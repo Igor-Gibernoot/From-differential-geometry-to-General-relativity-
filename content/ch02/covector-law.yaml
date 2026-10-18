@@ -1,0 +1,249 @@
+id: ch02-covector-law
+title: "Guided Problem: Do Covectors Transform the Same Way?"
+kind: guided
+
+cards:
+  - type: text
+    id: problem
+    title: The problem
+    body: |
+      Let $\{\hat{x}_i\}$ and $\{\hat{y}_i\}$ be two bases of a $d$-dimensional vector space $V$, related by
+      $$\hat{x}_i = \sum_{j=1}^d J_i^j\cdot\hat{y}_j .$$
+      Last lesson you showed that vector components transform **contravariantly**:
+      $$y^j = \sum_{i=1}^d J_i^j\, x^i .$$
+      Now take a covector $\mathsf{X}\in V^*$. Its components are $\mathsf{x}_i$ in the dual basis of $\{\hat{x}_i\}$ and $\mathsf{y}_i$ in the dual basis of $\{\hat{y}_i\}$.
+
+      > **(a)** How are the $\mathsf{y}_i$ related to the $\mathsf{x}_i$?
+      >
+      > **(b)** Show that the number $\mathsf{X}(\mathcal{X})$ comes out the same whichever basis you use to compute it.
+
+      We will solve it one step at a time.
+
+  - type: text
+    id: recall
+    title: "Recall: covectors and the dual basis"
+    body: |
+      - The **dual space** $V^*$ is the set of linear maps $V\to\mathbb{R}$. Its elements are **covectors**. A covector $\mathsf{X}$ eats a vector and returns a number $\mathsf{X}(\mathcal{X})\in\mathbb{R}$.
+      - The **dual basis** of $\{\hat{x}_i\}$ consists of the covectors $\hat{\mathfrak{x}}^1,\dots,\hat{\mathfrak{x}}^d$ defined by
+      $$\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j ,$$
+      where $\delta^i_j$ is the **Kronecker delta**: $1$ if $i = j$, otherwise $0$.
+      - Every covector expands in it as
+      $$\mathsf{X} = \sum_{i=1}^d \mathsf{x}_i\cdot\hat{\mathfrak{x}}^i .$$
+      Likewise, $\{\hat{\mathfrak{y}}^i\}$ is the dual basis of $\{\hat{y}_i\}$, and $\mathsf{X} = \sum_i \mathsf{y}_i\cdot\hat{\mathfrak{y}}^i$.
+
+      **A physical picture.** A temperature gradient is a covector: it eats a displacement and returns the change in temperature along it. Draw it as a stack of level lines (isotherms). $\mathsf{X}(\mathcal{X})$ counts how many lines the arrow $\mathcal{X}$ crosses.
+
+  - type: mcq
+    id: extract-component
+    prompt: |
+      Let $\mathsf{X} = \sum_i \mathsf{x}_i\cdot\hat{\mathfrak{x}}^i$, where $\{\hat{\mathfrak{x}}^i\}$ is the dual basis of $\{\hat{x}_i\}$, so that $\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j$. What is $\mathsf{X}(\hat{x}_k)$?
+    options:
+      - text: '$\mathsf{x}_k$'
+        correct: true
+      - text: '$\sum_i \mathsf{x}_i$'
+        feedback: |
+          Each $\hat{\mathfrak{x}}^i$ returns $\delta^i_k$ on $\hat{x}_k$, so all terms with $i\neq k$ die.
+      - text: '$\mathsf{x}_k\cdot\hat{x}_k$'
+        feedback: |
+          A covector returns a **number**, not a vector.
+      - text: '$1$'
+        feedback: |
+          That would be $\hat{\mathfrak{x}}^k(\hat{x}_k)$. Here $\mathsf{X}$ is a general covector with components $\mathsf{x}_i$.
+    explanation: |
+      $$\mathsf{X}(\hat{x}_k) = \sum_i \mathsf{x}_i\,\hat{\mathfrak{x}}^i(\hat{x}_k) = \sum_i \mathsf{x}_i\,\delta^i_k = \mathsf{x}_k .$$
+      **Key tool:** the $k$-th component of a covector is just its value on the $k$-th basis vector. The same holds in any basis:
+      $$\mathsf{y}_k = \mathsf{X}(\hat{y}_k).$$
+
+  - type: mcq
+    id: predict-gradient
+    prompt: |
+      Observer B's basis vectors are twice as long as A's: $\hat{y}_i = 2\cdot\hat{x}_i$. A temperature gradient $\mathsf{X}$ has components $(\mathsf{x}_1, \mathsf{x}_2) = (3, 1)$ in A's dual basis (°C per A-step).
+
+      What are its components $(\mathsf{y}_1, \mathsf{y}_2)$ in B's dual basis?
+    options:
+      - text: '$(6,\ 2)$'
+        correct: true
+      - text: '$(\tfrac32,\ \tfrac12)$'
+        feedback: |
+          That is what *vector* components did. A covector component is "change per basis step", and B's steps are twice as long. Use $\mathsf{y}_k = \mathsf{X}(\hat{y}_k)$.
+      - text: '$(3,\ 1)$'
+        feedback: |
+          The gradient is the same, but B's basis steps are twice as long, so each step crosses twice as many isotherms.
+    explanation: |
+      $$\mathsf{y}_i = \mathsf{X}(\hat{y}_i) = \mathsf{X}(2\cdot\hat{x}_i) = 2\,\mathsf{X}(\hat{x}_i) = 2\,\mathsf{x}_i ,$$
+      using linearity of $\mathsf{X}$. The basis doubled and the covector components doubled: they move **with** the basis.
+
+  - type: widget
+    id: playground
+    title: See both at once
+    widget: basis-playground
+    config:
+      vector: [3, 2]
+      covector: [1, 0.5]
+      basis: [[1, 0], [0, 1]]
+      snap: 0.5
+      presets:
+        - { label: 'Double both', basis: [[2, 0], [0, 2]] }
+        - { label: 'Shear', basis: [[1, 0], [1, 1]] }
+    body: |
+      The orange dashed lines are the level sets $\mathsf{X}(p) = n$ of a fixed covector $\mathsf{X}$, one for each integer $n$. $\mathsf{y}_i = \mathsf{X}(\hat{y}_i)$ counts how many lines $\hat{y}_i$ crosses, with a sign for direction.
+
+      Drag the basis. Watch the **blue** vector components and the **orange** covector components move in opposite directions, while the bottom line, $\sum_i\mathsf{y}_i\,y^i$, **never changes**. Part (b) asks you to prove that.
+
+  - type: mcq
+    id: new-in-old
+    prompt: |
+      To compute $\mathsf{y}_j = \mathsf{X}(\hat{y}_j)$ in general, you need the new basis vector $\hat{y}_j$ in terms of the old ones. Given
+      $$\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j ,$$
+      which is correct?
+    options:
+      - text: '$\hat{y}_j = \sum_i (J^{-1})_j^i\cdot\hat{x}_i$'
+        correct: true
+      - text: '$\hat{y}_j = \sum_i J_j^i\cdot\hat{x}_i$'
+        feedback: |
+          That reads the dictionary in the wrong direction. $J$ writes **old in terms of new**, so going from new to old needs its inverse.
+      - text: '$\hat{y}_j = \sum_i J_i^j\cdot\hat{x}_i$'
+        feedback: |
+          Swapping which index is summed amounts to taking the *transpose*, and the transpose is not the inverse in general. In the A/B example ($J = \tfrac12\,\mathbb{1}$) this would give $\hat{y}_j = \tfrac12\cdot\hat{x}_j$, but in fact $\hat{y}_j = 2\cdot\hat{x}_j$.
+    explanation: |
+      Since $J$ is invertible, the inverse dictionary is
+      $$\hat{y}_j = \sum_i (J^{-1})_j^i\cdot\hat{x}_i .$$
+      Check with A/B. There $J_i^j = \tfrac12\,\delta_i^j$, so $(J^{-1})_j^i = 2\,\delta_j^i$ and $\hat{y}_j = 2\cdot\hat{x}_j$, as it should be.
+
+  - type: build
+    id: build-covector-law
+    prompt: |
+      Plug $\hat{y}_j = \sum_i (J^{-1})_j^i\cdot\hat{x}_i$ into $\mathsf{y}_j = \mathsf{X}(\hat{y}_j)$, use linearity of $\mathsf{X}$, then use $\mathsf{X}(\hat{x}_i) = \mathsf{x}_i$. Build the result:
+    prefix: '\mathsf{y}_j = \mathsf{X}(\hat{y}_j) ='
+    tiles: ['\sum_{i=1}^d', '(J^{-1})_j^i', 'J_j^i', '\mathsf{x}_i', 'x^i', '\hat{\mathfrak{x}}^i']
+    answers:
+      - ['\sum_{i=1}^d', '(J^{-1})_j^i', '\mathsf{x}_i']
+      - ['\sum_{i=1}^d', '\mathsf{x}_i', '(J^{-1})_j^i']
+    wrong:
+      - answer: ['\sum_{i=1}^d', 'J_j^i', '\mathsf{x}_i']
+        feedback: |
+          The previous step showed that writing $\hat{y}_j$ in the old basis needs $J^{-1}$, not $J$.
+      - answer: ['\sum_{i=1}^d', '(J^{-1})_j^i', 'x^i']
+        feedback: |
+          $x^i$ are the components of some *vector*. Here we need the covector's own components, and $\mathsf{X}(\hat{x}_i) = \mathsf{x}_i$.
+      - answer: ['\sum_{i=1}^d', '(J^{-1})_j^i', '\hat{\mathfrak{x}}^i']
+        feedback: |
+          $\mathsf{y}_j$ is a number, but $\hat{\mathfrak{x}}^i$ is a covector. Evaluate first: what is $\mathsf{X}(\hat{x}_i)$?
+    hint: '$\mathsf{X}\big(\sum_i c^i\cdot\hat{x}_i\big) = \sum_i c^i\,\mathsf{X}(\hat{x}_i)$ for any numbers $c^i$.'
+    explanation: |
+      $$\mathsf{y}_j = \mathsf{X}\Big(\sum_i (J^{-1})_j^i\cdot\hat{x}_i\Big) = \sum_i (J^{-1})_j^i\,\mathsf{X}(\hat{x}_i) = \sum_{i=1}^d (J^{-1})_j^i\,\mathsf{x}_i .$$
+      That answers part **(a)**.
+
+  - type: mcq
+    id: co-or-contra
+    prompt: |
+      Compare the covector law with the rule for the basis vectors:
+      $$\mathsf{y}_j = \sum_i (J^{-1})_j^i\,\mathsf{x}_i ,\qquad \hat{y}_j = \sum_i (J^{-1})_j^i\cdot\hat{x}_i .$$
+      Covector components are therefore…
+    options:
+      - text: '**covariant**: same matrix, same index pattern as the basis vectors'
+        correct: true
+      - text: '**contravariant**, like vector components'
+        feedback: |
+          Look at the two formulas: they are identical in structure. Vector components used $J$ from old to new, *against* the basis.
+      - text: Neither; they need their own name
+        feedback: |
+          They behave exactly like the basis vectors, which is precisely the definition of covariant.
+    explanation: |
+      Covector components transform **with** the basis, so they are covariant. The book also writes the law the other way round (multiply by $J$ and use $JJ^{-1} = \mathbb{1}$):
+      $$\mathsf{x}_j = \sum_i J^i_j\,\mathsf{y}_i ,$$
+      which has the same shape as $\hat{x}_j = \sum_i J_j^i\cdot\hat{y}_i$. This is why covector components carry their index **down**.
+
+  - type: numeric
+    id: shear-covector
+    prompt: |
+      Shear again:
+      $$\hat{y}_1 = \hat{x}_1,\qquad \hat{y}_2 = \hat{x}_1 + \hat{x}_2 .$$
+      Take the covector $\mathsf{X} = \hat{\mathfrak{x}}^1$, the first dual basis covector of $\{\hat{x}_i\}$, so that $(\mathsf{x}_1, \mathsf{x}_2) = (1, 0)$. What is $\mathsf{y}_2$?
+    answer: 1
+    wrong:
+      - value: 0
+        feedback: |
+          $\mathsf{x}_2 = 0$, but the new basis vector $\hat{y}_2$ contains an $\hat{x}_1$, and $\hat{\mathfrak{x}}^1$ sees it. Use $\mathsf{y}_2 = \mathsf{X}(\hat{y}_2)$.
+      - value: -1
+        feedback: |
+          The $-1$ appeared for the *vector* $\hat{x}_2$ in the last lesson. Here use $\mathsf{y}_2 = \mathsf{X}(\hat{y}_2)$ directly.
+    hint: Use $\mathsf{y}_2 = \mathsf{X}(\hat{y}_2)$ and linearity.
+    explanation: |
+      $$\mathsf{y}_2 = \hat{\mathfrak{x}}^1(\hat{x}_1 + \hat{x}_2) = 1 + 0 = 1 .$$
+      Similarly
+      $$\mathsf{y}_1 = \hat{\mathfrak{x}}^1(\hat{x}_1) = 1 .$$
+      Under this shear the covector's components go $(1,0)\mapsto(1,1)$. In the last lesson the vector $\hat{x}_2$ went $(0,1)\mapsto(-1,1)$. Different objects, different rules.
+
+  - type: text
+    id: part-b
+    title: "Part (b): the number everyone agrees on"
+    body: |
+      In the old basis, linearity gives
+      $$\mathsf{X}(\mathcal{X}) = \mathsf{X}\Big(\sum_i x^i\cdot\hat{x}_i\Big) = \sum_i x^i\,\mathsf{X}(\hat{x}_i) = \sum_i \mathsf{x}_i\, x^i .$$
+      The same computation in the new basis gives $\sum_j \mathsf{y}_j\, y^j$. We want to show these are equal using only the two laws:
+      $$y^j = \sum_k J_k^j\, x^k ,\qquad \mathsf{y}_j = \sum_i (J^{-1})_j^i\,\mathsf{x}_i .$$
+      One more ingredient: substitute one dictionary into the other,
+      $$\hat{x}_k = \sum_j J_k^j\cdot\hat{y}_j = \sum_i\Big(\sum_j J_k^j\,(J^{-1})_j^i\Big)\cdot\hat{x}_i ,$$
+      and compare components in the basis $\{\hat{x}_i\}$ (they are unique):
+      $$\sum_{j=1}^d J_k^j\,(J^{-1})_j^i = \delta_k^i .$$
+
+  - type: order
+    id: invariance-proof
+    prompt: |
+      Put the proof that $\sum_j \mathsf{y}_j\, y^j = \sum_i \mathsf{x}_i\, x^i$ in order. Tap the steps from first to last.
+    steps:
+      - '$\displaystyle\sum_j \mathsf{y}_j\, y^j$'
+      - '$\displaystyle= \sum_j \Big(\sum_i (J^{-1})_j^i\,\mathsf{x}_i\Big)\Big(\sum_k J_k^j\, x^k\Big)$'
+      - '$\displaystyle= \sum_i \sum_k \mathsf{x}_i\, x^k \Big(\sum_j J_k^j\,(J^{-1})_j^i\Big)$'
+      - '$\displaystyle= \sum_i \sum_k \mathsf{x}_i\, x^k\,\delta_k^i$'
+      - '$\displaystyle= \sum_i \mathsf{x}_i\, x^i$'
+    hint: Substitute both laws first, then regroup so the two matrices sit together, then use the identity from the previous card.
+    explanation: |
+      Substituting the laws, regrouping the finite sums, and using
+      $$\sum_j J_k^j\,(J^{-1})_j^i = \delta_k^i$$
+      kills every term with $k\neq i$. This answers part **(b)**: the pairing $\mathsf{X}(\mathcal{X})$ does not depend on the basis.
+
+  - type: mcq
+    id: what-cancelled
+    prompt: |
+      In the proof that $\sum_j \mathsf{y}_j\, y^j = \sum_i \mathsf{x}_i\, x^i$, which fact made the change-of-basis matrices disappear?
+    options:
+      - text: 'The vector law uses $J$ and the covector law uses $J^{-1}$, and $\sum_j J_k^j\,(J^{-1})_j^i = \delta_k^i$'
+        correct: true
+      - text: '$J$ is orthogonal, so $J^{-1}$ is the transpose of $J$'
+        feedback: |
+          Orthogonality was never assumed. It is not even defined without a metric. The proof works for **any** invertible $J$, shears included.
+      - text: Finite sums can be reordered
+        feedback: |
+          That was needed to regroup the sums, but by itself it cancels nothing. The cancellation is $J$ against $J^{-1}$.
+    explanation: |
+      Opposite transformation laws are exactly what makes the pairing basis-independent. One index up, one index down, summed: the $J$ and the $J^{-1}$ meet and cancel.
+
+  - type: numeric
+    id: not-invariant
+    prompt: |
+      Here is the contrast. With $\hat{y}_i = 2\cdot\hat{x}_i$, a vector has components $(x^1, x^2) = (6, 4)$ and $(y^1, y^2) = (3, 2)$.
+
+      In the old basis,
+      $$\sum_i x^i\, x^i = 36 + 16 = 52 .$$
+      What is $\sum_i y^i\, y^i$ in the new basis?
+    answer: 13
+    wrong:
+      - value: 52
+        feedback: |
+          Compute it with $(y^1, y^2) = (3, 2)$. Is that really $52$?
+    explanation: |
+      $$\sum_i y^i\, y^i = 9 + 4 = 13 \neq 52 .$$
+      Two **upper** indices transform the same way, so nothing cancels: "the sum of squares of the components" is **not** a property of the vector. Turning two vectors into a basis-independent number needs extra structure, a **metric**, which is block 6 of the course. Until then, only up-down contractions are safe.
+
+  - type: text
+    id: wrap
+    title: Problem solved
+    body: |
+      **(a)** Covector components transform covariantly, with the same matrix and index pattern as the basis vectors:
+      $$\mathsf{y}_j = \sum_i (J^{-1})_j^i\,\mathsf{x}_i \quad\Longleftrightarrow\quad \mathsf{x}_j = \sum_i J^i_j\,\mathsf{y}_i .$$
+      **(b)** As a consequence, the pairing does not depend on the basis:
+      $$\mathsf{X}(\mathcal{X}) = \sum_i \mathsf{x}_i\, x^i = \sum_j \mathsf{y}_j\, y^j .$$
+
+      **Why this matters for GR.** A particle's velocity is a vector and the gradient of a field is a covector. Their pairing is the rate at which the field changes along the particle's path, and every observer must agree on it. Opposite transformation laws are what guarantee that. In Chapter 4, $J$ becomes the Jacobian of a coordinate change and these become the transformation laws of tensor calculus.

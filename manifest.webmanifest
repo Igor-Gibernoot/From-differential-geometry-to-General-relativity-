@@ -1,0 +1,9 @@
+{
+  "name": "From Differential Geometry to General Relativity",
+  "short_name": "Geo → GR",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f5f1",
+  "theme_color": "#3451d1",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

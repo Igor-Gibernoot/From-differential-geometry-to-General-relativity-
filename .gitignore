@@ -1,0 +1,14 @@
+# The professor's unpublished book — never publish it.
+from_differential_geometry_to_general_relativity/
+*.pdf
+
+# LaTeX build products
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.toc
+
+.DS_Store
+node_modules/
+.claude/settings.local.json

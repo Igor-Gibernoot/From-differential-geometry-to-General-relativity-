@@ -1,0 +1,271 @@
+id: ch02-change-of-basis
+title: Same Arrow, Different Numbers
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: A disagreement about numbers
+    body: |
+      Two observers, **A** and **B**, describe the same displacement $\mathcal{X}$, say from a lamp post to a bench.
+
+      - A uses basis vectors $\hat{x}_1$ (east) and $\hat{x}_2$ (north), each **1 m** long.
+      - B uses basis vectors $\hat{y}_1, \hat{y}_2$ pointing the same way, but each **2 m** long:
+      $$\hat{y}_1 = 2\cdot\hat{x}_1, \qquad \hat{y}_2 = 2\cdot\hat{x}_2 .$$
+
+      A reports the components $(x^1, x^2) = (6, 4)$, meaning
+      $$\mathcal{X} = 6\cdot\hat{x}_1 + 4\cdot\hat{x}_2 .$$
+      (Upper indices are labels, not powers: $x^2$ is "the second component".)
+
+      Before any theory, make a guess.
+
+  - type: mcq
+    id: predict-doubled
+    prompt: |
+      Observer B's basis vectors are twice as long as A's: $\hat{y}_i = 2\cdot\hat{x}_i$. A describes the displacement as $\mathcal{X} = 6\cdot\hat{x}_1 + 4\cdot\hat{x}_2$.
+
+      What components $(y^1, y^2)$ does B report for the **same** displacement?
+    options:
+      - text: '$(12,\ 8)$'
+        feedback: |
+          This is the most common guess: bigger basis, bigger numbers. Check it: $12\cdot\hat{y}_1$ is $12 \times 2\,\text{m} = 24\,\text{m}$ east, four times the real $6\,\text{m}$.
+      - text: '$(3,\ 2)$'
+        correct: true
+      - text: '$(6,\ 4)$: it is the same displacement'
+        feedback: |
+          The *displacement* is the same, but $(6, 4)$ is not the displacement. It is its description in A's basis. In B's basis, $6\cdot\hat{y}_1$ would already be $12\,\text{m}$ east.
+      - text: It cannot be determined without knowing lengths and angles (a metric)
+        feedback: |
+          No lengths are needed. The only input is how B's basis is written in terms of A's, $\hat{y}_i = 2\cdot\hat{x}_i$. The "1 m / 2 m" story just told you that relation.
+    explanation: |
+      Since $\hat{y}_i = 2\cdot\hat{x}_i$, we have $\hat{x}_i = \tfrac12\cdot\hat{y}_i$, so
+      $$\mathcal{X} = 6\cdot\hat{x}_1 + 4\cdot\hat{x}_2 = 3\cdot\hat{y}_1 + 2\cdot\hat{y}_2 .$$
+      The basis got **longer** and the components got **smaller**. This lesson is about that opposite behaviour.
+
+  - type: text
+    id: why-bases
+    title: Why bases exist at all
+    body: |
+      A vector $\mathcal{X}\in V$ is an abstract object: an arrow, a velocity, a state. To compute with it you need **numbers**, and the vector-space axioms give exactly one way to get them: a **basis**.
+
+      Recall that a basis $\{\hat{x}_1,\dots,\hat{x}_d\}$ of $V$ lets you write every $\mathcal{X}\in V$ in exactly one way as
+      $$\mathcal{X} = \sum_{i=1}^d x^i\cdot\hat{x}_i ,$$
+      where $d$ is the dimension of $V$ and the real numbers $x^i$ are the **components** of $\mathcal{X}$ with respect to that basis. (Here $+$ and $\cdot$ are the vector space's own addition $\oplus$ and scalar multiplication $\odot$.) "Exactly one way" is what linear independence of the basis buys you.
+
+      Nothing in the axioms singles out one basis. Different observers each bring their own, and later in the course so does every **coordinate chart on spacetime**. So the real question is:
+
+      > If two people describe the same vector with different bases, how do their numbers translate?
+
+      The vector itself never changes, only its description does. This is called a **passive** change of basis.
+
+  - type: text
+    id: J-def
+    title: The dictionary between two bases
+    body: |
+      Let $\{\hat{x}_i\}$ ("old") and $\{\hat{y}_i\}$ ("new") be two bases of the same $V$. Since $\{\hat{y}_j\}$ is a basis, each **old** basis vector can be written in the **new** one:
+      $$\hat{x}_i = \sum_{j=1}^d J_i^j\cdot\hat{y}_j,\qquad i = 1,\dots,d.$$
+      The real numbers $J_i^j$ form the **change-of-basis matrix** $J$. Read $J_i^j$ as *the $j$-th component of the old vector $\hat{x}_i$ in the new basis*:
+
+      - the lower index $i$ says **which old** basis vector,
+      - the upper index $j$ says **which new** basis vector.
+
+      Because both sets are bases, $J$ is invertible (proving that is a guided problem of its own), so we can also go back, using the inverse matrix $J^{-1}$:
+      $$\hat{y}_i = \sum_{j=1}^d (J^{-1})_i^j\cdot\hat{x}_j .$$
+
+      The letter $J$ is deliberate. In Chapter 4 the two bases will come from two coordinate charts, and $J$ will be the **Jacobian** of the change of coordinates.
+
+  - type: mcq
+    id: J-doubled
+    prompt: |
+      Observer B's basis is $\hat{y}_i = 2\cdot\hat{x}_i$ for $i = 1, 2$. With the convention
+      $$\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j ,$$
+      what is $J_1^1$?
+    options:
+      - text: '$2$'
+        feedback: |
+          $2$ is the factor writing the *new* vector in terms of the *old* one, $\hat{y}_1 = 2\cdot\hat{x}_1$. That is an entry of $J^{-1}$. Our convention goes the other way: **old in terms of new**.
+      - text: '$\tfrac12$'
+        correct: true
+      - text: '$1$'
+        feedback: |
+          The directions agree, but $J$ records the full linear relation between the bases, including how long the vectors are relative to each other.
+      - text: '$-2$'
+        feedback: |
+          Nothing flips orientation here; both bases point east and north.
+    explanation: |
+      $\hat{x}_1 = \tfrac12\cdot\hat{y}_1$, so $J_1^1 = \tfrac12$ and $J_1^2 = 0$. Likewise $J_2^2 = \tfrac12$ and $J_2^1 = 0$.
+
+      Mixing up the direction of $J$ is the most common source of errors in this subject. Always ask: *old in terms of new, or new in terms of old?*
+
+  - type: text
+    id: derive-setup
+    title: Deriving the translation rule
+    body: |
+      Now the general problem. The same vector has two descriptions:
+      $$\mathcal{X} = \sum_{i=1}^d x^i\cdot\hat{x}_i = \sum_{j=1}^d y^j\cdot\hat{y}_j .$$
+      Substitute the dictionary $\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$ into the first sum, then swap the order of the two finite sums:
+      $$\mathcal{X} = \sum_{i=1}^d x^i\cdot\Big(\sum_{j=1}^d J_i^j\cdot\hat{y}_j\Big) = \sum_{j=1}^d\Big(\sum_{i=1}^d J_i^j\, x^i\Big)\cdot\hat{y}_j .$$
+      Now we have **two expansions of $\mathcal{X}$ in the same basis** $\{\hat{y}_j\}$.
+
+  - type: mcq
+    id: why-compare
+    prompt: |
+      We have two expansions of the same vector in the basis $\{\hat{y}_j\}$:
+      $$\mathcal{X} = \sum_{j=1}^d y^j\cdot\hat{y}_j = \sum_{j=1}^d\Big(\sum_{i=1}^d J_i^j\, x^i\Big)\cdot\hat{y}_j .$$
+      Which fact lets us conclude that the coefficients of each $\hat{y}_j$ agree?
+    options:
+      - text: 'Components in a basis are **unique**, because the $\hat{y}_j$ are linearly independent'
+        correct: true
+      - text: '$J$ is invertible'
+        feedback: |
+          True, but not used here. We are comparing two expansions in the *same* basis $\{\hat{y}_j\}$, so what we need is uniqueness of components in that basis.
+      - text: Both sides equal $\mathcal{X}$, so they must agree term by term
+        feedback: |
+          Equal sums need not agree term by term: $1 + 3 = 2 + 2$. Agreement term by term is exactly what linear independence adds.
+      - text: 'The $\hat{y}_j$ span $V$'
+        feedback: |
+          Spanning guarantees that an expansion *exists*. Uniqueness comes from linear independence.
+    explanation: |
+      If $\sum_j a^j\cdot\hat{y}_j = \sum_j b^j\cdot\hat{y}_j$, then $\sum_j (a^j - b^j)\cdot\hat{y}_j = 0$, and linear independence forces $a^j = b^j$ for every $j$.
+
+  - type: build
+    id: build-contra
+    prompt: |
+      Read off the coefficient of $\hat{y}_j$. Build the law that gives the **new** component $y^j$ from the **old** components.
+    prefix: 'y^j ='
+    tiles: ['\sum_{i=1}^d', '\sum_{j=1}^d', 'J_i^j', '(J^{-1})_i^j', 'x^i', 'x^j', '\hat{y}_j']
+    answers:
+      - ['\sum_{i=1}^d', 'J_i^j', 'x^i']
+      - ['\sum_{i=1}^d', 'x^i', 'J_i^j']
+    wrong:
+      - answer: ['\sum_{i=1}^d', '(J^{-1})_i^j', 'x^i']
+        feedback: |
+          $J^{-1}$ would appear if we had substituted $\hat{y}$ in terms of $\hat{x}$. We substituted $\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$, so only $J$ appears.
+      - answer: ['\sum_{j=1}^d', 'J_i^j', 'x^i']
+        feedback: |
+          $j$ is the **free** index: it is fixed on the left-hand side, $y^j$. You can only sum over an index that disappears from the result, which here is $i$.
+      - answer: ['\sum_{i=1}^d', 'J_i^j', 'x^i', '\hat{y}_j']
+        feedback: |
+          $y^j$ is a number (a component), so the right-hand side must be a number too. The basis vector $\hat{y}_j$ is what $y^j$ *multiplies*.
+    hint: Look at the last expansion on the previous card. What multiplies $\hat{y}_j$?
+    explanation: |
+      $$y^j = \sum_{i=1}^d J_i^j\, x^i .$$
+      Check the index bookkeeping. The free index $j$ is **up** on both sides. The summed index $i$ appears once up ($x^i$) and once down ($J_i^j$). The book writes the same law with the letters swapped: $y^i = \sum_j J_j^i\, x^j$.
+
+  - type: widget
+    id: playground
+    title: Play with it
+    widget: basis-playground
+    config:
+      vector: [3, 2]
+      basis: [[1, 0], [0, 1]]
+      snap: 0.5
+      presets:
+        - { label: 'Double both', basis: [[2, 0], [0, 2]] }
+        - { label: 'Shear', basis: [[1, 0], [1, 1]] }
+    body: |
+      The black arrow is a **fixed** vector $\mathcal{X}$. The grey grid is the old basis $\hat{x}_1, \hat{x}_2$. **Drag the tips** of the new basis vectors $\hat{y}_1, \hat{y}_2$ (purple). The blue dashed path shows $\mathcal{X} = y^1\cdot\hat{y}_1 + y^2\cdot\hat{y}_2$.
+
+      Try this:
+      1. Stretch $\hat{y}_1$ to twice its length and watch $y^1$.
+      2. Tilt $\hat{y}_2$ toward $\hat{y}_1$ until they are almost parallel.
+
+  - type: mcq
+    id: widget-q
+    review: false
+    prompt: |
+      In the playground, you tilt $\hat{y}_2$ until it is almost parallel to $\hat{y}_1$. What happens to the components $y^1, y^2$ of the fixed vector $\mathcal{X}$, which does not lie along them?
+    options:
+      - text: They grow without bound, almost cancelling each other, and at exactly parallel there is no solution
+        correct: true
+      - text: They shrink to zero
+        feedback: |
+          Go back and try it. To reach a vector that sticks out of their common line, nearly parallel basis vectors need **huge** multiples.
+      - text: Nothing special happens; they change smoothly
+        feedback: |
+          They change smoothly *until* the basis degenerates. Near that point they blow up.
+    explanation: |
+      Nearly parallel basis vectors need huge, nearly cancelling multiples to reach a vector off their common line. When they are exactly parallel, the set spans only a line, so it is **no longer a basis**: $J$ stops being invertible and the components do not exist. "Both sets are bases" is a real requirement.
+
+  - type: numeric
+    id: shear
+    prompt: |
+      A less trivial change of basis, a **shear**:
+      $$\hat{y}_1 = \hat{x}_1,\qquad \hat{y}_2 = \hat{x}_1 + \hat{x}_2 .$$
+      Take $\mathcal{X} = \hat{x}_2$, so that $(x^1, x^2) = (0, 1)$. What is $y^1$?
+    answer: -1
+    wrong:
+      - value: 0
+        feedback: |
+          Tempting: $\mathcal{X}$ has no $\hat{x}_1$ part, and $\hat{y}_1 = \hat{x}_1$. But $\hat{y}_2$ also contains an $\hat{x}_1$, and that has to be cancelled. Write $\hat{x}_2$ in the new basis first.
+      - value: 1
+        feedback: |
+          Check the sign: which combination of $\hat{y}_1$ and $\hat{y}_2$ gives $\hat{x}_2$?
+    hint: First invert the dictionary. Write $\hat{x}_1$ and $\hat{x}_2$ in terms of $\hat{y}_1$ and $\hat{y}_2$.
+    explanation: |
+      $\hat{x}_1 = \hat{y}_1$ and $\hat{x}_2 = \hat{y}_2 - \hat{y}_1$, so
+      $$J_1^1 = 1,\quad J_1^2 = 0,\quad J_2^1 = -1,\quad J_2^2 = 1 .$$
+      Then
+      $$y^1 = J_1^1\, x^1 + J_2^1\, x^2 = 1\cdot 0 + (-1)\cdot 1 = -1,$$
+      $$y^2 = J_1^2\, x^1 + J_2^2\, x^2 = 0\cdot 0 + 1\cdot 1 = 1.$$
+      Check:
+      $$-\hat{y}_1 + \hat{y}_2 = -\hat{x}_1 + \hat{x}_1 + \hat{x}_2 = \hat{x}_2 .$$
+      **The lesson:** $y^1$ is *not* "how much $\mathcal{X}$ points along $\hat{y}_1$". It depends on **all** the basis vectors. Measuring "how much along" needs angles, which means a metric, and that comes much later.
+
+  - type: text
+    id: contra-name
+    title: Why "contravariant"
+    body: |
+      Put the two rules side by side:
+      $$\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j \qquad \text{(basis: old from new)}$$
+      $$y^j = \sum_i J_i^j\, x^i \qquad \text{(components: new from old)}$$
+      The same matrix $J$ takes the basis vectors **from new to old**, but takes the components **from old to new**. Components run **against** the basis. Objects whose components behave like this are called **contravariant** (Latin *contra*, against). The basis vectors, and anything that transforms the same way they do, are called **covariant**.
+
+      In the A/B example the basis was doubled and the components were halved, so each product "component × basis vector" stays the same. That is the whole point: $\mathcal{X}$ itself does not move.
+
+      This is also why a component carries its index **up** ($x^i$) and a basis vector carries it **down** ($\hat{x}_i$). In a sum where an up index meets a down index, such as $\sum_i x^i\cdot\hat{x}_i$, the basis dependence cancels.
+
+  - type: mcq
+    id: rotation
+    prompt: |
+      In the plane, you rotate both basis vectors by $+30^\circ$ to get a new basis. Compared with the old components $(x^1, x^2)$ of a fixed vector $\mathcal{X}$, the new components $(y^1, y^2)$ are the old ones rotated by…
+    options:
+      - text: '$+30^\circ$'
+        feedback: |
+          That is what the *basis* did. Components go against the basis.
+      - text: '$-30^\circ$'
+        correct: true
+      - text: '$0^\circ$: the vector did not move'
+        feedback: |
+          The vector did not move, but its components did. Same vector, different numbers.
+      - text: '$+60^\circ$'
+        feedback: |
+          Nothing doubles the angle here. Think about turning your head: the room seems to turn the other way.
+    explanation: |
+      Turn your head left and the room appears to turn right. For example, $\mathcal{X} = \hat{x}_1$ has old components $(1, 0)$ and new components $(\cos 30^\circ, -\sin 30^\circ)$, which is $(1,0)$ rotated by $-30^\circ$. This is contravariance again.
+
+  - type: mcq
+    id: what-is-a-vector
+    prompt: Which statement is precise?
+    options:
+      - text: A vector is a list of numbers that transforms contravariantly.
+        feedback: |
+          This physicist's shortcut mixes up the object with its description. The list depends on the basis; the vector does not.
+      - text: A vector is an element of $V$; its **components** with respect to a basis transform contravariantly.
+        correct: true
+      - text: A vector is contravariant and a basis vector is covariant, so they are different kinds of objects.
+        feedback: |
+          $\hat{x}_1$ is itself an element of $V$, a vector like any other. "Covariant" describes how the *set of basis vectors* gets re-expressed when you change basis. It is about labels, not a new kind of object.
+    explanation: |
+      Keep the object and its description separate: $\mathcal{X}\in V$ is fixed, while the list $(x^1,\dots,x^d)$ depends on the basis you choose and transforms contravariantly.
+
+  - type: text
+    id: wrap
+    title: What you now own
+    body: |
+      - A change of basis leaves the vector alone and changes its components.
+      - The dictionary $\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$ writes old in terms of new. It exists and is invertible because **both** sets are bases of the same finite-dimensional $V$.
+      - Components transform the opposite way, $y^j = \sum_i J_i^j\, x^i$: they are **contravariant**.
+      - A component is not "how much along that basis vector"; it depends on the whole basis.
+
+      **Next:** a covector eats a vector and returns a number. Vector components shrink when the basis grows. What must covector components do so that the number stays the same? That is the next guided problem.

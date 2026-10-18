@@ -1,0 +1,143 @@
+#!/usr/bin/env node
+// Checks the course and every lesson file:
+//   - YAML parses, required fields exist, ids are unique
+//   - question cards are well-formed (mcq has a correct option, build answers
+//     use only available tiles, numeric answers are numbers, ...)
+//   - every piece of math ($...$, $$...$$, tiles, prefixes) renders in KaTeX
+//
+// Usage: node tools/validate.mjs        (exit code 1 on any error)
+
+import { readFileSync, existsSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const require = createRequire(import.meta.url);
+const yaml = require(join(root, 'vendor/js-yaml.min.js'));
+const katex = require(join(root, 'vendor/katex/katex.min.js'));
+
+const errors = [];
+const warnings = [];
+const err = (where, msg) => errors.push(`${where}: ${msg}`);
+const warn = (where, msg) => warnings.push(`${where}: ${msg}`);
+
+const MATH = /\$\$([\s\S]+?)\$\$|\$((?:\\\$|[^$\n])+?)\$/g;
+function checkTex(where, src, display = false) {
+  try { katex.renderToString(String(src), { displayMode: display, throwOnError: true, strict: false }); }
+  catch (e) { err(where, `KaTeX: ${e.message.split('\n')[0]}  in  ${String(src).slice(0, 80)}`); }
+}
+function checkText(where, text) {
+  if (text == null) return;
+  const s = String(text);
+  for (const m of s.matchAll(MATH)) checkTex(where, m[1] ?? m[2], m[1] !== undefined);
+  const stripped = s.replace(MATH, '');
+  if ((stripped.match(/(?<!\\)\$/g) ?? []).length) err(where, 'unbalanced $ in text');
+}
+
+const KINDS = ['concept', 'guided', 'traps'];
+const course = yaml.load(readFileSync(join(root, 'content/course.yaml'), 'utf8'));
+const lessonIds = new Set();
+let built = 0, cardsTotal = 0;
+
+for (const level of course.levels ?? []) {
+  const lw = `course.yaml level ${level.id}`;
+  if (!level.id || !level.title || level.number == null) err(lw, 'needs id, number, title');
+  checkText(lw, level.blurb);
+  for (const meta of level.lessons ?? []) {
+    const w = `course.yaml lesson ${meta.id}`;
+    if (!meta.id || !meta.title) err(w, 'needs id and title');
+    if (lessonIds.has(meta.id)) err(w, 'duplicate lesson id');
+    lessonIds.add(meta.id);
+    if (!KINDS.includes(meta.kind)) err(w, `kind must be one of ${KINDS.join(', ')}`);
+    checkText(w, meta.title);
+    checkText(w, meta.summary);
+    if (!meta.file) continue;
+    const path = join(root, 'content', meta.file);
+    if (!existsSync(path)) { err(w, `file not found: content/${meta.file}`); continue; }
+    built++;
+    let lesson;
+    try { lesson = yaml.load(readFileSync(path, 'utf8')); }
+    catch (e) { err(meta.file, `YAML: ${e.message.split('\n')[0]}`); continue; }
+    if (lesson.id !== meta.id) err(meta.file, `id "${lesson.id}" does not match course.yaml id "${meta.id}"`);
+    checkLesson(meta.file, lesson);
+  }
+}
+
+function checkLesson(file, lesson) {
+  const ids = new Set();
+  if (!Array.isArray(lesson.cards) || !lesson.cards.length) return err(file, 'no cards');
+  lesson.cards.forEach((c, n) => {
+    cardsTotal++;
+    const w = `${file} card ${n + 1}${c.id ? ` (${c.id})` : ''}`;
+    if (!c.id) err(w, 'every card needs an id (review keys depend on it)');
+    else if (ids.has(c.id)) err(w, 'duplicate card id');
+    ids.add(c.id);
+    for (const f of ['title', 'body', 'prompt', 'explanation', 'hint', 'label', 'unit']) checkText(w, c[f]);
+    switch (c.type) {
+      case 'text':
+        if (!c.body) err(w, 'text card needs body');
+        break;
+      case 'widget':
+        if (!c.widget) err(w, 'widget card needs widget');
+        break;
+      case 'mcq': {
+        if (!c.prompt) err(w, 'needs prompt');
+        if (!Array.isArray(c.options) || c.options.length < 2) { err(w, 'needs >= 2 options'); break; }
+        const correct = c.options.filter(o => o.correct).length;
+        if (!correct) err(w, 'no option marked correct: true');
+        if (correct > 1 && !c.multiple) err(w, 'several correct options but multiple: true not set');
+        c.options.forEach((o, k) => {
+          if (typeof o.text !== 'string') err(w, `option ${k + 1} text must be a string (quote it)`);
+          checkText(`${w} option ${k + 1}`, o.text);
+          checkText(`${w} option ${k + 1} feedback`, o.feedback);
+          if (!o.correct && !o.feedback) warn(w, `wrong option ${k + 1} has no feedback (misconception explanation)`);
+        });
+        if (!c.explanation) warn(w, 'no explanation');
+        break;
+      }
+      case 'numeric':
+        if (!c.prompt) err(w, 'needs prompt');
+        if (typeof c.answer !== 'number') err(w, 'answer must be a number');
+        for (const x of c.wrong ?? []) {
+          if (typeof x.value !== 'number') err(w, 'wrong[].value must be a number');
+          checkText(w, x.feedback);
+        }
+        if (!c.explanation) warn(w, 'no explanation');
+        break;
+      case 'build': {
+        if (!c.prompt) err(w, 'needs prompt');
+        if (!Array.isArray(c.tiles) || !c.tiles.length) { err(w, 'needs tiles'); break; }
+        c.tiles.forEach(t => checkTex(`${w} tile`, t));
+        if (c.prefix) checkTex(`${w} prefix`, c.prefix);
+        if (c.suffix) checkTex(`${w} suffix`, c.suffix);
+        const norm = s => String(s).replace(/\s+/g, '');
+        const fits = seq => {
+          const pool = c.tiles.map(norm);
+          return seq.every(t => { const i = pool.indexOf(norm(t)); if (i < 0) return false; pool.splice(i, 1); return true; });
+        };
+        if (!Array.isArray(c.answers) || !c.answers.length) err(w, 'needs answers (list of tile sequences)');
+        for (const a of c.answers ?? []) if (!fits(a)) err(w, `answer uses tiles not in tiles[]: ${a.join(' ')}`);
+        for (const x of c.wrong ?? []) {
+          if (!fits(x.answer)) err(w, `wrong answer uses tiles not in tiles[]: ${x.answer.join(' ')}`);
+          checkText(w, x.feedback);
+        }
+        if (!c.explanation) warn(w, 'no explanation');
+        break;
+      }
+      case 'order':
+        if (!c.prompt) err(w, 'needs prompt');
+        if (!Array.isArray(c.steps) || c.steps.length < 2) err(w, 'needs >= 2 steps');
+        (c.steps ?? []).forEach((s, k) => checkText(`${w} step ${k + 1}`, s));
+        if (new Set(c.steps ?? []).size !== (c.steps ?? []).length) err(w, 'steps must be distinct');
+        break;
+      default:
+        err(w, `unknown type "${c.type}"`);
+    }
+  });
+}
+
+for (const w of warnings) console.log(`warn  ${w}`);
+for (const e of errors) console.log(`ERROR ${e}`);
+console.log(`\n${built} built lessons, ${cardsTotal} cards, ${errors.length} errors, ${warnings.length} warnings.`);
+process.exit(errors.length ? 1 : 0);

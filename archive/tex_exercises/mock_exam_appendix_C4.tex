@@ -1,0 +1,514 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+
+\newcommand{\Cinf}{C^\infty(\mathcal M)}
+\newcommand{\TpM}{T_p\mathcal M}
+\newcommand{\TpsM}{T_p^*\mathcal M}
+
+\title{Mock Exam --- Fields on a Surface in $\mathbb R^3$\\ \large Based on the worked example of Appendix C.4}
+\author{From Differential Geometry to General Relativity --- Study Companion}
+\date{}
+
+% ---------------------------------------------------------------------------
+% Problem statements are stored as macros so that the solutions can restate
+% them verbatim.
+% ---------------------------------------------------------------------------
+
+\newcommand{\probOne}{%
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{[5 pts]} Let $\mathcal W:=\mathcal M\setminus\{(0,0,h(0,0))\}$, and let $\widehat{\mathcal Y}:\mathcal W\to\mathbb R^2$ be
+defined by the same formula as $\mathcal Y$. Show that $\mathcal Y(\mathcal V)$ is open in $\mathbb R^2$, and that $\widehat{\mathcal Y}$
+is not continuous at the point $r:=(-2,0,h(-2,0))$. Conclude why the chart is defined on $\mathcal V$ and not on $\mathcal W$.
+\item \textbf{[5 pts]} Write down the transition maps $\mathcal T_{\mathcal{UV}}$ and $\mathcal T_{\mathcal{VU}}$ together with their
+domains, and prove that both are $C^\infty$. Why does this make the atlas $C^\infty$-compatible?
+\item \textbf{[5 pts]} Let $q:=(-1,-1,c_q)\in\mathcal M$. Find $c_q$, $\mathcal X(q)$ and $\mathcal Y(q)$. Then find all three
+cartesian coordinates of the point $s\in\mathcal V$ with $\mathcal Y(s)=(2,-\pi/2)$.
+\end{enumerate}}
+
+\newcommand{\probTwo}{%
+Let $p\in\mathcal M$ be the point with $\mathcal X(p)=(1,1)$.
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{[4 pts]} Compute $\mathcal Y(p)$, the matrices $J_{\mathcal{VU}}(\mathcal X(p))$ and $J_{\mathcal{UV}}(\mathcal Y(p))$, and verify that
+they are inverse to each other.
+\item \textbf{[4 pts]} Express $(\partial x_1)_p$ and $(\partial x_2)_p$ in terms of $(\partial y_1)_p$ and $(\partial y_2)_p$.
+\item \textbf{[4 pts]} Let $V_p:=2(\partial x_1)_p-(\partial x_2)_p\in T_p\mathcal M$. Find its components in the chart $(\mathcal V,\mathcal Y)$, and
+verify the result by substituting the answer of (b).
+\item \textbf{[4 pts]} Let $\omega_p:=3(dx^1)_p+(dx^2)_p\in T_p^*\mathcal M$. Find its components in $(\mathcal V,\mathcal Y)$, and check that
+$\omega_p(V_p)$ is the same number when computed in either chart.
+\item \textbf{[4 pts]} Prove that this is not a coincidence: for arbitrary $\omega_p\in T_p^*\mathcal M$ and $V_p\in T_p\mathcal M$, the
+contraction $\omega_p(V_p)$ computed from $\mathcal X$-components equals the one computed from $\mathcal Y$-components.
+\end{enumerate}}
+
+\newcommand{\probThree}{%
+Let $g:\mathcal M\to\mathbb R$ be the smooth scalar field
+\[
+g(a,b,c):=a^2+b^2.
+\]
+Let $p$ be the point with $\mathcal X(p)=(1,1)$ (as in Problem 2) and consider the two curves
+\begin{align*}
+\sigma:\mathbb R\to\mathcal M,\qquad \sigma(\lambda)&:=(\lambda,\lambda,h(\lambda,\lambda)),\\
+\delta:\mathbb R\to\mathcal M,\qquad \delta(\lambda)&:=(\sqrt2\cos\lambda,\ \sqrt2\sin\lambda,\ h(\sqrt2\cos\lambda,\sqrt2\sin\lambda)).
+\end{align*}
+Both pass through $p$: $\sigma$ at $\lambda=1$ and $\delta$ at $\lambda=\pi/4$. Write $\sigma_p:=v_{\sigma,p}$ and $\delta_p:=v_{\delta,p}$ for their velocities at $p$.
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{[5 pts]} Compute the components of $\sigma_p$ and $\delta_p$ in both charts, directly from the chart representatives of the
+curves, and check them against the transformation law of vector components.
+\item \textbf{[5 pts]} Determine for which $\lambda$ the curve $\sigma$ lies in $\mathcal V$, and describe $\mathcal Y\circ\sigma$. Is $\sigma$ smooth
+as a curve on $\mathcal M$?
+\item \textbf{[5 pts]} Compute the components of $(dg)_p$ in both charts from the chart representatives of $g$, and check them against the
+transformation law of covector components.
+\item \textbf{[5 pts]} Compute $\sigma_p(g)$ and $\delta_p(g)$ \emph{without any chart}, from the definition $v_{\gamma,p}(g):=(g\circ\gamma)'(\lambda_0)$,
+and confirm both numbers by contracting components in each chart. Interpret the value of $\delta_p(g)$ geometrically.
+\end{enumerate}}
+
+\newcommand{\probFour}{%
+Besides $g$ of Problem 3, consider the three vector fields $\mathfrak X,\mathfrak Y,\mathfrak R\in\Gamma T\mathcal M$ whose restrictions to $\mathcal U$ are
+\[
+\mathfrak X|_{\mathcal U}=\partial x_2,\qquad
+\mathfrak Y|_{\mathcal U}=-b\,\partial x_1+a\,\partial x_2,\qquad
+\mathfrak R|_{\mathcal U}=a\,\partial x_1+b\,\partial x_2,
+\]
+where $(a,b,c)$ denote the coordinates of the point at which the component functions are evaluated.
+(The first two are the fields of vertical lines and of circles of the worked example, and the third one is new.)
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{[5 pts]} Compute $\mathfrak R|_{\mathcal V}$, write $\mathfrak R$ in the tangent-bundle chart $\xi_{\mathcal Y}$, and say where $\mathfrak R$ vanishes.
+\item \textbf{[5 pts]} Compute the functions $\mathfrak X[g]$, $\mathfrak Y[g]$ and $\mathfrak R[g]$ on $\mathcal M$, and interpret each of them.
+\item \textbf{[5 pts]} Compute $(g\odot_\Gamma\mathfrak X\oplus_\Gamma\mathfrak Y)|_{\mathcal U}$, and then $dg\lceil g\odot_\Gamma\mathfrak X\oplus_\Gamma\mathfrak Y\rfloor$
+in two ways: directly, and using the $C^\infty(\mathcal M)$-linearity of $dg\lceil\cdot\rfloor$.
+\item \textbf{[5 pts]} Show that at every point $p\neq(0,0,h(0,0))$ the pair $(\mathfrak R_p,\mathfrak Y_p)$ is a basis of $T_p\mathcal M$, and
+find the functions $c^1,c^2$ on $\mathcal M\setminus\{(0,0,h(0,0))\}$ such that $\mathfrak X=c^1\odot\mathfrak R\oplus c^2\odot\mathfrak Y$. Why can $(\mathfrak R,\mathfrak Y)$ not
+be a frame on all of $\mathcal M$?
+\item \textbf{[5 pts]} Compute $\mathfrak X[g\odot_{C^\infty} g]$ in two ways: directly, and via the Leibniz rule. Show that, unlike $dg\lceil\cdot\rfloor$, the map
+$\mathfrak X[\cdot]$ is not $C^\infty(\mathcal M)$-linear.
+\end{enumerate}}
+
+\newcommand{\probFive}{%
+Let $S:=dg\otimes dg$, i.e.\ the $(0,2)$-tensor field
+\[
+S:\Gamma T\mathcal M\times\Gamma T\mathcal M\to\Cinf,\qquad S(\mathfrak Z_1,\mathfrak Z_2):=dg\lceil\mathfrak Z_1\rfloor\odot_{C^\infty}dg\lceil\mathfrak Z_2\rfloor,
+\]
+with $g$ as in Problem 3.
+\begin{enumerate}[label=(\alph*)]
+\item \textbf{[5 pts]} Find the component matrices $(S_{\mathcal U})_{ij}$ and $(S_{\mathcal V})_{kl}$, and verify the transformation law of
+a $(0,2)$-tensor field for the component $(S_{\mathcal V})_{11}$.
+\item \textbf{[5 pts]} Compute $S(\mathfrak X,\mathfrak X)$, $S(\mathfrak X,\mathfrak R)$ and $S(\mathfrak Y,\mathfrak Z)$ for an arbitrary field $\mathfrak Z$.
+\item \textbf{[5 pts]} Prove that $S$ is $C^\infty(\mathcal M)$-linear in its first argument.
+\item \textbf{[5 pts]} True or false? Justify each answer in one or two sentences.
+\begin{enumerate}[label=(\roman*)]
+\item The number $\mathfrak Y_p(g)$ depends on which chart is used to compute it.
+\item The field $\mathfrak Y$ is only defined on $\mathcal V$, because there it takes the simple form $\partial y_2$.
+\item The curve $\gamma_{x_0}(\lambda)=(x_0,\lambda,h(x_0,\lambda))$ with $x_0\le 0$ is not smooth, since $\mathcal Y\circ\gamma_{x_0}$ is discontinuous.
+\item Every covector field on $\mathcal M$ is the differential of a scalar field on $\mathcal M$.
+\end{enumerate}
+\end{enumerate}}
+
+\begin{document}
+\maketitle
+
+\subsection*{Instructions}
+
+\noindent Duration: 60 minutes. No notes. Total: 100 points (indicative time: P1 10 min, P2 12 min, P3 12 min, P4 15 min, P5 11 min).
+Justify every answer; results obtained by reading them off from a chart without saying why receive no credit.
+The exam is deliberately slightly longer than one hour of comfortable work: skip and return.
+
+\subsection*{Setting}
+
+Everything below takes place on the following $2$-dimensional smooth manifold $(\mathcal M,\mathcal O_{\mathcal M},\mathcal A_{C^\infty})_2$.
+The set is the graph of a height function $h$:
+\[
+\mathcal M:=\{p=(a,b,c)\in\mathbb R^3\mid c=h(a,b)\},\qquad h(a,b):=\cos a\cos b+1,
+\]
+with the topology induced from $\mathbb R^3$. The atlas consists of two charts:
+\begin{align*}
+\mathcal U&:=\mathcal M,& \mathcal X(p)&:=(a,b),\\
+\mathcal V&:=\mathcal M\setminus\{a\le 0,\ b=0\},& \mathcal Y(p)&:=\bigl(\sqrt{a^2+b^2},\ \mathrm{atan2}(b,a)\bigr),
+\end{align*}
+so that $\mathcal X(\mathcal U)=\mathbb R^2$ and $\mathcal Y(\mathcal V)=(0,\infty)\times(-\pi,\pi)$. Here $\mathrm{atan2}(b,a)\in(-\pi,\pi]$ is the polar angle of $(a,b)$.
+Points of $\mathcal X(\mathcal U)$ are written $(\alpha_1,\alpha_2)$ and points of $\mathcal Y(\mathcal V)$ are written $(\beta_1,\beta_2)$; we abbreviate
+$\rho:=\sqrt{\alpha_1^2+\alpha_2^2}$. The inverse chart maps are
+\[
+\mathcal X^{-1}(\alpha_1,\alpha_2)=(\alpha_1,\alpha_2,h(\alpha_1,\alpha_2)),\qquad
+\mathcal Y^{-1}(\beta_1,\beta_2)=(\beta_1\cos\beta_2,\ \beta_1\sin\beta_2,\ h(\beta_1\cos\beta_2,\beta_1\sin\beta_2)).
+\]
+
+\paragraph{Facts you may use.} The Jacobians of the transition maps, with $(J_{\mathcal{VU}})^i{}_j=\partial\mathcal Y^i/\partial\mathcal X^j$
+(row $i$, column $j$) and $(J_{\mathcal{UV}})^i{}_j=\partial\mathcal X^i/\partial\mathcal Y^j$, are
+\[
+J_{\mathcal{VU}}=\begin{bmatrix}\alpha_1/\rho & \alpha_2/\rho\\ -\alpha_2/\rho^2 & \alpha_1/\rho^2\end{bmatrix},\qquad
+J_{\mathcal{UV}}=\begin{bmatrix}\cos\beta_2 & -\beta_1\sin\beta_2\\ \sin\beta_2 & \beta_1\cos\beta_2\end{bmatrix}.
+\]
+For $V_p\in T_p\mathcal M$ with components $x^i$ (in $\mathcal X$) and $y^i$ (in $\mathcal Y$), for $\omega_p\in T_p^*\mathcal M$ with components $\mathsf x_i$
+and $\mathsf y_i$, and for the chart-induced bases $(\partial x_i)_p,(\partial y_i)_p$ of $T_p\mathcal M$ and $(dx^i)_p,(dy^i)_p$ of $T_p^*\mathcal M$
+(summation over repeated indices is implied):
+\begin{align*}
+&(\partial x_j)_p=(J_{\mathcal{VU}})^i{}_j\,(\partial y_i)_p, &&(\partial y_j)_p=(J_{\mathcal{UV}})^i{}_j\,(\partial x_i)_p,\\
+&y^i=(J_{\mathcal{VU}})^i{}_j\,x^j, &&x^i=(J_{\mathcal{UV}})^i{}_j\,y^j,\\
+&\mathsf y_j=(J_{\mathcal{UV}})^i{}_j\,\mathsf x_i, &&\mathsf x_j=(J_{\mathcal{VU}})^i{}_j\,\mathsf y_i.
+\end{align*}
+The velocity of a curve $\gamma:\mathbb R\to\mathcal M$ at $p=\gamma(\lambda_0)$ is $v_{\gamma,p}$; its components in $\mathcal X$ are
+$x^i=(\mathcal X^i\circ\gamma)'(\lambda_0)$, and it acts on $f\in\Cinf$ by
+\[
+v_{\gamma,p}(f):=(f\circ\gamma)'(\lambda_0).
+\]
+The differential $(df)_p\in T_p^*\mathcal M$ of $f\in\Cinf$ is defined by $(df)_p(v_{\gamma,p}):=v_{\gamma,p}(f)$; its components are
+$\mathsf x_i=\partial_i[f\circ\mathcal X^{-1}](\mathcal X(p))$ and $\mathsf y_i=\partial_i[f\circ\mathcal Y^{-1}](\mathcal Y(p))$.
+For vector fields $\mathfrak Z,\mathfrak W\in\Gamma T\mathcal M$ (smooth sections of $T\mathcal M$, written in fraktur to avoid clashing with the chart names), $f\in\Cinf$, and a covector field $\omega$:
+\begin{align*}
+&(\mathfrak Z\oplus_\Gamma\mathfrak W)(p):=\mathfrak Z_p+\mathfrak W_p, &&(f\odot_\Gamma\mathfrak Z)(p):=f(p)\,\mathfrak Z_p,\\
+&\mathfrak Z[f](p):=\mathfrak Z_p(f), &&\omega\lceil\mathfrak Z\rfloor(p):=\omega_p(\mathfrak Z_p).
+\end{align*}
+Component functions are the functions of $p=(a,b,c)$ obtained by reading the components at each point, e.g.\ $\mathfrak Z|_{\mathcal U}=Z^i\,\partial x_i$.
+A $(0,2)$-tensor field is a $C^\infty(\mathcal M)$-bilinear map $\Gamma T\mathcal M\times\Gamma T\mathcal M\to\Cinf$, with components
+$T_{ij}:=T(\partial x_i,\partial x_j)$ in $\mathcal U$ and $T_{kl}:=T(\partial y_k,\partial y_l)$ in $\mathcal V$.
+
+\newpage
+\section*{Problem 1 --- The manifold and its charts \textnormal{(15 pts)}}
+\probOne
+
+\section*{Problem 2 --- Jacobians and transformation laws at a point \textnormal{(20 pts)}}
+\probTwo
+
+\newpage
+\section*{Problem 3 --- Curves, velocities and a scalar field \textnormal{(20 pts)}}
+\probThree
+
+\section*{Problem 4 --- Vector fields and the module structure \textnormal{(25 pts)}}
+\probFour
+
+\newpage
+\section*{Problem 5 --- A tensor field, and true or false \textnormal{(20 pts)}}
+\probFive
+
+% =============================================================================
+\newpage
+\part*{Solutions}
+% =============================================================================
+
+\section*{Solution to Problem 1}
+\probOne
+
+\paragraph{Solution.}
+\begin{enumerate}[label=(\alph*)]
+\item The image is a product of open intervals,
+\[
+\mathcal Y(\mathcal V)=(0,\infty)\times(-\pi,\pi),
+\]
+hence open in $\mathbb R^2$.
+
+For the second claim, take $\varepsilon>0$ and the points
+\[
+r_\pm(\varepsilon):=(-2,\pm\varepsilon,h(-2,\pm\varepsilon))\in\mathcal W.
+\]
+Both converge to $r$ as $\varepsilon\to0^+$, and $r\in\mathcal W$ since $r\neq(0,0,h(0,0))$. However,
+\[
+\widehat{\mathcal Y}^2(r_\pm(\varepsilon))=\mathrm{atan2}(\pm\varepsilon,-2)=\arctan(\mp\varepsilon/2)\pm\pi\ \xrightarrow[\varepsilon\to0^+]{}\ \pm\pi,
+\]
+so the limits along the two sequences differ by $2\pi$: $\widehat{\mathcal Y}$ has no limit at $r$, and is discontinuous there.
+
+Since a chart map must be a homeomorphism onto an open set, $\mathcal Y$ cannot be defined across the closed ray $\{a\le0,b=0\}$ (this is a
+statement about the angle coordinate: the angle jumps by $2\pi$ when the ray is crossed). The origin's lift
+$(0,0,h(0,0))=(0,0,2)$ is excluded as well, because there the radial coordinate would be $0\notin(0,\infty)$ and $\mathrm{atan2}$ is undefined.
+\item Since $\mathcal U\cap\mathcal V=\mathcal V$, the maps are
+\begin{align*}
+\mathcal T_{\mathcal{UV}}=\mathcal X\circ\mathcal Y^{-1}&:\ \mathcal Y(\mathcal V)\to\mathcal X(\mathcal V),& (\beta_1,\beta_2)&\mapsto(\beta_1\cos\beta_2,\ \beta_1\sin\beta_2),\\
+\mathcal T_{\mathcal{VU}}=\mathcal Y\circ\mathcal X^{-1}&:\ \mathcal X(\mathcal V)\to\mathcal Y(\mathcal V),& (\alpha_1,\alpha_2)&\mapsto\bigl(\rho,\ \mathrm{atan2}(\alpha_2,\alpha_1)\bigr),
+\end{align*}
+where
+\[
+\mathcal X(\mathcal V)=\mathbb R^2\setminus\{(\alpha_1,0)\mid\alpha_1\le0\}.
+\]
+The height $h$ drops out of both formulas, because $\mathcal X$ only keeps $(a,b)$.
+
+$\mathcal T_{\mathcal{UV}}$ is $C^\infty$ because $\cos,\sin$ and products are. For $\mathcal T_{\mathcal{VU}}$, the first component
+$\rho=\sqrt{\alpha_1^2+\alpha_2^2}$ is smooth since $\rho>0$ on $\mathcal X(\mathcal V)$. For the second, on $\mathcal X(\mathcal V)$ one has $\alpha_1+\rho>0$
+(equality would force $\alpha_2=0,\alpha_1\le0$), and there
+\[
+\mathrm{atan2}(\alpha_2,\alpha_1)=2\arctan\frac{\alpha_2}{\alpha_1+\rho},
+\]
+which is a composition of smooth functions. (Check: with $\alpha_1=\rho\cos\theta$, $\alpha_2=\rho\sin\theta$, $\theta\in(-\pi,\pi)$, the argument is $\tan(\theta/2)$.)
+
+Two charts are $C^\infty$-compatible when both transition maps are $C^\infty$ on the images of the overlap; the atlas
+$\{(\mathcal U,\mathcal X),(\mathcal V,\mathcal Y)\}$ is therefore $C^\infty$-compatible, and $\mathcal A\equiv\mathcal A_{C^\infty}$.
+\item For $q$:
+\begin{align*}
+c_q&=h(-1,-1)=\cos^2(1)+1\approx1.292,\\
+\mathcal X(q)&=(-1,-1),\\
+\mathcal Y(q)&=\bigl(\sqrt2,\ \mathrm{atan2}(-1,-1)\bigr)=\bigl(\sqrt2,\ -3\pi/4\bigr),
+\end{align*}
+since $q$ lies in the third quadrant, i.e.\ $b<0$, $a<0$, and the angle is $\arctan(1)-\pi$.
+
+For $s$, the inverse chart gives
+\begin{align*}
+s&=\mathcal Y^{-1}(2,-\pi/2)=\bigl(2\cos(-\pi/2),\ 2\sin(-\pi/2),\ h(0,-2)\bigr)\\
+&=(0,-2,1+\cos2)\approx(0,-2,0.584).
+\end{align*}
+\end{enumerate}
+
+% -----------------------------------------------------------------------------
+\section*{Solution to Problem 2}
+\probTwo
+
+\paragraph{Solution.} Here $\alpha=(1,1)$, so $\rho=\sqrt2$.
+\begin{enumerate}[label=(\alph*)]
+\item The polar coordinates are
+\[
+\mathcal Y(p)=(\beta_1,\beta_2)=(\sqrt2,\ \pi/4),
+\]
+and, using $\cos\beta_2=\sin\beta_2=1/\sqrt2$ and $\beta_1\sin\beta_2=\beta_1\cos\beta_2=1$,
+\[
+J_{\mathcal{VU}}=\begin{bmatrix}1/\sqrt2&1/\sqrt2\\-1/2&1/2\end{bmatrix},\qquad
+J_{\mathcal{UV}}=\begin{bmatrix}1/\sqrt2&-1\\1/\sqrt2&1\end{bmatrix}.
+\]
+Their product is
+\[
+J_{\mathcal{UV}}J_{\mathcal{VU}}=\begin{bmatrix}\tfrac12+\tfrac12&\tfrac12-\tfrac12\\ \tfrac12-\tfrac12&\tfrac12+\tfrac12\end{bmatrix}=\begin{bmatrix}1&0\\0&1\end{bmatrix}.
+\]
+\item Using $(\partial x_j)_p=(J_{\mathcal{VU}})^i{}_j(\partial y_i)_p$, i.e.\ reading off the columns of $J_{\mathcal{VU}}$:
+\begin{align*}
+(\partial x_1)_p&=\tfrac1{\sqrt2}(\partial y_1)_p-\tfrac12(\partial y_2)_p,\\
+(\partial x_2)_p&=\tfrac1{\sqrt2}(\partial y_1)_p+\tfrac12(\partial y_2)_p.
+\end{align*}
+\item The $\mathcal X$-components are $(x^1,x^2)=(2,-1)$, hence $y^i=(J_{\mathcal{VU}})^i{}_jx^j$ gives
+\begin{align*}
+y^1&=\tfrac1{\sqrt2}\cdot2+\tfrac1{\sqrt2}\cdot(-1)=\tfrac1{\sqrt2},\\
+y^2&=-\tfrac12\cdot2+\tfrac12\cdot(-1)=-\tfrac32.
+\end{align*}
+Check with (b):
+\begin{align*}
+2(\partial x_1)_p-(\partial x_2)_p&=\Bigl(\tfrac2{\sqrt2}-\tfrac1{\sqrt2}\Bigr)(\partial y_1)_p+\Bigl(-1-\tfrac12\Bigr)(\partial y_2)_p\\
+&=\tfrac1{\sqrt2}(\partial y_1)_p-\tfrac32(\partial y_2)_p.
+\end{align*}
+\item The $\mathcal X$-components are $(\mathsf x_1,\mathsf x_2)=(3,1)$, so $\mathsf y_j=(J_{\mathcal{UV}})^i{}_j\mathsf x_i$ gives
+\begin{align*}
+\mathsf y_1&=\tfrac1{\sqrt2}\cdot3+\tfrac1{\sqrt2}\cdot1=2\sqrt2,\\
+\mathsf y_2&=-1\cdot3+1\cdot1=-2.
+\end{align*}
+The contractions are
+\begin{align*}
+\mathsf x_ix^i&=3\cdot2+1\cdot(-1)=5,\\
+\mathsf y_iy^i&=2\sqrt2\cdot\tfrac1{\sqrt2}+(-2)\cdot\bigl(-\tfrac32\bigr)=2+3=5.
+\end{align*}
+\item Using the laws for vector and covector components,
+\begin{align*}
+\mathsf y_jy^j&=(J_{\mathcal{UV}})^i{}_j\,\mathsf x_i\;(J_{\mathcal{VU}})^j{}_k\,x^k\\
+&=\mathsf x_i\,\bigl[(J_{\mathcal{UV}})^i{}_j(J_{\mathcal{VU}})^j{}_k\bigr]\,x^k\\
+&=\mathsf x_i\,\delta^i{}_k\,x^k=\mathsf x_ix^i,
+\end{align*}
+because $J_{\mathcal{UV}}J_{\mathcal{VU}}=\mathbb 1$ (the two transition maps are inverse to each other, so their Jacobians are inverse matrices by
+the chain rule). The covector components transform with $J_{\mathcal{UV}}$ contracted on its upper index, and the vector components with
+$J_{\mathcal{VU}}$; this is exactly what makes the pairing cancel the chart dependence.
+\end{enumerate}
+
+% -----------------------------------------------------------------------------
+\section*{Solution to Problem 3}
+\probThree
+
+\paragraph{Solution.}
+\begin{enumerate}[label=(\alph*)]
+\item For $\sigma$ at $\lambda_0=1$, the chart representatives are
+\begin{align*}
+(\mathcal X\circ\sigma)(\lambda)&=(\lambda,\lambda),\\
+(\mathcal Y\circ\sigma)(\lambda)&=(\sqrt2\lambda,\ \pi/4)\qquad(\lambda>0),
+\end{align*}
+so the components of $\sigma_p$ are
+\[
+(x^1,x^2)=(1,1),\qquad(y^1,y^2)=(\sqrt2,0).
+\]
+Transformation law:
+\[
+J_{\mathcal{VU}}\begin{pmatrix}1\\1\end{pmatrix}=\begin{pmatrix}\tfrac1{\sqrt2}+\tfrac1{\sqrt2}\\-\tfrac12+\tfrac12\end{pmatrix}=\begin{pmatrix}\sqrt2\\0\end{pmatrix}.\ \checkmark
+\]
+For $\delta$ at $\lambda_0=\pi/4$, near $\lambda_0$ the curve stays in $\mathcal V$, and
+\begin{align*}
+(\mathcal Y\circ\delta)(\lambda)&=(\sqrt2,\ \lambda),\\
+(\mathcal X\circ\delta)(\lambda)&=(\sqrt2\cos\lambda,\ \sqrt2\sin\lambda),
+\end{align*}
+so the components of $\delta_p$ are
+\[
+(y^1,y^2)=(0,1),\qquad(x^1,x^2)=(-\sqrt2\sin\tfrac\pi4,\ \sqrt2\cos\tfrac\pi4)=(-1,1).
+\]
+Transformation law:
+\[
+J_{\mathcal{UV}}\begin{pmatrix}0\\1\end{pmatrix}=\begin{pmatrix}-1\\1\end{pmatrix}.\ \checkmark
+\]
+Thus $\sigma_p=(\partial x_1)_p+(\partial x_2)_p=\sqrt2(\partial y_1)_p$ (purely radial) and $\delta_p=-(\partial x_1)_p+(\partial x_2)_p=(\partial y_2)_p$ (purely angular).
+\item The curve leaves $\mathcal V$ exactly when $\mathcal X(\sigma(\lambda))=(\lambda,\lambda)$ satisfies $b=0$ and $a\le0$, i.e.\ only for $\lambda=0$ (the origin's lift).
+So $\sigma\in\mathcal V$ for $\lambda\neq0$, and
+\[
+(\mathcal Y\circ\sigma)(\lambda)=\begin{cases}(\sqrt2\lambda,\ \pi/4),&\lambda>0,\\ (\sqrt2|\lambda|,\ -3\pi/4),&\lambda<0,\end{cases}
+\]
+two disconnected half-lines in $\mathcal Y(\mathcal V)$. Nevertheless $\sigma$ is smooth: smoothness is tested in a chart that sees the whole curve, and
+$\mathcal X\circ\sigma=(\lambda,\lambda)$ is smooth on $\mathbb R$. The gap belongs to the chart $\mathcal Y$, not to the curve.
+\item The chart representatives of $g$ are
+\begin{align*}
+g\circ\mathcal X^{-1}&:(\alpha_1,\alpha_2)\mapsto\alpha_1^2+\alpha_2^2,\\
+g\circ\mathcal Y^{-1}&:(\beta_1,\beta_2)\mapsto\beta_1^2\cos^2\beta_2+\beta_1^2\sin^2\beta_2=\beta_1^2.
+\end{align*}
+Hence, at $\alpha=(1,1)$ and $\beta=(\sqrt2,\pi/4)$,
+\begin{align*}
+(\mathsf x_1,\mathsf x_2)&=(2\alpha_1,2\alpha_2)=(2,2),\\
+(\mathsf y_1,\mathsf y_2)&=(2\beta_1,0)=(2\sqrt2,0).
+\end{align*}
+Transformation law $\mathsf y_j=(J_{\mathcal{UV}})^i{}_j\mathsf x_i$:
+\begin{align*}
+\mathsf y_1&=\tfrac1{\sqrt2}\cdot2+\tfrac1{\sqrt2}\cdot2=2\sqrt2,\\
+\mathsf y_2&=-1\cdot2+1\cdot2=0.\ \checkmark
+\end{align*}
+\item Along the curves,
+\begin{align*}
+(g\circ\sigma)(\lambda)&=2\lambda^2,\\
+(g\circ\delta)(\lambda)&=2\cos^2\lambda+2\sin^2\lambda=2,
+\end{align*}
+so
+\begin{align*}
+\sigma_p(g)&=(g\circ\sigma)'(1)=4,\\
+\delta_p(g)&=(g\circ\delta)'(\pi/4)=0.
+\end{align*}
+Contractions in $\mathcal X$:
+\begin{align*}
+x^i\mathsf x_i\big|_{\sigma_p}&=1\cdot2+1\cdot2=4,\\
+x^i\mathsf x_i\big|_{\delta_p}&=(-1)\cdot2+1\cdot2=0.
+\end{align*}
+Contractions in $\mathcal Y$:
+\begin{align*}
+y^i\mathsf y_i\big|_{\sigma_p}&=\sqrt2\cdot2\sqrt2+0\cdot0=4,\\
+y^i\mathsf y_i\big|_{\delta_p}&=0\cdot2\sqrt2+1\cdot0=0.
+\end{align*}
+The four numbers agree with the chart-free ones. Since $g$ is constant along $\delta$ (the circle $a^2+b^2=2$ is a level set of $g$), the velocity
+$\delta_p$ is tangent to a level set of $g$, hence $(dg)_p(\delta_p)=0$; equivalently $\delta_p\in\ker(dg)_p$. The curve $\sigma$ is radial and climbs $g$.
+\end{enumerate}
+
+% -----------------------------------------------------------------------------
+\section*{Solution to Problem 4}
+\probFour
+
+\paragraph{Solution.}
+\begin{enumerate}[label=(\alph*)]
+\item The $\mathcal X$-component functions of $\mathfrak R$ are $(R^1,R^2)=(a,b)$, so the transformation law $y^i=(J_{\mathcal{VU}})^i{}_jx^j$ with
+$\alpha=(a,b)$, $\rho=\sqrt{a^2+b^2}$ gives
+\begin{align*}
+\tilde Y^1&=\frac a\rho\,a+\frac b\rho\,b=\rho,\\
+\tilde Y^2&=-\frac b{\rho^2}\,a+\frac a{\rho^2}\,b=0,
+\end{align*}
+that is,
+\[
+\mathfrak R|_{\mathcal V}=\sqrt{a^2+b^2}\;\partial y_1.
+\]
+In the tangent-bundle chart $\xi_{\mathcal Y}$ the point $\mathfrak R_p$ is described by its base point and its components,
+\[
+\xi_{\mathcal Y}(\mathfrak R_p)=\begin{pmatrix}(\sqrt{a^2+b^2},\ \mathrm{atan2}(b,a))\\ (\sqrt{a^2+b^2},\ 0)\end{pmatrix}.
+\]
+The field is smooth on all of $\mathcal M$ (its $\mathcal X$-components are smooth on $\mathcal U=\mathcal M$), and $\mathfrak R_p=0$ if and only if $a=b=0$, i.e.\ only at the lift of the origin.
+\item With the components $\mathsf x_i=(2a,2b)$ of $dg$ in $\mathcal U$:
+\begin{align*}
+\mathfrak X[g]&=X^i\mathsf x_i=0\cdot2a+1\cdot2b=2b,\\
+\mathfrak Y[g]&=\tilde X^i\mathsf x_i=(-b)(2a)+a(2b)=0,\\
+\mathfrak R[g]&=a\cdot2a+b\cdot2b=2(a^2+b^2)=2g.
+\end{align*}
+(In $\mathcal V$: $\mathfrak Y[g]=0\cdot2\rho+1\cdot0=0$ and $\mathfrak R[g]=\rho\cdot2\rho+0\cdot0=2\rho^2$, the same functions.)
+Interpretation: $\mathfrak Y$ is tangent to the circles $g=\mathrm{const}$, so it never changes $g$. $\mathfrak R$ points outward and $\mathfrak R[g]=2g$ says that $g$ grows
+quadratically along it (an Euler-type relation for a homogeneous function of degree $2$). $\mathfrak X$ climbs $g$ where $b>0$, descends where $b<0$, and runs along a level set exactly where $b=0$.
+\item In $\mathcal U$,
+\begin{align*}
+(g\odot_\Gamma\mathfrak X\oplus_\Gamma\mathfrak Y)|_{\mathcal U}&=g\,\partial x_2-b\,\partial x_1+a\,\partial x_2\\
+&=-b\,\partial x_1+(a^2+b^2+a)\,\partial x_2.
+\end{align*}
+Directly,
+\begin{align*}
+dg\lceil g\odot_\Gamma\mathfrak X\oplus_\Gamma\mathfrak Y\rfloor&=2a(-b)+2b(a^2+b^2+a)\\
+&=2b(a^2+b^2)=2b\,g.
+\end{align*}
+Via $C^\infty(\mathcal M)$-linearity,
+\begin{align*}
+dg\lceil g\odot_\Gamma\mathfrak X\oplus_\Gamma\mathfrak Y\rfloor&=g\,dg\lceil\mathfrak X\rfloor+dg\lceil\mathfrak Y\rfloor\\
+&=g\cdot2b+0=2b\,g.
+\end{align*}
+The two agree, as they must: at each $p$, $(dg)_p$ is a linear map on $T_p\mathcal M$ and $g(p)$ is just a real number multiplying the vector $\mathfrak X_p$.
+\item In the $\mathcal X$-components the matrix whose columns are $\mathfrak R_p$ and $\mathfrak Y_p$ is
+\[
+M=\begin{bmatrix}a&-b\\b&a\end{bmatrix},\qquad\det M=a^2+b^2,
+\]
+which is nonzero unless $a=b=0$. Thus $(\mathfrak R_p,\mathfrak Y_p)$ is a basis of $T_p\mathcal M$ for every $p$ other than the lift of the origin.
+The coefficients solve $M\binom{c^1}{c^2}=\binom01$, where $(0,1)$ are the $\mathcal X$-components of $\mathfrak X$:
+\[
+\binom{c^1}{c^2}=M^{-1}\binom01=\frac1{a^2+b^2}\begin{bmatrix}a&b\\-b&a\end{bmatrix}\binom01=\binom{b/(a^2+b^2)}{a/(a^2+b^2)}.
+\]
+Hence, on $\mathcal M\setminus\{(0,0,h(0,0))\}$,
+\[
+\mathfrak X=\frac{b}{a^2+b^2}\odot_\Gamma\mathfrak R\ \oplus_\Gamma\ \frac a{a^2+b^2}\odot_\Gamma\mathfrak Y.
+\]
+(Check in $\mathcal V$: $\frac b{\rho^2}\cdot\rho\,\partial y_1+\frac a{\rho^2}\,\partial y_2=\frac b\rho\,\partial y_1+\frac a{\rho^2}\,\partial y_2$, the known form of $\mathfrak X|_{\mathcal V}$.)
+
+At the lift of the origin both $\mathfrak R$ and $\mathfrak Y$ vanish, so they span nothing in the $2$-dimensional space $T_p\mathcal M$; moreover $c^1,c^2$ blow up there and are not
+elements of $C^\infty(\mathcal M)$. The coefficients are non-constant functions: linear combinations in $\Gamma T\mathcal M$ have scalars in $C^\infty(\mathcal M)$, not in $\mathbb R$, which is the
+module structure at work; and a frame that exists over an open subset need not extend to all of $\mathcal M$.
+\item Along $\gamma_a(\lambda)=(a,\lambda,h(a,\lambda))$, at $\lambda_0=b$, directly,
+\[
+\mathfrak X[g\odot g]=\frac{d}{d\lambda}\Bigl[(a^2+\lambda^2)^2\Bigr]_{\lambda=b}=4b(a^2+b^2).
+\]
+Via the Leibniz rule and (b),
+\[
+\mathfrak X[g\odot g]=g\odot\mathfrak X[g]\oplus g\odot\mathfrak X[g]=2g\cdot2b=4b(a^2+b^2).\ \checkmark
+\]
+If $\mathfrak X[\cdot]$ were $C^\infty(\mathcal M)$-linear we would have $\mathfrak X[g\odot g]=g\odot\mathfrak X[g]$. The difference of the two sides is
+\[
+\mathfrak X[g\odot g]-g\odot\mathfrak X[g]=g\,\mathfrak X[g]=2b(a^2+b^2),
+\]
+nonzero for instance at $a=b=1$ (where $\mathfrak X[g\odot g]=8$ but $g\,\mathfrak X[g]=4$). So $\mathfrak X[\cdot]$ is only $\mathbb R$-linear plus Leibniz, whereas $dg\lceil\cdot\rfloor$ is $C^\infty(\mathcal M)$-linear
+(part (c)); this is why $dg$, not $\mathfrak X[\cdot]$, defines a tensor field.
+\end{enumerate}
+
+% -----------------------------------------------------------------------------
+\section*{Solution to Problem 5}
+\probFive
+
+\paragraph{Solution.}
+\begin{enumerate}[label=(\alph*)]
+\item By definition $(S_{\mathcal U})_{ij}=S(\partial x_i,\partial x_j)=\mathsf x_i\mathsf x_j$ with $\mathsf x_i=(2a,2b)$, and likewise $(S_{\mathcal V})_{kl}=\mathsf y_k\mathsf y_l$ with $\mathsf y_k=(2\rho,0)$
+(where $\rho=\sqrt{a^2+b^2}$, as in Problem 3(c) with $\beta_1=\rho$):
+\[
+(S_{\mathcal U})_{ij}=\begin{bmatrix}4a^2&4ab\\4ab&4b^2\end{bmatrix},\qquad
+(S_{\mathcal V})_{kl}=\begin{bmatrix}4(a^2+b^2)&0\\0&0\end{bmatrix}.
+\]
+The transformation law is $(S_{\mathcal V})_{kl}=(J_{\mathcal{UV}})^i{}_k(J_{\mathcal{UV}})^j{}_l(S_{\mathcal U})_{ij}$. For $k=l=1$, with $a=\beta_1\cos\beta_2$ and $b=\beta_1\sin\beta_2$,
+\begin{align*}
+(S_{\mathcal V})_{11}&=\cos^2\beta_2\,(4a^2)+2\cos\beta_2\sin\beta_2\,(4ab)+\sin^2\beta_2\,(4b^2)\\
+&=4(a\cos\beta_2+b\sin\beta_2)^2\\
+&=4\beta_1^2(\cos^2\beta_2+\sin^2\beta_2)^2=4\beta_1^2=4(a^2+b^2).\ \checkmark
+\end{align*}
+\item Using $S(\mathfrak Z_1,\mathfrak Z_2)=dg\lceil\mathfrak Z_1\rfloor\,dg\lceil\mathfrak Z_2\rfloor$ and $dg\lceil\mathfrak Z\rfloor=\mathfrak Z[g]$ from Problem 4(b):
+\begin{align*}
+S(\mathfrak X,\mathfrak X)&=(2b)^2=4b^2,\\
+S(\mathfrak X,\mathfrak R)&=2b\cdot2g=4b(a^2+b^2),\\
+S(\mathfrak Y,\mathfrak Z)&=\mathfrak Y[g]\,\mathfrak Z[g]=0\cdot\mathfrak Z[g]=0\quad\text{for every }\mathfrak Z\in\Gamma T\mathcal M.
+\end{align*}
+So $\mathfrak Y$ lies in the kernel of $S$ at every point: $S$ is degenerate (its component matrices have rank $\le1$, with zero determinant in either chart).
+\item Let $\varphi\in\Cinf$ and $\mathfrak Z_1,\mathfrak W_1,\mathfrak Z_2\in\Gamma T\mathcal M$. Since $dg\lceil\cdot\rfloor$ is $C^\infty(\mathcal M)$-linear (at each $p$, $(dg)_p$ is linear on $T_p\mathcal M$ and $\varphi(p)$ is a number),
+\begin{align*}
+S(\varphi\odot_\Gamma\mathfrak Z_1\oplus_\Gamma\mathfrak W_1,\mathfrak Z_2)&=dg\lceil\varphi\odot_\Gamma\mathfrak Z_1\oplus_\Gamma\mathfrak W_1\rfloor\odot_{C^\infty}dg\lceil\mathfrak Z_2\rfloor\\
+&=\bigl(\varphi\odot_{C^\infty}dg\lceil\mathfrak Z_1\rfloor\oplus_{C^\infty}dg\lceil\mathfrak W_1\rfloor\bigr)\odot_{C^\infty}dg\lceil\mathfrak Z_2\rfloor\\
+&=\varphi\odot_{C^\infty}S(\mathfrak Z_1,\mathfrak Z_2)\oplus_{C^\infty}S(\mathfrak W_1,\mathfrak Z_2).
+\end{align*}
+Here $\oplus_{C^\infty}$ and $\odot_{C^\infty}$ denote the pointwise sum and product of functions in $\Cinf$. The same computation in the second slot follows from symmetry of $S$.
+\item
+\begin{enumerate}[label=(\roman*)]
+\item \textbf{False.} The components $y^i$ and $\mathsf y_i$ (and the partial derivatives) depend on the chart, but their contraction does not (Problem 2(e)); in Problem 3(d) both charts gave the same number.
+\item \textbf{False.} $\mathfrak Y$ is a smooth vector field on all of $\mathcal M$: its $\mathcal X$-components $(-b,a)$ are smooth on $\mathcal U=\mathcal M$. Only the expression $\partial y_2$ is restricted to $\mathcal V$, since $\partial y_2$ itself only exists there.
+\item \textbf{False.} Smoothness of a curve is tested in a chart that contains its image; $\mathcal X\circ\gamma_{x_0}=(x_0,\lambda)$ is smooth on $\mathbb R$. The chart $\mathcal Y$ simply cannot see the points on the ray $\{a\le0,b=0\}$, so the curve appears in it as two pieces.
+\item \textbf{False.} If $\omega=d\varphi$, its component functions in $\mathcal U$ are $\mathsf x_i=\partial_i[\varphi\circ\mathcal X^{-1}]$, and equality of mixed partials forces
+\[
+\partial_1\mathsf x_2=\partial_2\mathsf x_1.
+\]
+The covector field $\omega:=a\,dx^2$ has $\mathsf x_2=a$ and $\mathsf x_1=0$, so $\partial_1\mathsf x_2=1\neq0=\partial_2\mathsf x_1$, and it is not a differential. Only \emph{closed} covector fields can be differentials.
+That closed implies exact holds on $\mathcal M$ because it is a graph over $\mathbb R^2$, hence contractible; on a manifold with nontrivial first de Rham cohomology it fails even for closed fields: on $\mathbb R^2\setminus\{0\}$ the field
+$\bigl(-y\,dx+x\,dy\bigr)/(x^2+y^2)$ is locally the differential of the polar angle but not of any global scalar field.
+\end{enumerate}
+\end{enumerate}
+
+\end{document}

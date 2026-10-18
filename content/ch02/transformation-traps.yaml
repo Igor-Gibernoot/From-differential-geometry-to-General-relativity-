@@ -1,0 +1,162 @@
+id: ch02-transformation-traps
+title: Transformation Traps
+kind: traps
+
+cards:
+  - type: text
+    id: intro
+    title: Trap round
+    body: |
+      Each question below is built around a mistake that catches most people the first time. Answer quickly and trust your bookkeeping.
+
+      Conventions, as always: $\{\hat{x}_i\}$ is the old basis, $\{\hat{y}_i\}$ the new one, and
+      $$\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j .$$
+      Vector components satisfy $\mathcal{X} = \sum_i x^i\cdot\hat{x}_i = \sum_i y^i\cdot\hat{y}_i$. Covector components satisfy $\mathsf{X} = \sum_i \mathsf{x}_i\cdot\hat{\mathfrak{x}}^i = \sum_i \mathsf{y}_i\cdot\hat{\mathfrak{y}}^i$, in the dual bases.
+
+  - type: numeric
+    id: units
+    prompt: |
+      Units are a basis. A rod has length component $3$ in the basis "one metre", $\hat{x}$. Switch to the basis "one centimetre":
+      $$\hat{y} = 0.01\cdot\hat{x} .$$
+      What is the rod's new component $y$?
+    answer: 300
+    wrong:
+      - value: 0.03
+        feedback: |
+          The basis vector got **smaller**, so the component must get **larger**. Components are contravariant.
+    explanation: |
+      $\hat{x} = 100\cdot\hat{y}$, so
+      $$3\cdot\hat{x} = 300\cdot\hat{y} .$$
+      You have used contravariance all your life: "3 m = 300 cm". The unit shrinks by 100, the number grows by 100.
+
+  - type: mcq
+    id: J-direction
+    prompt: In this course's convention, the change-of-basis matrix $J$ writes…
+    options:
+      - text: the **old** basis vectors in terms of the **new** ones, $\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$
+        correct: true
+      - text: the **new** basis vectors in terms of the **old** ones, $\hat{y}_i = \sum_j J_i^j\cdot\hat{x}_j$
+        feedback: |
+          Many textbooks use this convention, which is why it is a trap. In this course that relation involves $J^{-1}$.
+      - text: the new components in terms of the old ones, and nothing about the basis
+        feedback: |
+          $J$ is *defined* by the relation between the bases. That components then transform with it is a consequence you derived.
+    explanation: |
+      Old in terms of new. When you read any other source, check its convention first: half of all "sign and transpose" errors come from mixing the two.
+
+  - type: mcq
+    id: index-consistent
+    prompt: Exactly one of these formulas has consistent indices (free indices match on both sides, and every summed index appears once up and once down). Which one?
+    options:
+      - text: '$y^i = \sum_j J^i_j\, x^j$'
+        correct: true
+      - text: '$y^i = \sum_j J_i^j\, x^j$'
+        feedback: |
+          On the right, $i$ is **down** while on the left it is **up**, and the summed $j$ appears up twice. Both are red flags.
+      - text: '$y_i = \sum_j J^i_j\, x^j$'
+        feedback: |
+          The free index $i$ is down on the left and up on the right. Vector components carry upper indices anyway.
+      - text: '$y^i = \sum_i J^i_j\, x^j$'
+        feedback: |
+          This sums over $i$, the index that is supposed to stay free, and leaves $j$ dangling.
+    explanation: |
+      The correct law is
+      $$y^i = \sum_j J^i_j\, x^j ,$$
+      where $J^i_j$ is the same number as $J_j^i$: upper index $i$, lower index $j$. Index placement works as a type checker, and a misplaced index almost always signals a wrong formula, not a typo.
+
+  - type: mcq
+    id: free-index
+    prompt: |
+      In the covector law
+      $$\mathsf{x}_j = \sum_i J^i_j\,\mathsf{y}_i ,$$
+      which index is **free**?
+    options:
+      - text: '$j$'
+        correct: true
+      - text: '$i$'
+        feedback: |
+          $i$ is summed over (a "dummy" index). You could rename it to $k$ without changing anything.
+      - text: Both
+        feedback: |
+          A summed index cannot be free: it disappears from the result.
+    explanation: |
+      $j$ appears on both sides and labels which equation you are looking at. $i$ is a dummy index: it appears once up and once down and is summed away.
+
+  - type: mcq
+    id: passive
+    prompt: True or false? Changing the basis rotates or stretches the vector $\mathcal{X}$.
+    shuffle: false
+    options:
+      - text: 'True'
+        feedback: |
+          That is an *active* transformation, a different operation. A change of basis is passive: the arrow stays put and only its description changes.
+      - text: 'False'
+        correct: true
+    explanation: |
+      Passive change: same $\mathcal{X}$, new components. Keep that picture and most sign confusions disappear.
+
+  - type: mcq
+    id: projection-myth
+    prompt: |
+      True or false? The component $y^1$ of $\mathcal{X}$ measures how much $\mathcal{X}$ points along $\hat{y}_1$.
+    shuffle: false
+    options:
+      - text: 'True'
+        feedback: |
+          Counterexample: take $\hat{y}_1 = \hat{x}_1$ and $\hat{y}_2 = \hat{x}_1 + \hat{x}_2$. Then
+          $$\hat{x}_2 = -\hat{y}_1 + \hat{y}_2 ,$$
+          so $\mathcal{X} = \hat{x}_2$ has $y^1 = -1$, even though $\hat{y}_1$ did not change.
+      - text: 'False'
+        correct: true
+    explanation: |
+      Each component depends on the **whole** basis. "How much along" would be a projection, which needs angles, which means a metric. A bare vector space has none.
+
+  - type: mcq
+    id: dual-depends-on-all
+    prompt: |
+      Shear: $\hat{y}_1 = \hat{x}_1$ and $\hat{y}_2 = \hat{x}_1 + \hat{x}_2$. The first basis vector did not change. Is the first dual basis covector also unchanged, $\hat{\mathfrak{y}}^1 = \hat{\mathfrak{x}}^1$?
+    options:
+      - text: 'No: $\hat{\mathfrak{y}}^1 = \hat{\mathfrak{x}}^1 - \hat{\mathfrak{x}}^2$'
+        correct: true
+      - text: 'Yes: $\hat{\mathfrak{y}}^1$ only depends on $\hat{y}_1$'
+        feedback: |
+          Check the definition: $\hat{\mathfrak{y}}^1$ must also give $0$ on $\hat{y}_2$. But
+          $$\hat{\mathfrak{x}}^1(\hat{y}_2) = \hat{\mathfrak{x}}^1(\hat{x}_1 + \hat{x}_2) = 1 \neq 0 .$$
+      - text: 'No: $\hat{\mathfrak{y}}^1 = \hat{\mathfrak{x}}^1 + \hat{\mathfrak{x}}^2$'
+        feedback: |
+          Test it on $\hat{y}_2 = \hat{x}_1 + \hat{x}_2$: you get $1 + 1 = 2$, not $0$.
+    explanation: |
+      Write $\hat{\mathfrak{y}}^1 = a\cdot\hat{\mathfrak{x}}^1 + b\cdot\hat{\mathfrak{x}}^2$ and impose the defining conditions:
+      $$\hat{\mathfrak{y}}^1(\hat{y}_1) = a = 1,\qquad \hat{\mathfrak{y}}^1(\hat{y}_2) = a + b = 0 .$$
+      So $b = -1$. **Each dual basis covector depends on the entire basis**, not just its partner.
+
+  - type: mcq
+    id: rotation-coincidence
+    prompt: |
+      When you rotate a basis of the plane, vector components and covector components happen to transform with the same numbers. Does that mean vectors and covectors are "really the same thing"?
+    options:
+      - text: No. It is a coincidence of rotations, and a shear tells them apart.
+        correct: true
+      - text: Yes, for the plane at least.
+        feedback: |
+          Under the shear $\hat{y}_1 = \hat{x}_1$, $\hat{y}_2 = \hat{x}_1 + \hat{x}_2$, the vector $\hat{x}_2$ goes $(0,1)\mapsto(-1,1)$ while the covector $\hat{\mathfrak{x}}^1$ goes $(1,0)\mapsto(1,1)$. Same plane, different rules.
+      - text: Yes, because both are lists of $d$ numbers.
+        feedback: |
+          Being a list of $d$ numbers says nothing about type. What matters is how the list transforms, and on that vectors and covectors differ.
+    explanation: |
+      For a rotation, $J^{-1}$ equals the transpose of $J$, and that makes the two laws numerically identical. For a general $J$ they differ. Saying which bases are "rotations" (orthonormal) already requires a metric. Without one, $V$ and $V^*$ are different spaces with no preferred way to identify them.
+
+  - type: mcq
+    id: row-vector
+    prompt: '"A covector is just a vector written as a row." What is wrong with this?'
+    options:
+      - text: Without a metric there is no natural way to turn a vector into a covector, and their components transform oppositely.
+        correct: true
+      - text: Nothing; it is a convenient and correct picture.
+        feedback: |
+          As notation it is harmless. As a claim it is false. With $\hat{y}_i = 2\cdot\hat{x}_i$, a vector's components halve while a covector's double, so writing one as the other's row only works in a single basis.
+      - text: Covectors have more components than vectors.
+        feedback: |
+          In finite dimensions $V$ and $V^*$ have the same dimension $d$. The difference is in how the components transform, not how many there are.
+    explanation: |
+      Rows versus columns is a matrix-algebra convenience. The real distinction is $V$ versus $V^*$, and it shows up in the transformation laws. A metric (block 6 of the course) will later provide a way to convert between the two.

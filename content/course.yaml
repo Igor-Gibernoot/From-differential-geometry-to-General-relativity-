@@ -1,0 +1,88 @@
+# The trail. One level per book chapter, lessons in trail order.
+#
+# A lesson entry with `file:` is built and playable; without it, it shows as
+# a planned (greyed) node. `kind` is concept | guided | traps.
+# A level with `status: unwritten` is a chapter that is still "??" in the book.
+
+title: From Differential Geometry to General Relativity
+short: Geometry → Relativity
+subtitle: A problem-based trail through the course
+
+levels:
+  - id: ch02
+    number: 2
+    title: Vector Spaces
+    blurb: Vectors, covectors and tensors, and why their components transform the way they do.
+    lessons:
+      - id: ch02-maps
+        title: Maps and Bijections
+        kind: concept
+      - id: ch02-axioms
+        title: What Makes a Vector Space
+        kind: concept
+      - id: ch02-dual
+        title: Linear Maps and the Dual Space
+        kind: concept
+      - id: ch02-basis
+        title: Bases and the Dual Basis
+        kind: concept
+      - id: ch02-change-of-basis
+        title: Same Arrow, Different Numbers
+        kind: concept
+        file: ch02/change-of-basis.yaml
+        summary: Two observers describe one vector with different bases. Why do their numbers move *against* the basis? You'll derive the contravariant law yourself.
+      - id: ch02-covector-law
+        title: "Guided Problem: Do Covectors Transform the Same Way?"
+        kind: guided
+        file: ch02/covector-law.yaml
+        summary: Derive the covector transformation law step by step, then prove that $\mathsf{X}(\mathcal{X})$ is the same in every basis.
+      - id: ch02-transformation-traps
+        title: Transformation Traps
+        kind: traps
+        file: ch02/transformation-traps.yaml
+        summary: A fast round of the mistakes almost everyone makes with bases, indices and transformation laws.
+      - id: ch02-J-invertible
+        title: "Guided Problem: Why the Change of Basis Is Invertible"
+        kind: guided
+      - id: ch02-tensors
+        title: Tensors
+        kind: concept
+
+  - id: ch03
+    number: 3
+    title: Topological Manifolds
+    blurb: Open sets, continuity, charts and atlases. Just enough structure to say "locally looks like $\mathbb{R}^d$".
+    lessons:
+      - { id: ch03-open-sets, title: Topological Spaces and Open Sets, kind: concept }
+      - { id: ch03-standard-topology, title: The Standard and Inherited Topologies, kind: concept }
+      - { id: ch03-homeomorphisms, title: Continuity and Homeomorphisms, kind: concept }
+      - { id: ch03-charts, title: Charts and Transition Maps, kind: concept }
+      - { id: ch03-atlases, title: Atlases and Smooth Manifolds, kind: concept }
+
+  - id: ch04
+    number: 4
+    title: Tangent Spaces
+    blurb: Vectors on a curved space are velocities of curves, and $T_p\mathcal{M}$ is where they live.
+    lessons:
+      - { id: ch04-tangent-space, title: "Curves and the Tangent Space", kind: concept }
+      - { id: ch04-coordinate-basis, title: "Coordinate Bases and the Jacobian", kind: concept }
+      - { id: ch04-einstein, title: Einstein Summation, kind: concept }
+      - { id: ch04-cotangent, title: "The Cotangent Space", kind: concept }
+      - { id: ch04-cotangent-basis, title: "Differentials as a Basis", kind: concept }
+      - { id: ch04-tensor-space, title: "Tensor Spaces at a Point", kind: concept }
+
+  - id: ch05
+    number: 5
+    title: Fields
+    blurb: From one point to the whole manifold, with vector, covector and tensor fields.
+    lessons:
+      - { id: ch05-vector-fields, title: Vector Fields and the Tangent Bundle, kind: concept }
+      - { id: ch05-covector-fields, title: Covector Fields and the Cotangent Bundle, kind: concept }
+      - { id: ch05-module, title: "The $C^\\infty(\\mathcal{M})$-Module Structure", kind: concept }
+      - { id: ch05-tensor-fields, title: Tensor Fields, kind: concept }
+
+  - { id: ch06, number: 6, title: Covariant Derivative, status: unwritten }
+  - { id: ch07, number: 7, title: Metric Structure, status: unwritten }
+  - { id: ch08, number: 8, title: Integration on Manifolds, status: unwritten }
+  - { id: ch09, number: 9, title: Newtonian Gravitation, status: unwritten }
+  - { id: ch10, number: 10, title: General Relativity, status: unwritten }
