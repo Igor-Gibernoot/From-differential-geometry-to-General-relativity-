@@ -475,8 +475,14 @@ a { color: var(--accent); }
 .level:not(.unwritten) .level-head .meter { background: color-mix(in srgb, var(--accent-text) 25%, transparent); }
 .level:not(.unwritten) .level-head .meter > div { background: var(--accent-text); }
 
-/* Course title: the gradient of the level on screen (trail.js updates its data-hue on scroll) */
+/* Course title: the gradient of the level on screen (trail.js updates its data-hue on scroll).
+   Its stops are registered colour properties, so a hue change fades instead of jumping. */
+@property --title-a { syntax: '<color>'; inherits: false; initial-value: transparent; }
+@property --title-b { syntax: '<color>'; inherits: false; initial-value: transparent; }
+@property --title-c { syntax: '<color>'; inherits: false; initial-value: transparent; }
 .topbar .course-title[data-hue] {
-  background: linear-gradient(125deg, var(--hue-deep) 0%, var(--accent) 50%, var(--hue-light) 100%);
+  --title-a: var(--hue-deep); --title-b: var(--accent); --title-c: var(--hue-light);
+  background: linear-gradient(125deg, var(--title-a) 0%, var(--title-b) 50%, var(--title-c) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
+  transition: --title-a .6s ease, --title-b .6s ease, --title-c .6s ease;
 }
