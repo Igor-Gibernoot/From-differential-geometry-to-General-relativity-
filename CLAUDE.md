@@ -179,10 +179,12 @@ each session with `/clear` and a prompt naming **one unit of work**.
   start the next unit even if budget seems to remain; finish cleanly.
   A lesson that needs a new widget is two sessions: the widget first.
 - **Read only what you need, once:**
-  - `docs/LESSON_FORMAT.md`: `grep -n '^##'` it, then read from the top
-    to the start of `### widget` (registering, lesson file, card types) and
-    from `## Phone-safe layout` to the end. For a widget, read only its
-    own subsection. Skip the map section unless building a map.
+  - Status: only the **Current** block of `docs/STATUS.md`
+    (`sed -n '/^## Current/,/^## Log/p' docs/STATUS.md`), never the Log.
+  - Format: `docs/QUICKREF.md` (card types, phone-safe layout, YAML
+    gotchas, widget index). Open `docs/LESSON_FORMAT.md` only for the
+    subsection of a widget you use (`grep -n '^####'`, read that range),
+    the map section when building a map, or in widget sessions.
   - The model lesson: the most recent lesson of the same chapter. Read
     only its first ~120 lines for style; don't read the whole file.
   - The book: `grep -n` the section heading and read just that range.
@@ -202,108 +204,46 @@ each session with `/clear` and a prompt naming **one unit of work**.
   needs no image viewing. `--all` also saves
   build/order and phone `$$` cards: use it only when hunting a layout bug.
   Setup once per machine: `npm install --prefix tools`.
-- **End of every session:** validate, run the shots check, update the
-  Status below (a few lines, not a recap of every card), commit and push,
+- **End of every session:** validate, run the shots check, update
+  `docs/STATUS.md` (Current block, plus a Log entry of a few lines, not a
+  recap of every card), commit and push,
   then **give Igor a ready-to-paste prompt for the next session** naming
   the single next unit from `course.yaml`, with a card plan of about 10
   lines (hook, widget, key questions, summary), and the book lines to read.
-  End the Status entry with one line "Conventions fixed here: …"
-  (notation, names, choices the next units must reuse).
+  End the Log entry with one line "Conventions fixed here: …"
+  (notation, names, choices the next units must reuse), and copy those
+  into the Current block's conventions list.
 
 ### Autonomous mode (agents, one unit each)
 
 Igor can ask for several units in a row (e.g. "until the end of Chapter 3").
-Then the main session is a **coordinator**: it builds nothing itself.
+Then the main session is a **lean coordinator**: it builds nothing and
+reads nothing itself (no lesson files, no book, no docs), so its context
+stays small. Igor reviews the level on the live site at the end.
 - For each unit, in `course.yaml` order and **strictly sequentially** (never
   in parallel), spawn one fresh agent (model: Opus) whose prompt is the
   ready-to-paste unit prompt plus: "You are running autonomously: follow
   CLAUDE.md 'Building sessions' exactly, one unit only; you cannot ask Igor
-  questions, so make reasonable choices and record them in Status; at the
-  end, validate, run shots, update Status, commit and push, then reply with
-  a short report (what was built, checks output, conventions fixed, any
-  doubts) and the next unit's prompt."
-- Between units the coordinator reads the report, spot-checks the new
-  lesson (grep a few cards: notation consistent with earlier lessons, the
-  previous teaser honored, no concept used before it is introduced, math
-  of guided steps), fixes or sends the agent back if needed, then adds to
-  the next prompt what the previous lesson promised and which notation it
-  fixed.
-- Traps, map and challenge agents read the chapter's earlier lesson files
-  (grep titles and key cards) so they build on what was actually taught.
+  questions, so make reasonable choices and record them in the Log entry.
+  Do not view screenshot images unless shots.mjs flags a card or the unit
+  uses a widget preset never used before. Run commands from the repo root
+  without `cd … &&` prefixes. At the end, validate, run shots, update
+  docs/STATUS.md, commit and push, then reply with a report of at most 15
+  lines (what was built, checks output, conventions fixed, doubts) followed
+  by the next unit's prompt."
+- Between units the coordinator only reads that report: it checks that
+  validate and shots were clean and the commit was pushed (`git log -1
+  --oneline`), and passes the agent's next-unit prompt on, adding any
+  doubt worth carrying forward. If a check failed, it sends the same agent
+  back (SendMessage) rather than fixing things itself.
+- Traps, map and challenge agents grep the chapter's earlier lesson files
+  (titles, card ids, key prompts; not whole files) so they build on what
+  was actually taught.
 - **Stop at the end of each level** (after its challenge) and give Igor a
   summary of the units, any doubts, and the prompt to continue with the
   next level, so he can review the level on the live site first.
 
-### Status (2026-10-19, Chapter 2 complete, Chapter 3 in progress)
 
-Chapter 2 built: maps, axioms, dual space, bases and dual basis, change of
-basis, covector law, J invertible, dual basis law, transformation traps,
-tensors (multilinear maps, components, (0,2)/(1,1) laws, (1,1) = linear
-maps), tensor product (simple tensors, area = sum of two products, V⊗W,
-product basis, d^(r+s), T^(r,s) ≅ V⊗…⊗V*, rank), the content map (its
-tensors box now includes the product-basis expansion), and the level
-challenge (`ch02/challenge.yaml`: five problems on one change of basis
-ŷ₁ = 2x̂₁ + x̂₂, ŷ₂ = 3x̂₁ + 2x̂₂; vector/covector/dual basis, (0,2) vs (1,1)
-laws and trace invariance, symmetric + antisymmetric split, rank of a (1,1)
-map, dimension counts and the "one up, one down" invariance rule; it
-introduces symmetric/antisymmetric parts and the trace). All Chapter 2 lessons
-have had a headless screenshot pass (desktop + phone); all widgets are
-documented in `docs/LESSON_FORMAT.md` (machine-playground presets can now
-switch the tensor). Short inline math keeps trailing punctuation on its line
-(`js/render.js`).
+### Status
 
-Chapter 3 started: `ch03-open-sets` (powerset, topology rules, finite
-topologies, discrete/indiscrete, closed and clopen, 4 topologies on two
-points) and `ch03-standard-topology` (balls, standard topology, quantifier
-order, ball is open, infinite intersections, inherited topology on [0,2) and
-S¹), with the new `ball-probe` widget (line/plane/circle arc, optional
-ambient subspace). Then `ch03-homeomorphisms` (preimages, continuity, ε-δ as
-a special case, composition, homeomorphisms, the wrap [0,2π) → S¹ is a
-continuous bijection but not a homeomorphism; new `preimage-explorer` widget)
-and `ch03-hausdorff` (convergence via open sets, indiscrete limits, Hausdorff
-with the `ball-probe` `pair: true` mode, unique limits, two-point topologies,
-subspaces, line with two origins, basis, rational balls, discrete ℝ and
-uncountably many lines not second countable, why physics needs both). All four
-had a screenshot pass; all widgets are documented. Next: the remaining Chapter 3
-nodes in `course.yaml` order, then Chapters 4–10 (each with its content map
-and challenge). Each planned node in `course.yaml` is one lesson to build.
-
-Built and documented the `circle-charts` widget (θ and φ angle charts on S¹,
-or `stereo: true` for σ = x/(1−y); overlap pieces, draggable p, transition
-graph with the jump). The trail now gives each level a hue (`data-hue` on
-`.level`: banner and open nodes; light/dark variants in `css/app.css`) and a
-darker light-mode `--muted`.
-
-Built `ch03-charts` (chart (𝒰, 𝒳) with open image, why one chart can't
-cover S¹, inclusion of an arc is not a chart, overlap in two pieces,
-transition 𝒴∘𝒳⁻¹ = ᛖ, θ ↦ θ − 2π on the lower piece, harmless jump,
-topological manifold definition and dimension, line with two origins,
-stereographic σ = x/(1−y) and σ∘θ⁻¹ = cos/(1−sin), two traps). Screenshot
-pass done.
-
-Built `ch03-atlases` (hook: f(p) = p in charts x and x³ on ℝ; atlas
-definition; angle and stereographic transitions revisited in circle-charts;
-chart representatives f∘𝒳⁻¹ and the build f∘𝒴⁻¹ = (f∘𝒳⁻¹)∘(𝒳∘𝒴⁻¹);
-C^k/C^∞ compatibility, x vs x³ fails one direction; dσ/dθ = 1/(1 − sin θ);
-maximal atlas with an order-the-proof card; smooth manifold, two structures on
-ℝ; three traps). Screenshot pass done. The due review chip now follows the
-level hue with the course title.
-
-Built `ch03-smooth-maps` (hook: are ℝ_x and ℝ_y the same smooth manifold?;
-circle doubling map D in the θ chart via circle-charts, representative 2θ /
-2θ − 2π, slope 2; smooth map via Φ = 𝒴∘φ∘𝒳⁻¹, why continuity, build of chart
-independence; smooth functions and curves; id: ℝ_y → ℝ_x not smooth, F = p³
-is a diffeomorphism ℝ_y → ℝ_x; p³ on standard ℝ is not; hierarchy; exotic ℝ⁴,
-S⁷; two traps). Screenshot pass done.
-
-Session queue (one unit each): ⑤ `ch03-circle` → ⑥ `ch03-traps` → ⑦ `ch03-map` →
-⑧–⑨ `ch03-challenge`.
-
-Screenshot pass: `tools/shots.mjs` (`playwright-core`, installed in
-`tools/node_modules`, driving the cached Chromium in
-`~/Library/Caches/ms-playwright/chromium-1248`). It renders every card and
-its hints/feedback, flags `.katex-display` overflow at 390 px and 1280 px,
-and saves widget screenshots (full page, plus `*-widget.png` of the widget
-alone with the fixed footer hidden: view that one to check readouts). `#/lesson/<id>/<n>` is 1-based. Map lessons have
-no `cards:`, so the script doesn't cover them yet (extend it in the map
-session).
+See `docs/STATUS.md` (read only its **Current** block).
