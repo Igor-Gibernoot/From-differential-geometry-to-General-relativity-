@@ -1,0 +1,367 @@
+id: ch03-hausdorff
+title: Hausdorff and Second Countable
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: A path with two endpoints
+    body: |
+      Recall: a **topological space** $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ is a set $\mathcal{M}$ with a family $\mathcal{O}_\mathcal{M}$ of subsets, its **open sets**, containing $\emptyset$ and $\mathcal{M}$, finite intersections and arbitrary unions of its members.
+
+      Physics constantly produces lists of points and asks where they end up: the positions of a particle at the instants $1, \tfrac12, \tfrac13, \dots$ seconds before it arrives somewhere, or the successive steps of a numerical solution. Such a list is a **sequence** $(p_n) = p_1, p_2, p_3, \dots$: one point $p_n\in\mathcal{M}$ for each natural number $n = 1, 2, 3, \dots$
+
+      On the real line, a sequence that converges has exactly one limit: a particle cannot arrive at two places at once. The three rules of a topology say nothing about limits, though. Do they guarantee this?
+
+  - type: mcq
+    id: predict-two-limits
+    prompt: |
+      Before any definitions, guess. A **sequence** $(p_n) = p_1, p_2, \dots$ lists one point of a space for each natural number $n$. Can a sequence converge to two different points at once?
+    options:
+      - text: 'Not in $\mathbb{R}$, but in some topological spaces, yes'
+        correct: true
+      - text: 'Never: a limit is unique by definition'
+        feedback: |
+          Uniqueness is a **theorem** about $\mathbb{R}$, proved using distances. In a general topological space, convergence is defined with open sets only, and whether limits are unique depends on how many open sets there are.
+      - text: 'Yes, even in $\mathbb{R}$: $(-1)^n$ converges to both $1$ and $-1$'
+        feedback: |
+          $(-1)^n = -1, 1, -1, 1, \dots$ jumps forever: it converges to **neither**, since a small interval around $1$ never contains all the terms from some index on (the terms $-1$ keep leaving it).
+    explanation: |
+      In $\mathbb{R}$ limits are unique, but this relies on a property of its topology that the three rules do not force. This lesson finds a space where one sequence converges to two points, names the property that forbids it (**Hausdorff**), and adds a second, size-type condition (**second countable**). Together they are the global conditions in the definition of a manifold.
+
+  - type: text
+    id: def-convergence
+    title: Convergence with open sets
+    body: |
+      In $\mathbb{R}$, $p_n\to p$ means: however small a ball $B_r(p) = (p - r,\ p + r)$ you pick, all terms from some index on lie inside it. Without distances, replace the balls with open sets.
+
+      An **open neighbourhood** of a point $p$ is an open set $\mathcal{U}$ with $p\in\mathcal{U}$. A sequence $(p_n)$ in a topological space **converges** to $p$, written $p_n\to p$, when for every open neighbourhood $\mathcal{U}$ of $p$ there is an index $N$ with
+      $$p_n\in\mathcal{U}\quad\forall\,n\ge N.$$
+      In words: every open neighbourhood of $p$ eventually traps the whole tail of the sequence.
+
+      Example: $p_n = \tfrac1n$ in $\mathbb{R}$ with the standard topology. Any open $\mathcal{U}\ni 0$ contains some ball $(-r,\ r)$, and $\tfrac1n < r$ as soon as $n > \tfrac1r$. So $\tfrac1n\to 0$.
+
+  - type: numeric
+    id: tail-index
+    prompt: |
+      In $\mathbb{R}$ with the standard topology, take the sequence $p_n = \tfrac1n$ and the open neighbourhood $\mathcal{U} = (-0.01,\ 0.01)$ of $0$. What is the smallest index $N$ such that $p_n\in\mathcal{U}$ for every $n\ge N$?
+    answer: 101
+    wrong:
+      - value: 100
+        feedback: |
+          $p_{100} = 0.01$ is the right end of $\mathcal{U}$, and $\mathcal{U}$ is open: its ends are excluded. The tail must start one step later.
+      - value: 1
+        feedback: |
+          $p_1 = 1$ is far outside $(-0.01,\ 0.01)$. The index $N$ marks where the tail **starts** being trapped.
+    hint: Solve $\tfrac1n < 0.01$ for $n$, remembering that the ends of $\mathcal{U}$ are excluded.
+    explanation: |
+      $\tfrac1n < 0.01$ exactly when $n > 100$, so the tail $p_{101}, p_{102}, \dots$ lies in $\mathcal{U}$ and $N = 101$. A smaller neighbourhood needs a later $N$, but some $N$ always exists: that is $\tfrac1n\to 0$.
+
+  - type: mcq
+    id: indiscrete-limits
+    prompt: |
+      Let $\mathcal{M} = \{a, b\}$ with the **indiscrete** topology $\mathcal{O} = \{\emptyset, \mathcal{M}\}$. A sequence converges to $p$ when every open set containing $p$ contains all terms from some index on. To which points does the constant sequence $a, a, a, \dots$ converge?
+    options:
+      - text: To both $a$ and $b$
+        correct: true
+      - text: Only to $a$
+        feedback: |
+          It does converge to $a$, but check $b$ too. The open sets containing $b$: only $\mathcal{M}$ itself, and $\mathcal{M}$ contains every term $a$. So the condition holds for $b$ as well.
+      - text: To neither, because $\{a\}$ is not open
+        feedback: |
+          Convergence to $p$ only tests the open sets that contain $p$; it never needs $\{p\}$ to be open. Here the only such set is $\mathcal{M}$, which traps every term.
+    explanation: |
+      The only open set containing $a$ is $\mathcal{M}$, and the same holds for $b$; $\mathcal{M}$ contains all terms. So $a, a, a, \dots$ converges to $a$ **and** to $b$. In fact, in an indiscrete space every sequence converges to every point. The topology has too few open sets to tell $a$ and $b$ apart: no open set contains one and not the other.
+
+  - type: widget
+    id: probe-pair
+    title: Room for two
+    widget: ball-probe
+    config:
+      dim: 2
+      pair: true
+      p: [-1.5, 0]
+      q: [1.5, 0]
+      r: 2
+      rMax: 3
+      presets:
+        - { label: Close, p: [-0.4, 0], q: [0.4, 0.3], r: 0.7 }
+    body: |
+      What saves the plane $\mathbb{R}^2$ (standard topology)? Here are two points $p$ and $q$, each with an open ball of the same radius $r$. The balls turn red while they overlap.
+
+      1. Shrink $r$ with the slider until the balls stop overlapping. How does that radius compare with the distance $\lVert p - q\rVert$?
+      2. Press **Close**, then drag $q$ even nearer to $p$. Is there always a radius that separates them?
+
+  - type: mcq
+    id: probe-pair-close
+    review: false
+    prompt: |
+      In the pair probe, two distinct points $p$ and $q$ of the plane each get an open ball of radius $r$. What happens as $q$ is dragged closer and closer to $p$?
+    options:
+      - text: A smaller radius is needed, but some radius always separates them while $p\neq q$
+        correct: true
+      - text: Below some distance, no radius separates them any more
+        feedback: |
+          The separating radius is half the distance, $\tfrac12\lVert p - q\rVert$, which is positive for any two distinct points. It shrinks with the distance but never reaches $0$.
+      - text: The balls separate them only if $p$ and $q$ are at least $1$ apart
+        feedback: |
+          Nothing special happens at distance $1$: the radius $\tfrac12\lVert p - q\rVert$ works at every distance, $0.001$ included.
+    explanation: |
+      The balls of radius $r$ are disjoint exactly when $r\le\tfrac12\lVert p - q\rVert$. Distinct points have a positive distance, so there is always room for two disjoint balls. In the indiscrete space, by contrast, $a$ and $b$ have no disjoint open sets at all.
+
+  - type: numeric
+    id: half-distance
+    prompt: |
+      In $\mathbb{R}^2$, take $p = (0, 0)$ and $q = (3, 4)$. What is the **largest** radius $r$ such that the open balls $B_r(p)$ and $B_r(q)$ are disjoint?
+    answer: 2.5
+    tolerance: 0.0001
+    wrong:
+      - value: 5
+        feedback: |
+          $5$ is the full distance $\lVert p - q\rVert$. With that radius each ball reaches the other centre, and they overlap on a large lens around the midpoint.
+      - value: 3.5
+        feedback: |
+          That halves $3 + 4$, adding the coordinate differences. The distance in the plane is $\sqrt{3^2 + 4^2}$, not $3 + 4$.
+    hint: Compute the distance $\lVert p - q\rVert$ first. Where do two balls of equal radius first touch?
+    explanation: |
+      $\lVert p - q\rVert = \sqrt{9 + 16} = 5$, so $r = 2.5$. At that radius the only candidate common point is the midpoint $(1.5, 2)$, at distance exactly $2.5$ from both centres, and open balls exclude their boundary: the balls are disjoint. Any larger radius makes them overlap.
+
+  - type: text
+    id: def-hausdorff
+    title: The Hausdorff condition
+    body: |
+      A topological space $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ is **Hausdorff** (after the mathematician Felix Hausdorff) when any two distinct points can be **separated** by disjoint open sets: for any two points $p\neq q$ of $\mathcal{M}$ there are open sets $\mathcal{U}$ and $\mathcal{V}$ with
+      $$\begin{gathered}p\in\mathcal{U},\\ q\in\mathcal{V},\\ \mathcal{U}\cap\mathcal{V} = \emptyset.\end{gathered}$$
+      It says the topology has **enough** open sets to tell points apart.
+
+      The indiscrete $\{a, b\}$ fails: the only open set containing $a$ is $\mathcal{M}$, which also contains $b$. And $\mathbb{R}^d$ with the standard topology passes, with the balls of radius half the distance. The next card proves it.
+
+  - type: order
+    id: rd-hausdorff-proof
+    prompt: |
+      Recall the distance $\lVert p - q\rVert$ in $\mathbb{R}^d$ and the triangle inequality $\lVert p - q\rVert\le\lVert p - x\rVert + \lVert x - q\rVert$. Put in order the proof that $\mathbb{R}^d$ with the standard topology is Hausdorff.
+    steps:
+      - 'Let $p\neq q$ and $s := \lVert p - q\rVert$, so $s > 0$.'
+      - 'Take $\mathcal{U} = B_{s/2}(p)$ and $\mathcal{V} = B_{s/2}(q)$: open, with $p\in\mathcal{U}$ and $q\in\mathcal{V}$.'
+      - 'Suppose some $x$ lies in both: $\lVert x - p\rVert < \tfrac s2$ and $\lVert x - q\rVert < \tfrac s2$.'
+      - 'Then $s\le\lVert p - x\rVert + \lVert x - q\rVert$,'
+      - 'which is $< \tfrac s2 + \tfrac s2 = s$.'
+      - '$s < s$ is impossible, so $\mathcal{U}\cap\mathcal{V} = \emptyset$.'
+    hint: Choose the two balls first, then suppose they share a point and use the triangle inequality to reach a contradiction.
+    explanation: |
+      The radius $\tfrac s2$ is what makes the strict inequality $s < s$ appear. It needs $s > 0$, which is exactly $p\neq q$. Since open balls are open in the standard topology, this proves $\mathbb{R}^d$ is Hausdorff for every dimension $d$.
+
+  - type: order
+    id: unique-limit-proof
+    prompt: |
+      A sequence converges to $p$ when every open set containing $p$ contains all terms from some index on. Put in order the proof that in a **Hausdorff** space a sequence $(p_n)$ has at most one limit.
+    steps:
+      - 'Suppose $p_n\to p$ and $p_n\to q$, with $p\neq q$.'
+      - 'By Hausdorff, there are disjoint open sets $\mathcal{U}\ni p$ and $\mathcal{V}\ni q$.'
+      - 'As $p_n\to p$, there is $N_1$ with $p_n\in\mathcal{U}$ for all $n\ge N_1$.'
+      - 'As $p_n\to q$, there is $N_2$ with $p_n\in\mathcal{V}$ for all $n\ge N_2$.'
+      - 'For $n\ge\max(N_1, N_2)$, $p_n\in\mathcal{U}\cap\mathcal{V} = \emptyset$: a contradiction.'
+    hint: Assume two different limits, separate them, and look at a term far enough along the sequence.
+    explanation: |
+      The tail of the sequence cannot sit in two disjoint sets at once. So in a Hausdorff space, "the limit" is well defined. In the indiscrete $\{a, b\}$ the proof breaks at the second step, and indeed $a, a, a, \dots$ converges to both points.
+
+  - type: mcq
+    id: two-point-hausdorff
+    multiple: true
+    prompt: |
+      A space is Hausdorff when any two distinct points lie in disjoint open sets. On $\mathcal{M} = \{a, b\}$ there are four topologies. Which of them are Hausdorff?
+    options:
+      - text: 'The discrete topology $\big\{\emptyset, \{a\}, \{b\}, \mathcal{M}\big\}$'
+        correct: true
+      - text: 'The indiscrete topology $\{\emptyset, \mathcal{M}\}$'
+        feedback: |
+          The only open set containing $a$ is $\mathcal{M}$, and it contains $b$ too: there is nothing to separate them with.
+      - text: '$\big\{\emptyset, \{a\}, \mathcal{M}\big\}$'
+        feedback: |
+          $a$ has the private open set $\{a\}$, but $b$ does not: the only open set containing $b$ is $\mathcal{M}$, which meets $\{a\}$. Both points need their own sets, and the two sets must be disjoint.
+      - text: '$\big\{\emptyset, \{b\}, \mathcal{M}\big\}$'
+        feedback: |
+          Here $b$ has $\{b\}$, but every open set containing $a$ is $\mathcal{M}$, which meets $\{b\}$. One private set is not enough.
+    explanation: |
+      Only the discrete topology works: $\{a\}$ and $\{b\}$ are open and disjoint. More generally, a **finite** Hausdorff space is always discrete: for a point $p$, pick for each other point $q$ an open set containing $p$ but not $q$; the intersection of these finitely many open sets is $\{p\}$, so every single point is open.
+
+  - type: mcq
+    id: subspace-hausdorff
+    prompt: |
+      Let $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ be Hausdorff and $\mathcal{N}\subseteq\mathcal{M}$ any subset, with the **inherited** topology: its open sets are $\mathcal{N}\cap\mathcal{U}$ for $\mathcal{U}$ open in $\mathcal{M}$. Is $\mathcal{N}$ Hausdorff?
+    options:
+      - text: 'Always: cut down the sets that separate two points in $\mathcal{M}$'
+        correct: true
+      - text: Only when $\mathcal{N}$ is open in $\mathcal{M}$
+        feedback: |
+          Openness of $\mathcal{N}$ is not needed: $\mathcal{N}\cap\mathcal{U}$ is open **in** $\mathcal{N}$ by the definition of the inherited topology, whatever $\mathcal{N}$ is.
+      - text: Not necessarily, since cutting down can make the two open sets overlap
+        feedback: |
+          Cutting down only removes points. If $\mathcal{U}\cap\mathcal{V} = \emptyset$, then $(\mathcal{N}\cap\mathcal{U})\cap(\mathcal{N}\cap\mathcal{V})\subseteq\mathcal{U}\cap\mathcal{V}$ is empty too.
+    explanation: |
+      For $p\neq q$ in $\mathcal{N}$, separate them in $\mathcal{M}$ by disjoint open $\mathcal{U}\ni p$, $\mathcal{V}\ni q$. Then $\mathcal{N}\cap\mathcal{U}$ and $\mathcal{N}\cap\mathcal{V}$ are open in $\mathcal{N}$, contain $p$ and $q$, and are disjoint. So every subset of $\mathbb{R}^d$, the circle $S^1$ and the interval $[0, 2\pi)$ included, is Hausdorff.
+
+  - type: text
+    id: two-origins
+    title: The line with two origins
+    body: |
+      Is Hausdorff automatic for any space that looks like $\mathbb{R}$ near each point? Here is a space that does, and fails. Take the real line and **double its origin**:
+      $$\mathcal{M} := (\mathbb{R}\setminus\{0\})\cup\{0_A, 0_B\}.$$
+      Two different points, $0_A$ and $0_B$, both sit "at $0$". A subset $\mathcal{W}\subseteq\mathcal{M}$ is declared open when it looks open in $\mathbb{R}$ from both origins: reading $0_A$ as $0$ and dropping $0_B$ gives an open set of $\mathbb{R}$, and so does reading $0_B$ as $0$ and dropping $0_A$.
+
+      Near each point, $\mathcal{M}$ is just $\mathbb{R}$: removing $0_B$ leaves an ordinary copy of the line, and so does removing $0_A$. But every open set containing $0_A$ contains a punctured interval $(-r, 0)\cup(0, r)$ around it, and so does every open set containing $0_B$. Any two such sets meet: **$0_A$ and $0_B$ cannot be separated**.
+
+  - type: mcq
+    id: two-origins-limit
+    prompt: |
+      In the line with two origins, $\mathcal{M} = (\mathbb{R}\setminus\{0\})\cup\{0_A, 0_B\}$, every open set containing $0_A$ contains some punctured interval $(-r, 0)\cup(0, r)$, and likewise for $0_B$. To which points does the sequence $p_n = \tfrac1n$ converge?
+    options:
+      - text: To both $0_A$ and $0_B$
+        correct: true
+      - text: Only to $0_A$, the first copy of the origin
+        feedback: |
+          Nothing distinguishes the two copies: every open set containing $0_B$ also contains $(0, r)$, which traps the tail $\tfrac1n < r$.
+      - text: To neither, since $0$ was removed from the line
+        feedback: |
+          The ordinary $0$ is gone, but $0_A$ and $0_B$ took its place, and both have open neighbourhoods containing $(0, r)$.
+    explanation: |
+      Every open set containing $0_A$ contains some $(0, r)$, which holds all terms with $n > \tfrac1r$; the same holds for $0_B$. So $\tfrac1n$ converges to both. Physically: a particle moving with velocity $1$, starting at $x = -1$ at time $-1$, solves $\dot{x} = 1$, and at time $0$ it may continue through $0_A$ **or** through $0_B$. Looking like $\mathbb{R}$ near each point is a statement about one point at a time; Hausdorff is about **pairs** of points, so it must be demanded separately.
+
+  - type: text
+    id: def-basis
+    title: Building every open set from a few
+    body: |
+      The second condition limits how **large** a topology may be. It needs two words.
+
+      A set is **countable** when its elements can be listed as a sequence $s_1, s_2, s_3, \dots$ (finite lists included). The natural numbers $\mathbb{N}$, the integers $\mathbb{Z}$ and the rationals $\mathbb{Q}$ (fractions $\tfrac mn$) are countable; so are pairs and $d$-tuples of rationals. The real line $\mathbb{R}$ is **not**: no list of real numbers contains them all (Cantor's diagonal argument).
+
+      A **basis** of a topology $\mathcal{O}_\mathcal{M}$ is a family $\mathcal{B}\subseteq\mathcal{O}_\mathcal{M}$ of open sets such that **every** open set is a union of members of $\mathcal{B}$. Example: all open balls form a basis of the standard topology on $\mathbb{R}^d$. Each point of an open $\mathcal{U}$ has a ball inside $\mathcal{U}$, and $\mathcal{U}$ is the union of these balls.
+
+      A space is **second countable** when its topology has a **countable** basis. Warning: this basis has nothing to do with a basis of a vector space. There are no linear combinations, and an open set may be a union of basis members in many ways.
+
+  - type: mcq
+    id: integer-intervals
+    prompt: |
+      A basis of a topology is a family $\mathcal{B}$ of open sets such that every open set is a union of members of $\mathcal{B}$. On $\mathbb{R}$ with the standard topology, is the countable family $\mathcal{B} = \{(n,\ n + 1) \mid n\in\mathbb{Z}\}$ a basis?
+    options:
+      - text: 'No: the open set $(0, 2)$ contains $1$, and no member contains $1$'
+        correct: true
+      - text: 'Yes: its members are open, they are countably many, and they cover almost all of $\mathbb{R}$'
+        feedback: |
+          Open members and countably many of them are necessary, but the defining test is that **every** open set is a union of members. Unions of these intervals never contain an integer, so $(0, 2)$ cannot be built.
+      - text: 'No, because a basis must be finite'
+        feedback: |
+          A basis may be infinite; second countability only asks for a countable one. The real problem is that some open sets cannot be built from these intervals.
+    explanation: |
+      Every union of members avoids all the integers, so $(0, 2)\ni 1$ is not such a union. Even sets avoiding the integers fail: $(0, \tfrac12)$ would need a member inside it, but each member either contains all of $(0, 1)$ or misses it entirely. A basis needs members that are **arbitrarily small** around every point.
+
+  - type: order
+    id: rational-balls-proof
+    prompt: |
+      Let $\mathcal{B}$ be the family of open balls $B_s(c)$ in $\mathbb{R}^d$ with rational centre $c\in\mathbb{Q}^d$ and rational radius $s > 0$. Put in order the proof that every open set $\mathcal{U}$ is a union of such balls, by finding one around each $p\in\mathcal{U}$ that stays inside $\mathcal{U}$.
+    steps:
+      - 'As $\mathcal{U}$ is open and $p\in\mathcal{U}$, some $r > 0$ has $B_r(p)\subseteq\mathcal{U}$.'
+      - 'Pick a rational $s$ with $0 < s < \tfrac r2$.'
+      - 'Pick $c\in\mathbb{Q}^d$ with $\lVert c - p\rVert < s$, rounding each coordinate of $p$.'
+      - 'Then $p\in B_s(c)$, since $\lVert p - c\rVert < s$.'
+      - 'For $x\in B_s(c)$: $\lVert x - p\rVert\le\lVert x - c\rVert + \lVert c - p\rVert < 2s < r$, so $B_s(c)\subseteq\mathcal{U}$.'
+      - 'So $\mathcal{U}$ is the union of the balls of $\mathcal{B}$ contained in it.'
+    hint: Start from the ball that openness gives you around $p$, then shrink and shift it to rational data while keeping $p$ inside.
+    explanation: |
+      Rational numbers lie arbitrarily close to every real number, so a small rational ball can always be squeezed between $p$ and the edge of $\mathcal{U}$. The family $\mathcal{B}$ is labelled by $(c, s)\in\mathbb{Q}^d\times\mathbb{Q}$, a countable set. So $\mathbb{R}^d$ with the standard topology is **second countable**, and so is every subset of it, cutting the rational balls down.
+
+  - type: mcq
+    id: sqrt2-ball
+    prompt: |
+      In $\mathbb{R}$, the open balls $B_s(c) = (c - s,\ c + s)$ with rational centre $c$ and rational radius $s > 0$ form a basis. Take $\mathcal{U} = (1.41,\ 1.42)$ and the point $\sqrt2\approx 1.41421$ in it. Which ball of this family contains $\sqrt2$ and lies inside $\mathcal{U}$?
+    options:
+      - text: '$B_{0.002}(1.414) = (1.412,\ 1.416)$'
+        correct: true
+      - text: '$B_{0.01}(1.415) = (1.405,\ 1.425)$'
+        feedback: |
+          It contains $\sqrt2$ but pokes out of $\mathcal{U}$ on both sides: $1.405 < 1.41$ and $1.425 > 1.42$.
+      - text: '$B_{0.001}(1.412) = (1.411,\ 1.413)$'
+        feedback: |
+          It lies inside $\mathcal{U}$, but it misses the point: $\sqrt2\approx 1.41421 > 1.413$.
+      - text: '$B_{0.001}(\sqrt2)$'
+        feedback: |
+          It contains $\sqrt2$ and fits inside $\mathcal{U}$, but its centre is irrational, so it is not in the countable family. The whole point is to use rational data only.
+    explanation: |
+      $1.412 < 1.41421 < 1.416$, and $1.41 < 1.412$, $1.416 < 1.42$: the ball contains $\sqrt2$ and stays inside $\mathcal{U}$. Its centre $1.414$ and radius $0.002$ are rational. An irrational point never needs an irrational centre: a rational one nearby does the job.
+
+  - type: mcq
+    id: discrete-not-sc
+    prompt: |
+      Give $\mathbb{R}$ the **discrete** topology: every subset is open. A space is Hausdorff when distinct points lie in disjoint open sets, and second countable when some countable family of open sets builds every open set by unions. Which is true?
+    options:
+      - text: Hausdorff, but not second countable
+        correct: true
+      - text: Both Hausdorff and second countable, using the rational balls
+        feedback: |
+          The rational balls are a basis of the **standard** topology. Here $\{0\}$ is open, and no union of balls equals a single point. Any basis must contain $\{p\}$ itself, for every real $p$.
+      - text: Second countable, but not Hausdorff
+        feedback: |
+          Separating is easy here: $\{p\}$ and $\{q\}$ are open and disjoint. More open sets make Hausdorff easier, not harder.
+      - text: Neither
+        feedback: |
+          Hausdorff holds: $\{p\}$ and $\{q\}$ are disjoint open sets. Only the countability fails.
+    explanation: |
+      Hausdorff: separate $p\neq q$ by $\{p\}$ and $\{q\}$. Not second countable: $\{p\}$ is open, so it is a union of basis members; each member used is a non-empty subset of $\{p\}$, hence $\{p\}$ itself. So every basis contains all the singletons $\{p\}$: uncountably many. **The two conditions pull in opposite directions**: Hausdorff wants enough open sets, second countability forbids too many.
+
+  - type: mcq
+    id: uncountable-lines
+    prompt: |
+      Let $\mathcal{M}$ be uncountably many disjoint copies of the real line, one copy $L_t$ for each $t\in\mathbb{R}$; a subset is open when its part in each copy is open in that copy. Each $L_t$ is then open in $\mathcal{M}$. Every point has a neighbourhood that looks like $\mathbb{R}$, and $\mathcal{M}$ is Hausdorff. Why is $\mathcal{M}$ not second countable?
+    options:
+      - text: Every basis needs a member inside each open line $L_t$, and members inside different lines are different
+        correct: true
+      - text: Each single line $L_t$ is not second countable
+        feedback: |
+          Each $L_t$ is a copy of $\mathbb{R}$, which has the countable basis of rational balls. The trouble is how many lines there are.
+      - text: It is second countable, using the rational balls of each line
+        feedback: |
+          Countably many balls per line, but one family per line, and there are uncountably many lines: the total is uncountable.
+      - text: Because $\mathcal{M}$ is not Hausdorff
+        feedback: |
+          It is Hausdorff: points on different lines are separated by their two lines, points on the same line by small balls.
+    explanation: |
+      $L_t$ is open and non-empty, so it is a union of basis members, at least one of them non-empty and inside $L_t$. The lines are disjoint, so these members differ for different $t$: a basis has at least as many members as there are real numbers. Locally nothing is wrong, but globally the space is too big. (A connected example also exists: the **long line**, built by gluing uncountably many intervals end to end.)
+
+  - type: text
+    id: why-physics
+    title: Why spacetime must obey both
+    body: |
+      A spacetime will be a space that looks like $\mathbb{R}^4$ near each point. The two conditions are not technicalities.
+
+      **Hausdorff → unique limits → unique motion.** Limits are unique, so the solution of an equation of motion with given initial data is unique. On the line with two origins, a free particle could reach $0$ and then continue along either copy: physics would not be predictive.
+
+      **Second countable → countably many patches → integrals.** Given the other conditions, second countability means the space can be covered by **countably many** coordinate patches. Quantities like the total mass or charge are integrals over a region of spacetime, computed patch by patch and then **added up**. A sum of countably many pieces makes sense; a sum of uncountably many positive numbers is always infinite. The smooth weights that split an integrand between patches (partitions of unity, at the integrals, Level 8) exist because of these two conditions.
+
+      Both hold for $\mathbb{R}^d$ and for every subset of it.
+
+  - type: mcq
+    id: why-sc
+    prompt: |
+      A space is second countable when some countable family of open sets builds every open set by unions. Why does physics on curved spacetime need this condition?
+    options:
+      - text: Integrals over spacetime are assembled from coordinate patches, and only countably many pieces can be added up
+        correct: true
+      - text: Without it, a sequence could converge to two points
+        feedback: |
+          That is the Hausdorff condition, a separate one. Uncountably many disjoint lines are Hausdorff, so limits there are unique, yet the space is not second countable.
+      - text: Without it, the space cannot look like $\mathbb{R}^4$ near each point
+        feedback: |
+          Uncountably many disjoint copies of $\mathbb{R}^4$ look like $\mathbb{R}^4$ near every point and still fail. Second countability is a **global** size condition; nothing local goes wrong without it.
+    explanation: |
+      Given the other conditions, second countability means countably many coordinate patches cover the space. Integrals, such as a total mass, are defined patch by patch and added up, which needs countably many terms. Hausdorff and second countability are independent: each can fail while the other holds.
+
+  - type: text
+    id: wrap
+    title: What you now own
+    body: |
+      - **Convergence** with open sets: $p_n\to p$ when every open neighbourhood of $p$ traps the whole tail. In the indiscrete topology, every sequence converges to every point.
+      - **Hausdorff**: distinct points have disjoint open neighbourhoods. Then limits are unique. $\mathbb{R}^d$ is Hausdorff (balls of radius half the distance), and so is every subset. The line with two origins looks like $\mathbb{R}$ everywhere and is not Hausdorff.
+      - **Basis**: open sets whose unions give every open set. **Second countable**: a countable basis exists. $\mathbb{R}^d$ has the rational balls; the discrete $\mathbb{R}$ and uncountably many lines have none.
+      - Physics: unique motion needs Hausdorff; integrals over spacetime need second countability.
+
+      **Next:** "looks like $\mathbb{R}^d$ near each point" is still a slogan. The next lesson makes it precise with **charts**: homeomorphisms from open pieces of the space onto open sets of $\mathbb{R}^d$, the coordinate systems of physics, and the **transition maps** that translate between two of them.

@@ -186,7 +186,7 @@ Lessons are built across many short sessions, not all at once.
   session** naming the exact lessons to build (from `course.yaml`) and any
   leftover checks.
 
-### Status (2026-10-19, Chapter 2 complete, Chapter 3 started)
+### Status (2026-10-19, Chapter 2 complete, Chapter 3 in progress)
 
 Chapter 2 built: maps, axioms, dual space, bases and dual basis, change of
 basis, covector law, J invertible, dual basis law, transformation traps,
@@ -209,7 +209,14 @@ topologies, discrete/indiscrete, closed and clopen, 4 topologies on two
 points) and `ch03-standard-topology` (balls, standard topology, quantifier
 order, ball is open, infinite intersections, inherited topology on [0,2) and
 S¹), with the new `ball-probe` widget (line/plane/circle arc, optional
-ambient subspace). Both had a screenshot pass. Next: the remaining Chapter 3
+ambient subspace). Then `ch03-homeomorphisms` (preimages, continuity, ε-δ as
+a special case, composition, homeomorphisms, the wrap [0,2π) → S¹ is a
+continuous bijection but not a homeomorphism; new `preimage-explorer` widget)
+and `ch03-hausdorff` (convergence via open sets, indiscrete limits, Hausdorff
+with the `ball-probe` `pair: true` mode, unique limits, two-point topologies,
+subspaces, line with two origins, basis, rational balls, discrete ℝ and
+uncountably many lines not second countable, why physics needs both). All four
+had a screenshot pass; all widgets are documented. Next: the remaining Chapter 3
 nodes in `course.yaml` order, then Chapters 4–10 (each with its content map
 and challenge). Each planned node in `course.yaml` is one lesson to build.
 

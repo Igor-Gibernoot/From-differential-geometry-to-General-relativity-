@@ -256,6 +256,40 @@ config:
 ```
 Don't mix arc and non-arc sets in one widget's presets (the view scale differs).
 
+**Pair mode** (Hausdorff separation, `dim: 2` only): `pair: true` drops the set
+and shows two draggable points $p$ and $q$ with balls of the same radius $r$.
+The balls turn red while they overlap; the readout gives $\lVert p - q\rVert$
+and says they are disjoint exactly when $r \le \lVert p - q\rVert / 2$.
+```yaml
+config:
+  dim: 2
+  pair: true
+  p: [-1, 0]                  # first point
+  q: [1.5, 0.5]               # second point (default [2, 1])
+  r: 1.5
+  rMax: 3
+  view: { x: -3.5, y: -3, w: 7, h: 6 }   # optional
+  presets: [{ label: Close, p: [0, 0], q: [0.4, 0], r: 0.5 }]   # p, q, r optional
+```
+
+#### `preimage-explorer`
+Continuity through preimages. The graph of a fixed map $\mathbb{R}\to\mathbb{R}$;
+the reader drags the two ends of an open interval $\mathcal{V}$ (gold band) on
+the vertical axis. The part of the graph inside the band is highlighted and the
+preimage $\text{preim}(\mathcal{V})$ is drawn on the horizontal axis (filled end
+dot = that end belongs to the preimage). The readout writes the rule, $\mathcal{V}$,
+the preimage, and whether it is open (a filled end is a point with no room).
+```yaml
+config:
+  fn: linear                  # linear (2x + 1) | step (H: 0 for x < 0, 1 for x ≥ 0)
+                              # | square (x²) | const (1)
+  V: [0.5, 1.5]               # ends of the open interval V (a < b)
+  view: { x: -3, y: -1.5, w: 6, h: 4.5 }   # model units
+  snap: 0.1                   # grid for the ends of V
+  presets: [{ label: Jump, fn: step, V: [0.5, 1.5] }]   # fn, V optional
+```
+New maps go in `FUNCS` in `js/widgets.js` (rule text, formula, jump points).
+
 ## Content-map lessons (`kind: map`)
 
 The file describes a graph; the engine turns it into cards: an intro, one
