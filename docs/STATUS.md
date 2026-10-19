@@ -18,11 +18,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   list), one block per problem with `tag: Problem N · …` and ids `pN-…`, then
   `wrap-up` ending with a teaser for the next level.
 - **Chapter 4 in progress:** `ch04-tangent-space` (26 cards),
-  `ch04-velocity-operations` (23 cards) built.
+  `ch04-velocity-operations` (23 cards) built; widget `chart-basis` built
+  (coordinate lines of two charts, basis at $p$, components, Jacobian).
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, next a widget session (`chart-basis`: coordinate lines of two
-  charts, basis vectors at $p$, components and Jacobian), then
-  `ch04-coordinate-basis`; then Chapters 5–10 (each with
+  order, next `ch04-coordinate-basis` (uses `chart-basis`); then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -67,6 +66,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   partials $\partial_i F(\mathscr{X}(p))$; sum curves $\sigma_\mathcal{U}$ (straight,
   $(\lambda+1, 2\lambda+1)$), $\sigma_\mathcal{V}$ ($(\lambda+1, 1+2\lambda e^{-\lambda})$); scaling curve
   $\sigma(\lambda) = \gamma(\lambda_0+\alpha\lambda)$. Basis $(\partial/\partial\mathscr{X}^i)_p$ not yet named.
+  `chart-basis` widget: first chart solid lines, second dashed; basis purple
+  (second chart dashed); Jacobian $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$
+  with row $i$ ($\mathscr{Y}$), column $j$ ($\mathscr{X}$); chart letters
+  $\mathscr{C}$ ($x, y$), $\mathscr{P}$ ($r, \theta$, $\theta\in(0,2\pi)$, $|p|\ge 0.5$);
+  C.3 at $p=(1,1)$, $v=(1,2)$: $\mathscr{X}$-components $(2,-2)$,
+  $\mathscr{Y}$-components $(1,3e)$, Jacobian $\begin{pmatrix}1/2&0\\e/2&-e\end{pmatrix}$,
+  inverse $\begin{pmatrix}2&0\\1&-1/e\end{pmatrix}$, $(\partial/\partial\mathscr{X}^1)_p = (1/2, 0)$,
+  $(\partial/\partial\mathscr{X}^2)_p = (0,-1)$, $(\partial/\partial\mathscr{Y}^1)_p = (1,-1)$,
+  $(\partial/\partial\mathscr{Y}^2)_p = (0, 1/e)$ (standard components of $\mathbb{R}^2$).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -76,6 +84,19 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Built the `chart-basis` widget (no lesson): coordinate lines of one or two
+charts (presets `cartesian`, `polar`, C.3 `X`, `Y`), draggable $p$, purple basis
+$(\partial/\partial\mathscr{X}^i)_p$ as columns of $(D\mathscr{X})^{-1}$, draggable
+$v$, components per chart, Jacobian $D\mathscr{Y}\,(D\mathscr{X})^{-1}$; options
+`chain` (component law in numbers, or basis law with `basisOnly`), `inverse`,
+`lines`, `dragP`, chart `name`/`steps` overrides. Tested with a throwaway preset
+lesson (C.3, polar on the cut, basis-only, one chart), screenshots viewed,
+then removed. C.3 numbers reproduced. Choices: polar keeps $|p|\ge 0.5$, on the
+positive $q_1$-axis the readout says $\theta$ is read in $(-\pi,\pi)$; at most 8
+lines each side of $p$ (the `Y` lines crowd for large $q_1$). Conventions fixed
+here: Jacobian row $i$ = $\mathscr{Y}^i$, column $j$ = $\mathscr{X}^j$; chart letters
+$\mathscr{C}$, $\mathscr{P}$; first chart solid, second dashed (see Current).
 
 Built `ch04-velocity-operations` (guided, 23 cards, no widget): hook (is the
 sum a velocity?), predict MCQ, C.3 setup with $\mathscr{X}$, $\mathscr{Y}$,

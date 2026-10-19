@@ -14,6 +14,7 @@ const WIDGETS = {
   'preimage-explorer': preimageExplorer,
   'circle-charts': circleCharts,
   'curve-velocity': curveVelocity,
+  'chart-basis': chartBasis,
 };
 
 export function mountWidget(name, el, config) {
@@ -1275,6 +1276,232 @@ function curveVelocity(el, cfg) {
     else if (sameF) msg = `Equal on $f = ${F.tex}$ only: the components differ, so another $f$ tells the curves apart.`;
     else msg = 'Different velocities: $v_{\\gamma_1,p} \\neq v_{\\gamma_2,p}$.';
     rows.push(h('div', { class: cls, html: mdInline(msg) }));
+    readout.replaceChildren(...rows);
+  }
+  draw();
+}
+
+// ---------------------------------------------------------------------------
+// chart-basis
+//
+// The plane ℝ² with one or two charts drawn as their coordinate lines (first
+// chart solid, second dashed), a draggable point p (gold) and the chart-induced
+// basis vectors (∂/∂𝒳ⁱ)_p in purple: the velocity at λ = 0 of the coordinate
+// curve λ ↦ 𝒳⁻¹(𝒳(p) + λ eᵢ), i.e. column i of (D𝒳)⁻¹. A draggable velocity v
+// (blue) at p is the velocity of γ(λ) = p + λ v; the readout gives its
+// components (𝒳ⁱ∘γ)'(0) in each chart and the Jacobian (∂𝒴ⁱ/∂𝒳ʲ)_p (row i,
+// column j), with "components in 𝒴 = Jacobian · components in 𝒳".
+//
+// config:
+//   charts:    ['X', 'Y']       one or two of cartesian | polar | X | Y, or
+//                               { chart: 'polar', name: '\\mathscr{Y}', steps: [0.5, 0.3927] }
+//   p:         [1, 1]           the point (polar: kept at |p| ≥ 0.5)
+//   v:         [1, 2]           the velocity, in the standard components of ℝ²
+//   basisOnly: false            hide v and the components
+//   chain:     false            the law in numbers (components, or the basis
+//                               law when basisOnly)
+//   inverse:   false            also show the inverse Jacobian (∂𝒳ⁱ/∂𝒴ʲ)_p
+//   dragP:     true             p draggable
+//   snap:      0.25
+//   lines:     8                at most this many coordinate lines on each side of p
+//   view:      { x, y, w, h }   default: 5 × 5 centred on p
+//   presets:   [{ label, charts, p, v }]
+// ---------------------------------------------------------------------------
+const TWO_PI = 2 * Math.PI;
+const polarAngle = q => { const t = Math.atan2(q[1], q[0]); return t < 0 ? t + TWO_PI : t; };
+const CB_CHARTS = {
+  cartesian: { name: '\\mathscr{C}', coords: ['x', 'y'], glyphs: ['x', 'y'], rule: '(x, y) = (q_1, q_2)',
+    map: q => [q[0], q[1]], inv: c => [c[0], c[1]], jac: () => [[1, 0], [0, 1]], steps: [0.5, 0.5] },
+  polar: { name: '\\mathscr{P}', coords: ['r', '\\theta'], glyphs: ['r', 'θ'], rule: '(r, \\theta),\\ \\theta \\in (0, 2\\pi)',
+    map: q => [Math.hypot(...q), polarAngle(q)], inv: c => [c[0] * Math.cos(c[1]), c[0] * Math.sin(c[1])],
+    jac: q => { const r2 = q[0] ** 2 + q[1] ** 2, r = Math.sqrt(r2); return [[q[0] / r, q[1] / r], [-q[1] / r2, q[0] / r2]]; },
+    steps: [0.5, Math.PI / 8], polar: true },
+  X: { name: '\\mathscr{X}', rule: '(2q_1, -q_2)',
+    map: q => [2 * q[0], -q[1]], inv: c => [c[0] / 2, -c[1]], jac: () => [[2, 0], [0, -1]], steps: [1, 0.5] },
+  Y: { name: '\\mathscr{Y}', rule: '(q_1, q_2e^{q_1})',
+    map: q => [q[0], q[1] * Math.exp(q[0])], inv: c => [c[0], c[1] * Math.exp(-c[0])],
+    jac: q => [[1, 0], [q[1] * Math.exp(q[0]), Math.exp(q[0])]], steps: [0.5, 1] },
+};
+// Unicode mathematical script capital for \mathscr{L} (for SVG labels).
+const SCRIPT_HOLES = { B: 'ℬ', E: 'ℰ', F: 'ℱ', H: 'ℋ', I: 'ℐ', L: 'ℒ', M: 'ℳ', R: 'ℛ' };
+const scriptGlyph = name => {
+  const m = /\\mathscr\{([A-Z])\}/.exec(name);
+  if (!m) return name.replace(/\\/g, '');
+  return SCRIPT_HOLES[m[1]] ?? String.fromCodePoint(0x1D49C + m[1].charCodeAt(0) - 65);
+};
+const inv2 = ([[a, b], [c, d]]) => { const D = a * d - b * c; return [[d / D, -b / D], [-c / D, a / D]]; };
+const mul2 = (A, B) => A.map(r => [0, 1].map(j => r[0] * B[0][j] + r[1] * B[1][j]));
+const mulv = (A, v) => A.map(r => r[0] * v[0] + r[1] * v[1]);
+
+function chartBasis(el, cfg) {
+  const sn = cfg.snap ?? 0.25, basisOnly = !!cfg.basisOnly, chain = !!cfg.chain, showInv = !!cfg.inverse;
+  const dragP = cfg.dragP ?? true, nmax = cfg.lines ?? 8;
+  const mkChart = spec => {
+    const o = typeof spec === 'string' ? { chart: spec } : spec;
+    const base = CB_CHARTS[o.chart] ?? CB_CHARTS.X;
+    const name = o.name ?? base.name;
+    const g = scriptGlyph(name);
+    return { ...base, name,
+      coords: base.coords ?? [`${name}^1`, `${name}^2`],
+      glyphs: base.glyphs ?? [`${g}¹`, `${g}²`],
+      steps: o.steps ?? base.steps };
+  };
+  const init = () => ({
+    charts: (cfg.charts ?? ['X', 'Y']).slice(0, 2).map(mkChart),
+    p: [...(cfg.p ?? [1, 1])], v: [...(cfg.v ?? [1, 2])] });
+  let st = init();
+  const snap = t => (sn ? Math.round(t / sn) * sn : t);
+  const p0 = cfg.p ?? [1, 1];
+  const view = cfg.view ?? { x: p0[0] - 2.5, y: p0[1] - 2.5, w: 5, h: 5 };
+  const { svg, layers: L } = planeSvg(view, 'Coordinate lines of the charts, the basis vectors at p and a velocity v',
+    ['lines', 'arrows', 'marks', 'labels', 'handles']);
+  const readout = h('div', { class: 'readout' });
+  const btns = h('div', { class: 'wbtns' },
+    h('button', { class: 'btn ghost', type: 'button', onclick: () => { st = init(); draw(); } }, 'Reset'),
+    (cfg.presets ?? []).map(pr => h('button', { class: 'btn ghost', type: 'button', onclick: () => {
+      st = { charts: pr.charts ? pr.charts.slice(0, 2).map(mkChart) : st.charts,
+        p: pr.p ? [...pr.p] : st.p, v: pr.v ? [...pr.v] : st.v };
+      fixP(); draw();
+    } }, pr.label)));
+  el.append(h('div', { class: 'cc-panels single' }, svg), readout, btns);
+
+  // keep p off the origin when a polar chart is shown (r = 0 is outside its domain)
+  function fixP() {
+    if (!st.charts.some(c => c.polar)) return;
+    const r = Math.hypot(...st.p);
+    if (r < 0.5) st.p = r < 1e-9 ? [0.5, 0] : st.p.map(t => t * 0.5 / r);
+  }
+  fixP();
+
+  const handle = (cls, aria, onMove) => {
+    const c = s('circle', { r: 0.17, class: `w-handle ${cls}`, tabindex: 0, 'aria-label': aria });
+    L.handles.append(c);
+    c.addEventListener('pointerdown', e => {
+      e.preventDefault();
+      c.setPointerCapture(e.pointerId);
+      const move = ev => {
+        const q = svg.createSVGPoint();
+        q.x = ev.clientX; q.y = ev.clientY;
+        const m = q.matrixTransform(svg.getScreenCTM().inverse());
+        const x = snap(Math.max(view.x + 0.2, Math.min(view.x + view.w - 0.2, m.x)));
+        const y = snap(Math.max(view.y + 0.2, Math.min(view.y + view.h - 0.2, -m.y)));
+        onMove([x, y]);
+        draw();
+      };
+      const up = () => { c.removeEventListener('pointermove', move); c.removeEventListener('pointerup', up); c.removeEventListener('pointercancel', up); };
+      c.addEventListener('pointermove', move);
+      c.addEventListener('pointerup', up);
+      c.addEventListener('pointercancel', up);
+    });
+    return c;
+  };
+  const vh = basisOnly ? null : handle('vec', 'velocity v', q => {
+    const v = [q[0] - st.p[0], q[1] - st.p[1]];
+    if (Math.hypot(...v) >= 0.2) st.v = v;
+  });
+  const ph = dragP ? handle('gold', 'point p', q => { st.p = q; fixP(); }) : null;
+
+  const poly = (pts, cls) => s('polyline', { points: pts.map(q => P(...q).join(',')).join(' '), class: cls });
+  // range of each chart coordinate over the view (sampled on a grid)
+  function ranges(ch) {
+    const lo = [Infinity, Infinity], hi = [-Infinity, -Infinity];
+    for (let i = 0; i <= 40; i++) for (let j = 0; j <= 40; j++) {
+      const q = [view.x + view.w * i / 40, view.y + view.h * j / 40];
+      if (ch.polar && Math.hypot(...q) < 1e-6) continue;
+      const c = ch.map(q);
+      for (const k of [0, 1]) { lo[k] = Math.min(lo[k], c[k]); hi[k] = Math.max(hi[k], c[k]); }
+    }
+    if (ch.polar) { lo[0] = Math.max(lo[0], 0); if (Math.hypot(view.x + view.w / 2, view.y + view.h / 2) < Math.hypot(view.w, view.h)) { lo[1] = 0; hi[1] = TWO_PI; } }
+    return { lo, hi };
+  }
+  // coordinate lines: coordinate k fixed at cp[k] + n·step, the other one runs
+  function coordLines(ch, idx) {
+    const { lo, hi } = ranges(ch), cp = ch.map(st.p), out = [];
+    for (const k of [0, 1]) {
+      const o = 1 - k, st_ = ch.steps[k];
+      const nlo = Math.max(-nmax, Math.ceil((lo[k] - cp[k]) / st_)), nhi = Math.min(nmax, Math.floor((hi[k] - cp[k]) / st_));
+      const a = ch.polar ? (o === 1 ? 0 : Math.max(0, lo[0] - 0.1 * (hi[0] - lo[0]))) : lo[o] - 0.1 * (hi[o] - lo[o]);
+      const b = ch.polar && o === 1 ? TWO_PI : hi[o] + 0.1 * (hi[o] - lo[o]);
+      for (let n = nlo; n <= nhi; n++) {
+        const val = cp[k] + n * st_;
+        if (ch.polar && k === 0 && val <= 1e-9) continue;
+        if (ch.polar && k === 1 && (val < -1e-9 || val > TWO_PI - 1e-9)) continue;
+        const pts = [];
+        for (let i = 0; i <= 200; i++) {
+          const c = [0, 0];
+          c[k] = val; c[o] = a + (b - a) * i / 200;
+          pts.push(ch.inv(c));
+        }
+        out.push(poly(pts, `cb-line c${idx + 1}${n === 0 ? ' main' : ''}`));
+      }
+    }
+    return out;
+  }
+
+  // the polar angle at p, with its branch: on the cut (positive q₁-axis) θ ∈ (−π, π)
+  const onCut = q => Math.abs(q[1]) < 1e-9 && q[0] > 0;
+
+  function draw() {
+    for (const k of ['lines', 'arrows', 'marks', 'labels']) L[k].replaceChildren();
+    const p = st.p, chs = st.charts;
+    chs.forEach((ch, idx) => L.lines.append(...coordLines(ch, idx)));
+    // basis vectors: columns of (D𝒳)⁻¹ at p
+    const Ds = chs.map(ch => ch.jac(p)), Bs = Ds.map(inv2);
+    chs.forEach((ch, idx) => {
+      for (const i of [0, 1]) {
+        const e = [Bs[idx][0][i], Bs[idx][1][i]], tip = [p[0] + e[0], p[1] + e[1]];
+        L.arrows.append(arrow(p, tip, `w-basis${idx ? ' cv-dash' : ''}`));
+        // beyond the tip, pushed sideways (first chart to one side, second to the other)
+        const Ln = Math.hypot(...e) || 1, u = [e[0] / Ln, e[1] / Ln], sg = idx ? 1 : -1, side = 0.22 + 0.4 * Math.abs(u[1]);
+        L.labels.append(label([tip[0] + 0.3 * u[0] - sg * side * u[1], tip[1] + 0.25 * u[1] + sg * side * u[0]], `∂/∂${ch.glyphs[i]}`, 'basis small'));
+      }
+    });
+    if (!basisOnly) {
+      const tip = [p[0] + st.v[0], p[1] + st.v[1]], Ln = Math.hypot(...st.v) || 1;
+      L.arrows.append(arrow(p, tip, 'w-uvec'));
+      L.labels.append(label([tip[0] + 0.3 * st.v[0] / Ln - 0.22 * st.v[1] / Ln, tip[1] + 0.3 * st.v[1] / Ln + 0.22 * st.v[0] / Ln], 'v', 'vec'));
+      placeHandle(vh, tip);
+    }
+    const [px, py] = P(...p);
+    L.marks.append(s('circle', { cx: px, cy: py, r: 0.11, class: 'cv-p' }));
+    L.labels.append(label([p[0] - 0.3, p[1] - 0.3], 'p', 'gold'));
+    if (ph) placeHandle(ph, p);
+
+    // readout
+    const vec = a => `(${a.map(fmt).join(', ')})`;
+    const comps = Ds.map(D => mulv(D, st.v));
+    const rows = [h('div', { class: 'wide', html: mdInline(`$p = ${vec(p)}$${basisOnly ? '' : `, $v = ${vec(st.v)}$, the velocity of $\\gamma(\\lambda) = p + \\lambda\\, v$`}`) })];
+    chs.forEach((ch, idx) => {
+      const cp = ch.map(p);
+      if (ch.polar && onCut(p)) cp[1] = 0;
+      const cell = [
+        h('div', { class: 'cb-tag', html: mdInline(`$${ch.name}$, ${idx ? 'dashed' : 'solid'} lines`) }),
+        h('div', { html: tex(`${ch.name}(q) = ${ch.rule}`) }),
+        h('div', { html: tex(`${ch.name}(p) = ${vec(cp)}`) }),
+      ];
+      if (ch.polar && onCut(p)) cell.push(h('div', { class: 'cb-tag', html: mdInline('$p$ is on the cut of $\\theta \\in (0, 2\\pi)$: here $\\theta$ is read in $(-\\pi, \\pi)$.') }));
+      if (!basisOnly) for (const i of [0, 1])
+        cell.push(h('div', { class: 'c-vec', html: tex(`(${ch.coords[i]}\\circ\\gamma)'(0) = ${fmt(comps[idx][i])}`) }));
+      rows.push(h('div', { class: 'cv-cell' }, ...cell));
+    });
+    if (chs.length === 2) {
+      const [A, B] = chs;
+      const J = mul2(Ds[1], Bs[0]);       // (∂𝒴ⁱ/∂𝒳ʲ)_p = D𝒴 · (D𝒳)⁻¹
+      const mat = M => `\\begin{pmatrix} ${fmt(M[0][0])} & ${fmt(M[0][1])} \\\\ ${fmt(M[1][0])} & ${fmt(M[1][1])} \\end{pmatrix}`;
+      const col = a => `\\begin{pmatrix} ${fmt(a[0])} \\\\ ${fmt(a[1])} \\end{pmatrix}`;
+      const jac = [h('div', { html: tex(`\\Big(\\frac{\\partial ${B.name}^i}{\\partial ${A.name}^j}\\Big)_p = ${mat(J)}`) })];
+      if (showInv) jac.push(h('div', { html: tex(`\\Big(\\frac{\\partial ${A.name}^i}{\\partial ${B.name}^j}\\Big)_p = ${mat(inv2(J))}`) }));
+      rows.push(h('div', { class: 'wide cb-jac' }, ...jac));
+      if (!basisOnly) {
+        rows.push(h('div', { class: 'wide', html: mdInline(`Components in $${B.name}$ = Jacobian $\\cdot$ components in $${A.name}$${chain ? ':' : '.'}`) }));
+        if (chain) rows.push(h('div', { class: 'wide', html: tex(`${col(comps[1])} = ${mat(J)} ${col(comps[0])}`) }));
+      } else if (chain) {
+        const bv = (ch, i) => `\\Big(\\frac{\\partial}{\\partial ${ch.coords[i]}}\\Big)_p`;
+        const coef = (t, first) => (first ? fmt(t) : `${t < 0 ? '-' : '+'} ${fmt(Math.abs(t))}`);
+        for (const i of [0, 1])
+          rows.push(h('div', { html: tex(`\\begin{aligned} ${bv(A, i)} &= ${coef(J[0][i], true)}\\, ${bv(B, 0)} \\\\ &\\quad ${coef(J[1][i], false)}\\, ${bv(B, 1)} \\end{aligned}`) }));
+      }
+    }
     readout.replaceChildren(...rows);
   }
   draw();

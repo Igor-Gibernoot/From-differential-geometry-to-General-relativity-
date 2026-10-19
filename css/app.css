@@ -504,3 +504,10 @@ a { color: var(--accent); }
 .widget .readout .cv-cell { display: flex; flex-direction: column; gap: 2px; }
 .cv-flabel { align-self: center; padding: 0 4px; }
 polyline.w-level { fill: none; }
+
+/* ---------- chart-basis ---------- */
+.cb-line { fill: none; stroke: var(--ink); stroke-opacity: .25; stroke-width: 1.3px; vector-effect: non-scaling-stroke; }
+.cb-line.main { stroke-opacity: .75; stroke-width: 2.2px; }
+.cb-line.c2 { stroke-dasharray: 6 5; }
+.widget .readout .cb-tag { color: var(--muted); font-size: 15px; }
+.widget .readout .cb-jac { display: flex; flex-wrap: wrap; gap: 4px 24px; }
