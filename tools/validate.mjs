@@ -18,6 +18,12 @@ const require = createRequire(import.meta.url);
 const yaml = require(join(root, 'vendor/js-yaml.min.js'));
 const katex = require(join(root, 'vendor/katex/katex.min.js'));
 
+// KaTeX warns about symbols without font metrics (e.g. ᛖ); the browser renders them fine.
+const consoleWarn = console.warn;
+console.warn = (...args) => {
+  if (!String(args[0]).startsWith('No character metrics')) consoleWarn(...args);
+};
+
 const errors = [];
 const warnings = [];
 const err = (where, msg) => errors.push(`${where}: ${msg}`);
