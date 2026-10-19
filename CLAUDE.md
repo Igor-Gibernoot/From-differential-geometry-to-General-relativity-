@@ -195,8 +195,11 @@ each session with `/clear` and a prompt naming **one unit of work**.
 - **Checks are text-first.** Run `node tools/validate.mjs`, then
   `node tools/shots.mjs <file> <id> <scratchpad>/shots` (it serves the
   repo itself and prints only problems: formula overflow at phone and
-  desktop width, page errors). It screenshots widget cards only; look at
-  those images (2–4), plus any card it flags. `--all` also saves
+  desktop width, page errors). Always run it and read its text output.
+  It screenshots widget cards only; **view images only when something
+  visual is new** (widget sessions, or a widget preset not seen before),
+  plus any card it flags. A lesson that only reuses known widget presets
+  needs no image viewing. `--all` also saves
   build/order and phone `$$` cards: use it only when hunting a layout bug.
   Setup once per machine: `npm install --prefix tools`.
 - **End of every session:** validate, run the shots check, update the
