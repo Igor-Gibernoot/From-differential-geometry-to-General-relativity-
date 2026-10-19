@@ -486,3 +486,10 @@ a { color: var(--accent); }
   -webkit-background-clip: text; background-clip: text; color: transparent;
   transition: --title-a .6s ease, --title-b .6s ease, --title-c .6s ease;
 }
+/* The due review chip wears the same gradient, so it follows the level on screen too */
+.chip.review.due[data-hue] {
+  --title-a: var(--hue-deep); --title-b: var(--accent); --title-c: var(--hue-light);
+  background: linear-gradient(125deg, var(--title-a) 0%, var(--title-b) 50%, var(--title-c) 100%);
+  border-color: transparent;
+  transition: --title-a .6s ease, --title-b .6s ease, --title-c .6s ease;
+}

@@ -1,0 +1,410 @@
+id: ch03-atlases
+title: Atlases and Smooth Manifolds
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: Two honest rulers on a line
+    body: |
+      Take the real line $\mathcal{M} = \mathbb{R}$ with its standard topology, and write its points as $p$. Here are two charts, both with domain all of $\mathbb{R}$:
+      $$x(p) = p$$
+      and
+      $$y(p) = p^3.$$
+      Both are **homeomorphisms** of $\mathbb{R}$ onto the open set $\mathbb{R}$: $p\mapsto p^3$ is a continuous bijection, and its inverse $b\mapsto\sqrt[3]{b}$ is continuous too. So topologically both are perfectly good rulers.
+
+      Now take the function $f\colon\mathbb{R}\to\mathbb{R}$, $f(p) = p$. To differentiate it we must read it in coordinates, through a chart. In chart $x$, with coordinate $a = x(p)$:
+      $$f\circ x^{-1}(a) = a.$$
+      In chart $y$, with coordinate $b = y(p)$:
+      $$f\circ y^{-1}(b) = \sqrt[3]{b}.$$
+
+  - type: mcq
+    id: predict-differentiable
+    prompt: |
+      Before any definitions, guess. On $\mathcal{M} = \mathbb{R}$ take the two charts $x(p) = p$ and $y(p) = p^3$, both homeomorphisms onto $\mathbb{R}$. Read through them, the function $f(p) = p$ becomes $a\mapsto a$ in chart $x$ and $b\mapsto\sqrt[3]{b}$ in chart $y$. Is $f$ differentiable at $p = 0$?
+    options:
+      - text: 'The question has no answer yet: the two charts disagree, and nothing so far says which charts to trust'
+        correct: true
+      - text: 'Yes: in chart $x$ it is $a\mapsto a$, with slope $1$'
+        feedback: |
+          True in chart $x$. But in chart $y$ the same function is $\sqrt[3]{b}$, whose slope $\tfrac13 b^{-2/3}$ blows up at $b = 0$. Both charts are homeomorphisms, so topology alone gives no reason to prefer $x$.
+      - text: 'No: in chart $y$ it is $\sqrt[3]{b}$, with infinite slope at $0$'
+        feedback: |
+          True in chart $y$. But chart $x$ is just as legitimate, and there $f$ is $a\mapsto a$, as smooth as it gets. Picking $y$ over $x$ is as arbitrary as the reverse.
+      - text: 'Yes: differentiability cannot depend on the chart used to check it'
+        feedback: |
+          That is what we **want**, but it is not automatic: the two homeomorphic charts $x$ and $y$ give different verdicts at $p = 0$. Making the answer chart-independent needs an extra rule on which charts are allowed.
+    explanation: |
+      Homeomorphisms preserve continuity, not derivatives. A topological manifold therefore cannot answer "is $f$ differentiable?": the verdict changes from chart to chart. This lesson adds the missing rule: keep only charts that **agree about calculus** with each other, by demanding smooth transition maps. The result is a **smooth manifold**.
+
+  - type: text
+    id: def-atlas
+    title: Atlases
+    body: |
+      Recall: a **chart** $(\mathcal{U}, \mathscr{X})$ on a topological space $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ is an open set $\mathcal{U}$ with a homeomorphism $\mathscr{X}$ onto an open set of $\mathbb{R}^d$.
+
+      A single chart is usually too small to cover $\mathcal{M}$, so we collect several. Let $A$ be any index set (one label $\alpha$ per chart). A set of charts
+      $$\mathcal{A} = \{(\mathcal{U}_\alpha, \mathscr{X}_\alpha)\}_{\alpha\in A}$$
+      is an **atlas** of $\mathcal{M}$ if the chart domains cover $\mathcal{M}$:
+      $$\bigcup_{\alpha\in A}\mathcal{U}_\alpha = \mathcal{M}.$$
+      Equivalently: every point $p$ lies in the domain of at least one chart of $\mathcal{A}$. Like a road atlas, each page shows one region, and the pages overlap.
+
+      A topological manifold comes with one; the book writes it as the triple $(\mathcal{M}, \mathcal{O}_\mathcal{M}, \mathcal{A})_d$.
+
+      Examples on the unit circle $S^1$: the angle $\theta\in(0, 2\pi)$ misses $(1, 0)$, the angle $\varphi\in(-\pi, \pi)$ misses $(-1, 0)$, and the stereographic chart $\sigma = x/(1-y)$ misses $(0, 1)$. Both $\{\theta, \varphi\}$ and $\{\theta, \sigma\}$ are atlases. On $\mathbb{R}$, $\{x\}$ alone is an atlas, and so is $\{y\}$.
+
+  - type: mcq
+    id: which-atlases
+    multiple: true
+    prompt: |
+      On the unit circle $S^1$ consider these charts: the angle $\theta\in(0, 2\pi)$ (misses $(1, 0)$), the angle $\varphi\in(-\pi, \pi)$ (misses $(-1, 0)$), the stereographic $\sigma = x/(1-y)$ (misses $(0, 1)$), and $h_\pm(x, y) = x$ on the open upper ($y > 0$) or lower ($y < 0$) half. Which sets of charts are atlases? Select all that apply.
+    options:
+      - text: '$\{\varphi, \sigma\}$'
+        correct: true
+      - text: '$\{\theta, \varphi, \sigma\}$'
+        correct: true
+      - text: '$\{\theta\}$'
+        feedback: |
+          $\theta\in(0, 2\pi)$ misses $(1, 0)$, so its domain does not cover $S^1$. In fact no single chart can cover the circle.
+      - text: '$\{h_+, h_-\}$'
+        feedback: |
+          The open upper and lower halves leave out the two points with $y = 0$, namely $(1, 0)$ and $(-1, 0)$. Adding the right and left halves, $x > 0$ and $x < 0$, would complete the cover.
+    explanation: |
+      An atlas only needs its domains to **cover**: every point in at least one chart. $\varphi$ misses $(-1, 0)$ and $\sigma$ misses $(0, 1)$, a different point each, so $\{\varphi, \sigma\}$ covers $S^1$. Extra charts never hurt the cover, so $\{\theta, \varphi, \sigma\}$ is an atlas too.
+
+  - type: widget
+    id: transitions-explore
+    title: Look at the transition maps
+    widget: circle-charts
+    config:
+      angle: 60
+      show: both
+      snap: 15
+      presets:
+        - { label: Upper piece, show: both, angle: 60 }
+        - { label: Lower piece, show: both, angle: 300 }
+        - { label: Point (−1, 0), show: both, angle: 180 }
+    body: |
+      Chart A (outer ring) is $\theta\in(0, 2\pi)$, chart B (inner ring) is $\varphi\in(-\pi, \pi)$. The graph on the right is the transition map $\varphi(\theta)$ on the overlap.
+
+      1. Drag $p$ through the upper gold arc, then the lower one. On each piece, what kind of curve is the graph? Could you differentiate it as often as you like?
+      2. Press **Point (−1, 0)**. Is $\theta = \pi$ in the domain of the transition map?
+
+  - type: mcq
+    id: angle-transition-smooth
+    review: false
+    prompt: |
+      On the unit circle, the transition from $\theta\in(0, 2\pi)$ to $\varphi\in(-\pi, \pi)$ is $\varphi = \theta$ on the upper piece $(0, \pi)$ and $\varphi = \theta - 2\pi$ on the lower piece $(\pi, 2\pi)$. Is it infinitely differentiable on its domain?
+    options:
+      - text: 'Yes: on each piece it is a straight line of slope $1$'
+        correct: true
+      - text: 'No: it jumps at $\theta = \pi$'
+        feedback: |
+          $\theta = \pi$ is the point $(-1, 0)$, which chart B misses, so it is **not** in the domain of the transition map. The domain is the two open pieces, and on each the map is a line of slope $1$.
+      - text: 'No: a map defined by two formulas cannot be differentiable'
+        feedback: |
+          Differentiability is checked point by point, using a small open interval around the point. Every point of $(0, \pi)$ or $(\pi, 2\pi)$ has such an interval inside one piece, where a single formula applies.
+    explanation: |
+      Each piece is $\theta\mapsto\theta + c$ with a constant $c$ ($0$ or $-2\pi$): derivative $1$, all higher derivatives $0$. The jump sits at $\theta = \pi$, outside the domain.
+
+  - type: text
+    id: why-transitions
+    title: Where calculus can live
+    body: |
+      The manifold $\mathcal{M}$ itself has no subtraction and no division: "$\frac{f(q) - f(p)}{q - p}$" makes no sense for points of a circle. Calculus only exists on $\mathbb{R}^d$. So we **define** derivatives of a function $f\colon\mathcal{M}\to\mathbb{R}$ through a chart $(\mathcal{U}, \mathscr{X})$, by differentiating its **chart representative**
+      $$f\circ\mathscr{X}^{-1}\colon\mathscr{X}(\mathcal{U})\to\mathbb{R},$$
+      an ordinary function of $d$ real numbers.
+
+      With a second chart $(\mathcal{V}, \mathscr{Y})$ we get a second representative $f\circ\mathscr{Y}^{-1}$. For the definition to make sense, the two must agree on whether $f$ is differentiable. How are the two representatives related on the overlap $\mathcal{U}\cap\mathcal{V}$?
+
+  - type: build
+    id: build-representatives
+    prompt: |
+      Let $(\mathcal{U}, \mathscr{X})$ and $(\mathcal{V}, \mathscr{Y})$ be overlapping charts and $f\colon\mathcal{M}\to\mathbb{R}$ a function. On $\mathscr{Y}(\mathcal{U}\cap\mathcal{V})$, write the representative $f\circ\mathscr{Y}^{-1}$ in terms of $f\circ\mathscr{X}^{-1}$ and a transition map. (Insert $\mathscr{X}^{-1}\circ\mathscr{X} = \mathrm{id}$, the identity map.)
+    prefix: 'f\circ\mathscr{Y}^{-1} ='
+    tiles: ['(f\circ\mathscr{X}^{-1})', '\circ', '(\mathscr{X}\circ\mathscr{Y}^{-1})', '(\mathscr{Y}\circ\mathscr{X}^{-1})', '(f\circ\mathscr{X})']
+    answers:
+      - ['(f\circ\mathscr{X}^{-1})', '\circ', '(\mathscr{X}\circ\mathscr{Y}^{-1})']
+    wrong:
+      - answer: ['(f\circ\mathscr{X}^{-1})', '\circ', '(\mathscr{Y}\circ\mathscr{X}^{-1})']
+        feedback: |
+          Check the types. $f\circ\mathscr{Y}^{-1}$ eats $\mathscr{Y}$-coordinates, but $\mathscr{Y}\circ\mathscr{X}^{-1}$ eats $\mathscr{X}$-coordinates. You need the map that turns $\mathscr{Y}$-coordinates into $\mathscr{X}$-coordinates: $\mathscr{X}\circ\mathscr{Y}^{-1}$.
+      - answer: ['(f\circ\mathscr{X})', '\circ', '(\mathscr{X}\circ\mathscr{Y}^{-1})']
+        feedback: |
+          $\mathscr{X}\circ\mathscr{Y}^{-1}$ outputs **numbers** (coordinates), but $f\circ\mathscr{X}$ would first need $f$ to output points. The representative that eats coordinates is $f\circ\mathscr{X}^{-1}$.
+    hint: Write $f\circ\mathscr{Y}^{-1} = f\circ(\mathscr{X}^{-1}\circ\mathscr{X})\circ\mathscr{Y}^{-1}$ and regroup.
+    explanation: |
+      Inserting $\mathscr{X}^{-1}\circ\mathscr{X} = \mathrm{id}$ on the overlap and regrouping:
+      $$\begin{aligned}
+      f\circ\mathscr{Y}^{-1} &= f\circ\mathscr{X}^{-1}\circ\mathscr{X}\circ\mathscr{Y}^{-1} \\
+      &= (f\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\mathscr{Y}^{-1})
+      \end{aligned}$$
+      Both factors are maps between subsets of real spaces. If the transition $\mathscr{X}\circ\mathscr{Y}^{-1}$ is smooth, the chain rule says: $f\circ\mathscr{X}^{-1}$ smooth $\Rightarrow$ $f\circ\mathscr{Y}^{-1}$ smooth. The two charts then agree about calculus.
+
+  - type: text
+    id: def-compatible
+    title: Compatible charts
+    body: |
+      Notation: a map between open sets of real spaces is **$C^k$** if all its partial derivatives up to order $k$ exist and are continuous ($C^0$ means just continuous), and **$C^\infty$**, or **smooth**, if it is $C^k$ for every $k$.
+
+      Recall the transition maps of two charts $(\mathcal{U}, \mathscr{X})$ and $(\mathcal{V}, \mathscr{Y})$, written with the rune $\text{ᛖ}$:
+      $$\text{ᛖ}_{\mathcal{U}\mathcal{V}} := \mathscr{Y}\circ\mathscr{X}^{-1}$$
+      and
+      $$\text{ᛖ}_{\mathcal{V}\mathcal{U}} := \mathscr{X}\circ\mathscr{Y}^{-1}.$$
+      The two charts are **$C^\infty$-compatible** if either
+
+      1. $\mathcal{U}\cap\mathcal{V} = \emptyset$ (nothing to compare), or
+      2. **both** $\text{ᛖ}_{\mathcal{U}\mathcal{V}}$ and $\text{ᛖ}_{\mathcal{V}\mathcal{U}}$ are $C^\infty$ on their domains, in the ordinary multivariable calculus sense.
+
+      Both directions are needed: by the chain-rule argument, smoothness of $f$ passes from $\mathscr{X}$ to $\mathscr{Y}$ through $\mathscr{X}\circ\mathscr{Y}^{-1}$, and from $\mathscr{Y}$ back to $\mathscr{X}$ through $\mathscr{Y}\circ\mathscr{X}^{-1}$. Continuity of both is never in question: they are compositions of homeomorphisms. The same definition with $C^k$ in place of $C^\infty$ gives $C^k$-compatibility.
+
+  - type: mcq
+    id: cube-compatible
+    prompt: |
+      On $\mathbb{R}$, are the charts $x(p) = p$ and $y(p) = p^3$ (both with domain $\mathbb{R}$) $C^\infty$-compatible?
+    options:
+      - text: 'No: $x\circ y^{-1}(b) = \sqrt[3]{b}$ is not differentiable at $b = 0$'
+        correct: true
+      - text: 'Yes: the transition $y\circ x^{-1}(a) = a^3$ is smooth'
+        feedback: |
+          That is one direction only. The reverse transition $x\circ y^{-1}(b) = \sqrt[3]{b}$ has derivative $\tfrac13 b^{-2/3}$, which blows up at $b = 0$. Compatibility needs **both** directions smooth.
+      - text: 'Yes: both charts are homeomorphisms, so the transitions are continuous'
+        feedback: |
+          Continuity of the transitions comes free with any two charts. It cannot be what compatibility asks for, or every pair of charts would pass, including these two, which disagree on whether $f(p) = p$ is differentiable at $0$.
+      - text: 'No: $p\mapsto p^3$ is not a bijection, so $y$ is not a chart'
+        feedback: |
+          $p\mapsto p^3$ is a bijection of $\mathbb{R}$ (strictly increasing, onto), with continuous inverse $\sqrt[3]{b}$. So $y$ is a chart; the failure is in the calculus, not the topology.
+    explanation: |
+      $y\circ x^{-1}(a) = a^3$ is smooth, but its derivative $3a^2$ vanishes at $a = 0$, so its inverse $x\circ y^{-1}(b) = \sqrt[3]{b}$ has a vertical tangent there. Not $C^1$, hence not $C^\infty$: the charts are **not** compatible. This is exactly why $f(p) = p$ looked smooth in one chart and not in the other.
+
+  - type: numeric
+    id: lower-derivative
+    prompt: |
+      On the unit circle, on the lower piece of the overlap, the transition from the angle $\theta\in(0, 2\pi)$ to the angle $\varphi\in(-\pi, \pi)$ is
+      $$\varphi = \theta - 2\pi.$$
+      What is its derivative $\dfrac{d\varphi}{d\theta}$ at $\theta = \tfrac{3\pi}{2}$?
+    answer: 1
+    wrong:
+      - value: -1.5707963
+        feedback: That is the **value** $\varphi = \tfrac{3\pi}{2} - 2\pi = -\tfrac{\pi}{2}$. The question asks for the slope.
+      - value: 0
+        feedback: The constant $-2\pi$ has derivative $0$, but $\theta$ itself has derivative $1$.
+    tolerance: 0.001
+    hint: Differentiate $\theta - 2\pi$ term by term.
+    explanation: |
+      $\dfrac{d}{d\theta}(\theta - 2\pi) = 1$, at every point of the piece, and every higher derivative is $0$. The reverse map $\theta = \varphi + 2\pi$ is just as smooth, so the two angle charts are $C^\infty$-compatible.
+
+  - type: widget
+    id: stereo-explore
+    title: The stereographic transition
+    widget: circle-charts
+    config:
+      angle: 270
+      show: both
+      stereo: true
+      snap: 15
+      presets:
+        - { label: South pole, show: both, stereo: true, angle: 270 }
+        - { label: Near the top, show: both, stereo: true, angle: 75 }
+        - { label: Right point, show: both, stereo: true, angle: 0 }
+    body: |
+      Chart B is now the stereographic projection $\sigma = x/(1-y)$ on $S^1\setminus\{(0, 1)\}$, and the graph shows the transition $\sigma = \cos\theta/(1 - \sin\theta)$.
+
+      1. Drag $p$ slowly around the lower half: does the graph ever level off or turn back?
+      2. Press **Near the top** and move towards $(0, 1)$. The graph shoots off, but is $\theta = \tfrac\pi2$ in the domain of the transition?
+
+  - type: numeric
+    id: stereo-slope
+    prompt: |
+      On the unit circle, the transition from the angle $\theta\in(0, 2\pi)$ to the stereographic coordinate $\sigma = x/(1-y)$ is
+      $$\sigma = \frac{\cos\theta}{1 - \sin\theta}.$$
+      What is its derivative $\dfrac{d\sigma}{d\theta}$ at $\theta = \tfrac{3\pi}{2}$ (the south pole)?
+    answer: 0.5
+    answerText: '1/2'
+    tolerance: 0.001
+    wrong:
+      - value: 0
+        feedback: That is the **value** $\sigma = \cos\tfrac{3\pi}{2}/(1 + 1) = 0$ at the south pole. The question asks for the slope.
+      - value: 0.25
+        feedback: Close. You probably kept $(1 - \sin\theta)^2 = 4$ in the denominator; the numerator simplifies to $1 - \sin\theta = 2$ too, so one factor cancels.
+    hint: Quotient rule, then $\sin^2\theta + \cos^2\theta = 1$.
+    explanation: |
+      By the quotient rule,
+      $$\begin{aligned}
+      \frac{d\sigma}{d\theta} &= \frac{-\sin\theta\,(1 - \sin\theta) + \cos^2\theta}{(1 - \sin\theta)^2} \\
+      &= \frac{1 - \sin\theta}{(1 - \sin\theta)^2} \\
+      &= \frac{1}{1 - \sin\theta}
+      \end{aligned}$$
+      using $\sin^2\theta + \cos^2\theta = 1$. At $\theta = \tfrac{3\pi}{2}$, $\sin\theta = -1$, so the slope is $\tfrac12$.
+
+  - type: mcq
+    id: theta-sigma-compatible
+    prompt: |
+      On the unit circle, the transition from the angle $\theta\in(0, 2\pi)$ to the stereographic coordinate $\sigma = x/(1-y)$ is $\sigma = \cos\theta/(1 - \sin\theta)$ on the overlap, with derivative
+      $$\frac{d\sigma}{d\theta} = \frac{1}{1 - \sin\theta}.$$
+      Are the charts $\theta$ and $\sigma$ $C^\infty$-compatible?
+    options:
+      - text: 'Yes: the transition is smooth with slope never $0$, so its inverse is smooth too'
+        correct: true
+      - text: 'No: the transition blows up at $\theta = \tfrac{\pi}{2}$'
+        feedback: |
+          $\theta = \tfrac{\pi}{2}$ is the north pole $(0, 1)$, which $\sigma$ misses, so it is not in the overlap. On the overlap, $\sin\theta < 1$ and the formula is smooth.
+      - text: 'Yes: both are homeomorphisms, so they are compatible'
+        feedback: |
+          Homeomorphisms are not enough: $x(p) = p$ and $y(p) = p^3$ on $\mathbb{R}$ are homeomorphisms, yet $x\circ y^{-1} = \sqrt[3]{b}$ is not differentiable at $0$. Compatibility is about **derivatives** of the transitions.
+      - text: 'Cannot tell: only one direction has been computed'
+        feedback: |
+          The reverse direction follows. A smooth map of one variable with nonzero derivative has a smooth inverse, with derivative $1/(d\sigma/d\theta)$. Here $d\sigma/d\theta = 1/(1 - \sin\theta) > 0$ on the overlap.
+    explanation: |
+      On the overlap $\sin\theta < 1$, so $\cos\theta/(1 - \sin\theta)$ is smooth and its slope $1/(1 - \sin\theta)$ is never $0$. In one variable, a smooth map with nonzero slope has a smooth inverse (slope $1 - \sin\theta$, in terms of $\theta$). Explicitly, the reverse transition has $d\theta/d\sigma = 2/(1 + \sigma^2)$. Compare $a\mapsto a^3$, whose slope vanishes at $0$: that is where its inverse broke.
+
+  - type: text
+    id: def-maximal
+    title: Smooth atlases and maximal atlases
+    body: |
+      An atlas is **smooth** (a $C^\infty$-atlas, written $\mathcal{A}_{C^\infty}$) if **every pair** of its charts is $C^\infty$-compatible. So $\{\theta, \varphi\}$ and $\{\theta, \sigma\}$ are smooth atlases of $S^1$; $\{x\}$ and $\{y\}$ are smooth atlases of $\mathbb{R}$ (a single chart is always compatible with itself), but $\{x, y\}$ is not.
+
+      **The choice problem.** Calculus should not depend on which pages we happened to put in the atlas: $\{\theta, \varphi\}$ and $\{\theta, \sigma\}$ ought to give the circle the same calculus. So we throw in **every** chart that is compatible with all charts of a smooth atlas $\mathcal{A}$. The result is the **maximal atlas** generated by $\mathcal{A}$:
+      $$\mathcal{A}_{\max} = \{\text{charts compatible with all of } \mathcal{A}\}.$$
+
+      Two smooth atlases are **equivalent** if their union is still smooth; then they generate the same maximal atlas. A maximal atlas is called a **smooth structure**. One more fact is needed for this to work: the charts of $\mathcal{A}_{\max}$ must be compatible **with each other**, not just with $\mathcal{A}$. Next card.
+
+  - type: order
+    id: maximal-is-smooth
+    prompt: |
+      Let $\mathcal{A}$ be a smooth atlas, and $(\mathcal{V}, \mathscr{Y})$, $(\mathcal{W}, \mathscr{Z})$ two charts that are each $C^\infty$-compatible with every chart of $\mathcal{A}$. Put in order the proof that $\mathscr{Z}\circ\mathscr{Y}^{-1}$ is smooth on $\mathscr{Y}(\mathcal{V}\cap\mathcal{W})$.
+    steps:
+      - 'Take any point $p\in\mathcal{V}\cap\mathcal{W}$.'
+      - 'Since $\mathcal{A}$ covers $\mathcal{M}$, pick a chart $(\mathcal{U}, \mathscr{X})\in\mathcal{A}$ with $p\in\mathcal{U}$.'
+      - 'Near $\mathscr{Y}(p)$, write $\mathscr{Z}\circ\mathscr{Y}^{-1} = (\mathscr{Z}\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\mathscr{Y}^{-1})$.'
+      - 'Both factors are smooth, by compatibility with $\mathscr{X}$; by the chain rule, so is their composition.'
+      - 'Smoothness is checked point by point, and $p$ was arbitrary: $\mathscr{Z}\circ\mathscr{Y}^{-1}$ is smooth on all of $\mathscr{Y}(\mathcal{V}\cap\mathcal{W})$.'
+    hint: The atlas $\mathcal{A}$ acts as a middleman. You need a chart of it around the point before you can route through it.
+    explanation: |
+      The proof routes the transition through a middleman chart $\mathscr{X}$ of $\mathcal{A}$, which exists near each point because an atlas covers $\mathcal{M}$. Exchanging $\mathscr{Y}$ and $\mathscr{Z}$ gives the reverse direction. So every chart in $\mathcal{A}_{\max}$ is compatible with every other: the maximal atlas is itself a smooth atlas, and no compatible chart is left outside it.
+
+  - type: mcq
+    id: same-structure
+    prompt: |
+      On the unit circle, $\mathcal{A}_1 = \{\theta, \varphi\}$ (the angles in $(0, 2\pi)$ and $(-\pi, \pi)$) and $\mathcal{A}_2 = \{\theta, \sigma\}$ (with the stereographic $\sigma = x/(1-y)$) are both smooth atlases, and $\varphi$ and $\sigma$ are $C^\infty$-compatible. Do $\mathcal{A}_1$ and $\mathcal{A}_2$ define the same smooth structure?
+    options:
+      - text: 'Yes: their union $\{\theta, \varphi, \sigma\}$ is smooth, so they generate the same maximal atlas'
+        correct: true
+      - text: 'No: they contain different charts'
+        feedback: |
+          A smooth structure is the **maximal** atlas, not the atlas we wrote down. Every chart of $\mathcal{A}_2$ is compatible with every chart of $\mathcal{A}_1$, so $\sigma$ already belongs to the maximal atlas generated by $\mathcal{A}_1$.
+      - text: 'No: $\mathcal{A}_1$ has two charts of the same kind (angles), $\mathcal{A}_2$ mixes kinds'
+        feedback: |
+          The kind of formula is irrelevant. Only compatibility matters: smooth transitions in both directions between every pair of charts.
+    explanation: |
+      Check all pairs of $\{\theta, \varphi, \sigma\}$: $\theta$–$\varphi$ (slope $1$ on each piece), $\theta$–$\sigma$ (slope $1/(1 - \sin\theta) > 0$), and $\varphi$–$\sigma$ (given). All compatible, so the two atlases are equivalent and define one smooth structure: the standard smooth circle.
+
+  - type: text
+    id: def-smooth-manifold
+    title: Smooth manifolds
+    body: |
+      A **$d$-dimensional smooth manifold** (or $C^\infty$-manifold) is a triple
+      $$(\mathcal{M}, \mathcal{O}_\mathcal{M}, \mathcal{A}_{C^\infty})_d:$$
+      a topological manifold together with a smooth atlas, understood up to equivalence, that is, together with the maximal atlas it generates.
+
+      Back to $\mathbb{R}$. The atlases $\{x\}$, $x(p) = p$, and $\{y\}$, $y(p) = p^3$, are each smooth, but their union is not. So they generate **two different maximal atlases**: two different smooth structures on the same topological space $\mathbb{R}$. In the first, $f(p) = p$ is smooth; in the second it is not, because there its representative is $\sqrt[3]{b}$.
+
+      Different does not mean exotic: the two smooth lines turn out to be the same smooth manifold in disguise, related by a smooth map with smooth inverse. Genuinely inequivalent structures do exist: $\mathbb{R}^4$ carries uncountably many, and the sphere $S^7$ carries 28 (up to orientation-preserving diffeomorphism).
+
+      Is $C^\infty$ too greedy? For $k\ge 1$, every maximal $C^k$-atlas contains a $C^\infty$-atlas, unique up to diffeomorphism (Whitney), so nothing is lost by working with smooth manifolds from now on.
+
+  - type: mcq
+    id: in-maximal-atlas
+    multiple: true
+    prompt: |
+      On $\mathbb{R}$ (points $p$), take the smooth structure generated by the atlas $\{(\mathbb{R}, x)\}$, $x(p) = p$. Which of these charts belong to its maximal atlas? Select all that apply.
+    options:
+      - text: '$(\mathbb{R}, z)$ with $z(p) = 2p + 1$'
+        correct: true
+      - text: '$((0, \infty), \ell)$ with $\ell(p) = \ln p$'
+        correct: true
+      - text: '$(\mathbb{R}, w)$ with $w(p) = p + p^3$'
+        correct: true
+      - text: '$(\mathbb{R}, y)$ with $y(p) = p^3$'
+        feedback: |
+          $y\circ x^{-1}(a) = a^3$ is smooth, but its inverse $\sqrt[3]{b}$ is not differentiable at $0$: the slope $3a^2$ of $a^3$ vanishes at $a = 0$. Not compatible with $x$.
+      - text: '$(\mathbb{R}, u)$ with $u(p) = |p|$'
+        feedback: |
+          $|p|$ is not injective ($u(-1) = u(1)$), so $u$ is not even a homeomorphism: not a chart at all.
+    explanation: |
+      Test each chart against $x$ in both directions. $z$: transitions $2a + 1$ and $(b - 1)/2$, both smooth. $\ell$: domain $(0, \infty)$ is open, image $\mathbb{R}$; transitions $\ln a$ and $e^b$, smooth. $w$: $a + a^3$ has slope $1 + 3a^2 > 0$, never zero, so its inverse is smooth too. Contrast $y$: slope $3a^2$ vanishes at $0$, so the inverse $\sqrt[3]{b}$ fails.
+
+  - type: mcq
+    id: resolve-hook
+    prompt: |
+      Give $\mathbb{R}$ (points $p$) the smooth structure generated by the single chart $y(p) = p^3$. A function $g\colon\mathbb{R}\to\mathbb{R}$ counts as smooth if its representative $g\circ y^{-1}$ is smooth. Which function is smooth in this structure?
+    options:
+      - text: '$g(p) = p^3$'
+        correct: true
+      - text: '$g(p) = p$'
+        feedback: |
+          Its representative is $g\circ y^{-1}(b) = \sqrt[3]{b}$, not differentiable at $b = 0$. Smooth in the structure of $x(p) = p$, but not in this one.
+      - text: 'Both: smoothness of a function does not depend on the structure'
+        feedback: |
+          Smoothness is defined through the charts of the structure. With the charts compatible with $y$, $g(p) = p$ reads as $\sqrt[3]{b}$, which fails at $0$.
+    explanation: |
+      $g\circ y^{-1}(b) = (\sqrt[3]{b})^3 = b$: smooth. So the hook's question, "is $f(p) = p$ differentiable at $0$?", has an answer once a smooth structure is fixed: yes for the structure of $x$, no for that of $y$. Inside one maximal atlas all charts agree, so the answer no longer depends on which chart we use.
+
+  - type: mcq
+    id: trap-continuous
+    tag: Trap
+    shuffle: false
+    prompt: |
+      True or false: two overlapping charts on a topological manifold are $C^\infty$-compatible as soon as their transition maps are continuous.
+    options:
+      - text: 'True'
+        feedback: |
+          Transitions are compositions of homeomorphisms, so they are **always** continuous: this condition would make every pair compatible. On $\mathbb{R}$, $x(p) = p$ and $y(p) = p^3$ have continuous transitions $a^3$ and $\sqrt[3]{b}$, yet $\sqrt[3]{b}$ is not differentiable at $0$.
+      - text: 'False'
+        correct: true
+    explanation: |
+      Compatibility asks for **smooth** transitions in both directions. Continuity is already guaranteed by the charts being homeomorphisms, so it adds nothing.
+
+  - type: mcq
+    id: trap-one-direction
+    tag: Trap
+    shuffle: false
+    prompt: |
+      True or false: to check that two overlapping charts $(\mathcal{U}, \mathscr{X})$ and $(\mathcal{V}, \mathscr{Y})$ are $C^\infty$-compatible, it is enough that $\mathscr{Y}\circ\mathscr{X}^{-1}$ is smooth.
+    options:
+      - text: 'True'
+        feedback: |
+          On $\mathbb{R}$, $x(p) = p$ and $y(p) = p^3$ give $y\circ x^{-1}(a) = a^3$, which is smooth, while $x\circ y^{-1}(b) = \sqrt[3]{b}$ is not differentiable at $0$. One smooth direction does not make the other smooth.
+      - text: 'False'
+        correct: true
+    explanation: |
+      Both $\mathscr{Y}\circ\mathscr{X}^{-1}$ and $\mathscr{X}\circ\mathscr{Y}^{-1}$ must be smooth. In one variable, the reverse direction follows if the slope of $\mathscr{Y}\circ\mathscr{X}^{-1}$ never vanishes; $a^3$ fails exactly at $0$.
+
+  - type: mcq
+    id: trap-different-atlas
+    tag: Trap
+    shuffle: false
+    prompt: |
+      True or false: two smooth atlases of the same topological manifold that contain different charts always define different smooth structures.
+    options:
+      - text: 'True'
+        feedback: |
+          On the unit circle, $\{\theta, \varphi\}$ (two angle charts) and $\{\theta, \sigma\}$ (angle and stereographic) contain different charts, but their union is still smooth, so they generate the same maximal atlas.
+      - text: 'False'
+        correct: true
+    explanation: |
+      A smooth structure is a **maximal** atlas. Two atlases define the same one exactly when their union is smooth (all cross pairs compatible). Different structures arise only when some cross pair fails, as for $\{x\}$ and $\{x^3\}$ on $\mathbb{R}$.
+
+  - type: text
+    id: wrap-up
+    title: What you now own
+    body: |
+      - An **atlas**: a set of charts whose domains cover $\mathcal{M}$.
+      - Calculus on $\mathcal{M}$ is done on chart representatives $f\circ\mathscr{X}^{-1}$, and
+      $$f\circ\mathscr{Y}^{-1} = (f\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\mathscr{Y}^{-1})$$
+      shows why charts must agree through their **transition maps**.
+      - **$C^\infty$-compatible** charts: both transitions smooth (continuity is free). $x$ and $x^3$ on $\mathbb{R}$ fail; the angle and stereographic charts on $S^1$ pass.
+      - A **smooth atlas** has all pairs compatible; its **maximal atlas** is the smooth structure, and it is independent of the atlas we started from.
+      - A **smooth manifold** $(\mathcal{M}, \mathcal{O}_\mathcal{M}, \mathcal{A}_{C^\infty})_d$. The same space can carry different smooth structures, as $\mathbb{R}$ with $\{x\}$ and with $\{x^3\}$.
+
+      **Next:** with smooth structures in hand we can say when a map **between** two manifolds is smooth, and when two manifolds are the same smooth manifold: **diffeomorphisms**. We will find one between the two smooth lines of this lesson.

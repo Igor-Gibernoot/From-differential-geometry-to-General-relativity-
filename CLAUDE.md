@@ -255,8 +255,15 @@ topological manifold definition and dimension, line with two origins,
 stereographic σ = x/(1−y) and σ∘θ⁻¹ = cos/(1−sin), two traps). Screenshot
 pass done.
 
-Session queue (one unit each): ③ `ch03-atlases`
-→ ④ `ch03-smooth-maps` → ⑤ `ch03-circle` → ⑥ `ch03-traps` → ⑦ `ch03-map` →
+Built `ch03-atlases` (hook: f(p) = p in charts x and x³ on ℝ; atlas
+definition; angle and stereographic transitions revisited in circle-charts;
+chart representatives f∘𝒳⁻¹ and the build f∘𝒴⁻¹ = (f∘𝒳⁻¹)∘(𝒳∘𝒴⁻¹);
+C^k/C^∞ compatibility, x vs x³ fails one direction; dσ/dθ = 1/(1 − sin θ);
+maximal atlas with an order-the-proof card; smooth manifold, two structures on
+ℝ; three traps). Screenshot pass done. The due review chip now follows the
+level hue with the course title.
+
+Session queue (one unit each): ④ `ch03-smooth-maps` → ⑤ `ch03-circle` → ⑥ `ch03-traps` → ⑦ `ch03-map` →
 ⑧–⑨ `ch03-challenge`.
 
 Screenshot pass: `tools/shots.mjs` (`playwright-core`, installed in

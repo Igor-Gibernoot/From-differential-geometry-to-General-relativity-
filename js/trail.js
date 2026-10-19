@@ -27,7 +27,7 @@ export async function renderTrail(root) {
       acc != null ? h('span', { class: 'chip acc', tabindex: 0, 'data-tip': 'Average first-try accuracy over the lessons you finished', html: `${icons.target}<span>${pct(acc)}</span>` }) : null,
       h('span', { class: 'chip streak', tabindex: 0, 'data-tip': 'Days in a row you studied', html: `${icons.flame}<span>${streak}</span>` }),
       h('button', {
-        class: `chip review${due ? ' due' : ''}`, type: 'button', 'data-tip': 'Spaced-repetition review',
+        class: `chip review${due ? ' due' : ''}`, type: 'button', 'data-hue': 0, 'data-tip': 'Spaced-repetition review',
         html: `${icons.review}<span>${due ? `Review ${due}` : 'Review'}</span>`, onclick: () => { location.hash = '#/review'; },
       }),
       accountChip(),
@@ -80,12 +80,13 @@ export async function renderTrail(root) {
     const el = root.querySelector('.node.next');
     el?.scrollIntoView({ block: 'center' });
   }
-  followLevelHue(root.querySelector('.course-title'), [...root.querySelectorAll('section.level')]);
+  followLevelHue([...root.querySelectorAll('.course-title, .chip.review')], [...root.querySelectorAll('section.level')]);
 }
 
-// The course title takes the hue of the level on screen: the one crossing a
-// line a third of the way down the area below the sticky top bar.
-function followLevelHue(title, sections) {
+// The course title and the review chip take the hue of the level on screen:
+// the one crossing a line a third of the way down the area below the sticky top bar.
+function followLevelHue(targets, sections) {
+  const [title] = targets;
   let queued = false;
   const update = () => {
     queued = false;
@@ -93,7 +94,7 @@ function followLevelHue(title, sections) {
     const bar = title.parentElement.getBoundingClientRect().bottom;
     const line = bar + (innerHeight - bar) / 3;
     const cur = sections.findLast(s => s.getBoundingClientRect().top <= line) ?? sections[0];
-    if (cur && title.dataset.hue !== cur.dataset.hue) title.dataset.hue = cur.dataset.hue;
+    if (cur) for (const el of targets) if (el.dataset.hue !== cur.dataset.hue) el.dataset.hue = cur.dataset.hue;
   };
   const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
   addEventListener('scroll', onScroll, { passive: true });

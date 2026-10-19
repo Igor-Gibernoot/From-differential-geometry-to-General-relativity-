@@ -111,7 +111,11 @@ levels:
         kind: concept
         file: ch03/charts.yaml
         summary: Can one angle label every point of a circle? Charts, coordinates, transition maps between overlapping charts, and the definition of a topological manifold.
-      - { id: ch03-atlases, title: Atlases and Smooth Manifolds, kind: concept }
+      - id: ch03-atlases
+        title: Atlases and Smooth Manifolds
+        kind: concept
+        file: ch03/atlases.yaml
+        summary: Is $f(p) = p$ differentiable when the line is charted by $p^3$? Atlases, compatible charts, maximal atlases, and the definition of a smooth manifold.
       - { id: ch03-smooth-maps, title: Smooth Maps and Diffeomorphisms, kind: concept }
       - { id: ch03-circle, title: "Guided Problem: The Circle Is a Smooth Manifold", kind: guided }
       - { id: ch03-traps, title: Manifold Traps, kind: traps }
