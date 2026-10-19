@@ -23,7 +23,6 @@ professor (Daniel López Cano), which Igor converted to Markdown.
   (A computational resources, B proofs, C worked examples). Chapter 10 may
   still be in progress: check the Markdown before starting a chapter. The
   appendix B proofs and C examples are good sources for guided problems.
-  The previous conversion is kept in `book_old_backup/` (git-ignored).
 
 ## Course Overview
 
