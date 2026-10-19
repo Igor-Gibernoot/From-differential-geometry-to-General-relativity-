@@ -185,19 +185,25 @@ nodes:
     row: 4
     col: 3
     body: |
-      $$y^i = \sum_j J_j^i\, x^j \quad\text{(vector components: contravariant)}$$
-      $$\mathtt{x}_j = \sum_i J^i_j\,\mathtt{y}_i \quad\text{(covector components: covariant)}$$
+      Vector components are contravariant,
+      $$y^i = \sum_j J_j^i\, x^j ,$$
+      and covector components covariant,
+      $$\mathtt{x}_j = \sum_i J^i_j\,\mathtt{y}_i .$$
       So $\sum_i \mathtt{x}_i\, x^i$ is the same in every basis.
     decoys:
       - body: |
-          $$y^i = \sum_j (J^{-1})_j^i\, x^j \quad\text{(vector components: covariant)}$$
-          $$\mathtt{x}_j = \sum_i J^i_j\,\mathtt{y}_i \quad\text{(covector components: covariant)}$$
+          Vector components are covariant,
+          $$y^i = \sum_j (J^{-1})_j^i\, x^j ,$$
+          and so are covector components,
+          $$\mathtt{x}_j = \sum_i J^i_j\,\mathtt{y}_i .$$
           Both follow the basis.
         feedback: |
           Vector components run **against** the basis. Substituting $\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$ into $\mathcal{X} = \sum_i x^i\cdot\hat{x}_i$ gives $y^j = \sum_i J_i^j\, x^i$, with $J$, not $J^{-1}$. If the basis doubles, the components halve.
       - body: |
-          $$y^i = \sum_j J_j^i\, x^j \quad\text{(vector components)}$$
-          $$\mathtt{y}_i = \sum_j J_j^i\,\mathtt{x}_j \quad\text{(covector components)}$$
+          Vector components obey
+          $$y^i = \sum_j J_j^i\, x^j ,$$
+          and covector components
+          $$\mathtt{y}_i = \sum_j J_j^i\,\mathtt{x}_j .$$
           Same law for both; whether an index is up or down is only notation.
         feedback: |
           If both used $J$, the pairing $\sum_i \mathtt{x}_i\, x^i = \mathsf{X}(\mathcal{X})$ would change with the basis, yet it is a number defined without any basis. Covector components need the opposite law so that $J$ and $J^{-1}$ cancel. The index position records that behaviour; it is not decoration.
@@ -211,21 +217,33 @@ nodes:
     span: 3
     body: |
       An $(r,s)$-tensor is a map with $r$ covector slots and $s$ vector slots,
-      $$T: \underbrace{V^*\times\cdots\times V^*}_{r}\times\underbrace{V\times\cdots\times V}_{s}\to\mathbb{R},$$
-      that is **multilinear**: linear in each slot separately. Its components are $T^{i_1\dots i_r}_{j_1\dots j_s} = T(\hat{\mathfrak{x}}^{i_1},\dots,\hat{\mathfrak{x}}^{i_r};\hat{x}_{j_1},\dots,\hat{x}_{j_s})$. Each upper index transforms like a vector component and each lower index like a covector component.
+      $$\begin{aligned}T: {}&\underbrace{V^*\times\cdots\times V^*}_{r}\\ &\times\underbrace{V\times\cdots\times V}_{s}\to\mathbb{R},\end{aligned}$$
+      that is **multilinear**: linear in each slot separately. Its components are $T^{i_1\dots i_r}_{j_1\dots j_s} = T(\hat{\mathfrak{x}}^{i_1},\dots,\hat{\mathfrak{x}}^{i_r};\hat{x}_{j_1},\dots,\hat{x}_{j_s})$. Every tensor is a **sum** of tensor products of basis elements,
+      $$T = \sum T^{i_1\dots i_r}_{j_1\dots j_s}\,\hat{x}_{i_1}\otimes\cdots\otimes\hat{\mathfrak{x}}^{j_s},$$
+      so $\dim T^{(r,s)} = d^{\,r+s}$. Each upper index transforms like a vector component and each lower index like a covector component.
     decoys:
       - body: |
           An $(r,s)$-tensor is a map with $r$ covector slots and $s$ vector slots,
-          $$T: \underbrace{V^*\times\cdots\times V^*}_{r}\times\underbrace{V\times\cdots\times V}_{s}\to\mathbb{R},$$
-          that is **linear on the whole list of inputs at once**: $T(2\,\text{inputs}) = 2\,T(\text{inputs})$. Each upper index transforms like a vector component and each lower index like a covector component.
+          $$\begin{aligned}T: {}&\underbrace{V^*\times\cdots\times V^*}_{r}\\ &\times\underbrace{V\times\cdots\times V}_{s}\to\mathbb{R},\end{aligned}$$
+          that is **linear on the whole list of inputs at once**: $T(2\,\text{inputs}) = 2\,T(\text{inputs})$. Every tensor is a **sum** of tensor products of basis elements,
+          $$T = \sum T^{i_1\dots i_r}_{j_1\dots j_s}\,\hat{x}_{i_1}\otimes\cdots\otimes\hat{\mathfrak{x}}^{j_s},$$
+          so $\dim T^{(r,s)} = d^{\,r+s}$. Each upper index transforms like a vector component and each lower index like a covector component.
         feedback: |
           Multilinear means linear in **each slot separately**, with the others held fixed. So doubling every input of a $(1,1)$-tensor multiplies the result by $2\cdot 2 = 4$, not by $2$.
+      - body: |
+          An $(r,s)$-tensor is a map with $r$ covector slots and $s$ vector slots,
+          $$\begin{aligned}T: {}&\underbrace{V^*\times\cdots\times V^*}_{r}\\ &\times\underbrace{V\times\cdots\times V}_{s}\to\mathbb{R},\end{aligned}$$
+          that is **multilinear**: linear in each slot separately. Every tensor is a **single** tensor product of $r$ vectors and $s$ covectors,
+          $$T = v_1\otimes\cdots\otimes v_r\otimes\mathsf{v}^1\otimes\cdots\otimes\mathsf{v}^s,$$
+          so $\dim T^{(r,s)} = d^{\,r+s}$. Each upper index transforms like a vector component and each lower index like a covector component.
+        feedback: |
+          Single products are special: the signed area $x^1y^2 - x^2y^1$ is no product of two covectors (a product's components satisfy $T_{11}T_{22} - T_{12}T_{21} = 0$, the area's give $1$). It is the **sum** $\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2 - \hat{\mathfrak{x}}^2\otimes\hat{\mathfrak{x}}^1$. Every tensor is a sum of products, not one product.
       - body: |
           An $(r,s)$-tensor is an **array of numbers** with $r$ upper and $s$ lower indices. It is the same array in every basis.
         feedback: |
           The array is the tensor's *components*, and they depend on the basis: each index transforms with $J$ or $J^{-1}$. The tensor itself is the basis-free multilinear map.
     explanation: |
-      Tensors put everything together: they eat covectors (from the dual space) and vectors, and their components change by combining the vector and covector laws, one $J$ or $J^{-1}$ per index.
+      Tensors put everything together: they eat covectors (from the dual space) and vectors, and their components change by combining the vector and covector laws, one $J$ or $J^{-1}$ per index. The tensor product builds them from vectors and covectors: $T^{(r,s)}\cong V\otimes\cdots\otimes V\otimes V^*\otimes\cdots\otimes V^*$, with $r$ factors $V$ and $s$ factors $V^*$.
 
 edges:
   - [space, hom]
@@ -242,6 +260,6 @@ edges:
 
 outroTitle: Chapter 2 in one picture
 outro: |
-  Read it top to bottom. The axioms give **linear maps** and **bases**. Linear maps into $\mathbb{R}$ give the **dual space**, and a basis gives a **dual basis**. Comparing two bases gives $J$ and the **transformation laws**, with opposite behaviour for vectors and covectors. **Tensors** combine all of it.
+  Read it top to bottom. The axioms give **linear maps** and **bases**. Linear maps into $\mathbb{R}$ give the **dual space**, and a basis gives a **dual basis**. Comparing two bases gives $J$ and the **transformation laws**, with opposite behaviour for vectors and covectors. **Tensors** combine all of it, and the **tensor product** builds every tensor as a sum of products of vectors and covectors.
 
   **Next level:** Chapter 3 leaves the flat vector space behind. To talk about curved spacetime we first need to say what it means for a space to look like $\mathbb{R}^d$ up close: topology, charts and manifolds.

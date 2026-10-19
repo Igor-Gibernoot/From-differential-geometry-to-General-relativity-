@@ -1,0 +1,420 @@
+id: ch02-tensor-product
+title: The Tensor Product
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: Multiply two covectors
+    body: |
+      Recall: an $(r,s)$-tensor is a map with $r$ covector slots and $s$ vector slots that is linear in each slot separately, and a $(0,2)$-tensor eats two vectors.
+
+      Here is the cheapest way to make one. Take two covectors $\mathsf{X}, \mathsf{Y}\in V^*$, feed $\mathcal{X}$ to the first and $\mathcal{Y}$ to the second, and multiply the two numbers:
+      $$T(\mathcal{X}, \mathcal{Y}) = \mathsf{X}(\mathcal{X})\cdot\mathsf{Y}(\mathcal{Y}) .$$
+      With $\mathcal{Y}$ fixed, $\mathsf{Y}(\mathcal{Y})$ is just a number, and a number times the linear $\mathsf{X}(\mathcal{X})$ is linear in $\mathcal{X}$. The same holds for the second slot, so $T$ is a $(0,2)$-tensor.
+
+      Physics builds tensors this way all the time: in Level 9, Newton's gravity becomes a field equation whose right-hand side is the mass density times a covector multiplied by itself. So a natural question: is **every** $(0,2)$-tensor made like this?
+
+  - type: mcq
+    id: predict-area
+    prompt: |
+      A product of two covectors, $T(\mathcal{X}, \mathcal{Y}) = \mathsf{X}(\mathcal{X})\cdot\mathsf{Y}(\mathcal{Y})$, is a $(0,2)$-tensor. Before any theory: is the signed area of the plane,
+      $$A(\mathcal{X}, \mathcal{Y}) = x^1 y^2 - x^2 y^1 ,$$
+      such a product for some pair of covectors $\mathsf{X}, \mathsf{Y}$?
+    options:
+      - text: 'No: no choice of $\mathsf{X}$ and $\mathsf{Y}$ gives $A$'
+        correct: true
+      - text: 'Yes: take $\mathsf{X} = \hat{\mathfrak{x}}^1$ and $\mathsf{Y} = \hat{\mathfrak{x}}^2$'
+        feedback: |
+          That product is $\hat{\mathfrak{x}}^1(\mathcal{X})\cdot\hat{\mathfrak{x}}^2(\mathcal{Y}) = x^1 y^2$, only the first term of $A$. The term $-x^2 y^1$ is missing, and it cannot be added by changing the covectors, as this lesson shows.
+      - text: 'Yes: every bilinear map is the product of what it does in each slot'
+        feedback: |
+          Bilinearity says each slot is linear **with the other held fixed**. It does not say the two slots act independently. For the area, the covector $A(\mathcal{X}, \cdot\,)$ depends on $\mathcal{X}$ in direction, not only in size, which no product can do.
+      - text: 'Only after choosing a suitable basis'
+        feedback: |
+          The product $\mathsf{X}(\mathcal{X})\cdot\mathsf{Y}(\mathcal{Y})$ is defined without any basis. If $A$ were such a product, it would be one in every basis; if it is not, no basis can help.
+    explanation: |
+      No. The area is **not** a single product. The proof comes in a few cards; first, see the difference.
+
+  - type: widget
+    id: explore
+    title: Fill one slot
+    widget: machine-playground
+    config:
+      slots: 2
+      partial: true
+      tensor: [[0, 1], [0, 0]]
+      u: [2, 1]
+      v: [0, 2]
+      snap: 0.5
+      presets:
+        - { label: 'Area', tensor: [[0, 1], [-1, 0]] }
+        - { label: 'Swap factors', tensor: [[0, 0], [1, 0]] }
+    body: |
+      The machine starts as the product $T(\mathcal{X}, \mathcal{Y}) = \hat{\mathfrak{x}}^1(\mathcal{X})\cdot\hat{\mathfrak{x}}^2(\mathcal{Y}) = x^1 y^2$ of the dual basis covectors. Filling only the first slot leaves the covector $T(\mathcal{X}, \cdot\,)$, drawn as its orange level lines, with its components in the readout.
+
+      **Drag $\mathcal{X}$** around a full circle and watch the level lines: do they ever turn?
+
+      Then press **Area** (the signed area $x^1y^2 - x^2y^1$) and drag $\mathcal{X}$ again. **Swap factors** shows the other product, $\hat{\mathfrak{x}}^2(\mathcal{X})\cdot\hat{\mathfrak{x}}^1(\mathcal{Y}) = x^2y^1$; **Reset** brings back the first one.
+
+  - type: mcq
+    id: product-direction
+    prompt: |
+      Fill the first slot of the product $T(\mathcal{X}, \mathcal{Y}) = \mathsf{X}(\mathcal{X})\cdot\mathsf{Y}(\mathcal{Y})$ with a vector $\mathcal{X}$. What is the covector $T(\mathcal{X}, \cdot\,)$ that is left?
+    options:
+      - text: 'The number $\mathsf{X}(\mathcal{X})$ times the fixed covector $\mathsf{Y}$: as $\mathcal{X}$ moves, only its size and sign change'
+        correct: true
+      - text: 'A covector that turns as $\mathcal{X}$ turns'
+        feedback: |
+          That is what the area does: $A(\mathcal{X}, \cdot\,)$ has components $(-x^2, x^1)$, which rotate with $\mathcal{X}$. For a product, $\mathcal{X}$ enters only through the number $\mathsf{X}(\mathcal{X})$, which can rescale $\mathsf{Y}$ but never turn it.
+      - text: 'Always $\mathsf{Y}$ itself, whatever $\mathcal{X}$ is'
+        feedback: |
+          $\mathcal{X}$ does matter: it sets the factor $\mathsf{X}(\mathcal{X})$. Double $\mathcal{X}$ and the covector doubles (level lines twice as dense); pick $\mathcal{X}$ with $\mathsf{X}(\mathcal{X}) = 0$ and it vanishes.
+    explanation: |
+      $T(\mathcal{X}, \cdot\,) = \mathsf{X}(\mathcal{X})\cdot\mathsf{Y}$: always a multiple of the **same** covector $\mathsf{Y}$, so its level lines keep one direction. The area's partial covector $A(\mathcal{X}, \cdot\,)$ turns with $\mathcal{X}$, so the area cannot be a product.
+
+  - type: text
+    id: def-otimes
+    title: The tensor product of covectors
+    body: |
+      The product gets a name and a symbol, $\otimes$ ("tensor"):
+      $$(\mathsf{X}\otimes\mathsf{Y})(\mathcal{X}, \mathcal{Y}) := \mathsf{X}(\mathcal{X})\cdot\mathsf{Y}(\mathcal{Y}) .$$
+      The **order matters**: the first factor eats the first slot. In general $\mathsf{X}\otimes\mathsf{Y}\neq\mathsf{Y}\otimes\mathsf{X}$.
+
+      **Components.** Recall that a $(0,2)$-tensor has components $T_{ij} = T(\hat{x}_i, \hat{x}_j)$, and a covector has $\mathtt{x}_i = \mathsf{X}(\hat{x}_i)$. Write $\mathtt{y}_j = \mathsf{Y}(\hat{x}_j)$ for the components of $\mathsf{Y}$. Feeding the basis gives
+      $$(\mathsf{X}\otimes\mathsf{Y})_{ij} = \mathsf{X}(\hat{x}_i)\cdot\mathsf{Y}(\hat{x}_j) = \mathtt{x}_i\,\mathtt{y}_j .$$
+      Every component is a component of $\mathsf{X}$ times a component of $\mathsf{Y}$.
+
+  - type: numeric
+    id: product-component
+    prompt: |
+      Two covectors on the plane have components $\mathtt{x}_i = \mathsf{X}(\hat{x}_i)$ and $\mathtt{y}_j = \mathsf{Y}(\hat{x}_j)$:
+      $$\mathsf{X} = (1, 2),\qquad \mathsf{Y} = (3, -1) .$$
+      The tensor product is $(\mathsf{X}\otimes\mathsf{Y})(\mathcal{X}, \mathcal{Y}) := \mathsf{X}(\mathcal{X})\cdot\mathsf{Y}(\mathcal{Y})$. What is its component $(\mathsf{X}\otimes\mathsf{Y})_{21} = (\mathsf{X}\otimes\mathsf{Y})(\hat{x}_2, \hat{x}_1)$?
+    answer: 6
+    wrong:
+      - value: -1
+        feedback: |
+          That is $\mathtt{x}_1\,\mathtt{y}_2$, the component of $\mathsf{Y}\otimes\mathsf{X}$ instead. The first index belongs to the first slot, which is eaten by the first factor $\mathsf{X}$: the component is $\mathtt{x}_2\,\mathtt{y}_1$.
+      - value: 3
+        feedback: |
+          That is $\mathtt{x}_1\,\mathtt{y}_1$. The component $(\mathsf{X}\otimes\mathsf{Y})_{21}$ takes index $2$ from $\mathsf{X}$ and index $1$ from $\mathsf{Y}$.
+      - value: 5
+        feedback: |
+          The two numbers are **multiplied**, not added: $\mathsf{X}(\hat{x}_2)\cdot\mathsf{Y}(\hat{x}_1)$.
+    hint: '$(\mathsf{X}\otimes\mathsf{Y})_{21} = \mathsf{X}(\hat{x}_2)\cdot\mathsf{Y}(\hat{x}_1) = \mathtt{x}_2\,\mathtt{y}_1$.'
+    explanation: |
+      $\mathtt{x}_2\,\mathtt{y}_1 = 2\cdot 3 = 6$. All four components:
+      $$(\mathsf{X}\otimes\mathsf{Y})_{ij} = \begin{bmatrix} 3 & -1 \\ 6 & -2 \end{bmatrix}_{ij},$$
+      row $i$ from $\mathsf{X}$, column $j$ from $\mathsf{Y}$. Note the second row is twice the first.
+
+  - type: numeric
+    id: det-test
+    prompt: |
+      Two covectors on the plane have components $\mathsf{X} = (1, 2)$ and $\mathsf{Y} = (3, -1)$, so the components $T_{ij} = \mathtt{x}_i\,\mathtt{y}_j$ of $T = \mathsf{X}\otimes\mathsf{Y}$ are
+      $$T_{11} = 3,\quad T_{12} = -1,\quad T_{21} = 6,\quad T_{22} = -2 .$$
+      Compute $T_{11}\,T_{22} - T_{12}\,T_{21}$.
+    answer: 0
+    wrong:
+      - value: -12
+        feedback: |
+          Check the sign of the second term: $T_{12}\,T_{21} = (-1)\cdot 6 = -6$, and subtracting it gives $+6$.
+      - value: 1
+        feedback: |
+          That is the value for the signed area, whose components are $A_{11} = A_{22} = 0$, $A_{12} = 1$, $A_{21} = -1$. Here $T_{11}T_{22} = 3\cdot(-2)$.
+    explanation: |
+      $3\cdot(-2) - (-1)\cdot 6 = -6 + 6 = 0$. This is no accident: the next card shows it is $0$ for **every** product of two covectors.
+
+  - type: text
+    id: resolve
+    title: Why the area is not a product
+    body: |
+      For any product $T = \mathsf{X}\otimes\mathsf{Y}$ on the plane, $T_{ij} = \mathtt{x}_i\,\mathtt{y}_j$, so
+      $$\begin{aligned}
+      &T_{11}T_{22} - T_{12}T_{21} \\
+      &= \mathtt{x}_1\mathtt{y}_1\,\mathtt{x}_2\mathtt{y}_2 - \mathtt{x}_1\mathtt{y}_2\,\mathtt{x}_2\mathtt{y}_1 \\
+      &= 0 .
+      \end{aligned}$$
+      The same four numbers appear in both terms. (This is the determinant of the matrix $T_{ij}$: a product has proportional rows.)
+
+      The signed area has $A_{11} = A_{22} = 0$, $A_{12} = 1$ and $A_{21} = -1$, so
+      $$A_{11}A_{22} - A_{12}A_{21} = 0 - (1)(-1) = 1 .$$
+      Not $0$: **the area is not a product of two covectors**, in any basis. The widget showed the same thing geometrically: a product's partial covector never turns, the area's does.
+
+      But the area is not far from products either. Tensors can be added, so try a **sum** of products.
+
+  - type: build
+    id: build-area
+    prompt: |
+      The signed area of the plane is $A(\mathcal{X}, \mathcal{Y}) = x^1y^2 - x^2y^1$, and the dual basis reads off components, $\hat{\mathfrak{x}}^i(\mathcal{X}) = x^i$. Products of covectors act by $(\mathsf{X}\otimes\mathsf{Y})(\mathcal{X}, \mathcal{Y}) = \mathsf{X}(\mathcal{X})\cdot\mathsf{Y}(\mathcal{Y})$. Write $A$ as a combination of products of dual basis covectors.
+    prefix: 'A ='
+    tiles: ['\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2', '\hat{\mathfrak{x}}^2\otimes\hat{\mathfrak{x}}^1', '\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^1', '-', '+']
+    answers:
+      - ['\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2', '-', '\hat{\mathfrak{x}}^2\otimes\hat{\mathfrak{x}}^1']
+      - ['-', '\hat{\mathfrak{x}}^2\otimes\hat{\mathfrak{x}}^1', '+', '\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2']
+    wrong:
+      - answer: ['\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2', '+', '\hat{\mathfrak{x}}^2\otimes\hat{\mathfrak{x}}^1']
+        feedback: |
+          That evaluates to $x^1y^2 + x^2y^1$, which is symmetric: swapping $\mathcal{X}$ and $\mathcal{Y}$ leaves it unchanged. The area changes sign under the swap, so the second term needs a minus.
+      - answer: ['\hat{\mathfrak{x}}^2\otimes\hat{\mathfrak{x}}^1', '-', '\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2']
+        feedback: |
+          That evaluates to $x^2y^1 - x^1y^2 = -A$. The order of the factors matters: $(\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2)(\mathcal{X}, \mathcal{Y}) = x^1y^2$, the first factor eats $\mathcal{X}$.
+      - answer: ['-', '\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2', '+', '\hat{\mathfrak{x}}^2\otimes\hat{\mathfrak{x}}^1']
+        feedback: |
+          That evaluates to $-x^1y^2 + x^2y^1 = -A$. The term with a plus sign must be $x^1y^2 = (\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2)(\mathcal{X}, \mathcal{Y})$.
+      - answer: ['\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2']
+        feedback: |
+          That is $x^1y^2$ alone, and a single product can never be the area: its components would satisfy $A_{11}A_{22} - A_{12}A_{21} = 0$, while the area gives $1$. The $-x^2y^1$ needs a second term.
+    hint: '$(\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2)(\mathcal{X}, \mathcal{Y}) = x^1y^2$. Which product gives $x^2y^1$?'
+    explanation: |
+      $$\begin{aligned}
+      &(\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2 - \hat{\mathfrak{x}}^2\otimes\hat{\mathfrak{x}}^1)(\mathcal{X}, \mathcal{Y}) \\
+      &= x^1y^2 - x^2y^1 = A(\mathcal{X}, \mathcal{Y}) .
+      \end{aligned}$$
+      One product is not enough, two are. Filling the first slot shows how the sum can turn: $A(\mathcal{X}, \cdot\,) = x^1\,\hat{\mathfrak{x}}^2 - x^2\,\hat{\mathfrak{x}}^1$ mixes two fixed covectors with weights that depend on $\mathcal{X}$.
+
+  - type: text
+    id: def-VW
+    title: 'The tensor product of two spaces, $V\otimes W$'
+    body: |
+      Products alone are not closed under addition, but sums of them are. That suggests a space built from products. The idea works for any two real vector spaces $V$ and $W$, not only for covectors.
+
+      The **tensor product** $V\otimes W$ is the vector space whose elements are **finite sums**
+      $$\tau = \sum_k \alpha_k\,(v_k\otimes w_k),$$
+      with $\alpha_k\in\mathbb{R}$, $v_k\in V$, $w_k\in W$. A single $v\otimes w$ is called a **simple tensor**. Sums and multiples act term by term, and the symbol $\otimes$ obeys the **bilinearity** rules:
+      $$\begin{gathered}
+      (v_1 + v_2)\otimes w = v_1\otimes w + v_2\otimes w \\
+      v\otimes(w_1 + w_2) = v\otimes w_1 + v\otimes w_2 \\
+      (\alpha v)\otimes w = \alpha\,(v\otimes w) = v\otimes(\alpha w)
+      \end{gathered}$$
+      Two sums are the **same** element when these rules turn one into the other. They are exactly the rules that $\mathsf{X}\otimes\mathsf{Y}$ obeys, because the product $\mathsf{X}(\mathcal{X})\cdot\mathsf{Y}(\mathcal{Y})$ is linear in each factor.
+
+  - type: mcq
+    id: scale-simple
+    prompt: |
+      In the tensor product $V\otimes W$, the symbol $\otimes$ obeys the bilinearity rules, among them $(\alpha v)\otimes w = \alpha\,(v\otimes w) = v\otimes(\alpha w)$. For $v\in V$ and $w\in W$, what is $(2v)\otimes(3w)$?
+    options:
+      - text: '$6\,(v\otimes w)$'
+        correct: true
+      - text: '$5\,(v\otimes w)$'
+        feedback: |
+          Scalars do not add up. Pull the $2$ out of the first factor and the $3$ out of the second: each comes out as a factor, so they multiply.
+      - text: '$2\,(v\otimes w) + 3\,(v\otimes w)$'
+        feedback: |
+          This looks like a product rule, one term per factor, but it adds up to $5\,(v\otimes w)$. Bilinearity pulls the scalars out **one after the other**: $(2v)\otimes(3w) = 2\,\big(v\otimes(3w)\big) = 2\cdot 3\,(v\otimes w)$.
+      - text: 'Nothing simpler: $2v\otimes 3w$ is already a basic element'
+        feedback: |
+          It is a simple tensor, but the bilinearity rules identify it with $6\,(v\otimes w)$: the same element of $V\otimes W$, written differently.
+    explanation: |
+      $(2v)\otimes(3w) = 2\,\big(v\otimes(3w)\big) = 6\,(v\otimes w)$. One factor per slot, exactly as $A(2\mathcal{X}, 3\mathcal{Y}) = 6\,A(\mathcal{X}, \mathcal{Y})$ for a bilinear map.
+
+  - type: mcq
+    id: not-pairs
+    prompt: |
+      In the tensor product $V\otimes W$, the symbol $\otimes$ is linear in each factor separately. For $v_1, v_2\in V$ and $w_1, w_2\in W$, what is $(v_1 + v_2)\otimes(w_1 + w_2)$?
+    options:
+      - text: '$v_1\otimes w_1 + v_1\otimes w_2 + v_2\otimes w_1 + v_2\otimes w_2$'
+        correct: true
+      - text: '$v_1\otimes w_1 + v_2\otimes w_2$'
+        feedback: |
+          That is how **pairs** add in the Cartesian product $V\times W$: $(v_1, w_1) + (v_2, w_2) = (v_1 + v_2, w_1 + w_2)$, componentwise. The tensor product is a different space: expanding $\otimes$ is like multiplying out $(a + b)(c + d)$, which gives four terms.
+      - text: '$(v_1 + v_2)\otimes w_1 + w_2$'
+        feedback: |
+          $w_2$ alone is an element of $W$, not of $V\otimes W$, so it cannot be added to a tensor. Linearity in the second factor gives $(v_1 + v_2)\otimes w_1 + (v_1 + v_2)\otimes w_2$; expand the first factor too.
+    explanation: |
+      Expand the first factor, then the second:
+      $$\begin{aligned}
+      &(v_1 + v_2)\otimes(w_1 + w_2) \\
+      &= v_1\otimes(w_1 + w_2) + v_2\otimes(w_1 + w_2)
+      \end{aligned}$$
+      which is four terms. $V\otimes W$ and $V\times W$ are different spaces, and the next card shows that even their dimensions differ.
+
+  - type: text
+    id: basis-VW
+    title: 'A basis of $V\otimes W$'
+    body: |
+      Let $\{\hat{x}_1, \dots, \hat{x}_m\}$ be a basis of $V$ and $\{\hat{y}_1, \dots, \hat{y}_n\}$ a basis of $W$ (here $\hat{y}_j$ is not a new basis of $V$: it lives in $W$). Expand both factors of a simple tensor, $v = \sum_i a^i\,\hat{x}_i$ and $w = \sum_j b^j\,\hat{y}_j$, and use bilinearity:
+      $$v\otimes w = \sum_{i=1}^m\sum_{j=1}^n a^i\,b^j\;\hat{x}_i\otimes\hat{y}_j .$$
+      Every element of $V\otimes W$ is a sum of simple tensors, so the $m\cdot n$ products $\hat{x}_i\otimes\hat{y}_j$ **span** $V\otimes W$. They are also linearly independent (for tensors on $V$ you will prove it below, by feeding the basis). So they form a basis and
+      $$\dim(V\otimes W) = m\cdot n .$$
+      Compare the Cartesian product: a pair $(v, w)$ needs $m$ numbers for $v$ plus $n$ for $w$, so $\dim(V\times W) = m + n$. Products multiply the dimensions, pairs add them.
+
+  - type: numeric
+    id: dim-VW
+    prompt: |
+      $V$ has dimension $3$ and $W$ has dimension $2$. If $\{\hat{x}_i\}$ is a basis of $V$ and $\{\hat{y}_j\}$ a basis of $W$, the simple tensors $\hat{x}_i\otimes\hat{y}_j$ form a basis of $V\otimes W$. What is $\dim(V\otimes W)$?
+    answer: 6
+    wrong:
+      - value: 5
+        feedback: |
+          $3 + 2$ is the dimension of the Cartesian product $V\times W$, where a pair $(v, w)$ needs $3 + 2$ numbers. The basis of $V\otimes W$ has one element $\hat{x}_i\otimes\hat{y}_j$ for **each pair** of indices: $3\cdot 2$ of them.
+      - value: 9
+        feedback: |
+          That is $3^2 = \dim(V\otimes V)$. The second factor is $W$, which has dimension $2$: the index $j$ runs over $2$ values.
+      - value: 8
+        feedback: |
+          That is $2^3$. Count the pairs $(i, j)$ instead: $i$ takes $3$ values and $j$ takes $2$.
+    explanation: |
+      $3\cdot 2 = 6$ basis elements: $\hat{x}_1\otimes\hat{y}_1, \hat{x}_1\otimes\hat{y}_2, \dots, \hat{x}_3\otimes\hat{y}_2$.
+
+  - type: text
+    id: mixed
+    title: Vectors times covectors
+    body: |
+      Back to tensors on one space $V$ of dimension $d$, with basis $\{\hat{x}_i\}$ and dual basis $\{\hat{\mathfrak{x}}^j\}$, so that $\hat{\mathfrak{x}}^j(\hat{x}_i) = \delta^j_i$ (the **Kronecker delta**: $1$ if $i = j$, $0$ otherwise).
+
+      Recall that a vector $v$ eats a covector by $v(\mathsf{X}) := \mathsf{X}(v)$. So a vector times a covector is a $(1,1)$-tensor, each factor eating its own slot:
+      $$(v\otimes\mathsf{v})(\mathsf{X}, \mathcal{X}) := \mathsf{X}(v)\cdot\mathsf{v}(\mathcal{X}) .$$
+      Feed the product of basis elements $\hat{x}_i\otimes\hat{\mathfrak{x}}^j$ the dual basis and the basis:
+      $$\begin{aligned}
+      &(\hat{x}_i\otimes\hat{\mathfrak{x}}^j)(\hat{\mathfrak{x}}^k, \hat{x}_l) \\
+      &= \hat{\mathfrak{x}}^k(\hat{x}_i)\cdot\hat{\mathfrak{x}}^j(\hat{x}_l) \\
+      &= \delta^k_i\,\delta^j_l .
+      \end{aligned}$$
+      Each product of basis elements is $1$ on exactly **one** pair of basis inputs, $k = i$ and $l = j$, and $0$ on all the others.
+
+  - type: mcq
+    id: which-input
+    prompt: |
+      On the plane, with basis $\hat{x}_1, \hat{x}_2$ and dual basis $\hat{\mathfrak{x}}^1, \hat{\mathfrak{x}}^2$, the $(1,1)$-tensor $\hat{x}_1\otimes\hat{\mathfrak{x}}^2$ acts by
+      $$(\hat{x}_1\otimes\hat{\mathfrak{x}}^2)(\mathsf{X}, \mathcal{X}) = \mathsf{X}(\hat{x}_1)\cdot\hat{\mathfrak{x}}^2(\mathcal{X}) .$$
+      For which basis inputs $(\hat{\mathfrak{x}}^k, \hat{x}_l)$ is its value non-zero?
+    options:
+      - text: 'Only $(\hat{\mathfrak{x}}^1, \hat{x}_2)$'
+        correct: true
+      - text: 'Only $(\hat{\mathfrak{x}}^2, \hat{x}_1)$'
+        feedback: |
+          The indices are swapped. The vector $\hat{x}_1$ eats the covector slot, and $\hat{\mathfrak{x}}^k(\hat{x}_1)$ is non-zero only for $k = 1$. The covector $\hat{\mathfrak{x}}^2$ eats the vector slot, and $\hat{\mathfrak{x}}^2(\hat{x}_l)$ is non-zero only for $l = 2$.
+      - text: '$(\hat{\mathfrak{x}}^1, \hat{x}_1)$ and $(\hat{\mathfrak{x}}^2, \hat{x}_2)$'
+        feedback: |
+          Those are the inputs where the **identity** $\mathsf{X}(\mathcal{X})$ is non-zero. A single product of basis elements is non-zero on just one pair: $k$ must match the vector's index $1$, and $l$ the covector's index $2$.
+      - text: 'All four, since a tensor is linear'
+        feedback: |
+          Linearity does not make values non-zero. Here $\hat{\mathfrak{x}}^k(\hat{x}_1) = \delta^k_1$ kills every input with $k = 2$, and $\hat{\mathfrak{x}}^2(\hat{x}_l) = \delta^2_l$ kills every input with $l = 1$.
+    explanation: |
+      $(\hat{x}_1\otimes\hat{\mathfrak{x}}^2)(\hat{\mathfrak{x}}^k, \hat{x}_l) = \delta^k_1\,\delta^2_l$, which is $1$ for $k = 1, l = 2$ and $0$ otherwise. The product $\hat{x}_i\otimes\hat{\mathfrak{x}}^j$ is a "probe" for the single component $(i, j)$.
+
+  - type: text
+    id: expansion
+    title: Every tensor is a sum of products
+    body: |
+      Take any $(1,1)$-tensor $T$, with components $T^i_j = T(\hat{\mathfrak{x}}^i, \hat{x}_j)$. Build the combination of products of basis elements
+      $$S := \sum_{i=1}^d\sum_{j=1}^d T^i_j\;\hat{x}_i\otimes\hat{\mathfrak{x}}^j .$$
+      Feed it basis inputs. Every product is $\delta^k_i\,\delta^j_l$, so only the term $i = k$, $j = l$ survives:
+      $$\begin{aligned}
+      S(\hat{\mathfrak{x}}^k, \hat{x}_l) &= \sum_{i,j} T^i_j\,\delta^k_i\,\delta^j_l \\
+      &= T^k_l = T(\hat{\mathfrak{x}}^k, \hat{x}_l) .
+      \end{aligned}$$
+      So $S$ and $T$ agree on all basis inputs. Recall that a multilinear map is fixed by its values on the basis (expand each argument and use linearity slot by slot). Hence $S = T$:
+      $$T = \sum_{i,j} T^i_j\;\hat{x}_i\otimes\hat{\mathfrak{x}}^j .$$
+      The components are the **coefficients** of $T$ in the products of basis elements.
+
+  - type: numeric
+    id: coefficient
+    prompt: |
+      A $(1,1)$-tensor on the plane has components $T^i_j = T(\hat{\mathfrak{x}}^i, \hat{x}_j)$:
+      $$T^1_1 = 2,\quad T^1_2 = -1,\quad T^2_1 = 0,\quad T^2_2 = 3 .$$
+      It expands as $T = \sum_{i,j} T^i_j\,\hat{x}_i\otimes\hat{\mathfrak{x}}^j$. What is the coefficient of $\hat{x}_1\otimes\hat{\mathfrak{x}}^2$?
+    answer: -1
+    wrong:
+      - value: 0
+        feedback: |
+          That is $T^2_1$, the coefficient of $\hat{x}_2\otimes\hat{\mathfrak{x}}^1$. In $\hat{x}_i\otimes\hat{\mathfrak{x}}^j$ the vector carries the **upper** index of $T^i_j$ and the covector the lower one, so here $i = 1$, $j = 2$.
+      - value: 2
+        feedback: |
+          That is $T^1_1$, the coefficient of $\hat{x}_1\otimes\hat{\mathfrak{x}}^1$. The covector factor is $\hat{\mathfrak{x}}^2$, so the lower index is $2$.
+    hint: 'Read the indices off the product: $\hat{x}_i$ gives the upper index of $T^i_j$, $\hat{\mathfrak{x}}^j$ the lower one.'
+    explanation: |
+      The coefficient of $\hat{x}_1\otimes\hat{\mathfrak{x}}^2$ is $T^1_2 = -1$. In full,
+      $$\begin{aligned}
+      T = {}&2\,\hat{x}_1\otimes\hat{\mathfrak{x}}^1 - \hat{x}_1\otimes\hat{\mathfrak{x}}^2 \\
+      &+ 3\,\hat{x}_2\otimes\hat{\mathfrak{x}}^2 .
+      \end{aligned}$$
+      Check by feeding $(\hat{\mathfrak{x}}^1, \hat{x}_2)$: only the second term survives, giving $-1$.
+
+  - type: order
+    id: independence
+    prompt: |
+      On a space with basis $\{\hat{x}_i\}$ and dual basis $\{\hat{\mathfrak{x}}^j\}$, the products of basis elements satisfy $(\hat{x}_i\otimes\hat{\mathfrak{x}}^j)(\hat{\mathfrak{x}}^k, \hat{x}_l) = \delta^k_i\,\delta^j_l$. Put in order the proof that the $d^2$ tensors $\hat{x}_i\otimes\hat{\mathfrak{x}}^j$ are linearly independent.
+    steps:
+      - 'Suppose a combination vanishes: $\sum_{i,j}\alpha^i_j\,\hat{x}_i\otimes\hat{\mathfrak{x}}^j = 0$.'
+      - 'Fix indices $k, l$ and feed both sides the inputs $(\hat{\mathfrak{x}}^k, \hat{x}_l)$.'
+      - 'The left side becomes $\sum_{i,j}\alpha^i_j\,\delta^k_i\,\delta^j_l$, and the right side is $0$.'
+      - 'Only the term $i = k$, $j = l$ survives, so $\alpha^k_l = 0$.'
+      - 'This holds for every $k$ and $l$, so all the coefficients vanish.'
+    hint: Start from the assumption, then evaluate, then use the deltas.
+    explanation: |
+      The zero tensor gives $0$ on every input, so evaluating on $(\hat{\mathfrak{x}}^k, \hat{x}_l)$ isolates the single coefficient $\alpha^k_l$. With spanning (every tensor is $\sum T^i_j\,\hat{x}_i\otimes\hat{\mathfrak{x}}^j$), this makes the products a **basis**: the product basis.
+
+  - type: text
+    id: general
+    title: 'All types: $T^{(r,s)}\cong V\otimes\cdots\otimes V^*$'
+    body: |
+      Nothing above used that there were just two slots. For an $(r,s)$-tensor, the **product basis** consists of
+      $$\begin{aligned}
+      &\hat{x}_{i_1}\otimes\cdots\otimes\hat{x}_{i_r} \\
+      &\otimes\hat{\mathfrak{x}}^{j_1}\otimes\cdots\otimes\hat{\mathfrak{x}}^{j_s},
+      \end{aligned}$$
+      one basis vector for each covector slot and one dual basis covector for each vector slot. Feeding the basis gives a product of $r + s$ deltas, so the same two arguments (spanning and independence) show that every tensor expands uniquely, with its components as coefficients.
+
+      **Counting.** Each of the $r + s$ indices runs independently over $d$ values, so there are $d^{\,r+s}$ basis tensors: this is **why** $\dim T^{(r,s)} = d^{\,r+s}$.
+
+      **The second definition.** Since sums of products of $r$ vectors and $s$ covectors give every tensor, and nothing else,
+      $$T^{(r,s)}\cong\underbrace{V\otimes\cdots\otimes V}_{r}\otimes\underbrace{V^*\otimes\cdots\otimes V^*}_{s} .$$
+      Note the swap: the $r$ **covector** slots are filled by $r$ copies of $V$, because a vector is what eats a covector. The symbol $\cong$ means the two spaces are identified by a linear bijection; this needs $\dim V$ finite. Many books take the right-hand side as the definition of tensors.
+
+  - type: mcq
+    id: which-space
+    prompt: |
+      An $(r,s)$-tensor has $r$ covector slots and $s$ vector slots, and $T^{(r,s)}$ can be identified with a tensor product of copies of $V$ and $V^*$. A $(1,2)$-tensor eats one covector and two vectors. Which space is $T^{(1,2)}$?
+    options:
+      - text: '$V\otimes V^*\otimes V^*$'
+        correct: true
+      - text: '$V^*\otimes V\otimes V$'
+        feedback: |
+          This copies the slots instead of filling them. A covector slot needs something that **eats** covectors, which is a vector ($v(\mathsf{X}) := \mathsf{X}(v)$), so it contributes a factor $V$. The two vector slots are eaten by covectors: two factors $V^*$.
+      - text: '$V\times V^*\times V^*$'
+        feedback: |
+          The Cartesian product holds triples, with dimension $3d$, and it is not where tensors live: a $(1,2)$-tensor is a **sum** of products, and the space has dimension $d^3$.
+      - text: '$V\otimes V\otimes V^*$'
+        feedback: |
+          That has two factors $V$, so it eats two covectors: it is $T^{(2,1)}$. One covector slot gives one factor $V$, two vector slots give two factors $V^*$.
+    explanation: |
+      One covector slot gives one $V$, two vector slots give two $V^*$: $T^{(1,2)}\cong V\otimes V^*\otimes V^*$, of dimension $d^3$, with basis $\hat{x}_i\otimes\hat{\mathfrak{x}}^j\otimes\hat{\mathfrak{x}}^k$.
+
+  - type: text
+    id: linear-map
+    title: Simple tensors as linear maps
+    body: |
+      Recall that a $(1,1)$-tensor is a linear map $V\to V$: fill the vector slot and the vector left over is $\varphi_T(\mathcal{X}) = T(\cdot\,, \mathcal{X})$. For a simple tensor $v\otimes\mathsf{v}$,
+      $$(v\otimes\mathsf{v})(\cdot\,, \mathcal{X}) = \mathsf{v}(\mathcal{X})\;v ,$$
+      because the vector $v$ eats the covector slot. Every output is a multiple of the **same** vector $v$: a simple tensor squeezes $V$ onto one line. (This is the vector version of the widget: the partial covector of $\mathsf{X}\otimes\mathsf{Y}$ never turned.)
+
+      The basis element $\hat{x}_i\otimes\hat{\mathfrak{x}}^j$ sends $\hat{x}_j$ to $\hat{x}_i$ and every other basis vector to $0$: its matrix has a single $1$, in row $i$ and column $j$. The expansion $T = \sum T^i_j\,\hat{x}_i\otimes\hat{\mathfrak{x}}^j$ just says a matrix is the sum of its entries placed one at a time.
+
+  - type: numeric
+    id: identity-rank
+    prompt: |
+      A simple $(1,1)$-tensor $v\otimes\mathsf{v}$, read as a linear map, sends $\mathcal{X}\mapsto\mathsf{v}(\mathcal{X})\;v$, so all its outputs lie on the line of $v$. On the plane, what is the **smallest** number of simple tensors whose sum is the identity map $\mathcal{X}\mapsto\mathcal{X}$?
+    answer: 2
+    wrong:
+      - value: 1
+        feedback: |
+          A single $v\otimes\mathsf{v}$ sends every vector onto the line of $v$. The identity must output $\hat{x}_1$ and $\hat{x}_2$, which do not lie on one line.
+      - value: 4
+        feedback: |
+          The product basis has $4$ elements, but the identity only needs those with non-zero coefficients. Its components are $\delta^i_j$: only $T^1_1$ and $T^2_2$ are non-zero.
+    hint: 'The identity has components $T^i_j = \delta^i_j$. Expand it in the product basis and count the non-zero terms; then ask whether one simple tensor could do.'
+    explanation: |
+      $\mathrm{id} = \hat{x}_1\otimes\hat{\mathfrak{x}}^1 + \hat{x}_2\otimes\hat{\mathfrak{x}}^2$ uses two, and one cannot work because a single simple tensor has all its outputs on one line. Likewise the signed area needs two products. The smallest number of simple tensors needed is called the **rank** of the tensor; for a $(1,1)$-tensor it is the rank of its matrix.
+
+  - type: text
+    id: wrap
+    title: What you now own
+    body: |
+      - The **tensor product** multiplies tensors slot by slot: $(\mathsf{X}\otimes\mathsf{Y})(\mathcal{X}, \mathcal{Y}) = \mathsf{X}(\mathcal{X})\cdot\mathsf{Y}(\mathcal{Y})$, with components $\mathtt{x}_i\,\mathtt{y}_j$. Order matters.
+      - **Not every tensor is a product**: the signed area is $\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2 - \hat{\mathfrak{x}}^2\otimes\hat{\mathfrak{x}}^1$, a sum of two, and no single product (its $T_{11}T_{22} - T_{12}T_{21}$ is $1$, a product's is $0$).
+      - $V\otimes W$ is the space of **finite sums of simple tensors** $v\otimes w$, with $\otimes$ bilinear. Its basis is $\hat{x}_i\otimes\hat{y}_j$, so $\dim = m\cdot n$ (not $m + n$, which is $V\times W$).
+      - The **product basis** of $T^{(r,s)}$ evaluates on basis inputs to a product of deltas. It gives $T = \sum T^{i_1\dots}_{j_1\dots}\,\hat{x}_{i_1}\otimes\cdots\otimes\hat{\mathfrak{x}}^{j_s}$, explains $\dim T^{(r,s)} = d^{\,r+s}$, and identifies $T^{(r,s)}\cong V^{\otimes r}\otimes(V^*)^{\otimes s}$ ($r$ factors $V$, $s$ factors $V^*$).
+
+      **Next:** Level 2 is complete. Rebuild it as a content map, then test it in the level challenge. In Level 4 the same algebra is done at each point of a manifold, and $\otimes$ builds the tensor spaces there.

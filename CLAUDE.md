@@ -191,16 +191,20 @@ Lessons are built across many short sessions, not all at once.
 Chapter 2 built: maps, axioms, dual space, bases and dual basis, change of
 basis, covector law, J invertible, dual basis law, transformation traps,
 tensors (multilinear maps, components, (0,2)/(1,1) laws, (1,1) = linear
-maps), and the content map. All Chapter 2 lessons have had a headless
-screenshot pass (desktop + phone); all widgets are documented in
-`docs/LESSON_FORMAT.md`. Widget SVGs are height-capped on desktop and planar
-layers are clipped to the plane. Next: Chapter 2 tensor product, then the
-Chapter 2 challenge, then Chapters 3–10 in order (each with its content map
-and challenge). Each planned node in `course.yaml` is one lesson to build.
+maps), tensor product (simple tensors, area = sum of two products, V⊗W,
+product basis, d^(r+s), T^(r,s) ≅ V⊗…⊗V*, rank), and the content map (its
+tensors box now includes the product-basis expansion). All Chapter 2 lessons
+have had a headless screenshot pass (desktop + phone); all widgets are
+documented in `docs/LESSON_FORMAT.md` (machine-playground presets can now
+switch the tensor). Short inline math keeps trailing punctuation on its line
+(`js/render.js`). Next: the Chapter 2 challenge, then Chapters 3–10 in order
+(each with its content map and challenge). Each planned node in
+`course.yaml` is one lesson to build.
 
-Screenshot pass recipe: `playwright-core` (npm, in the scratchpad) driving the
+Screenshot pass recipe: `playwright-core@1.48` (npm, in the scratchpad) driving the
 cached Chromium in `~/Library/Caches/ms-playwright`, serving the repo with
 `python3 -m http.server`; for every card, flag `.katex-display` elements with
 `scrollWidth > clientWidth` at 390 px width (also render the card's
 explanation/feedback into the stage to check them), and screenshot widget,
-build, order and `$$` cards.
+build, order and `$$` cards. Note `#/lesson/<id>/<n>` is 1-based; map
+lessons have no `cards:` (loop n over the generated cards instead).

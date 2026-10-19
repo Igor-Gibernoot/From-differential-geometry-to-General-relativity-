@@ -67,6 +67,8 @@ levels:
       - id: ch02-tensor-product
         title: The Tensor Product
         kind: concept
+        file: ch02/tensor-product.yaml
+        summary: Is every two-slot machine a product of two covectors? Simple tensors, $V\otimes W$, the product basis, and why $T^{(r,s)}$ has dimension $d^{\,r+s}$.
       - id: ch02-map
         title: "Content Map: Vector Spaces"
         kind: map

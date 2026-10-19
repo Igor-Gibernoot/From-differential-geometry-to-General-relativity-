@@ -207,7 +207,9 @@ config:
   u: [2, 1]                   # initial 𝒳
   v: [0, 2]                   # initial 𝒴 (slots 2)
   snap: 0.5
-  presets: [{ label: Along a line, u: [1, 2] }]   # v optional: keeps the current 𝒴
+  presets: [{ label: Along a line, u: [1, 2] }]   # u, v optional: keep the current inputs
+                              # slots 2: a preset may also set tensor: [[..],[..]]
+                              # (Reset restores the configured tensor)
 ```
 The readout shows the inputs, the formula of a covector and its evaluation
 $\mathsf{X}(\mathcal{X}) = \dots$ (slots 1), or $T(\mathcal{X}, \mathcal{Y})$

@@ -249,12 +249,14 @@ function basisPlayground(el, cfg) {
 //   tensor:   [[0,1],[-1,0]]      (slots 2) components T_ij, row i = first slot
 //   u: [2, 1], v: [0, 2]          initial inputs, in the basis x̂
 //   snap: 0.5
-//   presets: [{label, u, v}]
+//   presets: [{label, u, v, tensor}]  (slots 2) a preset's tensor replaces T;
+//                                 Reset restores the configured one
 // ---------------------------------------------------------------------------
 function machinePlayground(el, cfg) {
   const slots = cfg.slots ?? 1;
   const C = cfg.covector ?? [1, 0.5];
-  const T = cfg.tensor ?? [[0, 1], [-1, 0]];
+  const T0 = cfg.tensor ?? [[0, 1], [-1, 0]];
+  let T = T0;
   const snap = cfg.snap ?? 0.5;
   const presets = cfg.presets ?? [];
   const start = [cfg.u ?? [2, 1], cfg.v ?? [0, 2]].slice(0, slots).map(v => [...v]);
@@ -273,12 +275,12 @@ function machinePlayground(el, cfg) {
   });
 
   const readout = h('div', { class: 'readout' });
-  const set = arr => { U = arr.slice(0, slots).map(v => [...v]); draw(); };
+  const set = (arr, t) => { U = arr.slice(0, slots).map(v => [...v]); if (t) T = t; draw(); };
   const btns = h('div', { class: 'wbtns' },
-    h('button', { class: 'btn ghost', type: 'button', onclick: () => set(start) }, 'Reset'),
+    h('button', { class: 'btn ghost', type: 'button', onclick: () => set(start, T0) }, 'Reset'),
     h('button', { class: 'btn ghost', type: 'button', onclick: () => set([[2 * U[0][0], 2 * U[0][1]], ...U.slice(1)]) }, 'Double 𝒳'),
     slots === 2 && h('button', { class: 'btn ghost', type: 'button', onclick: () => set(U.map(v => [2 * v[0], 2 * v[1]])) }, 'Double both'),
-    presets.map(p => h('button', { class: 'btn ghost', type: 'button', onclick: () => set([p.u, p.v ?? U[1]].filter(Boolean)) }, p.label)));
+    presets.map(p => h('button', { class: 'btn ghost', type: 'button', onclick: () => set([p.u ?? U[0], p.v ?? U[1]].filter(Boolean), p.tensor) }, p.label)));
   el.append(svg, readout, btns);
 
   const vecTex = (n, [a, b]) => `${n} = (${fmt(a)},\\ ${fmt(b)})`;
