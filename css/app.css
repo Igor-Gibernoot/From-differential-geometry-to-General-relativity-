@@ -4,7 +4,7 @@
   --surface: #ffffff;
   --surface-2: #f0efea;
   --text: #1c1d21;
-  --muted: #6a6b72;
+  --muted: #5b5c63;
   --line: #e2e0d9;
   --accent: #3451d1;
   --accent-soft: #e7ebff;
@@ -128,7 +128,7 @@ a { color: var(--accent); }
 .node svg { width: 30px; height: 30px; }
 .node.available { background: var(--accent); color: var(--accent-text); box-shadow: 0 5px 0 color-mix(in srgb, var(--accent) 60%, #000); }
 .node.done { background: var(--good); color: #fff; box-shadow: 0 5px 0 color-mix(in srgb, var(--good) 60%, #000); }
-.node.planned { background: var(--surface-2); color: var(--muted); box-shadow: 0 5px 0 var(--line); opacity: .75; }
+.node.planned { background: var(--surface-2); color: var(--muted); box-shadow: 0 5px 0 var(--line); opacity: .9; }
 .node.next::after {
   content: ""; position: absolute; inset: -9px; border-radius: 50%; border: 3px solid var(--accent);
   opacity: .5; animation: pulse 1.8s ease-out infinite;
@@ -420,3 +420,40 @@ a { color: var(--accent); }
 .w-end.ball.closed { fill: var(--vec); }
 .w-handle.gold { fill: var(--gold); stroke: var(--gold); }
 .w-label.gold { fill: var(--gold); }
+
+/* circle-charts: chart A blue (outer ring), chart B orange (inner ring), overlap gold */
+.cc-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; align-items: center; }
+.cc-panels.single { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+.cc-ring { fill: none; stroke-width: 5px; stroke-linecap: round; stroke-opacity: .75; }
+.cc-ring.a, .cc-angle.a { stroke: var(--vec); }
+.cc-ring.b, .cc-angle.b { stroke: var(--covec); }
+.cc-angle { fill: none; stroke-width: 2.5px; }
+.w-end.cc-miss.a { stroke: var(--vec); stroke-width: 2.5px; }
+.w-end.cc-miss.b { stroke: var(--covec); stroke-width: 2.5px; }
+.w-graph.on.cc { stroke: var(--gold); }
+.w-end.cc { stroke: var(--gold); }
+.cc-asym { stroke: var(--muted); stroke-width: 1.5px; }
+.cc-line { stroke: var(--covec); stroke-opacity: .5; stroke-width: 2px; }
+.cc-ray { stroke: var(--covec); stroke-width: 1.5px; stroke-dasharray: 5 4; }
+.cc-hit { fill: var(--covec); }
+.w-label.covec { fill: var(--covec); }
+.w-label.small { font-size: 0.3px; font-style: normal; }
+@media (max-width: 520px) {
+  .cc-panels { grid-template-columns: 1fr; }
+  .cc-panels svg { max-width: 330px; margin: 0 auto; }
+}
+
+/* ---------- Level colours: each level's banner and open nodes share a hue ---------- */
+.level[data-hue="0"] { --hue: #3451d1; --hue-dark: #7b93ff; }
+.level[data-hue="1"] { --hue: #0d7f86; --hue-dark: #4fc4c9; }
+.level[data-hue="2"] { --hue: #6d43d6; --hue-dark: #b394ff; }
+.level[data-hue="3"] { --hue: #b8366f; --hue-dark: #f27aae; }
+.level[data-hue="4"] { --hue: #b4520e; --hue-dark: #ff9a55; }
+.level[data-hue="5"] { --hue: #1a6fa8; --hue-dark: #62b3ea; }
+.level[data-hue] { --accent: var(--hue); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .level[data-hue] { --accent: var(--hue-dark); } }
+:root[data-theme="dark"] .level[data-hue] { --accent: var(--hue-dark); }
+.level:not(.unwritten) .level-head { background: var(--accent); color: var(--accent-text); border-color: transparent; }
+.level:not(.unwritten) .level-head :is(.eyebrow, p, .meta, .meta .acc) { color: color-mix(in srgb, var(--accent-text) 88%, transparent); }
+.level:not(.unwritten) .level-head .meter { background: color-mix(in srgb, var(--accent-text) 25%, transparent); }
+.level:not(.unwritten) .level-head .meter > div { background: var(--accent-text); }

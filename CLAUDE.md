@@ -242,9 +242,13 @@ had a screenshot pass; all widgets are documented. Next: the remaining Chapter 3
 nodes in `course.yaml` order, then Chapters 4–10 (each with its content map
 and challenge). Each planned node in `course.yaml` is one lesson to build.
 
-Session queue (one unit each): ① `circle-charts` widget (two charts on S¹:
-angle charts or stereographic, overlap highlighted, a draggable point showing
-both coordinates and the transition map) → ② `ch03-charts` → ③ `ch03-atlases`
+Built and documented the `circle-charts` widget (θ and φ angle charts on S¹,
+or `stereo: true` for σ = x/(1−y); overlap pieces, draggable p, transition
+graph with the jump). The trail now gives each level a hue (`data-hue` on
+`.level`: banner and open nodes; light/dark variants in `css/app.css`) and a
+darker light-mode `--muted`.
+
+Session queue (one unit each): ② `ch03-charts` → ③ `ch03-atlases`
 → ④ `ch03-smooth-maps` → ⑤ `ch03-circle` → ⑥ `ch03-traps` → ⑦ `ch03-map` →
 ⑧–⑨ `ch03-challenge`.
 

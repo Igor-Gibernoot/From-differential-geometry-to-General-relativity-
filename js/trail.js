@@ -34,7 +34,7 @@ export async function renderTrail(root) {
   // The first built lesson not yet done gets the "start here" marker.
   const nextId = course.levels.flatMap(l => l.lessons ?? []).find(m => m.file && !progress.lesson(m.id)?.done)?.id;
 
-  const levels = course.levels.map(level => {
+  const levels = course.levels.map((level, li) => {
     const lessons = level.lessons ?? [];
     const counted = lessons.filter(m => m.kind !== 'review');
     const done = counted.filter(m => m.file && progress.lesson(m.id)?.done).length;
@@ -72,7 +72,7 @@ export async function renderTrail(root) {
         h('div', { class: `node-label${state === 'planned' ? ' planned' : ''}`, html: mdInline(meta.title) }));
     }));
 
-    return h('section', { class: `level${unwritten ? ' unwritten' : ''}`, id: level.id }, head, lessons.length ? path : null);
+    return h('section', { class: `level${unwritten ? ' unwritten' : ''}`, id: level.id, 'data-hue': li % 6 }, head, lessons.length ? path : null);
   });
 
   root.replaceChildren(h('div', { class: 'trail' }, top, levels));
