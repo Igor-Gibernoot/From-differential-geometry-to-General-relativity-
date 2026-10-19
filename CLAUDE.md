@@ -263,7 +263,14 @@ maximal atlas with an order-the-proof card; smooth manifold, two structures on
 ℝ; three traps). Screenshot pass done. The due review chip now follows the
 level hue with the course title.
 
-Session queue (one unit each): ④ `ch03-smooth-maps` → ⑤ `ch03-circle` → ⑥ `ch03-traps` → ⑦ `ch03-map` →
+Built `ch03-smooth-maps` (hook: are ℝ_x and ℝ_y the same smooth manifold?;
+circle doubling map D in the θ chart via circle-charts, representative 2θ /
+2θ − 2π, slope 2; smooth map via Φ = 𝒴∘φ∘𝒳⁻¹, why continuity, build of chart
+independence; smooth functions and curves; id: ℝ_y → ℝ_x not smooth, F = p³
+is a diffeomorphism ℝ_y → ℝ_x; p³ on standard ℝ is not; hierarchy; exotic ℝ⁴,
+S⁷; two traps). Screenshot pass done.
+
+Session queue (one unit each): ⑤ `ch03-circle` → ⑥ `ch03-traps` → ⑦ `ch03-map` →
 ⑧–⑨ `ch03-challenge`.
 
 Screenshot pass: `tools/shots.mjs` (`playwright-core`, installed in

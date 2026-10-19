@@ -116,7 +116,11 @@ levels:
         kind: concept
         file: ch03/atlases.yaml
         summary: Is $f(p) = p$ differentiable when the line is charted by $p^3$? Atlases, compatible charts, maximal atlases, and the definition of a smooth manifold.
-      - { id: ch03-smooth-maps, title: Smooth Maps and Diffeomorphisms, kind: concept }
+      - id: ch03-smooth-maps
+        title: Smooth Maps and Diffeomorphisms
+        kind: concept
+        file: ch03/smooth-maps.yaml
+        summary: Are the line charted by $p$ and the line charted by $p^3$ the same smooth manifold? Smooth maps through chart representatives, smooth functions and curves, diffeomorphisms, and exotic structures.
       - { id: ch03-circle, title: "Guided Problem: The Circle Is a Smooth Manifold", kind: guided }
       - { id: ch03-traps, title: Manifold Traps, kind: traps }
       - { id: ch03-map, title: "Content Map: Topological Manifolds", kind: map }
