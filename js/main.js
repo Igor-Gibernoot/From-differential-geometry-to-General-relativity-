@@ -15,7 +15,7 @@ import { runSession, lessonItems } from './player.js';
 import { sounds, soundOn, setSound } from './sound.js';
 import { initTheme, themeButton } from './theme.js';
 import { initTooltips } from './tooltip.js';
-import { cloudConfigured, initCloud, onCloudChange, signIn, signOutUser } from './cloud.js';
+import { cloudConfigured, initCloud, onCloudChange, signIn, signOutUser, flushCloud } from './cloud.js';
 
 initTheme();
 initTooltips();
@@ -193,7 +193,7 @@ function settings() {
       h('p', {}, 'Erase all progress and the review deck, here and in your account if signed in.'),
       h('button', {
         class: 'btn ghost', type: 'button',
-        onclick: () => { if (confirm('Erase all progress in this browser (and in your account, if you are signed in)?')) { progress.reset(); location.hash = '#/'; } },
+        onclick: () => { if (confirm('Erase all progress in this browser (and in your account, if you are signed in)?')) { progress.reset(); flushCloud(); location.hash = '#/'; } },
       }, 'Reset progress'))));
 }
 
