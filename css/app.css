@@ -83,9 +83,17 @@ a { color: var(--accent); }
   position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent);
   backdrop-filter: blur(8px); display: flex; align-items: center; gap: 8px;
   padding: max(10px, env(safe-area-inset-top)) 0 10px;
+  flex-wrap: wrap; row-gap: 2px;
 }
-.topbar .brand { font-weight: 750; font-size: 16px; line-height: 1.2; flex: 1; min-width: 0; }
-.topbar .brand small { display: block; color: var(--muted); font-weight: 500; font-size: 13px; }
+.topbar .course-title { flex: 0 0 100%; margin: 0; font-size: 28px; line-height: 1.15; font-weight: 800; letter-spacing: -.01em; }
+.topbar .course-sub { flex: 0 0 100%; color: var(--muted); font-size: 14px; font-weight: 500; }
+.topbar .toolbar { flex: 0 0 100%; display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.toolbar .spacer { flex: 1; }
+.tip-bubble {
+  position: fixed; z-index: 100; max-width: 240px; padding: 7px 11px; border-radius: 9px;
+  background: var(--text); color: var(--bg); font-size: 13px; font-weight: 600; line-height: 1.35;
+  pointer-events: none; box-shadow: var(--shadow);
+}
 .chip {
   display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 999px;
   background: var(--surface); border: 1px solid var(--line); font-size: 14px; font-weight: 650;
@@ -355,4 +363,6 @@ a { color: var(--accent); }
 }
 .panel label.toggle { display: flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer; }
 .panel label.toggle input { width: 20px; height: 20px; accent-color: var(--accent); }
-@media (max-width: 520px) { .topbar .brand small { display: none; } .topbar .brand { font-size: 15px; } }
+@media (max-width: 520px) { .topbar .course-title { font-size: 23px; } }
+
+.topbar .brand { font-weight: 750; font-size: 18px; flex: 1; min-width: 0; }

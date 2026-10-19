@@ -5,6 +5,7 @@ import { mdInline } from './render.js';
 import { icons, KIND_LABEL } from './icons.js';
 import { getCourse } from './content.js';
 import { progress } from './progress.js';
+import { themeButton } from './theme.js';
 
 const OFFSETS = [0, 52, 78, 52, 0, -52, -78, -52];
 
@@ -17,14 +18,18 @@ export async function renderTrail(root) {
   const acc = progress.accuracy(allIds);
 
   const top = h('header', { class: 'topbar' },
-    h('div', { class: 'brand' }, course.title, h('small', {}, course.subtitle ?? '')),
-    acc != null ? h('span', { class: 'chip acc', title: 'Average first-try accuracy over the lessons you finished', html: `${icons.target}<span>${pct(acc)}</span>` }) : null,
-    h('span', { class: 'chip streak', title: 'Days in a row', html: `${icons.flame}<span>${streak}</span>` }),
-    h('button', {
-      class: `chip review${due ? ' due' : ''}`, type: 'button', title: 'Spaced-repetition review',
-      html: `${icons.review}<span>${due ? `Review ${due}` : 'Review'}</span>`, onclick: () => { location.hash = '#/review'; },
-    }),
-    h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Progress & settings', html: icons.settings, onclick: () => { location.hash = '#/settings'; } }));
+    h('h1', { class: 'course-title' }, course.title),
+    course.subtitle ? h('div', { class: 'course-sub' }, course.subtitle) : null,
+    h('div', { class: 'toolbar' },
+      acc != null ? h('span', { class: 'chip acc', tabindex: 0, 'data-tip': 'Average first-try accuracy over the lessons you finished', html: `${icons.target}<span>${pct(acc)}</span>` }) : null,
+      h('span', { class: 'chip streak', tabindex: 0, 'data-tip': 'Days in a row you studied', html: `${icons.flame}<span>${streak}</span>` }),
+      h('button', {
+        class: `chip review${due ? ' due' : ''}`, type: 'button', 'data-tip': 'Spaced-repetition review',
+        html: `${icons.review}<span>${due ? `Review ${due}` : 'Review'}</span>`, onclick: () => { location.hash = '#/review'; },
+      }),
+      h('span', { class: 'spacer' }),
+      themeButton(h),
+      h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Progress & settings', 'data-tip': 'Settings & account', html: icons.settings, onclick: () => { location.hash = '#/settings'; } })));
 
   // The first built lesson not yet done gets the "start here" marker.
   const nextId = course.levels.flatMap(l => l.lessons ?? []).find(m => m.file && !progress.lesson(m.id)?.done)?.id;

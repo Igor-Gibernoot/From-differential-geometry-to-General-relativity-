@@ -10,7 +10,8 @@ of short lessons:
 - and, at the end of each level, a **content-map puzzle**, a **level review** and a **challenge**.
 
 Every answered question joins a spaced-repetition review deck. Progress is
-stored in the browser and can be moved between devices with an export code.
+stored in the browser and can be moved between devices with an export code, or
+synced through an optional Google sign-in ([`docs/ACCOUNTS.md`](docs/ACCOUNTS.md)).
 
 **Play it:** https://igor-gibernoot.github.io/From-differential-geometry-to-General-relativity-/
 

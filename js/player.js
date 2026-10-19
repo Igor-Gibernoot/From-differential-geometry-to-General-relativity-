@@ -10,6 +10,7 @@ import { renderCard } from './cards.js';
 import { isQuestion } from './content.js';
 import { progress } from './progress.js';
 import { sounds, soundOn, setSound } from './sound.js';
+import { themeButton } from './theme.js';
 
 export function runSession(root, { items, mode, startAt = 0, onFinish, onExit }) {
   const stats = { questions: 0, firstTry: 0 };
@@ -29,7 +30,7 @@ export function runSession(root, { items, mode, startAt = 0, onFinish, onExit })
   paintSoundBtn();
 
   root.replaceChildren(h('div', { class: 'player' },
-    h('header', { class: 'player-top' }, closeBtn, h('div', { class: 'bar' }, fill), counter, soundBtn),
+    h('header', { class: 'player-top' }, closeBtn, h('div', { class: 'bar' }, fill), counter, soundBtn, themeButton(h)),
     main,
     h('footer', { class: 'player-foot' }, foot)));
 
@@ -37,7 +38,7 @@ export function runSession(root, { items, mode, startAt = 0, onFinish, onExit })
     const on = soundOn();
     soundBtn.innerHTML = on ? icons.soundOn : icons.soundOff;
     soundBtn.setAttribute('aria-label', on ? 'Mute sounds' : 'Turn sounds on');
-    soundBtn.title = on ? 'Sounds on' : 'Sounds off';
+    soundBtn.dataset.tip = on ? 'Sounds on' : 'Sounds off';
   }
   function toggleSound() { setSound(!soundOn()); paintSoundBtn(); }
 
@@ -63,7 +64,7 @@ export function runSession(root, { items, mode, startAt = 0, onFinish, onExit })
   // The Back button sits on the left of the footer on every card but the first.
   function setFoot(buttons) {
     const back = i > 0
-      ? h('button', { class: 'btn ghost back', type: 'button', 'aria-label': 'Previous card', title: 'Previous card', html: icons.back, onclick: prev })
+      ? h('button', { class: 'btn ghost back', type: 'button', 'aria-label': 'Previous card', 'data-tip': 'Previous card', html: icons.back, onclick: prev })
       : null;
     footButtons = buttons;
     foot.replaceChildren(...[back, ...buttons].filter(Boolean));

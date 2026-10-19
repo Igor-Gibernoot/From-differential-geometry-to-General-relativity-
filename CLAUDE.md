@@ -156,6 +156,10 @@ Back button and progress bar in the player; synthesized feedback sounds
 encouraging messages and "N in a row" streaks; average first-try accuracy on
 the trail (overall chip and per level); level reviews (`#/review/<levelId>`).
 
+Also built: light/dark toggle (`js/theme.js`), instant tooltips via `data-tip`
+(`js/tooltip.js`), and optional Google sign-in with Firestore sync (`js/cloud.js`,
+`docs/ACCOUNTS.md`; inactive until `js/firebase-config.js` is filled in).
+
 ### Status (2026-10-18)
 
 Built: Chapter 2 change of basis (concept), covector law (guided), the

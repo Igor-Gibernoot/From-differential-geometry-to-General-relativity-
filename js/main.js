@@ -13,6 +13,13 @@ import { progress } from './progress.js';
 import { renderTrail } from './trail.js';
 import { runSession, lessonItems } from './player.js';
 import { sounds, soundOn, setSound } from './sound.js';
+import { initTheme, themeButton } from './theme.js';
+import { initTooltips } from './tooltip.js';
+import { cloudConfigured, initCloud, onCloudChange, signIn, signOutUser } from './cloud.js';
+
+initTheme();
+initTooltips();
+initCloud();
 
 const root = document.getElementById('app');
 const REVIEW_SIZE = 12;
@@ -91,13 +98,13 @@ async function playReview(levelId) {
       doneScreen({
         title: level ? `${level.title}: review done` : 'Review done',
         subtitle: 'Spaced repetition keeps it in long-term memory.',
-        stats, actions: [['primary', 'Back to the trail', '#/']],
+        stats, mode: 'review', actions: [['primary', 'Back to the trail', '#/']],
       });
     },
   });
 }
 
-function doneScreen({ title, subtitle, stats, actions }) {
+function doneScreen({ title, subtitle, stats, actions, mode = 'lesson' }) {
   const pct = stats.questions ? Math.round((stats.firstTry / stats.questions) * 100) : 100;
   sounds.finish();
   root.replaceChildren(h('div', { class: 'page done-screen' },
@@ -105,10 +112,40 @@ function doneScreen({ title, subtitle, stats, actions }) {
     h('h1', {}, title),
     h('p', { class: 'hint-line', html: escapeHtml(subtitle) }),
     h('div', { class: 'stats' },
-      h('div', { class: 'stat' }, h('b', {}, `${pct}%`), h('span', {}, 'first-try accuracy')),
+      h('div', { class: 'stat' }, h('b', {}, `${pct}%`), h('span', {}, mode === 'lesson' ? 'first-try accuracy in this lesson' : 'first-try accuracy in this session')),
       h('div', { class: 'stat' }, h('b', {}, `${progress.streak()}`), h('span', {}, 'day streak'))),
     h('div', { class: 'actions' }, actions.filter(Boolean).map(([cls, label, href]) =>
       h('a', { class: `btn ${cls}`, href, style: 'text-decoration:none' }, label)))));
+}
+
+function accountPanel() {
+  const body = h('div');
+  const panel = h('div', { class: 'panel' }, h('h3', {}, 'Account & sync'), body);
+  if (!cloudConfigured) {
+    body.append(h('p', {}, 'Sign-in is not set up for this copy of the app yet, so progress stays in this browser (use the code below to move it).'));
+    return panel;
+  }
+  const msg = h('p', { class: 'hint-line', style: 'margin:8px 0 0' });
+  const off = onCloudChange(st => {
+    if (!panel.isConnected && body.childNodes.length) return off();
+    if (st.user) {
+      body.replaceChildren(
+        h('p', {}, `Signed in as ${st.user.name ?? st.user.email}${st.user.name ? ` (${st.user.email})` : ''}.`),
+        h('p', { class: 'hint-line', style: 'margin:0 0 8px' },
+          st.sync === 'syncing' ? 'Syncing…' : st.sync === 'error' ? `Sync problem: ${st.error}` : 'Progress is synced to your account on every change.'),
+        h('div', { class: 'row' }, h('button', { class: 'btn ghost', type: 'button', onclick: () => signOutUser() }, 'Sign out')));
+    } else {
+      body.replaceChildren(
+        h('p', {}, 'Sign in with Google to keep your progress in your account and share it between your phone and laptop. Progress already in this browser is merged in, never lost.'),
+        h('div', { class: 'row' }, h('button', {
+          class: 'btn primary', type: 'button',
+          onclick: async () => { msg.textContent = ''; try { await signIn(); } catch (err) { msg.textContent = `Sign-in failed: ${err.message}`; } },
+        }, 'Sign in with Google')),
+        msg);
+      if (st.error) msg.textContent = st.error;
+    }
+  });
+  return panel;
 }
 
 function settings() {
@@ -120,10 +157,12 @@ function settings() {
   root.replaceChildren(h('div', { class: 'page' },
     h('header', { class: 'topbar' },
       h('a', { class: 'icon-btn', href: '#/', 'aria-label': 'Back', html: icons.back }),
-      h('div', { class: 'brand' }, 'Progress & settings')),
+      h('div', { class: 'brand' }, 'Progress & settings'),
+      themeButton(h)),
+    accountPanel(),
     h('div', { class: 'panel' },
-      h('h3', {}, 'Move progress to another device'),
-      h('p', {}, 'Progress is saved in this browser. To continue on your phone (or laptop), copy this code here and import it there.'),
+      h('h3', {}, 'Move progress by code'),
+      h('p', {}, 'Without an account, progress is saved only in this browser. To continue on another device, copy this code here and import it there.'),
       code,
       h('div', { class: 'row' }, h('button', {
         class: 'btn primary', type: 'button',
@@ -151,10 +190,10 @@ function settings() {
         'Play a sound for right and wrong answers')),
     h('div', { class: 'panel' },
       h('h3', {}, 'Start over'),
-      h('p', {}, 'Erase all progress and the review deck in this browser.'),
+      h('p', {}, 'Erase all progress and the review deck, here and in your account if signed in.'),
       h('button', {
         class: 'btn ghost', type: 'button',
-        onclick: () => { if (confirm('Erase all progress in this browser?')) { progress.reset(); location.hash = '#/'; } },
+        onclick: () => { if (confirm('Erase all progress in this browser (and in your account, if you are signed in)?')) { progress.reset(); location.hash = '#/'; } },
       }, 'Reset progress'))));
 }
 

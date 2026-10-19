@@ -20,8 +20,32 @@ function load() {
 
 let state = load();
 
+const listeners = new Set();
+
 function save() {
   try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* private mode: keep in memory */ }
+  listeners.forEach(fn => fn(state));
+}
+
+// Merge two progress states without losing anything either side learned:
+// lessons keep the best score and run count (latest run wins `score`/`last`),
+// cards keep whichever side answered them most recently, streak keeps the
+// more recent day.
+function merge(a, b) {
+  const out = blank();
+  for (const id of new Set([...Object.keys(a.lessons), ...Object.keys(b.lessons)])) {
+    const x = a.lessons[id], y = b.lessons[id];
+    if (!x || !y) { out.lessons[id] = x ?? y; continue; }
+    const newer = (y.last ?? 0) > (x.last ?? 0) ? y : x;
+    out.lessons[id] = { ...newer, done: x.done || y.done, best: Math.max(x.best ?? 0, y.best ?? 0), runs: Math.max(x.runs ?? 0, y.runs ?? 0) };
+  }
+  for (const k of new Set([...Object.keys(a.cards), ...Object.keys(b.cards)])) {
+    const x = a.cards[k], y = b.cards[k];
+    out.cards[k] = !x ? y : !y ? x : (y.at ?? 0) > (x.at ?? 0) ? y : x;
+  }
+  const sa = a.streak, sb = b.streak;
+  out.streak = (sb.last ?? -1) > (sa.last ?? -1) || ((sb.last ?? -1) === (sa.last ?? -1) && sb.count > sa.count) ? { ...sb } : { ...sa };
+  return out;
 }
 
 function bumpStreak() {
@@ -32,7 +56,7 @@ function bumpStreak() {
 }
 
 function schedule(key, box) {
-  state.cards[key] = { box, due: today() + INTERVALS[box] };
+  state.cards[key] = { box, due: today() + INTERVALS[box], at: Date.now() };
 }
 
 export const progress = {
@@ -91,6 +115,17 @@ export const progress = {
   streak() {
     const s = state.streak;
     return s.last != null && s.last >= today() - 1 ? s.count : 0;
+  },
+
+  // Cloud sync hooks (see cloud.js).
+  snapshot: () => state,
+  onChange(fn) { listeners.add(fn); return () => listeners.delete(fn); },
+  // Combine a remote state into the local one; returns the merged state.
+  mergeRemote(remote) {
+    if (!remote || !remote.lessons || !remote.cards) return state;
+    state = merge(state, { streak: { count: 0, last: null }, ...remote });
+    save();
+    return state;
   },
 
   exportCode: () => btoa(unescape(encodeURIComponent(JSON.stringify(state)))),
