@@ -475,14 +475,15 @@ a { color: var(--accent); }
 .level:not(.unwritten) .level-head .meter { background: color-mix(in srgb, var(--accent-text) 25%, transparent); }
 .level:not(.unwritten) .level-head .meter > div { background: var(--accent-text); }
 
-/* Course title: a gradient through the level hues */
+/* Course title: a vertical gradient through the level hues, so the two
+   lines contrast (cool "From differential geometry", warm "to General Relativity") */
 .topbar .course-title {
-  background: linear-gradient(90deg, #3451d1, #6d43d6 35%, #b8366f 70%, #b4520e);
+  background: linear-gradient(180deg, #3451d1 8%, #6d43d6 44%, #b8366f 56%, #b4520e 92%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .topbar .course-title {
-  background-image: linear-gradient(90deg, #7b93ff, #b394ff 35%, #f27aae 70%, #ff9a55);
+  background-image: linear-gradient(180deg, #a9b8ff 8%, #cdb6ff 44%, #ffa3c9 56%, #ffbd8a 92%);
 } }
 :root[data-theme="dark"] .topbar .course-title {
-  background-image: linear-gradient(90deg, #7b93ff, #b394ff 35%, #f27aae 70%, #ff9a55);
+  background-image: linear-gradient(180deg, #a9b8ff 8%, #cdb6ff 44%, #ffa3c9 56%, #ffbd8a 92%);
 }
