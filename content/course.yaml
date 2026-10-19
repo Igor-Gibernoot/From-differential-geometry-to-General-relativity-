@@ -106,7 +106,11 @@ levels:
         kind: concept
         file: ch03/hausdorff.yaml
         summary: Can a sequence converge to two points? Separating points with open sets, the line with two origins, and countable bases.
-      - { id: ch03-charts, title: Charts and Transition Maps, kind: concept }
+      - id: ch03-charts
+        title: Charts and Transition Maps
+        kind: concept
+        file: ch03/charts.yaml
+        summary: Can one angle label every point of a circle? Charts, coordinates, transition maps between overlapping charts, and the definition of a topological manifold.
       - { id: ch03-atlases, title: Atlases and Smooth Manifolds, kind: concept }
       - { id: ch03-smooth-maps, title: Smooth Maps and Diffeomorphisms, kind: concept }
       - { id: ch03-circle, title: "Guided Problem: The Circle Is a Smooth Manifold", kind: guided }

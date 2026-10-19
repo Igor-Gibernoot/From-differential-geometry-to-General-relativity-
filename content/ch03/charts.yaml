@@ -1,0 +1,408 @@
+id: ch03-charts
+title: Charts and Transition Maps
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: One number per point
+    body: |
+      A GPS on a circular race track reports each car's position as one number: an angle. Model the track as the unit circle
+      $$S^1 := \{(x, y) \mid x^2 + y^2 = 1\}$$
+      with the topology inherited from $\mathbb{R}^2$.
+
+      A good labelling should give every point **exactly one** number, send nearby points to nearby numbers and nearby numbers back to nearby points (a **homeomorphism**: a bijection, continuous in both directions), and use an **open** interval of numbers, so every label has room on both sides.
+
+      Recall: the wrap $\theta\mapsto(\cos\theta, \sin\theta)$ of $[0, 2\pi)$ onto $S^1$ is a continuous bijection, but its inverse tears the circle at $(1, 0)$: points just below $(1, 0)$ get angles near $2\pi$, while $(1, 0)$ itself gets $0$.
+
+  - type: mcq
+    id: predict-one-angle
+    prompt: |
+      Before any definitions, guess. Can a single angle, taking values in an **open** interval of $\mathbb{R}$, label **every** point of the unit circle $S^1$ by a homeomorphism (one label per point, nearby points ↔ nearby labels)?
+    options:
+      - text: No, every such labelling misses at least one point
+        correct: true
+      - text: 'Yes: the angle in $[0, 2\pi)$'
+        feedback: |
+          $[0, 2\pi)$ is not open, and its inverse map, the wrap, tears the circle at $(1, 0)$: points just below $(1, 0)$ get labels near $2\pi$, while $(1, 0)$ gets $0$. Nearby points get distant labels.
+      - text: 'Yes: the angle in $(0, 2\pi)$'
+        feedback: |
+          This one is a homeomorphism, but onto $S^1$ minus the point $(1, 0)$: no angle in $(0, 2\pi)$ labels $(1, 0)$, since its angle would be $0$ or $2\pi$, both excluded.
+      - text: 'Yes: the angle in $(0, 4\pi)$, which has room to spare'
+        feedback: |
+          Now each point gets **two** labels, $\theta$ and $\theta + 2\pi$, so the labelling is not a bijection. Bigger intervals do not help: going round once more repeats points.
+    explanation: |
+      Every open interval misses something: $(0, 2\pi)$ misses $(1, 0)$, and any attempt to include it either tears the circle or labels points twice. This lesson shows why, and the way out: use **several** labellings, each on its own open piece, and learn to translate between them. Each labelling is a **chart**.
+
+  - type: text
+    id: def-chart
+    title: Charts
+    body: |
+      Let $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ be a topological space and $\mathcal{U}$ an open set of $\mathcal{M}$. A **chart map** on $\mathcal{U}$ is a map
+      $$\mathscr{X}\colon\mathcal{U}\to\mathscr{X}(\mathcal{U})\subseteq\mathbb{R}^d$$
+      such that
+
+      1. its image $\mathscr{X}(\mathcal{U})$ is an **open** set of $\mathbb{R}^d$, and
+      2. $\mathscr{X}$ is a **homeomorphism** onto that image (both sets with their inherited topologies).
+
+      The pair $(\mathcal{U}, \mathscr{X})$ is a **chart**, and $\mathcal{U}$ is its **chart domain**. The $d$ numbers
+      $$\mathscr{X}(p) = \big(\mathscr{X}^1(p), \dots, \mathscr{X}^d(p)\big)$$
+      are the **coordinates** of $p$; each component function $\mathscr{X}^i\colon\mathcal{U}\to\mathbb{R}$ is a **coordinate map**. The inverse $\mathscr{X}^{-1}$ turns numbers back into points, continuously.
+
+      On the circle, $d = 1$. Chart A is $\theta\in(0, 2\pi)$ on $\mathcal{U} = S^1\setminus\{(1, 0)\}$, with inverse
+      $$\theta^{-1}(\alpha) = (\cos\alpha,\ \sin\alpha).$$
+
+  - type: widget
+    id: charts-explore
+    title: Two angle charts
+    widget: circle-charts
+    config:
+      angle: 60
+      show: A
+      snap: 15
+      presets:
+        - { label: Chart A only, show: A, angle: 60 }
+        - { label: Both charts, show: both, angle: 60 }
+        - { label: Lower piece, show: both, angle: 300 }
+    body: |
+      The ring outside the circle is chart A: the angle $\theta\in(0, 2\pi)$ on $\mathcal{U} = S^1\setminus\{(1, 0)\}$.
+
+      1. Drag $p$ all the way round to $(1, 0)$. What does chart A say there?
+      2. Press **Both charts**. Chart B (inner ring) is the angle $\varphi\in(-\pi, \pi)$ on $\mathcal{V} = S^1\setminus\{(-1, 0)\}$. Which point does it miss? Does every point lie in at least one chart?
+      3. The gold arcs are the overlap $\mathcal{U}\cap\mathcal{V}$. Drag $p$ into each gold arc and compare $\theta(p)$ with $\varphi(p)$.
+
+  - type: mcq
+    id: missing-points
+    prompt: |
+      On the unit circle $S^1$, chart A is the angle $\theta\in(0, 2\pi)$ measured from $(1, 0)$, and chart B is the angle $\varphi\in(-\pi, \pi)$, also measured from $(1, 0)$ (negative angles clockwise). Which points do they miss?
+    options:
+      - text: 'A misses $(1, 0)$, B misses $(-1, 0)$'
+        correct: true
+      - text: 'Both miss $(1, 0)$, where the angles start'
+        feedback: |
+          $\varphi(1, 0) = 0$, which lies inside $(-\pi, \pi)$: chart B covers $(1, 0)$ comfortably. Its trouble spot is opposite, at $(-1, 0)$, whose angle would be $\pm\pi$, both excluded.
+      - text: 'A misses $(-1, 0)$, B misses $(1, 0)$'
+        feedback: |
+          $\theta(-1, 0) = \pi\in(0, 2\pi)$, so A covers $(-1, 0)$. A point is missed when its angle would sit at an **excluded endpoint** of the interval: $0$ or $2\pi$ for A, $\pm\pi$ for B.
+      - text: Neither misses anything
+        feedback: |
+          Open intervals leave out their endpoints. The point $(1, 0)$ would need $\theta = 0$ or $2\pi$, not in $(0, 2\pi)$.
+    explanation: |
+      A missing point sits where the angle would hit an excluded endpoint: $(1, 0)$ for $\theta\in(0, 2\pi)$ and $(-1, 0)$ for $\varphi\in(-\pi, \pi)$. Each chart misses a different point, so **together** they cover the whole circle.
+
+  - type: mcq
+    id: one-chart-impossible
+    prompt: |
+      A chart covering all of the unit circle $S^1$ would be a homeomorphism from $S^1$ onto an open set of $\mathbb{R}$. Why can no such chart exist?
+    options:
+      - text: Removing one point leaves the circle in one piece, but cuts any open interval in two; a homeomorphism cannot change the number of pieces
+        correct: true
+      - text: The circle is curved and $\mathbb{R}$ is straight
+        feedback: |
+          Bending is invisible to topology. The upper half of the circle is curved, yet $(x, y)\mapsto x$ is a homeomorphism from it onto the straight interval $(-1, 1)$.
+      - text: The circle lives in $\mathbb{R}^2$, so its points need two coordinates
+        feedback: |
+          The angle $\theta$ labels all but one point with a **single** number, so one coordinate suffices locally. The ambient plane does not set the number of coordinates.
+      - text: The angle $\theta$ is not continuous
+        feedback: |
+          $\theta$ is a perfectly good homeomorphism on $S^1\setminus\{(1, 0)\}$. The question is about **any** chart, not just the angle, so the reason must work for every candidate.
+    explanation: |
+      Suppose $\mathscr{X}\colon S^1\to\mathscr{X}(S^1)\subseteq\mathbb{R}$ were a homeomorphism. Continuous maps keep a space in one piece, so the image is a single open interval. Remove a point $p$: $S^1\setminus\{p\}$ is still one arc, while the interval minus $\mathscr{X}(p)$ falls apart into two. A homeomorphism matches these two spaces, so it would have to match one piece with two, which is impossible. (The precise word for "in one piece" is **connected**.) Charts are therefore **local**: the circle needs at least two.
+
+  - type: mcq
+    id: image-open
+    prompt: |
+      Let $\mathcal{U}$ be the open upper half of the unit circle (points with $y > 0$) and $\iota(x, y) = (x, y)$ its inclusion into $\mathbb{R}^2$. The map $\iota$ is a homeomorphism onto its image (inherited topologies). Is $(\mathcal{U}, \iota)$ a chart with $d = 2$?
+    options:
+      - text: 'No: the image, an arc, is not an open set of $\mathbb{R}^2$'
+        correct: true
+      - text: 'Yes: a homeomorphism onto the image is all a chart needs'
+        feedback: |
+          A chart has a second requirement: its image must be **open** in $\mathbb{R}^d$. No disc in the plane fits inside a thin arc, so the arc is not open in $\mathbb{R}^2$.
+      - text: 'No, because $\iota$ is not continuous'
+        feedback: |
+          $\iota$ is continuous: an open set of $\mathbb{R}^2$ pulls back to its intersection with $\mathcal{U}$, which is open in the inherited topology. The failure lies in the image.
+      - text: 'Yes, because the circle sits in the plane, so $d = 2$'
+        feedback: |
+          Where the circle sits does not decide $d$. The openness condition does: the image must be open in $\mathbb{R}^d$, and an arc is open in $\mathbb{R}^1$ (as an interval), not in $\mathbb{R}^2$.
+    explanation: |
+      The arc has no room in the direction off the circle, so it is not open in $\mathbb{R}^2$. A genuine chart on $\mathcal{U}$ is $(x, y)\mapsto x$, with image the open interval $(-1, 1)$ and inverse $x\mapsto(x, \sqrt{1 - x^2})$, so $d = 1$.
+
+      Why demand openness at all? Later we differentiate maps between chart images, and a derivative at a point needs room on **all** sides of it. Openness gives that room at every point, and it pins down $d$.
+
+  - type: mcq
+    id: overlap-pieces
+    prompt: |
+      On the unit circle, chart A is $\theta\in(0, 2\pi)$ on $\mathcal{U} = S^1\setminus\{(1, 0)\}$, and chart B is $\varphi\in(-\pi, \pi)$ on $\mathcal{V} = S^1\setminus\{(-1, 0)\}$. What does the overlap $\mathcal{U}\cap\mathcal{V}$ look like?
+    options:
+      - text: 'Two disjoint open arcs: the upper half and the lower half'
+        correct: true
+      - text: The whole circle
+        feedback: |
+          A point is in $\mathcal{U}\cap\mathcal{V}$ only if **both** charts cover it. $(1, 0)$ is missing from $\mathcal{U}$ and $(-1, 0)$ from $\mathcal{V}$, so neither is in the overlap. The **union** is the whole circle; the intersection is not.
+      - text: One arc, from just after $(1, 0)$ round to just before it
+        feedback: |
+          That arc is $\mathcal{U}$ itself. The overlap must also avoid $(-1, 0)$, which cuts this arc in two.
+    explanation: |
+      Removing $(1, 0)$ and $(-1, 0)$ from the circle leaves two open arcs: the upper half ($y > 0$) and the lower half ($y < 0$). In chart A they are $\theta\in(0, \pi)$ and $\theta\in(\pi, 2\pi)$. Overlaps of charts need not be in one piece.
+
+  - type: text
+    id: def-transition
+    title: Translating between charts
+    body: |
+      A point in the overlap of two charts has two sets of coordinates. The **transition map** translates one into the other: go back from the numbers to the point with one chart's inverse, then read the point with the other chart.
+
+      For charts $(\mathcal{U}, \mathscr{X})$ and $(\mathcal{V}, \mathscr{Y})$ with $\mathcal{U}\cap\mathcal{V}\neq\emptyset$, the transition map from $\mathscr{X}$-coordinates to $\mathscr{Y}$-coordinates is
+      $$\mathscr{Y}\circ\mathscr{X}^{-1}\colon\mathscr{X}(\mathcal{U}\cap\mathcal{V})\to\mathscr{Y}(\mathcal{U}\cap\mathcal{V}).$$
+      The book names it with the rune $\text{ᛖ}$:
+      $$\text{ᛖ}_{\mathcal{U}\mathcal{V}} := \mathscr{Y}\circ\mathscr{X}^{-1},$$
+      and the reverse translation is $\text{ᛖ}_{\mathcal{V}\mathcal{U}} := \mathscr{X}\circ\mathscr{Y}^{-1}$.
+
+      Both its domain and its target are subsets of $\mathbb{R}^d$: a transition map takes **numbers to numbers**. That is what lets us use calculus on it, while the manifold itself has no calculus yet.
+
+  - type: mcq
+    id: transition-domain
+    prompt: |
+      On the unit circle, chart A is $\theta\in(0, 2\pi)$ on $\mathcal{U} = S^1\setminus\{(1, 0)\}$, and chart B is $\varphi\in(-\pi, \pi)$ on $\mathcal{V} = S^1\setminus\{(-1, 0)\}$. What is the domain of the transition map $\varphi\circ\theta^{-1}$?
+    options:
+      - text: '$(0, \pi)\cup(\pi, 2\pi)$'
+        correct: true
+      - text: '$(0, 2\pi)$'
+        feedback: |
+          $\theta^{-1}(\pi) = (-1, 0)$, which chart B does not cover, so $\varphi(\theta^{-1}(\pi))$ is undefined. The domain is $\theta(\mathcal{U}\cap\mathcal{V})$, not all of $\theta(\mathcal{U})$.
+      - text: '$\mathcal{U}\cap\mathcal{V}$'
+        feedback: |
+          $\mathcal{U}\cap\mathcal{V}$ is a set of **points of the circle**. A transition map eats numbers: its domain is the image $\theta(\mathcal{U}\cap\mathcal{V})$ of the overlap in $\mathbb{R}$.
+      - text: '$(-\pi, 0)\cup(0, \pi)$'
+        feedback: |
+          These are the $\varphi$-values of the overlap, $\varphi(\mathcal{U}\cap\mathcal{V})$: where $\varphi\circ\theta^{-1}$ **lands**, the domain of the reverse map $\theta\circ\varphi^{-1}$.
+    explanation: |
+      The domain of $\varphi\circ\theta^{-1}$ is $\theta(\mathcal{U}\cap\mathcal{V})$. The overlap is the circle without $(1, 0)$ and $(-1, 0)$, whose $\theta$-values are $(0, \pi)\cup(\pi, 2\pi)$: an open set of $\mathbb{R}$ in two pieces.
+
+  - type: build
+    id: build-lower
+    prompt: |
+      On the unit circle, chart A is $\theta\in(0, 2\pi)$ and chart B is $\varphi\in(-\pi, \pi)$, both measured counterclockwise from $(1, 0)$. On the **lower** half of the circle, $\theta$ takes values $\alpha\in(\pi, 2\pi)$. Build the transition map there.
+    prefix: '\varphi(\theta^{-1}(\alpha)) ='
+    tiles: ['\alpha', '-', '+', '2\pi', '\pi']
+    answers:
+      - ['\alpha', '-', '2\pi']
+    wrong:
+      - answer: ['\alpha']
+        feedback: |
+          $\varphi = \alpha$ holds on the **upper** half, where both angles agree. On the lower half $\alpha > \pi$, which is outside $\varphi$'s range $(-\pi, \pi)$.
+      - answer: ['\alpha', '+', '2\pi']
+        feedback: |
+          That gives values in $(3\pi, 4\pi)$, far outside $(-\pi, \pi)$. Chart B measures the lower half **clockwise**, with negative angles: subtract a full turn.
+      - answer: ['\alpha', '-', '\pi']
+        feedback: |
+          That lands in $(0, \pi)$, the angles of the **upper** half. Going once round the circle is $2\pi$, not $\pi$.
+    hint: The point $\theta^{-1}(\alpha)$ has angle $\alpha$ counterclockwise; chart B must name it by an angle in $(-\pi, \pi)$. Which full-turn shift lands there?
+    explanation: |
+      Turning by $\alpha$ counterclockwise reaches the same point as turning by $2\pi - \alpha$ clockwise, i.e. by the angle $\alpha - 2\pi\in(-\pi, 0)$. So on the lower piece
+      $$\varphi(\theta^{-1}(\alpha)) = \alpha - 2\pi,$$
+      while on the upper piece $\varphi(\theta^{-1}(\alpha)) = \alpha$.
+
+  - type: numeric
+    id: phi-at-4pi3
+    prompt: |
+      On the unit circle, chart A is $\theta\in(0, 2\pi)$ and chart B is $\varphi\in(-\pi, \pi)$, both measured counterclockwise from $(1, 0)$. A point $p$ has $\theta(p) = \tfrac{4\pi}{3}$. Write $\varphi(p) = k\pi$: what is $k$? (Fractions like `1/2` are fine.)
+    answer: -0.6666667
+    tolerance: 0.001
+    answerText: '-2/3'
+    wrong:
+      - value: 1.3333333
+        tolerance: 0.001
+        feedback: |
+          $\tfrac{4\pi}{3}$ is outside $(-\pi, \pi)$, so it cannot be a value of $\varphi$. The point is on the lower half, where the translation is $\varphi = \theta - 2\pi$, not $\varphi = \theta$.
+      - value: 0.6666667
+        tolerance: 0.001
+        feedback: |
+          Right size, wrong sign. $\tfrac{2\pi}{3}$ is on the **upper** half; $p$ is on the lower half, reached by turning $\tfrac{2\pi}{3}$ **clockwise**: a negative $\varphi$.
+    hint: The point with $\theta = \tfrac{4\pi}{3}$ lies on the lower half of the circle, where $\varphi = \theta - 2\pi$.
+    explanation: |
+      $\theta = \tfrac{4\pi}{3}\in(\pi, 2\pi)$ is on the lower half, so
+      $$\varphi(p) = \tfrac{4\pi}{3} - 2\pi = -\tfrac{2\pi}{3},$$
+      and $k = -\tfrac23$. Check: $p = (\cos\tfrac{4\pi}{3}, \sin\tfrac{4\pi}{3}) = (-\tfrac12, -\tfrac{\sqrt3}{2})$, reached by turning $120°$ clockwise.
+
+  - type: mcq
+    id: jump-ok
+    prompt: |
+      On the unit circle, with $\theta\in(0, 2\pi)$ on $S^1\setminus\{(1, 0)\}$ and $\varphi\in(-\pi, \pi)$ on $S^1\setminus\{(-1, 0)\}$, the transition map is $\varphi = \theta$ for $\theta\in(0, \pi)$ and $\varphi = \theta - 2\pi$ for $\theta\in(\pi, 2\pi)$. Its graph jumps from near $\pi$ to near $-\pi$ at $\theta = \pi$. Is the transition map discontinuous?
+    options:
+      - text: 'No: $\theta = \pi$ is not in its domain, and on each of the two intervals it is $\theta$ plus a constant'
+        correct: true
+      - text: Yes, so the two charts are incompatible
+        feedback: |
+          Continuity is tested at points of the domain only. $\theta = \pi$ is the point $(-1, 0)$, which chart B does not cover, so the transition map is not defined there. Near every point where it **is** defined, it is a shift by a constant.
+      - text: Yes, but redefining $\varphi$ to take values in $(0, 2\pi)$ removes the jump
+        feedback: |
+          Then $\varphi$ is no longer a homeomorphism on $\mathcal{V} = S^1\setminus\{(-1, 0)\}$: points just above $(1, 0)$ would get values near $0$ and points just below get values near $2\pi$. The tear simply moves into chart B itself.
+    explanation: |
+      The domain $(0, \pi)\cup(\pi, 2\pi)$ has a gap exactly where the graph jumps. On each piece the map is $\theta$ or $\theta - 2\pi$: continuous, and differentiable as often as you like. A jump **between** pieces of the domain is harmless. The next lesson asks exactly this of every pair of charts: smooth transition maps.
+
+  - type: text
+    id: def-manifold
+    title: Topological manifolds
+    body: |
+      Charts make "looks like $\mathbb{R}^d$ near each point" precise. A **topological manifold of dimension $d$** is a topological space $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ that is
+
+      1. **Hausdorff**: distinct points have disjoint open neighbourhoods;
+      2. **second countable**: some countable family of open sets builds every open set by unions;
+      3. **locally Euclidean**: every point $p$ lies in the domain of some chart $(\mathcal{U}, \mathscr{X})$ with $\mathscr{X}(\mathcal{U})\subseteq\mathbb{R}^d$.
+
+      A set of charts whose domains together cover $\mathcal{M}$ is an **atlas** (the subject of the next lesson). The book writes the manifold as the triple $(\mathcal{M}, \mathcal{O}_\mathcal{M}, \mathcal{A})_d$, with $\mathcal{A}$ an atlas.
+
+      Example: $S^1$ inherits Hausdorff and second countable from $\mathbb{R}^2$ (every subset of $\mathbb{R}^d$ has both), and the charts $\theta$ and $\varphi$ cover it. So $S^1$ is a topological manifold.
+
+  - type: mcq
+    id: circle-dimension
+    prompt: |
+      The unit circle $S^1$ sits in the plane $\mathbb{R}^2$ and is covered by the angle charts $\theta\in(0, 2\pi)$ and $\varphi\in(-\pi, \pi)$. What is its dimension as a topological manifold?
+    options:
+      - text: '$1$'
+        correct: true
+      - text: '$2$, because it lies in $\mathbb{R}^2$'
+        feedback: |
+          The dimension is the number of coordinates a chart uses, not the size of the space the manifold happens to sit in. Each angle chart uses one number, and an arc is never open in $\mathbb{R}^2$.
+      - text: It depends on the chart chosen
+        feedback: |
+          It cannot. If one chart sent an open set to $\mathbb{R}^1$ and another the same set to $\mathbb{R}^2$, the transition map would be a homeomorphism between open sets of $\mathbb{R}^1$ and $\mathbb{R}^2$, and a theorem (invariance of domain) rules that out.
+    explanation: |
+      $d = 1$: the angle charts take values in open intervals of $\mathbb{R}$. The dimension is well defined because no homeomorphism matches an open set of $\mathbb{R}^d$ with one of $\mathbb{R}^e$ when $d\neq e$ (a deep theorem, intuitive enough: an interval is not a disc).
+
+  - type: mcq
+    id: two-origins
+    prompt: |
+      The **line with two origins** is the real line with the point $0$ replaced by two points $0_a$ and $0_b$; open sets around $0_a$ (or $0_b$) are intervals around zero using that origin. Every point lies in a chart onto an open interval of $\mathbb{R}$. Which manifold condition fails?
+    options:
+      - text: Hausdorff
+        correct: true
+      - text: Second countable
+        feedback: |
+          Intervals with rational endpoints, taken with either origin, form a countable basis. The space is small enough; the trouble is elsewhere.
+      - text: Locally Euclidean
+        feedback: |
+          Each origin has a chart: its own copy of $\mathbb{R}$. Nothing is wrong near any single point; that is what makes the example sneaky.
+    explanation: |
+      Every open set around $0_a$ and every open set around $0_b$ share the points near zero, so $0_a$ and $0_b$ have no disjoint neighbourhoods: not Hausdorff. Being locally Euclidean is not enough; that is why the definition adds the two global conditions.
+
+  - type: text
+    id: def-stereo
+    title: A chart that is not an angle
+    body: |
+      Charts need not be angles. The **stereographic projection** from the north pole $N = (0, 1)$ sends a point $p = (x, y)\neq N$ of the circle to where the straight line from $N$ through $p$ meets the horizontal axis.
+
+      That line is $N + t\,(p - N)$, with height $1 + t\,(y - 1)$. It reaches height $0$ at $t = \tfrac{1}{1 - y}$, and its horizontal position there is
+      $$\sigma(x, y) = \frac{x}{1 - y}.$$
+      The chart is $(\mathcal{V}, \sigma)$ with $\mathcal{V} = S^1\setminus\{N\}$. Its image is all of $\mathbb{R}$: points near $N$ shoot off to $\pm\infty$.
+
+  - type: widget
+    id: stereo-explore
+    title: Projecting from the north pole
+    widget: circle-charts
+    config:
+      angle: 120
+      show: both
+      stereo: true
+      snap: 15
+      presets:
+        - { label: South pole, show: both, stereo: true, angle: 270 }
+        - { label: Near the top, show: both, stereo: true, angle: 75 }
+        - { label: Left point, show: both, stereo: true, angle: 180 }
+    body: |
+      Chart B is now the stereographic projection $\sigma = x/(1 - y)$ on $S^1\setminus\{(0, 1)\}$: follow the dashed ray from $(0, 1)$ through $p$ to the axis.
+
+      1. Press **South pole** and **Left point**: what are $\sigma$ there?
+      2. Drag $p$ towards $(0, 1)$ from both sides. Where does $\sigma(p)$ go, and what does the graph of $\sigma(\theta)$ do at $\theta = \tfrac\pi2$?
+
+  - type: numeric
+    id: sigma-pi6
+    prompt: |
+      The stereographic chart on the unit circle is $\sigma(x, y) = \dfrac{x}{1 - y}$, defined on $S^1\setminus\{(0, 1)\}$. Take the point $p$ at angle $\theta = \tfrac\pi6$, i.e. $p = (\cos\tfrac\pi6,\ \sin\tfrac\pi6)$. What is $\sigma(p)$? (A decimal to two places is fine.)
+    answer: 1.7320508
+    tolerance: 0.01
+    answerText: '√3 ≈ 1.73'
+    wrong:
+      - value: 0.8660254
+        tolerance: 0.01
+        feedback: |
+          That is $x = \tfrac{\sqrt3}{2}$ alone. The projection divides by $1 - y = \tfrac12$, which stretches it: points above the axis land farther out.
+      - value: 0.5773503
+        tolerance: 0.01
+        feedback: |
+          That is $\tfrac{\sqrt3}{2}\big/\tfrac{3}{2}$, dividing by $1 + y$: the projection from the **south** pole. Here the ray starts at the north pole $(0, 1)$, so divide by $1 - y$.
+    hint: $\cos\tfrac\pi6 = \tfrac{\sqrt3}{2}$ and $\sin\tfrac\pi6 = \tfrac12$.
+    explanation: |
+      $p = (\tfrac{\sqrt3}{2}, \tfrac12)$, so
+      $$\sigma(p) = \frac{\sqrt3/2}{1 - 1/2} = \sqrt3\approx 1.73.$$
+
+  - type: mcq
+    id: stereo-transition
+    prompt: |
+      On the unit circle, chart A is the angle $\theta\in(0, 2\pi)$ with inverse $\theta^{-1}(\alpha) = (\cos\alpha, \sin\alpha)$, and the stereographic chart is $\sigma(x, y) = \dfrac{x}{1 - y}$ on $S^1\setminus\{(0, 1)\}$. Which formula is the transition map $\sigma\circ\theta^{-1}$?
+    options:
+      - text: '$\alpha\mapsto\dfrac{\cos\alpha}{1 - \sin\alpha}$, for $\alpha\neq\tfrac\pi2$'
+        correct: true
+      - text: '$\alpha\mapsto\dfrac{\sin\alpha}{1 - \cos\alpha}$'
+        feedback: |
+          This swaps the roles of $x$ and $y$: it is the projection from $(1, 0)$ onto the vertical axis. Substitute $x = \cos\alpha$ and $y = \sin\alpha$ into $\sigma = x/(1 - y)$.
+      - text: '$\alpha\mapsto\dfrac{\cos\alpha}{1 + \sin\alpha}$'
+        feedback: |
+          Dividing by $1 + y$ is the projection from the **south** pole $(0, -1)$. The ray here starts at $(0, 1)$.
+      - text: '$\alpha\mapsto\alpha$, since both charts label the same point'
+        feedback: |
+          Same point, different labels: that is the whole reason transition maps exist. At $\alpha = \tfrac{3\pi}{2}$ (the south pole) $\sigma = 0$, not $\tfrac{3\pi}{2}$.
+    explanation: |
+      Go back to the point, then project:
+      $$\begin{aligned}
+      \sigma(\theta^{-1}(\alpha)) &= \sigma(\cos\alpha, \sin\alpha) \\
+      &= \frac{\cos\alpha}{1 - \sin\alpha}.
+      \end{aligned}$$
+      Its domain is $\theta$ of the overlap: $(0, \tfrac\pi2)\cup(\tfrac\pi2, 2\pi)$, which skips $\alpha = \tfrac\pi2$, the north pole. Near it the formula blows up, which is the asymptote in the widget's graph; on each piece it is smooth.
+
+  - type: mcq
+    id: trap-chart-vs-value
+    tag: Trap
+    prompt: |
+      On the unit circle, chart A is $(\mathcal{U}, \theta)$ with $\theta\in(0, 2\pi)$ on $\mathcal{U} = S^1\setminus\{(1, 0)\}$. For the top point $p = (0, 1)$, $\theta(p) = \tfrac\pi2$. Which statement is correct?
+    options:
+      - text: '$\tfrac\pi2$ is the coordinate of $p$ in this chart; the chart is the pair $(\mathcal{U}, \theta)$'
+        correct: true
+      - text: '$\tfrac\pi2$ is the chart of $p$'
+        feedback: |
+          A chart is a whole map with its domain, $(\mathcal{U}, \theta)$, defined on many points. Its value at one point is a **coordinate**, a number.
+      - text: '$p = \tfrac\pi2$'
+        feedback: |
+          $p$ is a point of the circle, $(0, 1)$; $\tfrac\pi2$ is a label for it. Another chart labels the same point differently: on the upper half, the chart $(x, y)\mapsto x$ gives $p$ the coordinate $0$.
+      - text: 'The chart is the interval $(0, 2\pi)$'
+        feedback: |
+          $(0, 2\pi)$ is the chart's **image**, the set of possible coordinates. The chart is the map $\theta$ together with its domain $\mathcal{U}$.
+    explanation: |
+      Keep three things apart: the **point** $p\in\mathcal{M}$, the **chart** $(\mathcal{U}, \theta)$, and the **coordinate** $\theta(p)\in\mathbb{R}^d$. Physics constantly blurs them ("the point $x = 3$"), which is harmless only while one chart is in use.
+
+  - type: mcq
+    id: trap-must-cover
+    tag: Trap
+    shuffle: false
+    prompt: |
+      True or false: the domain of a chart on a topological manifold $\mathcal{M}$ must be all of $\mathcal{M}$.
+    options:
+      - text: 'True'
+        feedback: |
+          A chart only needs an **open** domain $\mathcal{U}\subseteq\mathcal{M}$. On the unit circle no chart can cover everything: removing a point leaves the circle in one piece but cuts any open interval in two.
+      - text: 'False'
+        correct: true
+    explanation: |
+      Charts are local. Some manifolds have a chart covering everything ($\mathbb{R}^d$ with the identity), but $S^1$ needs at least two, and the sphere $S^2$ too. "Every point lies in **some** chart" is the requirement; many charts working together is the normal case.
+
+  - type: text
+    id: wrap-up
+    title: What you now own
+    body: |
+      - A **chart** $(\mathcal{U}, \mathscr{X})$: an open domain $\mathcal{U}$ and a homeomorphism $\mathscr{X}$ onto an **open** set of $\mathbb{R}^d$. Its values are **coordinates**. Openness leaves room for derivatives and pins down $d$.
+      - Charts are local: the angle $\theta\in(0, 2\pi)$ misses $(1, 0)$, and no single chart covers $S^1$.
+      - The **transition map** $\mathscr{Y}\circ\mathscr{X}^{-1}$ translates coordinates on the overlap, numbers to numbers. For the two angle charts it is $\theta$ or $\theta - 2\pi$; for the stereographic chart, $\cos\theta/(1 - \sin\theta)$. Jumps between pieces of its domain are harmless.
+      - A **topological manifold** of dimension $d$: Hausdorff, second countable, and every point in a chart into $\mathbb{R}^d$. $S^1$ is one, with $d = 1$.
+
+      **Next:** the transition maps of the circle are smooth, but nothing so far demands that. The next lesson collects charts into **atlases** and asks for **smooth** transitions: the step from a topological manifold to a smooth one, where calculus becomes possible.
