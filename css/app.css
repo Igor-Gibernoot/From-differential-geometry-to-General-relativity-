@@ -493,3 +493,14 @@ a { color: var(--accent); }
   border-color: transparent;
   transition: --title-a .6s ease, --title-b .6s ease, --title-c .6s ease;
 }
+
+/* ---------- curve-velocity ---------- */
+.cv-curve { fill: none; stroke: var(--ink); stroke-width: 2.5px; stroke-opacity: .85; }
+.cv-curve.c2, .cv-tan.c2, .cv-dash line { stroke-dasharray: 7 5; }
+.cv-tan { stroke: var(--vec); stroke-width: 1.5px; stroke-opacity: .8; }
+.cv-dot { fill: var(--ink); fill-opacity: .7; }
+.cv-p { fill: var(--gold); }
+.w-handle.cv-bend { fill: var(--surface); fill-opacity: 1; stroke: var(--ink); }
+.widget .readout .cv-cell { display: flex; flex-direction: column; gap: 2px; }
+.cv-flabel { align-self: center; padding: 0 4px; }
+polyline.w-level { fill: none; }

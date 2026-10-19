@@ -18,7 +18,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   list), one block per problem with `tag: Problem N · …` and ids `pN-…`, then
   `wrap-up` ending with a teaser for the next level.
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, starting with `ch04-tangent-space`; then Chapters 5–10 (each with
+  order, starting with `ch04-tangent-space` (its widget `curve-velocity` is
+  built); then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -43,6 +44,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\mathcal{U}_A = \mathcal{M}\setminus\{0_B\}$; doubling $D$ (angle $t\mapsto 2t$,
   $q\mapsto q^2$), reflection $R(q_1,q_2) = (q_1,-q_2)$; facts beyond the level
   are flagged "stated here without proof".
+- **Chapter 4 conventions so far:** curves pass through $p$ at $\lambda = 0$ in
+  widgets ($\gamma(\lambda) = p + \lambda v + \lambda^2 a$; on $S^1$
+  $\theta(\gamma(\lambda)) = \theta_p + \lambda w + \lambda^2 a$); two curves are
+  $\gamma_1$ (solid) and $\gamma_2$ (dashed); components
+  $v^i = (\mathscr{X}^i\circ\gamma)'(0)$ in blue, $v^\theta$ on $S^1$; scalar
+  field presets $x$, $y$, $x^2+y$, $\theta$; level lines of $f$ dashed orange.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -52,6 +59,17 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Widget `curve-velocity` (for `ch04-tangent-space`): plane or `circle: true`
+($S^1$, θ chart); two curves through $p$ at λ = 0, velocity handle (blue tip)
+and bend handle at γ(−1) that changes the curve but not the velocity; field
+buttons $x, y, x^2+y, \theta$ with level lines; panel of λ ↦ f(γ(λ)) with
+tangent lines; readouts per curve (formula, components, $(f\circ\gamma)'(0)$,
+optional `chain` line), badge same / equal on this f only / different.
+Tested with a throwaway preset (plane, plane+chain+θ, circle), drags checked
+in Playwright, preset removed. Choices: curves parametrised so λ₀ = 0 (the book
+allows any λ₀); coinciding velocity handles grab γ₂'s.
+Conventions fixed here: see "Chapter 4 conventions so far" in Current.
 
 ch03-challenge, proofs for facts flagged "without proof" (Igor's request; lesson
 now 44 cards): p2-sphere (S² stereographic transition u/|u|², derived from

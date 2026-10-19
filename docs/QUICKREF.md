@@ -102,6 +102,7 @@ above"). Never name a theme-dependent colour; use labels or the fixed hues
 - `ball-probe`: is a set open? drag $p$, set radius $r$; line, plane, circle arc, subspaces, `pair: true` for Hausdorff.
 - `preimage-explorer`: continuity via preimages of an open interval.
 - `circle-charts`: θ/φ angle charts on $S^1$ (or `stereo: true` for $\sigma = x/(1-y)$), overlap pieces, draggable $p$, transition graph.
+- `curve-velocity`: two curves through $p$ (plane, or `circle: true` for $S^1$ with θ); drag velocity and bend handles; readouts $(f\circ\gamma)'(0)$, components $v^i$, "same velocity?" badge.
 
 ## Phone-safe layout
 
