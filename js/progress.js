@@ -9,7 +9,7 @@ const KEY = 'dg2gr.progress.v1';
 const INTERVALS = [0, 1, 3, 7, 16, 35];
 
 const today = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 60000) / 86400000);
-const blank = () => ({ version: 1, lessons: {}, cards: {}, streak: { count: 0, last: null } });
+const blank = () => ({ version: 1, epoch: 0, lessons: {}, cards: {}, streak: { count: 0, last: null } });
 
 function load() {
   try {
@@ -32,7 +32,11 @@ function save() {
 // cards keep whichever side answered them most recently, streak keeps the
 // more recent day.
 function merge(a, b) {
+  // A reset (or import) starts a new epoch; the newer epoch replaces older data entirely.
+  const ea = a.epoch ?? 0, eb = b.epoch ?? 0;
+  if (ea !== eb) return structuredClone(ea > eb ? a : b);
   const out = blank();
+  out.epoch = ea;
   for (const id of new Set([...Object.keys(a.lessons), ...Object.keys(b.lessons)])) {
     const x = a.lessons[id], y = b.lessons[id];
     if (!x || !y) { out.lessons[id] = x ?? y; continue; }
@@ -134,9 +138,9 @@ export const progress = {
   importCode(code) {
     const s = JSON.parse(decodeURIComponent(escape(atob(code.trim()))));
     if (!s || !s.lessons || !s.cards) throw new Error('Not a progress code.');
-    state = s;
+    state = { ...s, epoch: Date.now() };
     save();
   },
 
-  reset() { state = blank(); save(); },
+  reset() { state = { ...blank(), epoch: Date.now() }; save(); },
 };

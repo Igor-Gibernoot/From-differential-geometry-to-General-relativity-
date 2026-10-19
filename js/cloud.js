@@ -96,6 +96,12 @@ export async function signIn() {
   }
 }
 
+// Push right away (used after a reset, so a reload cannot pull the old copy back).
+export async function flushCloud() {
+  clearTimeout(pushTimer);
+  if (status.user) await run(push);
+}
+
 export async function signOutUser() {
   if (status.user) await run(push);
   await fb.signOut(auth);
