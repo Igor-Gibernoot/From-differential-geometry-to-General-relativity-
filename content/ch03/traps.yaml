@@ -1,0 +1,246 @@
+id: ch03-traps
+title: Manifold Traps
+kind: traps
+
+cards:
+  - type: text
+    id: intro
+    title: Trap round
+    body: |
+      Fast round: each question hides a tempting mistake. They run through the whole level, from open sets to diffeomorphisms. Answer quickly, then read the feedback, especially when you got it right for a shaky reason.
+
+      Notation used below: a **topology** on a set $\mathcal{M}$ is its family of open sets $\mathcal{O}_\mathcal{M}$; a **chart** $(\mathcal{U}, \mathscr{X})$ is an open set $\mathcal{U}\subseteq\mathcal{M}$ with a homeomorphism $\mathscr{X}$ onto an open set of $\mathbb{R}^d$; the unit circle is
+      $$S^1 = \{q\in\mathbb{R}^2 : q_1^2 + q_2^2 = 1\},$$
+      with the topology inherited from $\mathbb{R}^2$.
+
+  - type: mcq
+    id: open-where
+    title: Open in what?
+    multiple: true
+    prompt: |
+      "Open" always means open **in a given space**. Recall: in the standard topology of $\mathbb{R}^d$, a set is open when every point has a ball around it inside the set; a subset $\mathcal{N}$ carries the inherited topology, whose open sets are $\mathcal{N}\cap\mathcal{W}$ with $\mathcal{W}$ open in the bigger space. Which of these sets are open in the space named? Select all that apply.
+    options:
+      - text: 'The arc $\{q\in S^1 : q_2 > 0\}$, in $S^1$'
+        correct: true
+      - text: '$[0, 1)$, in the space $[0, 2\pi)$ with the topology inherited from $\mathbb{R}$'
+        correct: true
+      - text: 'The arc $\{q\in S^1 : q_2 > 0\}$, in $\mathbb{R}^2$'
+        feedback: |
+          Every disc around the top point $(0, 1)$ contains points just above the circle, which are not on the arc. A curve has no room off itself, so it is never open in the plane. In $S^1$ it is open: it equals $S^1\cap\{q_2 > 0\}$, a half-plane cut down to the circle.
+      - text: '$[0, 1)$, in $\mathbb{R}$'
+        feedback: |
+          Every ball $(-r, r)$ around $0$ contains negative numbers, which are not in $[0, 1)$. The same set is open in $[0, 2\pi)$ only because that space has no negative numbers to spoil it.
+      - text: 'The single point $\{0\}$, in $\mathbb{R}$'
+        feedback: |
+          No ball $(-r, r)$ with $r > 0$ fits inside $\{0\}$: it always contains other numbers. Points are open only in special topologies, such as the discrete one, where every subset is declared open.
+    explanation: |
+      Openness is a relation between a set and a space. The upper arc is $S^1\cap\{q_2 > 0\}$ and $[0, 1)$ is $[0, 2\pi)\cap(-1, 1)$: both are open in the smaller space, neither in the bigger one. Chart domains on a curved space are open in exactly this inherited sense.
+
+  - type: mcq
+    id: not-open-closed
+    title: Not open, so closed?
+    shuffle: false
+    prompt: |
+      Recall: a set is **closed** when its complement is open. True or false: in $\mathbb{R}$ with the standard topology, every subset that is not open is closed.
+    options:
+      - text: 'True'
+        feedback: |
+          In everyday language "open" and "closed" are opposites, which is the trap. Take $[0, 1)$: it is not open (no ball around $0$ fits inside it), and its complement $(-\infty, 0)\cup[1, \infty)$ is not open either (no ball around $1$ fits inside it). So $[0, 1)$ is neither open nor closed.
+      - text: 'False'
+        correct: true
+    explanation: |
+      Closed is defined through the complement, not as "not open". A set can be open, closed, both or neither. In $\mathbb{R}$: $(0, 1)$ is open, $[0, 1]$ is closed, $\emptyset$ and $\mathbb{R}$ are both, and $[0, 1)$ is neither.
+
+  - type: mcq
+    id: union-closed
+    title: Infinitely many closed sets
+    prompt: |
+      Recall: a set is closed when its complement is open. For $n = 1, 2, 3, \dots$ the interval $\mathcal{C}_n = [\tfrac1n, 1]$ is closed in $\mathbb{R}$ (standard topology). What is the union $\bigcup_{n=1}^\infty\mathcal{C}_n$, and is it closed?
+    options:
+      - text: '$(0, 1]$, which is not closed'
+        correct: true
+      - text: '$(0, 1]$, which is closed, since a union of closed sets is closed'
+        feedback: |
+          The rules for closed sets mirror those for open ones through complements: the complement of a union is the intersection of the complements. Only **finite** intersections of open sets are guaranteed open, so only finite unions of closed sets are guaranteed closed. Here the complement $(-\infty, 0]\cup(1, \infty)$ contains $0$ but no ball around it.
+      - text: '$[0, 1]$, which is closed'
+        feedback: |
+          The intervals reach as close to $0$ as you like, but $0$ itself lies in none of them: $\tfrac1n > 0$ for every $n$. A union contains only points that belong to at least one member.
+      - text: '$(0, 1)$, which is open'
+        feedback: |
+          $1$ belongs to every $\mathcal{C}_n = [\tfrac1n, 1]$, so it is in the union. And no ball around $1$ fits inside the union, since numbers just above $1$ are missing.
+    explanation: |
+      A point $x$ is in the union when $\tfrac1n\le x\le 1$ for some $n$, which holds exactly for $0 < x\le 1$. The complement $(-\infty, 0]\cup(1, \infty)$ is not open at $0$, so $(0, 1]$ is not closed. This is the mirror image of $\bigcap_n(-\tfrac1n, \tfrac1n) = \{0\}$: infinitely many open sets can intersect in a set that is not open.
+
+  - type: mcq
+    id: images-open
+    title: Continuous means open images?
+    shuffle: false
+    prompt: |
+      Recall: a map $f\colon\mathcal{M}\to\mathcal{N}$ between topological spaces is **continuous** when the preimage of every open set of $\mathcal{N}$ is open in $\mathcal{M}$. True or false: a continuous map $f\colon\mathbb{R}\to\mathbb{R}$ (standard topology) sends every open set to an open set.
+    options:
+      - text: 'True'
+        feedback: |
+          The definition runs backwards, through **preimages**, and the forward direction can fail. The constant map $f(x) = 0$ is continuous (every preimage is $\emptyset$ or $\mathbb{R}$), yet it sends the open set $\mathbb{R}$ to $\{0\}$, which is not open. So does $f(x) = x^2$: it sends $(-1, 1)$ to $[0, 1)$.
+      - text: 'False'
+        correct: true
+    explanation: |
+      Continuity is about preimages only. Images of open sets enter only for **homeomorphisms**: there the image under $f$ is the preimage under the continuous inverse $f^{-1}$, so it is open.
+
+  - type: mcq
+    id: interval-line
+    title: Short versus infinite
+    prompt: |
+      Recall: a **homeomorphism** is a continuous bijection whose inverse is also continuous. Are the open interval $(-1, 1)$ and the whole line $\mathbb{R}$ homeomorphic (standard topologies)?
+    options:
+      - text: 'Yes: $a\mapsto\tan(\tfrac{\pi}{2}a)$ is a continuous bijection with continuous inverse $b\mapsto\tfrac{2}{\pi}\arctan b$'
+        correct: true
+      - text: 'No: a homeomorphism cannot turn a bounded set into an unbounded one'
+        feedback: |
+          Length and boundedness are measured with a distance, and a topology knows no distances, only which sets are open. The map $\tan(\tfrac\pi2 a)$ stretches $(-1, 1)$ onto all of $\mathbb{R}$ continuously, and $\tfrac2\pi\arctan$ squeezes it back continuously.
+      - text: 'No: $(-1, 1)$ is a proper subset of $\mathbb{R}$, and a set cannot match a proper part of itself'
+        feedback: |
+          That holds for **finite** sets only. Infinite sets match proper parts of themselves all the time: $n\mapsto 2n$ matches the integers with the even integers. Here $\tan(\tfrac\pi2 a)$ matches $(-1, 1)$ with $\mathbb{R}$, continuously in both directions.
+      - text: 'No: the ends $\pm1$ would have to go somewhere'
+        feedback: |
+          The ends $\pm1$ are not in the open interval $(-1, 1)$, so nothing has to be sent anywhere. As $a\to1$, $\tan(\tfrac\pi2 a)\to\infty$: the missing end becomes the "end at infinity" of the line.
+    explanation: |
+      $\tan(\tfrac\pi2 a)$ is continuous and strictly increasing on $(-1, 1)$, with limits $\mp\infty$ at the ends, so it is a bijection onto $\mathbb{R}$; its inverse $\tfrac2\pi\arctan b$ is continuous. Topologically, a short open interval and the whole line are the same space. That is why a chart may land on any open interval, say $(0, 2\pi)$ or $(-1, 1)$: the choice is a convenience.
+
+  - type: mcq
+    id: subsets-hausdorff
+    title: Subsets of real space
+    shuffle: false
+    prompt: |
+      Recall: a space is **Hausdorff** when any two distinct points lie in disjoint open sets, and **second countable** when its topology has a countable basis (a countable family of open sets whose unions give every open set). True or false: every subset of $\mathbb{R}^d$, with the topology inherited from the standard one, is both Hausdorff and second countable.
+    options:
+      - text: 'True'
+        correct: true
+      - text: 'False'
+        feedback: |
+          It is tempting to expect some strange subset to break the global conditions. But both properties pass to any subset. Two points $p\neq q$ are separated in $\mathbb{R}^d$ by disjoint balls, and cutting them down to the subset keeps them disjoint and open there. Cutting down the countable basis of balls with rational centres and radii gives a countable basis of the subset.
+    explanation: |
+      Both properties are inherited by every subset of $\mathbb{R}^d$, so for any space sitting inside some $\mathbb{R}^d$, such as $S^1$, proving it is a manifold comes down to finding charts. The global conditions only bite for spaces built abstractly, without a home in $\mathbb{R}^d$.
+
+  - type: mcq
+    id: locally-hausdorff
+    title: Looks like the line everywhere
+    shuffle: false
+    prompt: |
+      True or false: if every point of a topological space has an open neighbourhood homeomorphic to an open interval of $\mathbb{R}$, then the space is Hausdorff (any two distinct points lie in disjoint open sets).
+    options:
+      - text: 'True'
+        feedback: |
+          Each neighbourhood, being a copy of an interval, is Hausdorff on its own; the trap is that two points may have no single such neighbourhood containing both. The **line with two origins** is the real line with $0$ replaced by two points $0_A$ and $0_B$, where an open set around either origin must contain a punctured interval $(-r, 0)\cup(0, r)$. Near each point it is a line, yet every open set around $0_A$ meets every open set around $0_B$.
+      - text: 'False'
+        correct: true
+    explanation: |
+      Looking like $\mathbb{R}$ near each point is a statement about one point at a time; Hausdorff is about **pairs** of points. In the line with two origins, $(\mathbb{R}\setminus\{0\})\cup\{0_A, 0_B\}$, the two origins cannot be separated, and the sequence $\tfrac1n$ converges to both. That is why the definition of a manifold demands Hausdorff on top of the charts.
+
+  - type: mcq
+    id: theta-extend
+    title: Patching the angle
+    prompt: |
+      On the unit circle $S^1$, the angle chart $\theta$ sends $S^1\setminus\{(1, 0)\}$ onto $(0, 2\pi)$. Extend it to the whole circle by setting $\theta(1, 0) = 0$, so that it becomes a bijection from $S^1$ onto $[0, 2\pi)$. Is $(S^1, \theta)$ a chart?
+    options:
+      - text: 'No: $[0, 2\pi)$ is not open in $\mathbb{R}$, and the extended $\theta$ jumps at $(1, 0)$'
+        correct: true
+      - text: 'Yes: it is a bijection, and its inverse $\alpha\mapsto(\cos\alpha, \sin\alpha)$ is continuous'
+        feedback: |
+          A chart must be continuous in **both** directions. The inverse, the wrap of $[0, 2\pi)$ around the circle, is continuous, but $\theta$ itself is not: points just below $(1, 0)$ have $\theta$ near $2\pi$, far from $\theta(1, 0) = 0$.
+      - text: 'Yes: $[0, 2\pi)$ is open in itself, so the image is open'
+        feedback: |
+          Every space is open in itself, so that requirement would say nothing. A chart's image must be open in $\mathbb{R}^d$, here $\mathbb{R}$, and every ball around $0$ contains negative numbers, which are missing from $[0, 2\pi)$.
+      - text: 'No: the point $(1, 0)$ can never lie in the domain of a chart'
+        feedback: |
+          No point is special on the circle. The angle $\varphi\in(-\pi, \pi)$ is a chart whose domain contains $(1, 0)$, where $\varphi = 0$. Only this particular extension of $\theta$ fails.
+    explanation: |
+      Both conditions fail. The image $[0, 2\pi)$ has no room to the left of $0$, so derivatives at $0$ would make no sense; and $\theta$ tears the circle at $(1, 0)$. No single chart covers $S^1$; the cure is a second chart, such as $\varphi$, around the missing point.
+
+  - type: numeric
+    id: min-charts
+    title: How few charts?
+    prompt: |
+      An atlas of the unit circle $S^1$ is a family of charts whose domains cover $S^1$. Each chart is a homeomorphism from an open subset of $S^1$ onto an open subset of $\mathbb{R}$. What is the smallest possible number of charts in an atlas of $S^1$?
+    answer: 2
+    wrong:
+      - value: 1
+        feedback: |
+          One chart would be a homeomorphism from all of $S^1$ onto an open set of $\mathbb{R}$. Remove a point: the circle stays in one piece, but an interval minus a point falls into two. A homeomorphism cannot change the number of pieces, so no chart covers the whole circle.
+      - value: 4
+        feedback: |
+          Four half-circle charts (upper, lower, right, left, each reading one coordinate) do form an atlas, but fewer suffice. The angle $\theta\in(0, 2\pi)$ misses only $(1, 0)$, and the angle $\varphi\in(-\pi, \pi)$ covers that point.
+      - value: 3
+        feedback: |
+          Three charts work, but two already do: the angle $\theta\in(0, 2\pi)$ misses only $(1, 0)$, and $\varphi\in(-\pi, \pi)$ contains it.
+    hint: Can one chart cover everything? If not, how many points does the angle chart $\theta\in(0, 2\pi)$ miss?
+    explanation: |
+      Two: $\{\theta, \varphi\}$ is an atlas, and one chart is impossible because removing a point leaves the circle in one piece but cuts an interval in two. Charts are local by nature; even the simplest closed curve needs two.
+
+  - type: mcq
+    id: disjoint-compatible
+    title: Charts that never meet
+    prompt: |
+      On the unit circle $S^1$, the upper chart reads $q_1$ on $\{q\in S^1 : q_2 > 0\}$, and the lower chart reads $q_1$ on $\{q\in S^1 : q_2 < 0\}$. Recall: two charts are $C^\infty$-compatible if their domains are disjoint, or if both transition maps are $C^\infty$. Are these two charts $C^\infty$-compatible?
+    options:
+      - text: 'Yes: the domains are disjoint, so there is nothing to check'
+        correct: true
+      - text: 'No: without an overlap there is no transition map, so compatibility cannot be established'
+        feedback: |
+          Compatibility exists to make smoothness agree where two charts **both** speak. Where they never meet, they cannot disagree, so the definition accepts disjoint domains outright.
+      - text: 'No: the coordinate $0.6$ means $(0.6, 0.8)$ in one chart and $(0.6, -0.8)$ in the other'
+        feedback: |
+          The same number naming different points in two charts is harmless: a coordinate always comes with its chart, as the pair $(\mathcal{U}, \mathscr{X})$. Within each chart, $0.6$ names exactly one point.
+      - text: 'Yes, because both read the same coordinate $q_1$'
+        feedback: |
+          Right verdict, wrong reason. What the charts read is irrelevant: two charts reading the same $q_1$ on overlapping domains would still have to pass the smoothness test there. Here the domains do not meet, and that alone settles it.
+    explanation: |
+      $q_2 > 0$ and $q_2 < 0$ never hold together, so the domains are disjoint and the pair is compatible by the first clause of the definition. In an atlas, only overlapping pairs need work: in the four half-circle atlas, upper–lower and right–left are free.
+
+  - type: mcq
+    id: one-map-not-diffeo
+    title: One failed map
+    shuffle: false
+    prompt: |
+      Let $\mathbb{R}_x$ be $\mathbb{R}$ with the smooth structure of the chart $x(p) = p$, and $\mathbb{R}_y$ the same set with the chart $y(p) = p^3$. The identity $p\mapsto p$ from $\mathbb{R}_x$ to $\mathbb{R}_y$ is not a diffeomorphism. True or false: therefore $\mathbb{R}_x$ and $\mathbb{R}_y$ are not diffeomorphic.
+    options:
+      - text: 'True'
+        feedback: |
+          Diffeomorphic means that **some** diffeomorphism exists; one failed candidate proves nothing. Try $\phi(p) = \sqrt[3]{p}$ from $\mathbb{R}_x$ to $\mathbb{R}_y$. Its representative is
+          $$y\circ\phi\circ x^{-1}(a) = (\sqrt[3]{a})^3 = a,$$
+          smooth with a smooth inverse.
+      - text: 'False'
+        correct: true
+    explanation: |
+      $\phi(p) = \sqrt[3]{p}$ is a bijection whose representative in the charts $x$ and $y$ is the identity $a\mapsto a$, so $\phi$ and $\phi^{-1}$ are smooth: $\mathbb{R}_x$ and $\mathbb{R}_y$ are diffeomorphic. Different smooth structures on one set can still give the same smooth manifold up to diffeomorphism; to prove two manifolds are **not** diffeomorphic you must rule out every map, which takes far more than one example.
+
+  - type: mcq
+    id: implications
+    title: What implies what
+    multiple: true
+    prompt: |
+      Recall: a map between smooth manifolds is **smooth** when its chart representatives $\mathscr{Y}\circ f\circ\mathscr{X}^{-1}$ are $C^\infty$, and a **diffeomorphism** is a smooth bijection with smooth inverse. Below, $\mathbb{R}$ carries the standard chart $x(p) = p$. Which statements are true? Select all that apply.
+    options:
+      - text: 'Every smooth map is continuous'
+        correct: true
+      - text: 'Every diffeomorphism is a homeomorphism'
+        correct: true
+      - text: 'A smooth bijection $f\colon\mathbb{R}\to\mathbb{R}$ whose derivative never vanishes is a diffeomorphism'
+        correct: true
+      - text: 'Every homeomorphism $f\colon\mathbb{R}\to\mathbb{R}$ is smooth'
+        feedback: |
+          Take $f(p) = \sqrt[3]{p}$. It is a continuous bijection with continuous inverse $p^3$, so a homeomorphism. Its representative $a\mapsto\sqrt[3]{a}$ has slope $\tfrac{1}{3}a^{-2/3}$, which blows up at $0$: not smooth. Topology alone allows corners and vertical slopes.
+    explanation: |
+      The chain runs one way: diffeomorphism $\Rightarrow$ homeomorphism, and smooth $\Rightarrow$ continuous, because a $C^\infty$ representative is continuous and charts are homeomorphisms. The reverse fails ($\sqrt[3]{p}$). In one variable, a smooth bijection is a diffeomorphism exactly when its derivative never vanishes, since then the inverse has slope $1/f'$, which is smooth.
+
+  - type: text
+    id: wrap-up
+    title: What you now own
+    body: |
+      - **Open is relative**: an arc is open in $S^1$, not in $\mathbb{R}^2$; $[0, 1)$ is open in $[0, 2\pi)$, not in $\mathbb{R}$. Closed is defined by complements, not as "not open".
+      - **Only finite** intersections of open sets, and finite unions of closed sets, are safe.
+      - **Continuity** is about preimages; homeomorphisms ignore length, so $(-1, 1)$ and $\mathbb{R}$ are the same space.
+      - **Global conditions**: subsets of $\mathbb{R}^d$ inherit Hausdorff and second countable for free, but being locally like $\mathbb{R}$ does not give Hausdorff (two origins).
+      - **Charts**: open image and continuity both ways; the circle needs at least two; disjoint charts are compatible for free.
+      - **Smooth maps**: one failed map does not make manifolds non-diffeomorphic, and a homeomorphism need not be smooth.
+
+      **Next:** the content map. Rebuild the level's chain of ideas, from open sets to smooth manifolds and diffeomorphisms, box by box.

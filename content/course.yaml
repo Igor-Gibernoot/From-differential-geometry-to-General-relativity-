@@ -126,7 +126,11 @@ levels:
         kind: guided
         file: ch03/circle.yaml
         summary: Prove, step by step, that the circle with four half-circle charts is a smooth manifold, from the inherited topology to the transitions $\pm\sqrt{1 - s^2}$.
-      - { id: ch03-traps, title: Manifold Traps, kind: traps }
+      - id: ch03-traps
+        title: Manifold Traps
+        kind: traps
+        file: ch03/traps.yaml
+        summary: Is a point open? Is a short interval the same space as the whole line? Twelve fast questions, each hiding a tempting mistake about topology, charts and smooth maps.
       - { id: ch03-map, title: "Content Map: Topological Manifolds", kind: map }
       - { id: ch03-review, title: Level Review, kind: review }
       - { id: ch03-challenge, title: Level Challenge, kind: challenge }

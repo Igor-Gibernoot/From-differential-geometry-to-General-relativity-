@@ -10,8 +10,8 @@ append a short entry at the end of **Log** (a few lines, ending with
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 built:** `ch03-open-sets`, `ch03-standard-topology`,
   `ch03-homeomorphisms`, `ch03-hausdorff`, `ch03-charts`, `ch03-atlases`,
-  `ch03-smooth-maps`, `ch03-circle`. All had a screenshot pass; all widgets are documented.
-- **Queue (one unit each):** ⑥ `ch03-traps` → ⑦ `ch03-map` →
+  `ch03-smooth-maps`, `ch03-circle`, `ch03-traps`. All had a screenshot pass; all widgets are documented.
+- **Queue (one unit each):** ⑦ `ch03-map` →
   ⑧–⑨ `ch03-challenge`, then Chapters 4–10 (each with map and challenge).
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -21,7 +21,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   lower: $\varphi=\theta-2\pi$); stereographic $\sigma = x/(1-y)$ from $(0,1)$;
   chart representative $f\circ\mathcal{X}^{-1}$, map representative
   $\Phi = \mathcal{Y}\circ\varphi\circ\mathcal{X}^{-1}$; $\mathbb{R}_x$, $\mathbb{R}_y$
-  for $\mathbb{R}$ with the charts $x$ and $x^3$. Book's four half-circle charts
+  for $\mathbb{R}$ with the charts $x$ and $x^3$. Traps lessons: no `tag: Trap` (the kind says it); line with two origins $0_A, 0_B$. Book's four half-circle charts
   (`ch03-circle`): points $q = (q_1, q_2)$, $\mathscr{X}_\uparrow,
   \mathscr{X}_\downarrow$ read $q_1$ on $q_2 \gtrless 0$, $\mathscr{X}_\rightarrow,
   \mathscr{X}_\leftarrow$ read $q_2$ on $q_1 \gtrless 0$, coordinates $\alpha$
@@ -106,3 +106,17 @@ trap, slope −0.75, order proof), angle chart θ compatible via cos/arccos). Th
 book's C.2 text stops after the first overlap; the remaining transitions were
 completed here. Conventions fixed here: q = (q₁, q₂), \mathscr{X}_↑↓→← with
 coordinate α, transitions ±√(1 − s²); S¹ (not 𝒮¹).
+
+Built `ch03-traps` (traps, 14 cards, 12 questions, no widget): open-where
+(multi-select: arc open in S¹ not ℝ², [0,1) open in [0,2π) not ℝ, {0}), not
+open ⇏ closed, ⋃[1/n,1] = (0,1] not closed, continuous ⇏ open images,
+(−1,1) ≅ ℝ via tan(πa/2), subsets of ℝ^d inherit Hausdorff + second countable,
+locally ℝ ⇏ Hausdorff (two origins, restated), θ extended to [0,2π) not a chart,
+minimum 2 charts on S¹ (numeric), disjoint domains compatible for free, one
+failed map ≠ non-diffeomorphic (∛p: ℝ_x → ℝ_y), implications multi-select
+(homeomorphism ⇏ smooth via ∛p). The planner's items already covered by
+earlier Trap cards (continuous bijection, one-direction, smooth bijection,
+different structures, closed-interval image) were replaced by variants.
+Also fixed QUICKREF: shots.mjs takes the path relative to content/.
+Conventions fixed here: traps lessons carry no `tag: Trap`; line with two
+origins written $0_A, 0_B$.

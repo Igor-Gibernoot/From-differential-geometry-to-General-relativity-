@@ -126,6 +126,6 @@ Applies to every string with math (body, prompt, options, hint, feedback, explan
 
 ```sh
 node tools/validate.mjs
-node tools/shots.mjs content/ch03/circle.yaml ch03-circle <scratchpad>/shots
+node tools/shots.mjs ch03/circle.yaml ch03-circle <scratchpad>/shots
 ```
 `#/lesson/<id>/<n>` (1-based) jumps to card n under `python3 -m http.server 8000`.
