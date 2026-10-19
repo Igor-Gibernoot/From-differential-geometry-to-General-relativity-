@@ -199,3 +199,17 @@ function settings() {
 
 window.addEventListener('hashchange', route);
 route();
+
+// A cloud sync can merge in progress made on another device while the trail is
+// already on screen: redraw it when the merged progress differs from what is shown.
+if (cloudConfigured) {
+  let shown = JSON.stringify(progress.snapshot());
+  onCloudChange(st => {
+    if (st.sync !== 'synced') return;
+    const now = JSON.stringify(progress.snapshot());
+    if (now === shown) return;
+    shown = now;
+    const page = location.hash.replace(/^#\/?/, '');
+    if (page === '' || page.startsWith('settings')) route();
+  });
+}
