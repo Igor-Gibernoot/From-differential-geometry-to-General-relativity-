@@ -149,7 +149,11 @@ levels:
         kind: concept
         file: ch04/tangent-space.yaml
         summary: With no space around a manifold, what is a velocity? Velocities as rates of change of scalar fields along curves, and the tangent space $T_p\mathcal{M}$.
-      - { id: ch04-velocity-operations, title: "Guided Problem: Adding Velocities with Curves", kind: guided }
+      - id: ch04-velocity-operations
+        title: "Guided Problem: Adding Velocities with Curves"
+        kind: guided
+        file: ch04/velocity-operations.yaml
+        summary: Is the sum of two velocities again a velocity? Add curves in two different charts, get two different curves with one velocity, and prove that $T_p\mathcal{M}$ is closed under $\oplus_T$ and $\odot_T$.
       - { id: ch04-coordinate-basis, title: Coordinate Bases and the Jacobian, kind: concept }
       - { id: ch04-chart-basis, title: "Guided Problem: The Chart-Induced Basis", kind: guided }
       - { id: ch04-einstein, title: Einstein Summation, kind: concept }

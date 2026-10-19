@@ -1,0 +1,391 @@
+id: ch04-velocity-operations
+title: 'Guided Problem: Adding Velocities with Curves'
+kind: guided
+
+cards:
+  - type: text
+    id: hook
+    title: Is the sum still a velocity?
+    body: |
+      Recall: on a smooth manifold $\mathcal{M}$, the velocity of a smooth curve $\gamma$ through $p$ at $\lambda_0$ is the map $v_{\gamma,p}\colon C^\infty(\mathcal{M})\to\mathbb{R}$,
+      $$v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0),$$
+      and the tangent space $T_p\mathcal{M}$ is the set of all such velocities. The sum is defined field by field:
+      $$(v_{\gamma_1,p}\oplus_T v_{\gamma_2,p})(f) := v_{\gamma_1,p}(f) + v_{\gamma_2,p}(f).$$
+      That defines **some** map $C^\infty(\mathcal{M})\to\mathbb{R}$. But $T_p\mathcal{M}$ only contains velocities of curves. Is the sum one of them? We need a curve $\sigma$ through $p$ with
+      $$v_{\sigma,p} = v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}.$$
+      Points cannot be added, so $\gamma_1 + \gamma_2$ is not available. The plan: add the curves **in a chart**, where points become lists of numbers. But a manifold has many charts.
+
+  - type: mcq
+    id: predict
+    prompt: |
+      Before computing, guess. On a smooth manifold, two curves $\gamma_1$, $\gamma_2$ pass through a point $p$. We build a "sum curve" by adding their chart representatives in $\mathbb{R}^d$ (and shifting so it passes through $p$), once in a chart $\mathscr{X}$ and once in a second chart $\mathscr{Y}$, then map each result back to the manifold. What do you expect?
+    options:
+      - text: 'Different curves in general, but the same velocity at $p$'
+        correct: true
+      - text: 'The same curve, since both charts describe the same manifold'
+        feedback: |
+          Adding in a chart uses the straight-line arithmetic of $\mathbb{R}^d$. A second chart that bends the coordinates turns "straight in $\mathscr{X}$" into "curved in $\mathscr{Y}$", so the two recipes generally give different curves. This lesson computes an example.
+      - text: 'Different curves, hence different velocities: the sum depends on the chart'
+        feedback: |
+          Different curves can share a velocity: a velocity only sees the curve to first order at $p$ (a bent and a straight curve with the same starting rate give the same numbers $(f\circ\gamma)'(0)$). Whether the two sum curves agree to first order is exactly what we will check.
+    explanation: |
+      The answer, worked out in this lesson: the **curves** depend on the chart, the **velocity** does not, and it equals $v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}$. First a concrete example, then the general proof.
+
+  - type: text
+    id: setup
+    title: 'The playground: $\mathbb{R}^2$ with two charts'
+    body: |
+      Take $\mathcal{M} = \mathbb{R}^2$ with its standard topology, points $q = (q_1, q_2)$. We **ignore** that points of $\mathbb{R}^2$ can be added: only the charts may be used. The atlas has two charts, both defined on all of $\mathcal{M}$:
+      $$\mathscr{X}(q) := (2q_1,\ -q_2),$$
+      $$\mathscr{Y}(q) := (q_1,\ q_2\,e^{q_1}).$$
+      Their inverses:
+      $$\mathscr{X}^{-1}(\alpha_1, \alpha_2) = (\alpha_1/2,\ -\alpha_2),$$
+      $$\mathscr{Y}^{-1}(\beta_1, \beta_2) = (\beta_1,\ \beta_2\,e^{-\beta_1}).$$
+      The transitions are built from polynomials and exponentials, so the atlas is smooth. Our two curves:
+      $$\gamma_1(\lambda) = (\lambda, 1),\quad \lambda_1 = 1,$$
+      $$\gamma_2(\lambda) = (1, 2\lambda),\quad \lambda_2 = \tfrac12.$$
+      Both pass through $p = (1, 1)$: $\gamma_1(\lambda_1) = \gamma_2(\lambda_2) = p$.
+
+  - type: build
+    id: x-gamma2
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$ with points $q = (q_1, q_2)$, the chart is $\mathscr{X}(q) = (2q_1, -q_2)$ and the curve is $\gamma_2(\lambda) = (1, 2\lambda)$. Build its chart representative $\mathscr{X}\circ\gamma_2$.
+    prefix: '(\mathscr{X}\circ\gamma_2)(\lambda) ='
+    tiles: ['(2, -2\lambda)', '(1, -2\lambda)', '(2, 2\lambda)', '(-2\lambda, 2)']
+    answers:
+      - ['(2, -2\lambda)']
+    wrong:
+      - answer: ['(1, -2\lambda)']
+        feedback: |
+          The chart doubles the **first** coordinate too: $\mathscr{X}(q)_1 = 2q_1 = 2\cdot 1 = 2$.
+      - answer: ['(2, 2\lambda)']
+        feedback: |
+          The chart flips the sign of the second coordinate: $\mathscr{X}(q)_2 = -q_2 = -2\lambda$.
+      - answer: ['(-2\lambda, 2)']
+        feedback: |
+          The chart keeps the order of the coordinates: first entry from $q_1 = 1$, second from $q_2 = 2\lambda$.
+    hint: Substitute $q_1 = 1$ and $q_2 = 2\lambda$ into $(2q_1, -q_2)$.
+    explanation: |
+      $$(\mathscr{X}\circ\gamma_2)(\lambda) = (2, -2\lambda).$$
+      Likewise $(\mathscr{X}\circ\gamma_1)(\lambda) = (2\lambda, -1)$ and $\mathscr{X}(p) = (2, -1)$.
+
+  - type: numeric
+    id: y-gamma1
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$ with points $q = (q_1, q_2)$, the chart is $\mathscr{Y}(q) = (q_1, q_2\,e^{q_1})$ and the curve is $\gamma_1(\lambda) = (\lambda, 1)$, which passes through $p = (1, 1)$ at $\lambda_1 = 1$. What is the second entry of $(\mathscr{Y}\circ\gamma_1)(\lambda_1)$? (Four decimals.)
+    answer: 2.71828
+    tolerance: 0.001
+    answerText: '$e\approx 2.7183$'
+    wrong:
+      - value: 1
+        feedback: |
+          $1$ is the second coordinate $q_2$ of $p$ itself. The chart multiplies it by $e^{q_1}$, with $q_1 = 1$.
+    hint: $(\mathscr{Y}\circ\gamma_1)(\lambda) = (\lambda, e^{\lambda})$. Evaluate at $\lambda = 1$.
+    explanation: |
+      $(\mathscr{Y}\circ\gamma_1)(\lambda) = (\lambda, 1\cdot e^{\lambda})$, so at $\lambda_1 = 1$ the second entry is $e$. Of course: $(\mathscr{Y}\circ\gamma_1)(\lambda_1) = \mathscr{Y}(p) = (1, e)$. The full list in chart $\mathscr{Y}$:
+      $$\begin{gathered}(\mathscr{Y}\circ\gamma_1)(\lambda) = (\lambda, e^{\lambda})\\ (\mathscr{Y}\circ\gamma_2)(\lambda) = (1, 2e\lambda)\\ \mathscr{Y}(p) = (1, e)\end{gathered}$$
+
+  - type: text
+    id: construction
+    title: Adding curves in a chart
+    body: |
+      Let $(\mathcal{U}, \mathscr{X})$ be a chart with $p\in\mathcal{U}$, and let $\gamma_1(\lambda_1) = \gamma_2(\lambda_2) = p$. Define the curve $\sigma_\mathcal{U}$ through its chart representative:
+      $$\begin{aligned}(\mathscr{X}\circ\sigma_\mathcal{U})(\lambda) := {}&(\mathscr{X}\circ\gamma_1)(\lambda_1 + \lambda)\\ &+ (\mathscr{X}\circ\gamma_2)(\lambda_2 + \lambda)\\ &- \mathscr{X}(p),\end{aligned}$$
+      and then $\sigma_\mathcal{U}(\lambda) := \mathscr{X}^{-1}\big((\mathscr{X}\circ\sigma_\mathcal{U})(\lambda)\big)$. Three remarks:
+
+      - The shifts $\lambda_1 + \lambda$ and $\lambda_2 + \lambda$ line both curves up so that each is at $p$ when $\lambda = 0$.
+      - The right-hand side is a sum of smooth maps $\mathbb{R}\to\mathbb{R}^d$, so $\sigma_\mathcal{U}$ is smooth.
+      - It makes sense for $\lambda$ near $0$, where the curves stay in $\mathcal{U}$ and the sum stays in the open set $\mathscr{X}(\mathcal{U})$. A velocity at $\lambda = 0$ only needs that. (Here both charts cover all of $\mathbb{R}^2$, so every $\lambda$ works.)
+
+  - type: mcq
+    id: why-subtract
+    prompt: |
+      In a chart $(\mathcal{U}, \mathscr{X})$ around $p$, with $\gamma_1(\lambda_1) = \gamma_2(\lambda_2) = p$, a curve $\sigma_\mathcal{U}$ is defined by
+      $$\begin{aligned}(\mathscr{X}\circ\sigma_\mathcal{U})(\lambda) := {}&(\mathscr{X}\circ\gamma_1)(\lambda_1 + \lambda)\\ &+ (\mathscr{X}\circ\gamma_2)(\lambda_2 + \lambda)\\ &- \mathscr{X}(p).\end{aligned}$$
+      Why subtract $\mathscr{X}(p)$?
+    options:
+      - text: 'So that $\sigma_\mathcal{U}$ passes through $p$ at $\lambda = 0$: without it, the sum at $\lambda = 0$ is $2\mathscr{X}(p)$'
+        correct: true
+      - text: 'To change the velocity: the subtraction cancels one of the two velocities'
+        feedback: |
+          $\mathscr{X}(p)$ is a constant, so it has zero derivative and changes no velocity. Its only job is to fix **where** the curve is at $\lambda = 0$.
+      - text: 'Because $\mathscr{X}(p) = 0$ in every chart, so it changes nothing'
+        feedback: |
+          Charts need not send $p$ to the origin: here $\mathscr{X}(1, 1) = (2, -1)$. If $\mathscr{X}(p)$ were $0$, the subtraction would indeed do nothing, and $2\mathscr{X}(p) = 0$ would be harmless.
+    explanation: |
+      At $\lambda = 0$ the right-hand side is $\mathscr{X}(p) + \mathscr{X}(p) - \mathscr{X}(p) = \mathscr{X}(p)$, so $\sigma_\mathcal{U}(0) = p$. A velocity at $p$ needs a curve **through** $p$; without the shift the curve would pass through the point with coordinates $2\mathscr{X}(p)$, some other point (or none: it may leave $\mathscr{X}(\mathcal{U})$).
+
+  - type: build
+    id: sigma-u
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$, the chart $\mathscr{X}(q) = (2q_1, -q_2)$ has inverse $\mathscr{X}^{-1}(\alpha_1, \alpha_2) = (\alpha_1/2, -\alpha_2)$. Adding $\gamma_1(\lambda) = (\lambda, 1)$ (at $\lambda_1 = 1$) and $\gamma_2(\lambda) = (1, 2\lambda)$ (at $\lambda_2 = \tfrac12$) in this chart gives
+      $$\begin{aligned}(\mathscr{X}\circ\sigma_\mathcal{U})(\lambda) &= (2 + 2\lambda, -1)\\ &\quad + (2, -1 - 2\lambda)\\ &\quad - (2, -1).\end{aligned}$$
+      Build the curve $\sigma_\mathcal{U}(\lambda)$ on the manifold.
+    prefix: '\sigma_\mathcal{U}(\lambda) ='
+    tiles: ['(\lambda + 1, 2\lambda + 1)', '(2\lambda + 2, -2\lambda - 1)', '(\lambda + 1, -2\lambda - 1)', '(2\lambda + 1, \lambda + 1)']
+    answers:
+      - ['(\lambda + 1, 2\lambda + 1)']
+    wrong:
+      - answer: ['(2\lambda + 2, -2\lambda - 1)']
+        feedback: |
+          That is $(\mathscr{X}\circ\sigma_\mathcal{U})(\lambda)$, the curve's coordinates in the chart. To get the curve on $\mathcal{M}$, apply $\mathscr{X}^{-1}$: halve the first entry, flip the sign of the second.
+      - answer: ['(\lambda + 1, -2\lambda - 1)']
+        feedback: |
+          Half of the inverse was applied: $\mathscr{X}^{-1}$ also flips the sign of the second entry, $-(-2\lambda - 1) = 2\lambda + 1$.
+      - answer: ['(2\lambda + 1, \lambda + 1)']
+        feedback: |
+          The entries are swapped. $\mathscr{X}^{-1}$ keeps their order: first entry $(2 + 2\lambda)/2$, second entry $-(-1 - 2\lambda)$.
+    hint: First add up the three pairs entry by entry, then apply $\mathscr{X}^{-1}(\alpha_1, \alpha_2) = (\alpha_1/2, -\alpha_2)$.
+    explanation: |
+      The sum is $(2\lambda + 2, -2\lambda - 1)$, and $\mathscr{X}^{-1}$ turns it into
+      $$\sigma_\mathcal{U}(\lambda) = (\lambda + 1, 2\lambda + 1),$$
+      a straight line through $\sigma_\mathcal{U}(0) = (1, 1) = p$.
+
+  - type: numeric
+    id: sigma-v
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$, the chart $\mathscr{Y}(q) = (q_1, q_2\,e^{q_1})$ has inverse $\mathscr{Y}^{-1}(\beta_1, \beta_2) = (\beta_1, \beta_2\,e^{-\beta_1})$. Adding $\gamma_1(\lambda) = (\lambda, 1)$ (at $\lambda_1 = 1$) and $\gamma_2(\lambda) = (1, 2\lambda)$ (at $\lambda_2 = \tfrac12$) in this chart, and subtracting $\mathscr{Y}(p) = (1, e)$, gives
+      $$(\mathscr{Y}\circ\sigma_\mathcal{V})(\lambda) = (\lambda + 1,\ e^{\lambda + 1} + 2e\lambda).$$
+      Map back with $\mathscr{Y}^{-1}$. What is the second entry of $\sigma_\mathcal{V}(1)$? (Four decimals.)
+    answer: 1.73576
+    tolerance: 0.001
+    answerText: '$1 + 2/e\approx 1.7358$'
+    wrong:
+      - value: 3
+        feedback: |
+          $3$ is the second entry of the curve built in the other chart, $\sigma_\mathcal{U}(\lambda) = (\lambda + 1, 2\lambda + 1)$, at $\lambda = 1$. Here apply $\mathscr{Y}^{-1}$: multiply the second entry by $e^{-(\lambda + 1)}$.
+      - value: 12.8256
+        feedback: |
+          $e^2 + 2e\approx 12.83$ is the second entry of $(\mathscr{Y}\circ\sigma_\mathcal{V})(1)$, a coordinate in the chart. The point on $\mathcal{M}$ needs $\mathscr{Y}^{-1}$, which multiplies it by $e^{-\beta_1} = e^{-2}$.
+    hint: $\mathscr{Y}^{-1}$ multiplies the second entry by $e^{-\beta_1}$, with $\beta_1 = \lambda + 1$. Simplify before plugging in $\lambda = 1$.
+    explanation: |
+      $$\begin{aligned}\sigma_\mathcal{V}(\lambda) &= \big(\lambda + 1,\ (e^{\lambda+1} + 2e\lambda)\,e^{-\lambda-1}\big)\\ &= (\lambda + 1,\ 1 + 2\lambda e^{-\lambda}).\end{aligned}$$
+      At $\lambda = 1$: $1 + 2/e\approx 1.7358$, while $\sigma_\mathcal{U}(1) = (2, 3)$. Same parameter, different points: $\sigma_\mathcal{U}\neq\sigma_\mathcal{V}$. The sum **curve** depends on the chart.
+
+  - type: mcq
+    id: why-differ
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$, adding the curves $\gamma_1(\lambda) = (\lambda, 1)$ and $\gamma_2(\lambda) = (1, 2\lambda)$ through $p = (1, 1)$ in the chart $\mathscr{X}(q) = (2q_1, -q_2)$ gives the straight line $\sigma_\mathcal{U}(\lambda) = (\lambda + 1, 2\lambda + 1)$; in the chart $\mathscr{Y}(q) = (q_1, q_2\,e^{q_1})$ it gives the bent curve $\sigma_\mathcal{V}(\lambda) = (\lambda + 1, 1 + 2\lambda e^{-\lambda})$. Why do the two charts disagree?
+    options:
+      - text: '$\mathscr{X}$ only rescales the coordinates, so straight lines in $\mathscr{X}$ are straight in $q$; $\mathscr{Y}$ stretches $q_2$ by $e^{q_1}$, so a straight sum in $\mathscr{Y}$ bends back on $\mathcal{M}$'
+        correct: true
+      - text: 'One of the two computations has an error: adding curves must give a single answer'
+        feedback: |
+          Both are right: check $\sigma_\mathcal{V}(0) = (1, 1) = p$, and $\mathscr{Y}\circ\sigma_\mathcal{V}$ is indeed the sum of the $\mathscr{Y}$-representatives. "Add in a chart" is a recipe that depends on the chart, because adding uses the straight-line arithmetic of that chart.
+      - text: '$\mathscr{Y}$ is not a valid smooth chart, since it mixes the coordinates'
+        feedback: |
+          $\mathscr{Y}$ is a homeomorphism with smooth inverse $\mathscr{Y}^{-1}(\beta_1, \beta_2) = (\beta_1, \beta_2\,e^{-\beta_1})$, and its transition with $\mathscr{X}$ is built from polynomials and exponentials. Charts may mix coordinates; most do.
+    explanation: |
+      Adding in a chart draws "straight" with respect to that chart's coordinates. $\mathscr{X}$ is linear in $q$, so its straight lines are straight lines of the plane. $\mathscr{Y}$ is not linear, and its straight lines become curves. Nothing on the manifold prefers one chart, so no single sum **curve** is singled out.
+
+  - type: numeric
+    id: sigma-v-velocity
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$, the curve $\sigma_\mathcal{V}(\lambda) = (\lambda + 1,\ 1 + 2\lambda e^{-\lambda})$ passes through $p = (1, 1)$ at $\lambda = 0$. Its first component has derivative $1$. What is the derivative of its second component at $\lambda = 0$?
+    answer: 2
+    wrong:
+      - value: 0
+        feedback: |
+          The derivative is $2e^{-\lambda}(1 - \lambda)$, which vanishes at $\lambda = 1$. The velocity at $p$ needs $\lambda = 0$, where the curve is at $p$.
+      - value: 1.73576
+        feedback: |
+          $1 + 2/e$ is the **value** of the second component at $\lambda = 1$, not a derivative.
+    hint: Product rule on $2\lambda e^{-\lambda}$.
+    explanation: |
+      $$\frac{d}{d\lambda}\big(1 + 2\lambda e^{-\lambda}\big) = 2e^{-\lambda}(1 - \lambda),$$
+      which is $2$ at $\lambda = 0$. So $\sigma_\mathcal{V}$ starts with components $(1, 2)$, exactly like the straight line $\sigma_\mathcal{U}(\lambda) = (\lambda + 1, 2\lambda + 1)$. The bend $-2\lambda^2 + \dots$ only shows up away from $p$.
+
+  - type: numeric
+    id: f-q1q2
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$, let $f(q) = q_1 q_2$ and $\sigma_\mathcal{V}(\lambda) = (\lambda + 1,\ 1 + 2\lambda e^{-\lambda})$, a curve through $p = (1, 1)$ at $\lambda = 0$. Compute $v_{\sigma_\mathcal{V},p}(f) = (f\circ\sigma_\mathcal{V})'(0)$.
+    answer: 3
+    wrong:
+      - value: 2
+        feedback: |
+          That is only one term of the product rule. $f(\sigma_\mathcal{V}(\lambda)) = (\lambda + 1)(1 + 2\lambda e^{-\lambda})$: the derivative of the first factor ($1$) times the second ($1$ at $\lambda = 0$), **plus** the first ($1$) times the derivative of the second ($2$).
+      - value: 1
+        feedback: |
+          That is only one term of the product rule. $f(\sigma_\mathcal{V}(\lambda)) = (\lambda + 1)(1 + 2\lambda e^{-\lambda})$: the derivative of the first factor ($1$) times the second ($1$ at $\lambda = 0$), **plus** the first ($1$) times the derivative of the second ($2$).
+    hint: $f(\sigma_\mathcal{V}(\lambda)) = (\lambda + 1)(1 + 2\lambda e^{-\lambda})$. Use the product rule at $\lambda = 0$.
+    explanation: |
+      $(f\circ\sigma_\mathcal{V})'(0) = 1\cdot 1 + 1\cdot 2 = 3$. For the straight line $\sigma_\mathcal{U}(\lambda) = (\lambda + 1, 2\lambda + 1)$, $f(\sigma_\mathcal{U}(\lambda)) = (\lambda + 1)(2\lambda + 1)$, also with derivative $1 + 2 = 3$ at $\lambda = 0$. And $v_{\gamma_1,p}(f) + v_{\gamma_2,p}(f) = 1 + 2 = 3$ too ($f(\gamma_1(\lambda)) = \lambda$, $f(\gamma_2(\lambda)) = 2\lambda$). One field agrees; equality of velocities needs **every** field.
+
+  - type: build
+    id: every-f
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$, $\gamma_1(\lambda) = (\lambda, 1)$ passes through $p = (1, 1)$ at $\lambda_1 = 1$, and $\gamma_2(\lambda) = (1, 2\lambda)$ at $\lambda_2 = \tfrac12$. For a smooth $f$ with partial derivatives $\partial_i f$, the chain rule gives $(f\circ\gamma)'(\lambda_0) = \sum_{i=1}^2 (\gamma^i)'(\lambda_0)\,\partial_i f(p)$. Build $(v_{\gamma_1,p}\oplus_T v_{\gamma_2,p})(f)$ for **every** $f$.
+    prefix: '='
+    tiles: ['\partial_1 f(p)', '+', '2\,\partial_2 f(p)', '2\,\partial_1 f(p)', '\partial_2 f(p)']
+    answers:
+      - ['\partial_1 f(p)', '+', '2\,\partial_2 f(p)']
+      - ['2\,\partial_2 f(p)', '+', '\partial_1 f(p)']
+    wrong:
+      - answer: ['2\,\partial_1 f(p)', '+', '\partial_2 f(p)']
+        feedback: |
+          The components are swapped. $\gamma_1$ moves along $q_1$ with $(\gamma_1^1)' = 1$, so it contributes $1\cdot\partial_1 f(p)$; $\gamma_2$ moves along $q_2$ with $(\gamma_2^2)' = 2$, so it contributes $2\,\partial_2 f(p)$.
+      - answer: ['\partial_1 f(p)', '+', '\partial_2 f(p)']
+        feedback: |
+          $\gamma_2(\lambda) = (1, 2\lambda)$ changes its second coordinate at rate $2$, not $1$: its term is $2\,\partial_2 f(p)$.
+    hint: The derivatives are $\gamma_1'(\lambda) = (1, 0)$ and $\gamma_2'(\lambda) = (0, 2)$. Add the two chain-rule sums.
+    explanation: |
+      $$\begin{aligned}(v_{\gamma_1,p}\oplus_T v_{\gamma_2,p})(f) &= \partial_1 f(p) + 2\,\partial_2 f(p).\end{aligned}$$
+      Both sum curves start with components $(1, 2)$, so the same chain rule gives
+      $$v_{\sigma_\mathcal{U},p}(f) = \partial_1 f(p) + 2\,\partial_2 f(p),$$
+      and the same for $\sigma_\mathcal{V}$. Since this holds for every $f$:
+      $$v_{\sigma_\mathcal{U},p} = v_{\sigma_\mathcal{V},p} = v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}.$$
+
+  - type: text
+    id: example-done
+    title: Two curves, one vector
+    body: |
+      The example in one line: the curves differ, the velocity does not.
+      $$\sigma_\mathcal{U}\neq\sigma_\mathcal{V},$$
+      $$v_{\sigma_\mathcal{U},p} = v_{\sigma_\mathcal{V},p} = v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}.$$
+      Our check leaned on $\mathcal{M} = \mathbb{R}^2$, where we could differentiate $f$ directly. On a general manifold only charts are available. So now the general proof: for **any** chart $(\mathcal{U}, \mathscr{X})$ around $p$, the curve $\sigma_\mathcal{U}$ realizes the sum.
+
+      **The tool.** Write the chart in components, $\mathscr{X} = (\mathscr{X}^1, \dots, \mathscr{X}^d)$ (upper indices label entries, not powers), and let
+      $$F := f\circ\mathscr{X}^{-1}\colon\mathbb{R}^d\to\mathbb{R}$$
+      be the chart representative of $f$, an ordinary smooth function with ordinary partial derivatives $\partial_i F$. Near $p$, $f\circ\sigma = F\circ(\mathscr{X}\circ\sigma)$, and the multivariable chain rule gives
+      $$\begin{aligned}(f\circ\sigma)'(0) = \sum_{i=1}^d\, &(\mathscr{X}^i\circ\sigma)'(0)\\ &\cdot\partial_i F(\mathscr{X}(p)).\end{aligned}$$
+
+  - type: build
+    id: component-derivative
+    prompt: |
+      In a chart $(\mathcal{U}, \mathscr{X})$ with components $\mathscr{X}^i$, the curve $\sigma$ is defined by
+      $$\begin{aligned}\mathscr{X}^i(\sigma(\lambda)) := {}&\mathscr{X}^i(\gamma_1(\lambda_1 + \lambda))\\ &+ \mathscr{X}^i(\gamma_2(\lambda_2 + \lambda))\\ &- \mathscr{X}^i(p).\end{aligned}$$
+      Build its derivative at $\lambda = 0$.
+    prefix: '(\mathscr{X}^i\circ\sigma)''(0) ='
+    tiles: ['(\mathscr{X}^i\circ\gamma_1)''(\lambda_1)', '+', '(\mathscr{X}^i\circ\gamma_2)''(\lambda_2)', '-\mathscr{X}^i(p)', '(\mathscr{X}^i\circ\gamma_1)''(0)']
+    answers:
+      - ['(\mathscr{X}^i\circ\gamma_1)''(\lambda_1)', '+', '(\mathscr{X}^i\circ\gamma_2)''(\lambda_2)']
+      - ['(\mathscr{X}^i\circ\gamma_2)''(\lambda_2)', '+', '(\mathscr{X}^i\circ\gamma_1)''(\lambda_1)']
+    wrong:
+      - answer: ['(\mathscr{X}^i\circ\gamma_1)''(\lambda_1)', '+', '(\mathscr{X}^i\circ\gamma_2)''(\lambda_2)', '-\mathscr{X}^i(p)']
+        feedback: |
+          $\mathscr{X}^i(p)$ is a fixed number, not a function of $\lambda$: its derivative is $0$. The subtraction moved the curve to pass through $p$; it does not touch the velocity.
+      - answer: ['(\mathscr{X}^i\circ\gamma_1)''(0)', '+', '(\mathscr{X}^i\circ\gamma_2)''(\lambda_2)']
+        feedback: |
+          $\gamma_1$ is evaluated at $\lambda_1 + \lambda$, so at $\lambda = 0$ its derivative is taken at $\lambda_1$ (where $\gamma_1$ is at $p$), not at $0$. The shift has derivative $1$, so no extra factor appears.
+    hint: Differentiate term by term. The shifted argument $\lambda_1 + \lambda$ has derivative $1$; a constant has derivative $0$.
+    explanation: |
+      $$\begin{aligned}(\mathscr{X}^i\circ\sigma)'(0) = {}&(\mathscr{X}^i\circ\gamma_1)'(\lambda_1)\\ &+ (\mathscr{X}^i\circ\gamma_2)'(\lambda_2).\end{aligned}$$
+      In the chart, the components of the sum curve are the sums of the components. In the example: $(1, 2) = (1, 0) + (0, 2)$ in the plane's coordinates, and in chart $\mathscr{Y}$, $(1, 3e) = (1, e) + (0, 2e)$.
+
+  - type: order
+    id: proof
+    prompt: |
+      On a smooth manifold $\mathcal{M}$ of dimension $d$, let $\gamma_1(\lambda_1) = \gamma_2(\lambda_2) = p$, let $(\mathcal{U}, \mathscr{X})$ be a chart around $p$ with components $\mathscr{X}^i$, and let $F := f\circ\mathscr{X}^{-1}$ for $f\in C^\infty(\mathcal{M})$. Define $\sigma$ by
+      $$\begin{aligned}(\mathscr{X}\circ\sigma)(\lambda) := {}&(\mathscr{X}\circ\gamma_1)(\lambda_1 + \lambda)\\ &+ (\mathscr{X}\circ\gamma_2)(\lambda_2 + \lambda)\\ &- \mathscr{X}(p).\end{aligned}$$
+      Put the proof of $v_{\sigma,p} = v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}$ in order.
+    steps:
+      - 'At $\lambda = 0$ the right-hand side is $\mathscr{X}(p)$, so $\sigma(0) = p$.'
+      - 'Insert $\mathscr{X}^{-1}\circ\mathscr{X}$ (the identity on $\mathcal{U}$): near $\lambda = 0$, $f\circ\sigma = F\circ(\mathscr{X}\circ\sigma)$.'
+      - 'Chain rule: $(f\circ\sigma)''(0) = \sum_{i=1}^d (\mathscr{X}^i\circ\sigma)''(0)\,\partial_i F(\mathscr{X}(p))$.'
+      - 'Differentiate the definition: $(\mathscr{X}^i\circ\sigma)''(0)$ is $(\mathscr{X}^i\circ\gamma_1)''(\lambda_1) + (\mathscr{X}^i\circ\gamma_2)''(\lambda_2)$, since $\mathscr{X}^i(p)$ is constant.'
+      - 'Split the sum into one sum over the components of $\gamma_1$ and one over those of $\gamma_2$.'
+      - 'Chain rule backwards, using $\gamma_k(\lambda_k) = p$: the sum for $\gamma_k$ equals $(F\circ\mathscr{X}\circ\gamma_k)''(\lambda_k) = (f\circ\gamma_k)''(\lambda_k)$.'
+      - 'So $v_{\sigma,p}(f) = v_{\gamma_1,p}(f) + v_{\gamma_2,p}(f)$ for every $f$, which is $v_{\sigma,p} = v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}$.'
+    hint: First check that $\sigma$ passes through $p$. Then go into the chart, apply the chain rule forwards, add the components, and apply the chain rule backwards.
+    explanation: |
+      Forwards, then backwards: the chain rule turns $(f\circ\sigma)'(0)$ into a sum over components; the components of $\sigma$ are sums of those of $\gamma_1$ and $\gamma_2$; and the chain rule turns each half back into $(f\circ\gamma_k)'(\lambda_k)$. So $T_p\mathcal{M}$ is closed under $\oplus_T$.
+
+  - type: mcq
+    id: chart-free
+    prompt: |
+      On a smooth manifold, a curve $\sigma$ is built by adding the chart representatives of $\gamma_1$ and $\gamma_2$ (both through $p$) in a chart $\mathscr{X}$, and one proves $v_{\sigma,p}(f) = v_{\gamma_1,p}(f) + v_{\gamma_2,p}(f)$ for every scalar field $f$. Why does this show that the velocity of $\sigma$ does not depend on the chart, even though $\sigma$ does?
+    options:
+      - text: 'The right-hand side $v_{\gamma_1,p}(f) + v_{\gamma_2,p}(f)$ mentions no chart, so every chart''s $\sigma$ has that same velocity'
+        correct: true
+      - text: 'Because the proof only works for charts that are linear, where all sum curves agree'
+        feedback: |
+          The proof uses an arbitrary chart: only the chain rule and the fact that $\mathscr{X}^{-1}\circ\mathscr{X}$ is the identity. It worked for the nonlinear chart $\mathscr{Y}(q) = (q_1, q_2\,e^{q_1})$ too, whose sum curve was bent.
+      - text: 'It does not show it: one has to compare the two velocities through the transition map'
+        feedback: |
+          No comparison is needed. Each chart's curve has velocity equal to $v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}$, a map defined without charts. Two things equal to the same thing are equal.
+    explanation: |
+      The chart is scaffolding: it is used to **build** a witness curve, then disappears from the result. Every chart gives a (possibly different) curve with the same velocity $v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}$.
+
+  - type: text
+    id: scalar
+    title: 'Scaling: no chart needed'
+    body: |
+      The other operation is $(\alpha\odot_T v_{\gamma,p})(f) := \alpha\cdot v_{\gamma,p}(f)$ for $\alpha\in\mathbb{R}$. Here a witness curve needs no chart: run along $\gamma$ at $\alpha$ times the speed. If $\gamma(\lambda_0) = p$, set
+      $$\sigma(\lambda) := \gamma(\lambda_0 + \alpha\lambda).$$
+      Then $\sigma(0) = \gamma(\lambda_0) = p$, and the one-variable chain rule gives
+      $$\begin{aligned}(f\circ\sigma)'(0) &= \alpha\cdot(f\circ\gamma)'(\lambda_0)\\ &= \alpha\cdot v_{\gamma,p}(f).\end{aligned}$$
+      So $v_{\sigma,p} = \alpha\odot_T v_{\gamma,p}$: twice as fast, twice the velocity; $\alpha = -1$ runs the curve backwards.
+
+  - type: numeric
+    id: scalar-number
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$, the curve $\gamma_1(\lambda) = (\lambda, 1)$ passes through $p = (1, 1)$ at $\lambda_0 = 1$. The curve $\sigma(\lambda) := \gamma_1(1 + 3\lambda)$ realizes $3\odot_T v_{\gamma_1,p}$. For $f(q) = q_1^2 + q_2$, compute $v_{\sigma,p}(f) = (f\circ\sigma)'(0)$.
+    answer: 6
+    wrong:
+      - value: 2
+        feedback: |
+          $2$ is $v_{\gamma_1,p}(f)$, the velocity of $\gamma_1$ itself. $\sigma$ runs three times as fast: $f(\sigma(\lambda)) = (1 + 3\lambda)^2 + 1$.
+      - value: 18
+        feedback: |
+          $f(\sigma(\lambda)) = (1 + 3\lambda)^2 + 1$ has derivative $6(1 + 3\lambda)$, which is $6$ at $\lambda = 0$ (where $\sigma$ is at $p$). $18$ would be the value at $\lambda = \tfrac23$.
+    hint: $\sigma(\lambda) = (1 + 3\lambda, 1)$, so $f(\sigma(\lambda)) = (1 + 3\lambda)^2 + 1$.
+    explanation: |
+      $(f\circ\sigma)'(0) = 6(1 + 0) = 6 = 3\cdot 2 = 3\cdot v_{\gamma_1,p}(f)$, as the general argument promised.
+
+  - type: mcq
+    id: zero-vector
+    prompt: |
+      On a smooth manifold $\mathcal{M}$, let $\gamma$ be a smooth curve with $\gamma(\lambda_0) = p$. Which curve realizes $0\odot_T v_{\gamma,p}$, the zero vector of $T_p\mathcal{M}$?
+    options:
+      - text: 'The constant curve $\sigma(\lambda) = p$, since $\sigma(\lambda) = \gamma(\lambda_0 + 0\cdot\lambda)$'
+        correct: true
+      - text: '$\gamma$ itself, shifted: $\sigma(\lambda) = \gamma(\lambda_0 + \lambda)$'
+        feedback: |
+          That is the recipe with $\alpha = 1$, which realizes $1\odot_T v_{\gamma,p} = v_{\gamma,p}$. Multiplying by $0$ must give the vector that returns $0$ on every field.
+      - text: 'None: a curve that does not move is not a curve, so the zero vector needs separate treatment'
+        feedback: |
+          A curve is any smooth map $\mathbb{R}\to\mathcal{M}$, and constant maps are smooth (every chart representative is constant). The constant curve at $p$ is a perfectly good curve through $p$.
+    explanation: |
+      With $\alpha = 0$, $\sigma(\lambda) = \gamma(\lambda_0) = p$ for every $\lambda$. Then $f\circ\sigma$ is the constant $f(p)$, with derivative $0$ for every $f$: $v_{\sigma,p}$ is the zero map, the zero vector of $T_p\mathcal{M}$.
+
+  - type: mcq
+    id: trap-chart-curve
+    prompt: |
+      True or false? "On a smooth manifold, the curve built by adding $\gamma_1$ and $\gamma_2$ in a chart depends on the chart. Therefore the vector $v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}$ depends on the chart too."
+    shuffle: false
+    options:
+      - text: 'True'
+        feedback: |
+          The premise is right, the conclusion is not. On $\mathbb{R}^2$ the charts $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2\,e^{q_1})$ give the different curves $(\lambda + 1, 2\lambda + 1)$ and $(\lambda + 1, 1 + 2\lambda e^{-\lambda})$, but both have velocity $f\mapsto\partial_1 f(p) + 2\,\partial_2 f(p)$ at $p = (1, 1)$. Many curves share one velocity.
+      - text: 'False'
+        correct: true
+    explanation: |
+      $\oplus_T$ is defined field by field, $(v_{\gamma_1,p}\oplus_T v_{\gamma_2,p})(f) = v_{\gamma_1,p}(f) + v_{\gamma_2,p}(f)$, with no chart at all. A chart is only used to exhibit **some** curve with that velocity, and every chart's curve has the same velocity.
+
+  - type: mcq
+    id: trap-need-chart
+    prompt: |
+      On a smooth manifold $\mathcal{M}$, which of these needs a chart?
+    options:
+      - text: 'Constructing a curve through $p$ whose velocity is $v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}$'
+        correct: true
+      - text: 'Defining the vector $v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}$'
+        feedback: |
+          The definition $(v_{\gamma_1,p}\oplus_T v_{\gamma_2,p})(f) := v_{\gamma_1,p}(f) + v_{\gamma_2,p}(f)$ adds two real numbers for each field $f$. No chart appears.
+      - text: 'Constructing a curve through $p$ whose velocity is $2\odot_T v_{\gamma,p}$'
+        feedback: |
+          Scaling only reparametrizes: if $\gamma(\lambda_0) = p$, then $\sigma(\lambda) = \gamma(\lambda_0 + 2\lambda)$ works, with no chart. Only adding two different curves needs coordinates to add in.
+    explanation: |
+      Points cannot be added, so combining two different curves needs a chart to add their coordinates. Defining the sum vector, and scaling a single curve, need none.
+
+  - type: text
+    id: wrap-up
+    title: What you now own
+    body: |
+      - **Closure under $\oplus_T$:** for curves with $\gamma_1(\lambda_1) = \gamma_2(\lambda_2) = p$ and any chart $\mathscr{X}$ around $p$, the curve with
+      $$\begin{aligned}\mathscr{X}\circ\sigma(\lambda) = {}&\mathscr{X}\circ\gamma_1(\lambda_1 + \lambda)\\ &+ \mathscr{X}\circ\gamma_2(\lambda_2 + \lambda)\\ &- \mathscr{X}(p)\end{aligned}$$
+      has velocity $v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}$. Proof: chain rule forwards, add components, chain rule backwards.
+      - **Closure under $\odot_T$:** $\sigma(\lambda) = \gamma(\lambda_0 + \alpha\lambda)$, no chart needed; $\alpha = 0$ gives the constant curve, the zero vector.
+      - So $T_p\mathcal{M}$ is a real vector space. The **curves** realizing the operations depend on the chart; the **vectors** do not.
+
+      **Next:** velocities have components $(\mathscr{X}^i\circ\gamma)'(\lambda_0)$ in every chart, and in this lesson they simply added. Which vectors play the role of a basis, and how do the components change from chart $\mathscr{X}$ to chart $\mathscr{Y}$? Coordinate bases and the Jacobian.

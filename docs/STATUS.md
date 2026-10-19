@@ -17,9 +17,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   Challenge file layout (reuse for later levels): `intro` (numbered problem
   list), one block per problem with `tag: Problem N · …` and ids `pN-…`, then
   `wrap-up` ending with a teaser for the next level.
-- **Chapter 4 in progress:** `ch04-tangent-space` built (26 cards).
+- **Chapter 4 in progress:** `ch04-tangent-space` (26 cards),
+  `ch04-velocity-operations` (23 cards) built.
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, next `ch04-velocity-operations`; then Chapters 5–10 (each with
+  order, next a widget session (`chart-basis`: coordinate lines of two
+  charts, basis vectors at $p$, components and Jacobian), then
+  `ch04-coordinate-basis`; then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -59,6 +62,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\gamma_1(\lambda) = (\lambda, 1)$ at $\lambda_0 = 1$, $\gamma_2(\lambda) = (1, 2\lambda)$
   at $\lambda_0 = \tfrac12$, $p = (1,1)$, $f = q_1^2 + q_2$ (both give 2).
   Polar angle $\theta$ used in the plane only as "smooth near $p$".
+  C.3 charts: $\mathscr{X}(q) = (2q_1, -q_2)$, $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, chart
+  components $\mathscr{X}^i$, chart representative $F := f\circ\mathscr{X}^{-1}$ with
+  partials $\partial_i F(\mathscr{X}(p))$; sum curves $\sigma_\mathcal{U}$ (straight,
+  $(\lambda+1, 2\lambda+1)$), $\sigma_\mathcal{V}$ ($(\lambda+1, 1+2\lambda e^{-\lambda})$); scaling curve
+  $\sigma(\lambda) = \gamma(\lambda_0+\alpha\lambda)$. Basis $(\partial/\partial\mathscr{X}^i)_p$ not yet named.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -68,6 +76,18 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Built `ch04-velocity-operations` (guided, 23 cards, no widget): hook (is the
+sum a velocity?), predict MCQ, C.3 setup with $\mathscr{X}$, $\mathscr{Y}$,
+build $\mathscr{X}\circ\gamma_2$, numeric $\mathscr{Y}\circ\gamma_1(1)$ ($e$), construction
+with domain remark, why subtract $\mathscr{X}(p)$, build $\sigma_\mathcal{U}$, numeric
+$\sigma_\mathcal{V}(1)$ ($1+2/e$), why charts disagree, velocity 2, $f=q_1q_2$ gives 3,
+build $\partial_1 f+2\partial_2 f$, general tool (chain rule via $F$), build
+component derivative, 7-step order proof, chart-free MCQ, $\odot_T$ by
+reparametrization (numeric 6, zero vector = constant curve), two traps, wrap-up.
+Choice: next lesson needs a widget (curvilinear coordinate lines + basis at
+$p$), so the next unit is the `chart-basis` widget. Conventions fixed here: $F$,
+$\mathscr{X}^i$, $\sigma_\mathcal{U}$, $\sigma_\mathcal{V}$, scaling curve (see Current).
 
 Built `ch04-tangent-space` (concept, 26 cards, 3 widgets): hook (velocity on
 $S^1$ with no plane; predict $\theta_p+\lambda$ vs $\theta_p+2\lambda$), circle
