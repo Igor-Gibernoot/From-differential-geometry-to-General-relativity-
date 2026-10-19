@@ -312,3 +312,47 @@ a { color: var(--accent); }
 .error-box { background: var(--bad-soft); border: 1.5px solid var(--bad); border-radius: var(--radius); padding: 14px; margin-top: 20px; }
 .node-wrap.has-bubble { margin-top: 40px; }
 .widget svg * { vector-effect: non-scaling-stroke; } /* not inherited, so set it on every element */
+
+/* ---------- Player extras ---------- */
+.foot-inner .btn.back { min-width: 0; flex: none; width: 52px; padding: 0; display: grid; place-items: center; margin-right: auto; }
+.foot-inner .btn.back svg { width: 22px; height: 22px; }
+
+/* ---------- Content map ---------- */
+.cmap-wrap { margin: 6px 0 14px; }
+.cmap { position: relative; display: grid; gap: 26px 12px; padding: 4px 0; }
+.cmap-edges { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+.cedge { stroke: var(--line); stroke-width: 1.5px; stroke-dasharray: 4 4; }
+.cedge.built { stroke: var(--muted); stroke-dasharray: none; }
+.cedge.live { stroke: var(--accent); stroke-width: 2px; stroke-dasharray: none; }
+.cedge.dashed { stroke-dasharray: 6 5; }
+.cnode {
+  position: relative; z-index: 1; appearance: none; font-size: 13px; font-weight: 650; line-height: 1.25;
+  min-height: 46px; padding: 8px 6px; border-radius: 11px; text-align: center; display: grid; place-items: center;
+  background: var(--surface); border: 2px dashed var(--line); color: var(--muted); cursor: default;
+}
+.cnode .katex { font-size: 1em; }
+.cnode.filled { border: 2px solid var(--accent); color: var(--text); cursor: pointer; box-shadow: 0 3px 0 color-mix(in srgb, var(--accent) 45%, transparent); }
+.cnode.filled.open { background: var(--accent-soft); }
+.cnode.current { border: 2px dashed var(--accent); color: var(--accent); background: var(--accent-soft); animation: glow 1.6s ease-in-out infinite; }
+.cnode .q { display: block; font-size: 18px; line-height: 1; }
+@keyframes glow { 50% { box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 22%, transparent); } }
+.cmap-detail { margin-top: 12px; padding: 12px 14px; border-radius: var(--radius); background: var(--surface); border: 1.5px solid var(--accent); font-size: 15px; }
+.cmap-detail h3 { margin: 0 0 6px; font-size: 16px; }
+.cmap-detail p:last-child { margin-bottom: 0; }
+.option .opt-text.prose p { margin: 0 0 .4em; }
+.option .opt-text.prose p:last-child { margin: 0; }
+.option .opt-text.prose ul { margin: 0 0 .4em; }
+.option .opt-text .katex-display { margin: .3em 0; }
+
+/* ---------- Trail extras ---------- */
+.chip.acc { color: var(--good); cursor: default; }
+.level-head .meta { display: flex; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--muted); margin-top: 6px; font-weight: 600; }
+.level-head .meta .acc { color: var(--good); }
+.node.special.available { background: var(--gold); color: #2a2000; box-shadow: 0 5px 0 color-mix(in srgb, var(--gold) 60%, #000); }
+.node .badge {
+  position: absolute; top: -4px; right: -4px; min-width: 22px; height: 22px; padding: 0 6px; border-radius: 99px;
+  background: var(--bad); color: #fff; font-size: 12px; font-weight: 800; display: grid; place-items: center;
+}
+.panel label.toggle { display: flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer; }
+.panel label.toggle input { width: 20px; height: 20px; accent-color: var(--accent); }
+@media (max-width: 520px) { .topbar .brand small { display: none; } .topbar .brand { font-size: 15px; } }

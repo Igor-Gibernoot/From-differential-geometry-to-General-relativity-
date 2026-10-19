@@ -43,6 +43,7 @@ export const progress = {
     const score = questions ? firstTry / questions : 1;
     state.lessons[id] = {
       done: true,
+      score, // latest run
       best: Math.max(score, prev?.best ?? 0),
       runs: (prev?.runs ?? 0) + 1,
       last: today(),
@@ -65,6 +66,22 @@ export const progress = {
   },
 
   finishReview() { bumpStreak(); save(); },
+
+  // Average first-try accuracy (latest run) over the finished lessons among ids.
+  accuracy(ids) {
+    const scores = ids.map(id => state.lessons[id]).filter(r => r?.done).map(r => r.score ?? r.best);
+    return scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : null;
+  },
+
+  // Review-deck keys belonging to the given lessons, most urgent first:
+  // due cards, then the weakest box, then the earliest due date.
+  deckKeys(lessonIds) {
+    const set = new Set(lessonIds);
+    return Object.entries(state.cards)
+      .filter(([k]) => set.has(k.split('/')[0]))
+      .sort(([, a], [, b]) => (a.due <= today() ? 0 : 1) - (b.due <= today() ? 0 : 1) || a.box - b.box || a.due - b.due)
+      .map(([k]) => k);
+  },
 
   dueKeys() {
     const d = today();

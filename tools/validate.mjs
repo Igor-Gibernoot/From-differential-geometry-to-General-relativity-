@@ -11,6 +11,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { expandLesson } from '../js/content.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
@@ -35,7 +36,10 @@ function checkText(where, text) {
   if ((stripped.match(/(?<!\\)\$/g) ?? []).length) err(where, 'unbalanced $ in text');
 }
 
-const KINDS = ['concept', 'guided', 'traps'];
+// Self-contained check: review shows a question alone, weeks later.
+const BACKREF = /\b(previous|last) (card|step|lesson|question)|\bin the (last|previous) lesson|\bas (shown|seen) above/i;
+
+const KINDS = ['concept', 'guided', 'traps', 'map', 'review', 'challenge'];
 const course = yaml.load(readFileSync(join(root, 'content/course.yaml'), 'utf8'));
 const lessonIds = new Set();
 let built = 0, cardsTotal = 0;
@@ -52,6 +56,7 @@ for (const level of course.levels ?? []) {
     if (!KINDS.includes(meta.kind)) err(w, `kind must be one of ${KINDS.join(', ')}`);
     checkText(w, meta.title);
     checkText(w, meta.summary);
+    if (meta.kind === 'review' && meta.file) err(w, 'a level review is automatic: it takes no file');
     if (!meta.file) continue;
     const path = join(root, 'content', meta.file);
     if (!existsSync(path)) { err(w, `file not found: content/${meta.file}`); continue; }
@@ -60,7 +65,32 @@ for (const level of course.levels ?? []) {
     try { lesson = yaml.load(readFileSync(path, 'utf8')); }
     catch (e) { err(meta.file, `YAML: ${e.message.split('\n')[0]}`); continue; }
     if (lesson.id !== meta.id) err(meta.file, `id "${lesson.id}" does not match course.yaml id "${meta.id}"`);
-    checkLesson(meta.file, lesson);
+    if (lesson.kind === 'map') checkMap(meta.file, lesson);
+    checkLesson(meta.file, expandLesson(lesson));
+  }
+}
+
+function checkMap(file, m) {
+  if (!m.name) err(file, 'map needs name (used in review prompts)');
+  if (!Array.isArray(m.nodes) || !m.nodes.length) return err(file, 'map needs nodes');
+  const ids = new Set();
+  const cells = new Set();
+  for (const n of m.nodes) {
+    const w = `${file} node ${n.id}`;
+    if (!n.id || ids.has(n.id)) err(w, 'node needs a unique id');
+    ids.add(n.id);
+    if (!n.title || !n.body) err(w, 'node needs title and body');
+    if (!(n.row >= 1 && n.col >= 1)) err(w, 'node needs row and col (1-based)');
+    if (n.col + (n.span ?? 1) - 1 > (m.cols ?? 3)) err(w, 'node sticks out of the grid (col + span > cols)');
+    for (let c = n.col; c < n.col + (n.span ?? 1); c++) {
+      if (cells.has(`${n.row},${c}`)) err(w, `overlaps another node at row ${n.row}, col ${c}`);
+      cells.add(`${n.row},${c}`);
+    }
+    if ((n.decoys ?? []).length < 2) warn(w, 'give at least 2 decoys');
+  }
+  for (const e of m.edges ?? []) {
+    const [a, b] = Array.isArray(e) ? e : [e.from, e.to];
+    if (!ids.has(a) || !ids.has(b)) err(file, `edge ${a} -> ${b} names an unknown node`);
   }
 }
 
@@ -74,14 +104,21 @@ function checkLesson(file, lesson) {
     else if (ids.has(c.id)) err(w, 'duplicate card id');
     ids.add(c.id);
     for (const f of ['title', 'body', 'prompt', 'explanation', 'hint', 'label', 'unit']) checkText(w, c[f]);
+    if (['mcq', 'numeric', 'build', 'order', 'mapstep'].includes(c.type) && c.review !== false) {
+      const texts = [c.prompt, c.hint, ...(c.options ?? []).map(o => o.feedback), ...(c.wrong ?? []).map(x => x.feedback)];
+      if (texts.some(t => t && BACKREF.test(t))) warn(w, 'refers to a previous card/lesson, but review shows it alone; restate the fact instead');
+    }
     switch (c.type) {
       case 'text':
         if (!c.body) err(w, 'text card needs body');
         break;
+      case 'mapview':
+        break;
       case 'widget':
         if (!c.widget) err(w, 'widget card needs widget');
         break;
-      case 'mcq': {
+      case 'mcq':
+      case 'mapstep': {
         if (!c.prompt) err(w, 'needs prompt');
         if (!Array.isArray(c.options) || c.options.length < 2) { err(w, 'needs >= 2 options'); break; }
         const correct = c.options.filter(o => o.correct).length;

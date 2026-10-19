@@ -21,7 +21,7 @@ export function renderCard(card, el) {
   return render(card, el);
 }
 
-const RENDERERS = { text, widget, mcq, numeric, build, order };
+const RENDERERS = { text, widget, mcq, numeric, build, order, mapstep, mapview };
 
 function header(card, el) {
   if (card.title) el.append(h('div', { class: 'prose' }, h('h2', { html: mdInline(card.title) })));
@@ -64,7 +64,7 @@ function mcq(card, el) {
 
   const btns = opts.map((o, k) => h('button', {
     class: 'option', type: 'button',
-    html: `<span class="key">${k + 1}</span><span class="opt-text">${mdInline(o.text)}</span>`,
+    html: `<span class="key">${k + 1}</span><span class="opt-text${card.richOptions ? ' prose' : ''}">${(card.richOptions ? md : mdInline)(o.text)}</span>`,
     onclick: () => select(k),
   }));
   el.append(h('div', { class: 'options' }, btns));
@@ -305,4 +305,89 @@ function order(card, el) {
       paint(Object.fromEntries(chosen.map(i => [i, 'correct'])));
     },
   };
+}
+
+// ---------- content map (kind: map lessons, see content.js expandLesson) ----------
+const SVG_NS = 'http://www.w3.org/2000/svg';
+let mapSeq = 0;
+
+// The map as a grid of boxes with arrows. Boxes before `filled` show as built
+// (tap one to read its card), box `current` is the one being chosen, the rest
+// are empty slots that only show their title.
+function mapDiagram(map, { filled, current = -1 }) {
+  const grid = h('div', { class: 'cmap', style: `grid-template-columns: repeat(${map.cols ?? 3}, minmax(0, 1fr))` });
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('class', 'cmap-edges');
+  svg.setAttribute('aria-hidden', 'true');
+  const marker = `cmap-arrow-${++mapSeq}`;
+  grid.append(svg);
+  const detail = h('div', { class: 'cmap-detail prose', hidden: true });
+
+  const boxes = new Map();
+  const index = new Map(map.nodes.map((n, k) => [n.id, k]));
+  map.nodes.forEach((n, k) => {
+    const state = k < filled ? 'filled' : k === current ? 'current' : 'empty';
+    const b = h('button', {
+      class: `cnode ${state}`, type: 'button', disabled: state !== 'filled',
+      style: `grid-row: ${n.row}; grid-column: ${n.col} / span ${n.span ?? 1}`,
+      html: `<span>${mdInline(n.title)}</span>${state === 'current' ? '<b class="q">?</b>' : ''}`,
+      onclick: () => {
+        const open = b.classList.contains('open');
+        boxes.forEach(x => x.classList.remove('open'));
+        if (open) { detail.hidden = true; return; }
+        b.classList.add('open');
+        detail.hidden = false;
+        detail.innerHTML = `<h3>${mdInline(n.title)}</h3>${md(n.body)}`;
+      },
+    });
+    boxes.set(n.id, b);
+    grid.append(b);
+  });
+
+  // Arrows from the edge of one box to the edge of the other.
+  function clip(r, toward) {
+    const cx = r.x + r.w / 2, cy = r.y + r.h / 2;
+    const dx = toward.x - cx, dy = toward.y - cy;
+    const t = Math.min(dx ? (r.w / 2 + 3) / Math.abs(dx) : Infinity, dy ? (r.h / 2 + 3) / Math.abs(dy) : Infinity);
+    return { x: cx + dx * t, y: cy + dy * t };
+  }
+  function drawEdges() {
+    const g = grid.getBoundingClientRect();
+    if (!g.width) return;
+    const rect = el => { const r = el.getBoundingClientRect(); return { x: r.left - g.left, y: r.top - g.top, w: r.width, h: r.height }; };
+    svg.setAttribute('viewBox', `0 0 ${g.width} ${g.height}`);
+    svg.setAttribute('width', g.width);
+    svg.setAttribute('height', g.height);
+    svg.innerHTML = `<defs><marker id="${marker}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs>`;
+    for (const e of map.edges ?? []) {
+      const [a, b] = Array.isArray(e) ? e : [e.from, e.to];
+      if (!boxes.has(a) || !boxes.has(b)) continue;
+      const ra = rect(boxes.get(a)), rb = rect(boxes.get(b));
+      const p = clip(ra, { x: rb.x + rb.w / 2, y: rb.y + rb.h / 2 });
+      const q = clip(rb, { x: ra.x + ra.w / 2, y: ra.y + ra.h / 2 });
+      const ka = index.get(a), kb = index.get(b);
+      const built = ka < filled && kb < filled;
+      const live = (ka < filled || ka === current) && (kb < filled || kb === current) && !built;
+      const line = document.createElementNS(SVG_NS, 'line');
+      Object.entries({ x1: p.x, y1: p.y, x2: q.x, y2: q.y }).forEach(([k, v]) => line.setAttribute(k, v));
+      line.setAttribute('class', `cedge${built ? ' built' : live ? ' live' : ''}${e.dashed ? ' dashed' : ''}`);
+      line.setAttribute('marker-end', `url(#${marker})`);
+      svg.append(line);
+    }
+  }
+  new ResizeObserver(drawEdges).observe(grid);
+  return h('div', { class: 'cmap-wrap' }, grid, detail);
+}
+
+function mapstep(card, el) {
+  el.append(mapDiagram(card.map, { filled: card.step, current: card.step }));
+  return mcq({ ...card, richOptions: true }, el);
+}
+
+function mapview(card, el) {
+  header(card, el);
+  if (card.body) el.append(h('div', { class: 'prose', html: md(card.body) }));
+  el.append(mapDiagram(card.map, { filled: card.filled }));
+  if (card.filled) el.append(h('div', { class: 'hint-line' }, 'Tap a box to read its card.'));
+  return { kind: 'info' };
 }

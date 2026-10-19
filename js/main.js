@@ -2,15 +2,17 @@
 //   #/                      trail map
 //   #/lesson/<id>           play a lesson
 //   #/lesson/<id>/<n>       jump to card n (1-based) — handy while authoring
-//   #/review                spaced-repetition session
+//   #/review                spaced-repetition session (due cards, all levels)
+//   #/review/<levelId>      level review (that level's cards, most urgent first)
 //   #/settings              progress export/import/reset
 
 import { h, shuffle, escapeHtml } from './dom.js';
 import { icons } from './icons.js';
-import { getLesson, nextLessonAfter, isQuestion } from './content.js';
+import { getCourse, getLesson, nextLessonAfter, isQuestion } from './content.js';
 import { progress } from './progress.js';
 import { renderTrail } from './trail.js';
 import { runSession, lessonItems } from './player.js';
+import { sounds, soundOn, setSound } from './sound.js';
 
 const root = document.getElementById('app');
 const REVIEW_SIZE = 12;
@@ -20,7 +22,7 @@ async function route() {
   const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
   try {
     if (parts[0] === 'lesson' && parts[1]) return await playLesson(decodeURIComponent(parts[1]), +(parts[2] ?? 1) - 1);
-    if (parts[0] === 'review') return await playReview();
+    if (parts[0] === 'review') return await playReview(parts[1]);
     if (parts[0] === 'settings') return settings();
     await renderTrail(root);
   } catch (err) {
@@ -55,8 +57,15 @@ async function playLesson(id, startAt) {
   });
 }
 
-async function playReview() {
-  const keys = shuffle(progress.dueKeys()).slice(0, REVIEW_SIZE);
+async function playReview(levelId) {
+  let keys, level;
+  if (levelId) {
+    level = (await getCourse()).levels.find(l => l.id === levelId);
+    if (!level) { location.hash = '#/'; return; }
+    keys = shuffle(progress.deckKeys((level.lessons ?? []).map(m => m.id)).slice(0, REVIEW_SIZE));
+  } else {
+    keys = shuffle(progress.dueKeys()).slice(0, REVIEW_SIZE);
+  }
   if (!keys.length) {
     root.replaceChildren(h('div', { class: 'page done-screen' },
       h('div', { class: 'burst', html: icons.check }),
@@ -79,13 +88,18 @@ async function playReview() {
     onExit: () => { location.hash = '#/'; },
     onFinish: stats => {
       progress.finishReview();
-      doneScreen({ title: 'Review done', subtitle: 'Spaced repetition keeps it in long-term memory.', stats, actions: [['primary', 'Back to the trail', '#/']] });
+      doneScreen({
+        title: level ? `${level.title}: review done` : 'Review done',
+        subtitle: 'Spaced repetition keeps it in long-term memory.',
+        stats, actions: [['primary', 'Back to the trail', '#/']],
+      });
     },
   });
 }
 
 function doneScreen({ title, subtitle, stats, actions }) {
   const pct = stats.questions ? Math.round((stats.firstTry / stats.questions) * 100) : 100;
+  sounds.finish();
   root.replaceChildren(h('div', { class: 'page done-screen' },
     h('div', { class: 'burst', html: icons.check }),
     h('h1', {}, title),
@@ -130,6 +144,11 @@ function settings() {
         },
       }, 'Import')),
       msg),
+    h('div', { class: 'panel' },
+      h('h3', {}, 'Sounds'),
+      h('label', { class: 'toggle' },
+        h('input', { type: 'checkbox', checked: soundOn(), onchange: e => setSound(e.target.checked) }),
+        'Play a sound for right and wrong answers')),
     h('div', { class: 'panel' },
       h('h3', {}, 'Start over'),
       h('p', {}, 'Erase all progress and the review deck in this browser.'),

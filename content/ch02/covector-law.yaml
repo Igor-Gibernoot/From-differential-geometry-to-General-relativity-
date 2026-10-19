@@ -122,7 +122,7 @@ cards:
     wrong:
       - answer: ['\sum_{i=1}^d', 'J_j^i', '\mathsf{x}_i']
         feedback: |
-          The previous step showed that writing $\hat{y}_j$ in the old basis needs $J^{-1}$, not $J$.
+          $J$ writes **old in terms of new** ($\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$). Writing the new $\hat{y}_j$ in the old basis needs the inverse, $\hat{y}_j = \sum_i (J^{-1})_j^i\cdot\hat{x}_i$, and that is what you substituted.
       - answer: ['\sum_{i=1}^d', '(J^{-1})_j^i', 'x^i']
         feedback: |
           $x^i$ are the components of some *vector*. Here we need the covector's own components, and $\mathsf{X}(\hat{x}_i) = \mathsf{x}_i$.
@@ -167,13 +167,13 @@ cards:
           $\mathsf{x}_2 = 0$, but the new basis vector $\hat{y}_2$ contains an $\hat{x}_1$, and $\hat{\mathfrak{x}}^1$ sees it. Use $\mathsf{y}_2 = \mathsf{X}(\hat{y}_2)$.
       - value: -1
         feedback: |
-          The $-1$ appeared for the *vector* $\hat{x}_2$ in the last lesson. Here use $\mathsf{y}_2 = \mathsf{X}(\hat{y}_2)$ directly.
+          $-1$ is what the *vector* $\hat{x}_2$ gets under this shear (its new component $y^1$). Covector components follow a different rule: use $\mathsf{y}_2 = \mathsf{X}(\hat{y}_2)$ directly.
     hint: Use $\mathsf{y}_2 = \mathsf{X}(\hat{y}_2)$ and linearity.
     explanation: |
       $$\mathsf{y}_2 = \hat{\mathfrak{x}}^1(\hat{x}_1 + \hat{x}_2) = 1 + 0 = 1 .$$
       Similarly
       $$\mathsf{y}_1 = \hat{\mathfrak{x}}^1(\hat{x}_1) = 1 .$$
-      Under this shear the covector's components go $(1,0)\mapsto(1,1)$. In the last lesson the vector $\hat{x}_2$ went $(0,1)\mapsto(-1,1)$. Different objects, different rules.
+      Under this shear the covector's components go $(1,0)\mapsto(1,1)$, while the components of the vector $\hat{x}_2$ go $(0,1)\mapsto(-1,1)$. Different objects, different rules.
 
   - type: text
     id: part-b
@@ -191,14 +191,16 @@ cards:
   - type: order
     id: invariance-proof
     prompt: |
-      Put the proof that $\sum_j \mathsf{y}_j\, y^j = \sum_i \mathsf{x}_i\, x^i$ in order. Tap the steps from first to last.
+      Vector and covector components transform as
+      $$y^j = \sum_k J_k^j\, x^k ,\qquad \mathsf{y}_j = \sum_i (J^{-1})_j^i\,\mathsf{x}_i ,$$
+      and $\sum_j J_k^j\,(J^{-1})_j^i = \delta_k^i$. Put the proof that $\sum_j \mathsf{y}_j\, y^j = \sum_i \mathsf{x}_i\, x^i$ in order. Tap the steps from first to last.
     steps:
       - '$\displaystyle\sum_j \mathsf{y}_j\, y^j$'
       - '$\displaystyle= \sum_j \Big(\sum_i (J^{-1})_j^i\,\mathsf{x}_i\Big)\Big(\sum_k J_k^j\, x^k\Big)$'
       - '$\displaystyle= \sum_i \sum_k \mathsf{x}_i\, x^k \Big(\sum_j J_k^j\,(J^{-1})_j^i\Big)$'
       - '$\displaystyle= \sum_i \sum_k \mathsf{x}_i\, x^k\,\delta_k^i$'
       - '$\displaystyle= \sum_i \mathsf{x}_i\, x^i$'
-    hint: Substitute both laws first, then regroup so the two matrices sit together, then use the identity from the previous card.
+    hint: 'Substitute both laws first, then regroup so the two matrices sit together, then use $\sum_j J_k^j\,(J^{-1})_j^i = \delta_k^i$.'
     explanation: |
       Substituting the laws, regrouping the finite sums, and using
       $$\sum_j J_k^j\,(J^{-1})_j^i = \delta_k^i$$

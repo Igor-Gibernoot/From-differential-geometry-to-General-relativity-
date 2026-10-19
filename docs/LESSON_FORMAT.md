@@ -24,11 +24,25 @@ levels:
     lessons:
       - id: ch02-change-of-basis        # must equal the lesson file's id
         title: Same Arrow, Different Numbers
-        kind: concept                   # concept | guided | traps
+        kind: concept                   # concept | guided | traps | map | review | challenge
         file: ch02/change-of-basis.yaml # omit → shown as a planned node
         summary: One or two sentences shown before starting.
   - { id: ch06, number: 6, title: Covariant Derivative, status: unwritten }
 ```
+
+Every level ends with three special nodes, in this order:
+
+```yaml
+      - { id: ch02-map, title: "Content Map: Vector Spaces", kind: map, file: ch02/map.yaml }
+      - { id: ch02-review, title: Level Review, kind: review }        # automatic, never a file
+      - { id: ch02-challenge, title: Level Challenge, kind: challenge, file: ch02/challenge.yaml }
+```
+
+- **map**: the content-map puzzle (format below). Build it once the level's lessons exist.
+- **review**: automatic. It plays up to 12 questions from this level's lessons
+  that the reader has already met, due and weak ones first (route `#/review/<levelId>`).
+- **challenge**: an ordinary lesson file (any card types) with harder problems
+  that **combine** several concepts of the level. Build it last.
 
 ## Lesson file
 
@@ -53,9 +67,15 @@ Question cards also take `explanation` (shown after a correct answer or
 use it when the card only makes sense right after the previous card, such as a
 question about a widget).
 
-Question prompts **must be self-contained**, because review shows them alone,
+Question prompts, hints and feedback **must be self-contained**, because review shows them alone,
 weeks later and out of order. Restate the setup ("With $\hat{y}_i = 2\cdot\hat{x}_i$…")
-instead of saying "in the previous card".
+instead of saying "in the previous card". The validator warns about phrases such as
+"previous card", "last lesson" or "as shown above".
+
+**Never name a colour that changes with the theme** (the app has light and dark
+modes: "the black arrow" is white in dark mode). Refer to labels ("the arrow
+labelled $\mathcal{X}$") or to the fixed hues: basis vectors are **purple**,
+vector components **blue**, covectors **orange**.
 
 ### `text`
 ```yaml
@@ -154,6 +174,47 @@ Available widgets:
 - `basis-playground`: a fixed vector (and optional covector, drawn as level
   lines) in the plane. The reader drags the new basis; components, covector
   components and their pairing update live.
+
+## Content-map lessons (`kind: map`)
+
+The file describes a graph; the engine turns it into cards: an intro, one
+"which card belongs in this box?" question per node (in the order listed),
+and the finished map. Each node's correct card competes with decoys that hide
+a classic mistake, so every decoy needs `feedback`.
+
+```yaml
+id: ch02-map
+title: "Content Map: Vector Spaces"
+kind: map
+name: Chapter 2, Vector Spaces     # used in the (self-contained) review prompts
+intro: |
+  Markdown shown before the puzzle.
+cols: 3                            # grid columns
+nodes:                             # build order = list order
+  - id: basis                      # card id becomes node-basis: never rename
+    title: 'Basis $\{\hat{x}_i\}$'
+    row: 2                         # 1-based grid position
+    col: 2
+    span: 1                        # optional, columns the box spans
+    body: |
+      The correct card (Markdown, short: it is shown as an option).
+    decoys:                        # 2 is a good number
+      - body: |
+          Same card with one subtle mistake.
+        feedback: |
+          Why it is wrong.
+    explanation: |
+      Optional: why this concept sits here, what it connects to.
+edges:                             # arrows: from a concept to one built on it
+  - [space, basis]
+  - { from: maps, to: cob, dashed: true }   # dashed = "tool used in"
+outroTitle: Chapter 2 in one picture
+outro: |
+  Markdown shown under the finished map.
+```
+
+Lay the grid out so that no arrow passes behind a box. Keep decoys parallel to
+the correct card (same format and length) so the reader has to read the details.
 
 ## YAML gotchas
 

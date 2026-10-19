@@ -42,6 +42,44 @@ cards:
       $$\mathcal{X} = 6\cdot\hat{x}_1 + 4\cdot\hat{x}_2 = 3\cdot\hat{y}_1 + 2\cdot\hat{y}_2 .$$
       The basis got **longer** and the components got **smaller**. This lesson is about that opposite behaviour.
 
+  - type: widget
+    id: explore
+    title: See it before any formulas
+    widget: basis-playground
+    config:
+      vector: [3, 2]
+      basis: [[1, 0], [0, 1]]
+      snap: 0.5
+      presets:
+        - { label: 'Observer B', basis: [[2, 0], [0, 2]] }
+    body: |
+      The arrow labelled $\mathcal{X}$ is a **fixed** vector; it never moves. The faint square grid is A's basis $\hat{x}_1, \hat{x}_2$. The purple arrows are a new basis $\hat{y}_1, \hat{y}_2$, and the readout below shows the components $y^1, y^2$ of $\mathcal{X}$ in it.
+
+      **Drag the circles** at the tips of the purple arrows. Try:
+      1. Press **Observer B** and check that you get $(3, 2)$.
+      2. Make only $\hat{y}_1$ longer and watch $y^1$ and $y^2$.
+      3. Turn $\hat{y}_1$ a little and watch both numbers change.
+
+  - type: mcq
+    id: stretch-one
+    prompt: |
+      A fixed vector has components $(y^1, y^2)$ in a basis $\{\hat{y}_1, \hat{y}_2\}$. You replace $\hat{y}_1$ by $3\cdot\hat{y}_1$ and keep $\hat{y}_2$. What are the new components?
+    options:
+      - text: '$(\tfrac13\, y^1,\ y^2)$'
+        correct: true
+      - text: '$(3\,y^1,\ y^2)$'
+        feedback: |
+          A longer basis vector needs a *smaller* multiple to cover the same distance: $3\,y^1$ copies of $3\cdot\hat{y}_1$ would overshoot by a factor of $9$.
+      - text: '$(\tfrac13\, y^1,\ \tfrac13\, y^2)$'
+        feedback: |
+          Only $\hat{y}_1$ changed. The part of the vector built from $\hat{y}_2$ is untouched, so $y^2$ stays.
+      - text: Both components change in a way that needs the angle between $\hat{y}_1$ and $\hat{y}_2$
+        feedback: |
+          No angles needed. Write $y^1\cdot\hat{y}_1 = \tfrac13 y^1\cdot(3\cdot\hat{y}_1)$ and nothing else changes.
+    explanation: |
+      $$\mathcal{X} = y^1\cdot\hat{y}_1 + y^2\cdot\hat{y}_2 = \tfrac13 y^1\cdot(3\cdot\hat{y}_1) + y^2\cdot\hat{y}_2 .$$
+      Stretch a basis vector and its component shrinks by the same factor. The rest of this lesson turns this picture into a general law.
+
   - type: text
     id: why-bases
     title: Why bases exist at all
@@ -131,7 +169,9 @@ cards:
   - type: build
     id: build-contra
     prompt: |
-      Read off the coefficient of $\hat{y}_j$. Build the law that gives the **new** component $y^j$ from the **old** components.
+      Two bases of $V$ are related by $\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$. Substituting this into $\mathcal{X} = \sum_i x^i\cdot\hat{x}_i$ gives two expansions of the same vector in the basis $\{\hat{y}_j\}$:
+      $$\mathcal{X} = \sum_{j=1}^d y^j\cdot\hat{y}_j = \sum_{j=1}^d\Big(\sum_{i=1}^d J_i^j\, x^i\Big)\cdot\hat{y}_j .$$
+      Build the law that gives the **new** component $y^j$ from the **old** components.
     prefix: 'y^j ='
     tiles: ['\sum_{i=1}^d', '\sum_{j=1}^d', 'J_i^j', '(J^{-1})_i^j', 'x^i', 'x^j', '\hat{y}_j']
     answers:
@@ -147,14 +187,14 @@ cards:
       - answer: ['\sum_{i=1}^d', 'J_i^j', 'x^i', '\hat{y}_j']
         feedback: |
           $y^j$ is a number (a component), so the right-hand side must be a number too. The basis vector $\hat{y}_j$ is what $y^j$ *multiplies*.
-    hint: Look at the last expansion on the previous card. What multiplies $\hat{y}_j$?
+    hint: Components in a basis are unique, so compare what multiplies $\hat{y}_j$ in the two expansions.
     explanation: |
       $$y^j = \sum_{i=1}^d J_i^j\, x^i .$$
       Check the index bookkeeping. The free index $j$ is **up** on both sides. The summed index $i$ appears once up ($x^i$) and once down ($J_i^j$). The book writes the same law with the letters swapped: $y^i = \sum_j J_j^i\, x^j$.
 
   - type: widget
     id: playground
-    title: Play with it
+    title: "Back to the playground: break it"
     widget: basis-playground
     config:
       vector: [3, 2]
@@ -164,11 +204,11 @@ cards:
         - { label: 'Double both', basis: [[2, 0], [0, 2]] }
         - { label: 'Shear', basis: [[1, 0], [1, 1]] }
     body: |
-      The black arrow is a **fixed** vector $\mathcal{X}$. The grey grid is the old basis $\hat{x}_1, \hat{x}_2$. **Drag the tips** of the new basis vectors $\hat{y}_1, \hat{y}_2$ (purple). The blue dashed path shows $\mathcal{X} = y^1\cdot\hat{y}_1 + y^2\cdot\hat{y}_2$.
+      Same picture: the arrow labelled $\mathcal{X}$ is fixed, and you drag the circles at the tips of the purple basis vectors $\hat{y}_1, \hat{y}_2$. The blue dashed path shows $\mathcal{X} = y^1\cdot\hat{y}_1 + y^2\cdot\hat{y}_2$.
 
-      Try this:
-      1. Stretch $\hat{y}_1$ to twice its length and watch $y^1$.
-      2. Tilt $\hat{y}_2$ toward $\hat{y}_1$ until they are almost parallel.
+      The law you just built says a basis must really be a basis. Try to break that:
+      1. Tilt $\hat{y}_2$ toward $\hat{y}_1$ until they are almost parallel, and watch $y^1, y^2$.
+      2. Make them exactly parallel.
 
   - type: mcq
     id: widget-q

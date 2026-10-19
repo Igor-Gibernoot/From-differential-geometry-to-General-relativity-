@@ -85,10 +85,24 @@ Workflow for every content change:
    of basis uses the same $J$).
 3. **Trap rounds** (`kind: traps`): fast questions, each built on a common
    misconception.
-4. **Review**: automatic. Every question card enters a spaced-repetition
-   deck, so prompts must be **self-contained** (restate the setup).
+4. **End of every level**, three special nodes (see `docs/LESSON_FORMAT.md`):
+   - **Content map** (`kind: map`): the reader rebuilds the chapter's concept
+     map box by box, picking each box's card among decoys that hide classic
+     mistakes. The old TeX files end with a content map per chapter: start
+     from it and check it against the book.
+   - **Level review** (`kind: review`): automatic, practises only that
+     level's questions.
+   - **Level challenge** (`kind: challenge`): harder problems that combine
+     several concepts of the level. Build it after the level's lessons.
+5. **Review**: automatic. Every question card enters a spaced-repetition
+   deck, so prompts, hints and feedback must be **self-contained** (restate
+   the setup; never "as in the previous card"). The validator warns.
 
 ### How to teach a topic (the pedagogy every concept lesson follows)
+
+Igor's emphasis: **language as simple as possible and an intuitive approach,
+while building a rigorous foundation**: define every new notation and symbol,
+and put the weight on understanding and on the physics.
 
 1. **Why the topic exists.** Say what problem it was invented to solve,
    ideally physics- or GR-flavored. Start with a hook: a concrete puzzle
@@ -124,16 +138,29 @@ Workflow for every content change:
 11. **Card-sized steps for flow.** One idea per card, many small
     questions, immediate feedback. Mix question types (not only MCQ) for
     active recall. Add a widget wherever manipulating something builds
-    intuition.
+    intuition, and put it **early** (right after the hook, before the
+    formulas) so intuition comes first; a later widget can revisit it to
+    probe limits.
 12. **Displayed math.** A standalone equation, definition or chain of
     equalities goes on its own `$$...$$` line. Inline math is for referring to
     symbols inside a sentence. Break long chains so they do not overflow on a
     phone.
+13. **Theme-neutral wording.** The app has light and dark modes: never say
+    "the black arrow". Name things by label, or by the fixed hues (basis
+    purple, vector components blue, covectors orange).
+
+### App features (besides lessons)
+
+Back button and progress bar in the player; synthesized feedback sounds
+(`js/sound.js`, toggle in the player header and settings) with varied
+encouraging messages and "N in a row" streaks; average first-try accuracy on
+the trail (overall chip and per level); level reviews (`#/review/<levelId>`).
 
 ### Status (2026-10-18)
 
-Built: Chapter 2 change of basis (concept), covector law (guided), and the
-transformation traps round. Next candidates: the remaining Chapter 2 lessons
-(maps, axioms, dual space, bases and dual basis, J invertible, tensors), then
-Chapters 3–5 in order. Each planned node in `course.yaml` is one lesson to
-build.
+Built: Chapter 2 change of basis (concept), covector law (guided), the
+transformation traps round, and the Chapter 2 content map. Next candidates:
+the remaining Chapter 2 lessons (maps, axioms, dual space, bases and dual
+basis, J invertible, tensors) and the Chapter 2 challenge, then Chapters 3–5
+in order (each with its content map and challenge). Each planned node in
+`course.yaml` is one lesson to build.

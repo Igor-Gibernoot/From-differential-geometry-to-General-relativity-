@@ -1,0 +1,247 @@
+id: ch02-map
+title: "Content Map: Vector Spaces"
+kind: map
+name: Chapter 2, Vector Spaces
+
+intro: |
+  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition or formula. An arrow goes from a concept to a concept that is built on it.
+
+  You will rebuild the Chapter 2 map one box at a time. For each glowing box, pick the card that belongs there. The other cards look alike but each hides a classic mistake, so read the details.
+
+  Tap a finished box at any time to reread its card.
+
+cols: 3
+nodes:
+  - id: space
+    title: 'Vector space $(V,\oplus,\odot)$'
+    row: 1
+    col: 1
+    span: 3
+    body: |
+      A set $V$ with an addition $\oplus: V\times V\to V$ and a scalar multiplication $\odot:\mathbb{R}\times V\to V$ such that
+
+      - $(V,\oplus)$ is an **abelian group**: closed, associative, commutative, with a zero vector and additive inverses;
+      - $\odot$ is associative, distributes over both additions, and $1\odot\mathcal{X} = \mathcal{X}$.
+
+      Nothing about lengths or angles.
+    decoys:
+      - body: |
+          A set of arrows in which any two have a **length and an angle between them**, closed under adding arrows tip to tail and under stretching them.
+        feedback: |
+          Lengths and angles are *extra* structure, a metric, which comes much later in the course. The axioms only ask that you can add and scale. That is why polynomials and functions are vector spaces too, even though they are not arrows.
+      - body: |
+          Lists of numbers $(x^1,\dots,x^d)$ that transform **contravariantly** when you change basis.
+        feedback: |
+          That describes *components*, and components only exist after you choose a basis. The vector space comes first, with no basis at all. A vector is an element of $V$; its components are one description of it.
+    explanation: |
+      Everything in the chapter is built from just these two operations. The definition is purely algebraic: no basis, no coordinates, no metric.
+
+  - id: maps
+    title: Maps and bijections
+    row: 2
+    col: 3
+    body: |
+      For a map $\phi: A\to B$:
+
+      - **injective**: $\phi(p_1) = \phi(p_2) \Rightarrow p_1 = p_2$;
+      - **surjective**: every $n\in B$ equals $\phi(p)$ for some $p\in A$;
+      - **bijective**: both. Exactly then $\phi^{-1}$ exists, and $(\varphi\circ\phi)^{-1} = \phi^{-1}\circ\varphi^{-1}$.
+    decoys:
+      - body: |
+          For a map $\phi: A\to B$:
+
+          - **injective**: every $n\in B$ equals $\phi(p)$ for some $p\in A$;
+          - **surjective**: $\phi(p_1) = \phi(p_2) \Rightarrow p_1 = p_2$;
+          - **bijective**: both. Exactly then $\phi^{-1}$ exists, and $(\varphi\circ\phi)^{-1} = \phi^{-1}\circ\varphi^{-1}$.
+        feedback: |
+          The two definitions are swapped. *Injective* (one-to-one) means no two points share an image. *Surjective* (onto) means every point of $B$ is hit.
+      - body: |
+          For a map $\phi: A\to B$:
+
+          - **injective**: $\phi(p_1) = \phi(p_2) \Rightarrow p_1 = p_2$;
+          - **surjective**: every $n\in B$ equals $\phi(p)$ for some $p\in A$;
+          - **bijective**: both. Exactly then $\phi^{-1}$ exists, and $(\varphi\circ\phi)^{-1} = \varphi^{-1}\circ\phi^{-1}$.
+        feedback: |
+          Inverses reverse the order, like socks and shoes. $\varphi\circ\phi$ applies $\phi$ first and $\varphi$ second, so undoing it removes $\varphi$ first: $(\varphi\circ\phi)^{-1} = \phi^{-1}\circ\varphi^{-1}$.
+    explanation: |
+      This box is a toolkit rather than a step of the main chain. It is used to show that a change of basis can always be undone (the dashed arrow), and later in the course charts on a manifold are bijections too.
+
+  - id: hom
+    title: 'Linear maps, $\mathrm{Hom}(V,W)$'
+    row: 2
+    col: 1
+    body: |
+      $\phi: V\to W$ is **linear** if
+      $$\phi(\mathcal{X}\oplus_V\mathcal{Y}) = \phi(\mathcal{X})\oplus_W\phi(\mathcal{Y}),$$
+      $$\phi(\alpha\odot_V\mathcal{X}) = \alpha\odot_W\phi(\mathcal{X}).$$
+      The set $\mathrm{Hom}(V,W)$ of linear maps (Hom = homomorphisms) is **itself a vector space**: add and scale maps point by point.
+    decoys:
+      - body: |
+          $\phi: V\to W$ is **linear** if
+          $$\phi(\mathcal{X}\oplus_V\mathcal{Y}) = \phi(\mathcal{X})\oplus_W\phi(\mathcal{Y}),$$
+          $$\phi(\alpha\odot_V\mathcal{X}) = \alpha\odot_W\phi(\mathcal{X}).$$
+          The set $\mathrm{Hom}(V,W)$ of linear maps is **just a set**: maps cannot be added or scaled.
+        feedback: |
+          They can. Define $(\phi\oplus_H\varphi)(\mathcal{X}) := \phi(\mathcal{X})\oplus_W\varphi(\mathcal{X})$ and scale the same way; the result is again linear. This is exactly what makes the dual space $V^* = \mathrm{Hom}(V,\mathbb{R})$ a vector space.
+      - body: |
+          $\phi: V\to W$ is **linear** if it has the form
+          $$\phi(\mathcal{X}) = A\,\mathcal{X} + b$$
+          for a matrix $A$ and a fixed vector $b$. The set $\mathrm{Hom}(V,W)$ of linear maps is **itself a vector space**.
+        feedback: |
+          With $b\neq 0$ that map is *affine*, not linear: $\phi(0) = b\neq 0$, and $\phi(\mathcal{X}\oplus\mathcal{Y})\neq\phi(\mathcal{X})\oplus\phi(\mathcal{Y})$. Also, linearity is defined without matrices. A matrix only appears once you pick bases.
+    explanation: |
+      Linear maps are the maps that respect the two operations of the vector space. Because they form a vector space themselves, choosing $W = \mathbb{R}$ immediately gives a new vector space, the dual.
+
+  - id: basis
+    title: 'Basis $\{\hat{x}_i\}$'
+    row: 2
+    col: 2
+    body: |
+      A set $\{\hat{x}_1,\dots,\hat{x}_d\}$ such that every $\mathcal{X}\in V$ can be written as
+      $$\mathcal{X} = \sum_{i=1}^d x^i\cdot\hat{x}_i$$
+      in **exactly one** way. The numbers $x^i$ are the **components** of $\mathcal{X}$, and $d$ is the dimension.
+    decoys:
+      - body: |
+          A set $\{\hat{x}_1,\dots,\hat{x}_d\}$ such that every $\mathcal{X}\in V$ can be written as
+          $$\mathcal{X} = \sum_{i=1}^d x^i\cdot\hat{x}_i$$
+          in **at least one** way. The numbers $x^i$ are the **components** of $\mathcal{X}$, and $d$ is the dimension.
+        feedback: |
+          "At least one way" only says the set *spans* $V$. Without uniqueness (linear independence) the "components" would not be well defined: with $\{\hat{x}_1, \hat{x}_2, \hat{x}_1+\hat{x}_2\}$ the vector $\hat{x}_1+\hat{x}_2$ has several descriptions.
+      - body: |
+          A set of **unit-length, mutually perpendicular** vectors $\{\hat{x}_1,\dots,\hat{x}_d\}$. The component $x^i$ of $\mathcal{X}$ is the length of its projection onto $\hat{x}_i$.
+        feedback: |
+          That is an *orthonormal* basis, which needs a metric. A basis needs no lengths or angles: $\{\hat{x}_1,\ \hat{x}_1+\hat{x}_2\}$ is a perfectly good basis of the plane, and its components are not projections.
+    explanation: |
+      A basis is what turns abstract vectors into numbers. "Exactly one way" is the important part: existence comes from spanning, uniqueness from linear independence.
+
+  - id: dual
+    title: 'Dual space $V^*$'
+    row: 3
+    col: 1
+    body: |
+      $$V^* := \mathrm{Hom}(V,\mathbb{R}),$$
+      all **linear** maps $V\to\mathbb{R}$. Its elements $\mathsf{X},\mathsf{Y}$ are **covectors**: each eats a vector and returns a number. $V^*$ is a vector space because every $\mathrm{Hom}$ is.
+    decoys:
+      - body: |
+          $$V^* := \{\text{all maps } V\to\mathbb{R}\},$$
+          linear or not. Its elements $\mathsf{X},\mathsf{Y}$ are **covectors**: each eats a vector and returns a number.
+        feedback: |
+          Only **linear** maps are covectors. A function like "the square of the first component" eats a vector and returns a number, but it is not linear, so it is not in $V^*$.
+      - body: |
+          $V^*$ is the set of vectors of $V$ written as **rows instead of columns**. Its elements $\mathsf{X},\mathsf{Y}$ are **covectors**.
+        feedback: |
+          Rows and columns are ways to write *components*, which need a basis. A covector is a different kind of object, a linear machine $V\to\mathbb{R}$. Without a metric there is no preferred way to turn a vector into a covector.
+    explanation: |
+      The dual space is the special case $W = \mathbb{R}$ of $\mathrm{Hom}(V,W)$. Physical example: a gradient eats a displacement and returns the change of a quantity along it.
+
+  - id: dbasis
+    title: 'Dual basis $\{\hat{\mathfrak{x}}^i\}$'
+    row: 3
+    col: 2
+    body: |
+      Given a basis $\{\hat{x}_i\}$, define covectors $\hat{\mathfrak{x}}^i$ by
+      $$\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j .$$
+      They form a basis of $V^*$: every covector is $\mathsf{X} = \sum_i \mathsf{x}_i\cdot\hat{\mathfrak{x}}^i$, with $\mathsf{x}_i = \mathsf{X}(\hat{x}_i)$.
+    decoys:
+      - body: |
+          Each covector $\hat{\mathfrak{x}}^i$ depends **only on** $\hat{x}_i$: it returns the length of the projection of a vector onto $\hat{x}_i$. Every covector is $\mathsf{X} = \sum_i \mathsf{x}_i\cdot\hat{\mathfrak{x}}^i$.
+        feedback: |
+          $\hat{\mathfrak{x}}^1$ must also give $0$ on $\hat{x}_2,\dots,\hat{x}_d$, so it depends on the **whole** basis: change $\hat{x}_2$ and $\hat{\mathfrak{x}}^1$ changes, even if $\hat{x}_1$ stays put. And "length of a projection" needs a metric.
+      - body: |
+          Given a basis $\{\hat{x}_i\}$, define covectors $\hat{\mathfrak{x}}^i$ by
+          $$\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j .$$
+          They form a basis of $V^*$: every covector is $\mathsf{X} = \sum_i \mathsf{x}_i\cdot\hat{\mathfrak{x}}^i$, with $\mathsf{x}_i = \mathsf{X}(\hat{\mathfrak{x}}^i)$.
+        feedback: |
+          $\mathsf{X}$ eats **vectors**, not covectors, so $\mathsf{X}(\hat{\mathfrak{x}}^i)$ means nothing. The component is the covector evaluated on a basis vector: $\mathsf{x}_i = \mathsf{X}(\hat{x}_i)$.
+    explanation: |
+      Each basis of $V$ comes with its own basis of $V^*$. The rule $\mathsf{x}_i = \mathsf{X}(\hat{x}_i)$ is the quickest way to find covector components.
+
+  - id: cob
+    title: Change of basis $J$
+    row: 3
+    col: 3
+    body: |
+      Two bases of $V$ are related by
+      $$\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$$
+      (old in terms of new). $J$ is **invertible** because both sets are bases, so $\hat{y}_i = \sum_j (J^{-1})_i^j\cdot\hat{x}_j$.
+    decoys:
+      - body: |
+          Two bases of $V$ are related by
+          $$\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$$
+          (old in terms of new). $J$ is invertible **only if both bases are orthonormal**.
+        feedback: |
+          *Any* two bases give an invertible $J$. No lengths or angles are involved: the shear $\hat{y}_1 = \hat{x}_1$, $\hat{y}_2 = \hat{x}_1 + \hat{x}_2$ has an invertible $J$.
+      - body: |
+          Two bases of $V$ are related by
+          $$\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$$
+          (old in terms of new). $J$ need not be invertible: going back from the new basis to the old one can fail.
+        feedback: |
+          Since $\{\hat{x}_i\}$ is also a basis, every $\hat{y}_i$ can be written in it, and that gives the inverse matrix. "Both sets are bases" is exactly what makes $J$ invertible. It fails only when one set stops being a basis, for example two parallel vectors in the plane.
+    explanation: |
+      $J$ is the dictionary between two descriptions. In Chapter 4 the two bases will come from two coordinate charts and $J$ becomes the Jacobian.
+
+  - id: laws
+    title: Transformation laws
+    row: 4
+    col: 3
+    body: |
+      $$y^i = \sum_j J_j^i\, x^j \quad\text{(vector components: contravariant)}$$
+      $$\mathsf{x}_j = \sum_i J^i_j\,\mathsf{y}_i \quad\text{(covector components: covariant)}$$
+      So $\sum_i \mathsf{x}_i\, x^i$ is the same in every basis.
+    decoys:
+      - body: |
+          $$y^i = \sum_j (J^{-1})_j^i\, x^j \quad\text{(vector components: covariant)}$$
+          $$\mathsf{x}_j = \sum_i J^i_j\,\mathsf{y}_i \quad\text{(covector components: covariant)}$$
+          Both follow the basis.
+        feedback: |
+          Vector components run **against** the basis. Substituting $\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$ into $\mathcal{X} = \sum_i x^i\cdot\hat{x}_i$ gives $y^j = \sum_i J_i^j\, x^i$, with $J$, not $J^{-1}$. If the basis doubles, the components halve.
+      - body: |
+          $$y^i = \sum_j J_j^i\, x^j \quad\text{(vector components)}$$
+          $$\mathsf{y}_i = \sum_j J_j^i\,\mathsf{x}_j \quad\text{(covector components)}$$
+          Same law for both; whether an index is up or down is only notation.
+        feedback: |
+          If both used $J$, the pairing $\sum_i \mathsf{x}_i\, x^i = \mathsf{X}(\mathcal{X})$ would change with the basis, yet it is a number defined without any basis. Covector components need the opposite law so that $J$ and $J^{-1}$ cancel. The index position records that behaviour; it is not decoration.
+    explanation: |
+      Opposite laws are exactly what makes up-down pairings basis-independent. In GR this is why every observer agrees on quantities like "the rate of change of a field along a worldline".
+
+  - id: tensors
+    title: 'Tensors $T^{(r,s)}$'
+    row: 5
+    col: 1
+    span: 3
+    body: |
+      An $(r,s)$-tensor is a map with $r$ covector slots and $s$ vector slots,
+      $$T: \underbrace{V^*\times\cdots\times V^*}_{r}\times\underbrace{V\times\cdots\times V}_{s}\to\mathbb{R},$$
+      that is **multilinear**: linear in each slot separately. Its components are $\mathsf{T}^{i_1\dots i_r}_{j_1\dots j_s} = T(\hat{\mathfrak{x}}^{i_1},\dots,\hat{\mathfrak{x}}^{i_r};\hat{x}_{j_1},\dots,\hat{x}_{j_s})$. Each upper index transforms like a vector component and each lower index like a covector component.
+    decoys:
+      - body: |
+          An $(r,s)$-tensor is a map with $r$ covector slots and $s$ vector slots,
+          $$T: \underbrace{V^*\times\cdots\times V^*}_{r}\times\underbrace{V\times\cdots\times V}_{s}\to\mathbb{R},$$
+          that is **linear on the whole list of inputs at once**: $T(2\,\text{inputs}) = 2\,T(\text{inputs})$. Each upper index transforms like a vector component and each lower index like a covector component.
+        feedback: |
+          Multilinear means linear in **each slot separately**, with the others held fixed. So doubling every input of a $(1,1)$-tensor multiplies the result by $2\cdot 2 = 4$, not by $2$.
+      - body: |
+          An $(r,s)$-tensor is an **array of numbers** with $r$ upper and $s$ lower indices. It is the same array in every basis.
+        feedback: |
+          The array is the tensor's *components*, and they depend on the basis: each index transforms with $J$ or $J^{-1}$. The tensor itself is the basis-free multilinear map.
+    explanation: |
+      Tensors put everything together: they eat covectors (from the dual space) and vectors, and their components change by combining the vector and covector laws, one $J$ or $J^{-1}$ per index.
+
+edges:
+  - [space, hom]
+  - [space, basis]
+  - [hom, dual]
+  - [basis, dbasis]
+  - [dual, dbasis]
+  - [basis, cob]
+  - { from: maps, to: cob, dashed: true }
+  - [cob, laws]
+  - [dbasis, laws]
+  - [dual, tensors]
+  - [laws, tensors]
+
+outroTitle: Chapter 2 in one picture
+outro: |
+  Read it top to bottom. The axioms give **linear maps** and **bases**. Linear maps into $\mathbb{R}$ give the **dual space**, and a basis gives a **dual basis**. Comparing two bases gives $J$ and the **transformation laws**, with opposite behaviour for vectors and covectors. **Tensors** combine all of it.
+
+  **Next level:** Chapter 3 leaves the flat vector space behind. To talk about curved spacetime we first need to say what it means for a space to look like $\mathbb{R}^d$ up close: topology, charts and manifolds.

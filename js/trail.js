@@ -11,10 +11,14 @@ const OFFSETS = [0, 52, 78, 52, 0, -52, -78, -52];
 export async function renderTrail(root) {
   const course = await getCourse();
   const due = progress.dueKeys().length;
+  const dueSet = new Set(progress.dueKeys());
   const streak = progress.streak();
+  const allIds = course.levels.flatMap(l => (l.lessons ?? []).map(m => m.id));
+  const acc = progress.accuracy(allIds);
 
   const top = h('header', { class: 'topbar' },
-    h('div', { class: 'brand' }, course.short ?? course.title, h('small', {}, course.subtitle ?? '')),
+    h('div', { class: 'brand' }, course.title, h('small', {}, course.subtitle ?? '')),
+    acc != null ? h('span', { class: 'chip acc', title: 'Average first-try accuracy over the lessons you finished', html: `${icons.target}<span>${pct(acc)}</span>` }) : null,
     h('span', { class: 'chip streak', title: 'Days in a row', html: `${icons.flame}<span>${streak}</span>` }),
     h('button', {
       class: `chip review${due ? ' due' : ''}`, type: 'button', title: 'Spaced-repetition review',
@@ -27,25 +31,35 @@ export async function renderTrail(root) {
 
   const levels = course.levels.map(level => {
     const lessons = level.lessons ?? [];
-    const built = lessons.filter(m => m.file);
-    const done = built.filter(m => progress.lesson(m.id)?.done).length;
+    const counted = lessons.filter(m => m.kind !== 'review');
+    const done = counted.filter(m => m.file && progress.lesson(m.id)?.done).length;
     const unwritten = level.status === 'unwritten';
+    const levelAcc = progress.accuracy(counted.map(m => m.id));
+    const deck = progress.deckKeys(lessons.map(m => m.id));
+    const levelDue = deck.filter(k => dueSet.has(k)).length;
 
     const head = h('div', { class: 'level-head' },
       h('div', { class: 'eyebrow' }, `Level ${level.number}${unwritten ? ' · not in the book yet' : ''}`),
       h('h2', {}, level.title),
       level.blurb ? h('p', { html: mdInline(level.blurb) }) : null,
-      lessons.length ? h('div', { class: 'meter', title: `${done}/${lessons.length} lessons done` },
-        h('div', { style: `width:${lessons.length ? (done / lessons.length) * 100 : 0}%` })) : null);
+      counted.length ? h('div', { class: 'meter', title: `${done}/${counted.length} lessons done` },
+        h('div', { style: `width:${(done / counted.length) * 100}%` })) : null,
+      counted.length ? h('div', { class: 'meta' },
+        h('span', {}, `${done}/${counted.length} lessons`),
+        levelAcc != null ? h('span', { class: 'acc', title: 'Average first-try accuracy in this level' }, `${pct(levelAcc)} accuracy`) : null) : null);
 
     const path = h('div', { class: 'path' }, lessons.map((meta, k) => {
       const rec = progress.lesson(meta.id);
-      const state = !meta.file ? 'planned' : rec?.done ? 'done' : 'available';
+      const isReview = meta.kind === 'review';
+      const state = isReview ? (deck.length ? 'available' : 'planned')
+        : !meta.file ? 'planned' : rec?.done ? 'done' : 'available';
       const isNext = meta.id === nextId;
+      const special = SPECIAL.includes(meta.kind);
       const node = h('button', {
-        class: `node ${state}${isNext ? ' next' : ''}`, type: 'button', 'aria-label': meta.title,
-        html: state === 'done' ? icons.check : state === 'planned' ? icons.planned : icons[meta.kind] ?? icons.concept,
-        onclick: () => openSheet(meta, state),
+        class: `node ${state}${special ? ' special' : ''}${isNext ? ' next' : ''}`, type: 'button', 'aria-label': meta.title,
+        html: (state === 'done' ? icons.check : state === 'planned' && !special ? icons.planned : ICON[meta.kind] ?? icons.concept)
+          + (isReview && levelDue ? `<span class="badge">${levelDue}</span>` : ''),
+        onclick: () => openSheet(meta, state, { level, deck: deck.length, due: levelDue }),
       });
       return h('div', { class: `node-wrap${isNext ? ' has-bubble' : ''}`, style: `transform: translateX(${OFFSETS[k % OFFSETS.length]}px)` },
         isNext ? h('div', { class: 'start-bubble' }, rec ? 'CONTINUE' : 'START') : null,
@@ -63,12 +77,22 @@ export async function renderTrail(root) {
   }
 }
 
-function openSheet(meta, state) {
+const SPECIAL = ['map', 'review', 'challenge'];
+const ICON = { ...icons, map: icons.map, review: icons.levelReview, challenge: icons.challenge };
+const pct = x => `${Math.round(x * 100)}%`;
+
+function openSheet(meta, state, { level, deck, due }) {
   const close = () => scrim.remove();
   const rec = progress.lesson(meta.id);
   const kind = KIND_LABEL[meta.kind] ?? 'Lesson';
   let body, actions;
-  if (state === 'planned') {
+  if (meta.kind === 'review') {
+    body = h('p', {}, deck
+      ? `Practice only the questions from ${level.title}: ${due ? `${due} due now, ` : ''}${deck.length} in this level's deck. Due and weak ones come first.`
+      : `Questions you answer in this level's lessons collect here, so you can practice just ${level.title}. Play a lesson first.`);
+    actions = [h('button', { class: 'btn ghost', type: 'button', onclick: close }, 'Close')];
+    if (deck) actions.push(h('button', { class: 'btn primary', type: 'button', onclick: () => { close(); location.hash = `#/review/${level.id}`; } }, 'Start review'));
+  } else if (state === 'planned') {
     body = h('p', {}, 'Not built yet. Ask Claude to build this lesson from the book.');
     actions = [h('button', { class: 'btn ghost', type: 'button', onclick: close }, 'Close')];
   } else {

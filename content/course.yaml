@@ -1,11 +1,12 @@
 # The trail. One level per book chapter, lessons in trail order.
 #
 # A lesson entry with `file:` is built and playable; without it, it shows as
-# a planned (greyed) node. `kind` is concept | guided | traps.
+# a planned (greyed) node. `kind` is concept | guided | traps, plus the three
+# end-of-level kinds: map (content-map puzzle), review (automatic, no file:
+# practises only this level's questions) and challenge (mixed problems).
 # A level with `status: unwritten` is a chapter that is still "??" in the book.
 
 title: From Differential Geometry to General Relativity
-short: Geometry → Relativity
 subtitle: A problem-based trail through the course
 
 levels:
@@ -47,6 +48,13 @@ levels:
       - id: ch02-tensors
         title: Tensors
         kind: concept
+      - id: ch02-map
+        title: "Content Map: Vector Spaces"
+        kind: map
+        file: ch02/map.yaml
+        summary: Rebuild the chapter's concept map box by box. For each box, pick the right card among look-alikes with subtle mistakes.
+      - { id: ch02-review, title: Level Review, kind: review }
+      - { id: ch02-challenge, title: Level Challenge, kind: challenge }
 
   - id: ch03
     number: 3
@@ -58,6 +66,9 @@ levels:
       - { id: ch03-homeomorphisms, title: Continuity and Homeomorphisms, kind: concept }
       - { id: ch03-charts, title: Charts and Transition Maps, kind: concept }
       - { id: ch03-atlases, title: Atlases and Smooth Manifolds, kind: concept }
+      - { id: ch03-map, title: "Content Map: Topological Manifolds", kind: map }
+      - { id: ch03-review, title: Level Review, kind: review }
+      - { id: ch03-challenge, title: Level Challenge, kind: challenge }
 
   - id: ch04
     number: 4
@@ -70,6 +81,9 @@ levels:
       - { id: ch04-cotangent, title: "The Cotangent Space", kind: concept }
       - { id: ch04-cotangent-basis, title: "Differentials as a Basis", kind: concept }
       - { id: ch04-tensor-space, title: "Tensor Spaces at a Point", kind: concept }
+      - { id: ch04-map, title: "Content Map: Tangent Spaces", kind: map }
+      - { id: ch04-review, title: Level Review, kind: review }
+      - { id: ch04-challenge, title: Level Challenge, kind: challenge }
 
   - id: ch05
     number: 5
@@ -80,6 +94,9 @@ levels:
       - { id: ch05-covector-fields, title: Covector Fields and the Cotangent Bundle, kind: concept }
       - { id: ch05-module, title: "The $C^\\infty(\\mathcal{M})$-Module Structure", kind: concept }
       - { id: ch05-tensor-fields, title: Tensor Fields, kind: concept }
+      - { id: ch05-map, title: "Content Map: Fields", kind: map }
+      - { id: ch05-review, title: Level Review, kind: review }
+      - { id: ch05-challenge, title: Level Challenge, kind: challenge }
 
   - { id: ch06, number: 6, title: Covariant Derivative, status: unwritten }
   - { id: ch07, number: 7, title: Metric Structure, status: unwritten }
