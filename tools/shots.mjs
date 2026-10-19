@@ -57,6 +57,12 @@ for (const [w, hgt, tag] of [[390, 844, 'phone'], [1280, 860, 'desk']]) {
     if (shotTypes.has(c.type) || (all && tag === 'phone' && hasDisplay)) {
       await p.screenshot({ path: `${out}/${tag}-${String(n + 1).padStart(2, '0')}-${c.id}.png`, fullPage: true }); shots++;
     }
+    // The fixed footer covers the readouts in full-page shots: also save the widget alone, footer hidden.
+    const wEl = c.type === 'widget' && await p.$('.widget');
+    if (wEl) {
+      await p.evaluate(() => { for (const e of document.querySelectorAll('*')) if (['fixed', 'sticky'].includes(getComputedStyle(e).position)) e.style.visibility = 'hidden'; });
+      await wEl.screenshot({ path: `${out}/${tag}-${String(n + 1).padStart(2, '0')}-${c.id}-widget.png` }); shots++;
+    }
   }
   if (errs.length) { problems++; console.log(tag, 'page errors', errs); }
   await p.close();

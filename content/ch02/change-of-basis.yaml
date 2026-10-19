@@ -142,7 +142,7 @@ cards:
       Now the general problem. The same vector has two descriptions:
       $$\mathcal{X} = \sum_{i=1}^d x^i\cdot\hat{x}_i = \sum_{j=1}^d y^j\cdot\hat{y}_j .$$
       Substitute the dictionary $\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$ into the first sum, then swap the order of the two finite sums:
-      $$\mathcal{X} = \sum_{i=1}^d x^i\cdot\Big(\sum_{j=1}^d J_i^j\cdot\hat{y}_j\Big) = \sum_{j=1}^d\Big(\sum_{i=1}^d J_i^j\, x^i\Big)\cdot\hat{y}_j .$$
+      $$\begin{aligned}\mathcal{X} &= \sum_{i=1}^d x^i\cdot\Big(\sum_{j=1}^d J_i^j\cdot\hat{y}_j\Big)\\ &= \sum_{j=1}^d\Big(\sum_{i=1}^d J_i^j\, x^i\Big)\cdot\hat{y}_j .\end{aligned}$$
       Now we have **two expansions of $\mathcal{X}$ in the same basis** $\{\hat{y}_j\}$.
 
   - type: mcq
@@ -257,8 +257,10 @@ cards:
     title: Why "contravariant"
     body: |
       Put the two rules side by side:
-      $$\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j \qquad \text{(basis: old from new)}$$
-      $$y^j = \sum_i J_i^j\, x^i \qquad \text{(components: new from old)}$$
+      $$\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$$
+      (basis: old from new), and
+      $$y^j = \sum_i J_i^j\, x^i$$
+      (components: new from old).
       The same matrix $J$ takes the basis vectors **from new to old**, but takes the components **from old to new**. Components run **against** the basis. Objects whose components behave like this are called **contravariant** (Latin *contra*, against). The basis vectors, and anything that transforms the same way they do, are called **covariant**.
 
       In the A/B example the basis was doubled and the components were halved, so each product "component × basis vector" stays the same. That is the whole point: $\mathcal{X}$ itself does not move.

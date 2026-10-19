@@ -263,6 +263,7 @@ Screenshot pass: `tools/shots.mjs` (`playwright-core`, installed in
 `tools/node_modules`, driving the cached Chromium in
 `~/Library/Caches/ms-playwright/chromium-1248`). It renders every card and
 its hints/feedback, flags `.katex-display` overflow at 390 px and 1280 px,
-and saves widget screenshots. `#/lesson/<id>/<n>` is 1-based. Map lessons have
+and saves widget screenshots (full page, plus `*-widget.png` of the widget
+alone with the fixed footer hidden: view that one to check readouts). `#/lesson/<id>/<n>` is 1-based. Map lessons have
 no `cards:`, so the script doesn't cover them yet (extend it in the map
 session).

@@ -131,7 +131,7 @@ cards:
           $\mathtt{y}_j$ is a number, but $\hat{\mathfrak{x}}^i$ is a covector. Evaluate first: what is $\mathsf{X}(\hat{x}_i)$?
     hint: '$\mathsf{X}\big(\sum_i c^i\cdot\hat{x}_i\big) = \sum_i c^i\,\mathsf{X}(\hat{x}_i)$ for any numbers $c^i$.'
     explanation: |
-      $$\mathtt{y}_j = \mathsf{X}\Big(\sum_i (J^{-1})_j^i\cdot\hat{x}_i\Big) = \sum_i (J^{-1})_j^i\,\mathsf{X}(\hat{x}_i) = \sum_{i=1}^d (J^{-1})_j^i\,\mathtt{x}_i .$$
+      $$\begin{aligned}\mathtt{y}_j &= \mathsf{X}\Big(\sum_i (J^{-1})_j^i\cdot\hat{x}_i\Big)\\ &= \sum_i (J^{-1})_j^i\,\mathsf{X}(\hat{x}_i)\\ &= \sum_{i=1}^d (J^{-1})_j^i\,\mathtt{x}_i .\end{aligned}$$
       That answers part **(a)**.
 
   - type: mcq
@@ -180,7 +180,7 @@ cards:
     title: "Part (b): the number everyone agrees on"
     body: |
       In the old basis, linearity gives
-      $$\mathsf{X}(\mathcal{X}) = \mathsf{X}\Big(\sum_i x^i\cdot\hat{x}_i\Big) = \sum_i x^i\,\mathsf{X}(\hat{x}_i) = \sum_i \mathtt{x}_i\, x^i .$$
+      $$\begin{aligned}\mathsf{X}(\mathcal{X}) &= \mathsf{X}\Big(\sum_i x^i\cdot\hat{x}_i\Big)\\ &= \sum_i x^i\,\mathsf{X}(\hat{x}_i)\\ &= \sum_i \mathtt{x}_i\, x^i .\end{aligned}$$
       The same computation in the new basis gives $\sum_j \mathtt{y}_j\, y^j$. We want to show these are equal using only the two laws:
       $$y^j = \sum_k J_k^j\, x^k ,\qquad \mathtt{y}_j = \sum_i (J^{-1})_j^i\,\mathtt{x}_i .$$
       One more ingredient: substitute one dictionary into the other,

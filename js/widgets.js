@@ -932,7 +932,7 @@ function circleCharts(el, cfg) {
     if (Math.abs(d - Math.round(d)) > 1e-9 || Math.round(d) % 15) return fmt(rad(d));
     const n = Math.abs(Math.round(d)), g = gcd(n, 180), num = n / g, den = 180 / g;
     const top = num === 1 ? '\\pi' : `${num}\\pi`;
-    return `${d < 0 ? '-' : ''}${den === 1 ? top : `\\tfrac{${top}}{${den}}`}`;
+    return `${d < 0 ? '-' : ''}${den === 1 ? top : `\\dfrac{${top}}{${den}}`}`;
   };
   const angTex = d => { const t = piTex(d); return t.includes('pi') ? `${t} \\approx ${fmt(rad(d))}` : t; };
 
@@ -1024,11 +1024,11 @@ function circleCharts(el, cfg) {
       : tex(`\\theta(p) = ${angTex(d)}`) }));
     if (showB) rows.push(h('div', { class: 'c-covec', html: b == null
       ? mdInline(`$${bName}(p)$ undefined: $p = ${stereo ? '(0,1)' : '(-1,0)'} \\notin \\mathcal{V}$`)
-      : tex(stereo ? `\\sigma(p) = \\frac{x}{1-y} = ${fmt(b)}` : `\\varphi(p) = ${angTex(b * 180 / Math.PI)}`) }));
+      : tex(stereo ? `\\sigma(p) = \\dfrac{x}{1-y} = ${fmt(b)}` : `\\varphi(p) = ${angTex(b * 180 / Math.PI)}`) }));
     if (both) {
       let msg;
       if (th == null || b == null) msg = `$p \\notin \\mathcal{U} \\cap \\mathcal{V}$: only one chart covers $p$, so there is nothing to translate.`;
-      else if (stereo) msg = `$p \\in \\mathcal{U} \\cap \\mathcal{V}$: $\\sigma = \\frac{\\cos\\theta}{1-\\sin\\theta} = ${fmt(b)}$`;
+      else if (stereo) msg = `$p \\in \\mathcal{U} \\cap \\mathcal{V}$: $\\sigma = \\dfrac{\\cos\\theta}{1-\\sin\\theta} = ${fmt(b)}$`;
       else if (d < 180) msg = `$p$ in the upper piece: $\\varphi = \\theta = ${piTex(d)}$`;
       else msg = `$p$ in the lower piece: $\\varphi = \\theta - 2\\pi = ${piTex(d - 360)}$`;
       rows.push(h('div', { class: `wide${th == null || b == null ? ' warn' : ''}`, html: mdInline(msg) }));
