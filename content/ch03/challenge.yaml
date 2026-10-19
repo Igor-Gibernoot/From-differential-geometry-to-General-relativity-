@@ -1,0 +1,499 @@
+id: ch03-challenge
+title: Level Challenge
+kind: challenge
+
+# Organization: intro, then one block per problem (cards tagged
+# "Problem N · …", ids prefixed pN-), then wrap-up. Problems 4-5 go
+# between the Problem 3 block and wrap-up.
+
+cards:
+  - type: text
+    id: intro
+    title: Manifolds under pressure
+    body: |
+      This challenge pushes each idea of the level to its edge. Keep pencil and paper at hand: every answer can be checked by hand.
+
+      Recall the toolkit. A **topological manifold** of dimension $d$ is a Hausdorff, second countable topological space in which every point has an open neighbourhood homeomorphic to an open set of $\mathbb{R}^d$. A **chart** $(\mathcal{U}, \mathscr{X})$ is such a homeomorphism $\mathscr{X}\colon\mathcal{U}\to\mathscr{X}(\mathcal{U})\subseteq\mathbb{R}^d$; an **atlas** is a set of charts covering the space; it is **smooth** when every transition map $\mathscr{Y}\circ\mathscr{X}^{-1}$ is $C^\infty$ (all derivatives exist and are continuous). A map $\phi$ between smooth manifolds is **smooth** when its representatives $\mathscr{Y}\circ\phi\circ\mathscr{X}^{-1}$ are $C^\infty$.
+
+      1. The graph of $|t|$: a corner, yet a smooth manifold?
+      2. Stereographic charts from both poles of the circle.
+      3. Two smooth structures on $\mathbb{R}$, one manifold.
+
+  # ---------------------------------------------------------------- Problem 1
+  - type: text
+    id: p1-setup
+    tag: Problem 1 · A graph with a corner
+    title: The graph of the absolute value
+    body: |
+      Let $\Gamma\subset\mathbb{R}^2$ be the graph of the absolute value,
+      $$\Gamma = \{(t, |t|) : t\in\mathbb{R}\},$$
+      a "V" with a corner at the origin. Give $\Gamma$ the topology inherited from $\mathbb{R}^2$: its open sets are $\Gamma\cap\mathcal{W}$ with $\mathcal{W}$ open in $\mathbb{R}^2$.
+
+      Calculus says $|t|$ has no derivative at $t = 0$. Does that stop $\Gamma$ from being a smooth manifold of dimension $1$? Decide it axiom by axiom.
+
+  - type: mcq
+    id: p1-inherited
+    tag: Problem 1 · A graph with a corner
+    multiple: true
+    prompt: |
+      $\Gamma = \{(t, |t|) : t\in\mathbb{R}\}$ carries the topology inherited from $\mathbb{R}^2$ (open sets $\Gamma\cap\mathcal{W}$, $\mathcal{W}$ open in $\mathbb{R}^2$). Which properties does $\Gamma$ get **for free**, just from being a subset of $\mathbb{R}^2$ with this topology? Select all that apply.
+    options:
+      - text: Hausdorff
+        correct: true
+      - text: Second countable
+        correct: true
+      - text: Every point has an open neighbourhood homeomorphic to an open interval
+        feedback: |
+          This one is not inherited: it depends on the shape of the subset. The cross $\{(a, b) : ab = 0\}$, the union of the two axes, sits in $\mathbb{R}^2$ too, but no neighbourhood of its centre is homeomorphic to an interval (removing the centre leaves four pieces, an interval minus a point only two). For $\Gamma$ it must be checked with an actual chart.
+    explanation: |
+      **Hausdorff:** two distinct points of $\Gamma$ have disjoint open balls $B_1, B_2$ in $\mathbb{R}^2$; then $\Gamma\cap B_1$ and $\Gamma\cap B_2$ are disjoint open sets of $\Gamma$ separating them. **Second countable:** if $\mathcal{B}$ is a countable basis of $\mathbb{R}^2$ (balls with rational centres and radii), the traces $\Gamma\cap B$, $B\in\mathcal{B}$, are a countable basis of $\Gamma$. Both hold for **every** subset of $\mathbb{R}^2$; the local shape does not.
+
+  - type: build
+    id: p1-inverse
+    tag: Problem 1 · A graph with a corner
+    prompt: |
+      On $\Gamma = \{(t, |t|) : t\in\mathbb{R}\}$ take the chart $\mathscr{X}\colon\Gamma\to\mathbb{R}$ that forgets the height,
+      $$\mathscr{X}(t, |t|) = t.$$
+      Build its inverse: the point of $\Gamma$ whose chart coordinate is $s\in\mathbb{R}$.
+    prefix: '\mathscr{X}^{-1}(s) = \big('
+    suffix: '\big)'
+    tiles: ['s', 's', ',', '|s|', '-s', '\sqrt{s^2}', 's^2']
+    answers:
+      - ['s', ',', '|s|']
+      - ['s', ',', '\sqrt{s^2}']
+    wrong:
+      - answer: ['|s|', ',', 's']
+        feedback: |
+          The coordinates are swapped. The chart reads the **first** coordinate, so the point with coordinate $s$ has first coordinate $s$; its height is $|s|$.
+      - answer: ['s', ',', 's']
+        feedback: |
+          $(s, s)$ lies on $\Gamma$ only for $s\geq 0$. At $s = -1$ it gives $(-1, -1)$, below the axis, while the point of $\Gamma$ above $-1$ is $(-1, 1)$.
+      - answer: ['s', ',', '-s']
+        feedback: |
+          That is the left branch only. At $s = 2$ it gives $(2, -2)$, which is not on $\Gamma$; the height is $|s|$, which equals $-s$ only for $s\leq 0$.
+      - answer: ['s', ',', 's^2']
+        feedback: |
+          $(s, s^2)$ is a point of the parabola, not of $\Gamma$: at $s = 2$ it gives $(2, 4)$ instead of $(2, 2)$.
+    hint: The chart forgets the height; the inverse must put back the height that makes the point land on the graph.
+    explanation: |
+      $$\mathscr{X}^{-1}(s) = (s, |s|),$$
+      and $\sqrt{s^2} = |s|$ is the same thing. Check both compositions: $\mathscr{X}(\mathscr{X}^{-1}(s)) = s$, and $\mathscr{X}^{-1}(\mathscr{X}(t, |t|)) = (t, |t|)$. So $\mathscr{X}$ is a bijection from $\Gamma$ onto all of $\mathbb{R}$.
+
+  - type: mcq
+    id: p1-homeo
+    tag: Problem 1 · A graph with a corner
+    prompt: |
+      On $\Gamma = \{(t, |t|) : t\in\mathbb{R}\}$, with the topology inherited from $\mathbb{R}^2$, the chart $\mathscr{X}(t, |t|) = t$ is a bijection onto $\mathbb{R}$ with inverse $\mathscr{X}^{-1}(s) = (s, |s|)$. Is $\mathscr{X}$ a homeomorphism?
+    options:
+      - text: 'Yes: $\mathscr{X}$ is the restriction of the continuous projection $(a, b)\mapsto a$, and $s\mapsto(s, |s|)$ is continuous because $|s|$ is'
+        correct: true
+      - text: 'No: $\mathscr{X}^{-1}$ is not continuous at $s = 0$, because of the corner'
+        feedback: |
+          The corner is a failure of **differentiability**, not of continuity. $|s|$ is continuous at $0$: if $|s| < \varepsilon$ then $\big||s| - 0\big| < \varepsilon$. A homeomorphism only needs continuity both ways.
+      - text: 'Yes: $\mathscr{X}$ is a bijection, and bijections are homeomorphisms'
+        feedback: |
+          A bijection need not be continuous, and a continuous bijection need not have a continuous inverse (wrapping $[0, 2\pi)$ onto the circle is the classic example). Both directions must be checked separately.
+      - text: 'No: $\mathscr{X}$ is not injective, since $t$ and $-t$ have the same height $|t|$'
+        feedback: |
+          $(t, |t|)$ and $(-t, |t|)$ have the same height but different first coordinates, and the chart reads the first coordinate: $t\neq -t$ for $t\neq 0$. Forgetting the height loses nothing.
+    explanation: |
+      Projection $(a, b)\mapsto a$ is continuous on $\mathbb{R}^2$, and restricting a continuous map to a subset with the inherited topology keeps it continuous. The inverse $s\mapsto(s, |s|)$ has continuous components, so it is continuous into $\mathbb{R}^2$, hence into $\Gamma$. So $(\Gamma, \mathscr{X})$ is one chart covering all of $\Gamma$: $\Gamma$ is a topological manifold of dimension $1$.
+
+  - type: numeric
+    id: p1-slope
+    tag: Problem 1 · A graph with a corner
+    prompt: |
+      On $\Gamma = \{(t, |t|) : t\in\mathbb{R}\}$ the chart $\mathscr{X}(t, |t|) = t$ has inverse $\mathscr{X}^{-1}(s) = (s, |s|)$. Let $h(s) = |s|$ be its second component. Compute the difference quotient of $h$ between $s = 0$ and $s = -0.5$:
+      $$\frac{h(-0.5) - h(0)}{-0.5 - 0}.$$
+    answer: -1
+    wrong:
+      - value: 1
+        feedback: |
+          That is the quotient on the **right** of $0$. Here the numerator is $h(-0.5) = 0.5 > 0$ but the denominator $-0.5$ is negative, so the quotient is negative.
+      - value: 0.5
+        feedback: |
+          $0.5$ is the value $h(-0.5) = |-0.5|$, the height of the point $\mathscr{X}^{-1}(-0.5) = (-0.5, 0.5)$. The quotient divides it by $-0.5$.
+    hint: '$\mathscr{X}^{-1}(-0.5) = (-0.5,\ 0.5)$, so $h(-0.5) = 0.5$.'
+    explanation: |
+      $$\frac{0.5 - 0}{-0.5} = -1.$$
+      Every quotient from the left of $0$ equals $-1$, every one from the right equals $+1$ (at $s = 0.5$: $0.5/0.5$). The two one-sided limits disagree, so $h$ has **no** derivative at $s = 0$. Keep this in mind: the question is whether it matters.
+
+  - type: mcq
+    id: p1-smooth
+    tag: Problem 1 · A graph with a corner
+    prompt: |
+      $\Gamma = \{(t, |t|) : t\in\mathbb{R}\}$, with the topology inherited from $\mathbb{R}^2$, is Hausdorff and second countable, and $\mathscr{X}(t, |t|) = t$ is a homeomorphism from $\Gamma$ onto $\mathbb{R}$. Is the one-chart atlas $\{(\Gamma, \mathscr{X})\}$ a smooth atlas, making $\Gamma$ a smooth manifold?
+    options:
+      - text: 'Yes: its only transition map is $\mathscr{X}\circ\mathscr{X}^{-1} = \text{id}_{\mathbb{R}}$, which is $C^\infty$'
+        correct: true
+      - text: 'No: the corner at $(0, 0)$ means $\Gamma$ is not smooth there'
+        feedback: |
+          The tempting picture: a corner looks non-smooth. But a smooth atlas is judged by its **transition maps**, which compare charts of $\Gamma$ with each other. With one chart the only transition is $s\mapsto s$. Nothing in the definition looks at how $\Gamma$ bends inside $\mathbb{R}^2$.
+      - text: 'No: an atlas needs at least two charts so that transitions can be checked'
+        feedback: |
+          An atlas only has to cover the space. One chart covering everything is allowed; the circle needs two only because no single chart can cover it. With one chart, smoothness of the atlas is automatic.
+      - text: 'Only $C^0$: the chart inverse $s\mapsto(s, |s|)$ is not differentiable'
+        feedback: |
+          Charts are only required to be homeomorphisms; the smoothness condition is on the **transitions** $\mathscr{Y}\circ\mathscr{X}^{-1}$, maps from $\mathbb{R}^d$ to $\mathbb{R}^d$. "Is $s\mapsto(s, |s|)$ differentiable?" is a question about a map into $\mathbb{R}^2$, which needs a smooth structure on $\mathbb{R}^2$ too.
+    explanation: |
+      Every pair of charts in $\{(\Gamma, \mathscr{X})\}$ is $(\mathscr{X}, \mathscr{X})$, with transition
+      $$\mathscr{X}\circ\mathscr{X}^{-1}(s) = s.$$
+      So $\Gamma$ is a $1$-dimensional smooth manifold, and $\mathscr{X}$ is even a diffeomorphism onto $\mathbb{R}$ (its representative in the charts $\mathscr{X}$ and $\text{id}_{\mathbb{R}}$ is $s\mapsto s$). As a smooth manifold, the "V" is just a line.
+
+  - type: mcq
+    id: p1-inclusion
+    tag: Problem 1 · A graph with a corner
+    prompt: |
+      $\Gamma = \{(t, |t|) : t\in\mathbb{R}\}$ is a smooth manifold with the single chart $\mathscr{X}(t, |t|) = t$, whose inverse is $\mathscr{X}^{-1}(s) = (s, |s|)$. Give $\mathbb{R}^2$ its standard smooth structure, generated by the chart $\text{id}_{\mathbb{R}^2}$. Is the inclusion $\iota\colon\Gamma\to\mathbb{R}^2$, $\iota(t, |t|) = (t, |t|)$, a smooth map?
+    options:
+      - text: 'No: its representative is $s\mapsto(s, |s|)$, whose second component has no derivative at $s = 0$'
+        correct: true
+      - text: 'Yes: $\Gamma$ is a smooth manifold, so its inclusion into $\mathbb{R}^2$ is smooth'
+        feedback: |
+          Smoothness of a map depends on the structures on **both** sides. $\Gamma$ being a smooth manifold says nothing about how its chart compares with the coordinates of $\mathbb{R}^2$. Compute the representative $\text{id}_{\mathbb{R}^2}\circ\iota\circ\mathscr{X}^{-1}$.
+      - text: 'No, because $\Gamma$ is not a smooth manifold: it has a corner'
+        feedback: |
+          $\Gamma$ **is** a smooth manifold: one chart, transition $s\mapsto s$. The corner shows up only when $\Gamma$ is compared with $\mathbb{R}^2$, that is, in the map $\iota$.
+      - text: 'Yes: $\iota$ is continuous and injective'
+        feedback: |
+          Continuous and injective is a topological statement. Smoothness asks for $C^\infty$ representatives, and $s\mapsto|s|$ is not even $C^1$.
+    explanation: |
+      $$\text{id}_{\mathbb{R}^2}\circ\iota\circ\mathscr{X}^{-1}(s) = (s, |s|),$$
+      and a map into $\mathbb{R}^2$ is $C^\infty$ only if each component is. The difference quotients of $|s|$ at $0$ are $-1$ from the left and $+1$ from the right, so there is no derivative. The lesson: **being a smooth manifold is a property of $\Gamma$ alone**, read through its own charts. The corner is real, but it belongs to the map $\iota$, to how $\Gamma$ sits inside $\mathbb{R}^2$.
+
+  # ---------------------------------------------------------------- Problem 2
+  - type: text
+    id: p2-setup
+    tag: Problem 2 · Two stereographic charts
+    title: Projecting from both poles
+    body: |
+      Write points of the unit circle as $q = (q_1, q_2)$, with $q_1^2 + q_2^2 = 1$. Its north pole is $N = (0, 1)$, its south pole $S = (0, -1)$.
+
+      Recall the **stereographic projection** from $N$: draw the straight line from $N$ through $q\neq N$ and record where it meets the horizontal axis. That gives the chart on $S^1\setminus\{N\}$
+      $$\sigma_N(q) = \frac{q_1}{1 - q_2}.$$
+      One chart misses $N$, so it cannot be the whole atlas. Repeat the construction from the **south** pole: the line from $S$ through $q\neq S$ is
+      $$\begin{aligned}
+      &S + t\,(q - S) \\
+      &= \big(t\,q_1,\ -1 + t\,(q_2 + 1)\big)
+      \end{aligned}$$
+      with $t\in\mathbb{R}$. Its horizontal position where it crosses height $0$ defines the chart $\sigma_S$ on $S^1\setminus\{S\}$.
+
+  - type: mcq
+    id: p2-sigma-s
+    tag: Problem 2 · Two stereographic charts
+    prompt: |
+      On the unit circle, points $q = (q_1, q_2)$ satisfy $q_1^2 + q_2^2 = 1$; the south pole is $S = (0, -1)$. The straight line from $S$ through $q\neq S$ is
+      $$\big(t\,q_1,\ -1 + t\,(q_2 + 1)\big),\quad t\in\mathbb{R}.$$
+      The stereographic chart $\sigma_S(q)$ is its horizontal position where it crosses height $0$. What is $\sigma_S(q)$?
+    options:
+      - text: '$\dfrac{q_1}{1 + q_2}$'
+        correct: true
+      - text: '$\dfrac{q_1}{1 - q_2}$'
+        feedback: |
+          That is the projection from the **north** pole $N = (0, 1)$. Solve $-1 + t\,(q_2 + 1) = 0$ for the line from $S$: the denominator comes from $q_2 + 1$.
+      - text: '$-\dfrac{q_1}{1 + q_2}$'
+        feedback: |
+          The crossing happens at $t = \tfrac{1}{1 + q_2} > 0$, on the same side of $S$ as $q$, so the horizontal position $t\,q_1$ has the sign of $q_1$. Check with $q = (1, 0)$: the line from $(0, -1)$ through $(1, 0)$ crosses the axis at $1$, not $-1$.
+      - text: '$\dfrac{q_2}{1 + q_1}$'
+        feedback: |
+          This swaps the roles of the coordinates: it would project from $(-1, 0)$ onto the vertical axis. The horizontal position of the line is $t\,q_1$.
+    explanation: |
+      Height $0$ means $-1 + t\,(q_2 + 1) = 0$, so $t = \tfrac{1}{1 + q_2}$ (fine, since $q\neq S$ gives $q_2\neq -1$). Then
+      $$\sigma_S(q) = t\,q_1 = \frac{q_1}{1 + q_2}.$$
+      It is $\sigma_N$ with $q_2$ replaced by $-q_2$: the same construction, reflected upside down.
+
+  - type: numeric
+    id: p2-values
+    tag: Problem 2 · Two stereographic charts
+    prompt: |
+      On the unit circle take the stereographic charts
+      $$\sigma_N(q) = \frac{q_1}{1 - q_2}$$
+      on $S^1\setminus\{(0, 1)\}$ and
+      $$\sigma_S(q) = \frac{q_1}{1 + q_2}$$
+      on $S^1\setminus\{(0, -1)\}$. The point $q = (\tfrac35, \tfrac45)$ has $\sigma_N(q) = 3$. What is $\sigma_S(q)$?
+    answer: 0.3333333
+    tolerance: 0.002
+    answerText: '1/3'
+    wrong:
+      - value: 3
+        feedback: |
+          That is $\sigma_N(q) = \tfrac{3/5}{1/5}$, dividing by $1 - q_2$. The south chart divides by $1 + q_2 = \tfrac95$.
+      - value: -0.3333333
+        tolerance: 0.002
+        feedback: |
+          The sign is off: $q_1 = \tfrac35$ and $1 + q_2 = \tfrac95$ are both positive. A point on the right half of the circle has positive coordinate in both charts.
+      - value: 0.6
+        feedback: |
+          That is $q_1 = \tfrac35$ alone. The chart divides it by $1 + q_2 = \tfrac95$.
+    hint: '$1 + q_2 = 1 + \tfrac45 = \tfrac95$.'
+    explanation: |
+      $$\sigma_S(q) = \frac{3/5}{9/5} = \frac13.$$
+      Notice $\sigma_N(q)\,\sigma_S(q) = 3\cdot\tfrac13 = 1$. Coincidence, or a law?
+
+  - type: mcq
+    id: p2-overlap
+    tag: Problem 2 · Two stereographic charts
+    prompt: |
+      On the unit circle, with points $q = (q_1, q_2)$, the stereographic chart $\sigma_N(q) = \dfrac{q_1}{1 - q_2}$ is defined on $S^1\setminus\{N\}$ and maps it onto $\mathbb{R}$, and $\sigma_S(q) = \dfrac{q_1}{1 + q_2}$ is defined on $S^1\setminus\{S\}$, where $N = (0, 1)$ and $S = (0, -1)$. The two domains overlap in $S^1\setminus\{N, S\}$. What is the image of this overlap under $\sigma_N$?
+    options:
+      - text: '$\mathbb{R}\setminus\{0\}$'
+        correct: true
+      - text: '$\mathbb{R}$'
+        feedback: |
+          That is the image of the whole domain $S^1\setminus\{N\}$. The overlap also removes $S$, and $\sigma_N(S) = \tfrac{0}{1 + 1} = 0$. Since $\sigma_N$ is injective, no other point of the overlap lands on $0$.
+      - text: '$(-1, 1)\setminus\{0\}$'
+        feedback: |
+          $(-1, 1)$ is the image of the **lower** half ($q_2 < 0$): there $1 - q_2 > 1 > |q_1|$. Upper points land outside $[-1, 1]$; for example $(\tfrac35, \tfrac45)$ goes to $3$.
+      - text: '$(0, \infty)$'
+        feedback: |
+          $\sigma_N(q)$ has the sign of $q_1$, since $1 - q_2 > 0$. Points of the left half, such as $(-1, 0)\mapsto -1$, give negative values.
+    explanation: |
+      $\sigma_N(q) = 0$ exactly when $q_1 = 0$, that is at $N$ or $S$. $N$ is not in the domain and $S$ is removed by the overlap, so
+      $$\sigma_N(S^1\setminus\{N, S\}) = \mathbb{R}\setminus\{0\}.$$
+      By the same argument $\sigma_S$ maps the overlap onto $\mathbb{R}\setminus\{0\}$ too. And since $N\neq S$, every point of $S^1$ lies in at least one domain: the two charts cover the circle.
+
+  - type: build
+    id: p2-product
+    tag: Problem 2 · Two stereographic charts
+    prompt: |
+      On the unit circle ($q_1^2 + q_2^2 = 1$), multiply the stereographic charts $\sigma_N(q) = \dfrac{q_1}{1 - q_2}$ and $\sigma_S(q) = \dfrac{q_1}{1 + q_2}$ on their overlap:
+      $$\sigma_N(q)\,\sigma_S(q) = \frac{q_1^2}{(1 - q_2)(1 + q_2)}.$$
+      Expand the denominator.
+    prefix: '(1 - q_2)(1 + q_2) ='
+    tiles: ['1', '-', '+', 'q_2^2', '2q_2', 'q_1^2']
+    answers:
+      - ['1', '-', 'q_2^2']
+      - ['-', 'q_2^2', '+', '1']
+    wrong:
+      - answer: ['1', '+', 'q_2^2']
+        feedback: |
+          Expand term by term: $1\cdot 1 + 1\cdot q_2 - q_2\cdot 1 - q_2\cdot q_2$. The cross terms cancel and the last one carries a minus sign.
+      - answer: ['1', '-', '2q_2']
+        feedback: |
+          The cross terms $+q_2$ and $-q_2$ cancel rather than add. What survives is $1 - q_2^2$.
+      - answer: ['q_1^2']
+        feedback: |
+          Right value, one step ahead: $q_1^2$ is what $1 - q_2^2$ **equals** on the circle. Expand first, with the tiles $1$, $-$, $q_2^2$.
+    hint: Difference of squares, $(a - b)(a + b) = a^2 - b^2$.
+    explanation: |
+      $(1 - q_2)(1 + q_2) = 1 - q_2^2$, and on the circle $1 - q_2^2 = q_1^2$. On the overlap $q_1\neq 0$, so
+      $$\sigma_N(q)\,\sigma_S(q) = \frac{q_1^2}{q_1^2} = 1.$$
+      The product is $1$ at every point of the overlap, not only at $(\tfrac35, \tfrac45)$.
+
+  - type: mcq
+    id: p2-transition
+    tag: Problem 2 · Two stereographic charts
+    prompt: |
+      On the unit circle, the stereographic charts $\sigma_N(q) = \dfrac{q_1}{1 - q_2}$ and $\sigma_S(q) = \dfrac{q_1}{1 + q_2}$ satisfy $\sigma_N(q)\,\sigma_S(q) = 1$ on their overlap $S^1\setminus\{(0, 1), (0, -1)\}$, which $\sigma_N$ maps onto $\mathbb{R}\setminus\{0\}$. What is the transition map $\sigma_S\circ\sigma_N^{-1}$, and is it $C^\infty$?
+    options:
+      - text: '$u\mapsto 1/u$ on $\mathbb{R}\setminus\{0\}$, which is $C^\infty$ there'
+        correct: true
+      - text: '$u\mapsto 1/u$, which is not smooth because it blows up at $u = 0$'
+        feedback: |
+          $u = 0$ is not in the domain of the transition: it is $\sigma_N(S)$, and the south pole is outside the overlap. On $\mathbb{R}\setminus\{0\}$ every derivative $(-1)^k k!\,u^{-k-1}$ exists and is continuous.
+      - text: '$u\mapsto u$, since both charts label the same point'
+        feedback: |
+          Same point, different labels: that is why transition maps exist. At $q = (\tfrac35, \tfrac45)$ the labels are $\sigma_N = 3$ and $\sigma_S = \tfrac13$.
+      - text: '$u\mapsto -1/u$ on $\mathbb{R}\setminus\{0\}$'
+        feedback: |
+          Both charts give a point the sign of $q_1$ (their denominators $1\mp q_2$ are positive), so the transition preserves signs. From $\sigma_N\,\sigma_S = 1$, $\sigma_S = +1/\sigma_N$.
+    explanation: |
+      If $u = \sigma_N(q)$, then $\sigma_S(q) = 1/u$:
+      $$\sigma_S\circ\sigma_N^{-1}(u) = \frac1u,\quad u\neq 0.$$
+      The reverse transition $\sigma_N\circ\sigma_S^{-1}(v) = 1/v$ has the same form. Both are $C^\infty$ on $\mathbb{R}\setminus\{0\}$, so $\{\sigma_N, \sigma_S\}$ is a smooth atlas of $S^1$ with only two charts.
+
+  - type: numeric
+    id: p2-slope
+    tag: Problem 2 · Two stereographic charts
+    prompt: |
+      On the unit circle, the transition from the north stereographic coordinate $u = \sigma_N(q)$ to the south one is
+      $$\sigma_S\circ\sigma_N^{-1}(u) = \frac1u,\quad u\neq 0.$$
+      What is its derivative at $u = 3$, the coordinate of the point $(\tfrac35, \tfrac45)$? (A decimal to three places is fine.)
+    answer: -0.1111111
+    tolerance: 0.002
+    answerText: '-1/9'
+    wrong:
+      - value: 0.3333333
+        tolerance: 0.002
+        feedback: That is the **value** $1/3 = \sigma_S$ at the point. The question asks for the slope.
+      - value: 0.1111111
+        tolerance: 0.002
+        feedback: |
+          The size is right, the sign is not: $1/u$ decreases on $(0, \infty)$, so its slope there is negative.
+    hint: '$\dfrac{d}{du}\,u^{-1} = -u^{-2}$.'
+    explanation: |
+      $$\frac{d}{du}\frac1u = -\frac{1}{u^2},$$
+      which is $-\tfrac19$ at $u = 3$.
+      A non-zero, finite slope: on the upper half, where $\sigma_N > 1$, a step in $\sigma_N$ becomes a smaller step in $\sigma_S$, and the order is reversed. The slope is never $0$ on the domain, as expected for a map with a smooth inverse.
+
+  - type: order
+    id: p2-proof
+    tag: Problem 2 · Two stereographic charts
+    prompt: |
+      Put in order the proof that the two stereographic charts $\sigma_N(q) = \dfrac{q_1}{1 - q_2}$ (on $S^1\setminus\{N\}$, $N = (0, 1)$) and $\sigma_S(q) = \dfrac{q_1}{1 + q_2}$ (on $S^1\setminus\{S\}$, $S = (0, -1)$) form a smooth atlas of the unit circle.
+    steps:
+      - 'The domains $S^1\setminus\{N\}$ and $S^1\setminus\{S\}$ cover $S^1$, because $N\neq S$.'
+      - 'The overlap is $S^1\setminus\{N, S\}$, and $\sigma_N$ maps it onto $\mathbb{R}\setminus\{0\}$.'
+      - 'On the overlap, $\sigma_N\,\sigma_S = q_1^2/(1 - q_2^2) = 1$, using $q_1^2 + q_2^2 = 1$.'
+      - 'Hence the transition is $\sigma_S\circ\sigma_N^{-1}(u) = 1/u$, and likewise $\sigma_N\circ\sigma_S^{-1}(v) = 1/v$.'
+      - 'The map $u\mapsto 1/u$ is $C^\infty$ on $\mathbb{R}\setminus\{0\}$, so both transitions are $C^\infty$ and the atlas is smooth.'
+    hint: Cover first, then the overlap, then the formula, then its smoothness.
+    explanation: |
+      The same atlas works one dimension up: on the sphere $S^2$ the two stereographic projections need only two charts, with transition $u\mapsto u/|u|^2$. And the atlas $\{\sigma_N, \sigma_S\}$ is compatible with the angle charts and the four half-circle charts, so all of them define the **same** smooth circle.
+
+  # ---------------------------------------------------------------- Problem 3
+  - type: text
+    id: p3-setup
+    tag: Problem 3 · Two structures on one line
+    title: Same set, two rulers
+    body: |
+      Take the set $\mathbb{R}$ with its standard topology and two one-chart atlases:
+
+      - $\mathbb{R}_x$: the chart $x(p) = p$;
+      - $\mathbb{R}_y$: the chart $y(p) = p^3$.
+
+      Both charts are homeomorphisms onto $\mathbb{R}$. Recall that they are **not** compatible: the transition $x\circ y^{-1}(b) = \sqrt[3]{b}$ has slope $\tfrac13 b^{-2/3}$, which blows up at $b = 0$. So $\mathbb{R}_x$ and $\mathbb{R}_y$ are different smooth structures on the same set.
+
+      Are they different **manifolds**? To show they are not, you must **construct** a diffeomorphism $\phi\colon\mathbb{R}_x\to\mathbb{R}_y$: a bijection with $\phi$ and $\phi^{-1}$ both smooth. The cleanest target is a representative equal to the identity,
+      $$y\circ\phi\circ x^{-1}(a) = a.$$
+
+  - type: mcq
+    id: p3-construct
+    tag: Problem 3 · Two structures on one line
+    prompt: |
+      On $\mathbb{R}$ take the smooth structures $\mathbb{R}_x$ (chart $x(p) = p$) and $\mathbb{R}_y$ (chart $y(p) = p^3$). You want a bijection $\phi\colon\mathbb{R}_x\to\mathbb{R}_y$ whose representative is the identity:
+      $$y\circ\phi\circ x^{-1}(a) = a$$
+      for every $a\in\mathbb{R}$. Which $\phi$ does this?
+    options:
+      - text: '$\phi(p) = \sqrt[3]{p}$'
+        correct: true
+      - text: '$\phi(p) = p^3$'
+        feedback: |
+          Its representative is $y(\phi(a)) = (a^3)^3 = a^9$. Smooth, but its inverse $b\mapsto b^{1/9}$ has an infinite slope at $0$, so this $\phi$ is not a diffeomorphism. Undo the cube in $y$ instead of adding another.
+      - text: '$\phi(p) = p$, the identity'
+        feedback: |
+          Its representative is $y(a) = a^3$, not $a$. The identity leaves points in place, so the cube in the chart $y$ remains.
+      - text: '$\phi(p) = 3p$'
+        feedback: |
+          Its representative is $y(3a) = 27a^3$. The goal needs $\phi(p)^3 = p$: $\phi$ must undo the cube, not scale.
+    explanation: |
+      With $x^{-1}(a) = a$, the condition reads $y(\phi(a)) = \phi(a)^3 = a$, so $\phi(a) = \sqrt[3]{a}$. In words: $\phi$ moves each point so that its $y$-reading after the move equals its $x$-reading before, $y\circ\phi = x$. As a real function $\sqrt[3]{p}$ has a vertical tangent at $0$, yet here it is the **good** map: what counts is its representative, not its formula.
+
+  - type: build
+    id: p3-inverse
+    tag: Problem 3 · Two structures on one line
+    prompt: |
+      On $\mathbb{R}$ take the smooth structures $\mathbb{R}_x$ (chart $x(p) = p$) and $\mathbb{R}_y$ (chart $y(p) = p^3$). The bijection $\phi\colon\mathbb{R}_x\to\mathbb{R}_y$, $\phi(p) = \sqrt[3]{p}$, has inverse $\phi^{-1}\colon\mathbb{R}_y\to\mathbb{R}_x$, $\phi^{-1}(q) = q^3$. Build the representative of $\phi^{-1}$: the composition that takes a $y$-coordinate $b$ to an $x$-coordinate.
+    prefix: 'b\mapsto'
+    suffix: '(b)'
+    tiles: ['x\circ', 'y\circ', '\phi^{-1}\circ', '\phi\circ', 'y^{-1}', 'x^{-1}']
+    answers:
+      - ['x\circ', '\phi^{-1}\circ', 'y^{-1}']
+    wrong:
+      - answer: ['y\circ', '\phi^{-1}\circ', 'x^{-1}']
+        feedback: |
+          The charts are in the wrong places. $\phi^{-1}$ starts in $\mathbb{R}_y$, so the coordinate $b$ is turned into a point by $y^{-1}$; it lands in $\mathbb{R}_x$, so the point is read by $x$.
+      - answer: ['x\circ', '\phi\circ', 'y^{-1}']
+        feedback: |
+          $\phi$ goes from $\mathbb{R}_x$ to $\mathbb{R}_y$, but after $y^{-1}$ you hold a point of $\mathbb{R}_y$. The map that starts there is $\phi^{-1}$.
+    hint: Read right to left. Coordinate to point in the source, apply the map, point to coordinate in the target.
+    explanation: |
+      $$\begin{aligned}
+      x\circ\phi^{-1}\circ y^{-1}(b) &= x\big(\phi^{-1}(\sqrt[3]{b})\big) \\
+      &= (\sqrt[3]{b})^3 = b.
+      \end{aligned}$$
+      Both representatives are the identity, so $\phi$ and $\phi^{-1}$ are smooth: $\phi$ is a diffeomorphism and $\mathbb{R}_x$, $\mathbb{R}_y$ are diffeomorphic.
+
+  - type: numeric
+    id: p3-id-slope
+    tag: Problem 3 · Two structures on one line
+    prompt: |
+      On $\mathbb{R}$ take the smooth structures $\mathbb{R}_x$ (chart $x(p) = p$) and $\mathbb{R}_y$ (chart $y(p) = p^3$). Now consider the identity $\text{id}(p) = p$ as a map $\mathbb{R}_x\to\mathbb{R}_y$. What is the derivative of its representative $y\circ\text{id}\circ x^{-1}$ at $a = 1$?
+    answer: 3
+    wrong:
+      - value: 1
+        feedback: |
+          The identity leaves points in place, but the representative also reads them with different charts: $y(\text{id}(x^{-1}(a))) = a^3$, not $a$.
+      - value: 0.3333333
+        tolerance: 0.002
+        feedback: |
+          That is the slope of $\sqrt[3]{b}$ at $1$, the representative of the identity in the **other** direction, $\mathbb{R}_y\to\mathbb{R}_x$. For $\mathbb{R}_x\to\mathbb{R}_y$, start with $x^{-1}$ and finish with $y$.
+    hint: '$y\circ\text{id}\circ x^{-1}(a) = a^3$.'
+    explanation: |
+      The representative is $a\mapsto a^3$, with derivative $3a^2 = 3$ at $a = 1$. It is $C^\infty$, so $\text{id}\colon\mathbb{R}_x\to\mathbb{R}_y$ **is** smooth. But its derivative is $0$ at $a = 0$: a warning sign for the inverse.
+
+  - type: mcq
+    id: p3-id-verdict
+    tag: Problem 3 · Two structures on one line
+    prompt: |
+      On $\mathbb{R}$ take the smooth structures $\mathbb{R}_x$ (chart $x(p) = p$) and $\mathbb{R}_y$ (chart $y(p) = p^3$). The map $\phi(p) = \sqrt[3]{p}$ is a diffeomorphism $\mathbb{R}_x\to\mathbb{R}_y$. What about the identity $\text{id}(p) = p$, from $\mathbb{R}_x$ to $\mathbb{R}_y$?
+    options:
+      - text: 'A smooth homeomorphism, but not a diffeomorphism: the representative of its inverse is $b\mapsto\sqrt[3]{b}$'
+        correct: true
+      - text: 'A diffeomorphism: the identity is always one'
+        feedback: |
+          The identity of a manifold to **itself** is a diffeomorphism. Here the two sides carry incompatible structures, so its inverse $\text{id}\colon\mathbb{R}_y\to\mathbb{R}_x$ has representative $x\circ y^{-1}(b) = \sqrt[3]{b}$, with infinite slope at $0$.
+      - text: 'Not smooth: its representative is $a\mapsto\sqrt[3]{a}$'
+        feedback: |
+          That is the representative of the identity in the **other** direction. From $\mathbb{R}_x$ to $\mathbb{R}_y$ it is $y\circ x^{-1}(a) = a^3$, which is smooth.
+      - text: 'Not even continuous, since the structures differ'
+        feedback: |
+          Both structures sit on the standard topology of $\mathbb{R}$, so the identity is a homeomorphism. The two structures disagree only about derivatives.
+    explanation: |
+      Smooth one way ($a\mapsto a^3$), not the other ($b\mapsto\sqrt[3]{b}$). So the obvious map fails while the less obvious $\phi = \sqrt[3]{\cdot}$ succeeds. Proving two manifolds diffeomorphic means finding the **right** map; one failed candidate proves nothing.
+
+  - type: mcq
+    id: p3-functions
+    tag: Problem 3 · Two structures on one line
+    multiple: true
+    prompt: |
+      On $\mathbb{R}$ take the smooth structure $\mathbb{R}_y$, generated by the single chart $y(p) = p^3$. A function $f\colon\mathbb{R}_y\to\mathbb{R}$ is smooth when its chart representative $f\circ y^{-1}(b) = f(\sqrt[3]{b})$ is $C^\infty$. Which of these functions are smooth on $\mathbb{R}_y$? Select all that apply.
+    options:
+      - text: '$f(p) = p^3$'
+        correct: true
+      - text: '$f(p) = p^6$'
+        correct: true
+      - text: '$f(p) = p$'
+        feedback: |
+          Its representative is $f(\sqrt[3]{b}) = \sqrt[3]{b}$, with infinite slope at $b = 0$. The function that is the chart on $\mathbb{R}_x$ is **not** smooth on $\mathbb{R}_y$.
+      - text: '$f(p) = p^2$'
+        feedback: |
+          Its representative is $(\sqrt[3]{b})^2 = b^{2/3}$, which has a cusp at $b = 0$ (slope $\tfrac23 b^{-1/3}$, infinite there). Smooth on $\mathbb{R}_x$, not on $\mathbb{R}_y$.
+      - text: '$f(p) = |p|^3$'
+        feedback: |
+          Its representative is $|\sqrt[3]{b}|^3 = |b|$, which has a corner at $0$. Being built from powers of $p$ is not enough: $f$ must be a smooth function **of $p^3$**.
+    explanation: |
+      The representatives are $b$, $b^2$, $\sqrt[3]{b}$, $b^{2/3}$, $|b|$; only the first two are $C^\infty$. The smooth functions on $\mathbb{R}_y$ are exactly $f(p) = h(p^3)$ with $h$ a smooth function of one variable. And the diffeomorphism $\phi(p) = \sqrt[3]{p}$ translates them: for $f(p) = h(p^3)$,
+      $$f\circ\phi(p) = h(p),$$
+      a smooth function on $\mathbb{R}_x$. $\phi$ matches the two lists of smooth functions one to one.
+
+  - type: mcq
+    id: p3-meaning
+    tag: Problem 3 · Two structures on one line
+    prompt: |
+      On $\mathbb{R}$ with its standard topology, $\mathbb{R}_x$ is generated by the chart $x(p) = p$ and $\mathbb{R}_y$ by $y(p) = p^3$. The charts are not compatible, yet $\phi(p) = \sqrt[3]{p}$ is a diffeomorphism $\mathbb{R}_x\to\mathbb{R}_y$. Which statement describes the situation correctly?
+    options:
+      - text: 'The two structures declare different functions on the set $\mathbb{R}$ smooth, but $\phi$ relabels the points so that one becomes the other: as smooth manifolds they are the same line'
+        correct: true
+      - text: '$\mathbb{R}_x$ and $\mathbb{R}_y$ have different open sets'
+        feedback: |
+          $y(p) = p^3$ is a homeomorphism of the standard topology, so both atlases live on the **same** topological space. A smooth structure is extra data on top of the topology; it can change while the open sets stay the same.
+      - text: '$\mathbb{R}_y$ has a defect at $0$, a point where calculus breaks down'
+        feedback: |
+          Every point of $\mathbb{R}_y$, including $0$, sits in the chart $y$, and calculus in that chart works everywhere. The trouble at $0$ appears only when $\mathbb{R}_y$ is **compared** with $\mathbb{R}_x$ through the identity map.
+      - text: '$\mathbb{R}_x$ and $\mathbb{R}_y$ are not diffeomorphic, since the identity fails to be a diffeomorphism'
+        feedback: |
+          "Diffeomorphic" asks whether **some** diffeomorphism exists. The identity fails, but $\phi(p) = \sqrt[3]{p}$ works, with both representatives equal to the identity.
+    explanation: |
+      "Different smooth structures" compares two atlases through the identity of the set: are their charts compatible? "Diffeomorphic" allows any bijection. The first can fail while the second holds, as here. Structures that are not even diffeomorphic do exist (exotic spheres in dimension $7$), but never on $\mathbb{R}$: every smooth structure on the line is diffeomorphic to $\mathbb{R}_x$.
+
+  # ---------------------------------------------------------------- Wrap-up
+  - type: text
+    id: wrap-up
+    title: What you now own
+    body: |
+      - **A smooth manifold is judged from inside.** The graph of $|t|$ is a smooth manifold with one chart; its corner is a property of the inclusion into $\mathbb{R}^2$, which is not smooth.
+      - **Two charts can be enough.** Stereographic projections from both poles cover the circle, with transition $u\mapsto 1/u$ on $\mathbb{R}\setminus\{0\}$, $C^\infty$ both ways.
+      - **Structure versus manifold.** $x(p) = p$ and $y(p) = p^3$ give incompatible structures on $\mathbb{R}$, yet $\phi(p) = \sqrt[3]{p}$ is a diffeomorphism between them, while the identity is smooth only one way.
+
+      **Next:** the line with two origins, which has charts and smooth transitions yet fails a manifold axiom, and smooth maps between circles.

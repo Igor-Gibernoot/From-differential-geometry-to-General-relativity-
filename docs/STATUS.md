@@ -11,7 +11,13 @@ append a short entry at the end of **Log** (a few lines, ending with
 - **Chapter 3 built:** `ch03-open-sets`, `ch03-standard-topology`,
   `ch03-homeomorphisms`, `ch03-hausdorff`, `ch03-charts`, `ch03-atlases`,
   `ch03-smooth-maps`, `ch03-circle`, `ch03-traps`, `ch03-map`. All had a screenshot pass; all widgets are documented.
-- **Queue (one unit each):** ⑧–⑨ `ch03-challenge`, then Chapters 4–10 (each with map and challenge).
+  `ch03-challenge` (`ch03/challenge.yaml`) has problems 1–3 (graph of $|t|$,
+  stereographic $\sigma_N,\sigma_S$, $\mathbb{R}_x$ vs $\mathbb{R}_y$).
+  File layout: `intro` (numbered problem list), one block per problem with
+  `tag: Problem N · …` and ids `pN-…`, then `wrap-up`. Session 2 inserts
+  problems 4–5 before `wrap-up`, adds them to the intro list, and extends the
+  wrap-up bullets and teaser (next level: Tangent Spaces).
+- **Queue (one unit each):** ⑨ `ch03-challenge` problems 4–5, then Chapters 4–10 (each with map and challenge).
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -28,6 +34,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   Lessons write chart maps as `\mathscr{X}`; set is $S^1$ (not $\mathcal{S}^1$).
   Maps: dashed edge = "model example for"; long box titles get a soft hyphen
   (`"Homeo\u00ADmorphism"`) so they fit 3 columns at 390 px.
+  Challenge ch03: graph $\Gamma = \{(t,|t|)\}$ with chart $\mathscr{X}(t,|t|) = t$,
+  inclusion $\iota$; $N = (0,1)$, $S = (0,-1)$, $\sigma_N = q_1/(1-q_2)$,
+  $\sigma_S = q_1/(1+q_2)$, transition $u\mapsto 1/u$; diffeomorphism
+  $\phi(p) = \sqrt[3]{p}\colon\mathbb{R}_x\to\mathbb{R}_y$ (maps named $\phi$).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -37,6 +47,19 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+ch03-challenge, session 1 of 2 (problems 1–3, 23 cards): (1) the graph Γ of
+|t| is a smooth manifold (inherited Hausdorff/second countable, chart
+forgets the height, one-chart atlas), but its inclusion into ℝ² is not
+smooth (difference quotients −1/+1 at 0); (2) stereographic charts from N
+and S written in q = (q₁, q₂), σ_S derived from the line through S, overlap
+image ℝ∖{0}, σ_Nσ_S = 1 via (1−q₂)(1+q₂) = q₁², transition 1/u, slope −1/9
+at u = 3, proof order; (3) ℝ_x vs ℝ_y: construct φ = ∛p from y∘φ = x, build
+the representative of φ⁻¹, id is smooth one way only (slope 3 at a = 1),
+smooth functions on ℝ_y are h(p³), meaning of "different structure".
+Choices: stereographic was already taught in ch03-charts (as x/(1−y)), so it
+is recalled, not introduced; no widget (problems are computational).
+Conventions fixed here: see the Challenge ch03 line in Current.
 
 Chapter 2 built: maps, axioms, dual space, bases and dual basis, change of
 basis, covector law, J invertible, dual basis law, transformation traps,

@@ -133,7 +133,11 @@ levels:
         summary: Is a point open? Is a short interval the same space as the whole line? Twelve fast questions, each hiding a tempting mistake about topology, charts and smooth maps.
       - { id: ch03-map, title: "Content Map: Topological Manifolds", kind: map, file: ch03/map.yaml }
       - { id: ch03-review, title: Level Review, kind: review }
-      - { id: ch03-challenge, title: Level Challenge, kind: challenge }
+      - id: ch03-challenge
+        title: Level Challenge
+        kind: challenge
+        file: ch03/challenge.yaml
+        summary: Harder problems mixing topology, charts, atlases and smooth maps - a graph with a corner, stereographic charts from both poles, and two smooth structures on one line.
 
   - id: ch04
     number: 4
