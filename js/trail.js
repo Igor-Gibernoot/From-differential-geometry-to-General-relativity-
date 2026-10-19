@@ -18,8 +18,13 @@ export async function renderTrail(root) {
   const allIds = course.levels.flatMap(l => (l.lessons ?? []).map(m => m.id));
   const acc = progress.accuracy(allIds);
 
+  // The first built lesson not yet done gets the "start here" marker; its
+  // level is the current one, and the course title takes that level's hue.
+  const nextId = course.levels.flatMap(l => l.lessons ?? []).find(m => m.file && !progress.lesson(m.id)?.done)?.id;
+  const currentLevel = Math.max(0, course.levels.findIndex(l => (l.lessons ?? []).some(m => m.id === nextId)));
+
   const top = h('header', { class: 'topbar' },
-    h('h1', { class: 'course-title' }, ...titleLines(course.title)),
+    h('h1', { class: 'course-title', 'data-hue': currentLevel % 6 }, ...titleLines(course.title)),
     h('div', { class: 'toolbar' },
       acc != null ? h('span', { class: 'chip acc', tabindex: 0, 'data-tip': 'Average first-try accuracy over the lessons you finished', html: `${icons.target}<span>${pct(acc)}</span>` }) : null,
       h('span', { class: 'chip streak', tabindex: 0, 'data-tip': 'Days in a row you studied', html: `${icons.flame}<span>${streak}</span>` }),
@@ -30,9 +35,6 @@ export async function renderTrail(root) {
       accountChip(),
       themeButton(h),
       h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Progress & settings', 'data-tip': 'Settings & account', html: icons.settings, onclick: () => { location.hash = '#/settings'; } })));
-
-  // The first built lesson not yet done gets the "start here" marker.
-  const nextId = course.levels.flatMap(l => l.lessons ?? []).find(m => m.file && !progress.lesson(m.id)?.done)?.id;
 
   const levels = course.levels.map((level, li) => {
     const lessons = level.lessons ?? [];

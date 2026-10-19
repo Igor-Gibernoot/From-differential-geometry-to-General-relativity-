@@ -444,25 +444,25 @@ a { color: var(--accent); }
 }
 
 /* ---------- Level colours: each level's banner and open nodes share a hue ---------- */
-.level[data-hue="0"] { --hue: #3451d1; --hue-dark: #7b93ff; }
-.level[data-hue="1"] { --hue: #0d7f86; --hue-dark: #4fc4c9; }
-.level[data-hue="2"] { --hue: #6d43d6; --hue-dark: #b394ff; }
-.level[data-hue="3"] { --hue: #b8366f; --hue-dark: #f27aae; }
-.level[data-hue="4"] { --hue: #b4520e; --hue-dark: #ff9a55; }
-.level[data-hue="5"] { --hue: #1a6fa8; --hue-dark: #62b3ea; }
-.level[data-hue] { --accent: var(--hue); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .level[data-hue] { --accent: var(--hue-dark); } }
-:root[data-theme="dark"] .level[data-hue] { --accent: var(--hue-dark); }
+[data-hue="0"] { --hue: #3451d1; --hue-dark: #7b93ff; }
+[data-hue="1"] { --hue: #0d7f86; --hue-dark: #4fc4c9; }
+[data-hue="2"] { --hue: #6d43d6; --hue-dark: #b394ff; }
+[data-hue="3"] { --hue: #b8366f; --hue-dark: #f27aae; }
+[data-hue="4"] { --hue: #b4520e; --hue-dark: #ff9a55; }
+[data-hue="5"] { --hue: #1a6fa8; --hue-dark: #62b3ea; }
+[data-hue] { --accent: var(--hue); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) [data-hue] { --accent: var(--hue-dark); } }
+:root[data-theme="dark"] [data-hue] { --accent: var(--hue-dark); }
 /* Each hue runs as a gradient from a deeper to a lighter shade of itself */
-.level[data-hue] {
+[data-hue] {
   --hue-deep: color-mix(in srgb, var(--accent) 68%, #000);
   --hue-light: color-mix(in srgb, var(--accent) 76%, #fff);
 }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .level[data-hue] {
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) [data-hue] {
   --hue-deep: color-mix(in srgb, var(--accent) 88%, #000);
   --hue-light: color-mix(in srgb, var(--accent) 62%, #fff);
 } }
-:root[data-theme="dark"] .level[data-hue] {
+:root[data-theme="dark"] [data-hue] {
   --hue-deep: color-mix(in srgb, var(--accent) 88%, #000);
   --hue-light: color-mix(in srgb, var(--accent) 62%, #fff);
 }
@@ -475,15 +475,8 @@ a { color: var(--accent); }
 .level:not(.unwritten) .level-head .meter { background: color-mix(in srgb, var(--accent-text) 25%, transparent); }
 .level:not(.unwritten) .level-head .meter > div { background: var(--accent-text); }
 
-/* Course title: a diagonal gradient through the level hues, blue at the
-   top left to rose at the bottom right */
-.topbar .course-title {
-  background: linear-gradient(150deg, #3451d1 15%, #6d43d6 50%, #b8366f 85%);
+/* Course title: the current level's gradient (it carries that level's data-hue) */
+.topbar .course-title[data-hue] {
+  background: linear-gradient(125deg, var(--hue-deep) 0%, var(--accent) 50%, var(--hue-light) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
-}
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .topbar .course-title {
-  background-image: linear-gradient(150deg, #a3b3ff 15%, #c2b0ff 50%, #ff9fcb 85%);
-} }
-:root[data-theme="dark"] .topbar .course-title {
-  background-image: linear-gradient(150deg, #a3b3ff 15%, #c2b0ff 50%, #ff9fcb 85%);
 }
