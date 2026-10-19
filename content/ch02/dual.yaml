@@ -166,7 +166,8 @@ cards:
       Hom stands for **homomorphism** (Greek: "same shape"), a map that preserves the structure; here, adding and scaling. (Not to be confused with *homeomorphism*, a topological notion later in the course.)
 
       Two linear maps $\phi, \varphi\in\mathrm{Hom}(V,W)$ can be added and scaled **pointwise**: for every $v\in V$,
-      $$(\phi\oplus_H\varphi)(v) := \phi(v)\oplus_W\varphi(v),\qquad (\lambda\odot_H\phi)(v) := \lambda\odot_W\phi(v).$$
+      $$(\phi\oplus_H\varphi)(v) := \phi(v)\oplus_W\varphi(v),$$
+      $$(\lambda\odot_H\phi)(v) := \lambda\odot_W\phi(v).$$
       The values $\phi(v), \varphi(v)$ live in $W$, so they are added with $W$'s addition. With these operations, $\mathrm{Hom}(V, W)$ is itself a vector space.
 
       A linear map that is also **bijective** is an **isomorphism**. If one exists, $V$ and $W$ are **isomorphic**, written $V\cong W$: they are the same vector space up to renaming the elements. The logarithm from the positive reals (with $X\oplus Y := X\cdot Y$, $\alpha\odot X := X^\alpha$) to $\mathbb{R}$ is one.
@@ -208,7 +209,7 @@ cards:
     id: regroup-why
     prompt: |
       In the proof that a sum of linear maps $\phi, \varphi: V\to W$ is additive, one step regroups
-      $$\big(\phi(\mathcal{X}) + \phi(\mathcal{Y})\big) + \big(\varphi(\mathcal{X}) + \varphi(\mathcal{Y})\big) = \big(\phi(\mathcal{X}) + \varphi(\mathcal{X})\big) + \big(\phi(\mathcal{Y}) + \varphi(\mathcal{Y})\big).$$
+      $$\begin{aligned}&\big(\phi(\mathcal{X}) + \phi(\mathcal{Y})\big) + \big(\varphi(\mathcal{X}) + \varphi(\mathcal{Y})\big)\\ ={}&\big(\phi(\mathcal{X}) + \varphi(\mathcal{X})\big) + \big(\phi(\mathcal{Y}) + \varphi(\mathcal{Y})\big).\end{aligned}$$
       Which facts allow it?
     options:
       - text: Addition in $W$ is commutative and associative
@@ -231,7 +232,8 @@ cards:
       the set of all **linear** maps from $V$ to the real numbers. Its elements are called **covectors** and are written in sans-serif, $\mathsf{X}, \mathsf{Y}$. A covector eats a vector and returns a number $\mathsf{X}(\mathcal{X})\in\mathbb{R}$.
 
       Because every $\mathrm{Hom}$ is a vector space, $V^*$ is one too, with no extra work:
-      $$(\mathsf{X}\oplus^*\mathsf{Y})(\mathcal{X}) := \mathsf{X}(\mathcal{X}) + \mathsf{Y}(\mathcal{X}),\qquad (\alpha\odot^*\mathsf{X})(\mathcal{X}) := \alpha\,\mathsf{X}(\mathcal{X}).$$
+      $$(\mathsf{X}\oplus^*\mathsf{Y})(\mathcal{X}) := \mathsf{X}(\mathcal{X}) + \mathsf{Y}(\mathcal{X}),$$
+      $$(\alpha\odot^*\mathsf{X})(\mathcal{X}) := \alpha\,\mathsf{X}(\mathcal{X}).$$
 
       Covectors are everywhere in physics: the temperature-change machine $\mathsf{L}$, the work done by a force along a displacement, the integral $I$ on polynomials. Picture a covector on the plane as its stack of level lines, and $\mathsf{X}(\mathcal{X})$ as the number of lines the arrow crosses.
 

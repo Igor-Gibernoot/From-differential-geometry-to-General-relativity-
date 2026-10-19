@@ -1,0 +1,457 @@
+id: ch02-tensors
+title: Tensors as Multilinear Maps
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: The area machine
+    body: |
+      Two arrows $\mathcal{X}$ and $\mathcal{Y}$ in the plane span a parallelogram. Call its area $A(\mathcal{X}, \mathcal{Y})$. Like a covector, $A$ is a **machine** that returns a number, but it has **two slots**: it eats two vectors.
+
+      Area is everywhere in physics: the flux of a field through a surface element, the angular momentum swept out by an orbit (Kepler's second law). In GR, a machine with two slots measures lengths and times: the metric, which you will meet in Level 7.
+
+      Before any theory, a prediction.
+
+  - type: mcq
+    id: predict-double
+    prompt: |
+      Two vectors $\mathcal{X}$ and $\mathcal{Y}$ in the plane span a parallelogram of area $A(\mathcal{X}, \mathcal{Y})$. Before any theory: if **both** $\mathcal{X}$ and $\mathcal{Y}$ are doubled, the area becomes…
+    options:
+      - text: '$4\,A(\mathcal{X}, \mathcal{Y})$'
+        correct: true
+      - text: '$2\,A(\mathcal{X}, \mathcal{Y})$'
+        feedback: |
+          Tempting if you think of $A$ as "linear", so that doubling the input doubles the output. But both sides of the parallelogram double, and each side contributes a factor of $2$. Think of a $1\times 1$ square becoming a $2\times 2$ square.
+      - text: '$A(\mathcal{X}, \mathcal{Y})$, since the shape is the same'
+        feedback: |
+          The shape is the same, but the size is not: a $2\times 2$ square has area $4$, not $1$.
+      - text: '$8\,A(\mathcal{X}, \mathcal{Y})$'
+        feedback: |
+          A factor $2^3 = 8$ belongs to a volume, which has three sides. A parallelogram has two.
+    explanation: |
+      Each side doubles, and the area scales by $2$ for each side: $2\cdot 2 = 4$. So $A$ is **not** linear in the usual sense, where doubling the input doubles the output. Yet it is built from linear pieces. This lesson makes that precise.
+
+  - type: widget
+    id: explore
+    title: Play with the area machine
+    widget: machine-playground
+    config:
+      slots: 2
+      area: true
+      name: 'A'
+      u: [2, 1]
+      v: [0, 2]
+      snap: 0.5
+      presets:
+        - { label: 'Swap 𝒳 and 𝒴', u: [0, 2], v: [2, 1] }
+        - { label: '𝒴 along 𝒳', u: [2, 1], v: [4, 2] }
+    body: |
+      The shaded region is the parallelogram spanned by the two blue arrows $\mathcal{X}$ and $\mathcal{Y}$. The readout shows its **signed** area $A(\mathcal{X}, \mathcal{Y})$: positive when $\mathcal{Y}$ is reached from $\mathcal{X}$ by turning counterclockwise, negative otherwise.
+
+      **Drag the tips.** Try:
+      1. Press **Reset**, then **Double 𝒳**. Then **Reset** and **Double both**.
+      2. Press **Swap 𝒳 and 𝒴** and watch the sign.
+      3. Press **𝒴 along 𝒳**: what is the area of a flat parallelogram?
+
+  - type: mcq
+    id: per-slot
+    prompt: |
+      For $\mathcal{X} = (2, 1)$ and $\mathcal{Y} = (0, 2)$ the signed area of the parallelogram is $A(\mathcal{X}, \mathcal{Y}) = 4$. Doubling only $\mathcal{X}$ gives $8$, and doubling both gives $16$. Which statement describes $A$?
+    options:
+      - text: '$A$ is linear in each slot **separately**: with the other slot held fixed, it scales and adds like a covector'
+        correct: true
+      - text: '$A$ is linear in the pair: $A(2\mathcal{X}, 2\mathcal{Y}) = 2\,A(\mathcal{X}, \mathcal{Y})$'
+        feedback: |
+          The numbers say otherwise: $16 \neq 2\cdot 4$. Treating the pair $(\mathcal{X}, \mathcal{Y})$ as one input and scaling it by $2$ scales **each** slot by $2$, so the output picks up $2\cdot 2$.
+      - text: '$A$ has nothing linear about it, because the area grows like a square'
+        feedback: |
+          Doubling only $\mathcal{X}$ exactly doubled the area ($4 \to 8$). With $\mathcal{Y}$ fixed, $A$ behaves like a covector eating $\mathcal{X}$. The square appears only when both slots are scaled at once.
+    explanation: |
+      Hold $\mathcal{Y}$ fixed and $A(\cdot, \mathcal{Y})$ is a linear machine on $\mathcal{X}$; the same holds the other way round. Scaling both slots by $2$ pulls out one factor $2$ per slot: $2\cdot 2\cdot 4 = 16$.
+
+  - type: text
+    id: bilinear
+    title: Linear in each slot
+    body: |
+      In the basis $\hat{x}_1, \hat{x}_2$ the signed area is the familiar $2\times 2$ determinant,
+      $$A(\mathcal{X}, \mathcal{Y}) = x^1 y^2 - x^2 y^1 ,$$
+      where $x^i$ and $y^i$ are the components of $\mathcal{X}$ and $\mathcal{Y}$. (Check: $\mathcal{X} = (2,1)$, $\mathcal{Y} = (0,2)$ give $4 - 0 = 4$.) Hold $y^1, y^2$ fixed and this is $y^2\,x^1 - y^1\,x^2$, a linear expression in the $x^i$, so for all vectors and every $\alpha\in\mathbb{R}$:
+      $$A(\alpha\,\mathcal{X} + \mathcal{X}', \mathcal{Y}) = \alpha\,A(\mathcal{X}, \mathcal{Y}) + A(\mathcal{X}', \mathcal{Y}),$$
+      $$A(\mathcal{X}, \alpha\,\mathcal{Y} + \mathcal{Y}') = \alpha\,A(\mathcal{X}, \mathcal{Y}) + A(\mathcal{X}, \mathcal{Y}') .$$
+      A map with two slots that is linear in each one separately is called **bilinear**.
+
+      **The prediction, explained.** Pull the $2$ out of each slot in turn:
+      $$A(2\mathcal{X}, 2\mathcal{Y}) = 2\,A(\mathcal{X}, 2\mathcal{Y}) = 2\cdot 2\,A(\mathcal{X}, \mathcal{Y}) .$$
+
+      **Why signed?** Additivity forces it. $A(\mathcal{X}, \mathcal{Y}) + A(-\mathcal{X}, \mathcal{Y}) = A(0, \mathcal{Y}) = 0$, so the two areas must have opposite signs. The unsigned area $|A|$ would give $2\,|A| \neq 0$ and is **not** bilinear.
+
+  - type: numeric
+    id: scale-slots
+    prompt: |
+      $A$ is the signed-area machine on the plane, which is linear in each of its two slots separately. Two vectors have $A(\mathcal{X}, \mathcal{Y}) = 5$. What is $A(3\,\mathcal{X}, -2\,\mathcal{Y})$?
+    answer: -30
+    wrong:
+      - value: 30
+        feedback: |
+          The factor $-2$ comes out with its sign: reversing $\mathcal{Y}$ flips the orientation, and so the sign of the signed area.
+      - value: 15
+        feedback: |
+          You pulled out only the factor of the first slot. Each slot gives up its own factor: $3$ from the first **and** $-2$ from the second.
+      - value: -10
+        feedback: |
+          You pulled out only the factor of the second slot. Each slot gives up its own factor: $3$ from the first **and** $-2$ from the second.
+      - value: 5
+        feedback: |
+          Adding the factors ($3 + (-2) = 1$) is not a rule of anything. Bilinearity **multiplies**: one factor per slot.
+    hint: Pull the number out of the first slot, then out of the second.
+    explanation: |
+      $A(3\mathcal{X}, -2\mathcal{Y}) = 3\,A(\mathcal{X}, -2\mathcal{Y}) = 3\cdot(-2)\,A(\mathcal{X}, \mathcal{Y}) = -30$.
+
+  - type: text
+    id: def-tensor
+    title: Tensors
+    body: |
+      Allow any number of slots, of both kinds. Recall: $V$ is a real vector space, its dual $V^*$ holds the covectors (linear maps $V\to\mathbb{R}$). An **$(r,s)$-tensor** is a map
+      $$T: \underbrace{V^*\times\cdots\times V^*}_{r\ \text{copies}}\times\underbrace{V\times\cdots\times V}_{s\ \text{copies}}\to\mathbb{R}$$
+      that is **multilinear**: linear in each of its $r + s$ slots separately, with the others held fixed. The pair $(r, s)$ is its **type**: $r$ covector slots (the book lists them first), then $s$ vector slots. The symbol $\times$ is the Cartesian product: an input is a list of $r$ covectors and $s$ vectors.
+
+      Examples: the area machine $A$ is a $(0,2)$-tensor; a covector is a $(0,1)$-tensor; a number is a $(0,0)$-tensor (no slots at all).
+
+      The $(r,s)$-tensors form a vector space $T^{(r,s)}$, with pointwise operations exactly as for $\mathrm{Hom}(V, W)$:
+      $$(T_1\oplus_T T_2)(\dots) := T_1(\dots) + T_2(\dots),$$
+      $$(\alpha\odot_T T)(\dots) := \alpha\cdot T(\dots).$$
+
+  - type: mcq
+    id: type-count
+    prompt: |
+      An $(r,s)$-tensor has $r$ covector slots followed by $s$ vector slots. A machine $G(\mathsf{X}, \mathcal{X}, \mathcal{Y})$ eats one covector $\mathsf{X}$ and two vectors $\mathcal{X}, \mathcal{Y}$, and is linear in each slot. What is its type?
+    options:
+      - text: '$(1, 2)$'
+        correct: true
+      - text: '$(2, 1)$'
+        feedback: |
+          The order is fixed: the **first** number counts covector slots, the second vector slots. $G$ has one covector slot and two vector slots.
+      - text: '$(0, 3)$'
+        feedback: |
+          Only vector slots count in the second number. A covector slot is a different kind of slot: it accepts elements of $V^*$, not of $V$.
+      - text: '$3$, the number of slots'
+        feedback: |
+          $r + s = 3$ is the total number of slots, but the type keeps the two kinds apart, because covector slots and vector slots behave differently under a change of basis.
+    explanation: |
+      One covector slot, two vector slots: type $(1,2)$.
+
+  - type: mcq
+    id: which-tensors
+    multiple: true
+    prompt: |
+      Vectors of the plane have components $\mathcal{X} = (x^1, x^2)$ and $\mathcal{Y} = (y^1, y^2)$ in a fixed basis, and $\mathsf{X}$ is a covector. Which of these machines are tensors (linear in each slot)? Select all that apply.
+    options:
+      - text: '$T(\mathcal{X}, \mathcal{Y}) = x^1 y^1 + x^2 y^2$'
+        correct: true
+      - text: '$T(\mathsf{X}, \mathcal{X}) = \mathsf{X}(\mathcal{X})$'
+        correct: true
+      - text: '$T(\mathcal{X}, \mathcal{Y}) = x^1 + y^1$'
+        feedback: |
+          Hold $\mathcal{Y}$ fixed and double $\mathcal{X}$: $2x^1 + y^1 \neq 2(x^1 + y^1)$. The $y^1$ is a constant offset in the first slot, so that slot is not linear. Each term must contain exactly one component **from each slot**.
+      - text: '$T(\mathcal{X}, \mathcal{Y}) = x^1 x^2$'
+        feedback: |
+          Two failures. Doubling $\mathcal{X}$ multiplies by $4$ (two factors from the same slot). And doubling $\mathcal{Y}$ changes nothing, while a linear slot must double the output.
+    explanation: |
+      The first is the dot product, a $(0,2)$-tensor (the metric of the plane, a preview of Level 7). The second is the pairing of a covector with a vector, a $(1,1)$-tensor. A multilinear expression has one factor from each slot in every term.
+
+  - type: text
+    id: vectors-as-tensors
+    title: Vectors are (1,0)-tensors
+    body: |
+      What about vectors? A covector eats vectors. Turn it around: a vector $\mathcal{X}$ can **eat a covector**, by letting the covector act on it:
+      $$\mathcal{X}(\mathsf{X}) := \mathsf{X}(\mathcal{X}) .$$
+      This is linear in $\mathsf{X}$, so $\mathcal{X}$ becomes a machine with one covector slot: a $(1,0)$-tensor. The $(1,0)$-tensors form the space $(V^*)^*$ of linear maps $V^*\to\mathbb{R}$.
+
+      Is every $(1,0)$-tensor a vector in disguise? In finite dimensions, yes. The map $\mathcal{X}\mapsto\mathcal{X}(\cdot)$ is linear and **injective**: if $\mathsf{X}(\mathcal{X}) = 0$ for every covector, then in particular each component $x^i = \hat{\mathfrak{x}}^i(\mathcal{X})$ is $0$, so $\mathcal{X} = 0$. Both $V$ and $(V^*)^*$ have dimension $d$ (a dual basis has $d$ covectors, and so does the dual of the dual), and an injective linear map between spaces of the same finite dimension is bijective. So
+      $$T^{(1,0)} = (V^*)^* \cong V,$$
+      $$T^{(0,1)} = V^*,\qquad T^{(0,0)} = \mathbb{R}.$$
+      This identification needs no basis, which is why it is called **canonical**. In infinite dimensions it can fail.
+
+  - type: mcq
+    id: why-linear-in-covector
+    prompt: |
+      A vector $\mathcal{X}$ eats a covector by the rule $\mathcal{X}(\mathsf{X}) := \mathsf{X}(\mathcal{X})$. Why is this linear in $\mathsf{X}$, that is, why is $\mathcal{X}(\mathsf{X} + \mathsf{Y}) = \mathcal{X}(\mathsf{X}) + \mathcal{X}(\mathsf{Y})$?
+    options:
+      - text: 'Because covectors are added pointwise: $(\mathsf{X} + \mathsf{Y})(\mathcal{X}) := \mathsf{X}(\mathcal{X}) + \mathsf{Y}(\mathcal{X})$'
+        correct: true
+      - text: 'Because each covector is linear: $\mathsf{X}(\mathcal{X} + \mathcal{Y}) = \mathsf{X}(\mathcal{X}) + \mathsf{X}(\mathcal{Y})$'
+        feedback: |
+          That is linearity in the **vector**, with the covector fixed. Here the vector is fixed and the covector varies, so what is needed is the rule for adding two covectors.
+      - text: 'Because $\mathcal{X}$ can be written in a basis'
+        feedback: |
+          No basis is needed: one line, $\mathcal{X}(\mathsf{X} + \mathsf{Y}) = (\mathsf{X} + \mathsf{Y})(\mathcal{X}) = \mathsf{X}(\mathcal{X}) + \mathsf{Y}(\mathcal{X})$, uses only the definition of the sum in $V^*$.
+    explanation: |
+      $\mathcal{X}(\mathsf{X} + \mathsf{Y}) = (\mathsf{X} + \mathsf{Y})(\mathcal{X}) = \mathsf{X}(\mathcal{X}) + \mathsf{Y}(\mathcal{X}) = \mathcal{X}(\mathsf{X}) + \mathcal{X}(\mathsf{Y})$. Scaling works the same way, with $(\alpha\mathsf{X})(\mathcal{X}) := \alpha\,\mathsf{X}(\mathcal{X})$.
+
+  - type: text
+    id: components
+    title: 'Components: feed the basis'
+    body: |
+      Recall the method for covectors: the components are found by feeding the basis, $\mathtt{x}_i = \mathsf{X}(\hat{x}_i)$. Do the same with every slot. For a $(0,2)$-tensor $T$ and a basis $\{\hat{x}_1, \dots, \hat{x}_d\}$, the **components** are the $d^2$ numbers
+      $$T_{ij} := T(\hat{x}_i, \hat{x}_j) .$$
+      The first index belongs to the first slot, the second to the second. For the area machine: $A_{11} = A_{22} = 0$ (a flat parallelogram), $A_{12} = A(\hat{x}_1, \hat{x}_2) = 1$ (the unit square), and $A_{21} = -1$.
+
+      Why are these numbers enough? Write $\mathcal{X} = \sum_i x^i\,\hat{x}_i$ and $\mathcal{Y} = \sum_j y^j\,\hat{x}_j$, and use linearity in the first slot, then in the second. Every term keeps one component of each vector and one value of $T$ on basis vectors.
+
+  - type: build
+    id: build-evaluate
+    prompt: |
+      A $(0,2)$-tensor $T$ has components $T_{ij} := T(\hat{x}_i, \hat{x}_j)$ in the basis $\{\hat{x}_i\}$, and the vectors are $\mathcal{X} = \sum_i x^i\,\hat{x}_i$, $\mathcal{Y} = \sum_j y^j\,\hat{x}_j$. Using linearity in each slot, build the term inside the double sum.
+    prefix: 'T(\mathcal{X}, \mathcal{Y}) = \sum_{i=1}^d\sum_{j=1}^d'
+    tiles: ['T_{ij}', 'x^i', 'y^j', 'x^j', 'y^i', 'x^i y^i']
+    answers:
+      - ['T_{ij}', 'x^i', 'y^j']
+      - ['T_{ij}', 'y^j', 'x^i']
+      - ['x^i', 'T_{ij}', 'y^j']
+      - ['x^i', 'y^j', 'T_{ij}']
+      - ['y^j', 'T_{ij}', 'x^i']
+      - ['y^j', 'x^i', 'T_{ij}']
+    wrong:
+      - answer: ['T_{ij}', 'x^j', 'y^i']
+        feedback: |
+          That is $T(\mathcal{Y}, \mathcal{X})$: the first index of $T_{ij}$ belongs to the **first** slot, which holds $\mathcal{X}$, so it must pair with $x^i$. For a tensor that is not symmetric, the order matters.
+      - answer: ['x^j', 'y^i', 'T_{ij}']
+        feedback: |
+          That is $T(\mathcal{Y}, \mathcal{X})$: the first index of $T_{ij}$ belongs to the **first** slot, which holds $\mathcal{X}$, so it must pair with $x^i$. For a tensor that is not symmetric, the order matters.
+      - answer: ['T_{ij}', 'x^i y^i']
+        feedback: |
+          With $x^i y^i$ both components follow the index $i$ of the first slot, and nothing carries $j$. Each slot brings its own index: $x^i$ goes with the first, $y^j$ with the second.
+    hint: Linearity in the first slot gives $\sum_i x^i\,T(\hat{x}_i, \mathcal{Y})$. Now expand the second slot the same way.
+    explanation: |
+      $$\begin{aligned}T(\mathcal{X}, \mathcal{Y}) &= \sum_i x^i\, T(\hat{x}_i, \mathcal{Y})\\ &= \sum_i\sum_j x^i\,y^j\,T(\hat{x}_i, \hat{x}_j)\\ &= \sum_{i,j} T_{ij}\,x^i\,y^j .\end{aligned}$$
+      For the area machine this gives $A_{12}\,x^1y^2 + A_{21}\,x^2y^1 = x^1y^2 - x^2y^1$, the determinant.
+
+  - type: numeric
+    id: evaluate-components
+    prompt: |
+      A $(0,2)$-tensor on the plane has components $T_{ij} = T(\hat{x}_i, \hat{x}_j)$ given by
+      $$T_{11} = 1,\quad T_{12} = 2,\quad T_{21} = 0,\quad T_{22} = 3 .$$
+      Using $T(\mathcal{X}, \mathcal{Y}) = \sum_{i,j} T_{ij}\,x^i\,y^j$, compute $T(\mathcal{X}, \mathcal{Y})$ for $\mathcal{X} = (1, 1)$ and $\mathcal{Y} = (2, -1)$.
+    answer: -3
+    wrong:
+      - value: 3
+        feedback: |
+          That is $T(\mathcal{Y}, \mathcal{X})$. The first index of $T_{ij}$ goes with the first slot: the term $T_{12}$ multiplies $x^1 y^2 = 1\cdot(-1)$, not $y^1 x^2 = 2\cdot 1$.
+      - value: 7
+        feedback: |
+          Check the signs: $y^2 = -1$ enters two of the four terms, $T_{12}\,x^1 y^2 = -2$ and $T_{22}\,x^2 y^2 = -3$.
+    hint: There are four terms, one for each pair $(i, j)$.
+    explanation: |
+      $T_{11}\cdot 1\cdot 2 + T_{12}\cdot 1\cdot(-1) + T_{21}\cdot 1\cdot 2 + T_{22}\cdot 1\cdot(-1) = 2 - 2 + 0 - 3 = -3$. Swapping the slots gives $T(\mathcal{Y}, \mathcal{X}) = 3$: this tensor is not symmetric, because $T_{12}\neq T_{21}$.
+
+  - type: text
+    id: general-components
+    title: All the components, and how many
+    body: |
+      In general, feed the **dual basis** $\hat{\mathfrak{x}}^i$ into the covector slots and the basis $\hat{x}_j$ into the vector slots:
+      $$T^{i_1\dots i_r}_{j_1\dots j_s} := T(\hat{\mathfrak{x}}^{i_1}, \dots, \hat{\mathfrak{x}}^{i_r}; \hat{x}_{j_1}, \dots, \hat{x}_{j_s}) .$$
+      Covector slots give **upper** indices and vector slots give **lower** ones. By multilinearity, $T$ on any arguments is the components multiplied by one component of each argument and summed:
+      $$T(\mathsf{X}, \mathcal{X}) = \sum_{i,j} T^i_j\,\mathtt{x}_i\,x^j\quad\text{for a } (1,1)\text{-tensor}.$$
+      Conversely, **any** array of numbers defines a tensor through such a sum, because each term has exactly one factor from each slot. So a tensor is the same information as its components, and
+      $$\dim T^{(r,s)} = d^{\,r+s} :$$
+      each of the $r + s$ indices runs independently over $d$ values.
+
+  - type: numeric
+    id: dimension
+    prompt: |
+      An $(r,s)$-tensor on a vector space of dimension $d$ has components $T^{i_1\dots i_r}_{j_1\dots j_s}$, one for each choice of the $r + s$ indices. Spacetime has $d = 4$. How many components does a $(1,2)$-tensor have?
+    answer: 64
+    wrong:
+      - value: 12
+        feedback: |
+          That is $d\cdot(r+s)$: it adds up the choices instead of combining them. Each of the three indices runs over $4$ values **independently**, so the counts multiply: $4\cdot 4\cdot 4$.
+      - value: 81
+        feedback: |
+          That is $(r+s)^d = 3^4$, base and exponent swapped. There are $3$ indices, each with $4$ possible values: $4^3$.
+      - value: 16
+        feedback: |
+          That is $d^2$, the count for $2$ indices. A $(1,2)$-tensor has $1 + 2 = 3$ indices.
+    explanation: |
+      $d^{\,r+s} = 4^3 = 64$. The Riemann curvature of GR (Level 6) is a $(1,3)$-tensor, so $4^4 = 256$ components before its symmetries cut the count down.
+
+  - type: text
+    id: law-02
+    title: Changing the basis
+    body: |
+      Recall the change of basis: two bases related by $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$, so that new in terms of old is
+      $$\hat{y}_i = \sum_{j=1}^d (J^{-1})_i^j\,\hat{x}_j .$$
+      Covector components, defined by feeding basis vectors, transform with one factor of $J^{-1}$:
+      $$\mathtt{y}_j = \mathsf{X}(\hat{y}_j) = \sum_{i=1}^d (J^{-1})_j^i\,\mathtt{x}_i .$$
+      A $(0,2)$-tensor has the same components definition in each slot. Its components in the new basis are written with a tilde, $\tilde{T}_{ij} := T(\hat{y}_i, \hat{y}_j)$. Expand **each** slot.
+
+  - type: build
+    id: build-law-02
+    prompt: |
+      Two bases are related by $\hat{y}_i = \sum_k (J^{-1})_i^k\,\hat{x}_k$. A $(0,2)$-tensor $T$ has components $T_{kl} = T(\hat{x}_k, \hat{x}_l)$ in the old basis and $\tilde{T}_{ij} = T(\hat{y}_i, \hat{y}_j)$ in the new one. Expand both slots and build the transformation law.
+    prefix: '\tilde{T}_{ij} = \sum_{k=1}^d\sum_{l=1}^d'
+    tiles: ['(J^{-1})_i^k', '(J^{-1})_j^l', 'J_i^k', 'J_j^l', '(J^{-1})_k^i', 'T_{kl}', 'T_{ij}']
+    answers:
+      - ['(J^{-1})_i^k', '(J^{-1})_j^l', 'T_{kl}']
+      - ['(J^{-1})_j^l', '(J^{-1})_i^k', 'T_{kl}']
+      - ['(J^{-1})_i^k', 'T_{kl}', '(J^{-1})_j^l']
+      - ['(J^{-1})_j^l', 'T_{kl}', '(J^{-1})_i^k']
+      - ['T_{kl}', '(J^{-1})_i^k', '(J^{-1})_j^l']
+      - ['T_{kl}', '(J^{-1})_j^l', '(J^{-1})_i^k']
+    wrong:
+      - answer: ['J_i^k', 'J_j^l', 'T_{kl}']
+        feedback: |
+          $J$ writes the **old** basis in terms of the new, $\hat{x}_i = \sum_k J_i^k\,\hat{y}_k$. With $J$ you get the reverse law, $T_{ij} = \sum_{k,l} J_i^k\,J_j^l\,\tilde{T}_{kl}$. To expand $T(\hat{y}_i, \hat{y}_j)$ you need $\hat{y}$ in terms of $\hat{x}$, which is $J^{-1}$.
+      - answer: ['(J^{-1})_i^k', 'J_j^l', 'T_{kl}']
+        feedback: |
+          Both slots are vector slots, and both hold a new basis vector $\hat{y}$. They expand the same way, each with a factor of $J^{-1}$. Mixed factors belong to a tensor with one slot of each kind.
+      - answer: ['(J^{-1})_i^k', '(J^{-1})_j^l', 'T_{ij}']
+        feedback: |
+          The sums run over $k$ and $l$, so the old components must carry $k$ and $l$: they are $T(\hat{x}_k, \hat{x}_l) = T_{kl}$. With $T_{ij}$ the sums would act on nothing.
+    hint: '$T(\hat{y}_i, \hat{y}_j) = T\big(\sum_k (J^{-1})_i^k\,\hat{x}_k, \sum_l (J^{-1})_j^l\,\hat{x}_l\big)$. Now pull the numbers out of each slot.'
+    explanation: |
+      $$\begin{aligned}\tilde{T}_{ij} &= T\Big(\sum_k (J^{-1})_i^k\,\hat{x}_k,\ \sum_l (J^{-1})_j^l\,\hat{x}_l\Big)\\ &= \sum_{k,l} (J^{-1})_i^k\,(J^{-1})_j^l\,T_{kl} .\end{aligned}$$
+      One factor of $J^{-1}$ **per lower index**: each slot transforms like a covector component.
+
+  - type: numeric
+    id: shear-dot
+    prompt: |
+      On the plane, the dot product $T(\mathcal{X}, \mathcal{Y}) = x^1 y^1 + x^2 y^2$ is a $(0,2)$-tensor with components $T_{11} = T_{22} = 1$, $T_{12} = T_{21} = 0$ in the basis $\hat{x}_1, \hat{x}_2$. Take the sheared basis
+      $$\hat{y}_1 = \hat{x}_1,\qquad \hat{y}_2 = \hat{x}_1 + \hat{x}_2 .$$
+      What is the new component $\tilde{T}_{22} = T(\hat{y}_2, \hat{y}_2)$?
+    answer: 2
+    wrong:
+      - value: 1
+        feedback: |
+          That assumes the components stay the same in every basis. The **tensor** is the same machine, but its components depend on which vectors you feed it. Compute $T(\hat{x}_1 + \hat{x}_2, \hat{x}_1 + \hat{x}_2)$ by expanding both slots: four terms.
+      - value: 4
+        feedback: |
+          Expanding both slots gives four terms, $T_{11} + T_{12} + T_{21} + T_{22}$, and two of them are $0$.
+    hint: Expand both slots, $T(\hat{x}_1 + \hat{x}_2, \hat{x}_1 + \hat{x}_2) = T_{11} + T_{12} + T_{21} + T_{22}$.
+    explanation: |
+      $\tilde{T}_{22} = T_{11} + T_{12} + T_{21} + T_{22} = 1 + 0 + 0 + 1 = 2$: the squared length of the diagonal $\hat{x}_1 + \hat{x}_2$. Likewise $\tilde{T}_{12} = T(\hat{x}_1, \hat{x}_1 + \hat{x}_2) = 1$. In the law, $(J^{-1})_2^1 = (J^{-1})_2^2 = 1$, so $\tilde{T}_{22} = \sum_{k,l} T_{kl}$. The machine did not change; its numbers did.
+
+  - type: text
+    id: law-11
+    title: Mixed slots, mixed factors
+    body: |
+      A $(1,1)$-tensor has components $T^k_l = T(\hat{\mathfrak{x}}^k, \hat{x}_l)$. Its new components $\tilde{T}^i_j = T(\hat{\mathfrak{y}}^i, \hat{y}_j)$ need the new dual basis too. Recall that the dual basis transforms with $J$ itself:
+      $$\hat{\mathfrak{y}}^i = \sum_{k=1}^d J_k^i\,\hat{\mathfrak{x}}^k .$$
+      Expand both slots and pull the numbers out:
+      $$\begin{aligned}\tilde{T}^i_j &= T\Big(\sum_k J_k^i\,\hat{\mathfrak{x}}^k,\ \sum_l (J^{-1})_j^l\,\hat{x}_l\Big)\\ &= \sum_{k=1}^d\sum_{l=1}^d J_k^i\,(J^{-1})_j^l\,T^k_l .\end{aligned}$$
+      **One factor per index**: $J$ for each upper index (like vector components, $y^i = \sum_k J_k^i\,x^k$) and $J^{-1}$ for each lower index (like covector components). For any type:
+      $$\begin{aligned}\tilde{T}^{i_1\dots i_r}_{j_1\dots j_s} = \sum_{\substack{k_1,\dots,k_r\\ l_1,\dots,l_s}} &J_{k_1}^{i_1}\cdots J_{k_r}^{i_r}\\ \cdot\,&(J^{-1})_{j_1}^{l_1}\cdots(J^{-1})_{j_s}^{l_s}\,T^{k_1\dots k_r}_{l_1\dots l_s} .\end{aligned}$$
+
+  - type: mcq
+    id: law-21
+    prompt: |
+      Two bases are related by $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$. Vector components transform as $y^i = \sum_k J_k^i\,x^k$ and covector components as $\mathtt{y}_j = \sum_l (J^{-1})_j^l\,\mathtt{x}_l$. A $(2,1)$-tensor has components $T^{ij}_k$. Which is its transformation law?
+    options:
+      - text: '$\tilde{T}^{ij}_k = \sum_{l,m,n} J_l^i\,J_m^j\,(J^{-1})_k^n\,T^{lm}_n$'
+        correct: true
+      - text: '$\tilde{T}^{ij}_k = \sum_{l,m,n} (J^{-1})_l^i\,(J^{-1})_m^j\,J_k^n\,T^{lm}_n$'
+        feedback: |
+          The roles are swapped. Upper indices come from covector slots, which are fed the dual basis; the dual basis transforms with $J$, like vector components. Lower indices get $J^{-1}$.
+      - text: '$\tilde{T}^{ij}_k = \sum_{l,m,n} J_l^i\,J_m^j\,J_k^n\,T^{lm}_n$'
+        feedback: |
+          The lower index comes from a vector slot, fed the new basis $\hat{y}_k = \sum_n (J^{-1})_k^n\,\hat{x}_n$. That slot contributes $J^{-1}$, not $J$.
+      - text: '$\tilde{T}^{ij}_k = \sum_{l} J_l^i\,T^{lj}_k$'
+        feedback: |
+          Every index transforms, not only the first. Each slot is fed a new basis element, so each one contributes its own factor.
+    explanation: |
+      One factor per index: two upper indices, two factors of $J$; one lower index, one factor of $J^{-1}$.
+
+  - type: widget
+    id: partial
+    title: Fill one slot
+    widget: machine-playground
+    config:
+      slots: 2
+      area: true
+      partial: true
+      name: 'A'
+      u: [2, 1]
+      v: [0, 2]
+      snap: 0.5
+      presets:
+        - { label: '𝒴 along 𝒳', u: [2, 1], v: [4, 2] }
+    body: |
+      What happens if you fill only **one** slot of a tensor? Put $\mathcal{X}$ into the first slot of the area machine and leave the second open: $A(\mathcal{X}, \cdot\,)$ still eats one vector, linearly. So it is a **covector**, drawn here as its orange level lines; the readout gives its components in the dual basis.
+
+      **Drag $\mathcal{X}$** and watch the level lines turn with it. Then drag $\mathcal{Y}$ along a line and count the lines it crosses.
+
+  - type: mcq
+    id: partial-kernel
+    prompt: |
+      The signed area $A(\mathcal{X}, \mathcal{Y}) = x^1y^2 - x^2y^1$ is a $(0,2)$-tensor on the plane. Fill its first slot with a fixed non-zero vector $\mathcal{X}$: the result $A(\mathcal{X}, \cdot\,)$ is a covector. Which vectors $\mathcal{Y}$ does it send to $0$?
+    options:
+      - text: 'The multiples of $\mathcal{X}$, so its level lines are parallel to $\mathcal{X}$'
+        correct: true
+      - text: 'The vectors perpendicular to $\mathcal{X}$'
+        feedback: |
+          "Perpendicular" needs angles, and area does not use them. $A(\mathcal{X}, \mathcal{Y}) = 0$ means the parallelogram is flat: $\mathcal{Y}$ lies along $\mathcal{X}$.
+      - text: 'Only $\mathcal{Y} = 0$'
+        feedback: |
+          A non-zero covector on the plane always has a whole line of vectors it sends to $0$. Here it is the line of $\mathcal{X}$: $A(\mathcal{X}, \lambda\mathcal{X}) = \lambda\,(x^1x^2 - x^2x^1) = 0$.
+    explanation: |
+      $A(\mathcal{X}, \lambda\mathcal{X}) = 0$ for every $\lambda$: a flat parallelogram has no area. Filling one slot of a $(0,2)$-tensor turns it into a covector. Filling the vector slot of a $(1,1)$-tensor does something even more useful, as you will see next.
+
+  - type: text
+    id: linear-maps
+    title: (1,1)-tensors are linear maps
+    body: |
+      Take a $(1,1)$-tensor $T(\mathsf{X}, \mathcal{X})$ and fill only the **vector** slot. What is left, $T(\cdot\,, \mathcal{X})$, eats a covector linearly: it is a $(1,0)$-tensor, which is a vector. Call it $\varphi_T(\mathcal{X})$, so that $\mathsf{X}\big(\varphi_T(\mathcal{X})\big) = T(\mathsf{X}, \mathcal{X})$. Linearity of $T$ in the vector slot makes
+      $$\varphi_T: V\to V,\qquad \mathcal{X}\mapsto T(\cdot\,, \mathcal{X})$$
+      a **linear map**. Conversely, every linear map $\varphi: V\to V$ gives the $(1,1)$-tensor $T(\mathsf{X}, \mathcal{X}) := \mathsf{X}\big(\varphi(\mathcal{X})\big)$. So $(1,1)$-tensors and linear maps $V\to V$ are the same thing.
+
+      **In components.** The $i$-th component of a vector is read off by $\hat{\mathfrak{x}}^i$, so
+      $$\varphi_T(\mathcal{X})^i = T(\hat{\mathfrak{x}}^i, \mathcal{X}) = \sum_{j=1}^d T^i_j\,x^j :$$
+      the components $T^i_j$ are the **matrix** of the map, with row $i$ (upper index) and column $j$ (lower index). The count agrees: $d^{1+1} = d^2$ entries.
+
+  - type: numeric
+    id: matrix-action
+    prompt: |
+      A $(1,1)$-tensor $T$ on the plane has components $T^i_j = T(\hat{\mathfrak{x}}^i, \hat{x}_j)$:
+      $$T^1_1 = 0,\quad T^1_2 = -1,\quad T^2_1 = 1,\quad T^2_2 = 0 .$$
+      As a linear map, $\varphi_T(\mathcal{X})^i = \sum_j T^i_j\,x^j$. What is the first component $\varphi_T(\mathcal{X})^1$ for $\mathcal{X} = (2, 1)$?
+    answer: -1
+    wrong:
+      - value: 1
+        feedback: |
+          You summed over the **upper** index, $\sum_j T^j_1\,x^j$, which uses the transposed matrix. The sum runs over the lower index: $T^1_1\,x^1 + T^1_2\,x^2$.
+      - value: 2
+        feedback: |
+          That is the second component, $T^2_1\,x^1 + T^2_2\,x^2 = 2$. The first is $T^1_1\,x^1 + T^1_2\,x^2$.
+    hint: '$\varphi_T(\mathcal{X})^1 = T^1_1\,x^1 + T^1_2\,x^2$.'
+    explanation: |
+      $\varphi_T(\mathcal{X})^1 = 0\cdot 2 + (-1)\cdot 1 = -1$ and $\varphi_T(\mathcal{X})^2 = 1\cdot 2 + 0\cdot 1 = 2$. So $\varphi_T(2, 1) = (-1, 2)$: this tensor is the rotation by a quarter turn, written in the basis $\hat{x}_1, \hat{x}_2$.
+
+  - type: mcq
+    id: invariant-components
+    prompt: |
+      A tensor is a machine defined without any basis, but its components depend on the basis: for instance the signed area $A$ has $A(\hat{x}_1, \hat{x}_2) = 1$, but after $\hat{y}_1 = 2\,\hat{x}_1$, $\hat{y}_2 = \hat{x}_2$ it has $\tilde{A}_{12} = A(\hat{y}_1, \hat{y}_2) = 2$. Which tensor has the **same** components in every basis?
+    options:
+      - text: 'The $(1,1)$-tensor $T(\mathsf{X}, \mathcal{X}) = \mathsf{X}(\mathcal{X})$, whose linear map is the identity'
+        correct: true
+      - text: 'Every tensor, because tensors are basis-independent'
+        feedback: |
+          This is the classic confusion between the object and its components. The machine $A$ is the same in every basis, yet $A_{12} = 1$ while $\tilde{A}_{12} = 2$. Basis independence is a property of $T$, not of the numbers $T^{i\dots}_{j\dots}$.
+      - text: 'The dot product $x^1y^1 + x^2y^2$'
+        feedback: |
+          Under the shear $\hat{y}_1 = \hat{x}_1$, $\hat{y}_2 = \hat{x}_1 + \hat{x}_2$ its component $\tilde{T}_{22}$ becomes $2$, not $1$. A $(0,2)$-tensor gets two factors of $J^{-1}$, which do not cancel.
+      - text: 'None: every non-zero tensor changes components under some change of basis'
+        feedback: |
+          Check the pairing $T(\mathsf{X}, \mathcal{X}) = \mathsf{X}(\mathcal{X})$: its components are $T(\hat{\mathfrak{x}}^i, \hat{x}_j) = \delta^i_j$ in **every** basis, by the definition of a dual basis.
+    explanation: |
+      $T(\hat{\mathfrak{y}}^i, \hat{y}_j) = \hat{\mathfrak{y}}^i(\hat{y}_j) = \delta^i_j$ in every basis. Through the law: $\sum_{k} J_k^i\,(J^{-1})_j^k = \delta^i_j$, because $J^{-1}$ undoes $J$. The identity map has the identity matrix in every basis; one $J$ and one $J^{-1}$ cancel.
+
+  - type: text
+    id: wrap
+    title: What you now own
+    body: |
+      - An **$(r,s)$-tensor** is a map with $r$ covector slots and $s$ vector slots, **linear in each slot separately**. Scaling every slot by $2$ scales the output by $2^{r+s}$: the area grows by $4$.
+      - Special cases: numbers $(0,0)$, covectors $(0,1)$, vectors $(1,0)$ via $\mathcal{X}(\mathsf{X}) := \mathsf{X}(\mathcal{X})$ (finite dimensions), and linear maps $V\to V$ as $(1,1)$-tensors, with the components $T^i_j$ as their matrix.
+      - **Components** come from feeding the basis: dual basis into covector slots (upper indices), basis into vector slots (lower indices). They determine $T$, and $\dim T^{(r,s)} = d^{\,r+s}$.
+      - **Transformation law:** one factor per index, $J$ for each upper index and $J^{-1}$ for each lower index. The tensor stays the same; its components change.
+
+      **Next:** where do tensors come from? Multiplying a vector and a covector gives a $(1,1)$-tensor, $\hat{x}_i\otimes\hat{\mathfrak{x}}^j$. This **tensor product** builds a basis of $T^{(r,s)}$ and explains the count $d^{\,r+s}$.

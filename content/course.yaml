@@ -62,6 +62,8 @@ levels:
       - id: ch02-tensors
         title: Tensors as Multilinear Maps
         kind: concept
+        file: ch02/tensors.yaml
+        summary: Double both sides of a parallelogram and its area grows by 4. Machines that are linear in each slot, their components, and why one factor of $J$ or $J^{-1}$ appears per index.
       - id: ch02-tensor-product
         title: The Tensor Product
         kind: concept

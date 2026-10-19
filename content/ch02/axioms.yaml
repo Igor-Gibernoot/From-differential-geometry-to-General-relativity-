@@ -209,7 +209,7 @@ cards:
     title: A space of functions
     body: |
       A main example in the book: the polynomials of degree at most $N$,
-      $$P_N := \{\,p(x) = p^0 + p^1 x + \cdots + p^N x^N \mid p^i\in\mathbb{R}\,\},$$
+      $$\begin{aligned}P_N := \{\,p(x) &= p^0 + p^1 x + \cdots + p^N x^N \\ &\mid p^i\in\mathbb{R}\,\},\end{aligned}$$
       with **pointwise** operations: the sum $p\oplus q$ is the polynomial whose value at each $x$ is $p(x) + q(x)$, and $(\alpha\odot p)(x) := \alpha\cdot p(x)$.
 
       Each rule holds because it holds for the real numbers $p(x)$, $q(x)$ at every single $x$. The neutral element is the zero polynomial $\mathbf{0}(x) := 0$. The same argument makes the continuous functions $\mathbb{R}\to\mathbb{R}$ a vector space.

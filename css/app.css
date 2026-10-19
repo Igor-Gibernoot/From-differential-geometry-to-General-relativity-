@@ -274,7 +274,7 @@ a { color: var(--accent); }
 
 /* widget */
 .widget { margin-top: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; box-shadow: var(--shadow); }
-.widget svg { width: 100%; height: auto; display: block; touch-action: none; user-select: none; -webkit-user-select: none; }
+.widget svg { width: 100%; height: auto; max-height: min(60vh, 460px); display: block; touch-action: none; user-select: none; -webkit-user-select: none; }
 .widget .readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 4px 16px; padding: 8px 6px 4px; font-size: 15px; }
 .widget .readout .wide { grid-column: 1 / -1; }
 .widget .readout .warn { color: var(--bad); font-weight: 650; }

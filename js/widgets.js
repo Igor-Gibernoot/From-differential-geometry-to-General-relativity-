@@ -78,9 +78,21 @@ function levelLines(C, cls = 'w-level') {
   return g;
 }
 
+let clipCount = 0;
 function planeSvg(view, ariaLabel, layerNames) {
   const svg = s('svg', { viewBox: `${view.x} ${-(view.y + view.h)} ${view.w} ${view.h}`, role: 'img', 'aria-label': ariaLabel });
-  const layers = ['grid', ...layerNames].reduce((o, k) => { o[k] = s('g'); svg.append(o[k]); return o; }, {});
+  // When the svg is wider than its viewBox (height capped by CSS), long lines
+  // would show outside the plane: clip the drawing layers to it.
+  const clipId = `plane-clip-${++clipCount}`;
+  const clip = s('clipPath', { id: clipId });
+  clip.append(s('rect', { x: view.x, y: -(view.y + view.h), width: view.w, height: view.h }));
+  svg.append(clip);
+  const free = ['labels', 'handles'];
+  const layers = ['grid', ...layerNames].reduce((o, k) => {
+    o[k] = s('g', free.includes(k) ? {} : { 'clip-path': `url(#${clipId})` });
+    svg.append(o[k]);
+    return o;
+  }, {});
   for (let k = Math.ceil(view.x); k <= view.x + view.w; k++)
     layers.grid.append(line([k, view.y], [k, view.y + view.h], k === 0 ? 'w-axis' : 'w-grid'));
   for (let k = Math.ceil(view.y); k <= view.y + view.h; k++)
@@ -232,7 +244,8 @@ function basisPlayground(el, cfg) {
 //
 // config:
 //   covector: [1, 0.5]            (slots 1) X(𝒳) = 1 x^1 + 0.5 x^2
-//   name:     'X'                 (slots 1) the covector's letter
+//   name:     'X'                 the covector's letter (slots 1, sans-serif)
+//                                 or the tensor's letter (slots 2, default T)
 //   tensor:   [[0,1],[-1,0]]      (slots 2) components T_ij, row i = first slot
 //   u: [2, 1], v: [0, 2]          initial inputs, in the basis x̂
 //   snap: 0.5
@@ -270,6 +283,7 @@ function machinePlayground(el, cfg) {
 
   const vecTex = (n, [a, b]) => `${n} = (${fmt(a)},\\ ${fmt(b)})`;
   const cname = `\\mathsf{${cfg.name ?? 'X'}}`;
+  const tname = cfg.name ?? 'T';
 
   function draw() {
     for (const k of ['area', 'levels', 'vec', 'labels']) layers[k].replaceChildren();
@@ -293,8 +307,8 @@ function machinePlayground(el, cfg) {
       const val = part[0] * v[0] + part[1] * v[1];
       if (cfg.partial) layers.levels.append(levelLines(part));
       rows.push(h('div', { class: 'c-vec', html: tex(vecTex('\\mathcal{Y}', v)) }));
-      if (cfg.partial) rows.push(h('div', { class: 'wide c-covec', html: tex(dualCombo('T(\\mathcal{X},\\,\\cdot\\,)', part)) }));
-      rows.push(h('div', { class: 'wide', html: tex(`T(\\mathcal{X}, \\mathcal{Y}) = ${fmt(val)}`) }));
+      if (cfg.partial) rows.push(h('div', { class: 'wide c-covec', html: tex(dualCombo(`${tname}(\\mathcal{X},\\,\\cdot\\,)`, part)) }));
+      rows.push(h('div', { class: 'wide', html: tex(`${tname}(\\mathcal{X}, \\mathcal{Y}) = ${fmt(val)}`) }));
     }
 
     U.forEach((b, k) => {

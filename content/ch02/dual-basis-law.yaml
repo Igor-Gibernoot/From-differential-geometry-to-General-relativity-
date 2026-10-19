@@ -91,7 +91,7 @@ cards:
           The covector is $\hat{\mathfrak{x}}^i$ throughout, and it eats the summed vectors $\hat{x}_m$. The indices of $\hat{\mathfrak{x}}^m(\hat{x}_i)$ are swapped.
     hint: '$\hat{\mathfrak{x}}^i\big(\sum_m c^m\,\hat{x}_m\big) = \sum_m c^m\,\hat{\mathfrak{x}}^i(\hat{x}_m)$ for any numbers $c^m$.'
     explanation: |
-      $$\hat{\mathfrak{x}}^i(\hat{y}_k) = \hat{\mathfrak{x}}^i\Big(\sum_m (J^{-1})_k^m\,\hat{x}_m\Big) = \sum_{m=1}^d (J^{-1})_k^m\,\hat{\mathfrak{x}}^i(\hat{x}_m).$$
+      $$\begin{aligned}\hat{\mathfrak{x}}^i(\hat{y}_k) &= \hat{\mathfrak{x}}^i\Big(\sum_m (J^{-1})_k^m\,\hat{x}_m\Big)\\ &= \sum_{m=1}^d (J^{-1})_k^m\,\hat{\mathfrak{x}}^i(\hat{x}_m).\end{aligned}$$
 
   - type: mcq
     id: simplify
@@ -168,7 +168,7 @@ cards:
     explanation: |
       $\hat{\mathfrak{y}}^1 = J_1^1\,\hat{\mathfrak{x}}^1 + J_2^1\,\hat{\mathfrak{x}}^2 = \hat{\mathfrak{x}}^1 - \hat{\mathfrak{x}}^2$. Check against the definition:
       $$\hat{\mathfrak{y}}^1(\hat{y}_1) = \hat{\mathfrak{x}}^1(\hat{x}_1) - \hat{\mathfrak{x}}^2(\hat{x}_1) = 1,$$
-      $$\hat{\mathfrak{y}}^1(\hat{y}_2) = \hat{\mathfrak{x}}^1(\hat{x}_1 + \hat{x}_2) - \hat{\mathfrak{x}}^2(\hat{x}_1 + \hat{x}_2) = 1 - 1 = 0 .$$
+      $$\begin{aligned}\hat{\mathfrak{y}}^1(\hat{y}_2) &= \hat{\mathfrak{x}}^1(\hat{x}_1 + \hat{x}_2) - \hat{\mathfrak{x}}^2(\hat{x}_1 + \hat{x}_2)\\ &= 1 - 1 = 0 .\end{aligned}$$
       The first basis vector did not change, yet its dual covector did: each dual covector depends on the whole basis.
 
   - type: order

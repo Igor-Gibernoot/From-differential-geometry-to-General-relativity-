@@ -84,7 +84,7 @@ cards:
       Three properties decide whether a map can be undone:
 
       - **injective** (nothing is lost): different elements have different images,
-      $$\forall p_1, p_2\in\mathcal{M}:\quad \phi(p_1) = \phi(p_2)\ \Rightarrow\ p_1 = p_2 ;$$
+      $$\begin{gathered}\forall p_1, p_2\in\mathcal{M}:\\ \phi(p_1) = \phi(p_2)\ \Rightarrow\ p_1 = p_2 ;\end{gathered}$$
       - **surjective** (nothing is missed): every element of the target is an image,
       $$\forall n\in\mathcal{N}\ \ \exists p\in\mathcal{M}:\quad \phi(p) = n ;$$
       - **bijective**: both injective and surjective.

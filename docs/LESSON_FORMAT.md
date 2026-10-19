@@ -170,10 +170,63 @@ Each tile can be used once; list a tile twice if it is needed twice.
 Widgets live in `js/widgets.js` (register new ones in `WIDGETS`). Follow a
 widget card with a question about what the reader observed.
 
-Available widgets:
-- `basis-playground`: a fixed vector (and optional covector, drawn as level
-  lines) in the plane. The reader drags the new basis; components, covector
-  components and their pairing update live.
+Available widgets (all coordinates are components in the reference basis
+$\hat{x}_1, \hat{x}_2$; draggable tips snap to a grid of `snap`, 0 = free):
+
+#### `basis-playground`
+A fixed vector $\mathcal{X}$ (and optionally a covector, drawn as its level
+lines) in the plane. The reader drags the new basis $\hat{y}_1, \hat{y}_2$;
+the components $y^i$, the covector components $\mathtt{y}_i$ and their pairing
+update live. Parallel basis vectors trigger a "not a basis" warning.
+```yaml
+config:
+  vector: [3, 2]              # 𝒳 in the old basis
+  covector: [1, 0.5]          # optional: covector components in the old dual basis
+  dual: 1                     # optional, 1 or 2: draw the level lines of the dual
+                              # basis covector ŷ^k and show it in the old dual basis
+  basis: [[1, 0], [0, 1]]     # initial ŷ1, ŷ2
+  snap: 0.5
+  presets: [{ label: Shear, basis: [[1, 0], [1, 1]] }]
+```
+
+#### `machine-playground`
+A tensor as a machine with slots: the reader drags the input vector(s) and
+watches the output number. Buttons: **Reset**, **Double 𝒳**, and with two
+slots **Double both**, plus the presets.
+```yaml
+config:
+  slots: 1                    # 1: a covector eats 𝒳. 2: a (0,2)-tensor eats 𝒳 and 𝒴
+  covector: [1, 0.5]          # slots 1: X(𝒳) = 1 x^1 + 0.5 x^2, drawn as level lines
+  name: L                     # slots 1: the covector's letter (sans-serif), default X;
+                              # slots 2: the tensor's letter, default T
+  tensor: [[0, 1], [-1, 0]]   # slots 2: components T_ij, row i = first slot
+                              # (the default [[0,1],[-1,0]] is the signed area)
+  area: true                  # slots 2: shade the parallelogram spanned by 𝒳 and 𝒴
+  partial: true               # slots 2: draw T(𝒳, ·) as level lines and show its
+                              # components (fill one slot, get a covector)
+  u: [2, 1]                   # initial 𝒳
+  v: [0, 2]                   # initial 𝒴 (slots 2)
+  snap: 0.5
+  presets: [{ label: Along a line, u: [1, 2] }]   # v optional: keeps the current 𝒴
+```
+The readout shows the inputs, the formula of a covector and its evaluation
+$\mathsf{X}(\mathcal{X}) = \dots$ (slots 1), or $T(\mathcal{X}, \mathcal{Y})$
+(slots 2).
+
+#### `map-builder`
+Two finite sets, the domain $\mathcal{M}$ on the left and the target
+$\mathcal{N}$ on the right, with one arrow per domain element. Tapping a domain
+element moves its arrow to the next target element; the readout says whether
+the map is injective, surjective and bijective (and lists $\phi^{-1}$ when it
+exists), with the reason.
+```yaml
+config:
+  domain: ['a', 'b', 'c']
+  target: ['1', '2', '3']
+  map: [0, 0, 1]              # index in target of each domain element's image
+  presets: [{ label: '3 → 4', domain: ['a','b','c'], target: ['1','2','3','4'] }]
+                              # a preset's map is optional (all to the first element)
+```
 
 ## Content-map lessons (`kind: map`)
 
