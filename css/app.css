@@ -276,11 +276,11 @@ a { color: var(--accent); }
 /* widget */
 .widget { margin-top: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; box-shadow: var(--shadow); }
 .widget svg { width: 100%; height: auto; max-height: min(60vh, 460px); display: block; touch-action: none; user-select: none; -webkit-user-select: none; }
-.widget .readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 4px 16px; padding: 8px 6px 4px; font-size: 15px; }
+.widget .readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 4px 16px; padding: 8px 6px 4px; font-size: 17px; }
 .widget .readout .wide { grid-column: 1 / -1; }
 .widget .readout .warn { color: var(--bad); font-weight: 650; }
 .widget .wbtns { display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; }
-.widget .wbtns .btn { min-height: 34px; padding: 5px 12px; font-size: 13px; }
+.widget .wbtns .btn { min-height: 36px; padding: 5px 12px; font-size: 14.5px; }
 .w-grid { stroke: var(--grid); stroke-width: 1px; vector-effect: non-scaling-stroke; }
 .w-axis { stroke: var(--line); stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
 .w-lattice { stroke: var(--basis); stroke-opacity: .22; stroke-width: 1px; vector-effect: non-scaling-stroke; }
@@ -437,7 +437,7 @@ a { color: var(--accent); }
 .cc-ray { stroke: var(--covec); stroke-width: 1.5px; stroke-dasharray: 5 4; }
 .cc-hit { fill: var(--covec); }
 .w-label.covec { fill: var(--covec); }
-.w-label.small { font-size: 0.3px; font-style: normal; }
+.w-label.small { font-size: 0.34px; font-style: normal; }
 @media (max-width: 520px) {
   .cc-panels { grid-template-columns: 1fr; }
   .cc-panels svg { max-width: 330px; margin: 0 auto; }
