@@ -176,9 +176,9 @@ function basisPlayground(el, cfg) {
       if (C) {
         const c1 = C[0] * b1[0] + C[1] * b1[1], c2 = C[0] * b2[0] + C[1] * b2[1];
         rows.push(
-          h('div', { class: 'c-covec', html: tex(`\\mathsf{y}_1 = \\mathsf{X}(\\hat{y}_1) = ${fmt(c1)}`) }),
-          h('div', { class: 'c-covec', html: tex(`\\mathsf{y}_2 = \\mathsf{X}(\\hat{y}_2) = ${fmt(c2)}`) }),
-          h('div', { class: 'wide', html: tex(`\\textstyle\\sum_i \\mathsf{y}_i\\, y^i = ${fmt(c1 * y1 + c2 * y2)}`) }));
+          h('div', { class: 'c-covec', html: tex(`\\mathtt{y}_1 = \\mathsf{X}(\\hat{y}_1) = ${fmt(c1)}`) }),
+          h('div', { class: 'c-covec', html: tex(`\\mathtt{y}_2 = \\mathsf{X}(\\hat{y}_2) = ${fmt(c2)}`) }),
+          h('div', { class: 'wide', html: tex(`\\textstyle\\sum_i \\mathtt{y}_i\\, y^i = ${fmt(c1 * y1 + c2 * y2)}`) }));
       }
     }
     readout.replaceChildren(...rows);

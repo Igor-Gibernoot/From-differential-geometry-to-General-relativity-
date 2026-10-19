@@ -150,7 +150,7 @@ Each tile can be used once; list a tile twice if it is needed twice.
   id: invariance-proof
   prompt: Put the proof in order.
   steps:                         # in the CORRECT order; shown shuffled
-    - '$\displaystyle\sum_j \mathsf{y}_j\, y^j$'
+    - '$\displaystyle\sum_j \mathtt{y}_j\, y^j$'
     - '$\displaystyle= \dots$'
   hint: ...
   explanation: ...

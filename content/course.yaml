@@ -4,7 +4,7 @@
 # a planned (greyed) node. `kind` is concept | guided | traps, plus the three
 # end-of-level kinds: map (content-map puzzle), review (automatic, no file:
 # practises only this level's questions) and challenge (mixed problems).
-# A level with `status: unwritten` is a chapter that is still "??" in the book.
+# A level with `status: unwritten` shows as "not in the book yet" (unused now that the book is complete).
 
 title: From Differential Geometry to General Relativity
 
@@ -44,8 +44,14 @@ levels:
       - id: ch02-J-invertible
         title: "Guided Problem: Why the Change of Basis Is Invertible"
         kind: guided
+      - id: ch02-dual-basis-law
+        title: "Guided Problem: The Dual Basis Uses the Same J"
+        kind: guided
       - id: ch02-tensors
-        title: Tensors
+        title: Tensors as Multilinear Maps
+        kind: concept
+      - id: ch02-tensor-product
+        title: The Tensor Product
         kind: concept
       - id: ch02-map
         title: "Content Map: Vector Spaces"
@@ -63,8 +69,12 @@ levels:
       - { id: ch03-open-sets, title: Topological Spaces and Open Sets, kind: concept }
       - { id: ch03-standard-topology, title: The Standard and Inherited Topologies, kind: concept }
       - { id: ch03-homeomorphisms, title: Continuity and Homeomorphisms, kind: concept }
+      - { id: ch03-hausdorff, title: Hausdorff and Second Countable, kind: concept }
       - { id: ch03-charts, title: Charts and Transition Maps, kind: concept }
       - { id: ch03-atlases, title: Atlases and Smooth Manifolds, kind: concept }
+      - { id: ch03-smooth-maps, title: Smooth Maps and Diffeomorphisms, kind: concept }
+      - { id: ch03-circle, title: "Guided Problem: The Circle Is a Smooth Manifold", kind: guided }
+      - { id: ch03-traps, title: Manifold Traps, kind: traps }
       - { id: ch03-map, title: "Content Map: Topological Manifolds", kind: map }
       - { id: ch03-review, title: Level Review, kind: review }
       - { id: ch03-challenge, title: Level Challenge, kind: challenge }
@@ -74,12 +84,15 @@ levels:
     title: Tangent Spaces
     blurb: Vectors on a curved space are velocities of curves, and $T_p\mathcal{M}$ is where they live.
     lessons:
-      - { id: ch04-tangent-space, title: "Curves and the Tangent Space", kind: concept }
-      - { id: ch04-coordinate-basis, title: "Coordinate Bases and the Jacobian", kind: concept }
+      - { id: ch04-tangent-space, title: Curves and the Tangent Space, kind: concept }
+      - { id: ch04-velocity-operations, title: "Guided Problem: Adding Velocities with Curves", kind: guided }
+      - { id: ch04-coordinate-basis, title: Coordinate Bases and the Jacobian, kind: concept }
+      - { id: ch04-chart-basis, title: "Guided Problem: The Chart-Induced Basis", kind: guided }
       - { id: ch04-einstein, title: Einstein Summation, kind: concept }
-      - { id: ch04-cotangent, title: "The Cotangent Space", kind: concept }
-      - { id: ch04-cotangent-basis, title: "Differentials as a Basis", kind: concept }
-      - { id: ch04-tensor-space, title: "Tensor Spaces at a Point", kind: concept }
+      - { id: ch04-cotangent, title: The Cotangent Space, kind: concept }
+      - { id: ch04-cotangent-basis, title: Differentials as a Basis, kind: concept }
+      - { id: ch04-tensor-space, title: Tensor Spaces at a Point, kind: concept }
+      - { id: ch04-traps, title: Tangent Space Traps, kind: traps }
       - { id: ch04-map, title: "Content Map: Tangent Spaces", kind: map }
       - { id: ch04-review, title: Level Review, kind: review }
       - { id: ch04-challenge, title: Level Challenge, kind: challenge }
@@ -93,12 +106,90 @@ levels:
       - { id: ch05-covector-fields, title: Covector Fields and the Cotangent Bundle, kind: concept }
       - { id: ch05-module, title: "The $C^\\infty(\\mathcal{M})$-Module Structure", kind: concept }
       - { id: ch05-tensor-fields, title: Tensor Fields, kind: concept }
+      - { id: ch05-differentials, title: "Guided Problem: Which Covector Fields Are Differentials?", kind: guided }
+      - { id: ch05-traps, title: Field Traps, kind: traps }
       - { id: ch05-map, title: "Content Map: Fields", kind: map }
       - { id: ch05-review, title: Level Review, kind: review }
       - { id: ch05-challenge, title: Level Challenge, kind: challenge }
 
-  - { id: ch06, number: 6, title: Covariant Derivative, status: unwritten }
-  - { id: ch07, number: 7, title: Metric Structure, status: unwritten }
-  - { id: ch08, number: 8, title: Integration on Manifolds, status: unwritten }
-  - { id: ch09, number: 9, title: Newtonian Gravitation, status: unwritten }
-  - { id: ch10, number: 10, title: General Relativity, status: unwritten }
+  - id: ch06
+    number: 6
+    title: Covariant Derivative
+    blurb: Differentiating vector fields needs extra structure, a connection, and its torsion and curvature characterize it.
+    lessons:
+      - { id: ch06-connections, title: Connections and Affine Manifolds, kind: concept }
+      - { id: ch06-christoffel, title: Connection Coefficient Functions, kind: concept }
+      - { id: ch06-parallel-transport, title: Parallel Transport and Autoparallels, kind: concept }
+      - { id: ch06-torsion-curvature, title: Torsion and Curvature, kind: concept }
+      - { id: ch06-torsion-tensor, title: "Guided Problem: Torsion Is a Tensor", kind: guided }
+      - { id: ch06-three-connections, title: "Guided Problem: Three Connections on the Plane", kind: guided }
+      - { id: ch06-traps, title: Connection Traps, kind: traps }
+      - { id: ch06-map, title: "Content Map: Covariant Derivative", kind: map }
+      - { id: ch06-review, title: Level Review, kind: review }
+      - { id: ch06-challenge, title: Level Challenge, kind: challenge }
+
+  - id: ch07
+    number: 7
+    title: Metric
+    blurb: Lengths, angles and geodesics, and the one connection the metric singles out.
+    lessons:
+      - { id: ch07-metric, title: The Metric and the Musical Maps, kind: concept }
+      - { id: ch07-signature, title: Signature, kind: concept }
+      - { id: ch07-length, title: Length and Geodesics, kind: concept }
+      - { id: ch07-euler-lagrange, title: Variations and the Euler-Lagrange Equations, kind: concept }
+      - { id: ch07-geodesic-equation, title: "Guided Problem: Deriving the Geodesic Equation", kind: guided }
+      - { id: ch07-levi-civita, title: The Levi-Civita Connection, kind: concept }
+      - { id: ch07-curvature, title: Curvature of the Metric, kind: concept }
+      - { id: ch07-sphere, title: "Guided Problem: Meridians and Parallels of the Sphere", kind: guided }
+      - { id: ch07-traps, title: Metric Traps, kind: traps }
+      - { id: ch07-map, title: "Content Map: Metric", kind: map }
+      - { id: ch07-review, title: Level Review, kind: review }
+      - { id: ch07-challenge, title: Level Challenge, kind: challenge }
+
+  - id: ch08
+    number: 8
+    title: Integrals
+    blurb: Integration that does not depend on the chart, with volume forms and orientation.
+    lessons:
+      - { id: ch08-volume-forms, title: Volume Forms and Orientation, kind: concept }
+      - { id: ch08-integration, title: Integration on Manifolds, kind: concept }
+      - { id: ch08-metric-volume, title: The Metric Volume Form, kind: concept }
+      - { id: ch08-circle-length, title: "Guided Problem: The Length of a Circle, Chart by Chart", kind: guided }
+      - { id: ch08-traps, title: Integration Traps, kind: traps }
+      - { id: ch08-map, title: "Content Map: Integrals", kind: map }
+      - { id: ch08-review, title: Level Review, kind: review }
+      - { id: ch08-challenge, title: Level Challenge, kind: challenge }
+
+  - id: ch09
+    number: 9
+    title: Newton-Cartan Theory
+    blurb: Newtonian gravity rewritten on a 4-dimensional manifold, with gravity living in the connection.
+    lessons:
+      - { id: ch09-newtonian-spacetime, title: Absolute Time and Newtonian Spacetime, kind: concept }
+      - { id: ch09-newton-axioms, title: Newton's Axioms on a Manifold, kind: concept }
+      - { id: ch09-stratified, title: Stratified Atlases, kind: concept }
+      - { id: ch09-pseudo-forces, title: Inertial Charts and Pseudo-Forces, kind: concept }
+      - { id: ch09-gravity-connection, title: Gravity in the Connection, kind: concept }
+      - { id: ch09-tidal, title: Tidal Acceleration, kind: concept }
+      - { id: ch09-point-mass, title: "Guided Problem: A Point Mass in Newton-Cartan Theory", kind: guided }
+      - { id: ch09-traps, title: Newton-Cartan Traps, kind: traps }
+      - { id: ch09-map, title: "Content Map: Newton-Cartan Theory", kind: map }
+      - { id: ch09-review, title: Level Review, kind: review }
+      - { id: ch09-challenge, title: Level Challenge, kind: challenge }
+
+  - id: ch10
+    number: 10
+    title: General Relativity
+    blurb: Spacetime, observers and proper time, and the Einstein equations from an action.
+    lessons:
+      - { id: ch10-spacetime, title: Spacetime and Time Orientation, kind: concept }
+      - { id: ch10-worldlines, title: Worldlines and Proper Time, kind: concept }
+      - { id: ch10-observers, title: Observers and What They Measure, kind: concept }
+      - { id: ch10-lorentz, title: Lorentz Transformations from Observer Frames, kind: concept }
+      - { id: ch10-einstein-hilbert, title: The Einstein Equations from an Action, kind: concept }
+      - { id: ch10-matter, title: Coupling to Matter, kind: concept }
+      - { id: ch10-schwarzschild, title: "Guided Problem: Checking the Schwarzschild Metric", kind: guided }
+      - { id: ch10-traps, title: Relativity Traps, kind: traps }
+      - { id: ch10-map, title: "Content Map: General Relativity", kind: map }
+      - { id: ch10-review, title: Level Review, kind: review }
+      - { id: ch10-challenge, title: Level Challenge, kind: challenge }

@@ -16,13 +16,14 @@ professor (Daniel López Cano), which Igor converted to Markdown.
 - **The book is unpublished. Never commit or push it** (Markdown, images or
   PDFs). The GitHub repo is public; `.gitignore` excludes the book folder and
   all PDFs. Keep it that way.
-- The book was re-converted from the updated PDF on 2026-10-18 (with
-  `marker_single`). It now covers Chapters 1–10 (Introduction, Vector Spaces,
-  Topological Manifolds, Tangent Spaces, Fields, Covariant Derivative, Metric,
-  Integrals, Newton-Cartan Theory, General Relativity) plus appendices
-  (A computational resources, B proofs, C worked examples). Chapter 10 may
-  still be in progress: check the Markdown before starting a chapter. The
-  appendix B proofs and C examples are good sources for guided problems.
+- The book is **complete** (re-converted 2026-10-18 with `marker_single`):
+  Chapters 1–10 (Introduction, Vector Spaces, Topological Manifolds, Tangent
+  Spaces, Fields, Covariant Derivative, Metric, Integrals, Newton-Cartan
+  Theory, General Relativity) plus appendices (A computational resources,
+  B proofs, C worked examples). The appendix B proofs and C examples are the
+  sources for the planned guided problems (e.g. B.3 dual basis law, B.10
+  torsion is a tensor, B.16 geodesic equation, C.2 circle, C.8 point mass,
+  C.9 Schwarzschild).
 
 ## Course Overview
 
@@ -32,8 +33,9 @@ language connects directly to the modern formulation of General Relativity.
 Thematic blocks: 1. Vector Spaces, 2. Topological Manifolds, 3. Tangent and
 Cotangent Spaces, 4. Vector, Covector, and Tensor Fields, 5. Covariant
 Derivative, 6. Metric Structure, 7. Integration on Manifolds, 8. Newtonian
-Gravitation, 9. General Relativity. Use this arc to anticipate where a
-`??` chapter is headed and keep terminology consistent with later blocks.
+Gravitation, 9. General Relativity. Book chapter $n+1$ is block $n$ (Chapter 1
+is the introduction); in lessons, refer to later material by its name
+("the metric, Level 7"): trail levels use book chapter numbers.
 
 ## Role
 
@@ -84,8 +86,8 @@ Workflow for every content change:
 2. **Guided problems** (`kind: guided`): one substantial problem split into
    steps, each step a question. Prefer deriving foundational results the
    book states without proof (search the book for `DLC: PROOF`, e.g. the
-   invertibility of $J$, that the dual basis is a basis, that the dual change
-   of basis uses the same $J$).
+   invertibility of $J$, that the dual basis is a basis) and the Appendix B
+   proofs (e.g. B.3: the dual change of basis uses the same $J$).
 3. **Trap rounds** (`kind: traps`): fast questions, each built on a common
    misconception.
 4. **End of every level**, three special nodes (see `docs/LESSON_FORMAT.md`):
@@ -131,8 +133,11 @@ and put the weight on understanding and on the physics.
 8. **Don't give away a question in the card before it.**
 9. **Consistency.** Use the book's conventions exactly: $\hat{x}_i = \sum_j
    J_i^j\cdot\hat{y}_j$ (old in terms of new), $y^i = \sum_j J^i_j x^j$,
-   $\mathsf{x}_j = \sum_i J^i_j \mathsf{y}_i$, notation $\mathcal{X}$,
-   $\hat{\mathfrak{x}}^i$, $\mathsf{X}$, $T_p\mathcal{M}$, $T_p^*\mathcal{M}$.
+   $\mathtt{x}_j = \sum_i J^i_j \mathtt{y}_i$ (covector components are
+   typewriter `\mathtt`, covectors sans-serif `\mathsf{X}`), notation
+   $\mathcal{X}$, $\hat{\mathfrak{x}}^i$ (the book's "induced dual cobasis"),
+   $T^{i_1\dots}_{j_1\dots}$ for tensor components, $T_p\mathcal{M}$,
+   $T_p^*\mathcal{M}$.
    Chapter 2 writes sums explicitly; Einstein summation only from the chapter
    where the book introduces it (Chapter 4).
 10. **Self-contained.** No bare references to book sections. Lessons should
@@ -163,11 +168,13 @@ Also built: light/dark toggle (`js/theme.js`), instant tooltips via `data-tip`
 (`js/tooltip.js`), and optional Google sign-in with Firestore sync (`js/cloud.js`,
 `docs/ACCOUNTS.md`; inactive until `js/firebase-config.js` is filled in).
 
-### Status (2026-10-18)
+### Status (2026-10-19)
 
 Built: Chapter 2 change of basis (concept), covector law (guided), the
-transformation traps round, and the Chapter 2 content map. Next candidates:
-the remaining Chapter 2 lessons (maps, axioms, dual space, bases and dual
-basis, J invertible, tensors) and the Chapter 2 challenge, then Chapters 3–5
-in order (each with its content map and challenge). Each planned node in
-`course.yaml` is one lesson to build.
+transformation traps round, and the Chapter 2 content map (all checked
+against the complete book on 2026-10-19). `course.yaml` now plans every
+chapter 2–10 from the book's sections. Next: the remaining Chapter 2 lessons
+(maps, axioms, dual space, bases and dual basis, J invertible, dual basis
+law, tensors, tensor product) and the Chapter 2 challenge, then Chapters
+3–10 in order (each with its content map and challenge). Each planned node
+in `course.yaml` is one lesson to build.

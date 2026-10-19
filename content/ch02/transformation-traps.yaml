@@ -11,7 +11,7 @@ cards:
 
       Conventions, as always: $\{\hat{x}_i\}$ is the old basis, $\{\hat{y}_i\}$ the new one, and
       $$\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j .$$
-      Vector components satisfy $\mathcal{X} = \sum_i x^i\cdot\hat{x}_i = \sum_i y^i\cdot\hat{y}_i$. Covector components satisfy $\mathsf{X} = \sum_i \mathsf{x}_i\cdot\hat{\mathfrak{x}}^i = \sum_i \mathsf{y}_i\cdot\hat{\mathfrak{y}}^i$, in the dual bases.
+      Vector components satisfy $\mathcal{X} = \sum_i x^i\cdot\hat{x}_i = \sum_i y^i\cdot\hat{y}_i$. Covector components satisfy $\mathsf{X} = \sum_i \mathtt{x}_i\cdot\hat{\mathfrak{x}}^i = \sum_i \mathtt{y}_i\cdot\hat{\mathfrak{y}}^i$, in the dual bases.
 
   - type: numeric
     id: units
@@ -68,7 +68,7 @@ cards:
     id: free-index
     prompt: |
       In the covector law
-      $$\mathsf{x}_j = \sum_i J^i_j\,\mathsf{y}_i ,$$
+      $$\mathtt{x}_j = \sum_i J^i_j\,\mathtt{y}_i ,$$
       which index is **free**?
     options:
       - text: '$j$'
@@ -159,4 +159,4 @@ cards:
         feedback: |
           In finite dimensions $V$ and $V^*$ have the same dimension $d$. The difference is in how the components transform, not how many there are.
     explanation: |
-      Rows versus columns is a matrix-algebra convenience. The real distinction is $V$ versus $V^*$, and it shows up in the transformation laws. A metric (block 6 of the course) will later provide a way to convert between the two.
+      Rows versus columns is a matrix-algebra convenience. The real distinction is $V$ versus $V^*$, and it shows up in the transformation laws. A metric (Level 7, Metric) will later provide a way to convert between the two.
