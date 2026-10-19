@@ -53,6 +53,16 @@ append a short entry at the end of **Log** (a few lines, ending with
 
 ## Log
 
+ch03-challenge, proofs for facts flagged "without proof" (Igor's request; lesson
+now 44 cards): p2-sphere (S² stereographic transition u/|u|², derived from
+|u|² = (1+q₃)/(1−q₃)), p2-sphere-num (σ_N = (1,1) ⇒ σ_S = (½,½); decoy
+componentwise 1/u), p2-compatible (σ_N⁻¹ explicit; compatible with half-circle
+and angle charts, θ∘σ_N⁻¹ = 2 arctan u − π/2 or + 3π/2). p3-meaning: proved the
+one-chart case φ = y⁻¹. Kept flagged as beyond the course: smooth structures on
+ℝ with many charts, exotic 7-spheres, Whitney (contrast only).
+Conventions fixed here: a fact stays "stated without proof" only when its proof
+is far beyond the course; otherwise prove it in the simplest way.
+
 ch03-challenge, session 2 of 2 (problems 4–5, 17 cards; lesson now 41):
 (4) line with two origins built by gluing two copies of ℝ along t ≠ 0 (book
 footnote 2): chart X_A is a homeomorphism onto ℝ, overlap image ℝ∖{0},

@@ -341,7 +341,54 @@ cards:
       - 'The map $u\mapsto 1/u$ is $C^\infty$ on $\mathbb{R}\setminus\{0\}$, so both transitions are $C^\infty$ and the atlas is smooth.'
     hint: Cover first, then the overlap, then the formula, then its smoothness.
     explanation: |
-      Two facts stated here without proof (both are checked the same way, by computing transitions): one dimension up, on the sphere $S^2$, the two stereographic projections again need only two charts, with transition $u\mapsto u/|u|^2$; and the atlas $\{\sigma_N, \sigma_S\}$ is compatible with the angle charts and the four half-circle charts, so all of them define the **same** smooth circle.
+      Cover, overlap, transition formula, smoothness: every "this atlas is smooth" proof has these four steps. The next cards run them twice more: one dimension up on the sphere $S^2$, and between $\sigma_N$ and the charts you already know on $S^1$.
+
+  - type: text
+    id: p2-sphere
+    tag: Problem 2 · Two stereographic charts
+    title: One dimension up
+    body: |
+      The sphere $S^2$ is the set of $q = (q_1, q_2, q_3)$ in $\mathbb{R}^3$ with $q_1^2 + q_2^2 + q_3^2 = 1$. Project from the poles $N = (0, 0, 1)$ and $S = (0, 0, -1)$ onto the plane $\mathbb{R}^2$, by the same formulas as on the circle:
+      $$\sigma_N(q) = \frac{(q_1, q_2)}{1 - q_3},\qquad \sigma_S(q) = \frac{(q_1, q_2)}{1 + q_3}.$$
+      Write $u = \sigma_N(q)$, a vector in $\mathbb{R}^2$, and $|u|^2 = (u^1)^2 + (u^2)^2$. Using $q_1^2 + q_2^2 = 1 - q_3^2$:
+      $$|u|^2 = \frac{1 - q_3^2}{(1 - q_3)^2} = \frac{1 + q_3}{1 - q_3}.$$
+      The two charts differ only by the factor $\frac{1 - q_3}{1 + q_3} = 1/|u|^2$, so on the overlap $S^2\setminus\{N, S\}$, which $\sigma_N$ maps onto $\mathbb{R}^2\setminus\{0\}$,
+      $$\sigma_S\circ\sigma_N^{-1}(u) = \frac{u}{|u|^2}.$$
+      Its components $u^i/\big((u^1)^2 + (u^2)^2\big)$ are quotients of polynomials with a non-zero denominator, so they are $C^\infty$; the reverse transition has the same form. Two charts again suffice for $S^2$. On the circle $|u|^2 = u^2$, and $u/u^2 = 1/u$ is Problem 2's transition.
+
+  - type: numeric
+    id: p2-sphere-num
+    tag: Problem 2 · Two stereographic charts
+    prompt: |
+      On the sphere $S^2$, the north and south stereographic charts $\sigma_N(q) = \dfrac{(q_1, q_2)}{1 - q_3}$ and $\sigma_S(q) = \dfrac{(q_1, q_2)}{1 + q_3}$ are related by
+      $$\sigma_S\circ\sigma_N^{-1}(u) = \frac{u}{|u|^2},\quad u\in\mathbb{R}^2\setminus\{0\}.$$
+      A point $q$ has $\sigma_N(q) = (1, 1)$. What is the **first** component of $\sigma_S(q)$?
+    answer: 0.5
+    tolerance: 0.002
+    answerText: '1/2'
+    wrong:
+      - value: 1
+        tolerance: 0.002
+        feedback: |
+          That inverts each component on its own, $(1/u^1, 1/u^2)$, a tempting copy of the circle's $1/u$. In the plane the division is by the squared **length**: $|u|^2 = 1 + 1 = 2$.
+    hint: '$|u|^2 = (u^1)^2 + (u^2)^2$.'
+    explanation: |
+      $$\frac{(1, 1)}{|u|^2} = \frac{(1, 1)}{2} = \left(\tfrac12, \tfrac12\right).$$
+      Check on the sphere: $|u|^2 = 2 = \frac{1 + q_3}{1 - q_3}$ gives $q_3 = \tfrac13$, then $(q_1, q_2) = u\,(1 - q_3) = (\tfrac23, \tfrac23)$, and $\tfrac49 + \tfrac49 + \tfrac19 = 1$. Directly, $\sigma_S(q) = (\tfrac23, \tfrac23)/\tfrac43 = (\tfrac12, \tfrac12)$.
+
+  - type: text
+    id: p2-compatible
+    tag: Problem 2 · Two stereographic charts
+    title: The same smooth circle
+    body: |
+      Is $\{\sigma_N, \sigma_S\}$ the same smooth circle as the angle charts and the four half-circle charts? It is, if $\sigma_N$ (and likewise $\sigma_S$) is compatible with each of them. Solving $u = q_1/(1 - q_2)$ together with $q_1^2 + q_2^2 = 1$ gives the inverse
+      $$\sigma_N^{-1}(u) = \left(\frac{2u}{1 + u^2},\ \frac{u^2 - 1}{u^2 + 1}\right).$$
+      - **Half-circle charts.** Each reads off $q_1$ or $q_2$, so the transition from $\sigma_N$ is one component above: smooth. Backwards, $\sigma_N = q_1/(1 - q_2)$ evaluated on the smooth inverse of a half-circle chart, e.g. $s\mapsto s/(1 - \sqrt{1 - s^2})$ for the upper one with $s\neq 0$: smooth, since the denominator never vanishes off $N$.
+      - **Angle chart** $\theta\in(0, 2\pi)$. Recall $\sigma_N\circ\theta^{-1}(\alpha) = \frac{\cos\alpha}{1 - \sin\alpha}$, which equals $\tan\!\big(\tfrac\alpha2 + \tfrac\pi4\big)$. Inverting,
+      $$\theta\circ\sigma_N^{-1}(u) = \begin{cases} 2\arctan u - \tfrac\pi2, & u > 1,\\ 2\arctan u + \tfrac{3\pi}2, & u < 1,\end{cases}$$
+      smooth on each piece ($u = 1$ is $\alpha = 0$, outside the chart).
+
+      All transitions are $C^\infty$: every chart met so far defines the **same** smooth circle.
 
   # ---------------------------------------------------------------- Problem 3
   - type: text
@@ -487,7 +534,7 @@ cards:
         feedback: |
           "Diffeomorphic" asks whether **some** diffeomorphism exists. The identity fails, but $\phi(p) = \sqrt[3]{p}$ works, with both representatives equal to the identity.
     explanation: |
-      "Different smooth structures" compares two atlases through the identity of the set: are their charts compatible? "Diffeomorphic" allows any bijection. The first can fail while the second holds, as here. Two deep theorems, stated here without proof: structures that are not even diffeomorphic do exist (exotic spheres in dimension $7$), but never on $\mathbb{R}$, where every smooth structure is diffeomorphic to $\mathbb{R}_x$.
+      "Different smooth structures" compares two atlases through the identity of the set: are their charts compatible? "Diffeomorphic" allows any bijection. The first can fail while the second holds, as here. The same trick works for **any** structure on $\mathbb{R}$ given by one chart $y\colon\mathbb{R}\to\mathbb{R}$ (a homeomorphism onto $\mathbb{R}$): take $\phi = y^{-1}$, so both representatives are $y\circ\phi\circ x^{-1}(a) = a$ and $x\circ\phi^{-1}\circ y^{-1}(b) = b$. Two deep theorems, far beyond this course and stated here without proof: even with atlases of many charts, every smooth structure on $\mathbb{R}$ is diffeomorphic to $\mathbb{R}_x$; elsewhere, structures that are not diffeomorphic do exist (exotic spheres in dimension $7$).
 
   # ---------------------------------------------------------------- Problem 4
   - type: text
