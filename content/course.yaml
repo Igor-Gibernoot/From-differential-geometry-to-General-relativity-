@@ -75,7 +75,11 @@ levels:
         file: ch02/map.yaml
         summary: Rebuild the chapter's concept map box by box. For each box, pick the right card among look-alikes with subtle mistakes.
       - { id: ch02-review, title: Level Review, kind: review }
-      - { id: ch02-challenge, title: Level Challenge, kind: challenge }
+      - id: ch02-challenge
+        title: Level Challenge
+        kind: challenge
+        file: ch02/challenge.yaml
+        summary: Five problems on one change of basis. Transform vectors, covectors and tensors, split a tensor into symmetric and antisymmetric parts, find ranks, and count dimensions.
 
   - id: ch03
     number: 3

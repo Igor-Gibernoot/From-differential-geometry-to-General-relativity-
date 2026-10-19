@@ -186,18 +186,23 @@ Lessons are built across many short sessions, not all at once.
   session** naming the exact lessons to build (from `course.yaml`) and any
   leftover checks.
 
-### Status (2026-10-19)
+### Status (2026-10-19, Chapter 2 complete)
 
 Chapter 2 built: maps, axioms, dual space, bases and dual basis, change of
 basis, covector law, J invertible, dual basis law, transformation traps,
 tensors (multilinear maps, components, (0,2)/(1,1) laws, (1,1) = linear
 maps), tensor product (simple tensors, area = sum of two products, V⊗W,
-product basis, d^(r+s), T^(r,s) ≅ V⊗…⊗V*, rank), and the content map (its
-tensors box now includes the product-basis expansion). All Chapter 2 lessons
+product basis, d^(r+s), T^(r,s) ≅ V⊗…⊗V*, rank), the content map (its
+tensors box now includes the product-basis expansion), and the level
+challenge (`ch02/challenge.yaml`: five problems on one change of basis
+ŷ₁ = 2x̂₁ + x̂₂, ŷ₂ = 3x̂₁ + 2x̂₂; vector/covector/dual basis, (0,2) vs (1,1)
+laws and trace invariance, symmetric + antisymmetric split, rank of a (1,1)
+map, dimension counts and the "one up, one down" invariance rule; it
+introduces symmetric/antisymmetric parts and the trace). All Chapter 2 lessons
 have had a headless screenshot pass (desktop + phone); all widgets are
 documented in `docs/LESSON_FORMAT.md` (machine-playground presets can now
 switch the tensor). Short inline math keeps trailing punctuation on its line
-(`js/render.js`). Next: the Chapter 2 challenge, then Chapters 3–10 in order
+(`js/render.js`). Next: Chapters 3–10 in order
 (each with its content map and challenge). Each planned node in
 `course.yaml` is one lesson to build.
 
