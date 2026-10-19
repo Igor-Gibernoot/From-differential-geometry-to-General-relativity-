@@ -1,0 +1,423 @@
+id: ch04-tangent-space
+title: Curves and the Tangent Space
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: A velocity with nowhere to point
+    body: |
+      In the plane $\mathbb{R}^2$ the velocity of a curve $\gamma$ at $\lambda = 0$ is an arrow:
+      $$\gamma'(0) = \lim_{\lambda\to 0}\frac{\gamma(\lambda) - \gamma(0)}{\lambda}.$$
+      This formula **subtracts points**. That works in $\mathbb{R}^2$, where points are pairs of numbers, but a manifold has no subtraction of points. Picture the circle $S^1$ as a world of its own, with no plane around it: a bug crawling on it cannot draw an arrow "off" the circle, because there is no off. Spacetime is like that too: there is no bigger space around it for velocity arrows to live in.
+
+      Still, the bug clearly moves at some rate. Describe its motion with the angle chart $\theta\in(0, 2\pi)$ (defined on $S^1$ without the point $(1, 0)$). Bug 1 follows
+      $$\theta(\gamma_1(\lambda)) = \theta_p + \lambda,$$
+      bug 2 follows
+      $$\theta(\gamma_2(\lambda)) = \theta_p + 2\lambda.$$
+      Both are at the same point $p$ at $\lambda = 0$, moving the same way.
+
+  - type: mcq
+    id: predict-twice
+    prompt: |
+      Before any definitions, guess. On the circle $S^1$, with the angle chart $\theta\in(0, 2\pi)$, curve $\gamma_1$ follows $\theta(\gamma_1(\lambda)) = \theta_p + \lambda$ and curve $\gamma_2$ follows $\theta(\gamma_2(\lambda)) = \theta_p + 2\lambda$. Both pass through the point $p$ at $\lambda = 0$. Whatever "velocity at $p$" ends up meaning on $S^1$, should the two velocities be the same?
+    options:
+      - text: 'No: $\gamma_2$ covers angle twice as fast, so its velocity should be twice that of $\gamma_1$'
+        correct: true
+      - text: 'Yes: both trace the same circle in the same direction through the same point'
+        feedback: |
+          Same path and direction is not the same motion: after a parameter time $\lambda$, $\gamma_2$ has turned twice as far. In the plane, $\lambda\mapsto(\lambda, 0)$ and $\lambda\mapsto(2\lambda, 0)$ trace the same line, and their velocities $(1, 0)$ and $(2, 0)$ differ. A good definition on $S^1$ should keep that.
+      - text: 'The question has no answer: without a surrounding plane there is no velocity at all'
+        feedback: |
+          There is no **arrow**, but the bugs still move: the angle changes at a definite rate, and so does anything we could measure along the way (a temperature on the circle, say). The plan of this lesson is to define velocity from such rates of change, without any surrounding space.
+    explanation: |
+      Our intuition says "twice as fast, twice the velocity". The task is a definition of velocity that uses only the manifold (points, charts, smooth functions) and still delivers that. The trick: watch how fast a **function** changes along the curve.
+
+  - type: widget
+    id: circle-explore
+    title: Measuring along a curve
+    widget: curve-velocity
+    config:
+      circle: true
+      angle: 60
+      f: x
+      curves:
+        - { w: 1 }
+        - { w: 0.5, a: 0.5 }
+      presets:
+        - label: Same speed
+          curves:
+            - { w: 1 }
+            - { w: 1, a: -0.5 }
+    body: |
+      The point $p$ sits at $60°$ on $S^1$. Each curve passes through $p$ at $\lambda = 0$ and follows $\theta(\gamma(\lambda)) = \theta_p + \lambda w + \lambda^2 a$: $w$ sets how fast it starts, $a$ bends it (speeds it up or slows it down later). The scalar field is $f(q) = q_1$, the first coordinate of the point $q$, a smooth function on the circle. The number to watch is $(f\circ\gamma)'(0)$: how fast $f$ changes as the bug passes $p$.
+
+      1. Start: $\gamma_1$ has $w = 1$, $\gamma_2$ has $w = 0.5$. Compare their two readouts $(f\circ\gamma)'(0)$.
+      2. Press **Same speed**: both start with $w = 1$, but $\gamma_2$ is bent. Do the curves differ? Do the readouts?
+      3. Drag the hollow bend handle of $\gamma_2$ around. What changes, and what stays fixed?
+
+  - type: mcq
+    id: bend-no-effect
+    prompt: |
+      On the circle $S^1$ with the angle chart $\theta$, take the point $p$ with $\theta_p = \pi/3$ and two curves through $p$ at $\lambda = 0$:
+      $$\theta(\gamma_1(\lambda)) = \theta_p + \lambda,$$
+      $$\theta(\gamma_2(\lambda)) = \theta_p + \lambda + \tfrac12\lambda^2.$$
+      Let $f(q) = q_1$, so $f(\gamma(\lambda)) = \cos\theta(\gamma(\lambda))$. Which is true?
+    options:
+      - text: 'The curves are different maps, yet $(f\circ\gamma_1)''(0) = (f\circ\gamma_2)''(0)$'
+        correct: true
+      - text: 'The bend changes the curve, so $(f\circ\gamma_2)''(0)$ differs from $(f\circ\gamma_1)''(0)$'
+        feedback: |
+          The bend term $\tfrac12\lambda^2$ has derivative $\lambda$, which vanishes at $\lambda = 0$. By the chain rule, $(f\circ\gamma_2)'(0) = -\sin\theta_p\cdot(1 + \lambda)|_{\lambda=0} = -\sin\theta_p$, exactly as for $\gamma_1$. The bend only matters away from $p$.
+      - text: 'The curves are the same map, since they pass through $p$ in the same direction'
+        feedback: |
+          At $\lambda = 1$, $\gamma_1$ is at angle $\theta_p + 1$ and $\gamma_2$ at $\theta_p + 1.5$: different points, so different maps. What they share is only their behaviour **at** $\lambda = 0$, to first order.
+    explanation: |
+      $(f\circ\gamma)'(0)$ only sees the curve to first order at $p$: here $-\sin\theta_p\cdot w$, with $w$ the starting rate. So the curve with $w = 1$ gives $-\tfrac{\sqrt3}{2}\approx -0.87$, and the one with $w = 0.5$ gives half of that. This number is the seed of the definition of velocity.
+
+  - type: text
+    id: recall-ingredients
+    title: 'Recall: curves and scalar fields'
+    body: |
+      Two ingredients, both from smooth manifolds. Let $\mathcal{M}$ be a smooth manifold of dimension $d$.
+
+      - A **curve** is a map $\gamma\colon\mathbb{R}\to\mathcal{M}$, $\lambda\mapsto\gamma(\lambda)$. Giving $\mathbb{R}$ its standard chart $\mathrm{id}_\mathbb{R}$ (id = identity), $\gamma$ is **smooth** when every chart representative $\mathscr{X}\circ\gamma$ is $C^\infty$. It **passes through** $p\in\mathcal{M}$ at the parameter $\lambda_0$ if $\gamma(\lambda_0) = p$.
+      - A **scalar field** (smooth function) is a smooth $f\colon\mathcal{M}\to\mathbb{R}$: every $f\circ\mathscr{X}^{-1}$ is $C^\infty$. Their set is $C^\infty(\mathcal{M})$.
+
+      $C^\infty(\mathcal{M})$ is a real vector space, with operations defined point by point:
+      $$(f\oplus g)(p) := f(p) + g(p)$$
+      and
+      $$(\alpha\odot f)(p) := \alpha\cdot f(p),$$
+      for $f, g\in C^\infty(\mathcal{M})$ and $\alpha\in\mathbb{R}$. The circles $\oplus$, $\odot$ remind us that these are new operations on functions, built from $+$ and $\cdot$ of numbers.
+
+  - type: mcq
+    id: why-differentiable
+    prompt: |
+      Let $\gamma\colon\mathbb{R}\to\mathcal{M}$ be a smooth curve on a smooth manifold $\mathcal{M}$ and $f\colon\mathcal{M}\to\mathbb{R}$ a smooth function. Neither one can be differentiated directly, since $\mathcal{M}$ has no calculus of its own. Why is $f\circ\gamma\colon\mathbb{R}\to\mathbb{R}$ an ordinary differentiable function?
+    options:
+      - text: 'Near any $\lambda_0$, pick a chart $\mathscr{X}$ around $\gamma(\lambda_0)$: $f\circ\gamma = (f\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\gamma)$, a composition of $C^\infty$ maps between spaces $\mathbb{R}^n$'
+        correct: true
+      - text: 'Because $f\circ\gamma$ goes from $\mathbb{R}$ to $\mathbb{R}$, and every such function is differentiable'
+        feedback: |
+          Plenty of functions $\mathbb{R}\to\mathbb{R}$ are not differentiable, like $|\lambda|$ at $0$. Being a map between copies of $\mathbb{R}$ only makes the question meaningful; smoothness of $f$ and $\gamma$ is what makes the answer yes.
+      - text: 'Because $\mathcal{M}$ sits inside some $\mathbb{R}^n$, where $f$ and $\gamma$ can be differentiated'
+        feedback: |
+          A manifold need not sit inside anything: its definition is a set, a topology and an atlas. The argument must only use charts, and it does: insert $\mathscr{X}^{-1}\circ\mathscr{X}$ (the identity on the chart domain) between $f$ and $\gamma$.
+    explanation: |
+      On the chart domain $\mathscr{X}^{-1}\circ\mathscr{X}$ is the identity, so $f\circ\gamma = (f\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\gamma)$ near $\lambda_0$. Both pieces are $C^\infty$ by definition, and the ordinary chain rule says their composition is $C^\infty$. So $(f\circ\gamma)'(\lambda_0)$ is a well-defined real number.
+
+  - type: text
+    id: def-velocity
+    title: Velocity as a rate of change
+    body: |
+      Here is the definition, built only from curves and scalar fields. Let $\gamma$ be a smooth curve through $p$ at $\lambda_0$, so $\gamma(\lambda_0) = p$. Its **velocity at $p$** is the map
+      $$v_{\gamma,p}\colon C^\infty(\mathcal{M})\to\mathbb{R}$$
+      that sends each scalar field to its rate of change along $\gamma$ at $p$:
+      $$v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0).$$
+      Read it as a measuring device: feed it a field $f$ (a temperature, a coordinate, anything smooth), and it returns how fast $f$ changes as the curve passes $p$.
+
+      So a vector is no longer an arrow. It is a **machine that eats functions** and returns numbers. Two velocities are equal when they are equal as maps:
+      $$v_{\gamma_1,p} = v_{\gamma_2,p}$$
+      means $v_{\gamma_1,p}(f) = v_{\gamma_2,p}(f)$ for **every** $f\in C^\infty(\mathcal{M})$.
+
+  - type: order
+    id: linear-proof
+    prompt: |
+      Let $\gamma$ be a smooth curve on a smooth manifold $\mathcal{M}$ with $\gamma(\lambda_0) = p$, and $v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0)$ for $f\in C^\infty(\mathcal{M})$. Put the proof of $v_{\gamma,p}(f\oplus g) = v_{\gamma,p}(f) + v_{\gamma,p}(g)$ in order.
+    steps:
+      - 'By the definition of $\oplus$, for every $\lambda$: $((f\oplus g)\circ\gamma)(\lambda) = f(\gamma(\lambda)) + g(\gamma(\lambda))$.'
+      - 'So the real function $(f\oplus g)\circ\gamma$ is the ordinary sum of $f\circ\gamma$ and $g\circ\gamma$.'
+      - 'The derivative of a sum of differentiable real functions is the sum of their derivatives.'
+      - 'Evaluating at $\lambda_0$: $v_{\gamma,p}(f\oplus g) = (f\circ\gamma)''(\lambda_0) + (g\circ\gamma)''(\lambda_0) = v_{\gamma,p}(f) + v_{\gamma,p}(g)$.'
+    hint: Start from what $f\oplus g$ does to a single point, then differentiate.
+    explanation: |
+      The same argument with $(\alpha\odot f)(\gamma(\lambda)) = \alpha\cdot f(\gamma(\lambda))$ gives $v_{\gamma,p}(\alpha\odot f) = \alpha\cdot v_{\gamma,p}(f)$. So $v_{\gamma,p}$ is **linear**: an element of $\mathrm{Hom}(C^\infty(\mathcal{M}), \mathbb{R})$ (Hom = homomorphism, the linear maps), the dual space of the vector space of scalar fields.
+
+  - type: numeric
+    id: c3-gamma1
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$ (points $q = (q_1, q_2)$) take the curve $\gamma_1(\lambda) = (\lambda, 1)$, which passes through $p = (1, 1)$ at $\lambda_0 = 1$, and the scalar field $f(q) = q_1^2 + q_2$. Compute $v_{\gamma_1,p}(f) = (f\circ\gamma_1)'(\lambda_0)$.
+    answer: 2
+    wrong:
+      - value: 0
+        feedback: |
+          Evaluating at $\lambda = 0$ uses the wrong parameter: $\gamma_1(0) = (0, 1)$ is not $p$. The curve passes through $p$ at $\lambda_0 = 1$, so the derivative is taken there.
+      - value: 1
+        feedback: |
+          That is the derivative of the first component of $\gamma_1$, not of $f\circ\gamma_1$. Compose first: $f(\gamma_1(\lambda)) = \lambda^2 + 1$.
+    hint: Write out $f(\gamma_1(\lambda))$ as a function of $\lambda$, differentiate, and evaluate where $\gamma_1$ is at $p$.
+    explanation: |
+      $f(\gamma_1(\lambda)) = \lambda^2 + 1$, so $(f\circ\gamma_1)'(\lambda) = 2\lambda$, and at $\lambda_0 = 1$ this is $2$. Note the parameter: a curve may pass through $p$ at any $\lambda_0$, and the derivative is taken there.
+
+  - type: numeric
+    id: c3-gamma2
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$ (points $q = (q_1, q_2)$) take the curve $\gamma_2(\lambda) = (1, 2\lambda)$, which passes through $p = (1, 1)$ at $\lambda_0 = \tfrac12$, and the scalar field $f(q) = q_1^2 + q_2$. Compute $v_{\gamma_2,p}(f)$.
+    answer: 2
+    wrong:
+      - value: 1
+        feedback: |
+          That is $\lambda_0$ times the slope, or the value of something at $\lambda_0 = \tfrac12$. Compose first: $f(\gamma_2(\lambda)) = 1 + 2\lambda$, whose derivative is the same at every $\lambda$.
+      - value: 0
+        feedback: |
+          The first entry of $\gamma_2$ is constant, so $q_1^2$ contributes nothing; but the second entry $2\lambda$ grows, and $f$ contains $q_2$.
+    hint: Write out $f(\gamma_2(\lambda))$ as a function of $\lambda$.
+    explanation: |
+      $f(\gamma_2(\lambda)) = 1 + 2\lambda$, with derivative $2$ everywhere, so $v_{\gamma_2,p}(f) = 2$. The same number as for $\gamma_1(\lambda) = (\lambda, 1)$ at $\lambda_0 = 1$: is that the same velocity?
+
+  - type: mcq
+    id: one-f-not-enough
+    prompt: |
+      On $\mathbb{R}^2$, the curves $\gamma_1(\lambda) = (\lambda, 1)$ (through $p = (1, 1)$ at $\lambda_0 = 1$) and $\gamma_2(\lambda) = (1, 2\lambda)$ (through $p$ at $\lambda_0 = \tfrac12$) both give $v_{\gamma,p}(f) = 2$ for $f(q) = q_1^2 + q_2$. Are $v_{\gamma_1,p}$ and $v_{\gamma_2,p}$ the same velocity?
+    options:
+      - text: 'No: for $g(q) = q_2$ they give $0$ and $2$'
+        correct: true
+      - text: 'Yes: they agree on the field $f$'
+        feedback: |
+          A velocity is a map on **all** scalar fields; agreeing on one field is like two vectors having the same dot product with one fixed vector. Try $g(q) = q_2$: $g(\gamma_1(\lambda)) = 1$ has derivative $0$, while $g(\gamma_2(\lambda)) = 2\lambda$ has derivative $2$.
+      - text: 'The question makes no sense: the curves pass through $p$ at different parameters'
+        feedback: |
+          The parameter $\lambda_0$ is just where each curve happens to be at $p$; each velocity is a derivative at its own $\lambda_0$. Both are maps $C^\infty(\mathbb{R}^2)\to\mathbb{R}$, so they can be compared field by field.
+    explanation: |
+      Equality of velocities means equality on every $f$. One field can coincide by accident: $\gamma_1$ moves right at rate $1$ and $\gamma_2$ up at rate $2$, and $f = q_1^2 + q_2$ happens to grow at rate $2$ in both directions at $p$.
+
+  - type: widget
+    id: plane-explore
+    title: Same curve, same velocity?
+    widget: curve-velocity
+    config:
+      p: [1, 1]
+      f: x2y
+      curves:
+        - { v: [1, 0.5] }
+        - { v: [1, 0.5], a: [0, -0.75] }
+      presets:
+        - label: Trap
+          f: x
+          curves:
+            - { v: [1, 0] }
+            - { v: [1, 2] }
+    body: |
+      Back in the plane, at $p = (1, 1)$. Here each curve passes through $p$ at $\lambda = 0$: $\gamma(\lambda) = p + \lambda v + \lambda^2 a$. That is no restriction: a curve through $p$ at $\lambda_0$ can be shifted to $\lambda\mapsto\gamma(\lambda + \lambda_0)$, which passes at $0$ with the same velocity. The blue handle sets $v$, the hollow handle bends the curve (sets $a$). The field buttons choose $f$; the second panel graphs $f(\gamma(\lambda))$ for both curves with their tangent lines at $\lambda = 0$.
+
+      1. At the start the curves differ (one is bent). Compare their $(f\circ\gamma)'(0)$ for each field $x$, $y$, $x^2 + y$.
+      2. Press **Trap** and read the badge with $f = x$. Then switch to $f = y$.
+      3. Drag either blue handle until the badge says **Same velocity**. What must match?
+
+  - type: mcq
+    id: different-curves-same-v
+    prompt: |
+      On $\mathbb{R}^2$ take $p = (1, 1)$ and two curves through $p$ at $\lambda = 0$:
+      $$\gamma_1(\lambda) = p + \lambda\,(1, \tfrac12),$$
+      $$\gamma_2(\lambda) = p + \lambda\,(1, \tfrac12) + \lambda^2(0, -\tfrac34).$$
+      Which is true?
+    options:
+      - text: 'The curves are different, but $v_{\gamma_1,p} = v_{\gamma_2,p}$'
+        correct: true
+      - text: 'Different curves always give different velocities'
+        feedback: |
+          The bend term $\lambda^2(0, -\tfrac34)$ has derivative $2\lambda(0, -\tfrac34)$, which vanishes at $\lambda = 0$. So for every $f$ the chain rule gives the same $(f\circ\gamma)'(0)$ for both curves. Many curves share one velocity.
+      - text: 'They have the same velocity only for some fields $f$, so the velocities differ'
+        feedback: |
+          Agreement on one field would not be enough, true. But here the agreement holds for every $f$: $(f\circ\gamma)'(0)$ depends only on $p$ and the first-order term $(1, \tfrac12)$, which the two curves share.
+    explanation: |
+      Velocity forgets everything about a curve except its first-order behaviour at $p$. So each vector of $T_p\mathcal{M}$ (defined in a moment) is the velocity of infinitely many curves.
+
+  - type: text
+    id: chain-rule
+    title: What the machine sees in $\mathbb{R}^d$
+    body: |
+      Why does only the first-order term matter? In $\mathbb{R}^d$ we can compute. Write a smooth curve with $\gamma(0) = p$ in components, $\gamma(\lambda) = (\gamma^1(\lambda), \dots, \gamma^d(\lambda))$ (upper indices label components, they are not powers), and call
+      $$v^i := (\gamma^i)'(0)$$
+      its **components** at $p$. Let $\partial_i f$ be the ordinary partial derivative of $f$ with respect to its $i$-th entry. The multivariable chain rule differentiates $f(\gamma^1(\lambda), \dots, \gamma^d(\lambda))$ entry by entry.
+
+  - type: build
+    id: chain-build
+    prompt: |
+      In $\mathbb{R}^d$, let $\gamma$ be a smooth curve with $\gamma(0) = p$ and components $v^i := (\gamma^i)'(0)$, and let $f$ be a smooth function with partial derivatives $\partial_i f$. Build the multivariable chain rule for $(f\circ\gamma)'(0)$.
+    prefix: '(f\circ\gamma)''(0) ='
+    tiles: ['\sum_{i=1}^d', 'v^i', '\partial_i f(p)', '\partial_i f(0)', '\gamma^i(0)']
+    answers:
+      - ['\sum_{i=1}^d', 'v^i', '\partial_i f(p)']
+      - ['\sum_{i=1}^d', '\partial_i f(p)', 'v^i']
+    wrong:
+      - answer: ['\sum_{i=1}^d', 'v^i', '\partial_i f(0)']
+        feedback: |
+          $f$ lives on $\mathbb{R}^d$, not on the parameter line: its partial derivatives are evaluated at the point $\gamma(0) = p$, not at the parameter value $0$.
+      - answer: ['\sum_{i=1}^d', '\gamma^i(0)', '\partial_i f(p)']
+        feedback: |
+          $\gamma^i(0)$ is the $i$-th coordinate of the point $p$ itself, not a rate of change. The chain rule multiplies by the derivatives $(\gamma^i)'(0) = v^i$.
+      - answer: ['\sum_{i=1}^d', '\partial_i f(p)', '\gamma^i(0)']
+        feedback: |
+          $\gamma^i(0)$ is the $i$-th coordinate of the point $p$ itself, not a rate of change. The chain rule multiplies by the derivatives $(\gamma^i)'(0) = v^i$.
+    hint: Each entry of $f$ changes at rate $(\gamma^i)'(0)$, and $f$ responds to entry $i$ with $\partial_i f$ at the current point.
+    explanation: |
+      $$(f\circ\gamma)'(0) = \sum_{i=1}^d v^i\,\partial_i f(p).$$
+      Only $p$ and the components $v^i$ appear: the bend and every higher-order term drop out. And two curves with the same components give the same number for **every** $f$, so the same velocity.
+
+  - type: numeric
+    id: chain-number
+    prompt: |
+      On $\mathbb{R}^2$ take the curve $\gamma(\lambda) = (1 + 3\lambda,\ 1 - 2\lambda + \lambda^2)$ through $p = (1, 1)$ at $\lambda = 0$, and $f(q) = q_1^2 + q_2$. Use $(f\circ\gamma)'(0) = \sum_i v^i\,\partial_i f(p)$ to compute $v_{\gamma,p}(f)$.
+    answer: 4
+    wrong:
+      - value: 6
+        feedback: |
+          That is only the $i = 1$ term, $v^1\,\partial_1 f(p) = 3\cdot 2$. Add the $i = 2$ term $v^2\,\partial_2 f(p) = (-2)\cdot 1$.
+      - value: 1
+        feedback: |
+          That adds the components $3 + (-2)$ without the weights $\partial_i f(p)$. Here $\partial_1 f = 2q_1$ is $2$ at $p$, and $\partial_2 f = 1$.
+      - value: 2
+        feedback: |
+          The $\lambda^2$ term has zero derivative at $\lambda = 0$, so $v^2 = -2$, not $-2 + 2$. Only first-order terms count.
+    hint: 'Components: $v^1 = 3$, $v^2 = -2$. Partial derivatives at $p$: $\partial_1 f = 2q_1$ and $\partial_2 f = 1$.'
+    explanation: |
+      $v = (3, -2)$ and $\partial f(p) = (2, 1)$, so
+      $$v_{\gamma,p}(f) = 3\cdot 2 + (-2)\cdot 1 = 4.$$
+      Check directly: $f(\gamma(\lambda)) = (1 + 3\lambda)^2 + 1 - 2\lambda + \lambda^2$ has derivative $6 - 2 = 4$ at $0$.
+
+  - type: widget
+    id: chain-explore
+    title: The chain rule, live
+    widget: curve-velocity
+    config:
+      p: [1, 1]
+      f: theta
+      chain: true
+      curves:
+        - { v: [1, 0.5] }
+        - { v: [-1, 1] }
+    body: |
+      Curves through $p = (1, 1)$ at $\lambda = 0$. The field $\theta$ is the polar angle. It is smooth near $p$ (its jump lies on the positive $x$-axis, far away), and a derivative at $p$ only uses $f$ near $p$. The readout now expands $(f\circ\gamma)'(0) = \partial_1 f(p)\,v^1 + \partial_2 f(p)\,v^2$ in numbers.
+
+      1. Drag a blue handle along the dashed orange ray through $p$ (a level line of $\theta$). What is $(\theta\circ\gamma)'(0)$ there?
+      2. Switch to $f = x$, then $f = y$. Compare $(f\circ\gamma)'(0)$ with the components $(v^1, v^2)$.
+
+  - type: mcq
+    id: coordinate-functions
+    prompt: |
+      On $\mathbb{R}^2$ let $\gamma$ be a smooth curve through $p$ at $\lambda = 0$ with components $v^i = (\gamma^i)'(0)$. Take the coordinate function $y(q) = q_2$ as the scalar field. What is $v_{\gamma,p}(y)$?
+    options:
+      - text: '$v^2$'
+        correct: true
+      - text: '$v^1 + v^2$'
+        feedback: |
+          The chain rule weights each component by $\partial_i y(p)$. Here $\partial_1 y = 0$ ($y$ ignores $q_1$) and $\partial_2 y = 1$, so only $v^2$ survives.
+      - text: '$q_2$ evaluated at $p$'
+        feedback: |
+          That is $y(p)$, the value of the field, not its rate of change along $\gamma$. The velocity returns derivatives: $(y\circ\gamma)'(0) = (\gamma^2)'(0)$.
+    explanation: |
+      $(y\circ\gamma)(\lambda) = \gamma^2(\lambda)$, so $v_{\gamma,p}(y) = (\gamma^2)'(0) = v^2$; likewise $v_{\gamma,p}(x) = v^1$ for $x(q) = q_1$. Feeding the machine the coordinate functions **reads out the components**. So nothing is lost: in $\mathbb{R}^d$ the machine $v_{\gamma,p}$ knows the arrow $v$, and the arrow determines the machine.
+
+  - type: numeric
+    id: read-component
+    prompt: |
+      On $\mathbb{R}^2$ take the curve $\gamma(\lambda) = (1 + 3\lambda,\ 1 - 2\lambda + \lambda^2)$ through $p = (1, 1)$ at $\lambda = 0$, and the coordinate function $y(q) = q_2$. Compute $v_{\gamma,p}(y)$.
+    answer: -2
+    wrong:
+      - value: 3
+        feedback: |
+          That is the rate of the first coordinate, $v_{\gamma,p}(x)$ for $x(q) = q_1$. The field $y$ reads the second entry, $1 - 2\lambda + \lambda^2$.
+      - value: 1
+        feedback: |
+          That is $y(p)$, the value at $p$. The velocity returns the derivative of $y(\gamma(\lambda)) = 1 - 2\lambda + \lambda^2$ at $\lambda = 0$.
+    hint: $y(\gamma(\lambda))$ is just the second entry of $\gamma(\lambda)$.
+    explanation: |
+      $y(\gamma(\lambda)) = 1 - 2\lambda + \lambda^2$, with derivative $-2 + 2\lambda$, which is $-2$ at $0$. This is the component $v^2$.
+
+  - type: text
+    id: def-tangent-space
+    title: The tangent space $T_p\mathcal{M}$
+    body: |
+      On a general manifold we keep the machine and drop the arrow. The **tangent space** to $\mathcal{M}$ at $p$ is the set of all velocities at $p$:
+      $$T_p\mathcal{M} := \{v_{\gamma,p}\mid\gamma\text{ smooth through }p\}.$$
+      Its elements are called **vectors** (tangent vectors) at $p$. Each one is a linear map $C^\infty(\mathcal{M})\to\mathbb{R}$, and each is the velocity of many curves.
+
+      To be a vector space it needs an addition and a scalar multiplication. Both are defined field by field, the way $\oplus$ was defined point by point:
+      $$(v_{\gamma_1,p}\oplus_T v_{\gamma_2,p})(f) := v_{\gamma_1,p}(f) + v_{\gamma_2,p}(f),$$
+      $$(\alpha\odot_T v_{\gamma,p})(f) := \alpha\cdot v_{\gamma,p}(f).$$
+      The subscript $T$ marks operations on tangent vectors.
+
+  - type: mcq
+    id: resolve-hook
+    prompt: |
+      On $S^1$ with the angle chart $\theta$, curve $\gamma_1$ follows $\theta(\gamma_1(\lambda)) = \theta_p + \lambda$ and curve $\gamma_2$ follows $\theta(\gamma_2(\lambda)) = \theta_p + 2\lambda$, so $\gamma_2(\lambda) = \gamma_1(2\lambda)$. Both pass through $p$ at $\lambda = 0$. How are their velocities related?
+    options:
+      - text: '$v_{\gamma_2,p} = 2\odot_T v_{\gamma_1,p}$'
+        correct: true
+      - text: '$v_{\gamma_2,p} = v_{\gamma_1,p}$, since the two curves have the same image'
+        feedback: |
+          The velocity sees how fast the curve passes $p$, not just its path. By the chain rule, $(f\circ\gamma_2)'(0) = \frac{d}{d\lambda}f(\gamma_1(2\lambda))|_{0} = 2\,(f\circ\gamma_1)'(0)$ for every $f$.
+      - text: '$v_{\gamma_2,p} = \tfrac12\odot_T v_{\gamma_1,p}$'
+        feedback: |
+          $\gamma_2$ reaches each angle in half the parameter time, so fields change **faster** along it. The chain rule gives $\frac{d}{d\lambda}f(\gamma_1(2\lambda)) = 2\,(f\circ\gamma_1)'(2\lambda)$: a factor $2$, not $\tfrac12$.
+    explanation: |
+      For every $f$, $(f\circ\gamma_2)'(0) = 2\,(f\circ\gamma_1)'(0) = (2\odot_T v_{\gamma_1,p})(f)$, so the two maps are equal. This settles the opening question without any plane around $S^1$: twice as fast means twice the velocity, as an equation in $T_p S^1$.
+
+  - type: numeric
+    id: sum-number
+    prompt: |
+      On $\mathbb{R}^2$, $\gamma_1(\lambda) = (\lambda, 1)$ passes through $p = (1, 1)$ at $\lambda_0 = 1$, and $\gamma_2(\lambda) = (1, 2\lambda)$ passes through $p$ at $\lambda_0 = \tfrac12$. For $f(q) = q_1^2 + q_2$, compute $(v_{\gamma_1,p}\oplus_T v_{\gamma_2,p})(f)$.
+    answer: 4
+    wrong:
+      - value: 2
+        feedback: |
+          Each velocity alone gives $2$: $f(\gamma_1(\lambda)) = \lambda^2 + 1$ has derivative $2$ at $\lambda = 1$, and $f(\gamma_2(\lambda)) = 1 + 2\lambda$ has derivative $2$. The sum $\oplus_T$ adds the two numbers.
+    hint: By definition, $(v_{\gamma_1,p}\oplus_T v_{\gamma_2,p})(f) = v_{\gamma_1,p}(f) + v_{\gamma_2,p}(f)$.
+    explanation: |
+      $2 + 2 = 4$. Check with components: the sum has components $(1, 0) + (0, 2) = (1, 2)$, and $\sum_i v^i\,\partial_i f(p) = 1\cdot 2 + 2\cdot 1 = 4$.
+
+  - type: mcq
+    id: sum-curve
+    prompt: |
+      For velocities $v_{\gamma_1,p}, v_{\gamma_2,p}\in T_p\mathcal{M}$ on a smooth manifold $\mathcal{M}$, the sum $\oplus_T$ is defined field by field. For $T_p\mathcal{M}$ to be closed under it, the sum must again be the velocity of some curve through $p$. Why not simply take the curve $\lambda\mapsto\gamma_1(\lambda) + \gamma_2(\lambda)$?
+    options:
+      - text: 'Points of a manifold cannot be added; even in $\mathbb{R}^2$ that curve passes through $2p$ at $\lambda = 0$, not through $p$'
+        correct: true
+      - text: 'It works, but only when both curves pass through $p$ at the same $\lambda_0$'
+        feedback: |
+          Even with matching parameters, $\gamma_1(\lambda_0) + \gamma_2(\lambda_0) = p + p$, which needs an addition of points that a manifold does not have. In $\mathbb{R}^2$, where it exists, the result is $2p$, the wrong point.
+      - text: 'It works on every manifold, because $\oplus$ already adds functions point by point'
+        feedback: |
+          $\oplus$ adds the **values** of two functions, which are real numbers. A curve's values are points of $\mathcal{M}$, and there is no rule for adding points.
+    explanation: |
+      The fix is to add in a chart: add the chart representatives $\mathscr{X}\circ\gamma_1$ and $\mathscr{X}\circ\gamma_2$ in $\mathbb{R}^d$, subtract $\mathscr{X}(p)$ to stay at $p$, and map back. The resulting **curve** depends on the chart, yet its **velocity** does not, and it equals $v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}$. Proving this is the next guided problem.
+
+  - type: text
+    id: physics
+    title: 'Physics: the four-velocity'
+    body: |
+      In relativity a particle traces a **worldline**, a curve $\gamma$ in spacetime $\mathcal{M}$, usually parametrized by its proper time $\tau$ (the time its own clock reads; defined with the metric, Level 7). Its **four-velocity** at the event $p = \gamma(\tau_0)$ is exactly $v_{\gamma,p}\in T_p\mathcal{M}$.
+
+      No arrow sticks out of spacetime, and none is needed. If $T$ is a temperature field on spacetime, then
+      $$v_{\gamma,p}(T) = (T\circ\gamma)'(\tau_0)$$
+      is the rate at which a thermometer carried by the particle sees the temperature change, per tick of its own clock. The four-velocity is the machine that answers "how fast does this field change for this observer?" for every field at once.
+
+  - type: mcq
+    id: physics-meaning
+    prompt: |
+      A particle moves along a worldline $\gamma$ in spacetime $\mathcal{M}$, parametrized by its proper time $\tau$ (the time on its own clock), and is at the event $p = \gamma(\tau_0)$. $T$ is a smooth temperature field on $\mathcal{M}$. What does $v_{\gamma,p}(T)$ measure?
+    options:
+      - text: 'The rate at which the particle''s thermometer reading changes, per unit of its own time, at $p$'
+        correct: true
+      - text: 'The temperature at the event $p$'
+        feedback: |
+          That is $T(p)$, the value of the field. The velocity returns a derivative, $(T\circ\gamma)'(\tau_0)$: how fast the reading changes, not what it reads.
+      - text: 'How fast the temperature changes at $p$ in time, the same for every observer'
+        feedback: |
+          Different worldlines through $p$ give different numbers: an observer moving towards a heater sees $T$ rise faster than one at rest. $v_{\gamma,p}(T)$ depends on the curve, which is why it describes a velocity.
+    explanation: |
+      $v_{\gamma,p}(T) = (T\circ\gamma)'(\tau_0)$ is the rate of change of $T$ along this particular worldline at $p$. Swap $T$ for any other field and the same four-velocity gives that field's rate; together these numbers are the vector.
+
+  - type: text
+    id: wrap-up
+    title: What you now own
+    body: |
+      - **Velocity without arrows:** for a smooth curve $\gamma$ through $p$ at $\lambda_0$,
+      $$v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0),$$
+      a linear map $C^\infty(\mathcal{M})\to\mathbb{R}$. It uses only curves and scalar fields, so it works on any manifold, with no surrounding space.
+      - Two velocities are equal when they agree on **every** field; agreeing on one is not enough. Different curves (one bent, one straight) can share one velocity.
+      - In $\mathbb{R}^d$: $(f\circ\gamma)'(0) = \sum_{i=1}^d v^i\,\partial_i f(p)$, and the coordinate functions read out the components $v^i$.
+      - The **tangent space** $T_p\mathcal{M}$: all velocities at $p$, with $\oplus_T$ and $\odot_T$ defined field by field. Twice as fast gives $2\odot_T v$. The four-velocity of a worldline lives here.
+
+      **Next:** a guided problem. Is $v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}$ really the velocity of some curve? Add the curves in a chart, watch the curve change with the chart, and prove that its velocity does not.

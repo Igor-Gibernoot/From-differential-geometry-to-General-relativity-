@@ -17,9 +17,9 @@ append a short entry at the end of **Log** (a few lines, ending with
   Challenge file layout (reuse for later levels): `intro` (numbered problem
   list), one block per problem with `tag: Problem N · …` and ids `pN-…`, then
   `wrap-up` ending with a teaser for the next level.
+- **Chapter 4 in progress:** `ch04-tangent-space` built (26 cards).
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, starting with `ch04-tangent-space` (its widget `curve-velocity` is
-  built); then Chapters 5–10 (each with
+  order, next `ch04-velocity-operations`; then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -50,6 +50,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\gamma_1$ (solid) and $\gamma_2$ (dashed); components
   $v^i = (\mathscr{X}^i\circ\gamma)'(0)$ in blue, $v^\theta$ on $S^1$; scalar
   field presets $x$, $y$, $x^2+y$, $\theta$; level lines of $f$ dashed orange.
+  Velocity $v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0)$, a map
+  $C^\infty(\mathcal{M})\to\mathbb{R}$; points of $\mathbb{R}^2$ are $q = (q_1, q_2)$,
+  coordinate functions $x(q) = q_1$, $y(q) = q_2$; curve components
+  $\gamma^i$, $v^i := (\gamma^i)'(0)$, partials $\partial_i f(p)$; chain rule
+  written $\sum_{i=1}^d v^i\,\partial_i f(p)$ (explicit sums until `ch04-einstein`);
+  $\oplus_T$, $\odot_T$ defined field by field; C.3 running example
+  $\gamma_1(\lambda) = (\lambda, 1)$ at $\lambda_0 = 1$, $\gamma_2(\lambda) = (1, 2\lambda)$
+  at $\lambda_0 = \tfrac12$, $p = (1,1)$, $f = q_1^2 + q_2$ (both give 2).
+  Polar angle $\theta$ used in the plane only as "smooth near $p$".
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -59,6 +68,19 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Built `ch04-tangent-space` (concept, 26 cards, 3 widgets): hook (velocity on
+$S^1$ with no plane; predict $\theta_p+\lambda$ vs $\theta_p+2\lambda$), circle
+widget + bend MCQ, recall curves/$C^\infty(\mathcal{M})$, why $f\circ\gamma$ is
+differentiable, definition, linearity order card, C.3 numerics (2 and 2) and
+"one f is not enough", plane widget (Trap preset), chain-rule build + numerics,
+chain widget with θ, coordinate functions read components, $T_p\mathcal{M}$ with
+$\oplus_T,\odot_T$, hook resolved as $2\odot_T v$, sum numeric (4), why not
+$\gamma_1+\gamma_2$ (tease next lesson), four-velocity + thermometer MCQ, wrap-up.
+Choices: f = q₁ on $S^1$ (globally smooth; θ is only a chart); θ in the plane
+flagged "smooth near p". Conventions fixed here: velocity, $q=(q_1,q_2)$, $x,y$
+coordinate functions, $\gamma^i$, $v^i$, explicit chain-rule sum, C.3 example
+(see Current).
 
 Widget `curve-velocity` (for `ch04-tangent-space`): plane or `circle: true`
 ($S^1$, θ chart); two curves through $p$ at λ = 0, velocity handle (blue tip)

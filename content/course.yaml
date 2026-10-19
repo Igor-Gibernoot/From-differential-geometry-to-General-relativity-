@@ -144,7 +144,11 @@ levels:
     title: Tangent Spaces
     blurb: Vectors on a curved space are velocities of curves, and $T_p\mathcal{M}$ is where they live.
     lessons:
-      - { id: ch04-tangent-space, title: Curves and the Tangent Space, kind: concept }
+      - id: ch04-tangent-space
+        title: Curves and the Tangent Space
+        kind: concept
+        file: ch04/tangent-space.yaml
+        summary: With no space around a manifold, what is a velocity? Velocities as rates of change of scalar fields along curves, and the tangent space $T_p\mathcal{M}$.
       - { id: ch04-velocity-operations, title: "Guided Problem: Adding Velocities with Curves", kind: guided }
       - { id: ch04-coordinate-basis, title: Coordinate Bases and the Jacobian, kind: concept }
       - { id: ch04-chart-basis, title: "Guided Problem: The Chart-Induced Basis", kind: guided }
