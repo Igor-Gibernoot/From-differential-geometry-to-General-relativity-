@@ -207,6 +207,32 @@ each session with `/clear` and a prompt naming **one unit of work**.
   then **give Igor a ready-to-paste prompt for the next session** naming
   the single next unit from `course.yaml`, with a card plan of about 10
   lines (hook, widget, key questions, summary), and the book lines to read.
+  End the Status entry with one line "Conventions fixed here: …"
+  (notation, names, choices the next units must reuse).
+
+### Autonomous mode (agents, one unit each)
+
+Igor can ask for several units in a row (e.g. "until the end of Chapter 3").
+Then the main session is a **coordinator**: it builds nothing itself.
+- For each unit, in `course.yaml` order and **strictly sequentially** (never
+  in parallel), spawn one fresh agent (model: Opus) whose prompt is the
+  ready-to-paste unit prompt plus: "You are running autonomously: follow
+  CLAUDE.md 'Building sessions' exactly, one unit only; you cannot ask Igor
+  questions, so make reasonable choices and record them in Status; at the
+  end, validate, run shots, update Status, commit and push, then reply with
+  a short report (what was built, checks output, conventions fixed, any
+  doubts) and the next unit's prompt."
+- Between units the coordinator reads the report, spot-checks the new
+  lesson (grep a few cards: notation consistent with earlier lessons, the
+  previous teaser honored, no concept used before it is introduced, math
+  of guided steps), fixes or sends the agent back if needed, then adds to
+  the next prompt what the previous lesson promised and which notation it
+  fixed.
+- Traps, map and challenge agents read the chapter's earlier lesson files
+  (grep titles and key cards) so they build on what was actually taught.
+- **Stop at the end of each level** (after its challenge) and give Igor a
+  summary of the units, any doubts, and the prompt to continue with the
+  next level, so he can review the level on the live site first.
 
 ### Status (2026-10-19, Chapter 2 complete, Chapter 3 in progress)
 
