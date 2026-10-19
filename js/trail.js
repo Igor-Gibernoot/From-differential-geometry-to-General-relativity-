@@ -18,13 +18,11 @@ export async function renderTrail(root) {
   const allIds = course.levels.flatMap(l => (l.lessons ?? []).map(m => m.id));
   const acc = progress.accuracy(allIds);
 
-  // The first built lesson not yet done gets the "start here" marker; its
-  // level is the current one, and the course title takes that level's hue.
+  // The first built lesson not yet done gets the "start here" marker.
   const nextId = course.levels.flatMap(l => l.lessons ?? []).find(m => m.file && !progress.lesson(m.id)?.done)?.id;
-  const currentLevel = Math.max(0, course.levels.findIndex(l => (l.lessons ?? []).some(m => m.id === nextId)));
 
   const top = h('header', { class: 'topbar' },
-    h('h1', { class: 'course-title', 'data-hue': currentLevel % 6 }, ...titleLines(course.title)),
+    h('h1', { class: 'course-title', 'data-hue': 0 }, ...titleLines(course.title)),
     h('div', { class: 'toolbar' },
       acc != null ? h('span', { class: 'chip acc', tabindex: 0, 'data-tip': 'Average first-try accuracy over the lessons you finished', html: `${icons.target}<span>${pct(acc)}</span>` }) : null,
       h('span', { class: 'chip streak', tabindex: 0, 'data-tip': 'Days in a row you studied', html: `${icons.flame}<span>${streak}</span>` }),
@@ -82,6 +80,24 @@ export async function renderTrail(root) {
     const el = root.querySelector('.node.next');
     el?.scrollIntoView({ block: 'center' });
   }
+  followLevelHue(root.querySelector('.course-title'), [...root.querySelectorAll('section.level')]);
+}
+
+// The course title takes the hue of the level on screen: the one crossing a
+// line a third of the way down the area below the sticky top bar.
+function followLevelHue(title, sections) {
+  let queued = false;
+  const update = () => {
+    queued = false;
+    if (!title.isConnected) return removeEventListener('scroll', onScroll);
+    const bar = title.parentElement.getBoundingClientRect().bottom;
+    const line = bar + (innerHeight - bar) / 3;
+    const cur = sections.findLast(s => s.getBoundingClientRect().top <= line) ?? sections[0];
+    if (cur && title.dataset.hue !== cur.dataset.hue) title.dataset.hue = cur.dataset.hue;
+  };
+  const onScroll = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+  addEventListener('scroll', onScroll, { passive: true });
+  update();
 }
 
 const SPECIAL = ['map', 'review', 'challenge'];

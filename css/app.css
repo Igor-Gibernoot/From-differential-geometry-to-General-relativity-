@@ -475,7 +475,7 @@ a { color: var(--accent); }
 .level:not(.unwritten) .level-head .meter { background: color-mix(in srgb, var(--accent-text) 25%, transparent); }
 .level:not(.unwritten) .level-head .meter > div { background: var(--accent-text); }
 
-/* Course title: the current level's gradient (it carries that level's data-hue) */
+/* Course title: the gradient of the level on screen (trail.js updates its data-hue on scroll) */
 .topbar .course-title[data-hue] {
   background: linear-gradient(125deg, var(--hue-deep) 0%, var(--accent) 50%, var(--hue-light) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent;
