@@ -148,6 +148,8 @@ function accountPanel() {
   return panel;
 }
 
+const BUILD = '2026-10-18.3 (reset epoch)';
+
 function settings() {
   const code = h('textarea', { readonly: true, 'aria-label': 'Your progress code' });
   code.value = progress.exportCode();
@@ -194,7 +196,11 @@ function settings() {
       h('button', {
         class: 'btn ghost', type: 'button',
         onclick: () => { if (confirm('Erase all progress in this browser (and in your account, if you are signed in)?')) { progress.reset(); flushCloud(); location.hash = '#/'; } },
-      }, 'Reset progress'))));
+      }, 'Reset progress')),
+    h('div', { class: 'panel' },
+      h('h3', {}, 'About this build'),
+      h('p', {}, `Build ${BUILD}`),
+      h('p', {}, `Reset epoch: ${progress.snapshot().epoch ?? 'none (older data)'}. Lessons done here: ${Object.values(progress.snapshot().lessons).filter(l => l.done).length}.`))));
 }
 
 window.addEventListener('hashchange', route);
