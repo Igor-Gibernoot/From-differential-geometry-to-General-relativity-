@@ -1,0 +1,309 @@
+id: ch03-open-sets
+title: Topological Spaces and Open Sets
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: Nearby, without a ruler
+    body: |
+      Physics says "nearby" all the time: a limit, a trajectory with no jumps, a small perturbation. In ordinary calculus, "nearby" means "at small distance".
+
+      General Relativity breaks this habit. There, the distances between events are what Einstein's equations **solve for** (later in the course, the metric is the unknown). Yet before solving anything we already need to say which events are close to which, and which maps do not tear spacetime apart.
+
+      So we need a notion of "nearby" that uses **no distance at all**. The idea: instead of measuring, just declare which regions count as **open**. Think of an open region as one that contains none of its own edge, like the inside of a disc without its rim: every point of it has some room around it inside the region.
+
+  - type: mcq
+    id: predict-choice
+    prompt: |
+      Suppose a set of points comes with no distance, only a list of the regions declared **open** (regions in which every point has some room around it). Before any rules: does the set itself decide which regions are open?
+    options:
+      - text: No. Declaring the open regions is an extra choice, and one set can carry several different choices
+        correct: true
+      - text: Yes. Once you know the points, the open regions are fixed
+        feedback: |
+          Tempting, because on the real line we never had to choose: "open interval" seemed to come with the numbers. But it came with the **distance** we used to define it. A bare set of points has no distance, so nothing singles out one family of open regions.
+      - text: No. Every region of every set is open
+        feedback: |
+          That is one possible choice (it even has a name, you will meet it in this lesson), but it is not forced. Other choices declare fewer regions open.
+    explanation: |
+      A bare set has no built-in notion of "room". Declaring which subsets are open is extra structure, and the same set can carry several different declarations. By the end of this lesson you will count exactly how many there are on a set with two points.
+
+  - type: text
+    id: powerset
+    title: All the subsets at once
+    body: |
+      A choice of open sets is a collection of subsets of $\mathcal{M}$. (The letter $\mathcal{M}$ is for "manifold": this set will become one later in the course. For now it is any set.)
+
+      A **subset** $\mathcal{U}\subseteq\mathcal{M}$ is a set whose elements all lie in $\mathcal{M}$. The **empty set** $\emptyset$, with no elements, is a subset of every set, and so is $\mathcal{M}$ itself.
+
+      The **powerset** $\mathcal{P}(\mathcal{M})$ is the set of **all** subsets of $\mathcal{M}$. For $\mathcal{M} = \{a, b\}$:
+      $$\mathcal{P}(\mathcal{M}) = \big\{\emptyset, \{a\}, \{b\}, \{a, b\}\big\}.$$
+      Its elements are themselves sets. A choice of open sets will be a subset of $\mathcal{P}(\mathcal{M})$: some subsets are declared open, the rest are not.
+
+  - type: numeric
+    id: powerset-size
+    prompt: |
+      The powerset $\mathcal{P}(\mathcal{M})$ is the set of **all** subsets of $\mathcal{M}$, including $\emptyset$ and $\mathcal{M}$ itself. How many elements does $\mathcal{P}(\{a, b, c\})$ have?
+    answer: 8
+    wrong:
+      - value: 3
+        feedback: |
+          That counts the elements of $\mathcal{M}$. The powerset collects **subsets**: $\{a\}$, $\{a, b\}$, $\emptyset$, and so on.
+      - value: 6
+        feedback: |
+          You counted the subsets with one or two elements. The empty set $\emptyset$ and the whole set $\{a, b, c\}$ are subsets too.
+      - value: 7
+        feedback: |
+          Almost: did you leave out $\emptyset$ or $\{a, b, c\}$? Both are subsets.
+    hint: For each of the three elements, a subset either contains it or not.
+    explanation: |
+      Each element is either in a subset or not: $2\cdot 2\cdot 2 = 8$ choices. They are $\emptyset$; $\{a\}, \{b\}, \{c\}$; $\{a,b\}, \{a,c\}, \{b,c\}$; and $\{a,b,c\}$. A set with $n$ elements has $2^n$ subsets.
+
+  - type: text
+    id: def-topology
+    title: The rules for open sets
+    body: |
+      Which families of "regions with room" make sense? Three requirements, all phrased without distance:
+
+      1. The empty region and the whole space have room: $\emptyset$ and $\mathcal{M}$ are open.
+      2. Where two regions with room overlap, the overlap has room: the **intersection** $\mathcal{U}\cap\mathcal{V}$ (the points in both) of two open sets is open.
+      3. Gluing any number of regions with room gives a region with room: the **union** (the points in at least one) of any family of open sets is open.
+
+      Formally, a subset $\mathcal{O}\subseteq\mathcal{P}(\mathcal{M})$ is a **topology** on $\mathcal{M}$, written $\mathcal{O}_\mathcal{M}$, if
+
+      $$\begin{gathered}\emptyset\in\mathcal{O}_\mathcal{M},\\ \mathcal{M}\in\mathcal{O}_\mathcal{M},\\ \mathcal{U}, \mathcal{V}\in\mathcal{O}_\mathcal{M}\ \Rightarrow\ \mathcal{U}\cap\mathcal{V}\in\mathcal{O}_\mathcal{M},\\ \textstyle \mathcal{U}_\alpha\in\mathcal{O}_\mathcal{M}\ \forall\alpha\ \Rightarrow\ \bigcup_\alpha \mathcal{U}_\alpha\in\mathcal{O}_\mathcal{M}.\end{gathered}$$
+
+      In the last rule $\alpha$ runs over any **index set** (a set of labels, one per member of the family): finite, countably infinite, or bigger. Recall $\forall$ reads "for all".
+
+      The members of $\mathcal{O}_\mathcal{M}$ are the **open sets**, and the pair $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ is a **topological space**.
+
+  - type: mcq
+    id: nested
+    prompt: |
+      On $\mathcal{M} = \{a, b, c\}$, consider
+      $$\mathcal{O} = \big\{\emptyset, \{a\}, \{a, b\}, \mathcal{M}\big\}.$$
+      Is $\mathcal{O}$ a topology? (A topology contains $\emptyset$ and $\mathcal{M}$, and is closed under intersections of two members and under unions of any family of members.)
+    options:
+      - text: Yes
+        correct: true
+      - text: No, because $\{b\}$ and $\{c\}$ are missing
+        feedback: |
+          A topology does not have to contain every subset. The rules only ask that intersections and unions of members stay inside the family. Nothing forces $\{b\}$ in, since no intersection or union of members produces it.
+      - text: No, because $\{a\}\cup\{a, b\}$ is not in $\mathcal{O}$
+        feedback: |
+          $\{a\}\cup\{a, b\} = \{a, b\}$, which is in $\mathcal{O}$. A union is the set of points in **at least one** of the sets, so it never has more elements than the members combined.
+    explanation: |
+      The members are **nested**:
+      $$\emptyset\subseteq\{a\}\subseteq\{a,b\}\subseteq\mathcal{M}.$$
+      So the intersection of two members is the smaller one, and the union of any family is its largest member (or $\emptyset$ for the empty family). Both stay in $\mathcal{O}$, and $\emptyset, \mathcal{M}$ are in by construction. So $(\mathcal{M}, \mathcal{O})$ is a topological space.
+
+  - type: mcq
+    id: which-rule-fails
+    prompt: |
+      On $\mathcal{M} = \{a, b, c\}$, consider
+      $$\mathcal{O}' = \big\{\emptyset, \{a\}, \{b\}, \mathcal{M}\big\}.$$
+      Recall the three rules for a topology: (1) it contains $\emptyset$ and $\mathcal{M}$; (2) the intersection of two members is a member; (3) any union of members is a member. Which rule fails?
+    options:
+      - text: Rule (3), unions
+        correct: true
+      - text: Rule (2), intersections
+        feedback: |
+          Check every pair: $\{a\}\cap\{b\} = \emptyset$, which is a member, and any member intersected with $\emptyset$ or $\mathcal{M}$ gives a member back. Intersections are fine. Look at what you get by **gluing** $\{a\}$ and $\{b\}$.
+      - text: Rule (1)
+        feedback: |
+          Both $\emptyset$ and $\mathcal{M}$ are listed. The problem is elsewhere.
+      - text: None, it is a topology
+        feedback: |
+          Glue the two single points together: $\{a\}\cup\{b\} = \{a, b\}$. Is $\{a, b\}$ in $\mathcal{O}'$?
+    explanation: |
+      $\{a\}\cup\{b\} = \{a, b\}\notin\mathcal{O}'$, so rule (3) fails. A family can be closed under intersections and still fail under unions: **every rule must be checked**.
+
+  - type: mcq
+    id: which-are-topologies
+    multiple: true
+    prompt: |
+      Which of these families are topologies on $\mathcal{M} = \{a, b, c\}$? A topology contains $\emptyset$ and $\mathcal{M}$, contains the intersection of any two members, and contains the union of any family of members. Select all that apply.
+    options:
+      - text: '$\big\{\emptyset, \{c\}, \mathcal{M}\big\}$'
+        correct: true
+      - text: '$\big\{\emptyset, \{a\}, \{b\}, \{a, b\}, \mathcal{M}\big\}$'
+        correct: true
+      - text: '$\big\{\emptyset, \{a, b\}, \{b, c\}, \mathcal{M}\big\}$'
+        feedback: |
+          The two middle sets overlap in $\{a,b\}\cap\{b,c\} = \{b\}$, which is not in the family. Rule (2) fails: overlaps of open sets must be open.
+      - text: '$\big\{\{a\}, \{a, b\}, \mathcal{M}\big\}$'
+        feedback: |
+          $\emptyset$ is missing, so rule (1) fails. (It is also forced by rule (2): two **disjoint** open sets would intersect in $\emptyset$, and by rule (3): the union of the empty family is $\emptyset$.)
+    explanation: |
+      $\{\emptyset, \{c\}, \mathcal{M}\}$ is nested, so it is closed under both operations. In the second family, $\{a\}\cap\{b\} = \emptyset$ and $\{a\}\cup\{b\} = \{a,b\}$ are members, and every other combination gives a member back. The third fails rule (2) at $\{b\}$, the fourth fails rule (1).
+
+  - type: mcq
+    id: finite-intersections
+    prompt: |
+      Rule (2) of a topology only says: if $\mathcal{U}$ and $\mathcal{V}$ are open, then $\mathcal{U}\cap\mathcal{V}$ is open. Let $\mathcal{U}_1, \mathcal{U}_2, \mathcal{U}_3$ be open. Is $\mathcal{U}_1\cap\mathcal{U}_2\cap\mathcal{U}_3$ open?
+    options:
+      - text: 'Yes: it equals $(\mathcal{U}_1\cap\mathcal{U}_2)\cap\mathcal{U}_3$, and rule (2) applies twice'
+        correct: true
+      - text: Not necessarily, since rule (2) only talks about two sets
+        feedback: |
+          Rule (2) can be applied repeatedly. $\mathcal{U}_1\cap\mathcal{U}_2$ is open by rule (2), and it is just another open set, so intersecting it with $\mathcal{U}_3$ is again covered by rule (2).
+      - text: 'Yes, and the same argument shows that any intersection of open sets, even infinitely many, is open'
+        feedback: |
+          Repeating rule (2) reaches any **finite** number of sets, one step at a time, but never infinitely many: the repetition never ends. Whether infinite intersections can fail is the subject of the next lesson.
+    explanation: |
+      By repeating rule (2), the intersection of any **finite** number of open sets is open:
+      $$\mathcal{U}_1\cap\mathcal{U}_2\cap\mathcal{U}_3 = (\mathcal{U}_1\cap\mathcal{U}_2)\cap\mathcal{U}_3.$$
+      Notice the asymmetry between the rules: unions of **any** family, intersections only of finitely many. That asymmetry is deliberate.
+
+  - type: text
+    id: disc-indisc
+    title: Two topologies that every set has
+    body: |
+      Whatever the set $\mathcal{M}$, two topologies always exist. The **discrete topology** declares **every** subset open:
+      $$\mathcal{O}_{\text{disc}} := \mathcal{P}(\mathcal{M}).$$
+      The **indiscrete topology** declares open only the two subsets that rule (1) forces:
+      $$\mathcal{O}_{\text{indisc}} := \{\emptyset, \mathcal{M}\}.$$
+      They are the two extremes. On $\{a, b, c\}$ the discrete topology has 8 open sets, the indiscrete one has 2, and the nested topology $\{\emptyset, \{a\}, \{a,b\}, \mathcal{M}\}$ sits strictly between them. So one set really does carry several topologies.
+
+  - type: mcq
+    id: indisc-unions
+    prompt: |
+      The indiscrete topology on a set $\mathcal{M}$ is $\mathcal{O}_{\text{indisc}} = \{\emptyset, \mathcal{M}\}$. To check rule (3), take any family of its members and form the union. What can the union be?
+    options:
+      - text: '$\mathcal{M}$ if the family contains $\mathcal{M}$, otherwise $\emptyset$'
+        correct: true
+      - text: Always $\mathcal{M}$
+        feedback: |
+          A family made only of copies of $\emptyset$ (or the empty family, with no members at all) has union $\emptyset$: there is no point in any member.
+      - text: Possibly some other subset of $\mathcal{M}$, so rule (3) can fail
+        feedback: |
+          A union only contains points that lie in some member. The members are $\emptyset$ (no points) and $\mathcal{M}$ (all points), so the union is either all of $\mathcal{M}$ or nothing.
+    explanation: |
+      If $\mathcal{M}$ is among the united sets, the union contains all of $\mathcal{M}$, and it cannot contain more, so it equals $\mathcal{M}$. Otherwise every member is $\emptyset$ and the union is $\emptyset$. Either way it is a member. Intersections work the same way ($\emptyset\cap\mathcal{M} = \emptyset$), so $\{\emptyset, \mathcal{M}\}$ is a topology on every set.
+
+  - type: text
+    id: closed
+    title: Closed sets
+    body: |
+      The **complement** of $\mathcal{C}\subseteq\mathcal{M}$ is the set of points of $\mathcal{M}$ not in $\mathcal{C}$:
+      $$\mathcal{M}\setminus\mathcal{C} := \{p\in\mathcal{M} \mid p\notin\mathcal{C}\}.$$
+      A set $\mathcal{C}$ is **closed** if its complement is open:
+      $$\mathcal{C}\ \text{closed}\iff\mathcal{M}\setminus\mathcal{C}\in\mathcal{O}_\mathcal{M}.$$
+      On the line this matches intuition: the closed interval $[0, 1]$ has complement $(-\infty, 0)\cup(1, \infty)$, a region with room everywhere.
+
+      Despite the names, **closed is not the opposite of open**. A set can be open, closed, both (**clopen**), or neither. The next questions show all four.
+
+  - type: mcq
+    id: four-cases
+    prompt: |
+      On $\mathcal{M} = \{a, b, c\}$ take the topology
+      $$\mathcal{O} = \big\{\emptyset, \{a\}, \{a, b\}, \mathcal{M}\big\}.$$
+      A set is closed when its complement is open. What is the subset $\{b\}$?
+    options:
+      - text: Neither open nor closed
+        correct: true
+      - text: Closed, because it is not open
+        feedback: |
+          "Not open" does not mean "closed". Closed means the **complement** is open. The complement of $\{b\}$ is $\{a, c\}$, which is not in $\mathcal{O}$ either.
+      - text: Open
+        feedback: |
+          $\{b\}$ is not in the list $\mathcal{O}$, and a set is open exactly when it is in the list.
+      - text: Clopen
+        feedback: |
+          Clopen needs both $\{b\}$ and its complement $\{a, c\}$ in $\mathcal{O}$. Neither is.
+    explanation: |
+      The complements of the four open sets are $\mathcal{M}$, $\{b,c\}$, $\{c\}$ and $\emptyset$, so those are the closed sets. Then:
+
+      - $\{a\}$ is open, not closed;
+      - $\{c\}$ is closed, not open;
+      - $\emptyset$ and $\mathcal{M}$ are clopen;
+      - $\{b\}$ is neither.
+
+  - type: mcq
+    id: always-clopen
+    prompt: |
+      Let $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ be **any** topological space (a set with a topology). A set is closed when its complement is open. Are $\emptyset$ and $\mathcal{M}$ closed?
+    options:
+      - text: Yes, always. They are open by rule (1), and each is the complement of the other
+        correct: true
+      - text: Only in the discrete topology, where every subset is open
+        feedback: |
+          No special topology is needed. The complement of $\emptyset$ is $\mathcal{M}$, which every topology contains, and the complement of $\mathcal{M}$ is $\emptyset$, also always open.
+      - text: No, $\mathcal{M}$ is open, so it cannot be closed
+        feedback: |
+          Open and closed are not opposites. $\mathcal{M}$ is closed because its complement, $\emptyset$, is open.
+    explanation: |
+      $\mathcal{M}\setminus\emptyset = \mathcal{M}$ and $\mathcal{M}\setminus\mathcal{M} = \emptyset$, both open by rule (1). So $\emptyset$ and $\mathcal{M}$ are clopen in **every** topology.
+
+  - type: mcq
+    id: discrete-clopen
+    prompt: |
+      In the discrete topology $\mathcal{O}_{\text{disc}} = \mathcal{P}(\mathcal{M})$, every subset of $\mathcal{M}$ is open. Which subsets are closed?
+    options:
+      - text: Every subset, so every subset is clopen
+        correct: true
+      - text: Only $\emptyset$ and $\mathcal{M}$
+        feedback: |
+          Take any $\mathcal{C}\subseteq\mathcal{M}$. Its complement $\mathcal{M}\setminus\mathcal{C}$ is also a subset of $\mathcal{M}$, hence open in the discrete topology. So $\mathcal{C}$ is closed.
+      - text: None, since all of them are open
+        feedback: |
+          Being open does not stop a set from being closed. Closed only asks that the complement be open, and here every complement is open.
+    explanation: |
+      For any $\mathcal{C}\subseteq\mathcal{M}$, both $\mathcal{C}$ and $\mathcal{M}\setminus\mathcal{C}$ are subsets of $\mathcal{M}$, hence open. So every subset is clopen. The same subset can be open in one topology and not in another: $\{b\}$ is open in the discrete topology on $\{a, b, c\}$ but not in $\{\emptyset, \{a\}, \{a,b\}, \mathcal{M}\}$. **"Open" only means something relative to a chosen topology.**
+
+  - type: numeric
+    id: count-two-points
+    prompt: |
+      Back to the opening question: does a set decide its own open sets? Count them. How many different topologies are there on the two-point set $\mathcal{M} = \{a, b\}$? (A topology is a family of subsets that contains $\emptyset$ and $\mathcal{M}$, contains the intersection of any two members, and contains the union of any family of members.)
+    answer: 4
+    wrong:
+      - value: 2
+        feedback: |
+          The discrete and indiscrete topologies are two of them, but there are others in between. Could a family containing $\{a\}$ but not $\{b\}$ be a topology?
+      - value: 16
+        feedback: |
+          That counts all families of subsets ($2^4$, since $\mathcal{P}(\mathcal{M})$ has 4 elements). But every topology **must** contain $\emptyset$ and $\{a, b\}$, which leaves far fewer choices.
+      - value: 3
+        feedback: |
+          You may have counted $\{\emptyset, \{a\}, \mathcal{M}\}$ and $\{\emptyset, \{b\}, \mathcal{M}\}$ as one. They are different families: one declares $\{a\}$ open, the other $\{b\}$.
+    hint: Every topology contains $\emptyset$ and $\{a, b\}$. The only freedom left is whether $\{a\}$ and $\{b\}$ are in. Check each of the four choices against the rules.
+    explanation: |
+      $\emptyset$ and $\{a,b\}$ are forced. For $\{a\}$ and $\{b\}$ there are 4 choices, and all of them pass, since $\{a\}\cap\{b\} = \emptyset$ and $\{a\}\cup\{b\} = \{a,b\}$ are always members:
+
+      - $\{\emptyset, \mathcal{M}\}$ (indiscrete);
+      - $\{\emptyset, \{a\}, \mathcal{M}\}$;
+      - $\{\emptyset, \{b\}, \mathcal{M}\}$;
+      - $\{\emptyset, \{a\}, \{b\}, \mathcal{M}\}$ (discrete).
+
+      So even two points carry four topologies. A topology is genuine extra structure chosen on top of a set. (On three points there are already 29.)
+
+  - type: mcq
+    id: why-in-gr
+    prompt: |
+      A topology on a set $\mathcal{M}$ is a family of subsets, called open, that contains $\emptyset$ and $\mathcal{M}$ and is closed under finite intersections and arbitrary unions. Why does General Relativity build spacetime from a topology rather than starting from distances?
+    options:
+      - text: Distances are what the theory solves for, so "nearby" must be available before any distance is known
+        correct: true
+      - text: Because spacetime has no distances at all
+        feedback: |
+          Spacetime does get a notion of distance, the metric, later in the course. The point is the order: the metric is the **unknown** of Einstein's equations, so the structure underneath has to make sense without it.
+      - text: Because topologies are more precise than distances
+        feedback: |
+          A topology carries **less** information than a distance: it knows which regions have room, not how much. That is exactly why it can come first.
+      - text: Because on a finite set distances cannot be defined
+        feedback: |
+          Spacetime is not a finite set, and finite sets can carry distances. The finite examples here are only small enough to check by hand.
+    explanation: |
+      The axioms mention no number and no distance. A topology is the minimal structure from which "nearby", "limit" and "continuous" can be rebuilt, so it can sit underneath a metric that is still unknown.
+
+  - type: text
+    id: wrap
+    title: What you now own
+    body: |
+      - The **powerset** $\mathcal{P}(\mathcal{M})$ is the set of all subsets; a set with $n$ elements has $2^n$ of them.
+      - A **topology** $\mathcal{O}_\mathcal{M}\subseteq\mathcal{P}(\mathcal{M})$ contains $\emptyset$ and $\mathcal{M}$, the intersection of two (hence finitely many) members, and the union of any family of members. Its members are the **open sets**; $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ is a **topological space**.
+      - A topology is a **choice**: two points already carry 4. The discrete ($\mathcal{P}(\mathcal{M})$) and indiscrete ($\{\emptyset, \mathcal{M}\}$) ones exist on every set.
+      - **Closed** means the complement is open. Open and closed are not opposites: a set can be either, both or neither; $\emptyset$ and $\mathcal{M}$ are always clopen.
+
+      **Next:** the topology that the real line and $\mathbb{R}^d$ actually use. Is the interval $[0, 1)$ open? The answer depends on a question you have not asked yet: open **in what**?

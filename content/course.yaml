@@ -86,8 +86,16 @@ levels:
     title: Topological Manifolds
     blurb: Open sets, continuity, charts and atlases. Just enough structure to say "locally looks like $\mathbb{R}^d$".
     lessons:
-      - { id: ch03-open-sets, title: Topological Spaces and Open Sets, kind: concept }
-      - { id: ch03-standard-topology, title: The Standard and Inherited Topologies, kind: concept }
+      - id: ch03-open-sets
+        title: Topological Spaces and Open Sets
+        kind: concept
+        file: ch03/open-sets.yaml
+        summary: How do you say "nearby" when distance is the unknown? The three rules for open sets, closed sets, and why one set carries many topologies.
+      - id: ch03-standard-topology
+        title: The Standard and Inherited Topologies
+        kind: concept
+        file: ch03/standard-topology.yaml
+        summary: Is $[0, 1)$ open? Balls and the standard topology on $\mathbb{R}^d$, why only finite intersections, and the topology a subset inherits.
       - { id: ch03-homeomorphisms, title: Continuity and Homeomorphisms, kind: concept }
       - { id: ch03-hausdorff, title: Hausdorff and Second Countable, kind: concept }
       - { id: ch03-charts, title: Charts and Transition Maps, kind: concept }

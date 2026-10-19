@@ -1,0 +1,404 @@
+id: ch03-standard-topology
+title: The Standard and Inherited Topologies
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: Open in what?
+    body: |
+      Recall: a **topology** on a set $\mathcal{M}$ is a family $\mathcal{O}_\mathcal{M}$ of subsets, the **open sets**, that contains $\emptyset$ and $\mathcal{M}$, the intersection of any two members, and the union of any family of members.
+
+      The rules say what a topology is, but they do not hand us one worth using. Coordinates on spacetime will be lists of real numbers, so we need a topology on $\mathbb{R}^d$ that matches the intuition "open = every point has some room around it inside the set". And we need a way to give a topology to a **piece** of a space: a circle inside the plane, an interval inside the line.
+
+      Here is the puzzle. Take the interval
+      $$[0, 1) = \{x\in\mathbb{R} \mid 0\le x < 1\}.$$
+      Near $0$ there is no room to the left. But imagine a creature living on the half-line $[0, 2)$ only: for it, nothing exists to the left of $0$, so $0$ seems to have all the room there is.
+
+  - type: mcq
+    id: predict-half-open
+    prompt: |
+      Before any definitions, guess. Is the interval $[0, 1) = \{x \mid 0\le x<1\}$ an open set? (Think of open as "every point has some room around it inside the set".)
+    options:
+      - text: It depends on which larger space we regard it as part of
+        correct: true
+      - text: 'No, never: the point $0$ has no room to its left'
+        feedback: |
+          True inside the real line. But if the whole world is $[0, 2)$, there is no "left of $0$" for the ball around $0$ to poke into. Keep both pictures in mind: the lesson makes them precise.
+      - text: 'Yes, always: it contains only one endpoint'
+        feedback: |
+          Containing even one edge point is enough to fail in the real line: every interval around $0$ contains negative numbers, which are not in $[0, 1)$.
+    explanation: |
+      Both instincts are right, in different spaces. By the end of the lesson, $[0, 1)$ will be **not open in $\mathbb{R}$** but **open in $[0, 2)$**. "Open" is always "open in some space".
+
+  - type: widget
+    id: probe-line
+    title: Give every point some room
+    widget: ball-probe
+    config:
+      dim: 1
+      set: { a: 0, b: 1, closed: [false, false] }
+      view: [-0.5, 1.5]
+      p: 0.5
+      r: 0.3
+      rMax: 1
+      presets:
+        - { label: '[0, 1)', set: { a: 0, b: 1, closed: [true, false] }, p: 0, r: 0.2 }
+        - { label: '[0, 1]', set: { a: 0, b: 1, closed: [true, true] }, p: 1, r: 0.2 }
+    body: |
+      The shaded segment is the set $\mathcal{U}$; a filled end dot means the endpoint belongs to it, a hollow one that it does not. Drag the point $p$ along the line and set the radius $r$ with the slider. Drawn above the line is the **ball** around $p$: all numbers at distance less than $r$ from $p$, the interval $(p - r,\ p + r)$. The part of it outside $\mathcal{U}$ turns red.
+
+      1. For $\mathcal{U} = (0, 1)$, move $p$ close to $1$. Can you always shrink $r$ until the ball fits?
+      2. Press **[0, 1)**, with $p$ at $0$. Try every radius.
+
+  - type: mcq
+    id: probe-line-edge
+    review: false
+    prompt: |
+      In the ball probe, with $\mathcal{U} = [0, 1)$ and $p = 0$: what happens as you shrink the radius $r$?
+    options:
+      - text: The ball always pokes out to the left, however small $r$ is
+        correct: true
+      - text: For $r$ small enough, the ball fits
+        feedback: |
+          Look at the left half: the ball $(-r,\ r)$ always contains $-r/2$, a negative number, and $-r/2\notin[0,1)$. Shrinking $r$ shrinks the red part but never removes it.
+      - text: The ball fits for every $r$ up to $1$
+        feedback: |
+          That is what happens for points like $p = 0.5$ in $(0, 1)$ with small $r$, not at the endpoint $0$. There, half of every ball is outside $[0, 1)$.
+    explanation: |
+      Every point of $(0, 1)$ has some radius that fits, though the radius must shrink as $p$ nears an end. The point $0$ of $[0, 1)$ has **no** such radius. That single point is what will make $[0, 1)$ fail to be open in $\mathbb{R}$.
+
+  - type: text
+    id: def-standard
+    title: Balls and the standard topology
+    body: |
+      A point of $\mathbb{R}^d$ is a list $p = (p_1, \dots, p_d)$ of $d$ real numbers. The **Euclidean distance** between $q$ and $p$ is
+      $$\lVert q - p\rVert := \sqrt{\textstyle\sum_{i=1}^d (q_i - p_i)^2}.$$
+      The **open ball** of radius $r > 0$ around $p$ is the set of points closer than $r$:
+      $$B_r(p) := \{q\in\mathbb{R}^d \mid \lVert q - p\rVert < r\}.$$
+      For $d = 1$ it is the interval $(p - r,\ p + r)$; for $d = 2$ a disc without its rim.
+
+      The **standard topology** $\mathcal{O}_{\mathbb{R}^d}$ declares $\mathcal{U}\subseteq\mathbb{R}^d$ open when every point of $\mathcal{U}$ has a ball around it inside $\mathcal{U}$:
+      $$\begin{aligned}\mathcal{U}\in\mathcal{O}_{\mathbb{R}^d}\iff\ &\forall p\in\mathcal{U}\ \ \exists r>0:\\ &B_r(p)\subseteq\mathcal{U}.\end{aligned}$$
+      Read the order of the symbols: **for each** point **there exists** a radius. The radius may depend on the point.
+
+      A distance appears here only to **build** the open sets. Once $\mathcal{O}_{\mathbb{R}^d}$ is built, everything topological uses the open sets alone.
+
+  - type: numeric
+    id: largest-radius
+    prompt: |
+      In $\mathbb{R}$, the ball around $p$ of radius $r$ is the interval $B_r(p) = (p - r,\ p + r)$. Let $\mathcal{U} = (0, 1)$ and $p = 0.9$. What is the **largest** radius $r$ with $B_r(p)\subseteq\mathcal{U}$?
+    answer: 0.1
+    tolerance: 0.0001
+    wrong:
+      - value: 0.9
+        feedback: |
+          That is the room on the **left**, the distance from $0.9$ to $0$. The ball reaches equally far on both sides, and on the right there is only $1 - 0.9$ before leaving $(0, 1)$.
+      - value: 1
+        feedback: |
+          $(0.9 - 1,\ 0.9 + 1) = (-0.1,\ 1.9)$ sticks out on both sides. The radius is limited by the **nearer** endpoint.
+    hint: The ball reaches distance $r$ on both sides of $p$. Which endpoint of $(0, 1)$ is nearer to $0.9$?
+    explanation: |
+      $B_r(0.9) = (0.9 - r,\ 0.9 + r)$ stays inside $(0, 1)$ exactly when $0.9 + r\le 1$ and $0.9 - r\ge 0$, so the largest radius is $\min(0.9,\ 0.1) = 0.1$. (Any smaller radius also works; openness only needs one.)
+
+  - type: mcq
+    id: one-radius
+    prompt: |
+      A set $\mathcal{U}\subseteq\mathbb{R}$ is open in the standard topology when for each $p\in\mathcal{U}$ there exists $r > 0$ with $(p - r,\ p + r)\subseteq\mathcal{U}$. For $\mathcal{U} = (0, 1)$, is there a **single** radius $r > 0$ that works for **every** point of $\mathcal{U}$ at once?
+    options:
+      - text: No, and openness does not ask for one
+        correct: true
+      - text: Yes, $r = 1/2$ works for every point
+        feedback: |
+          At $p = 0.9$ the ball $(0.4,\ 1.4)$ leaves $(0, 1)$. Near the ends, only small radii fit.
+      - text: No, so $(0, 1)$ is not open
+        feedback: |
+          This swaps the order of "for each" and "there exists". The definition only asks that **each** point have **its own** radius. A radius that works for all points at once is a much stronger (and different) property.
+    explanation: |
+      At $p$ the largest radius is $\min(p,\ 1 - p)$, which shrinks to $0$ as $p$ approaches an end. For any fixed $r > 0$, the point $p = r/2$ (if $r < 1$) has too little room. But every single point has **some** radius, and that is all the definition asks. The order of the quantifiers $\forall p\ \exists r$ matters.
+
+  - type: order
+    id: interval-open-proof
+    prompt: |
+      Put in order the proof that $(0, 1)$ is open in $\mathbb{R}$ with the standard topology (for each point $p$ there must exist $r > 0$ with $B_r(p) = (p - r,\ p + r)\subseteq(0, 1)$).
+    steps:
+      - 'Let $p\in(0, 1)$ and set $r := \min(p,\ 1 - p)$, so $r > 0$, $r\le p$ and $r\le 1 - p$.'
+      - 'Take any $x\in B_r(p)$, that is $p - r < x < p + r$.'
+      - 'Then $x > p - r\ge 0$ and $x < p + r\le 1$.'
+      - 'So $0 < x < 1$, which shows $B_r(p)\subseteq(0, 1)$.'
+      - 'Since $p\in(0,1)$ was arbitrary, $(0, 1)$ is open.'
+    hint: Choose the radius first, then test an arbitrary point of the ball.
+    explanation: |
+      The radius is chosen **after** the point and depends on it. The proof then checks that an arbitrary point $x$ of the ball lies in $(0, 1)$. The same argument shows every interval $(a, b)$ is open.
+
+  - type: mcq
+    id: half-open-witness
+    prompt: |
+      In the standard topology on $\mathbb{R}$, a set $\mathcal{U}$ is open when every $p\in\mathcal{U}$ has some $r > 0$ with $(p - r,\ p + r)\subseteq\mathcal{U}$. Which argument shows that $[0, 1) = \{x \mid 0\le x < 1\}$ is **not** open in $\mathbb{R}$?
+    options:
+      - text: 'At $p = 0$: for every $r > 0$, the point $-r/2$ lies in $(-r,\ r)$ but not in $[0, 1)$'
+        correct: true
+      - text: 'At $p = 1$: no ball around $1$ fits inside $[0, 1)$'
+        feedback: |
+          $1\notin[0, 1)$, so the definition asks nothing about it. Openness is tested only at points **of the set**.
+      - text: 'At $p = 0.99$: the ball of radius $0.1$ pokes out'
+        feedback: |
+          At $p = 0.99$ a smaller radius, such as $0.005$, fits. One failing radius proves nothing; the definition only needs one radius that works.
+      - text: Its complement is not open, so it is not open
+        feedback: |
+          A set whose complement is not open is **not closed**. That says nothing about whether the set itself is open: open and closed are not opposites.
+    explanation: |
+      To break "for each $p$ there exists $r$", exhibit **one** point at which **every** radius fails. At $p = 0$, each ball $(-r,\ r)$ contains $-r/2 < 0$. So $[0, 1)$ is not open in $\mathbb{R}$. (Its complement $(-\infty, 0)\cup[1, \infty)$ is not open either, at the point $1$, so $[0, 1)$ is neither open nor closed in $\mathbb{R}$.)
+
+  - type: widget
+    id: probe-plane
+    title: Balls in the plane
+    widget: ball-probe
+    config:
+      dim: 2
+      set: { shape: disc, center: [0, 0], radius: 2, closed: false }
+      p: [1, 0.5]
+      r: 0.5
+      rMax: 2
+      presets:
+        - { label: Closed disc, set: { shape: disc, center: [0, 0], radius: 2, closed: true }, p: [2, 0], r: 0.3 }
+        - { label: Half-plane, set: { shape: halfplane, closed: false }, p: [1, 1], r: 0.5 }
+    body: |
+      Now $d = 2$: the ball $B_r(p)$ is a disc without its rim (dashed edge). The shaded set $\mathcal{U}$ starts as the disc of radius $2$ around the origin, without its rim; a solid edge means the edge belongs to the set.
+
+      1. Drag $p$ toward the rim of the open disc. What happens to the largest radius that fits?
+      2. Press **Closed disc**: $p$ sits on the rim, which now belongs to the set. Try every radius.
+      3. Press **Half-plane** (all points with second coordinate $> 0$). How does the largest radius depend on $p$?
+
+  - type: build
+    id: ball-is-open
+    prompt: |
+      Every open ball $B_r(p) = \{q\in\mathbb{R}^d \mid \lVert q - p\rVert < r\}$ is an open set. To prove it, take any $q\in B_r(p)$; we need a radius $s > 0$ with $B_s(q)\subseteq B_r(p)$. Build the choice of $s$ that works for every such $q$, using the triangle inequality $\lVert x - p\rVert\le\lVert x - q\rVert + \lVert q - p\rVert$.
+    prefix: 's ='
+    tiles: ['r', '-', '+', '\lVert q-p\rVert', '\lVert q\rVert', '\tfrac{r}{2}']
+    answers:
+      - ['r', '-', '\lVert q-p\rVert']
+      - ['-', '\lVert q-p\rVert', '+', 'r']
+    wrong:
+      - answer: ['r']
+        feedback: |
+          A ball of the full radius $r$ around $q$ reaches distance up to $r + \lVert q - p\rVert$ from $p$, past the rim whenever $q\neq p$.
+      - answer: ['\tfrac{r}{2}']
+        feedback: |
+          Fine when $q$ is near the centre, but if $q$ is closer than $r/2$ to the rim, the ball $B_{r/2}(q)$ pokes out. The radius must shrink as $q$ approaches the rim.
+      - answer: ['r', '-', '\lVert q\rVert']
+        feedback: |
+          $\lVert q\rVert$ is the distance from $q$ to the **origin**, but the ball is centred at $p$. What matters is how far $q$ is from $p$.
+    hint: How much room does $q$ have before reaching the rim of $B_r(p)$? The rim is at distance $r$ from $p$, and $q$ is already $\lVert q - p\rVert$ away from $p$.
+    explanation: |
+      Set $s := r - \lVert q - p\rVert$, which is $> 0$ because $q\in B_r(p)$. For any $x\in B_s(q)$:
+      $$\begin{aligned}\lVert x - p\rVert &\le \lVert x - q\rVert + \lVert q - p\rVert\\ &< s + \lVert q - p\rVert\\ &= r.\end{aligned}$$
+      So $x\in B_r(p)$, and $B_s(q)\subseteq B_r(p)$. Open balls are open sets: the name is earned.
+
+  - type: numeric
+    id: half-plane-radius
+    prompt: |
+      In $\mathbb{R}^2$ with the standard topology, let $\mathcal{H} = \{(x, y) \mid y > 0\}$ be the open upper half-plane. At the point $p = (3,\ 0.5)$, what is the largest radius $r$ with $B_r(p)\subseteq\mathcal{H}$?
+    answer: 0.5
+    tolerance: 0.0001
+    wrong:
+      - value: 3
+        feedback: |
+          That is the distance to the vertical axis, which is not an edge of $\mathcal{H}$. The only edge is the horizontal axis $y = 0$.
+      - value: 3.04
+        feedback: |
+          That is the distance to the origin. The ball first leaves $\mathcal{H}$ where it touches the line $y = 0$, straight below $p$.
+    hint: Which points of the ball have the smallest second coordinate?
+    explanation: |
+      The lowest point of $B_r(p)$ has second coordinate $0.5 - r$, so the ball stays in $\mathcal{H}$ exactly when $r\le 0.5$. In general $r = p_2$ (the height of $p$) works: every $q\in B_r(p)$ has $|q_2 - p_2|\le\lVert q - p\rVert < p_2$, hence $q_2 > 0$. So $\mathcal{H}$ is open.
+
+  - type: text
+    id: infinite-intersections
+    title: Why only finite intersections
+    body: |
+      Recall that the topology rules allow **any** union of open sets but intersections only of two (hence, by repetition, finitely many). The standard topology shows why.
+
+      For $n = 1, 2, 3, \dots$ take the open interval
+      $$\mathcal{I}_n := \left(-\tfrac{1}{n},\ \tfrac{1}{n}\right) = B_{1/n}(0).$$
+      Each one is open. They shrink: $(-1, 1)$, $(-\tfrac12, \tfrac12)$, $(-\tfrac13, \tfrac13)$, … The intersection $\bigcap_{n=1}^\infty \mathcal{I}_n$ is the set of numbers that lie in **all** of them.
+
+  - type: mcq
+    id: intersection-zero
+    prompt: |
+      For $n = 1, 2, 3, \dots$ let $\mathcal{I}_n = (-\tfrac1n,\ \tfrac1n)$, an open interval of $\mathbb{R}$. Which set is the intersection of all of them, $\bigcap_{n=1}^\infty\mathcal{I}_n$, and is it open in the standard topology?
+    options:
+      - text: '$\{0\}$, which is not open'
+        correct: true
+      - text: '$\emptyset$, which is open'
+        feedback: |
+          $0$ lies in every $\mathcal{I}_n$, since $|0| < \tfrac1n$ for all $n$. So the intersection is not empty.
+      - text: 'A very small open interval around $0$'
+        feedback: |
+          Any interval $(-\varepsilon, \varepsilon)$ with $\varepsilon > 0$ fails to lie inside $\mathcal{I}_n$ once $\tfrac1n < \varepsilon$. A number $x\neq 0$ drops out as soon as $\tfrac1n\le|x|$.
+      - text: '$\{0\}$, which is open since it is an intersection of open sets'
+        feedback: |
+          That assumes what is in question. Test $\{0\}$ directly: every ball $(-r,\ r)$ around $0$ contains $r/2\neq 0$, so no ball fits.
+    explanation: |
+      A number $x$ lies in every $\mathcal{I}_n$ only if $|x| < \tfrac1n$ for all $n$, which forces $x = 0$. And $\{0\}$ is not open: no ball around $0$ fits inside it. **Infinitely many open sets can intersect in a set that is not open**, so rule (2) could not have asked for more than finite intersections. Unions, by contrast, never cause trouble: a point of a union has a ball inside one of the united sets, hence inside the union.
+
+  - type: text
+    id: def-inherited
+    title: Topology for a piece of a space
+    body: |
+      Now the second recipe. Let $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ be a topological space and $\mathcal{N}\subseteq\mathcal{M}$ any subset. The **inherited topology** (also called subspace topology) on $\mathcal{N}$ is
+      $$\mathcal{O}_{\mathcal{N}}\big|_{\mathcal{M}} := \{\mathcal{N}\cap\mathcal{U} \mid \mathcal{U}\in\mathcal{O}_\mathcal{M}\}.$$
+      In words: a set is open **in $\mathcal{N}$** when it is what remains of some open set of $\mathcal{M}$ after cutting it down to $\mathcal{N}$.
+
+      With balls: a ball cut down to $\mathcal{N}$, $B_r(p)\cap\mathcal{N}$, only contains points of $\mathcal{N}$. Whatever lies outside $\mathcal{N}$ simply does not exist for the subspace, so it cannot make a ball poke out.
+
+      Example: $\mathcal{N} = [0, 2)$ inside $\mathbb{R}$. Since $(-1, 1)$ is open in $\mathbb{R}$,
+      $$[0, 1) = [0, 2)\cap(-1, 1)$$
+      is open in $[0, 2)$.
+
+  - type: widget
+    id: probe-subspace
+    title: The same set, two spaces
+    widget: ball-probe
+    config:
+      dim: 1
+      set: { a: 0, b: 1, closed: [true, false] }
+      ambient: { a: 0, b: 2, closed: [true, false] }
+      view: [-0.75, 2.25]
+      p: 0
+      r: 0.3
+      rMax: 1.5
+    body: |
+      The wide band is the space $\mathcal{N} = [0, 2)$, and the shaded segment is $\mathcal{U} = [0, 1)$ inside it. The part of a ball outside $\mathcal{N}$ is drawn faded: it does not exist for the subspace. The readout judges $\mathcal{U}$ twice, as a subset of $\mathcal{N}$ and as a subset of $\mathbb{R}$.
+
+      Start with $p = 0$. Then move $p$ toward $1$.
+
+  - type: mcq
+    id: probe-subspace-why
+    review: false
+    prompt: |
+      In the ball probe with $\mathcal{U} = [0, 1)$ inside $\mathcal{N} = [0, 2)$, at $p = 0$: why does the ball fit in $\mathcal{N}$ but not in $\mathbb{R}$?
+    options:
+      - text: Its left half lies outside $\mathcal{N}$, so it does not count in $\mathcal{N}$
+        correct: true
+      - text: In $\mathcal{N}$ the balls are smaller
+        feedback: |
+          The radius is the same in both readouts. What changes is which points the ball contains: cut down to $\mathcal{N}$, the ball $(-r,\ r)$ becomes $[0,\ r)$.
+      - text: In $\mathcal{N}$ the point $0$ is not part of $\mathcal{U}$
+        feedback: |
+          $0$ belongs to $\mathcal{U} = [0, 1)$ in both readouts. It is the ball that changes, not the set.
+    explanation: |
+      Cut down to $\mathcal{N}$, the ball around $0$ is $(-r,\ r)\cap[0, 2) = [0,\ r)$, which lies in $[0, 1)$ for $r\le 1$. The hook's puzzle is resolved: $[0, 1)$ is **open in $[0, 2)$** and **not open in $\mathbb{R}$**. The only edge that matters is $1$, where $\mathcal{N}$ continues past $\mathcal{U}$.
+
+  - type: mcq
+    id: trace-witness
+    prompt: |
+      Give $\mathcal{N} = [0, 1]$ the topology inherited from $\mathbb{R}$: a set is open in $\mathcal{N}$ when it equals $\mathcal{N}\cap\mathcal{U}$ for some $\mathcal{U}$ open in $\mathbb{R}$. Which open $\mathcal{U}$ shows that $[0, \tfrac12)$ is open in $\mathcal{N}$?
+    options:
+      - text: '$\mathcal{U} = (-1,\ \tfrac12)$'
+        correct: true
+      - text: '$\mathcal{U} = [0,\ \tfrac12)$'
+        feedback: |
+          Then $\mathcal{N}\cap\mathcal{U}$ is indeed $[0, \tfrac12)$, but $\mathcal{U}$ must be open **in $\mathbb{R}$**, and $[0, \tfrac12)$ is not: no ball around $0$ fits in it. The inherited topology only allows cutting down sets that are already open in the big space.
+      - text: '$\mathcal{U} = (0,\ \tfrac12)$'
+        feedback: |
+          This $\mathcal{U}$ is open in $\mathbb{R}$, but $\mathcal{N}\cap(0, \tfrac12) = (0, \tfrac12)$ misses the point $0$.
+      - text: '$\mathcal{U} = (-1,\ 1)$'
+        feedback: |
+          $\mathcal{N}\cap(-1, 1) = [0, 1)$, not $[0, \tfrac12)$. The open set must stop at $\tfrac12$, and may stick out past $0$ as much as it likes.
+    explanation: |
+      $(-1, \tfrac12)$ is open in $\mathbb{R}$, and
+      $$[0, 1]\cap(-1,\ \tfrac12) = [0,\ \tfrac12).$$
+      Notice the trick: the open set of $\mathbb{R}$ sticks out beyond the end of $\mathcal{N}$, and cutting down to $\mathcal{N}$ removes the excess.
+
+  - type: mcq
+    id: whole-space-open
+    prompt: |
+      Give $\mathcal{N} = [0, 1]$ the topology inherited from $\mathbb{R}$ (the sets $\mathcal{N}\cap\mathcal{U}$ with $\mathcal{U}$ open in $\mathbb{R}$). Is $[0, 1]$ an open set of this topological space?
+    options:
+      - text: Yes. $[0, 1] = \mathcal{N}\cap\mathbb{R}$, and in fact the whole space is open in every topology
+        correct: true
+      - text: No. $[0, 1]$ is closed, so it is not open
+        feedback: |
+          $[0, 1]$ is closed in $\mathbb{R}$, and closed does not exclude open. Here we ask about the space $\mathcal{N}$ itself, which every topology on $\mathcal{N}$ declares open (rule 1).
+      - text: No. Its endpoints have no room around them
+        feedback: |
+          Inside $\mathcal{N}$ nothing exists beyond the endpoints, so a ball cut down to $\mathcal{N}$, such as $[0,\ r)$ around $0$, lies in $[0, 1]$.
+    explanation: |
+      $\mathcal{N} = \mathcal{N}\cap\mathbb{R}$ with $\mathbb{R}$ open, so $[0, 1]$ is open in itself, as rule (1) demands. It is not open in $\mathbb{R}$. **Always say which space a set is open in.**
+
+  - type: widget
+    id: probe-circle
+    title: An arc of the circle
+    widget: ball-probe
+    config:
+      dim: 2
+      set: { shape: arc, from: 0, to: 180, closed: [false, false] }
+      name: '\mathcal{A}'
+      p: 90
+      r: 0.5
+      rMax: 2.2
+      presets:
+        - { label: Closed arc, set: { shape: arc, from: 0, to: 180, closed: [true, true] }, p: 0, r: 0.3 }
+    body: |
+      The ring is the unit circle $S^1 := \{(a, b)\in\mathbb{R}^2 \mid a^2 + b^2 = 1\}$, with the topology inherited from the plane. The shaded arc is the upper half $\mathcal{A} = \{(a, b)\in S^1 \mid b > 0\}$, endpoints excluded. The faded disc is the ball $B_r(p)$ in the plane; the thick arc is what remains of it on the circle.
+
+      Drag $p$ around the arc and change $r$. Then press **Closed arc** (endpoints included), with $p$ at an endpoint.
+
+  - type: mcq
+    id: arc-open
+    prompt: |
+      Let $S^1 = \{(a, b) \mid a^2 + b^2 = 1\}$ carry the topology inherited from $\mathbb{R}^2$, and $\mathcal{A} = \{(a, b)\in S^1 \mid b > 0\}$, the upper half of the circle without its endpoints. Which statement is true?
+    options:
+      - text: '$\mathcal{A}$ is open in $S^1$ but not open in $\mathbb{R}^2$'
+        correct: true
+      - text: '$\mathcal{A}$ is open in both'
+        feedback: |
+          In $\mathbb{R}^2$, every disc around $p = (0, 1)$ contains points off the circle, such as $(0,\ 1 + r/2)$, which are not in $\mathcal{A}$. A curve has no room in the plane.
+      - text: '$\mathcal{A}$ is open in neither, because a curve has no thickness'
+        feedback: |
+          In $S^1$ only points of the circle exist. $\mathcal{A} = S^1\cap\mathcal{H}$ with $\mathcal{H} = \{(x, y) \mid y > 0\}$, the upper half-plane, which is open in $\mathbb{R}^2$. So $\mathcal{A}$ is open in $S^1$ by definition.
+      - text: '$\mathcal{A}$ is open in $\mathbb{R}^2$ but not in $S^1$'
+        feedback: |
+          Being open in the subspace is the **easier** condition: if a subset $\mathcal{V}$ of $S^1$ is open in $\mathbb{R}^2$, then $\mathcal{V} = S^1\cap\mathcal{V}$ is open in $S^1$ too. And $\mathcal{A}$ is not open in $\mathbb{R}^2$.
+    explanation: |
+      Open in $S^1$: $\mathcal{A} = S^1\cap\mathcal{H}$, where the half-plane $\mathcal{H}$ is open (each point $p$ has the ball of radius $p_2$ inside it). Not open in $\mathbb{R}^2$: at $p = (0, 1)$, every ball contains $(0,\ 1 + \tfrac r2)$, which is off the circle. This is the situation of a coordinate patch on a curved space: open in the space itself, not in some bigger space around it.
+
+  - type: order
+    id: inherited-axiom-2
+    prompt: |
+      The inherited topology on $\mathcal{N}\subseteq\mathcal{M}$ is $\mathcal{O}_{\mathcal{N}}|_{\mathcal{M}} = \{\mathcal{N}\cap\mathcal{U} \mid \mathcal{U}\in\mathcal{O}_\mathcal{M}\}$. Let $\mathcal{V}_1 = \mathcal{N}\cap\mathcal{U}_1$ and $\mathcal{V}_2 = \mathcal{N}\cap\mathcal{U}_2$ with $\mathcal{U}_1, \mathcal{U}_2$ open in $\mathcal{M}$. Put in order the check that $\mathcal{V}_1\cap\mathcal{V}_2$ is open in $\mathcal{N}$.
+    steps:
+      - '$\mathcal{V}_1\cap\mathcal{V}_2$'
+      - '$= (\mathcal{N}\cap\mathcal{U}_1)\cap(\mathcal{N}\cap\mathcal{U}_2)$'
+      - '$= \mathcal{N}\cap(\mathcal{U}_1\cap\mathcal{U}_2)$'
+      - 'and $\mathcal{U}_1\cap\mathcal{U}_2$ is open in $\mathcal{M}$ by rule (2) there,'
+      - 'so $\mathcal{V}_1\cap\mathcal{V}_2\in\mathcal{O}_{\mathcal{N}}|_{\mathcal{M}}$.'
+    hint: Substitute, then regroup the intersections (intersection is associative and commutative, and $\mathcal{N}\cap\mathcal{N} = \mathcal{N}$).
+    explanation: |
+      Rule (2) for $\mathcal{N}$ is inherited from rule (2) for $\mathcal{M}$. The other rules work the same way: $\emptyset = \mathcal{N}\cap\emptyset$ and $\mathcal{N} = \mathcal{N}\cap\mathcal{M}$, and a union of the sets $\mathcal{N}\cap\mathcal{U}_\alpha$ equals $\mathcal{N}\cap\bigcup_\alpha\mathcal{U}_\alpha$. So the inherited topology really is a topology on $\mathcal{N}$.
+
+  - type: mcq
+    id: why-inherited
+    prompt: |
+      The inherited topology on a subset $\mathcal{N}\subseteq\mathcal{M}$ declares open the sets $\mathcal{N}\cap\mathcal{U}$ with $\mathcal{U}$ open in $\mathcal{M}$. Why is it the right topology for a circle drawn in the plane, rather than inventing one from scratch?
+    options:
+      - text: It is automatic and makes "nearby on the circle" agree with "nearby in the plane"
+        correct: true
+      - text: Because the circle cannot carry any other topology
+        feedback: |
+          Any set carries many topologies (the discrete one, for instance). The inherited one is singled out because it is compatible with the plane, not because it is the only one.
+      - text: Because it makes every arc of the circle open in the plane
+        feedback: |
+          No arc is open in the plane: every disc around a point of the circle leaves the circle. The inherited topology makes arcs open **in the circle**.
+    explanation: |
+      Every subset of a topological space gets a topology for free, and two points of the circle are close in it exactly when they are close in the plane. Later, spacetime itself will not sit inside any bigger space, but its coordinate patches will be compared with open subsets of $\mathbb{R}^4$ carrying exactly these topologies.
+
+  - type: text
+    id: wrap
+    title: What you now own
+    body: |
+      - The **open ball** $B_r(p) = \{q \mid \lVert q - p\rVert < r\}$, and the **standard topology** on $\mathbb{R}^d$: $\mathcal{U}$ is open when **each** $p\in\mathcal{U}$ has **some** ball inside $\mathcal{U}$ (the radius may depend on $p$). Open intervals, balls and half-planes are open; $[0, 1)$ is not open in $\mathbb{R}$.
+      - Infinitely many open sets can intersect in a non-open set: $\bigcap_n (-\tfrac1n, \tfrac1n) = \{0\}$. That is why the rule asks for finite intersections only.
+      - The **inherited topology** $\mathcal{O}_{\mathcal{N}}|_{\mathcal{M}} = \{\mathcal{N}\cap\mathcal{U}\}$ gives every subset a topology. **Open is always open in some space**: $[0, 1)$ is open in $[0, 2)$, the upper arc is open in $S^1$, neither in the bigger space.
+
+      **Next:** when are two spaces "the same"? Is the circle $S^1$ the same topological space as the interval $[0, 2\pi)$, which it can be wrapped onto point by point? The answer needs **continuity**, defined with open sets alone.
