@@ -121,7 +121,11 @@ levels:
         kind: concept
         file: ch03/smooth-maps.yaml
         summary: Are the line charted by $p$ and the line charted by $p^3$ the same smooth manifold? Smooth maps through chart representatives, smooth functions and curves, diffeomorphisms, and exotic structures.
-      - { id: ch03-circle, title: "Guided Problem: The Circle Is a Smooth Manifold", kind: guided }
+      - id: ch03-circle
+        title: "Guided Problem: The Circle Is a Smooth Manifold"
+        kind: guided
+        file: ch03/circle.yaml
+        summary: Prove, step by step, that the circle with four half-circle charts is a smooth manifold, from the inherited topology to the transitions $\pm\sqrt{1 - s^2}$.
       - { id: ch03-traps, title: Manifold Traps, kind: traps }
       - { id: ch03-map, title: "Content Map: Topological Manifolds", kind: map }
       - { id: ch03-review, title: Level Review, kind: review }

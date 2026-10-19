@@ -10,8 +10,8 @@ append a short entry at the end of **Log** (a few lines, ending with
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 built:** `ch03-open-sets`, `ch03-standard-topology`,
   `ch03-homeomorphisms`, `ch03-hausdorff`, `ch03-charts`, `ch03-atlases`,
-  `ch03-smooth-maps`. All had a screenshot pass; all widgets are documented.
-- **Queue (one unit each):** ⑤ `ch03-circle` → ⑥ `ch03-traps` → ⑦ `ch03-map` →
+  `ch03-smooth-maps`, `ch03-circle`. All had a screenshot pass; all widgets are documented.
+- **Queue (one unit each):** ⑥ `ch03-traps` → ⑦ `ch03-map` →
   ⑧–⑨ `ch03-challenge`, then Chapters 4–10 (each with map and challenge).
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -21,7 +21,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   lower: $\varphi=\theta-2\pi$); stereographic $\sigma = x/(1-y)$ from $(0,1)$;
   chart representative $f\circ\mathcal{X}^{-1}$, map representative
   $\Phi = \mathcal{Y}\circ\varphi\circ\mathcal{X}^{-1}$; $\mathbb{R}_x$, $\mathbb{R}_y$
-  for $\mathbb{R}$ with the charts $x$ and $x^3$.
+  for $\mathbb{R}$ with the charts $x$ and $x^3$. Book's four half-circle charts
+  (`ch03-circle`): points $q = (q_1, q_2)$, $\mathscr{X}_\uparrow,
+  \mathscr{X}_\downarrow$ read $q_1$ on $q_2 \gtrless 0$, $\mathscr{X}_\rightarrow,
+  \mathscr{X}_\leftarrow$ read $q_2$ on $q_1 \gtrless 0$, coordinates $\alpha$
+  (first chart) and $\beta$; transitions $\pm\sqrt{1-s^2}$ on $(0,1)$ or $(-1,0)$.
+  Lessons write chart maps as `\mathscr{X}`; set is $S^1$ (not $\mathcal{S}^1$).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -90,3 +95,14 @@ circle doubling map D in the θ chart via circle-charts, representative 2θ /
 independence; smooth functions and curves; id: ℝ_y → ℝ_x not smooth, F = p³
 is a diffeomorphism ℝ_y → ℝ_x; p³ on standard ℝ is not; hierarchy; exotic ℝ⁴,
 S⁷; two traps). Screenshot pass done.
+
+Built `ch03-circle` (guided; book C.2 atlas of four half-circle projection
+charts, not the θ/φ atlas: hook "is q ↦ q₁ a chart on all of S¹?"; circle-charts
+`show: A` used only for the readout p = (q₁, q₂) to see which halves contain p;
+steps topology (∩, build for ∪), Hausdorff (radius ½|p − q|), second countable
+(rational discs ∩ S¹), homeomorphism (injectivity via sign of √), cover, overlaps
+and transitions (0.6 ↦ 0.8, build −√(1−α²), domain (0,1)), smoothness (endpoint
+trap, slope −0.75, order proof), angle chart θ compatible via cos/arccos). The
+book's C.2 text stops after the first overlap; the remaining transitions were
+completed here. Conventions fixed here: q = (q₁, q₂), \mathscr{X}_↑↓→← with
+coordinate α, transitions ±√(1 − s²); S¹ (not 𝒮¹).

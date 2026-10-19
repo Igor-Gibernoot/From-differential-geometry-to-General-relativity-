@@ -1,0 +1,428 @@
+id: ch03-circle
+title: "Guided Problem: The Circle Is a Smooth Manifold"
+kind: guided
+
+cards:
+  - type: text
+    id: hook
+    title: The problem
+    body: |
+      Every definition of this level now meets one example. The unit circle is the set
+      $$S^1 := \{q\in\mathbb{R}^2 : q_1^2 + q_2^2 = 1\},$$
+      with points written $q = (q_1, q_2)$. Its topology $\mathcal{O}_{S^1}$ is **inherited** from the standard topology of $\mathbb{R}^2$: the open sets of $S^1$ are the sets $S^1\cap\mathcal{W}$ with $\mathcal{W}$ open in $\mathbb{R}^2$.
+
+      **Goal:** prove that the triple $(S^1, \mathcal{O}_{S^1}, \mathcal{A})_1$ is a smooth manifold of dimension $1$, for an atlas $\mathcal{A}$ of four simple charts. The checklist:
+
+      1. $\mathcal{O}_{S^1}$ is a topology;
+      2. it is Hausdorff;
+      3. it is second countable;
+      4. each chart is a homeomorphism onto an open interval;
+      5. the chart domains cover $S^1$;
+      6. every transition map is $C^\infty$, in both directions.
+
+  - type: mcq
+    id: predict-one-chart
+    title: Before any proof
+    prompt: |
+      On the unit circle $S^1 = \{(q_1, q_2) : q_1^2 + q_2^2 = 1\}$, the simplest coordinate is the horizontal one, $q\mapsto q_1$. Can this map, on the **whole** circle, be a chart onto $[-1, 1]$?
+    options:
+      - text: 'No: two different points, such as $(0.6, 0.8)$ and $(0.6, -0.8)$, get the same coordinate'
+        correct: true
+      - text: 'Yes: every point has a well-defined $q_1$, and every value in $[-1, 1]$ occurs'
+        feedback: |
+          Defined everywhere and onto is not enough: a chart must be a **bijection** onto its image, so that the coordinate pins down the point. Here $q_1 = 0.6$ is shared by $(0.6, 0.8)$ and $(0.6, -0.8)$.
+      - text: 'No, only because $[-1, 1]$ is a closed interval, not an open set of $\mathbb{R}$'
+        feedback: |
+          The image must indeed be open, but that is not the only failure. Even on the open arc without $(\pm1, 0)$ the map is two-to-one: the points above and below the horizontal axis share $q_1$.
+    explanation: |
+      A chart's coordinate must determine the point. The value $q_1$ fixes $q_2$ only up to sign, $q_2 = \pm\sqrt{1 - q_1^2}$. The cure is to cut the circle: on the upper half ($q_2 > 0$) the sign is $+$, so $q_1$ alone determines the point. That is the idea behind the four charts of this problem.
+
+  - type: text
+    id: four-charts
+    title: The atlas
+    body: |
+      Cut the circle in four open halves and read one coordinate on each:
+
+      - **Upper** chart: on $\mathcal{U}_\uparrow = \{q\in S^1 : q_2 > 0\}$, read $\mathscr{X}_\uparrow(q) = q_1$.
+      - **Lower** chart: on $\mathcal{U}_\downarrow = \{q\in S^1 : q_2 < 0\}$, read $\mathscr{X}_\downarrow(q) = q_1$.
+      - **Right** chart: on $\mathcal{U}_\rightarrow = \{q\in S^1 : q_1 > 0\}$, read $\mathscr{X}_\rightarrow(q) = q_2$.
+      - **Left** chart: on $\mathcal{U}_\leftarrow = \{q\in S^1 : q_1 < 0\}$, read $\mathscr{X}_\leftarrow(q) = q_2$.
+
+      Each chart map projects its half-circle onto one axis; the upper and lower halves read the horizontal coordinate, the right and left halves the vertical one. The atlas $\mathcal{A}$ is the set of these four charts.
+
+  - type: widget
+    id: explore-cover
+    title: Which charts see p?
+    widget: circle-charts
+    config:
+      angle: 45
+      show: A
+      snap: 15
+      presets:
+        - { label: p at 45°, angle: 45 }
+        - { label: p at 135°, angle: 135 }
+        - { label: p at 0°, angle: 0 }
+        - { label: p at 270°, angle: 270 }
+    body: |
+      Drag the point $p$ around the circle. Ignore the angle ring for now: the readout gives the coordinates $p = (q_1, q_2)$, and that is all the four charts use. For each position decide:
+
+      1. Which halves contain $p$? Upper needs $q_2 > 0$, lower $q_2 < 0$, right $q_1 > 0$, left $q_1 < 0$.
+      2. What does each of those charts read? Upper and lower read $q_1$; right and left read $q_2$.
+      3. At $45°$ and $135°$, how many charts see $p$? At $0°$ and $270°$?
+
+  - type: numeric
+    id: charts-at-east
+    prompt: |
+      The unit circle $S^1$ carries four charts, each on an open half: upper ($q_2 > 0$) and lower ($q_2 < 0$), both reading $q_1$; right ($q_1 > 0$) and left ($q_1 < 0$), both reading $q_2$. How many of the four chart domains contain the point $(1, 0)$?
+    answer: 1
+    wrong:
+      - value: 0
+        feedback: |
+          $(1, 0)$ is indeed missing from the upper and lower halves, since $q_2 = 0$ is neither positive nor negative. But $q_1 = 1 > 0$, so the right half contains it.
+      - value: 2
+        feedback: |
+          The upper half needs $q_2 > 0$ strictly, and here $q_2 = 0$. Only the conditions on $q_1$ can be met: $q_1 = 1 > 0$.
+    hint: Test the four strict inequalities $q_2 > 0$, $q_2 < 0$, $q_1 > 0$, $q_1 < 0$ at $q_1 = 1$, $q_2 = 0$.
+    explanation: |
+      Only the right chart sees $(1, 0)$, and it reads $\mathscr{X}_\rightarrow(1, 0) = 0$. Points on the axes lie in exactly one domain; every other point, like the one at $45°$, lies in two.
+
+  - type: text
+    id: step-topology
+    title: "Step 1: a topology"
+    body: |
+      Recall the three rules of a topology $\mathcal{O}$ on a set $\mathcal{M}$: $\emptyset$ and $\mathcal{M}$ are in $\mathcal{O}$; any union of members is a member; the intersection of **finitely** many members is a member.
+
+      For $\mathcal{O}_{S^1} = \{S^1\cap\mathcal{W} : \mathcal{W}\text{ open in }\mathbb{R}^2\}$ the first rule is quick: $\emptyset = S^1\cap\emptyset$ and $S^1 = S^1\cap\mathbb{R}^2$, and $\emptyset$, $\mathbb{R}^2$ are open in $\mathbb{R}^2$. The other two rules reduce to the same rules in $\mathbb{R}^2$.
+
+  - type: mcq
+    id: inherited-intersection
+    prompt: |
+      $S^1$, the unit circle, has the topology inherited from $\mathbb{R}^2$: its open sets are $S^1\cap\mathcal{W}$ with $\mathcal{W}$ open in $\mathbb{R}^2$. Take two such open sets, $S^1\cap\mathcal{W}_1$ and $S^1\cap\mathcal{W}_2$. Why is their intersection open in $S^1$?
+    options:
+      - text: 'It equals $S^1\cap(\mathcal{W}_1\cap\mathcal{W}_2)$, and $\mathcal{W}_1\cap\mathcal{W}_2$ is open in $\mathbb{R}^2$'
+        correct: true
+      - text: 'Because $S^1$ itself is open in $\mathbb{R}^2$'
+        feedback: |
+          $S^1$ is not open in $\mathbb{R}^2$: every disc around a point of the circle contains points off it. Nothing of the kind is needed, since openness **in** $S^1$ only asks for the form $S^1\cap\mathcal{W}$.
+      - text: 'Because $(S^1\cap\mathcal{W}_1)\cap(S^1\cap\mathcal{W}_2)$ is a subset of $S^1$'
+        feedback: |
+          Being a subset of $S^1$ is not enough: a single point of $S^1$ is a subset, but not open in $S^1$ (every disc around it meets the circle in a whole arc). Openness needs the form $S^1\cap\mathcal{W}$ with $\mathcal{W}$ open.
+      - text: 'Only when $\mathcal{W}_1\cap\mathcal{W}_2$ lies inside $S^1$'
+        feedback: |
+          No open set of $\mathbb{R}^2$ except $\emptyset$ lies inside the circle (a curve has no area). The inherited topology never asks $\mathcal{W}$ to fit inside $S^1$; it cuts $\mathcal{W}$ down to $S^1$.
+    explanation: |
+      Intersections can be regrouped: $(S^1\cap\mathcal{W}_1)\cap(S^1\cap\mathcal{W}_2) = S^1\cap(\mathcal{W}_1\cap\mathcal{W}_2)$. A finite intersection of open sets of $\mathbb{R}^2$ is open, so the result has the required form.
+
+  - type: build
+    id: inherited-union
+    prompt: |
+      $S^1$ has the topology inherited from $\mathbb{R}^2$: its open sets are $S^1\cap\mathcal{W}$ with $\mathcal{W}$ open in $\mathbb{R}^2$. Rewrite a union of open sets of $S^1$, indexed by $i$ in any family, as one set of that form.
+    prefix: '\bigcup_i (S^1\cap\mathcal{W}_i) ='
+    tiles: ['S^1', '\cap', '\cup', '\bigcup_i \mathcal{W}_i', '\bigcap_i \mathcal{W}_i']
+    answers:
+      - ['S^1', '\cap', '\bigcup_i \mathcal{W}_i']
+      - ['\bigcup_i \mathcal{W}_i', '\cap', 'S^1']
+    wrong:
+      - answer: ['S^1', '\cap', '\bigcap_i \mathcal{W}_i']
+        feedback: |
+          That keeps only the points lying in **every** $\mathcal{W}_i$; a union keeps points lying in **some** $\mathcal{W}_i$. Also, an infinite intersection of open sets need not be open.
+      - answer: ['S^1', '\cup', '\bigcup_i \mathcal{W}_i']
+        feedback: |
+          $S^1\cup\bigcup_i\mathcal{W}_i$ contains points off the circle, while a union of subsets of $S^1$ stays inside $S^1$. The circle must cut the union down, so the operation is $\cap$.
+    hint: A point is in the left side when it is on the circle and in at least one $\mathcal{W}_i$.
+    explanation: |
+      $$\bigcup_i (S^1\cap\mathcal{W}_i) = S^1\cap\bigcup_i\mathcal{W}_i,$$
+      and any union of open sets of $\mathbb{R}^2$ is open. With the intersection rule and $\emptyset$, $S^1$, all three rules hold: $\mathcal{O}_{S^1}$ is a topology. The same argument works for any subset of $\mathbb{R}^2$.
+
+  - type: numeric
+    id: hausdorff-radius
+    title: "Step 2: Hausdorff"
+    prompt: |
+      To separate two points $p\neq q$ of the unit circle $S^1$, take open discs of the same radius $r$ around each in $\mathbb{R}^2$, and keep their parts on the circle. For $p = (1, 0)$ and $q = (0, 1)$, what is the largest $r$ such that the two open discs are guaranteed not to meet?
+    answer: 0.7071067812
+    tolerance: 0.001
+    answerText: '√2/2 ≈ 0.707'
+    wrong:
+      - value: 1.4142135624
+        feedback: |
+          That is the distance $|p - q| = \sqrt2$ itself. Two discs of that radius both contain the midpoint $(\tfrac12, \tfrac12)$, so they meet. Each disc may take at most half of the gap.
+      - value: 1
+        feedback: |
+          With $r = 1$ both discs contain the midpoint $(\tfrac12, \tfrac12)$, at distance $\tfrac{\sqrt2}{2} < 1$ from each point. Each disc may take at most half of the distance $|p - q|$.
+    hint: First compute the distance $|p - q|$ in the plane. A point in both discs would be closer than $r$ to each of $p$ and $q$.
+    explanation: |
+      $|p - q| = \sqrt{1 + 1} = \sqrt2$, so $r = \tfrac{\sqrt2}{2}$. In general take $r = \tfrac12|p - q|$: a point $z$ in both discs would give, by the triangle inequality,
+      $$|p - q| \le |p - z| + |z - q| < 2r = |p - q|,$$
+      which is impossible. So the discs are disjoint.
+
+  - type: mcq
+    id: hausdorff-subspace
+    prompt: |
+      Let $p\neq q$ be points of the unit circle $S^1$, and $B_p$, $B_q$ disjoint open discs around them in $\mathbb{R}^2$. $S^1$ has the topology inherited from $\mathbb{R}^2$. Why do $S^1\cap B_p$ and $S^1\cap B_q$ prove that $S^1$ is Hausdorff?
+    options:
+      - text: 'Both are open in $S^1$ by definition, they contain $p$ and $q$, and they are disjoint because $B_p$ and $B_q$ are'
+        correct: true
+      - text: 'They are not open in $S^1$, because an arc of the circle is not open in $\mathbb{R}^2$'
+        feedback: |
+          Open in $\mathbb{R}^2$ and open in $S^1$ are different questions. The arc $S^1\cap B_p$ is open **in** $S^1$ by the definition of the inherited topology, and Hausdorff for $S^1$ only asks for open sets of $S^1$.
+      - text: 'They work, but only because $S^1$ is a closed subset of $\mathbb{R}^2$'
+        feedback: |
+          Closedness is never used. The same argument works for **any** subset of $\mathbb{R}^2$, closed or not: cutting disjoint open sets down to the subset keeps them disjoint and makes them open in the subset.
+    explanation: |
+      Cutting disjoint open sets of $\mathbb{R}^2$ down to $S^1$ keeps them disjoint, and the cut-down sets are open in the inherited topology. So $S^1$, like every subset of $\mathbb{R}^d$, is Hausdorff.
+
+  - type: mcq
+    id: second-countable
+    title: "Step 3: second countable"
+    prompt: |
+      Recall: a basis of a topology is a family of open sets such that every open set is a union of members, and the open discs of $\mathbb{R}^2$ with rational centre and rational radius form a **countable** basis $\mathcal{B}$. Why is $\{S^1\cap B : B\in\mathcal{B}\}$ a countable basis of the topology of the unit circle $S^1$ inherited from $\mathbb{R}^2$?
+    options:
+      - text: 'It has one member per disc of $\mathcal{B}$, and every open $S^1\cap\mathcal{W}$ is a union of them, since $\mathcal{W}$ is a union of discs $B_k\in\mathcal{B}$'
+        correct: true
+      - text: 'It is not countable: each member is an arc with uncountably many points'
+        feedback: |
+          Countability concerns the number of **members** of the family, not the number of points in each. The members are labelled by the discs of $\mathcal{B}$, so there are countably many.
+      - text: 'It only works with discs centred on the circle, which would have to be rational points of $S^1$'
+        feedback: |
+          Centres need not lie on $S^1$. A disc centred off the circle still cuts it in an open set of $S^1$ (possibly empty), and keeping all discs of $\mathcal{B}$ makes the family both countable and fine enough.
+    explanation: |
+      Write $\mathcal{W} = \bigcup_k B_k$ with $B_k\in\mathcal{B}$. Then
+      $$S^1\cap\mathcal{W} = \bigcup_k (S^1\cap B_k),$$
+      a union of members of the family. Every member is open in $S^1$, and the family has at most as many members as $\mathcal{B}$: countably many. So $S^1$ is second countable, as is every subset of $\mathbb{R}^d$.
+
+  - type: text
+    id: step-homeo
+    title: "Step 4: charts"
+    body: |
+      Recall: a chart $(\mathcal{U}, \mathscr{X})$ is an open set $\mathcal{U}$ with a map $\mathscr{X}$ that is a homeomorphism (a continuous bijection with continuous inverse) onto an open set of $\mathbb{R}^d$; here $d = 1$.
+
+      Take the upper chart, $\mathscr{X}_\uparrow(q) = q_1$ on $\mathcal{U}_\uparrow = \{q\in S^1 : q_2 > 0\}$. Its domain is open in $S^1$: it is $S^1\cap\{q_2 > 0\}$, and the open upper half-plane is open in $\mathbb{R}^2$. Its image: $q_1 = \pm1$ would force $q_2 = 0$, which is excluded, so the image is the open interval $(-1, 1)$.
+
+  - type: mcq
+    id: upper-injective
+    prompt: |
+      The upper chart of the unit circle is $\mathscr{X}_\uparrow(q) = q_1$, on the half $\mathcal{U}_\uparrow$ where $q_2 > 0$. On the whole circle, $q\mapsto q_1$ is two-to-one. Why is $\mathscr{X}_\uparrow$ injective?
+    options:
+      - text: 'On $\mathcal{U}_\uparrow$, the other coordinate is fixed by $q_1$: $q_2 = +\sqrt{1 - q_1^2}$'
+        correct: true
+      - text: 'Because $q\mapsto q_1$ is a linear map'
+        feedback: |
+          Linear maps can fail to be injective, and this one does on all of $\mathbb{R}^2$ (and on the whole circle): it forgets $q_2$. Injectivity comes from the domain, not from linearity.
+      - text: 'Because the image $(-1, 1)$ is an open interval'
+        feedback: |
+          An open image says nothing about injectivity: on the open arc $q_1 > -1$, $q_1 < 1$ of the whole circle (both halves) the image is still $(-1, 1)$, yet two points share each value.
+    explanation: |
+      From $q_1^2 + q_2^2 = 1$ we get $q_2 = \pm\sqrt{1 - q_1^2}$, and the condition $q_2 > 0$ picks the sign $+$. So $q_1$ determines the point, and the inverse is
+      $$\mathscr{X}_\uparrow^{-1}(\alpha) = \big(\alpha, \sqrt{1 - \alpha^2}\big),$$
+      for $\alpha\in(-1, 1)$. Both directions are continuous: $\mathscr{X}_\uparrow$ is the projection $(q_1, q_2)\mapsto q_1$ restricted to the arc, and the inverse is built from continuous functions of $\alpha$. So $\mathscr{X}_\uparrow$ is a homeomorphism onto $(-1, 1)$.
+
+  - type: mcq
+    id: left-inverse
+    prompt: |
+      The left chart of the unit circle is $\mathscr{X}_\leftarrow(q) = q_2$, on the half $\mathcal{U}_\leftarrow$ where $q_1 < 0$; its image is $(-1, 1)$. What is the inverse $\mathscr{X}_\leftarrow^{-1}(\alpha)$, for $\alpha\in(-1, 1)$?
+    options:
+      - text: '$\big(-\sqrt{1 - \alpha^2}, \alpha\big)$'
+        correct: true
+      - text: '$\big(\alpha, -\sqrt{1 - \alpha^2}\big)$'
+        feedback: |
+          This puts $\alpha$ in the first slot, but the left chart reads the **vertical** coordinate: $\alpha = q_2$. It is the inverse of the lower chart, which reads $q_1$ on $q_2 < 0$.
+      - text: '$\big(\sqrt{1 - \alpha^2}, \alpha\big)$'
+        feedback: |
+          This point has $q_1 > 0$: it lies on the right half. On the left half $q_1 < 0$, so the square root needs a minus sign.
+      - text: '$\big(-(1 - \alpha^2), \alpha\big)$'
+        feedback: |
+          This point is not on the circle in general: at $\alpha = 0.6$ it gives $(-0.64, 0.6)$, and $0.64^2 + 0.6^2 \neq 1$. Solving $q_1^2 = 1 - \alpha^2$ needs the square root.
+    explanation: |
+      The chart reads $\alpha = q_2$; the circle gives $q_1 = \pm\sqrt{1 - \alpha^2}$, and $q_1 < 0$ picks the minus sign. The four inverses all have this shape: one slot holds $\alpha$, the other $\pm\sqrt{1 - \alpha^2}$, with the sign of the half.
+
+  - type: mcq
+    id: cover
+    title: "Step 5: the cover"
+    prompt: |
+      The unit circle $S^1$ carries four charts on open halves: upper ($q_2 > 0$), lower ($q_2 < 0$), right ($q_1 > 0$), left ($q_1 < 0$). Suppose we keep only the upper and lower charts. Which points of $S^1$ are then not covered?
+    options:
+      - text: '$(1, 0)$ and $(-1, 0)$'
+        correct: true
+      - text: '$(0, 1)$ and $(0, -1)$'
+        feedback: |
+          $(0, 1)$ has $q_2 = 1 > 0$, so the upper half contains it. The points missed by both halves are those with $q_2 = 0$: the two ends of the horizontal diameter.
+      - text: 'None: the upper and lower halves together make the whole circle'
+        feedback: |
+          The halves are **open**: $q_2 > 0$ and $q_2 < 0$ strictly. The points with $q_2 = 0$ belong to neither. Including them would ruin openness of the domain and of the image interval.
+    explanation: |
+      Open halves always leave out their two endpoints, so the right and left charts are needed for $(1, 0)$ and $(-1, 0)$. With all four the cover is complete: since $q_1^2 + q_2^2 = 1$, no point has $q_1 = q_2 = 0$, so every point has a nonzero coordinate and lies in some half.
+
+  - type: text
+    id: step-overlaps
+    title: "Step 6: the overlaps"
+    body: |
+      Recall: where two chart domains $\mathcal{U}$ and $\mathcal{V}$ (charts $\mathscr{X}$, $\mathscr{Y}$) overlap, the **transition map** $\mathscr{Y}\circ\mathscr{X}^{-1}$ turns the first chart's coordinate of a point of $\mathcal{U}\cap\mathcal{V}$ into the second's. The atlas is smooth when every such map, and its inverse $\mathscr{X}\circ\mathscr{Y}^{-1}$, is $C^\infty$.
+
+      Opposite halves do not meet: $\mathcal{U}_\uparrow\cap\mathcal{U}_\downarrow = \emptyset$ and $\mathcal{U}_\rightarrow\cap\mathcal{U}_\leftarrow = \emptyset$, so there is nothing to check. The other four pairs meet in open quarter-circles, for example
+      $$\mathcal{U}_\uparrow\cap\mathcal{U}_\rightarrow = \{q\in S^1 : q_1 > 0,\ q_2 > 0\}.$$
+      Recipe for a transition: take a coordinate $\alpha$ of the first chart, rebuild the point with the inverse chart, then read it with the second chart.
+
+  - type: numeric
+    id: transition-value
+    prompt: |
+      On the unit circle, the upper chart $\mathscr{X}_\uparrow(q) = q_1$ ($q_2 > 0$) and the right chart $\mathscr{X}_\rightarrow(q) = q_2$ ($q_1 > 0$) overlap in the quarter where $q_1 > 0$ and $q_2 > 0$. A point there has upper coordinate $\alpha = 0.6$. What is its right coordinate, $\mathscr{X}_\rightarrow\circ\mathscr{X}_\uparrow^{-1}(0.6)$?
+    answer: 0.8
+    tolerance: 0.001
+    wrong:
+      - value: 0.6
+        feedback: |
+          That is the upper coordinate again. The right chart reads the **other** coordinate, $q_2$, of the same point.
+      - value: 0.64
+        feedback: |
+          $1 - 0.6^2 = 0.64$ is $q_2^2$, not $q_2$. Take the square root.
+      - value: -0.8
+        feedback: |
+          The point lies on the upper half, where $q_2 > 0$, so the positive root applies.
+    hint: Rebuild the point with $\mathscr{X}_\uparrow^{-1}(\alpha) = (\alpha, \sqrt{1 - \alpha^2})$, then read its $q_2$.
+    explanation: |
+      $\mathscr{X}_\uparrow^{-1}(0.6) = (0.6, \sqrt{1 - 0.36}) = (0.6, 0.8)$, and the right chart reads $q_2 = 0.8$. In general
+      $$\mathscr{X}_\rightarrow\circ\mathscr{X}_\uparrow^{-1}(\alpha) = \sqrt{1 - \alpha^2},$$
+      for $\alpha\in(0, 1)$.
+
+  - type: build
+    id: transition-lower-right
+    prompt: |
+      On the unit circle, the lower chart $\mathscr{X}_\downarrow(q) = q_1$ ($q_2 < 0$) and the right chart $\mathscr{X}_\rightarrow(q) = q_2$ ($q_1 > 0$) overlap in the quarter where $q_1 > 0$ and $q_2 < 0$. Build the transition from the lower coordinate $\alpha$ to the right coordinate.
+    prefix: '\mathscr{X}_\rightarrow\circ\mathscr{X}_\downarrow^{-1}(\alpha) ='
+    tiles: ['-', '\sqrt{1-\alpha^2}', '1-\alpha^2', '\alpha']
+    answers:
+      - ['-', '\sqrt{1-\alpha^2}']
+    wrong:
+      - answer: ['\sqrt{1-\alpha^2}']
+        feedback: |
+          That is the transition on the **upper** right quarter. Here the point is on the lower half, $\mathscr{X}_\downarrow^{-1}(\alpha) = (\alpha, -\sqrt{1 - \alpha^2})$, so its $q_2$ is negative.
+      - answer: ['\alpha']
+        feedback: |
+          $\alpha$ is the coordinate $q_1$ that the lower chart reads. The right chart reads the other coordinate, $q_2$.
+      - answer: ['-', '1-\alpha^2']
+        feedback: |
+          $1 - \alpha^2$ is $q_2^2$, not $|q_2|$: at $\alpha = 0.6$ it gives $-0.64$, a point off the circle. Take the square root.
+    hint: Rebuild the point with the inverse of the lower chart, $(\alpha, -\sqrt{1 - \alpha^2})$, and read its second coordinate.
+    explanation: |
+      $$\mathscr{X}_\rightarrow\circ\mathscr{X}_\downarrow^{-1}(\alpha) = -\sqrt{1 - \alpha^2},$$
+      the vertical coordinate of the point. Check: $\alpha = 0.6$ gives $(0.6, -0.8)$ and the right coordinate $-0.8$.
+
+  - type: mcq
+    id: transition-domain
+    prompt: |
+      On the unit circle, the lower chart reads $q_1$ on $q_2 < 0$, and the right chart reads $q_2$ on $q_1 > 0$. Their transition $\alpha\mapsto-\sqrt{1 - \alpha^2}$ is defined on the set of lower coordinates of the overlap quarter. Which set is it?
+    options:
+      - text: '$(0, 1)$'
+        correct: true
+      - text: '$(-1, 1)$'
+        feedback: |
+          That is the image of the whole lower half. The transition only lives on the overlap, where also $q_1 > 0$, so $\alpha = q_1$ is positive.
+      - text: '$(-1, 0)$'
+        feedback: |
+          These would be the lower coordinates of the lower **left** quarter, where $q_1 < 0$. The right chart needs $q_1 > 0$.
+      - text: '$[0, 1]$'
+        feedback: |
+          The endpoints are missing: $\alpha = 0$ is the point $(0, -1)$, outside the right half; $\alpha = 1$ is $(1, 0)$, outside the lower half. The overlap of two open sets is open, and so is its image.
+    explanation: |
+      On the quarter $q_1 > 0$, $q_2 < 0$, the lower chart reads $\alpha = q_1\in(0, 1)$, and the transition sends it to $-\sqrt{1 - \alpha^2}\in(-1, 0)$, the right coordinates of the same quarter.
+
+  - type: text
+    id: all-transitions
+    title: All eight transitions
+    body: |
+      The other quarters work the same way. On each of the four quarters there are two transitions, one in each direction, and all eight have one shape:
+      $$s\mapsto\pm\sqrt{1 - s^2},$$
+      on $(0, 1)$ or on $(-1, 0)$, with the sign of the half the point lies on. Examples: from right to upper on the upper right quarter, $\beta\mapsto\sqrt{1 - \beta^2}$ for $\beta\in(0, 1)$; from upper to left on the upper left quarter, $\alpha\mapsto\sqrt{1 - \alpha^2}$ for $\alpha\in(-1, 0)$.
+
+      So step 6 reduces to one question: is $s\mapsto\sqrt{1 - s^2}$ smooth on these intervals?
+
+  - type: mcq
+    id: endpoint-trap
+    title: "Step 7: smoothness"
+    prompt: |
+      The transitions of the four half-circle charts of the unit circle all have the form $s\mapsto\pm\sqrt{1 - s^2}$, on $(0, 1)$ or $(-1, 0)$. The derivative of $\sqrt{1 - s^2}$ is $-s/\sqrt{1 - s^2}$, which blows up as $s\to\pm1$. Does this spoil the smoothness of the atlas?
+    options:
+      - text: 'No: $s = \pm1$ never occurs in an overlap, because the overlap intervals are open'
+        correct: true
+      - text: 'Yes: a transition must be differentiable on the closed interval $[-1, 1]$'
+        feedback: |
+          Transitions are only defined on the coordinates of the overlap, an open set. $s = 1$ would be the point $(1, 0)$ read by the upper chart, but $(1, 0)$ is not in the upper half.
+      - text: 'No, because only one direction of each transition needs to be smooth'
+        feedback: |
+          Both directions must be smooth: otherwise $\mathbb{R}$ with charts $p$ and $p^3$, whose transition $a\mapsto a^3$ is smooth but its inverse $\sqrt[3]{b}$ is not, would count as compatible. Here both directions are smooth, for another reason.
+      - text: 'No, because a derivative only needs to exist at most points'
+        feedback: |
+          $C^\infty$ requires derivatives of every order at **every** point of the domain. The atlas passes because the bad points are not in the domain at all.
+    explanation: |
+      The blow-up happens where the half-circle turns vertical, at $(\pm1, 0)$ for the upper and lower charts. Those points are exactly the ones cut out of the domains. Inside $(0, 1)$ and $(-1, 0)$ we have $1 - s^2 > 0$, where the square root is smooth.
+
+  - type: numeric
+    id: transition-slope
+    prompt: |
+      On the unit circle, the transition from the upper chart ($q_1$ on $q_2 > 0$) to the right chart ($q_2$ on $q_1 > 0$) is $\alpha\mapsto\sqrt{1 - \alpha^2}$ for $\alpha\in(0, 1)$. What is its derivative at $\alpha = 0.6$?
+    answer: -0.75
+    tolerance: 0.001
+    wrong:
+      - value: -1.2
+        feedback: |
+          $-1.2 = -2\alpha$ is the derivative of the inside, $1 - \alpha^2$, alone. The chain rule also brings the factor $\tfrac{1}{2\sqrt{1 - \alpha^2}}$ from the root.
+      - value: 0.75
+        feedback: |
+          The sign: as $\alpha = q_1$ grows on the upper right quarter, the point moves down towards $(1, 0)$, so $q_2$ decreases.
+      - value: -1.3333333333
+        feedback: |
+          That is $-0.8/0.6$, the slope of the inverse transition at the same point. Here the variable is $\alpha = 0.6$: the slope is $-\alpha/\sqrt{1 - \alpha^2}$.
+    hint: The chain rule gives $-\alpha/\sqrt{1 - \alpha^2}$, and $\sqrt{1 - 0.36} = 0.8$.
+    explanation: |
+      $$\frac{d}{d\alpha}\sqrt{1 - \alpha^2} = \frac{-\alpha}{\sqrt{1 - \alpha^2}} = \frac{-0.6}{0.8} = -0.75.$$
+      Each further derivative is again a quotient with a power of $\sqrt{1 - \alpha^2}$ in the denominator, finite as long as $1 - \alpha^2 > 0$.
+
+  - type: order
+    id: smooth-proof
+    prompt: |
+      Put in order the proof that the transition $\alpha\mapsto\sqrt{1 - \alpha^2}$, from the upper chart ($q_1$ on $q_2 > 0$) to the right chart ($q_2$ on $q_1 > 0$) of the unit circle, is $C^\infty$.
+    steps:
+      - 'On the overlap quarter $q_1 > 0$, $q_2 > 0$, the upper coordinate $\alpha = q_1$ lies in $(0, 1)$.'
+      - 'For $\alpha\in(0, 1)$, the number $1 - \alpha^2$ lies in $(0, 1)$, so it is positive.'
+      - 'The polynomial $\alpha\mapsto 1 - \alpha^2$ is $C^\infty$, and the square root is $C^\infty$ on $(0, \infty)$.'
+      - 'A composition of $C^\infty$ maps is $C^\infty$, so $\sqrt{1 - \alpha^2}$ is $C^\infty$ on $(0, 1)$.'
+      - 'The inverse transition $\beta\mapsto\sqrt{1 - \beta^2}$ has the same form on $(0, 1)$, so it is $C^\infty$ too.'
+    hint: Start by locating the coordinate, then check that the root never sees $0$.
+    explanation: |
+      The whole proof rests on one inequality, $1 - s^2 > 0$ on the overlap intervals. The same five steps, with a sign, cover the other three quarters, so all eight transitions are $C^\infty$ and $\mathcal{A}$ is a smooth atlas.
+
+  - type: mcq
+    id: angle-compatible
+    title: The angle chart joins in
+    prompt: |
+      The unit circle has the upper chart $\mathscr{X}_\uparrow(q) = q_1$ on $q_2 > 0$, and the angle chart $\theta\in(0, 2\pi)$ on $S^1\setminus\{(1, 0)\}$, with $q = (\cos\theta, \sin\theta)$. They overlap on the upper half, where $\theta\in(0, \pi)$ and the transition is $\alpha = \cos\theta$. Are the two charts $C^\infty$-compatible?
+    options:
+      - text: 'Yes: $\cos\theta$ is smooth, and its inverse $\arccos\alpha$ is smooth on $(-1, 1)$'
+        correct: true
+      - text: 'No: $\arccos$ is not differentiable at $\alpha = \pm1$'
+        feedback: |
+          True of $\arccos$, but $\alpha = \pm1$ is not in the overlap: the upper chart takes values in the open interval $(-1, 1)$. On that interval the derivative $-1/\sqrt{1 - \alpha^2}$ and all higher ones are finite.
+      - text: 'No: an angle and a length are different kinds of coordinate'
+        feedback: |
+          Compatibility only asks whether the transition maps are $C^\infty$ in both directions. What the numbers "mean" plays no role: any coordinate is a real number.
+      - text: 'Yes, because $\cos\theta$ is smooth; the inverse need not be checked'
+        feedback: |
+          Both directions must be checked, as $a\mapsto a^3$ (smooth, with non-smooth inverse $\sqrt[3]{b}$) shows. Here the inverse $\arccos$ happens to be smooth on $(-1, 1)$.
+    explanation: |
+      $\frac{d}{d\alpha}\arccos\alpha = -1/\sqrt{1 - \alpha^2}$, finite on $(-1, 1)$, and so are all higher derivatives. So $\theta$ is compatible with $\mathscr{X}_\uparrow$, and checking the other halves the same way, with the whole atlas $\mathcal{A}$: the angle charts belong to the same **maximal** atlas. The circle has one smooth structure, whichever of these charts we compute in.
+
+  - type: text
+    id: wrap-up
+    title: What you now own
+    body: |
+      - A complete proof that $(S^1, \mathcal{O}_{S^1}, \mathcal{A})_1$ is a **smooth manifold** of dimension $1$:
+        1. the inherited topology satisfies the three rules, because $S^1\cap\cdot$ commutes with unions and intersections;
+        2. Hausdorff: disjoint discs of radius $\tfrac12|p - q|$, cut down to the circle;
+        3. second countable: rational discs cut down to the circle;
+        4. four half-circle charts, each reading one coordinate, homeomorphisms onto $(-1, 1)$;
+        5. they cover $S^1$, since no point has $q_1 = q_2 = 0$;
+        6. all eight transitions are $\pm\sqrt{1 - s^2}$ on open intervals where $1 - s^2 > 0$, hence $C^\infty$.
+      - Why **open** halves matter: they keep the vertical points, where $\sqrt{1 - s^2}$ fails to be smooth, out of every overlap.
+      - The angle charts are compatible with this atlas: one smooth structure, many charts.
+
+      **Next:** a round of traps on this level's definitions, from open sets to diffeomorphisms: fast questions, each built on a tempting mistake.
