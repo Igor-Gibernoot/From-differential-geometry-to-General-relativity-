@@ -112,7 +112,7 @@ a { color: var(--accent); }
 }
 .level-head .eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 700; }
 .level-head h2 { margin: 2px 0 4px; font-size: 22px; }
-.level-head p { margin: 0; color: var(--muted); font-size: 15px; }
+.level-head p { margin: 0; color: var(--muted); font-size: 16.5px; line-height: 1.45; }
 .level-head .meter { height: 6px; background: var(--surface-2); border-radius: 99px; margin-top: 12px; overflow: hidden; }
 .level-head .meter > div { height: 100%; background: var(--good); border-radius: 99px; transition: width .4s; }
 .level.unwritten .level-head { opacity: .6; box-shadow: none; border-style: dashed; }
@@ -453,7 +453,36 @@ a { color: var(--accent); }
 .level[data-hue] { --accent: var(--hue); }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .level[data-hue] { --accent: var(--hue-dark); } }
 :root[data-theme="dark"] .level[data-hue] { --accent: var(--hue-dark); }
-.level:not(.unwritten) .level-head { background: var(--accent); color: var(--accent-text); border-color: transparent; }
+/* Each hue runs as a gradient from a deeper to a lighter shade of itself */
+.level[data-hue] {
+  --hue-deep: color-mix(in srgb, var(--accent) 68%, #000);
+  --hue-light: color-mix(in srgb, var(--accent) 76%, #fff);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .level[data-hue] {
+  --hue-deep: color-mix(in srgb, var(--accent) 88%, #000);
+  --hue-light: color-mix(in srgb, var(--accent) 62%, #fff);
+} }
+:root[data-theme="dark"] .level[data-hue] {
+  --hue-deep: color-mix(in srgb, var(--accent) 88%, #000);
+  --hue-light: color-mix(in srgb, var(--accent) 62%, #fff);
+}
+.level:not(.unwritten) .level-head {
+  background: linear-gradient(125deg, var(--hue-deep) 0%, var(--accent) 50%, var(--hue-light) 100%);
+  color: var(--accent-text); border-color: transparent;
+}
+.level[data-hue] .node.available:not(.special) { background: linear-gradient(150deg, var(--hue-light), var(--accent) 55%, var(--hue-deep)); }
 .level:not(.unwritten) .level-head :is(.eyebrow, p, .meta, .meta .acc) { color: color-mix(in srgb, var(--accent-text) 88%, transparent); }
 .level:not(.unwritten) .level-head .meter { background: color-mix(in srgb, var(--accent-text) 25%, transparent); }
 .level:not(.unwritten) .level-head .meter > div { background: var(--accent-text); }
+
+/* Course title: a gradient through the level hues */
+.topbar .course-title {
+  background: linear-gradient(90deg, #3451d1, #6d43d6 35%, #b8366f 70%, #b4520e);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .topbar .course-title {
+  background-image: linear-gradient(90deg, #7b93ff, #b394ff 35%, #f27aae 70%, #ff9a55);
+} }
+:root[data-theme="dark"] .topbar .course-title {
+  background-image: linear-gradient(90deg, #7b93ff, #b394ff 35%, #f27aae 70%, #ff9a55);
+}
