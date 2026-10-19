@@ -269,6 +269,38 @@ outro: |
 Lay the grid out so that no arrow passes behind a box. Keep decoys parallel to
 the correct card (same format and length) so the reader has to read the details.
 
+## Phone-safe layout (get it right on the first try)
+
+The phone stage is about 320 px wide: a display line holds roughly **25–30
+characters of rendered math** (a sum with limits counts as about 3). Anything
+longer scrolls sideways. These rules apply to **every** string that holds math:
+body, prompt, options, `explanation`, `hint`, `feedback`, map cards.
+
+- **One relation per `$$` line.** Two equations go on two `$$` lines joined by
+  prose ("and", "so"), never side by side with `\qquad`, `,\;` or `\text{and}`
+  (spacing only makes the line wider).
+- **Chains of equalities: use `aligned`**, one step per line, aligned at `=`:
+  ```
+  $$\begin{aligned}
+  \mathsf{X}(\mathcal{X}) &= \sum_{i=1}^d \mathtt{x}_i\, x^i \\
+  &= \mathtt{x}_1 x^1 + \mathtt{x}_2 x^2
+  \end{aligned}$$
+  ```
+- **Lists of unrelated formulas** (definitions, a map's rule): use `gathered`,
+  one per line.
+- **No prose inside display math.** Move "(from the shear)" or
+  `\text{for all } i` out into the sentence before or after.
+- **Long right-hand sides**: break after an operator (`+`, `=`) inside
+  `aligned`, not in the middle of a product.
+- **Inline math** wraps only between formulas, so keep each `$...$` short
+  (a symbol or a short equation); a long one belongs on a `$$` line.
+- **Build cards**: the prefix plus all answer tiles must fit one line. Keep
+  the prefix short (`'T_{ij} ='`), and prefer at most about 6 answer tiles.
+
+New widgets: draw planes with `planeSvg` (it clips the layers to the plane and
+the CSS caps the SVG height so the readout stays on screen on desktop); keep the
+readout to a few short lines, each one formula.
+
 ## YAML gotchas
 
 - Put TeX in **single quotes** (`'J_i^j'`) or block scalars (`|`). Never use

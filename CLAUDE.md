@@ -151,8 +151,9 @@ and put the weight on understanding and on the physics.
     probe limits.
 12. **Displayed math.** A standalone equation, definition or chain of
     equalities goes on its own `$$...$$` line. Inline math is for referring to
-    symbols inside a sentence. Break long chains so they do not overflow on a
-    phone.
+    symbols inside a sentence. Follow "Phone-safe layout" in
+    `docs/LESSON_FORMAT.md` (one relation per line, `aligned` chains, about
+    25–30 characters per display line) so nothing overflows on a phone.
 13. **Theme-neutral wording.** The app has light and dark modes: never say
     "the black arrow". Name things by label, or by the fixed hues (basis
     purple, vector components blue, covectors orange).
