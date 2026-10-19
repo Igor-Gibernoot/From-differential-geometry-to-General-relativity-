@@ -80,16 +80,18 @@ async function attach() {
   });
 }
 
+// Load Firebase ahead of the click: browsers only allow the sign-in popup if it
+// opens right inside the tap, so nothing may be awaited before signInWithPopup.
+export function preloadCloud() { if (cloudConfigured) { started = true; return attach(); } }
+
 export async function signIn() {
-  started = true;
-  await attach();
+  if (!attached) await attach(); // slow path only; may be blocked on phones
   setHint(true);
-  const provider = new fb.GoogleAuthProvider();
   try {
-    await fb.signInWithPopup(auth, provider);
+    await fb.signInWithPopup(auth, new fb.GoogleAuthProvider());
   } catch (err) {
-    if (err.code === 'auth/popup-blocked') return fb.signInWithRedirect(auth, provider);
     if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') return;
+    if (err.code === 'auth/popup-blocked') throw new Error('The browser blocked the sign-in window. Allow pop-ups for this site and tap the button again.');
     throw err;
   }
 }

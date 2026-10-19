@@ -87,7 +87,8 @@ a { color: var(--accent); }
 }
 .topbar .course-title { flex: 0 0 100%; text-align: center; margin: 0; font-size: 28px; line-height: 1.15; font-weight: 800; letter-spacing: -.01em; }
 .topbar .course-sub { flex: 0 0 100%; text-align: center; color: var(--muted); font-size: 14px; font-weight: 500; }
-.topbar .toolbar { flex: 0 0 100%; display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.topbar .toolbar { flex: 0 0 100%; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.chip.account img { width: 18px; height: 18px; border-radius: 50%; }
 .toolbar .spacer { flex: 1; }
 .tip-bubble {
   position: fixed; z-index: 100; max-width: 240px; padding: 7px 11px; border-radius: 9px;

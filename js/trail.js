@@ -6,6 +6,7 @@ import { icons, KIND_LABEL } from './icons.js';
 import { getCourse } from './content.js';
 import { progress } from './progress.js';
 import { themeButton } from './theme.js';
+import { cloudConfigured, preloadCloud, onCloudChange, signIn } from './cloud.js';
 
 const OFFSETS = [0, 52, 78, 52, 0, -52, -78, -52];
 
@@ -18,8 +19,7 @@ export async function renderTrail(root) {
   const acc = progress.accuracy(allIds);
 
   const top = h('header', { class: 'topbar' },
-    h('h1', { class: 'course-title' }, course.title),
-    course.subtitle ? h('div', { class: 'course-sub' }, course.subtitle) : null,
+    h('h1', { class: 'course-title' }, ...titleLines(course.title)),
     h('div', { class: 'toolbar' },
       acc != null ? h('span', { class: 'chip acc', tabindex: 0, 'data-tip': 'Average first-try accuracy over the lessons you finished', html: `${icons.target}<span>${pct(acc)}</span>` }) : null,
       h('span', { class: 'chip streak', tabindex: 0, 'data-tip': 'Days in a row you studied', html: `${icons.flame}<span>${streak}</span>` }),
@@ -27,7 +27,7 @@ export async function renderTrail(root) {
         class: `chip review${due ? ' due' : ''}`, type: 'button', 'data-tip': 'Spaced-repetition review',
         html: `${icons.review}<span>${due ? `Review ${due}` : 'Review'}</span>`, onclick: () => { location.hash = '#/review'; },
       }),
-      h('span', { class: 'spacer' }),
+      accountChip(),
       themeButton(h),
       h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Progress & settings', 'data-tip': 'Settings & account', html: icons.settings, onclick: () => { location.hash = '#/settings'; } })));
 
@@ -115,4 +115,33 @@ function openSheet(meta, state, { level, deck, due }) {
       h('div', { class: 'actions' }, actions)));
   document.body.append(scrim);
   scrim.querySelector('.btn.primary')?.focus();
+}
+
+// "From A to B": break before the last " to " so the title sits on two lines.
+function titleLines(title) {
+  const i = title.lastIndexOf(' to ');
+  return i < 0 ? [title] : [title.slice(0, i), h('br'), title.slice(i + 1)];
+}
+
+// Sign-in button that turns into the account avatar once signed in.
+function accountChip() {
+  if (!cloudConfigured) return null;
+  preloadCloud();
+  const btn = h('button', { class: 'chip account', type: 'button' });
+  const off = onCloudChange(st => {
+    if (!btn.isConnected && btn.childNodes.length) return off();
+    if (st.user) {
+      btn.replaceChildren(st.user.photo
+        ? h('img', { src: st.user.photo, alt: '', referrerpolicy: 'no-referrer' })
+        : h('span', { html: icons.user }));
+      btn.append(h('span', {}, (st.user.name ?? st.user.email ?? 'Account').split(' ')[0]));
+      btn.dataset.tip = `Signed in as ${st.user.email ?? st.user.name} · tap for account`;
+      btn.onclick = () => { location.hash = '#/settings'; };
+    } else {
+      btn.replaceChildren(h('span', { html: icons.user }), h('span', {}, 'Log in'));
+      btn.dataset.tip = 'Sign in with Google to sync progress';
+      btn.onclick = () => signIn().catch(err => alert(`Sign-in failed: ${err.message}`));
+    }
+  });
+  return btn;
 }

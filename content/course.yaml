@@ -7,7 +7,6 @@
 # A level with `status: unwritten` is a chapter that is still "??" in the book.
 
 title: From Differential Geometry to General Relativity
-subtitle: A problem-based trail through the course
 
 levels:
   - id: ch02
