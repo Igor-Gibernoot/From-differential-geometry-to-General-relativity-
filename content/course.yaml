@@ -137,7 +137,7 @@ levels:
         title: Level Challenge
         kind: challenge
         file: ch03/challenge.yaml
-        summary: Harder problems mixing topology, charts, atlases and smooth maps - a graph with a corner, stereographic charts from both poles, and two smooth structures on one line.
+        summary: Harder problems mixing topology, charts, atlases and smooth maps - a graph with a corner, stereographic charts from both poles, two smooth structures on one line, the line with two origins, and the doubling map of the circle.
 
   - id: ch04
     number: 4

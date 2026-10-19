@@ -8,17 +8,18 @@ append a short entry at the end of **Log** (a few lines, ending with
 ## Current (2026-10-19)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
-- **Chapter 3 built:** `ch03-open-sets`, `ch03-standard-topology`,
-  `ch03-homeomorphisms`, `ch03-hausdorff`, `ch03-charts`, `ch03-atlases`,
-  `ch03-smooth-maps`, `ch03-circle`, `ch03-traps`, `ch03-map`. All had a screenshot pass; all widgets are documented.
-  `ch03-challenge` (`ch03/challenge.yaml`) has problems 1–3 (graph of $|t|$,
-  stereographic $\sigma_N,\sigma_S$, $\mathbb{R}_x$ vs $\mathbb{R}_y$).
-  File layout: `intro` (numbered problem list), one block per problem with
-  `tag: Problem N · …` and ids `pN-…`, then `wrap-up`. Session 2 inserts
-  problems 4–5 before `wrap-up`, adds them to the intro list, and extends the
-  wrap-up bullets and teaser (next level: Tangent Spaces).
-- **Queue (one unit each):** ⑨ `ch03-challenge` problems 4–5, then Chapters 4–10 (each with map and challenge).
-  Each planned node in `course.yaml` is one lesson.
+- **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
+  `ch03-standard-topology`, `ch03-homeomorphisms`, `ch03-hausdorff`,
+  `ch03-charts`, `ch03-atlases`, `ch03-smooth-maps`, `ch03-circle`,
+  `ch03-traps`, `ch03-map`, `ch03-challenge` (five problems: graph of $|t|$,
+  stereographic $\sigma_N,\sigma_S$, $\mathbb{R}_x$ vs $\mathbb{R}_y$, line with
+  two origins, doubling map $D$ vs reflection $R$ on $S^1$).
+  Challenge file layout (reuse for later levels): `intro` (numbered problem
+  list), one block per problem with `tag: Problem N · …` and ids `pN-…`, then
+  `wrap-up` ending with a teaser for the next level.
+- **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
+  order, starting with `ch04-tangent-space`; then Chapters 5–10 (each with
+  map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
   on $S^1$: $\theta \in (0,2\pi)$ on $S^1\setminus\{(1,0)\}$, $\varphi \in (-\pi,\pi)$
@@ -37,7 +38,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   Challenge ch03: graph $\Gamma = \{(t,|t|)\}$ with chart $\mathscr{X}(t,|t|) = t$,
   inclusion $\iota$; $N = (0,1)$, $S = (0,-1)$, $\sigma_N = q_1/(1-q_2)$,
   $\sigma_S = q_1/(1+q_2)$, transition $u\mapsto 1/u$; diffeomorphism
-  $\phi(p) = \sqrt[3]{p}\colon\mathbb{R}_x\to\mathbb{R}_y$ (maps named $\phi$).
+  $\phi(p) = \sqrt[3]{p}\colon\mathbb{R}_x\to\mathbb{R}_y$ (maps named $\phi$);
+  two origins: charts $(\mathcal{U}_A, \mathscr{X}_A)$, $(\mathcal{U}_B, \mathscr{X}_B)$,
+  $\mathcal{U}_A = \mathcal{M}\setminus\{0_B\}$; doubling $D$ (angle $t\mapsto 2t$,
+  $q\mapsto q^2$), reflection $R(q_1,q_2) = (q_1,-q_2)$; facts beyond the level
+  are flagged "stated here without proof".
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -47,6 +52,25 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+ch03-challenge, session 2 of 2 (problems 4–5, 17 cards; lesson now 41):
+(4) line with two origins built by gluing two copies of ℝ along t ≠ 0 (book
+footnote 2): chart X_A is a homeomorphism onto ℝ, overlap image ℝ∖{0},
+transition t ↦ t, tail of 1/n inside (−0.01, 0.01) from n = 101, multi-select
+on limits (±1/n → both origins; constant 0_A does not → 0_B, T1 holds),
+proof order, which axiom fails, trap on "charts onto ℝ ⇒ inherited
+Hausdorff", T/F: no subset of ℝ² is homeomorphic to it (Whitney stated
+without proof). (5) doubling D with θ at the source, φ at the target: domain
+drops θ = π/2, 3π/2 (three pieces, shifts 0, −2π, −4π), slope 2 at θ = π
+(the point the (θ, θ) pair missed), chart change φ∘D∘φ⁻¹ through transitions
+(−π/4 ↦ 7π/4 ↦ 3π/2 ↦ −π/2), two preimages, verdict, reflection R is a
+diffeomorphism (rep 2π − θ). Choices: went beyond hausdorff.yaml and
+smooth-maps.yaml (mixed chart pair, T1 vs Hausdorff, embedding); also
+flagged the S² transition, the σ/angle compatibility and exotic spheres in
+problems 2–3 as "stated here without proof". Validate 0/0; shots 0 problems.
+Conventions fixed here: two-origin charts (𝒰_A, 𝒳_A), 𝒰_A = ℳ∖{0_B};
+doubling D, reflection R(q₁, q₂) = (q₁, −q₂); facts beyond the level are
+flagged "stated here without proof".
 
 ch03-challenge, session 1 of 2 (problems 1–3, 24 cards): (1) the graph Γ of
 |t| is a smooth manifold (inherited Hausdorff/second countable, chart
