@@ -1,0 +1,237 @@
+id: ch02-dual-basis-law
+title: "Guided Problem: The Dual Basis Uses the Same J"
+kind: guided
+
+cards:
+  - type: text
+    id: problem
+    title: The problem
+    body: |
+      Let $\{\hat{x}_i\}$ and $\{\hat{y}_i\}$ be two bases of a $d$-dimensional vector space $V$, related by
+      $$\hat{x}_i = \sum_{j=1}^d J_i^j\,\hat{y}_j ,$$
+      with $J$ invertible, so that $\hat{y}_k = \sum_m (J^{-1})_k^m\,\hat{x}_m$. Each basis has its dual basis in $V^*$:
+      $$\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j ,\qquad \hat{\mathfrak{y}}^i(\hat{y}_j) = \delta^i_j .$$
+      Both $\{\hat{\mathfrak{x}}^i\}$ and $\{\hat{\mathfrak{y}}^i\}$ are bases of $V^*$, so they are related by **some** matrix. The book claims it is built from the same $J$ (its Appendix B.3).
+
+      > **(a)** Express each $\hat{\mathfrak{x}}^i$ in terms of the $\hat{\mathfrak{y}}^j$.
+      >
+      > **(b)** Express each $\hat{\mathfrak{y}}^i$ in terms of the $\hat{\mathfrak{x}}^j$, and compare with the law for vector components.
+      >
+      > **(c)** Use the result to derive the transformation law of covector components.
+
+  - type: mcq
+    id: predict-double
+    prompt: |
+      Observer B's basis vectors are twice as long as A's: $\hat{y}_i = 2\,\hat{x}_i$. The dual bases satisfy $\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j$ and $\hat{\mathfrak{y}}^i(\hat{y}_j) = \delta^i_j$. How is $\hat{\mathfrak{y}}^i$ related to $\hat{\mathfrak{x}}^i$?
+    options:
+      - text: '$\hat{\mathfrak{y}}^i = \tfrac12\,\hat{\mathfrak{x}}^i$'
+        correct: true
+      - text: '$\hat{\mathfrak{y}}^i = 2\,\hat{\mathfrak{x}}^i$'
+        feedback: |
+          Tempting ("the dual basis follows the basis"), but test it: $2\,\hat{\mathfrak{x}}^i(\hat{y}_i) = 2\,\hat{\mathfrak{x}}^i(2\,\hat{x}_i) = 4$, not $1$.
+      - text: '$\hat{\mathfrak{y}}^i = \hat{\mathfrak{x}}^i$'
+        feedback: |
+          Then $\hat{\mathfrak{y}}^i(\hat{y}_i) = \hat{\mathfrak{x}}^i(2\,\hat{x}_i) = 2$, not $1$.
+    explanation: |
+      $\hat{\mathfrak{y}}^i$ must give $1$ on $\hat{y}_i = 2\,\hat{x}_i$, so it is half of $\hat{\mathfrak{x}}^i$: $\tfrac12\,\hat{\mathfrak{x}}^i(2\,\hat{x}_i) = 1$. The basis doubled and the dual basis **halved**, the same way vector components behave. The general proof follows.
+
+  - type: mcq
+    id: ansatz
+    prompt: |
+      Let $\{\hat{\mathfrak{x}}^i\}$ and $\{\hat{\mathfrak{y}}^j\}$ be the dual bases of two bases $\{\hat{x}_i\}$, $\{\hat{y}_j\}$ of $V$. We write
+      $$\hat{\mathfrak{x}}^i = \sum_{j=1}^d A^i_j\,\hat{\mathfrak{y}}^j$$
+      with unknown numbers $A^i_j$. Why do such numbers exist, and why are they unique?
+    options:
+      - text: '$\hat{\mathfrak{x}}^i$ is a covector, and $\{\hat{\mathfrak{y}}^j\}$ is a basis of $V^*$'
+        correct: true
+      - text: 'Because $\hat{\mathfrak{x}}^i$ is a vector of $V$ and $\{\hat{y}_j\}$ is a basis of $V$'
+        feedback: |
+          $\hat{\mathfrak{x}}^i$ lives in $V^*$, not in $V$. We expand it in a basis of $V^*$, the dual basis $\{\hat{\mathfrak{y}}^j\}$.
+      - text: 'Because $A = J$ by definition'
+        feedback: |
+          Nothing has been assumed about $A$. Finding it is the point of the problem.
+    explanation: |
+      The dual basis of any basis is a basis of $V^*$. So $\hat{\mathfrak{x}}^i$ has unique components $A^i_j$ in $\{\hat{\mathfrak{y}}^j\}$.
+
+  - type: mcq
+    id: extract
+    prompt: |
+      Let $\hat{\mathfrak{x}}^i = \sum_j A^i_j\,\hat{\mathfrak{y}}^j$, where $\{\hat{\mathfrak{y}}^j\}$ is the dual basis of $\{\hat{y}_k\}$, so $\hat{\mathfrak{y}}^j(\hat{y}_k) = \delta^j_k$. Which input isolates the single number $A^i_k$?
+    options:
+      - text: 'Evaluate both sides on $\hat{y}_k$: $\ \hat{\mathfrak{x}}^i(\hat{y}_k) = A^i_k$'
+        correct: true
+      - text: 'Evaluate both sides on $\hat{x}_k$'
+        feedback: |
+          Then the right side becomes $\sum_j A^i_j\,\hat{\mathfrak{y}}^j(\hat{x}_k)$, and $\hat{\mathfrak{y}}^j(\hat{x}_k)$ is not a Kronecker delta. All the $A^i_j$ stay mixed.
+      - text: 'Evaluate both sides on $\hat{\mathfrak{y}}^k$'
+        feedback: |
+          Covectors eat **vectors**. $\hat{\mathfrak{x}}^i(\hat{\mathfrak{y}}^k)$ means nothing.
+    explanation: |
+      $$\hat{\mathfrak{x}}^i(\hat{y}_k) = \sum_j A^i_j\,\hat{\mathfrak{y}}^j(\hat{y}_k) = \sum_j A^i_j\,\delta^j_k = A^i_k .$$
+      This is the trick from before: **the components of a covector are its values on the basis vectors**. Now we need to compute $\hat{\mathfrak{x}}^i(\hat{y}_k)$.
+
+  - type: build
+    id: build-evaluate
+    prompt: |
+      Two bases are related by $\hat{y}_k = \sum_m (J^{-1})_k^m\,\hat{x}_m$, and $\hat{\mathfrak{x}}^i$ is linear. Substitute and pull the numbers out of $\hat{\mathfrak{x}}^i$:
+    prefix: '\hat{\mathfrak{x}}^i(\hat{y}_k) ='
+    tiles: ['\sum_{m=1}^d', '(J^{-1})_k^m', 'J_k^m', '\hat{\mathfrak{x}}^i(\hat{x}_m)', '\hat{x}_m', '\hat{\mathfrak{x}}^m(\hat{x}_i)']
+    answers:
+      - ['\sum_{m=1}^d', '(J^{-1})_k^m', '\hat{\mathfrak{x}}^i(\hat{x}_m)']
+      - ['\sum_{m=1}^d', '\hat{\mathfrak{x}}^i(\hat{x}_m)', '(J^{-1})_k^m']
+    wrong:
+      - answer: ['\sum_{m=1}^d', 'J_k^m', '\hat{\mathfrak{x}}^i(\hat{x}_m)']
+        feedback: |
+          $J$ writes **old in terms of new**. Here we need the new vector $\hat{y}_k$ in the old basis, which uses $J^{-1}$.
+      - answer: ['\sum_{m=1}^d', '(J^{-1})_k^m', '\hat{x}_m']
+        feedback: |
+          The left side is a **number** (a covector evaluated on a vector), so the right side must be too. Apply $\hat{\mathfrak{x}}^i$ to each $\hat{x}_m$.
+      - answer: ['\sum_{m=1}^d', '(J^{-1})_k^m', '\hat{\mathfrak{x}}^m(\hat{x}_i)']
+        feedback: |
+          The covector is $\hat{\mathfrak{x}}^i$ throughout, and it eats the summed vectors $\hat{x}_m$. The indices of $\hat{\mathfrak{x}}^m(\hat{x}_i)$ are swapped.
+    hint: '$\hat{\mathfrak{x}}^i\big(\sum_m c^m\,\hat{x}_m\big) = \sum_m c^m\,\hat{\mathfrak{x}}^i(\hat{x}_m)$ for any numbers $c^m$.'
+    explanation: |
+      $$\hat{\mathfrak{x}}^i(\hat{y}_k) = \hat{\mathfrak{x}}^i\Big(\sum_m (J^{-1})_k^m\,\hat{x}_m\Big) = \sum_{m=1}^d (J^{-1})_k^m\,\hat{\mathfrak{x}}^i(\hat{x}_m).$$
+
+  - type: mcq
+    id: simplify
+    prompt: |
+      Using $\hat{\mathfrak{x}}^i(\hat{x}_m) = \delta^i_m$, simplify
+      $$\sum_{m=1}^d (J^{-1})_k^m\,\hat{\mathfrak{x}}^i(\hat{x}_m).$$
+    options:
+      - text: '$(J^{-1})_k^i$'
+        correct: true
+      - text: '$(J^{-1})_i^k$'
+        feedback: |
+          The delta sets the **upper** index $m$ of $(J^{-1})_k^m$ equal to $i$; the lower index $k$ stays. Swapping the two indices would give the transpose, a different matrix.
+      - text: '$\sum_m (J^{-1})_k^m$'
+        feedback: |
+          $\delta^i_m$ kills every term except $m = i$. It does not turn into $1$ for every $m$.
+      - text: '$\delta^i_k$'
+        feedback: |
+          That would mean $\hat{\mathfrak{x}}^i(\hat{y}_k) = \delta^i_k$, i.e. the old dual basis is also dual to the new basis. That only happens when the bases coincide.
+    explanation: |
+      Only the term $m = i$ survives: $A^i_k = (J^{-1})_k^i$. That answers part **(a)**:
+      $$\hat{\mathfrak{x}}^i = \sum_{j=1}^d (J^{-1})_j^i\,\hat{\mathfrak{y}}^j .$$
+
+  - type: mcq
+    id: part-b
+    prompt: |
+      Part (b) by the same trick. Write $\hat{\mathfrak{y}}^i = \sum_k B^i_k\,\hat{\mathfrak{x}}^k$, so $B^i_k = \hat{\mathfrak{y}}^i(\hat{x}_k)$. With $\hat{x}_k = \sum_j J_k^j\,\hat{y}_j$ and $\hat{\mathfrak{y}}^i(\hat{y}_j) = \delta^i_j$, what is $B^i_k$?
+    options:
+      - text: '$J_k^i$'
+        correct: true
+      - text: '$(J^{-1})_k^i$'
+        feedback: |
+          That is what appeared in part (a), where we evaluated on the **new** vectors. Here we evaluate on the **old** vector $\hat{x}_k$, and it is written in the new basis with $J$ itself.
+      - text: '$J_i^k$'
+        feedback: |
+          $\hat{\mathfrak{y}}^i\big(\sum_j J_k^j\,\hat{y}_j\big) = \sum_j J_k^j\,\delta^i_j$ sets the **upper** index $j$ to $i$. The lower index $k$ stays.
+    explanation: |
+      $$B^i_k = \hat{\mathfrak{y}}^i\Big(\sum_j J_k^j\,\hat{y}_j\Big) = \sum_j J_k^j\,\delta^i_j = J_k^i ,$$
+      so
+      $$\hat{\mathfrak{y}}^i = \sum_{j=1}^d J_j^i\,\hat{\mathfrak{x}}^j .$$
+      (Consistent with (a): substituting one law into the other gives $\sum_j J_j^i (J^{-1})_k^j = \delta^i_k$.)
+
+  - type: mcq
+    id: which-law
+    prompt: |
+      Compare the dual basis law with the law for vector components, both for the change of basis $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$:
+      $$\hat{\mathfrak{y}}^i = \sum_j J_j^i\,\hat{\mathfrak{x}}^j ,\qquad y^i = \sum_j J_j^i\,x^j .$$
+      So the dual basis covectors transform…
+    options:
+      - text: '**contravariantly**: same matrix and index pattern as vector components, against the basis'
+        correct: true
+      - text: '**covariantly**, like the basis vectors $\hat{x}_i$'
+        feedback: |
+          The basis vectors go $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$: old from new. The dual basis goes $\hat{\mathfrak{y}}^i = \sum_j J_j^i\,\hat{\mathfrak{x}}^j$: **new** from old, with the summed index of $J$ in the other slot. That is the vector-component pattern.
+      - text: In a third way, with the transpose of $J$
+        feedback: |
+          Put the two formulas side by side: they are identical, letter for letter, with $\hat{\mathfrak{y}}^i, \hat{\mathfrak{x}}^j$ in place of $y^i, x^j$.
+    explanation: |
+      The dual basis carries an **upper** index, like vector components, and transforms like them. In the doubling example $\hat{y}_i = 2\,\hat{x}_i$: $J_j^i = \tfrac12\,\delta_j^i$, so $\hat{\mathfrak{y}}^i = \tfrac12\,\hat{\mathfrak{x}}^i$, as predicted at the start.
+
+  - type: numeric
+    id: shear-dual
+    prompt: |
+      Shear: $\hat{y}_1 = \hat{x}_1$, $\hat{y}_2 = \hat{x}_1 + \hat{x}_2$, so with $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$,
+      $$J_1^1 = 1,\quad J_1^2 = 0,\quad J_2^1 = -1,\quad J_2^2 = 1 .$$
+      Using $\hat{\mathfrak{y}}^i = \sum_j J_j^i\,\hat{\mathfrak{x}}^j$, write $\hat{\mathfrak{y}}^1 = a\,\hat{\mathfrak{x}}^1 + b\,\hat{\mathfrak{x}}^2$. What is $b$?
+    answer: -1
+    wrong:
+      - value: 0
+        feedback: |
+          $b = J_2^1$, the entry with lower index $2$ and upper index $1$. Here $J_2^1 = -1$ (from $\hat{x}_2 = -\hat{y}_1 + \hat{y}_2$).
+      - value: 1
+        feedback: |
+          Check the sign of $J_2^1$: $\hat{x}_2 = \hat{y}_2 - \hat{y}_1$.
+    explanation: |
+      $\hat{\mathfrak{y}}^1 = J_1^1\,\hat{\mathfrak{x}}^1 + J_2^1\,\hat{\mathfrak{x}}^2 = \hat{\mathfrak{x}}^1 - \hat{\mathfrak{x}}^2$. Check against the definition:
+      $$\hat{\mathfrak{y}}^1(\hat{y}_1) = \hat{\mathfrak{x}}^1(\hat{x}_1) - \hat{\mathfrak{x}}^2(\hat{x}_1) = 1,$$
+      $$\hat{\mathfrak{y}}^1(\hat{y}_2) = \hat{\mathfrak{x}}^1(\hat{x}_1 + \hat{x}_2) - \hat{\mathfrak{x}}^2(\hat{x}_1 + \hat{x}_2) = 1 - 1 = 0 .$$
+      The first basis vector did not change, yet its dual covector did: each dual covector depends on the whole basis.
+
+  - type: order
+    id: covector-law
+    prompt: |
+      Part (c). A covector has components $\mathtt{x}_j$ in $\{\hat{\mathfrak{x}}^j\}$ and $\mathtt{y}_i$ in $\{\hat{\mathfrak{y}}^i\}$, and the dual bases are related by $\hat{\mathfrak{y}}^i = \sum_j J_j^i\,\hat{\mathfrak{x}}^j$. Put in order the derivation of the law for the covector components.
+    steps:
+      - '$\displaystyle \sum_j \mathtt{x}_j\,\hat{\mathfrak{x}}^j = \mathsf{X} = \sum_i \mathtt{y}_i\,\hat{\mathfrak{y}}^i$'
+      - '$\displaystyle = \sum_i \mathtt{y}_i\,\Big(\sum_j J_j^i\,\hat{\mathfrak{x}}^j\Big)$'
+      - '$\displaystyle = \sum_j \Big(\sum_i J_j^i\,\mathtt{y}_i\Big)\,\hat{\mathfrak{x}}^j$'
+      - 'Components in $\{\hat{\mathfrak{x}}^j\}$ are unique, so $\mathtt{x}_j = \sum_i J_j^i\,\mathtt{y}_i$.'
+    hint: Expand the covector in both dual bases, substitute the dual basis law, regroup, and compare components.
+    explanation: |
+      $$\mathtt{x}_j = \sum_{i=1}^d J_j^i\,\mathtt{y}_i ,$$
+      the same pattern as the basis vectors $\hat{x}_j = \sum_i J_j^i\,\hat{y}_i$: covector components are **covariant**. This is the route the book takes. It agrees with the shortcut $\mathtt{y}_j = \mathsf{X}(\hat{y}_j) = \sum_i (J^{-1})_j^i\,\mathtt{x}_i$; multiply by $J$ to go from one form to the other.
+
+  - type: mcq
+    id: covariant-list
+    multiple: true
+    prompt: |
+      For the change of basis $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$, which objects transform with the **same** pattern as the basis vectors (covariantly)? Select all that apply.
+    options:
+      - text: 'Covector components, $\mathtt{x}_j = \sum_i J_j^i\,\mathtt{y}_i$'
+        correct: true
+      - text: 'Vector components, $y^i = \sum_j J_j^i\,x^j$'
+        feedback: |
+          Vector components go **against** the basis: the same $J$ produces the new components from the old ones, while it produces the old basis vectors from the new ones.
+      - text: 'Dual basis covectors, $\hat{\mathfrak{y}}^i = \sum_j J_j^i\,\hat{\mathfrak{x}}^j$'
+        feedback: |
+          This is the vector-component pattern (new from old), so the dual basis is contravariant, even though its elements are covectors.
+    explanation: |
+      Index position tells you the pattern: **lower** index ($\hat{x}_i$, $\mathtt{x}_i$) transforms like the basis vectors; **upper** index ($x^i$, $\hat{\mathfrak{x}}^i$) transforms the opposite way. Note the twist: covectors themselves don't change, but the dual **basis** they are expanded in is contravariant, which makes their **components** covariant.
+
+  - type: mcq
+    id: why-opposite
+    prompt: |
+      Why must the dual basis transform **oppositely** to the basis vectors, for any change of basis?
+    options:
+      - text: 'The pairing $\hat{\mathfrak{y}}^i(\hat{y}_j) = \delta^i_j$ must hold in every basis, so whatever the basis does, its dual must undo'
+        correct: true
+      - text: It is a convention chosen to make formulas look symmetric
+        feedback: |
+          Nothing was chosen: the dual basis is **defined** by $\hat{\mathfrak{y}}^i(\hat{y}_j) = \delta^i_j$, and the law followed by computation.
+      - text: Because $J$ is orthogonal
+        feedback: |
+          No orthogonality was assumed anywhere; it would need a metric. The shear example has a non-orthogonal $J$ and the law still holds.
+    explanation: |
+      If basis and dual basis both doubled, the pairing would become $2\cdot 2 = 4$ instead of $1$. Keeping $\delta^i_j$ fixed forces $J$ on one side and $J^{-1}$ on the other. The same cancellation is what makes $\mathsf{X}(\mathcal{X}) = \sum_i \mathtt{x}_i\,x^i$ basis-independent.
+
+  - type: text
+    id: wrap
+    title: Problem solved
+    body: |
+      For $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$, the dual bases are related by the **same** $J$:
+      $$\hat{\mathfrak{x}}^i = \sum_{j} (J^{-1})_j^i\,\hat{\mathfrak{y}}^j \quad\Longleftrightarrow\quad \hat{\mathfrak{y}}^i = \sum_{j} J_j^i\,\hat{\mathfrak{x}}^j .$$
+
+      | object | index | transforms |
+      |---|---|---|
+      | basis vectors $\hat{x}_i$ | down | covariant |
+      | covector components $\mathtt{x}_i$ | down | covariant |
+      | vector components $x^i$ | up | contravariant |
+      | dual basis $\hat{\mathfrak{x}}^i$ | up | contravariant |
+
+      **The method** (used twice): to find the components of a covector, evaluate it on basis vectors. You will use it again for tensors.
+
+      **Next:** machines with **several** slots, such as the area of a parallelogram, which eats two vectors. These are tensors.

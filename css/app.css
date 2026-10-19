@@ -291,6 +291,24 @@ a { color: var(--accent); }
 .w-handle:active { cursor: grabbing; fill-opacity: .35; }
 .w-label { font: italic 0.38px Georgia, "Times New Roman", serif; fill: var(--ink); paint-order: stroke; stroke: var(--surface); stroke-width: 0.08px; }
 .w-label.basis { fill: var(--basis); }
+.w-handle.vec { fill: var(--vec); stroke: var(--vec); }
+.w-uvec { stroke: var(--vec); fill: var(--vec); stroke-width: 3px; }
+.w-label.vec { fill: var(--vec); }
+.w-area { fill: var(--vec); fill-opacity: .13; stroke: none; }
+.w-set { fill: var(--surface-2); stroke: var(--line); stroke-width: 1.5px; }
+.w-setname { font: italic 0.6px Georgia, "Times New Roman", serif; fill: var(--muted); }
+.w-elem circle { fill: var(--surface); stroke: var(--ink); stroke-width: 1.5px; }
+.w-elem text { font: 650 0.42px system-ui, -apple-system, sans-serif; fill: var(--text); pointer-events: none; }
+.w-elem.dom { cursor: pointer; outline: none; }
+.w-elem.dom circle { stroke: var(--accent); fill: var(--accent-soft); stroke-width: 2px; }
+.w-elem.dom:hover circle, .w-elem.dom:focus-visible circle { stroke-width: 3.5px; }
+.w-elem.tgt.missed circle { stroke: var(--muted); stroke-dasharray: 3 3; }
+.w-elem.tgt.clash circle { stroke: var(--bad); stroke-width: 2.5px; }
+.w-maparrow line { stroke: var(--accent); stroke-width: 2px; }
+.w-maparrow polygon { fill: var(--accent); }
+.w-maparrow.clash line { stroke: var(--bad); }
+.w-maparrow.clash polygon { fill: var(--bad); }
+.widget .readout .ok { color: var(--good); font-weight: 650; }
 .c-vec { color: var(--vec); }
 .c-covec { color: var(--covec); }
 .c-basis { color: var(--basis); }

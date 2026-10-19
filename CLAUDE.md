@@ -168,13 +168,32 @@ Also built: light/dark toggle (`js/theme.js`), instant tooltips via `data-tip`
 (`js/tooltip.js`), and optional Google sign-in with Firestore sync (`js/cloud.js`,
 `docs/ACCOUNTS.md`; inactive until `js/firebase-config.js` is filled in).
 
+### Building sessions (token efficiency)
+
+Lessons are built across many short sessions, not all at once.
+- **Budget per session:** about 2 concept lessons, or 3 lighter ones
+  (guided, traps, map). A new widget counts as one lesson. A level
+  challenge counts as two.
+- **Read only what you need:** `docs/LESSON_FORMAT.md`, one existing lesson
+  of the same kind as a model, and the relevant book section (find it with
+  `grep -n` and read just that range; never the whole book). Don't re-read
+  files already in context.
+- **Screenshots:** only for the lessons built in this session, a few cards
+  each (widget cards and long formulas), at desktop and phone width.
+- **End of every session:** validate, play-check, update the Status below,
+  commit and push, then **give Igor a ready-to-paste prompt for the next
+  session** naming the exact lessons to build (from `course.yaml`) and any
+  leftover checks.
+
 ### Status (2026-10-19)
 
-Built: Chapter 2 change of basis (concept), covector law (guided), the
-transformation traps round, and the Chapter 2 content map (all checked
-against the complete book on 2026-10-19). `course.yaml` now plans every
-chapter 2–10 from the book's sections. Next: the remaining Chapter 2 lessons
-(maps, axioms, dual space, bases and dual basis, J invertible, dual basis
-law, tensors, tensor product) and the Chapter 2 challenge, then Chapters
-3–10 in order (each with its content map and challenge). Each planned node
-in `course.yaml` is one lesson to build.
+Chapter 2 built: maps, axioms, dual space, bases and dual basis, change of
+basis, covector law, J invertible, dual basis law, transformation traps, and
+the content map. New widgets: `machine-playground` (covectors and 2-slot
+tensors, area, partial evaluation) and `map-builder`; `basis-playground`
+gained a `dual` option. Not yet done: a headless screenshot pass of maps,
+axioms, dual, basis, J-invertible and dual-basis-law (validated only), and
+documenting the new widgets in `docs/LESSON_FORMAT.md`. Next: Chapter 2
+tensors and tensor product, then the Chapter 2 challenge, then Chapters 3–10
+in order (each with its content map and challenge). Each planned node in
+`course.yaml` is one lesson to build.

@@ -1,0 +1,298 @@
+id: ch02-basis
+title: Bases and the Dual Basis
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: From vectors to numbers
+    body: |
+      An abstract vector space has no numbers in it. To add two displacements on paper, or to write a force as three numbers, you need a way to turn each vector into a list of real numbers, with no ambiguity and no information lost. A **basis** does exactly that.
+
+      Once you have the numbers, there is a natural machine that **reads off the first number** of each vector. It eats a vector and returns a number, linearly, so it is a covector.
+
+      Here is a puzzle about that machine. In the plane, take a basis $\{\hat{x}_1, \hat{x}_2\}$, so every vector is $\mathcal{X} = x^1\,\hat{x}_1 + x^2\,\hat{x}_2$. Now keep $\hat{x}_1$ but replace $\hat{x}_2$ by $\hat{x}_1 + \hat{x}_2$.
+
+  - type: mcq
+    id: predict-reader
+    prompt: |
+      In the plane, a basis $\{\hat{x}_1, \hat{x}_2\}$ is replaced by $\{\hat{x}_1,\ \hat{x}_1 + \hat{x}_2\}$: the first basis vector is kept, the second changes. Does the covector that **reads off the first component** of a vector change?
+    options:
+      - text: Yes, even though the first basis vector did not change
+        correct: true
+      - text: 'No: the first basis vector is the same, so its reader is the same'
+        feedback: |
+          Test it on the vector $\hat{x}_2$. In the old basis its first component is $0$. In the new basis, $\hat{x}_2 = -1\cdot\hat{x}_1 + 1\cdot(\hat{x}_1 + \hat{x}_2)$, so its first component is $-1$. Same vector, different reading.
+      - text: Only by an overall factor
+        feedback: |
+          On $\hat{x}_1$ both readers give $1$, so they are not multiples of each other unless equal. Yet on $\hat{x}_2$ they give $0$ and $-1$.
+    explanation: |
+      The first component of a vector depends on the **whole** basis: changing the second basis vector changes how much of the first one you need. This lesson builds the precise tool, the **dual basis**, and shows why it depends on every basis vector at once.
+
+  - type: text
+    id: basis-def
+    title: Bases and components
+    body: |
+      Let $V$ be a vector space. A **linear combination** of vectors $\hat{x}_1, \dots, \hat{x}_d$ is a vector $\sum_{i=1}^d c^i\,\hat{x}_i$ with real numbers $c^i$.
+
+      A finite set $\{\hat{x}_1,\dots,\hat{x}_d\}$ is a **basis** of $V$ if every vector $\mathcal{X}\in V$ can be written as
+      $$\mathcal{X} = \sum_{i=1}^d x^i\,\hat{x}_i$$
+      in **exactly one** way. The numbers $x^i$ are the **components** of $\mathcal{X}$ with respect to this basis. (Upper indices are labels, not powers.)
+
+      "Exactly one way" has two halves:
+
+      - **at least one** way: the set **spans** $V$;
+      - **at most one** way: the set is **linearly independent**, meaning $\sum_i c^i\,\hat{x}_i = 0$ only when every $c^i = 0$.
+
+      All bases of $V$ have the same number of elements, $d$, called the **dimension** of $V$. Throughout this course $d$ is finite.
+
+  - type: mcq
+    id: why-finite
+    prompt: |
+      The definition of a basis only allows **finite** sums $\sum_{i=1}^d x^i\,\hat{x}_i$. Why not infinite sums?
+    options:
+      - text: The vector-space rules give no meaning to an infinite sum, since they say nothing about limits or convergence
+        correct: true
+      - text: Infinite sums are always equal to zero
+        feedback: |
+          An infinite sum is not zero; it is undefined. To define it you need a notion of "getting closer", which a bare vector space does not have.
+      - text: There is no reason; it is only a convention
+        feedback: |
+          It is forced. Adding two vectors, and then a third, never reaches "infinitely many" without a limit, and limits need extra structure (a topology).
+    explanation: |
+      Repeated addition only ever gives finite sums. Infinite sums (as in Fourier series) need a notion of convergence, which is extra structure on top of the vector space. In finite dimensions the issue never comes up.
+
+  - type: mcq
+    id: three-vectors
+    prompt: |
+      In the plane, with a basis $\{\hat{x}_1, \hat{x}_2\}$, is the set $\{\hat{x}_1,\ \hat{x}_2,\ \hat{x}_1 + \hat{x}_2\}$ a basis?
+    options:
+      - text: 'No: it spans the plane, but it is not linearly independent'
+        correct: true
+      - text: 'Yes: every vector can be written with it'
+        feedback: |
+          Every vector can be written with it, but not uniquely: $\hat{x}_1 + \hat{x}_2$ is $1\cdot(\hat{x}_1 + \hat{x}_2)$ and also $1\cdot\hat{x}_1 + 1\cdot\hat{x}_2$. Components would be ambiguous.
+      - text: 'No: it does not span the plane'
+        feedback: |
+          It contains $\hat{x}_1$ and $\hat{x}_2$, which already span the plane. The problem is the opposite one: too many vectors.
+    explanation: |
+      $1\cdot\hat{x}_1 + 1\cdot\hat{x}_2 - 1\cdot(\hat{x}_1 + \hat{x}_2) = 0$ is a non-trivial combination giving zero, so the set is dependent. A basis of the plane has exactly $2$ vectors.
+
+  - type: numeric
+    id: skew-component
+    prompt: |
+      In $\mathbb{R}^2$ (pairs of numbers), take the basis
+      $$\hat{x}_1 = (1, 0),\qquad \hat{x}_2 = (1, 1).$$
+      The vector $\mathcal{X} = (3, 2)$ is written as $\mathcal{X} = x^1\,\hat{x}_1 + x^2\,\hat{x}_2$. What is $x^1$?
+    answer: 1
+    wrong:
+      - value: 3
+        feedback: |
+          $3$ is the first entry of the pair $(3, 2)$, but $\hat{x}_2 = (1,1)$ also contributes to the first entry. Solve $x^1 + x^2 = 3$ and $x^2 = 2$.
+    explanation: |
+      $x^1\,(1,0) + x^2\,(1,1) = (x^1 + x^2,\ x^2) = (3, 2)$ gives $x^2 = 2$ and $x^1 = 1$. Check: $(1,0) + 2\,(1,1) = (3, 2)$. Components depend on all basis vectors, and the basis need not be "perpendicular": there are no angles in a vector space.
+
+  - type: numeric
+    id: dim-poly
+    prompt: |
+      $P_3$ is the vector space of polynomials of degree at most $3$, $p(x) = p^0 + p^1 x + p^2 x^2 + p^3 x^3$. What is its dimension?
+    answer: 4
+    wrong:
+      - value: 3
+        feedback: |
+          $3$ is the highest degree. Count the basis $\{1,\ x,\ x^2,\ x^3\}$: the constant counts too.
+    explanation: |
+      The monomials $\hat{x}_0 = 1$, $\hat{x}_1 = x$, $\hat{x}_2 = x^2$, $\hat{x}_3 = x^3$ form a basis, and the components of $p$ are its coefficients $p^0, \dots, p^3$. Four of them, so $\dim P_3 = 4$.
+
+  - type: text
+    id: dual-def
+    title: The dual basis
+    body: |
+      Fix a basis $\{\hat{x}_1,\dots,\hat{x}_d\}$ of $V$. For each $i$, define a covector $\hat{\mathfrak{x}}^i\in V^*$ by its values on the basis,
+      $$\hat{\mathfrak{x}}^i(\hat{x}_j) := \delta^i_j ,$$
+      where $\delta^i_j$ is the **Kronecker delta**: $1$ if $i = j$ and $0$ otherwise. On any other vector, $\hat{\mathfrak{x}}^i$ is fixed by linearity.
+
+      The covectors $\hat{\mathfrak{x}}^1,\dots,\hat{\mathfrak{x}}^d$ form the **dual basis** (the book calls it the "induced dual cobasis"). The letter is a fraktur x, $\hat{\mathfrak{x}}$, and its index is **up**.
+
+      In words: $\hat{\mathfrak{x}}^i$ gives $1$ on its partner $\hat{x}_i$ and $0$ on **every other** basis vector. That second half is why it depends on the whole basis.
+
+  - type: mcq
+    id: reads-component
+    prompt: |
+      Let $\{\hat{x}_j\}$ be a basis with dual basis $\{\hat{\mathfrak{x}}^i\}$, so $\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j$. For a vector $\mathcal{X} = \sum_j x^j\,\hat{x}_j$, what is $\hat{\mathfrak{x}}^i(\mathcal{X})$?
+    options:
+      - text: '$x^i$, the $i$-th component of $\mathcal{X}$'
+        correct: true
+      - text: '$\sum_j x^j$'
+        feedback: |
+          Each $\hat{x}_j$ with $j\neq i$ is sent to $0$, so only one term survives.
+      - text: '$x^i\,\hat{x}_i$'
+        feedback: |
+          A covector returns a **number**, not a vector.
+      - text: '$1$'
+        feedback: |
+          That is $\hat{\mathfrak{x}}^i(\hat{x}_i)$. Here the input is a general vector with components $x^j$.
+    explanation: |
+      $$\hat{\mathfrak{x}}^i(\mathcal{X}) = \sum_j x^j\,\hat{\mathfrak{x}}^i(\hat{x}_j) = \sum_j x^j\,\delta^i_j = x^i .$$
+      The dual basis covector $\hat{\mathfrak{x}}^i$ **is** the machine that reads off the $i$-th component. It is exactly the reader from the opening puzzle.
+
+  - type: widget
+    id: playground
+    title: See the dual basis
+    widget: basis-playground
+    config:
+      vector: [3, 2]
+      basis: [[1, 0], [0, 1]]
+      dual: 1
+      snap: 0.5
+      presets:
+        - { label: 'Shear', basis: [[1, 0], [1, 1]] }
+        - { label: 'Stretch ŷ₁', basis: [[2, 0], [0, 1]] }
+    body: |
+      The faint square grid is a reference basis $\hat{x}_1, \hat{x}_2$. The purple arrows are another basis $\hat{y}_1, \hat{y}_2$ that you can drag, and the arrow labelled $\mathcal{X}$ is a fixed vector with components $y^1, y^2$ in it.
+
+      The orange dashed lines are the level lines $\hat{\mathfrak{y}}^1 = \dots, -1, 0, 1, 2, \dots$ of the first dual basis covector. Check that the tip of $\hat{y}_1$ sits on line $1$ and that $\hat{y}_2$ lies along line $0$. The number of lines $\mathcal{X}$ crosses is $y^1$.
+
+      **Try:** press **Shear**, which keeps $\hat{y}_1$ and only moves $\hat{y}_2$. Then drag $\hat{y}_2$ around.
+
+  - type: mcq
+    id: widget-whole-basis
+    review: false
+    prompt: |
+      In the dual-basis playground, you keep $\hat{y}_1$ fixed and drag only $\hat{y}_2$. What do the level lines of $\hat{\mathfrak{y}}^1$ do?
+    options:
+      - text: They turn to stay parallel to $\hat{y}_2$, so $\hat{\mathfrak{y}}^1$ changes
+        correct: true
+      - text: They stay put, because $\hat{y}_1$ did not move
+        feedback: |
+          Look again: $\hat{\mathfrak{y}}^1$ must give $0$ on $\hat{y}_2$, so its zero line has to follow $\hat{y}_2$ wherever it goes.
+      - text: They only change their spacing
+        feedback: |
+          The spacing is pinned by $\hat{\mathfrak{y}}^1(\hat{y}_1) = 1$; it is the **direction** that follows $\hat{y}_2$.
+    explanation: |
+      $\hat{\mathfrak{y}}^1(\hat{y}_2) = 0$ forces the zero line of $\hat{\mathfrak{y}}^1$ to run along $\hat{y}_2$, and $\hat{\mathfrak{y}}^1(\hat{y}_1) = 1$ fixes the spacing. Move $\hat{y}_2$ and $\hat{\mathfrak{y}}^1$ must change. This is the opening puzzle, seen.
+
+  - type: mcq
+    id: skew-dual
+    prompt: |
+      In $\mathbb{R}^2$ (pairs $(a, b)$), take the basis $\hat{x}_1 = (1, 0)$, $\hat{x}_2 = (1, 1)$. How does the first dual basis covector $\hat{\mathfrak{x}}^1$ act on a pair $(a, b)$?
+    options:
+      - text: '$\hat{\mathfrak{x}}^1(a, b) = a - b$'
+        correct: true
+      - text: '$\hat{\mathfrak{x}}^1(a, b) = a$'
+        feedback: |
+          Test it on $\hat{x}_2 = (1, 1)$: it gives $1$, but $\hat{\mathfrak{x}}^1(\hat{x}_2)$ must be $0$.
+      - text: '$\hat{\mathfrak{x}}^1(a, b) = a + b$'
+        feedback: |
+          On $\hat{x}_1 = (1,0)$ this gives $1$, fine, but on $\hat{x}_2 = (1,1)$ it gives $2$ instead of $0$.
+    explanation: |
+      Write $(a, b) = (a - b)\,\hat{x}_1 + b\,\hat{x}_2$; then $\hat{\mathfrak{x}}^1$ reads the first component, $a - b$. Check the definition: $\hat{\mathfrak{x}}^1(1, 0) = 1$ and $\hat{\mathfrak{x}}^1(1, 1) = 0$. Likewise $\hat{\mathfrak{x}}^2(a, b) = b$.
+
+  - type: text
+    id: is-basis
+    title: Is it really a basis of $V^*$?
+    body: |
+      We called $\{\hat{\mathfrak{x}}^i\}$ a basis of $V^*$. That is a claim: it must **span** $V^*$ and be **linearly independent**. The key tool is a fact about linear maps:
+
+      > Two linear maps that agree on every basis vector agree everywhere.
+
+      Indeed, if $\mathsf{X}(\hat{x}_j) = \mathsf{Y}(\hat{x}_j)$ for all $j$, then for any $\mathcal{X} = \sum_j x^j\,\hat{x}_j$, linearity gives
+      $$\mathsf{X}(\mathcal{X}) = \sum_j x^j\,\mathsf{X}(\hat{x}_j) = \sum_j x^j\,\mathsf{Y}(\hat{x}_j) = \mathsf{Y}(\mathcal{X}).$$
+      So a linear map is completely determined by what it does to a basis.
+
+  - type: order
+    id: spans-proof
+    prompt: |
+      Let $\{\hat{x}_i\}$ be a basis of $V$ with dual basis $\{\hat{\mathfrak{x}}^i\}$, so $\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j$. Put in order the proof that every covector $\mathsf{X}\in V^*$ is a combination of the $\hat{\mathfrak{x}}^i$.
+    steps:
+      - 'Define the numbers $\mathtt{x}_i := \mathsf{X}(\hat{x}_i)$ and the covector $\mathsf{Y} := \sum_i \mathtt{x}_i\,\hat{\mathfrak{x}}^i$.'
+      - 'On each basis vector, $\mathsf{Y}(\hat{x}_j) = \sum_i \mathtt{x}_i\,\delta^i_j = \mathtt{x}_j$.'
+      - 'So $\mathsf{Y}(\hat{x}_j) = \mathsf{X}(\hat{x}_j)$ for every $j$.'
+      - 'Linear maps that agree on a basis agree everywhere, so $\mathsf{X} = \sum_i \mathtt{x}_i\,\hat{\mathfrak{x}}^i$.'
+    hint: Guess the coefficients first (evaluate $\mathsf{X}$ on the basis), then check that the guess agrees with $\mathsf{X}$ on the basis.
+    explanation: |
+      Every covector expands as
+      $$\mathsf{X} = \sum_{i=1}^d \mathtt{x}_i\,\hat{\mathfrak{x}}^i ,\qquad \mathtt{x}_i = \mathsf{X}(\hat{x}_i).$$
+      The numbers $\mathtt{x}_i$ (typewriter letters, index **down**) are the **components** of the covector. To find them, feed the basis vectors to the covector.
+
+  - type: mcq
+    id: independence
+    prompt: |
+      Let $\{\hat{\mathfrak{x}}^i\}$ be the dual basis of a basis $\{\hat{x}_j\}$, so $\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j$. To prove linear independence, suppose $\sum_i \lambda_i\,\hat{\mathfrak{x}}^i = 0$ (the zero covector). What should you evaluate both sides on, to conclude $\lambda_j = 0$?
+    options:
+      - text: The basis vector $\hat{x}_j$
+        correct: true
+      - text: The dual basis covector $\hat{\mathfrak{x}}^j$
+        feedback: |
+          Covectors eat **vectors**. $\hat{\mathfrak{x}}^i(\hat{\mathfrak{x}}^j)$ means nothing.
+      - text: The zero vector
+        feedback: |
+          Every linear map gives $0$ on the zero vector, so you would learn $0 = 0$, nothing about the $\lambda_i$.
+    explanation: |
+      $$0 = \sum_i \lambda_i\,\hat{\mathfrak{x}}^i(\hat{x}_j) = \sum_i \lambda_i\,\delta^i_j = \lambda_j .$$
+      So the dual basis spans and is independent: it is a basis of $V^*$, with $d$ elements.
+
+  - type: numeric
+    id: dim-dual
+    prompt: |
+      $V$ has dimension $4$. What is the dimension of its dual space $V^* = \mathrm{Hom}(V,\mathbb{R})$?
+    answer: 4
+    wrong:
+      - value: 16
+        feedback: |
+          $16 = 4\cdot 4$ would be the dimension of $\mathrm{Hom}(V, V)$, the linear maps $V\to V$. A covector only needs one number per basis vector: $\mathtt{x}_i = \mathsf{X}(\hat{x}_i)$.
+      - value: 1
+        feedback: |
+          $1$ is the dimension of the target $\mathbb{R}$. But a covector on $V$ needs one number for each basis vector of $V$.
+    explanation: |
+      The dual basis $\{\hat{\mathfrak{x}}^1,\dots,\hat{\mathfrak{x}}^4\}$ has $4$ elements, so $\dim V^* = \dim V = 4$. Same dimension, but **not** the same space: there is no preferred way to match a vector with a covector without extra structure.
+
+  - type: numeric
+    id: integral-component
+    prompt: |
+      On the polynomials $P_3$ with basis $\hat{x}_0 = 1$, $\hat{x}_1 = x$, $\hat{x}_2 = x^2$, $\hat{x}_3 = x^3$, take the covector
+      $$I(p) := \int_0^1 p(x)\,dx .$$
+      Its components are $\mathtt{x}_j = I(\hat{x}_j)$. What is $\mathtt{x}_2$?
+    answer: 0.333333
+    answerText: '1/3'
+    tolerance: 0.001
+    wrong:
+      - value: 0.5
+        feedback: |
+          $\tfrac12 = I(x)$ is $\mathtt{x}_1$. For $\mathtt{x}_2$ integrate $x^2$ from $0$ to $1$.
+    explanation: |
+      $\mathtt{x}_j = \int_0^1 x^j\,dx = \frac{1}{j+1}$, so $\mathtt{x}_2 = \tfrac13$ and
+      $$I = \hat{\mathfrak{x}}^0 + \tfrac12\,\hat{\mathfrak{x}}^1 + \tfrac13\,\hat{\mathfrak{x}}^2 + \tfrac14\,\hat{\mathfrak{x}}^3 .$$
+      Then for $p = \sum_j p^j\,\hat{x}_j$, $I(p) = \sum_j \mathtt{x}_j\,p^j = p^0 + \tfrac12 p^1 + \tfrac13 p^2 + \tfrac14 p^3$: an integral computed by a sum of products.
+
+  - type: mcq
+    id: taylor-dual
+    prompt: |
+      On $P_3$ with the monomial basis $\{1, x, x^2, x^3\}$, which covector is the dual basis covector $\hat{\mathfrak{x}}^2$, the one that reads off the coefficient of $x^2$?
+    options:
+      - text: "$p\\mapsto \\tfrac12\\,p''(0)$"
+        correct: true
+      - text: "$p\\mapsto p''(0)$"
+        feedback: |
+          Test it on $x^2$: the second derivative is $2$, so this gives $2$ instead of $1$. You need the $\tfrac{1}{2!}$ of Taylor's formula.
+      - text: '$p\mapsto p(2)$'
+        feedback: |
+          Evaluating at $2$ mixes all coefficients: $p(2) = p^0 + 2p^1 + 4p^2 + 8p^3$.
+      - text: '$p\mapsto \int_0^1 p(x)\,x^2\,dx$'
+        feedback: |
+          This is linear, so it is a covector, but on the basis vector $1$ it gives $\tfrac13 \neq 0$.
+    explanation: |
+      $\tfrac12\,p''(0)$ gives $1$ on $x^2$ and $0$ on $1$, $x$ and $x^3$. In general the dual basis of the monomials is
+      $$\hat{\mathfrak{x}}^k(p) = \frac{1}{k!}\,\frac{d^k p}{dx^k}\Big|_{x=0},$$
+      which is Taylor's formula read as a dual basis.
+
+  - type: text
+    id: wrap
+    title: What you now own
+    body: |
+      - A **basis** writes every vector in exactly one way, $\mathcal{X} = \sum_i x^i\,\hat{x}_i$: spanning gives existence, independence gives uniqueness. All bases have $d = \dim V$ elements.
+      - Each basis has a **dual basis** $\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j$, a basis of $V^*$. Its covector $\hat{\mathfrak{x}}^i$ reads off the $i$-th component, $\hat{\mathfrak{x}}^i(\mathcal{X}) = x^i$, and it depends on the **whole** basis.
+      - Covector components are found by feeding the basis: $\mathsf{X} = \sum_i \mathtt{x}_i\,\hat{\mathfrak{x}}^i$ with $\mathtt{x}_i = \mathsf{X}(\hat{x}_i)$.
+      - Index positions: vector components up ($x^i$), basis vectors down ($\hat{x}_i$); covector components down ($\mathtt{x}_i$), dual basis up ($\hat{\mathfrak{x}}^i$).
+
+      **Next:** different observers bring different bases. Same vector, different numbers: how do their components translate?

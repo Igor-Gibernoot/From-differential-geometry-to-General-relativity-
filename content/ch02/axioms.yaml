@@ -1,0 +1,285 @@
+id: ch02-axioms
+title: What Makes a Vector Space
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: Arrows are only one example
+    body: |
+      Displacements add tip to tail and can be stretched. So can velocities, forces and electric fields. So can things that are not arrows at all: two sound waves superpose into a sound wave, two polynomials add to a polynomial, and in quantum mechanics two states superpose into a state. Later in this course, the "vectors" on a curved spacetime will be **derivatives acting on functions**, with no arrows in sight.
+
+      If one short list of rules covers all of these, then every theorem proved from the rules holds for all of them at once. That list is the definition of a **vector space**.
+
+      Here is a strange candidate. Take the **positive real numbers**, and declare that "adding" two of them means **multiplying** them, and "scaling" $X$ by a real number $\alpha$ means raising it to the power $\alpha$:
+      $$X\oplus Y := X\cdot Y,\qquad \alpha\odot X := X^\alpha .$$
+
+  - type: mcq
+    id: predict-positive
+    prompt: |
+      Take the positive real numbers with "addition" $X\oplus Y := X\cdot Y$ (ordinary product) and "scaling" $\alpha\odot X := X^\alpha$ for real $\alpha$. Before any theory: is this a vector space?
+    options:
+      - text: Yes
+        correct: true
+      - text: 'No: multiplication is not addition'
+        feedback: |
+          The rules never say *what* the operations are, only how they must behave. Any operation that obeys the rules counts as an addition.
+      - text: 'No: there is no zero vector, since $0$ is not positive'
+        feedback: |
+          The zero vector is whatever element does nothing when "added". Here that is the number $1$: $X\oplus 1 = X\cdot 1 = X$.
+      - text: 'No: there are no negative vectors'
+        feedback: |
+          The "negative" of $X$ is whatever undoes it under $\oplus$. Here that is $1/X$, which is positive: $X\oplus\tfrac1X = 1$, the zero vector.
+    explanation: |
+      Surprisingly, yes. You will check every rule later in this lesson. The lesson behind it: a vector space is defined by **how its operations behave**, not by what its elements are.
+
+  - type: text
+    id: operations
+    title: Two operations
+    body: |
+      A **real vector space** is a triple $(V, \oplus, \odot)$:
+
+      - a set $V$, whose elements are called **vectors** and written $\mathcal{X}, \mathcal{Y}, \mathcal{Z}$;
+      - an **addition** $\oplus: V\times V\to V$, a map that turns a pair of vectors into a vector;
+      - a **scalar multiplication** $\odot: \mathbb{R}\times V\to V$, a map that turns a real number (a **scalar**, written $\alpha, \beta$) and a vector into a vector.
+
+      (Recall: $V\times V$ is the set of ordered pairs $(\mathcal{X}, \mathcal{Y})$.) The circled symbols are on purpose. $\oplus$ and $\odot$ act on vectors and need not be the ordinary $+$ and $\cdot$, which we keep for real numbers. Both operations land back in $V$: this is called **closure**.
+
+      The scalars are the real numbers. What we use about them is that you can add, subtract, multiply, and divide by any non-zero number, with the usual rules. (A set of numbers with these properties is called a **field**.)
+
+  - type: text
+    id: axioms
+    title: The rules
+    body: |
+      For all vectors $\mathcal{X}, \mathcal{Y}, \mathcal{Z}\in V$ and scalars $\alpha, \beta\in\mathbb{R}$:
+
+      **Addition** makes $(V, \oplus)$ an **abelian group** (abelian = commutative):
+
+      1. commutative: $\mathcal{X}\oplus\mathcal{Y} = \mathcal{Y}\oplus\mathcal{X}$;
+      2. associative: $(\mathcal{X}\oplus\mathcal{Y})\oplus\mathcal{Z} = \mathcal{X}\oplus(\mathcal{Y}\oplus\mathcal{Z})$;
+      3. neutral element: there is a vector $0_V$ with $\mathcal{X}\oplus 0_V = \mathcal{X}$;
+      4. inverses: for each $\mathcal{X}$ there is $-\mathcal{X}$ with $\mathcal{X}\oplus(-\mathcal{X}) = 0_V$.
+
+      **Scaling** fits with numbers and with addition:
+
+      5. associative: $(\alpha\cdot\beta)\odot\mathcal{X} = \alpha\odot(\beta\odot\mathcal{X})$;
+      6. distributive 1: $(\alpha+\beta)\odot\mathcal{X} = (\alpha\odot\mathcal{X})\oplus(\beta\odot\mathcal{X})$;
+      7. distributive 2: $\alpha\odot(\mathcal{X}\oplus\mathcal{Y}) = (\alpha\odot\mathcal{X})\oplus(\alpha\odot\mathcal{Y})$;
+      8. unit: $1\odot\mathcal{X} = \mathcal{X}$.
+
+      That is all. Nothing about lengths, angles, or an origin of position.
+
+  - type: mcq
+    id: which-plus
+    prompt: |
+      In the vector-space rule
+      $$(\alpha+\beta)\odot\mathcal{X} = (\alpha\odot\mathcal{X})\oplus(\beta\odot\mathcal{X}),$$
+      where $\alpha, \beta$ are real numbers and $\mathcal{X}$ is a vector, what do $+$ and $\oplus$ add?
+    options:
+      - text: '$+$ adds two real numbers; $\oplus$ adds two vectors'
+        correct: true
+      - text: Both add vectors; the circle is decoration
+        feedback: |
+          $\alpha$ and $\beta$ are numbers, so $\alpha + \beta$ is a sum of numbers. The circle marks the operation of $V$, which can be very different (in the positive reals with $X\oplus Y := X\cdot Y$, it is a product).
+      - text: Both add real numbers
+        feedback: |
+          $\alpha\odot\mathcal{X}$ is a vector, so the sum on the right combines two vectors.
+    explanation: |
+      The rule links the two worlds: adding scalars first and then scaling gives the same vector as scaling separately and then adding vectors. Keeping $+$ and $\oplus$ apart is what makes rules like this checkable.
+
+  - type: mcq
+    id: quadrant
+    prompt: |
+      Take the **first quadrant** of the plane, all pairs $(x^1, x^2)$ with $x^1\ge 0$ and $x^2\ge 0$, with the usual addition and scaling of pairs. It is not a vector space. Which rule fails?
+    options:
+      - text: 'Inverses (and closure under scaling): $(1, 1)$ has no partner in the quadrant to cancel it, and $(-1)\odot(1,1)$ leaves the quadrant'
+        correct: true
+      - text: The neutral element
+        feedback: |
+          $(0, 0)$ is in the quadrant and does nothing when added. The neutral element is fine.
+      - text: Commutativity
+        feedback: |
+          The usual addition of pairs is commutative everywhere, including in the quadrant.
+      - text: Distributivity
+        feedback: |
+          Whenever both sides stay in the quadrant, they agree, since they are computed with ordinary arithmetic.
+    explanation: |
+      Cancelling $(1,1)$ needs $(-1,-1)$, which is not in the set. The algebra of the plane is still there; the problem is that the set is not closed under the operations. Closure is the most commonly forgotten requirement.
+
+  - type: numeric
+    id: bad-scaling-numeric
+    prompt: |
+      On the pairs $\mathbb{R}^2$, keep the usual addition but define a lopsided scaling that ignores the second entry:
+      $$\alpha\odot(x^1, x^2) := (\alpha x^1,\ x^2).$$
+      Take $\mathcal{X} = (1, 1)$ and $\alpha = \beta = 1$. Then $(\alpha+\beta)\odot\mathcal{X} = (2, 1)$. What is the **second** entry of $(\alpha\odot\mathcal{X})\oplus(\beta\odot\mathcal{X})$?
+    answer: 2
+    wrong:
+      - value: 1
+        feedback: |
+          Compute each piece: $1\odot(1,1) = (1, 1)$, and adding two copies gives $(1,1)\oplus(1,1) = (2, 2)$.
+    explanation: |
+      $(\alpha\odot\mathcal{X})\oplus(\beta\odot\mathcal{X}) = (1,1)\oplus(1,1) = (2, 2)$, but $(\alpha+\beta)\odot\mathcal{X} = (2, 1)$. The second entries disagree.
+
+  - type: mcq
+    id: bad-scaling-axiom
+    prompt: |
+      On $\mathbb{R}^2$ with the usual addition and the scaling $\alpha\odot(x^1, x^2) := (\alpha x^1,\ x^2)$, which rule fails?
+    options:
+      - text: 'Distributive 1: $(\alpha+\beta)\odot\mathcal{X} = (\alpha\odot\mathcal{X})\oplus(\beta\odot\mathcal{X})$'
+        correct: true
+      - text: 'The unit rule: $1\odot\mathcal{X} = \mathcal{X}$'
+        feedback: |
+          $1\odot(x^1, x^2) = (x^1, x^2)$. It holds.
+      - text: 'Associativity: $(\alpha\cdot\beta)\odot\mathcal{X} = \alpha\odot(\beta\odot\mathcal{X})$'
+        feedback: |
+          Both sides give $(\alpha\beta x^1,\ x^2)$. It holds.
+      - text: 'Distributive 2: $\alpha\odot(\mathcal{X}\oplus\mathcal{Y}) = (\alpha\odot\mathcal{X})\oplus(\alpha\odot\mathcal{Y})$'
+        feedback: |
+          Both sides give $(\alpha(x^1 + y^1),\ x^2 + y^2)$. It holds.
+    explanation: |
+      $(\alpha+\beta)\odot\mathcal{X} = ((\alpha+\beta)x^1,\ x^2)$, but $(\alpha\odot\mathcal{X})\oplus(\beta\odot\mathcal{X}) = ((\alpha+\beta)x^1,\ 2x^2)$. Each operation looks reasonable on its own. The rules that **link** them are what fail, which is why both operations must be checked together.
+
+  - type: text
+    id: positive-check
+    title: Back to the positive reals
+    body: |
+      Now check the strange candidate from the start: positive reals, $X\oplus Y := X\cdot Y$, $\alpha\odot X := X^\alpha$.
+
+      **Closure.** A product of positive numbers is positive, and so is any real power of a positive number.
+
+      **Abelian group.** Multiplication is commutative and associative. The neutral element and the inverses are not $0$ and $-X$; you have to find what plays their role.
+
+  - type: numeric
+    id: positive-zero
+    prompt: |
+      On the positive reals, "addition" is $X\oplus Y := X\cdot Y$. Which positive number is the **neutral element** $0_V$ (the vector with $X\oplus 0_V = X$ for every $X$)?
+    answer: 1
+    wrong:
+      - value: 0
+        feedback: |
+          $0$ is not even in the set, and $X\oplus 0 = X\cdot 0 = 0 \neq X$. Which number leaves $X$ unchanged under multiplication?
+    explanation: |
+      $X\oplus 1 = X\cdot 1 = X$, so the zero vector of this space is the **number** $1$. "Zero vector" is a role, not a particular symbol.
+
+  - type: numeric
+    id: positive-inverse
+    prompt: |
+      On the positive reals, with $X\oplus Y := X\cdot Y$ and neutral element $1$, what is the inverse $-X$ of the vector $X = 4$ (the vector with $4\oplus(-X) = 1$)?
+    answer: 0.25
+    answerText: '1/4'
+    wrong:
+      - value: -4
+        feedback: |
+          $-4$ is not positive, so it is not in the set, and $4\oplus(-4) = -16$ is not the neutral element $1$.
+    explanation: |
+      $4\oplus\tfrac14 = 4\cdot\tfrac14 = 1 = 0_V$. In this space the "negative" of $X$ is $1/X$.
+
+  - type: numeric
+    id: positive-scale
+    prompt: |
+      On the positive reals, scaling is $\alpha\odot X := X^\alpha$. What is $3\odot 2$?
+    answer: 8
+    wrong:
+      - value: 6
+        feedback: |
+          That is the ordinary product $3\cdot 2$. Here scaling the vector $2$ by the number $3$ means $2^3$.
+      - value: 9
+        feedback: |
+          The scalar is the exponent and the vector is the base: $3\odot 2 = 2^3$.
+    explanation: |
+      $3\odot 2 = 2^3 = 8$. Note that $3\odot 2 = 2\oplus 2\oplus 2 = 2\cdot 2\cdot 2$: scaling by $3$ is "adding three copies", as it should be.
+
+  - type: order
+    id: positive-distributive
+    prompt: |
+      On the positive reals with $X\oplus Y := X\cdot Y$ and $\alpha\odot X := X^\alpha$, put in order the check of distributive rule 1, $(\alpha+\beta)\odot X = (\alpha\odot X)\oplus(\beta\odot X)$.
+    steps:
+      - '$(\alpha+\beta)\odot X$'
+      - '$= X^{\alpha+\beta}$'
+      - '$= X^\alpha\cdot X^\beta$'
+      - '$= (\alpha\odot X)\oplus(\beta\odot X)$'
+    hint: Unfold the definition of $\odot$, use a law of exponents, then fold the definitions back.
+    explanation: |
+      Every rule turns into a law of exponents: $(X^\beta)^\alpha = X^{\alpha\beta}$, $X^{\alpha+\beta} = X^\alpha X^\beta$, $(XY)^\alpha = X^\alpha Y^\alpha$, $X^1 = X$. So the positive reals with these operations **are** a vector space.
+
+      In fact the logarithm translates it into the ordinary real line: $\ln(X\cdot Y) = \ln X + \ln Y$ and $\ln(X^\alpha) = \alpha\ln X$. It is the real line in disguise. Such structure-preserving translations are the subject of the next lesson.
+
+  - type: text
+    id: polynomials
+    title: A space of functions
+    body: |
+      A main example in the book: the polynomials of degree at most $N$,
+      $$P_N := \{\,p(x) = p^0 + p^1 x + \cdots + p^N x^N \mid p^i\in\mathbb{R}\,\},$$
+      with **pointwise** operations: the sum $p\oplus q$ is the polynomial whose value at each $x$ is $p(x) + q(x)$, and $(\alpha\odot p)(x) := \alpha\cdot p(x)$.
+
+      Each rule holds because it holds for the real numbers $p(x)$, $q(x)$ at every single $x$. The neutral element is the zero polynomial $\mathbf{0}(x) := 0$. The same argument makes the continuous functions $\mathbb{R}\to\mathbb{R}$ a vector space.
+
+  - type: mcq
+    id: which-spaces
+    multiple: true
+    prompt: |
+      Which of these are vector spaces with pointwise addition and scaling of functions? Select all that apply.
+    options:
+      - text: Polynomials of degree **at most** 3
+        correct: true
+      - text: Polynomials of degree **exactly** 3
+        feedback: |
+          Not closed: $x^3$ and $-x^3 + x$ both have degree 3, but their sum $x$ does not. And the zero polynomial is missing.
+      - text: Solutions $y(t)$ of the oscillator equation $y'' + y = 0$
+        correct: true
+      - text: Solutions $y(t)$ of the forced equation $y'' + y = 1$
+        feedback: |
+          If $y_1$ and $y_2$ are solutions, then $(y_1 + y_2)'' + (y_1 + y_2) = 2 \neq 1$. Also, the zero function is not a solution.
+    explanation: |
+      Degree "at most 3" is closed under adding and scaling; degree "exactly 3" is not. The solutions of a **linear homogeneous** equation like $y'' + y = 0$ form a vector space: this is the **superposition principle** of physics. Adding a source term ($= 1$) breaks it.
+
+  - type: mcq
+    id: no-zero-scaling
+    prompt: |
+      Here is the start of a proof that $0\odot\mathcal{X} = 0_V$ for every vector $\mathcal{X}$, using only the rules:
+      $$0\odot\mathcal{X} = (0+0)\odot\mathcal{X} = (0\odot\mathcal{X})\oplus(0\odot\mathcal{X}).$$
+      Which rule justifies the **second** equality?
+    options:
+      - text: Distributive 1, $(\alpha+\beta)\odot\mathcal{X} = (\alpha\odot\mathcal{X})\oplus(\beta\odot\mathcal{X})$
+        correct: true
+      - text: Distributive 2, $\alpha\odot(\mathcal{X}\oplus\mathcal{Y}) = (\alpha\odot\mathcal{X})\oplus(\alpha\odot\mathcal{Y})$
+        feedback: |
+          Distributive 2 splits a sum of **vectors**. Here the sum $0 + 0$ is a sum of **numbers**.
+      - text: The neutral element, $\mathcal{X}\oplus 0_V = \mathcal{X}$
+        feedback: |
+          The neutral element is used in the *next* step. This step splits a sum of scalars.
+    explanation: |
+      Now add the inverse $-(0\odot\mathcal{X})$ to both sides of
+      $$0\odot\mathcal{X} = (0\odot\mathcal{X})\oplus(0\odot\mathcal{X})$$
+      and get $0_V = 0\odot\mathcal{X}$. Facts like this, and $(-1)\odot\mathcal{X} = -\mathcal{X}$, are not extra rules: they follow from the eight. In the positive reals this one reads $X^0 = 1$.
+
+  - type: mcq
+    id: what-it-lacks
+    prompt: Which question can you answer in **every** vector space, using only the vector-space rules?
+    options:
+      - text: 'Is $\mathcal{X}\oplus\mathcal{Y}$ equal to $\mathcal{Y}\oplus\mathcal{X}$?'
+        correct: true
+      - text: 'How long is $\mathcal{X}$?'
+        feedback: |
+          No rule mentions length. In the positive reals, how long is the vector $4$? The question has no answer until you add structure.
+      - text: 'What is the angle between $\mathcal{X}$ and $\mathcal{Y}$?'
+        feedback: |
+          Angles need extra structure, a **metric**, which arrives in Level 7. A bare vector space only adds and scales.
+      - text: 'Is $\mathcal{X}$ perpendicular to $\mathcal{Y}$?'
+        feedback: |
+          Perpendicularity is about angles, and a bare vector space has none.
+    explanation: |
+      A vector space knows how to add and scale, nothing more. In GR this matters: the metric of spacetime is a separate, physical ingredient (it encodes gravity), so it must not be smuggled into the vector-space structure.
+
+  - type: text
+    id: wrap
+    title: What you now own
+    body: |
+      - A real vector space $(V, \oplus, \odot)$ is a set with an addition and a scaling that obey eight rules: $(V,\oplus)$ is an abelian group, and scaling fits with numbers and with addition.
+      - A vector is any element of such a set: an arrow, a polynomial, a solution of a linear equation, even a positive number with $X\oplus Y := X\cdot Y$.
+      - Both operations must be checked together, closure included.
+      - There are no lengths or angles. Those need a metric.
+
+      From now on, once the space is clear, we write $\mathcal{X} + \mathcal{Y}$ and $\alpha\,\mathcal{X}$ (or $\alpha\cdot\mathcal{X}$) for $\mathcal{X}\oplus\mathcal{Y}$ and $\alpha\odot\mathcal{X}$.
+
+      **Next:** maps that respect adding and scaling, the **linear maps**. A gradient eats a displacement and returns a number: where do such machines live?

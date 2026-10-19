@@ -17,15 +17,23 @@ levels:
       - id: ch02-maps
         title: Maps and Bijections
         kind: concept
+        file: ch02/maps.yaml
+        summary: When can a change of description be undone? Injective, surjective and bijective maps, composition, and how to repair polar coordinates.
       - id: ch02-axioms
         title: What Makes a Vector Space
         kind: concept
+        file: ch02/axioms.yaml
+        summary: Is the set of positive numbers, with multiplication as "addition", a vector space? The eight rules, and what they leave out.
       - id: ch02-dual
         title: Linear Maps and the Dual Space
         kind: concept
+        file: ch02/dual.yaml
+        summary: A gradient eats a step and returns a number. Linear maps, the vector space $\mathrm{Hom}(V,W)$, and the dual space of covectors.
       - id: ch02-basis
         title: Bases and the Dual Basis
         kind: concept
+        file: ch02/basis.yaml
+        summary: A basis turns vectors into numbers, and hands you a basis of $V^*$ for free. Why does each dual basis covector depend on the whole basis?
       - id: ch02-change-of-basis
         title: Same Arrow, Different Numbers
         kind: concept
@@ -44,9 +52,13 @@ levels:
       - id: ch02-J-invertible
         title: "Guided Problem: Why the Change of Basis Is Invertible"
         kind: guided
+        file: ch02/J-invertible.yaml
+        summary: The book uses $J^{-1}$ freely. Prove it exists, using nothing but the uniqueness of components in a basis.
       - id: ch02-dual-basis-law
         title: "Guided Problem: The Dual Basis Uses the Same J"
         kind: guided
+        file: ch02/dual-basis-law.yaml
+        summary: When the basis changes by $J$, how does the dual basis change? Derive it by evaluating on basis vectors, and recover the covector law.
       - id: ch02-tensors
         title: Tensors as Multilinear Maps
         kind: concept

@@ -1,0 +1,289 @@
+id: ch02-maps
+title: Maps and Bijections
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: Can you always translate back?
+    body: |
+      Physics is full of **changes of description**: Celsius to Fahrenheit, one observer's basis to another's, Cartesian coordinates to polar ones. Each is a rule that turns one description into another. A trustworthy translation has to pass two tests:
+
+      - **nothing is lost**: two different situations never end up with the same new description;
+      - **nothing is missed**: every new description corresponds to some situation.
+
+      Here is a translation you have used many times. Polar coordinates send a pair $(r, \theta)$, with $r \ge 0$ and $\theta$ any real number, to the point
+      $$(x, y) = (r\cos\theta,\ r\sin\theta)$$
+      of the plane. Before any theory, make a guess.
+
+  - type: mcq
+    id: predict-polar
+    prompt: |
+      Polar coordinates send $(r, \theta)$, with $r \ge 0$ and $\theta$ any real number, to the point $(x, y) = (r\cos\theta,\ r\sin\theta)$. Given a point $(x, y)$, can you always recover the pair $(r, \theta)$ that produced it?
+    options:
+      - text: 'No: $\theta$ and $\theta + 2\pi$ give the same point, and at the origin every $\theta$ does'
+        correct: true
+      - text: 'Yes: $r = \sqrt{x^2 + y^2}$ and $\theta$ is the angle of the point'
+        feedback: |
+          "The angle of the point" is not one number: the point at angle $\theta$ is also at angle $\theta + 2\pi$, $\theta + 4\pi, \dots$ And the origin has $r = 0$ with *every* $\theta$. Different pairs land on the same point.
+      - text: 'No: some points of the plane are never reached'
+        feedback: |
+          Every point is reached: any $(x, y)$ has a distance $r$ from the origin and some angle. The problem is the opposite one: points are reached by *too many* pairs.
+      - text: 'Yes, as long as $r > 0$'
+        feedback: |
+          Removing the origin helps, but $(r, \theta)$ and $(r, \theta + 2\pi)$ still land on the same point.
+    explanation: |
+      Many pairs land on the same point, so information is lost: from the point alone you cannot tell which pair produced it. This lesson gives this failure a name and finds the exact condition under which a translation can be undone. At the end you will repair polar coordinates.
+
+  - type: widget
+    id: explore
+    title: Build some maps
+    widget: map-builder
+    config:
+      domain: ['a', 'b', 'c']
+      target: ['1', '2', '3']
+      map: [0, 0, 1]
+      presets:
+        - { label: '3 → 4', domain: ['a', 'b', 'c'], target: ['1', '2', '3', '4'], map: [0, 1, 1] }
+        - { label: '4 → 3', domain: ['a', 'b', 'c', 'd'], target: ['1', '2', '3'], map: [0, 1, 2, 0] }
+    body: |
+      A **map** sends every element of a set $\mathcal{M}$ (left) to exactly one element of a set $\mathcal{N}$ (right). Each element on the left has exactly one arrow.
+
+      **Tap an element on the left** to move its arrow to the next element on the right. The readout says whether information is lost (two arrows meet) and whether something is missed (an element on the right gets no arrow).
+
+      1. Make a map where nothing is lost and nothing is missed.
+      2. Press **3 → 4** and try again. Then **4 → 3**.
+
+  - type: mcq
+    id: widget-sizes
+    review: false
+    prompt: |
+      In the map builder, the set on the left has 3 elements and the set on the right has 4. What can you achieve?
+    options:
+      - text: Nothing is lost, but something on the right is always missed
+        correct: true
+      - text: Nothing is missed, but two arrows always meet
+        feedback: |
+          That is the **4 → 3** case. With 3 arrows and 4 targets, there are not even enough arrows to reach every target.
+      - text: Both, with the right choice of arrows
+        feedback: |
+          3 arrows can reach at most 3 of the 4 elements on the right. Try it: one element always stays empty.
+    explanation: |
+      With 3 arrows and 4 targets, some target is always missed. With 4 arrows and 3 targets, two arrows always meet (the **pigeonhole principle**). A translation that loses nothing *and* misses nothing needs two sets of the same size.
+
+  - type: text
+    id: def-map
+    title: Maps, precisely
+    body: |
+      A **set** $\mathcal{M}$ is a collection of **elements**, written $p \in \mathcal{M}$ ("$p$ is in $\mathcal{M}$"). Two symbols will save words: $\forall$ reads "for all" and $\exists$ reads "there exists".
+
+      A **map** from $\mathcal{M}$ to $\mathcal{N}$, written
+      $$\phi: \mathcal{M}\to\mathcal{N},\qquad p\mapsto\phi(p),$$
+      assigns to **every** $p\in\mathcal{M}$ exactly one element $\phi(p)\in\mathcal{N}$, its **image**. $\mathcal{M}$ is the **domain** and $\mathcal{N}$ the **target**. Both are part of the map: the same formula with different sets is a different map.
+
+      Three properties decide whether a map can be undone:
+
+      - **injective** (nothing is lost): different elements have different images,
+      $$\forall p_1, p_2\in\mathcal{M}:\quad \phi(p_1) = \phi(p_2)\ \Rightarrow\ p_1 = p_2 ;$$
+      - **surjective** (nothing is missed): every element of the target is an image,
+      $$\forall n\in\mathcal{N}\ \ \exists p\in\mathcal{M}:\quad \phi(p) = n ;$$
+      - **bijective**: both injective and surjective.
+
+  - type: mcq
+    id: square-R
+    prompt: |
+      Consider $\phi: \mathbb{R}\to\mathbb{R}$, $\phi(p) := p^2$, where $\mathbb{R}$ is the set of real numbers. Which properties does it have?
+    options:
+      - text: Neither injective nor surjective
+        correct: true
+      - text: Injective, but not surjective
+        feedback: |
+          Not injective: $\phi(1) = \phi(-1) = 1$, but $1 \neq -1$. Two different elements share an image.
+      - text: Surjective, but not injective
+        feedback: |
+          Not surjective: $p^2 \ge 0$ for every real $p$, so a negative number like $-1$ in the target is never an image.
+      - text: Bijective
+        feedback: |
+          It fails both tests: $\phi(1) = \phi(-1)$, and $-1$ is never reached.
+    explanation: |
+      $\phi(1) = \phi(-1)$ shows it is not injective, and $-1$ has no preimage, so it is not surjective. A single counterexample is enough to break a "for all" statement.
+
+  - type: mcq
+    id: square-restricted
+    prompt: |
+      Keep the formula $\phi(p) := p^2$ but change both sets to the non-negative reals:
+      $$\phi: \mathbb{R}_{\ge 0}\to\mathbb{R}_{\ge 0}.$$
+      Which properties does this map have?
+    options:
+      - text: Bijective
+        correct: true
+      - text: Still neither injective nor surjective, since the formula is the same
+        feedback: |
+          The sets are part of the map. On $\mathbb{R}_{\ge 0}$ the troublemaker $-1$ is gone from the domain (so no partner for $1$) and from the target (so nothing is missed).
+      - text: Injective only
+        feedback: |
+          It is also surjective: every $n \ge 0$ is the image of $p = \sqrt{n} \ge 0$.
+      - text: Surjective only
+        feedback: |
+          It is also injective now: if $p_1^2 = p_2^2$ with $p_1, p_2 \ge 0$, then $p_1 = p_2$.
+    explanation: |
+      Injective: $p_1^2 = p_2^2$ means $(p_1 - p_2)(p_1 + p_2) = 0$, and with $p_1, p_2 \ge 0$ that forces $p_1 = p_2$. Surjective: $n = (\sqrt{n})^2$. **Bijectivity depends on the domain and the target, not only on the formula.** Charts on curved spaces, later in the course, come with carefully restricted domains for exactly this reason.
+
+  - type: text
+    id: inverse
+    title: Undoing a map
+    body: |
+      The **composition** of $\phi:\mathcal{M}\to\mathcal{N}$ and $\varphi:\mathcal{N}\to\mathcal{P}$ is the map $\varphi\circ\phi:\mathcal{M}\to\mathcal{P}$ that applies $\phi$ **first**:
+      $$(\varphi\circ\phi)(p) := \varphi\big(\phi(p)\big).$$
+      Read it right to left. The **identity map** $\mathrm{id}_\mathcal{M}$ sends every element to itself, $\mathrm{id}_\mathcal{M}(p) := p$.
+
+      An **inverse** of $\phi$ is a map $\phi^{-1}:\mathcal{N}\to\mathcal{M}$ that undoes it from both sides:
+      $$\phi^{-1}\circ\phi = \mathrm{id}_\mathcal{M}, \qquad \phi\circ\phi^{-1} = \mathrm{id}_\mathcal{N}.$$
+      To define $\phi^{-1}(n)$ we must pick the $p$ with $\phi(p) = n$. That needs two things: such a $p$ must exist, and it must be the only one.
+
+  - type: mcq
+    id: why-bijective
+    prompt: |
+      To define the inverse map at $n\in\mathcal{N}$, we set $\phi^{-1}(n) :=$ "the $p\in\mathcal{M}$ with $\phi(p) = n$". Which property of $\phi$ guarantees that there is **at most one** such $p$?
+    options:
+      - text: Injectivity
+        correct: true
+      - text: Surjectivity
+        feedback: |
+          Surjectivity guarantees **at least one** such $p$, so that $\phi^{-1}(n)$ is defined for every $n$. Uniqueness is the other half.
+      - text: Neither; a map always has exactly one preimage
+        feedback: |
+          A map gives each $p$ exactly one *image*. Going backwards is different: $p^2 = 1$ has the two preimages $\pm 1$.
+    explanation: |
+      Surjective: at least one $p$, so $\phi^{-1}(n)$ exists for every $n$. Injective: at most one, so $\phi^{-1}(n)$ is a single element. Together:
+      $$\phi \text{ has an inverse} \iff \phi \text{ is bijective}.$$
+
+  - type: numeric
+    id: inverse-value
+    prompt: |
+      The map $\phi:\mathbb{R}\to\mathbb{R}$, $\phi(p) := 2p + 1$ is bijective. What is $\phi^{-1}(7)$?
+    answer: 3
+    wrong:
+      - value: 15
+        feedback: |
+          That is $\phi(7)$. The inverse answers the opposite question: which $p$ has $\phi(p) = 7$?
+      - value: 0.142857
+        feedback: |
+          $\phi^{-1}$ is the inverse **map**, not the reciprocal $1/\phi(p)$. It undoes $\phi$: solve $2p + 1 = 7$.
+    tolerance: 0.001
+    hint: Solve $2p + 1 = 7$ for $p$.
+    explanation: |
+      $\phi^{-1}(n) = \frac{n - 1}{2}$, so $\phi^{-1}(7) = 3$. Check: $\phi(3) = 7$. The notation $\phi^{-1}$ never means $1/\phi$.
+
+  - type: numeric
+    id: compose-order
+    prompt: |
+      Let $\phi(p) := p + 1$ and $\varphi(p) := 2p$, both maps $\mathbb{R}\to\mathbb{R}$. Recall $(\varphi\circ\phi)(p) := \varphi\big(\phi(p)\big)$. What is $(\varphi\circ\phi)(3)$?
+    answer: 8
+    wrong:
+      - value: 7
+        feedback: |
+          That is $(\phi\circ\varphi)(3) = \phi(6) = 7$: you applied $\varphi$ first. In $\varphi\circ\phi$ the map written on the **right** acts first.
+    explanation: |
+      $\phi(3) = 4$, then $\varphi(4) = 8$. In the other order, $(\phi\circ\varphi)(3) = 7$. **Composition is not commutative**, but it is **associative**: $(f\circ g)\circ h$ and $f\circ(g\circ h)$ both send $a$ to $f(g(h(a)))$, so chains of maps need no brackets.
+
+  - type: mcq
+    id: inverse-composite
+    prompt: |
+      Let $\phi:\mathcal{M}\to\mathcal{N}$ and $\varphi:\mathcal{N}\to\mathcal{P}$ be bijections, so $\varphi\circ\phi:\mathcal{M}\to\mathcal{P}$ applies $\phi$ first and $\varphi$ second. Which map is $(\varphi\circ\phi)^{-1}$?
+    options:
+      - text: '$\phi^{-1}\circ\varphi^{-1}$'
+        correct: true
+      - text: '$\varphi^{-1}\circ\phi^{-1}$'
+        feedback: |
+          Check the types. $\phi^{-1}$ lands in $\mathcal{M}$, but $\varphi^{-1}$ eats elements of $\mathcal{P}$, so this composition does not even make sense. Undoing "first $\phi$, then $\varphi$" means removing $\varphi$ first.
+      - text: '$(\varphi\circ\phi)^{-1}$ need not exist'
+        feedback: |
+          It exists: a composition of injective maps is injective, and of surjective maps is surjective. So $\varphi\circ\phi$ is bijective.
+    explanation: |
+      Socks, then shoes; to undo it, shoes off first, then socks. The inverse of a composition reverses the order:
+      $$(\varphi\circ\phi)^{-1} = \phi^{-1}\circ\varphi^{-1}.$$
+
+  - type: order
+    id: inverse-proof
+    prompt: |
+      Let $\phi:\mathcal{M}\to\mathcal{N}$ and $\varphi:\mathcal{N}\to\mathcal{P}$ be bijections. Put in order the check that $\phi^{-1}\circ\varphi^{-1}$ undoes $\varphi\circ\phi$ from the left side of the target, using associativity of $\circ$ and $\phi\circ\phi^{-1} = \mathrm{id}_\mathcal{N}$, $\varphi\circ\varphi^{-1} = \mathrm{id}_\mathcal{P}$.
+    steps:
+      - '$(\varphi\circ\phi)\circ(\phi^{-1}\circ\varphi^{-1})$'
+      - '$= \varphi\circ(\phi\circ\phi^{-1})\circ\varphi^{-1}$'
+      - '$= \varphi\circ\mathrm{id}_\mathcal{N}\circ\varphi^{-1}$'
+      - '$= \varphi\circ\varphi^{-1}$'
+      - '$= \mathrm{id}_\mathcal{P}$'
+    hint: Regroup the brackets first so that $\phi$ meets $\phi^{-1}$.
+    explanation: |
+      Associativity lets us move the brackets so that $\phi$ meets $\phi^{-1}$ in the middle; they cancel to the identity, and then $\varphi$ meets $\varphi^{-1}$. The same steps in the other order give $(\phi^{-1}\circ\varphi^{-1})\circ(\varphi\circ\phi) = \mathrm{id}_\mathcal{M}$.
+
+  - type: mcq
+    id: fix-polar
+    prompt: |
+      Polar coordinates send $(r, \theta)$ to $(r\cos\theta,\ r\sin\theta)$. Which choice of domain and target makes this map a **bijection**?
+    options:
+      - text: 'Domain $r > 0$, $0 \le \theta < 2\pi$; target the plane without the origin'
+        correct: true
+      - text: 'Domain $r \ge 0$, $0 \le \theta < 2\pi$; target the whole plane'
+        feedback: |
+          The origin is still reached by every pair $(0, \theta)$, so the map is not injective there.
+      - text: 'Domain $r > 0$, $\theta$ any real number; target the plane without the origin'
+        feedback: |
+          $(r, \theta)$ and $(r, \theta + 2\pi)$ still give the same point. The angle needs a range of length one full turn.
+      - text: 'No choice works: polar coordinates can never be undone'
+        feedback: |
+          Restricting the sets removes both problems, exactly as with $p\mapsto p^2$ on $\mathbb{R}_{\ge 0}$.
+    explanation: |
+      Removing the origin and allowing one full turn of $\theta$ makes the map injective, and it is surjective onto the plane minus the origin. This is the hook problem solved. It is also a preview: on a curved space like a sphere, a coordinate system (a **chart**) is a bijection that only covers part of the space, and you need several of them.
+
+  - type: text
+    id: product
+    title: One more set tool, the Cartesian product
+    body: |
+      Some operations eat **two** inputs, such as adding two vectors. To say what they eat, we need pairs.
+
+      The **Cartesian product** of two sets is the set of ordered pairs
+      $$\mathcal{M}\times\mathcal{N} := \{(m, n) \mid m\in\mathcal{M},\ n\in\mathcal{N}\}.$$
+      "Ordered" means $(m, n)$ and $(n, m)$ are different pairs. Repeating it gives lists, $\mathcal{M}^n := \mathcal{M}\times\cdots\times\mathcal{M}$ ($n$ times); for example $\mathbb{R}^2$ is the set of pairs of real numbers.
+
+      Then "addition of real numbers" is a map $+:\mathbb{R}\times\mathbb{R}\to\mathbb{R}$, $(\alpha,\beta)\mapsto\alpha+\beta$. The vector-space operations of the next lesson are maps of this kind.
+
+  - type: numeric
+    id: product-size
+    prompt: |
+      $\mathcal{M}$ has 3 elements and $\mathcal{N}$ has 4. How many elements does the Cartesian product $\mathcal{M}\times\mathcal{N}$ (the set of ordered pairs $(m, n)$) have?
+    answer: 12
+    wrong:
+      - value: 7
+        feedback: |
+          That counts the elements of both sets together. A pair needs one choice from $\mathcal{M}$ **and** one from $\mathcal{N}$: $3$ choices times $4$ choices.
+    explanation: |
+      Each of the 3 choices of $m$ combines with each of the 4 choices of $n$, so $3\cdot 4 = 12$ pairs. In general $|\mathcal{M}\times\mathcal{N}| = |\mathcal{M}|\cdot|\mathcal{N}|$.
+
+  - type: mcq
+    id: why-for-bases
+    prompt: |
+      Two observers describe the vectors of the plane by lists of components, $(x^1, x^2)$ and $(y^1, y^2)$. The translation from the first list to the second is a map $\mathbb{R}^2\to\mathbb{R}^2$. What would go wrong if it were **not injective**?
+    options:
+      - text: Two different vectors would get the same description from the second observer, who could no longer tell them apart
+        correct: true
+      - text: Some lists of numbers would not describe any vector
+        feedback: |
+          That would be a failure of **surjectivity**: some list is never reached.
+      - text: Nothing; a translation only has to exist
+        feedback: |
+          A translation that merges different vectors loses information, and the first observer's description could not be recovered from the second.
+    explanation: |
+      A change of basis must be a bijection between the two component descriptions: no vector merged with another, no list left over. Whether that is automatic for any two bases is a guided problem later in this level.
+
+  - type: text
+    id: wrap
+    title: What you now own
+    body: |
+      - A **map** $\phi:\mathcal{M}\to\mathcal{N}$ gives every element of the domain exactly one image; domain and target are part of the map.
+      - **Injective**: nothing lost. **Surjective**: nothing missed. **Bijective**: both, which is exactly when $\phi^{-1}$ exists.
+      - Composition $\varphi\circ\phi$ acts right to left, is associative but not commutative, and $(\varphi\circ\phi)^{-1} = \phi^{-1}\circ\varphi^{-1}$.
+      - $\mathcal{M}\times\mathcal{N}$ is the set of ordered pairs; it is what two-input operations eat.
+
+      **Next:** what does it take for a set to deserve the name "vector space"? Is the set of positive numbers, with multiplication playing the role of addition, a vector space?

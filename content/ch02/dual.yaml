@@ -1,0 +1,277 @@
+id: ch02-dual
+title: Linear Maps and the Dual Space
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: A machine that eats steps
+    body: |
+      A hiker stands on a hillside where the temperature varies from place to place. For a small step $\mathcal{X}$, with components $(x^1, x^2)$ in metres east and north, the change in temperature is, to first order (that is what a derivative gives),
+      $$\mathsf{L}(\mathcal{X}) = 1\cdot x^1 + \tfrac12\cdot x^2 \quad \text{(in °C)}.$$
+      $\mathsf{L}$ is a **machine**: it eats a step and returns a number. It is not itself a step. It is a rule, "take the east part, add half the north part".
+
+      Two questions drive this lesson. Which properties must every machine of this kind have? And is the collection of all such machines a vector space of its own?
+
+  - type: mcq
+    id: predict-properties
+    multiple: true
+    prompt: |
+      For a small step $\mathcal{X}$, the machine $\mathsf{L}(\mathcal{X})$ returns the first-order change in temperature along $\mathcal{X}$. Before any theory, which properties should **any** such rate-of-change machine have? Select all that apply.
+    options:
+      - text: 'Doubling the step doubles the change: $\mathsf{L}(2\,\mathcal{X}) = 2\,\mathsf{L}(\mathcal{X})$'
+        correct: true
+      - text: 'Two steps in a row give the sum of the changes: $\mathsf{L}(\mathcal{X}+\mathcal{Y}) = \mathsf{L}(\mathcal{X}) + \mathsf{L}(\mathcal{Y})$'
+        correct: true
+      - text: 'Not moving gives no change: $\mathsf{L}(0) = 0$'
+        correct: true
+      - text: 'The change is never negative: $\mathsf{L}(\mathcal{X}) \ge 0$'
+        feedback: |
+          Walking downhill in temperature gives a negative change, and reversing a step flips the sign: $\mathsf{L}(-\mathcal{X}) = -\mathsf{L}(\mathcal{X})$.
+    explanation: |
+      To first order, rates of change add and scale with the step. These two properties have a name, **linearity**, and the third ($\mathsf{L}(0) = 0$) follows from them.
+
+  - type: widget
+    id: explore
+    title: See the machine
+    widget: machine-playground
+    config:
+      slots: 1
+      name: 'L'
+      covector: [1, 0.5]
+      u: [2, 1]
+      snap: 0.5
+      presets:
+        - { label: 'Along a line', u: [1, -2] }
+    body: |
+      The orange dashed lines are the places where the machine gives a whole number: the **isotherms** $\mathsf{L} = \dots, -1, 0, 1, 2, \dots$ The blue arrow is a step $\mathcal{X}$. $\mathsf{L}(\mathcal{X})$ counts how many lines the arrow crosses, with a sign for direction.
+
+      **Drag the tip of $\mathcal{X}$.** Try:
+      1. Press **Double 𝒳** a few times and watch $\mathsf{L}(\mathcal{X})$.
+      2. Press **Along a line**, then move the tip along the orange line it lies on.
+
+  - type: mcq
+    id: widget-kernel
+    review: false
+    prompt: |
+      In the playground, the step $\mathcal{X} = (1, -2)$ lies along the orange line $\mathsf{L} = 0$ for $\mathsf{L}(\mathcal{X}) = x^1 + \tfrac12 x^2$. What is $\mathsf{L}(\mathcal{X})$, and what does it mean?
+    options:
+      - text: '$0$: this step runs along an isotherm, so the temperature does not change'
+        correct: true
+      - text: '$\sqrt{5}$, the length of the step'
+        feedback: |
+          The machine does not measure length. It computes $1\cdot 1 + \tfrac12\cdot(-2) = 0$.
+      - text: 'It depends on where the hiker stands'
+        feedback: |
+          $\mathsf{L}$ is fixed for this lesson (the rate at one spot), and it only looks at the step: $1 + \tfrac12(-2) = 0$.
+    explanation: |
+      $\mathsf{L}(1, -2) = 1 - 1 = 0$. Every step along the line through the origin is invisible to $\mathsf{L}$. A non-zero linear machine on the plane always has such a line of invisible steps, and the level lines are all parallel to it.
+
+  - type: text
+    id: def-linear
+    title: Linear maps
+    body: |
+      Let $(V, \oplus_V, \odot_V)$ and $(W, \oplus_W, \odot_W)$ be vector spaces. A map $\phi: V\to W$ is **linear** if, for all $\mathcal{X}, \mathcal{Y}\in V$ and $\alpha\in\mathbb{R}$,
+      $$\phi(\mathcal{X}\oplus_V\mathcal{Y}) = \phi(\mathcal{X})\oplus_W\phi(\mathcal{Y}),$$
+      $$\phi(\alpha\odot_V\mathcal{X}) = \alpha\odot_W\phi(\mathcal{X}).$$
+      The subscripts say **which space** adds: on the left we add in $V$ before mapping, on the right we add in $W$ after mapping. Linear means "add (or scale) first, then map" equals "map first, then add (or scale)". The book marks linear maps with a tilde on the arrow, $\phi: V\xrightarrow{\sim}W$.
+
+      Warning: the school phrase "linear function $y = ax + b$" is **not** linear in this sense unless $b = 0$.
+
+  - type: mcq
+    id: which-linear
+    multiple: true
+    prompt: |
+      Which maps $f:\mathbb{R}\to\mathbb{R}$ are linear (with $\mathbb{R}$ as a vector space under ordinary $+$ and $\cdot$)? Select all that apply.
+    options:
+      - text: '$f(x) = 3x$'
+        correct: true
+      - text: '$f(x) = 3x + 1$'
+        feedback: |
+          $f(0) = 1$, but a linear map must send $0$ to $0$. Also $f(1 + 1) = 7$ while $f(1) + f(1) = 8$. This map is called **affine**.
+      - text: '$f(x) = x^2$'
+        feedback: |
+          $f(2\cdot 1) = 4$ but $2\,f(1) = 2$: scaling the input does not scale the output the same way.
+      - text: '$f(x) = 0$'
+        correct: true
+    explanation: |
+      The linear maps $\mathbb{R}\to\mathbb{R}$ are exactly $f(x) = a\,x$ for a fixed number $a$, including $a = 0$. Quick test: a map with $f(0)\neq 0$ is never linear.
+
+  - type: mcq
+    id: zero-to-zero
+    prompt: |
+      Why does every linear map $\phi: V\to W$ send the zero vector $0_V$ to the zero vector $0_W$?
+    options:
+      - text: 'Because $\phi(0_V) = \phi(0\odot_V 0_V) = 0\odot_W\phi(0_V) = 0_W$'
+        correct: true
+      - text: 'Because $0_V$ and $0_W$ are the same vector'
+        feedback: |
+          They live in different spaces. For the positive reals with $X\oplus Y := X\cdot Y$, the zero vector is the number $1$, not $0$.
+      - text: 'It is an extra requirement in the definition of linear'
+        feedback: |
+          It is not required separately; it follows from the scaling rule, as the correct option shows.
+    explanation: |
+      Write $0_V = 0\odot_V 0_V$ (any vector scaled by the number $0$ is the zero vector), pull the $0$ out with linearity, and use the same fact in $W$. So "$\phi(0)\neq 0$" is an instant proof that $\phi$ is not linear.
+
+  - type: text
+    id: poly-examples
+    title: Linear maps on polynomials
+    body: |
+      Recall the vector space $P_N$ of polynomials of degree at most $N$, with pointwise operations. Two linear maps from the book:
+
+      - the **derivative** $\delta: P_N\to P_N$, $\delta(p) := p'$. Linear because $(p + q)' = p' + q'$ and $(\alpha p)' = \alpha p'$;
+      - the **integral** $I: P_N\to\mathbb{R}$,
+      $$I(p) := \int_0^1 p(x)\,dx .$$
+      Linear because integrals add and scale.
+
+      Note the targets: $\delta$ returns a polynomial, while $I$ returns a **number**.
+
+  - type: numeric
+    id: integral-value
+    prompt: |
+      The linear map $I: P_N\to\mathbb{R}$, $I(p) := \int_0^1 p(x)\,dx$, eats a polynomial and returns a number. What is $I(p)$ for $p(x) = 1 + 6x$?
+    answer: 4
+    wrong:
+      - value: 7
+        feedback: |
+          That is $p(1)$. Integrate instead: $\int_0^1 (1 + 6x)\,dx$.
+    explanation: |
+      $\int_0^1 (1 + 6x)\,dx = 1 + 3 = 4$. By linearity you could also compute $I(1) + 6\,I(x) = 1 + 6\cdot\tfrac12$.
+
+  - type: mcq
+    id: poly-covectors
+    multiple: true
+    prompt: |
+      Which of these maps $P_N\to\mathbb{R}$ (polynomials to numbers) are linear? Select all that apply.
+    options:
+      - text: '$p\mapsto p(2)$, evaluation at $x = 2$'
+        correct: true
+      - text: "$p\\mapsto p'(0)$, the slope at $x = 0$"
+        correct: true
+      - text: '$p\mapsto p(0)\cdot p(1)$'
+        feedback: |
+          Doubling $p$ multiplies the output by $4$: $(2p)(0)\cdot(2p)(1) = 4\,p(0)\,p(1)$. A product of two values is not linear.
+      - text: '$p\mapsto \int_0^1 p(x)^2\,dx$'
+        feedback: |
+          The square spoils it: doubling $p$ multiplies the output by $4$.
+    explanation: |
+      Evaluating at a point, differentiating at a point and integrating are all linear. Squaring or multiplying values is not. The linear ones are examples of the main character of this lesson.
+
+  - type: text
+    id: hom
+    title: Linear maps form a vector space
+    body: |
+      Collect all linear maps from $V$ to $W$ into one set,
+      $$\mathrm{Hom}(V, W) := \{\phi: V\to W \mid \phi \text{ linear}\}.$$
+      Hom stands for **homomorphism** (Greek: "same shape"), a map that preserves the structure; here, adding and scaling. (Not to be confused with *homeomorphism*, a topological notion later in the course.)
+
+      Two linear maps $\phi, \varphi\in\mathrm{Hom}(V,W)$ can be added and scaled **pointwise**: for every $v\in V$,
+      $$(\phi\oplus_H\varphi)(v) := \phi(v)\oplus_W\varphi(v),\qquad (\lambda\odot_H\phi)(v) := \lambda\odot_W\phi(v).$$
+      The values $\phi(v), \varphi(v)$ live in $W$, so they are added with $W$'s addition. With these operations, $\mathrm{Hom}(V, W)$ is itself a vector space.
+
+      A linear map that is also **bijective** is an **isomorphism**. If one exists, $V$ and $W$ are **isomorphic**, written $V\cong W$: they are the same vector space up to renaming the elements. The logarithm from the positive reals (with $X\oplus Y := X\cdot Y$, $\alpha\odot X := X^\alpha$) to $\mathbb{R}$ is one.
+
+  - type: mcq
+    id: hom-sum
+    prompt: |
+      Let $\phi, \varphi: V\to W$ be linear maps. The sum $\phi\oplus_H\varphi$ in $\mathrm{Hom}(V,W)$ is the map that sends $v\in V$ to…
+    options:
+      - text: '$\phi(v)\oplus_W\varphi(v)$'
+        correct: true
+      - text: '$\phi\big(\varphi(v)\big)$'
+        feedback: |
+          That is the **composition** $\phi\circ\varphi$, a different operation (and it only makes sense if $W = V$). The sum adds the two outputs.
+      - text: '$\phi(v)\oplus_V\varphi(v)$'
+        feedback: |
+          $\phi(v)$ and $\varphi(v)$ are vectors of $W$, so they must be added with $W$'s addition. $\oplus_V$ adds vectors of $V$.
+      - text: '$\phi(v\oplus_V v)$'
+        feedback: |
+          That is $2\odot_W\phi(v)$, which does not involve $\varphi$ at all.
+    explanation: |
+      Pointwise: evaluate both maps at the same input, then add the outputs in $W$.
+
+  - type: order
+    id: sum-is-linear
+    prompt: |
+      For linear $\phi, \varphi: V\to W$, put in order the proof that the pointwise sum $\phi\oplus_H\varphi$ is again additive. (All additions on the right of the first line are in $W$; write $+$ for $\oplus_W$.)
+    steps:
+      - '$(\phi\oplus_H\varphi)(\mathcal{X}\oplus_V\mathcal{Y})$'
+      - '$= \phi(\mathcal{X}\oplus_V\mathcal{Y}) + \varphi(\mathcal{X}\oplus_V\mathcal{Y})$'
+      - '$= \big(\phi(\mathcal{X}) + \phi(\mathcal{Y})\big) + \big(\varphi(\mathcal{X}) + \varphi(\mathcal{Y})\big)$'
+      - '$= \big(\phi(\mathcal{X}) + \varphi(\mathcal{X})\big) + \big(\phi(\mathcal{Y}) + \varphi(\mathcal{Y})\big)$'
+      - '$= (\phi\oplus_H\varphi)(\mathcal{X}) + (\phi\oplus_H\varphi)(\mathcal{Y})$'
+    hint: Unfold the definition of the sum, use linearity of each map, regroup, and fold back.
+    explanation: |
+      Definition of $\oplus_H$, then linearity of $\phi$ and $\varphi$, then a regrouping, then the definition again. The scaling rule and the rest of the axioms are checked the same way, point by point.
+
+  - type: mcq
+    id: regroup-why
+    prompt: |
+      In the proof that a sum of linear maps $\phi, \varphi: V\to W$ is additive, one step regroups
+      $$\big(\phi(\mathcal{X}) + \phi(\mathcal{Y})\big) + \big(\varphi(\mathcal{X}) + \varphi(\mathcal{Y})\big) = \big(\phi(\mathcal{X}) + \varphi(\mathcal{X})\big) + \big(\phi(\mathcal{Y}) + \varphi(\mathcal{Y})\big).$$
+      Which facts allow it?
+    options:
+      - text: Addition in $W$ is commutative and associative
+        correct: true
+      - text: '$\phi$ and $\varphi$ are linear'
+        feedback: |
+          Linearity was used in the step **before**, to split $\phi(\mathcal{X}\oplus_V\mathcal{Y})$. The regrouping only shuffles four vectors of $W$.
+      - text: Addition in $V$ is commutative
+        feedback: |
+          All four terms are vectors of $W$. Nothing in $V$ is being added here.
+    explanation: |
+      $\mathrm{Hom}(V,W)$ inherits its structure from the target $W$. That is why it is a vector space for any $V$ and $W$.
+
+  - type: text
+    id: dual
+    title: The dual space
+    body: |
+      Now choose the target $W = \mathbb{R}$, the real numbers as a vector space. The **dual space** of $V$ is
+      $$V^* := \mathrm{Hom}(V, \mathbb{R}),$$
+      the set of all **linear** maps from $V$ to the real numbers. Its elements are called **covectors** and are written in sans-serif, $\mathsf{X}, \mathsf{Y}$. A covector eats a vector and returns a number $\mathsf{X}(\mathcal{X})\in\mathbb{R}$.
+
+      Because every $\mathrm{Hom}$ is a vector space, $V^*$ is one too, with no extra work:
+      $$(\mathsf{X}\oplus^*\mathsf{Y})(\mathcal{X}) := \mathsf{X}(\mathcal{X}) + \mathsf{Y}(\mathcal{X}),\qquad (\alpha\odot^*\mathsf{X})(\mathcal{X}) := \alpha\,\mathsf{X}(\mathcal{X}).$$
+
+      Covectors are everywhere in physics: the temperature-change machine $\mathsf{L}$, the work done by a force along a displacement, the integral $I$ on polynomials. Picture a covector on the plane as its stack of level lines, and $\mathsf{X}(\mathcal{X})$ as the number of lines the arrow crosses.
+
+  - type: numeric
+    id: covector-combo
+    prompt: |
+      Two covectors on the plane act on $\mathcal{X} = (x^1, x^2)$ as
+      $$\mathsf{X}(\mathcal{X}) = 2x^1 + x^2,\qquad \mathsf{Y}(\mathcal{X}) = x^1 - x^2 .$$
+      Covectors add and scale pointwise. What is $(\mathsf{X} + 3\,\mathsf{Y})(\mathcal{X})$ for $\mathcal{X} = (2, 1)$?
+    answer: 8
+    wrong:
+      - value: 10
+        feedback: |
+          The $3$ multiplies **all** of $\mathsf{Y}$, including its $-x^2$: $3\,\mathsf{Y}(\mathcal{X}) = 3x^1 - 3x^2$. Safest is to evaluate first: $(\mathsf{X} + 3\mathsf{Y})(\mathcal{X}) = \mathsf{X}(\mathcal{X}) + 3\,\mathsf{Y}(\mathcal{X})$.
+    hint: Compute $\mathsf{X}(\mathcal{X})$ and $\mathsf{Y}(\mathcal{X})$ separately, then combine.
+    explanation: |
+      $\mathsf{X}(2,1) = 5$ and $\mathsf{Y}(2,1) = 1$, so $(\mathsf{X} + 3\mathsf{Y})(2,1) = 5 + 3 = 8$. Equivalently, $\mathsf{X} + 3\mathsf{Y}$ is the covector $5x^1 - 2x^2$, and $5\cdot 2 - 2\cdot 1 = 8$.
+
+  - type: mcq
+    id: covector-not-vector
+    prompt: |
+      A gradient eats a displacement and returns the change of a quantity along it. A displacement is a vector. Which statement is right?
+    options:
+      - text: The gradient is a covector, an element of $V^*$, a different space from $V$
+        correct: true
+      - text: The gradient is a vector of $V$, just pointing uphill
+        feedback: |
+          "Pointing uphill" needs a way to turn a covector into an arrow, which uses angles: a **metric**. Without one, the gradient is a machine on steps, not a step. Its level-line picture is the honest one.
+      - text: Vectors and covectors are the same once you write them as lists of numbers
+        feedback: |
+          Lists of numbers need a basis, and the two lists change in different ways when the basis changes. That difference is the subject of later lessons in this level.
+    explanation: |
+      $V$ and $V^*$ are different spaces. In GR this is the difference between a velocity (vector) and a momentum or gradient (covector). Only a metric, which comes much later, lets you convert one into the other.
+
+  - type: text
+    id: wrap
+    title: What you now own
+    body: |
+      - A **linear map** respects adding and scaling: map-then-add equals add-then-map. It always sends $0$ to $0$.
+      - $\mathrm{Hom}(V,W)$, the linear maps $V\to W$, is a vector space under pointwise operations. A bijective linear map is an **isomorphism**, $V\cong W$.
+      - The **dual space** $V^* = \mathrm{Hom}(V,\mathbb{R})$ holds the **covectors**: linear machines that eat a vector and return a number. Picture them as stacks of level lines.
+
+      **Next:** to compute, we need numbers. A **basis** turns vectors into lists of components. Does a basis of $V$ also hand us a basis of $V^*$ for free?
