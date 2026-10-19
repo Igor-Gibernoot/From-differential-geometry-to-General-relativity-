@@ -48,7 +48,7 @@ append a short entry at the end of **Log** (a few lines, ending with
 
 ## Log
 
-ch03-challenge, session 1 of 2 (problems 1–3, 23 cards): (1) the graph Γ of
+ch03-challenge, session 1 of 2 (problems 1–3, 24 cards): (1) the graph Γ of
 |t| is a smooth manifold (inherited Hausdorff/second countable, chart
 forgets the height, one-chart atlas), but its inclusion into ℝ² is not
 smooth (difference quotients −1/+1 at 0); (2) stereographic charts from N
