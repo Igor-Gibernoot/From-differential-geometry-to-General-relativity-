@@ -72,10 +72,9 @@ Structure:
 Workflow for every content change:
 1. Write or edit the YAML.
 2. Run `node tools/validate.mjs` and fix every error and warning.
-3. Play the lesson locally (`python3 -m http.server 8000`, then
-   `#/lesson/<id>/<n>` jumps to card n). Check desktop and phone widths,
-   ideally with a headless-browser screenshot pass, for layout bugs,
-   overflowing formulas and wrong answers.
+3. Run `node tools/shots.mjs <file> <id> <outDir>` (headless check at phone
+   and desktop width; see "Building sessions"). To play by hand:
+   `python3 -m http.server 8000`, then `#/lesson/<id>/<n>` jumps to card n.
 4. Commit and push (the user has authorized pushing this repo).
 
 ### Lesson kinds (per chapter level)
@@ -171,20 +170,40 @@ Also built: light/dark toggle (`js/theme.js`), instant tooltips via `data-tip`
 
 ### Building sessions (token efficiency)
 
-Lessons are built across many short sessions, not all at once.
-- **Budget per session:** about 2 concept lessons, or 3 lighter ones
-  (guided, traps, map). A new widget counts as one lesson. A level
-  challenge counts as two.
-- **Read only what you need:** `docs/LESSON_FORMAT.md`, one existing lesson
-  of the same kind as a model, and the relevant book section (find it with
-  `grep -n` and read just that range; never the whole book). Don't re-read
-  files already in context.
-- **Screenshots:** only for the lessons built in this session, a few cards
-  each (widget cards and long formulas), at desktop and phone width.
-- **End of every session:** validate, play-check, update the Status below,
-  commit and push, then **give Igor a ready-to-paste prompt for the next
-  session** naming the exact lessons to build (from `course.yaml`) and any
-  leftover checks.
+Lessons are built across many short sessions, not all at once. Igor starts
+each session with `/clear` and a prompt naming **one unit of work**.
+- **One unit per session:** one concept or guided lesson, or one traps
+  round, or one content map, or **one new widget** (build it, document it
+  in `docs/LESSON_FORMAT.md`, test it with a throwaway preset, no lesson).
+  A level challenge takes two sessions (problems 1–3, then 4–5). Don't
+  start the next unit even if budget seems to remain; finish cleanly.
+  A lesson that needs a new widget is two sessions: the widget first.
+- **Read only what you need, once:**
+  - `docs/LESSON_FORMAT.md`: `grep -n '^##'` it, then read from the top
+    to the start of `### widget` (registering, lesson file, card types) and
+    from `## Phone-safe layout` to the end. For a widget, read only its
+    own subsection. Skip the map section unless building a map.
+  - The model lesson: the most recent lesson of the same chapter. Read
+    only its first ~120 lines for style; don't read the whole file.
+  - The book: `grep -n` the section heading and read just that range.
+  - `js/widgets.js` only in widget sessions (grep for the widget's
+    function; read just it and the registry at the bottom).
+  - Never re-read a file you wrote or edited this session.
+- **Write the lesson in one `Write` call**, then fix with small `Edit`s.
+  Plan the card list in your head (or a few lines of text), not as a
+  draft file.
+- **Checks are text-first.** Run `node tools/validate.mjs`, then
+  `node tools/shots.mjs <file> <id> <scratchpad>/shots` (it serves the
+  repo itself and prints only problems: formula overflow at phone and
+  desktop width, page errors). It screenshots widget cards only; look at
+  those images (2–4), plus any card it flags. `--all` also saves
+  build/order and phone `$$` cards: use it only when hunting a layout bug.
+  Setup once per machine: `npm install --prefix tools`.
+- **End of every session:** validate, run the shots check, update the
+  Status below (a few lines, not a recap of every card), commit and push,
+  then **give Igor a ready-to-paste prompt for the next session** naming
+  the single next unit from `course.yaml`, with a card plan of about 10
+  lines (hook, widget, key questions, summary), and the book lines to read.
 
 ### Status (2026-10-19, Chapter 2 complete, Chapter 3 in progress)
 
@@ -220,10 +239,16 @@ had a screenshot pass; all widgets are documented. Next: the remaining Chapter 3
 nodes in `course.yaml` order, then Chapters 4–10 (each with its content map
 and challenge). Each planned node in `course.yaml` is one lesson to build.
 
-Screenshot pass recipe: `playwright-core@1.48` (npm, in the scratchpad) driving the
-cached Chromium in `~/Library/Caches/ms-playwright`, serving the repo with
-`python3 -m http.server`; for every card, flag `.katex-display` elements with
-`scrollWidth > clientWidth` at 390 px width (also render the card's
-explanation/feedback into the stage to check them), and screenshot widget,
-build, order and `$$` cards. Note `#/lesson/<id>/<n>` is 1-based; map
-lessons have no `cards:` (loop n over the generated cards instead).
+Session queue (one unit each): ① `circle-charts` widget (two charts on S¹:
+angle charts or stereographic, overlap highlighted, a draggable point showing
+both coordinates and the transition map) → ② `ch03-charts` → ③ `ch03-atlases`
+→ ④ `ch03-smooth-maps` → ⑤ `ch03-circle` → ⑥ `ch03-traps` → ⑦ `ch03-map` →
+⑧–⑨ `ch03-challenge`.
+
+Screenshot pass: `tools/shots.mjs` (`playwright-core`, installed in
+`tools/node_modules`, driving the cached Chromium in
+`~/Library/Caches/ms-playwright/chromium-1248`). It renders every card and
+its hints/feedback, flags `.katex-display` overflow at 390 px and 1280 px,
+and saves widget screenshots. `#/lesson/<id>/<n>` is 1-based. Map lessons have
+no `cards:`, so the script doesn't cover them yet (extend it in the map
+session).
