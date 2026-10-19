@@ -16,10 +16,14 @@ professor (Daniel López Cano), which Igor converted to Markdown.
 - **The book is unpublished. Never commit or push it** (Markdown, images or
   PDFs). The GitHub repo is public; `.gitignore` excludes the book folder and
   all PDFs. Keep it that way.
-- The book is unfinished. As of 2026-10, Chapters 1–5 (Introduction, Vector
-  Spaces, Topological Manifolds, Tangent Spaces, Fields) are written; later
-  chapters are still `??` placeholders. Only build lessons for chapters that
-  are actually written. Check the Markdown before starting a new chapter.
+- The book was re-converted from the updated PDF on 2026-10-18 (with
+  `marker_single`). It now covers Chapters 1–10 (Introduction, Vector Spaces,
+  Topological Manifolds, Tangent Spaces, Fields, Covariant Derivative, Metric,
+  Integrals, Newton-Cartan Theory, General Relativity) plus appendices
+  (A computational resources, B proofs, C worked examples). Chapter 10 may
+  still be in progress: check the Markdown before starting a chapter. The
+  appendix B proofs and C examples are good sources for guided problems.
+  The previous conversion is kept in `book_old_backup/` (git-ignored).
 
 ## Course Overview
 

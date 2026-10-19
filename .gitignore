@@ -1,5 +1,6 @@
 # The professor's unpublished book — never publish it.
 from_differential_geometry_to_general_relativity/
+book_old_backup/
 *.pdf
 
 # LaTeX build products
