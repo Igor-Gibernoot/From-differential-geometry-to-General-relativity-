@@ -1,0 +1,345 @@
+id: ch03-homeomorphisms
+title: Continuity and Homeomorphisms
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: Wrapping a string around a ring
+    body: |
+      Recall: a **topological space** $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ is a set $\mathcal{M}$ with a family $\mathcal{O}_\mathcal{M}$ of subsets, its **open sets**. A subset of a space gets the **inherited topology**: its open sets are the pieces $\mathcal{N}\cap\mathcal{U}$ of open sets $\mathcal{U}$ of the big space.
+
+      Coordinates on spacetime will be maps from a piece of spacetime to lists of numbers. We need to say when such a map is faithful: it must not **tear** the space, and it must not **glue** distant points together. This lesson makes both words precise, with open sets alone.
+
+      Here is the test case. Take the interval of angles $[0, 2\pi)$ (inside $\mathbb{R}$) and the unit circle (inside $\mathbb{R}^2$),
+      $$S^1 := \{(a, b) \mid a^2 + b^2 = 1\}.$$
+      Wrap the interval around the circle like a string:
+      $$\phi(\theta) := (\cos\theta,\ \sin\theta).$$
+      Every point of the circle is hit exactly once, and nearby angles land on nearby points.
+
+  - type: mcq
+    id: predict-wrap
+    prompt: |
+      Before any definitions, guess. The map $\phi(\theta) = (\cos\theta,\ \sin\theta)$ wraps the interval $[0, 2\pi)$ once around the unit circle $S^1$, hitting every point of the circle exactly once. Are $[0, 2\pi)$ and $S^1$ "the same space", only bent?
+    options:
+      - text: 'No: something goes wrong near the point $(1, 0) = \phi(0)$'
+        correct: true
+      - text: 'Yes: $\phi$ is a one-to-one correspondence, so they are the same'
+        feedback: |
+          A one-to-one correspondence only matches the **points**. "Same space" must also match which points are near which. Watch what happens around $(1, 0)$ when you walk the wrap backwards.
+      - text: 'No: the circle lives in the plane and the interval on the line'
+        feedback: |
+          Where a space happens to sit is not part of its shape: a straight segment and a bent arc in the plane are the same space, only bent. The real obstacle is elsewhere.
+    explanation: |
+      On the circle, points just below $(1, 0)$ are close to $(1, 0)$. Walking the wrap backwards sends them to angles near $2\pi$, while $(1, 0)$ goes to $0$: the inverse **tears** the circle open. By the end of the lesson this will be a precise statement.
+
+  - type: text
+    id: def-preimage
+    title: Looking backwards
+    body: |
+      In calculus, "no tearing" is phrased with distances ($\varepsilon$ and $\delta$). Here we only have open sets, so we look **backwards**: for a region of the target, which inputs land in it?
+
+      Let $\phi\colon\mathcal{M}\to\mathcal{N}$ be any map and $\mathcal{V}\subseteq\mathcal{N}$ a subset of the target. The **preimage** of $\mathcal{V}$ is the set of inputs that $\phi$ sends into $\mathcal{V}$:
+      $$\begin{aligned}&\text{preim}_\phi(\mathcal{V})\\ &:= \{p\in\mathcal{M} \mid \phi(p)\in\mathcal{V}\}.\end{aligned}$$
+      It is a subset of the **domain** $\mathcal{M}$, and it exists for **every** map, invertible or not. It is not the inverse map applied to $\mathcal{V}$: there may be no inverse map at all.
+
+      The opposite direction is the **image** of a subset $\mathcal{A}\subseteq\mathcal{M}$, the set of outputs:
+      $$\phi(\mathcal{A}) := \{\phi(p) \mid p\in\mathcal{A}\}.$$
+
+  - type: mcq
+    id: preimage-square
+    prompt: |
+      Let $f\colon\mathbb{R}\to\mathbb{R}$, $f(x) = x^2$. The preimage of a set $\mathcal{V}$ is $\text{preim}_f(\mathcal{V}) = \{x \mid f(x)\in\mathcal{V}\}$. What is $\text{preim}_f\big((1, 4)\big)$?
+    options:
+      - text: '$(-2, -1)\cup(1, 2)$'
+        correct: true
+      - text: '$(1, 2)$'
+        feedback: |
+          These inputs do land in $(1, 4)$, but so do their negatives: $(-1.5)^2 = 2.25$. The preimage collects **every** input that lands in the set.
+      - text: '$(1, 16)$'
+        feedback: |
+          That is the **image** $f\big((1, 4)\big)$, the outputs of inputs in $(1, 4)$. The preimage goes the other way: inputs whose outputs lie in $(1, 4)$.
+      - text: 'It does not exist, because $x^2$ has no inverse'
+        feedback: |
+          The preimage needs no inverse map: it is defined for every map, by asking of each input whether its output lies in the set.
+    explanation: |
+      $1 < x^2 < 4$ holds exactly when $1 < |x| < 2$, that is for $x\in(-2, -1)$ or $x\in(1, 2)$. A preimage can have several pieces even when the set $\mathcal{V}$ is one interval.
+
+  - type: widget
+    id: explore-preimage
+    title: Tears show up in preimages
+    widget: preimage-explorer
+    config:
+      fn: linear
+      V: [0.5, 1.5]
+      view: { x: -3, y: -1.5, w: 6, h: 5 }
+      presets:
+        - { label: Jump, fn: step, V: [0.5, 1.5] }
+        - { label: 'x²', fn: square, V: [1, 3] }
+        - { label: Constant, fn: const, V: [0.5, 1.5] }
+    body: |
+      The curve is the graph of a map from $\mathbb{R}$ to $\mathbb{R}$. The gold band is an open interval $\mathcal{V}$ of outputs, ends excluded: drag its two ends on the vertical axis. The part of the graph inside the band is highlighted, and below it, on the horizontal axis, the preimage $\text{preim}(\mathcal{V})$ is drawn: a filled end dot means that end belongs to the preimage.
+
+      1. For $f(x) = 2x + 1$, move $\mathcal{V}$ around. Is the preimage ever not open?
+      2. Press **Jump**: the map $H$ jumps from $0$ to $1$ at $x = 0$. Look at the left end of the preimage. Then try to place $\mathcal{V}$ so that the preimage is open again.
+
+  - type: mcq
+    id: jump-preimage
+    prompt: |
+      Let $H\colon\mathbb{R}\to\mathbb{R}$ be the jump: $H(x) = 0$ for $x < 0$ and $H(x) = 1$ for $x\ge 0$. With the standard topology on $\mathbb{R}$, what is the preimage of the open interval $\mathcal{V} = (\tfrac12, \tfrac32)$, and is it open?
+    options:
+      - text: '$[0, \infty)$, which is not open'
+        correct: true
+      - text: '$(0, \infty)$, which is open'
+        feedback: |
+          $H(0) = 1\in(\tfrac12, \tfrac32)$, so $0$ itself belongs to the preimage. That is exactly the problem: $0$ is in, but its neighbours on the left are not.
+      - text: '$\{1\}$, which is not open'
+        feedback: |
+          $\{1\}$ is part of the **image** side, an output. The preimage lives among the inputs: all $x$ with $H(x)\in(\tfrac12, \tfrac32)$.
+      - text: '$[0, \infty)$, which is open since it is a preimage of an open set'
+        feedback: |
+          Preimages of open sets need not be open; whether they are is precisely the question. Test $[0, \infty)$ at $p = 0$: every ball $(-r,\ r)$ contains $-r/2$, which is not in it.
+    explanation: |
+      $H(x)\in(\tfrac12, \tfrac32)$ exactly when $H(x) = 1$, that is $x\ge 0$. The preimage $[0, \infty)$ is not open: the input $0$ lands inside $\mathcal{V}$, but inputs just to its left land outside, however close they are. **The tear at $0$ shows up as a preimage point with no room.**
+
+  - type: text
+    id: def-continuous
+    title: Continuity with open sets
+    body: |
+      Let $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ and $(\mathcal{N}, \mathcal{O}_\mathcal{N})$ be topological spaces. A map $\phi\colon\mathcal{M}\to\mathcal{N}$ is **continuous** (with respect to these two topologies) when the preimage of every open set is open:
+      $$\forall\,\mathcal{V}\in\mathcal{O}_\mathcal{N}:\ \text{preim}_\phi(\mathcal{V})\in\mathcal{O}_\mathcal{M}.$$
+
+      Why this captures "no tearing": suppose $\phi$ tears at an input $p$, so some inputs arbitrarily close to $p$ land far from $\phi(p)$. Take $\mathcal{V}$ a small open set around $\phi(p)$. Then $p$ is in the preimage of $\mathcal{V}$, but some of its neighbours, however close, are not: $p$ has no room, and the preimage is not open.
+
+      Two things to notice. Continuity is about **preimages**, never images. And it depends on **both** topologies: change either one and the same formula may stop being continuous.
+
+  - type: mcq
+    id: constant-continuous
+    prompt: |
+      A map $\phi\colon\mathcal{M}\to\mathcal{N}$ between topological spaces is continuous when $\text{preim}_\phi(\mathcal{V})$ is open in $\mathcal{M}$ for every open $\mathcal{V}$ of $\mathcal{N}$. Let $\phi$ be constant: $\phi(p) = c$ for every $p\in\mathcal{M}$. For which topologies is $\phi$ continuous?
+    options:
+      - text: For every topology on $\mathcal{M}$ and on $\mathcal{N}$
+        correct: true
+      - text: Only when $\{c\}$ is open in $\mathcal{N}$
+        feedback: |
+          Openness of $\{c\}$ is never needed. Every preimage is $\mathcal{M}$ (if $c\in\mathcal{V}$) or $\emptyset$ (if not), and both are open in any topology.
+      - text: Only for the standard topologies on $\mathbb{R}^d$
+        feedback: |
+          The argument uses nothing about balls: the only possible preimages are $\mathcal{M}$ and $\emptyset$, which every topology contains.
+    explanation: |
+      For any $\mathcal{V}\subseteq\mathcal{N}$, either $c\in\mathcal{V}$ and every input lands in it ($\text{preim}_\phi(\mathcal{V}) = \mathcal{M}$), or $c\notin\mathcal{V}$ and no input does ($\text{preim}_\phi(\mathcal{V}) = \emptyset$). Rule (1) of every topology makes both open. A constant map cannot tear anything.
+
+  - type: mcq
+    id: images-not-open
+    prompt: |
+      With the standard topology on $\mathbb{R}$, $f(x) = x^2$ is continuous. Yet it sends the open interval $(-1, 1)$ to the image $f\big((-1, 1)\big) = [0, 1)$, which is not open. What does this show?
+    options:
+      - text: Continuous maps need not send open sets to open sets; continuity only constrains preimages
+        correct: true
+      - text: That $x^2$ is not continuous after all
+        feedback: |
+          Check the definition: for every open $\mathcal{V}$, the inputs landing in $\mathcal{V}$ form an open set (for example $\text{preim}_f\big((1, 4)\big) = (-2, -1)\cup(1, 2)$). Nothing in the definition mentions images.
+      - text: That $(-1, 1)$ is not open
+        feedback: |
+          $(-1, 1)$ is an open ball around $0$, so it is open. The non-open set is the image $[0, 1)$, and that is allowed.
+    explanation: |
+      $x^2$ folds the line at $0$: the inputs $\pm x$ land on the same output, and the output $0$ sits at the edge of the image. Folding is not tearing. Continuity is a statement about preimages only; a map that also sends open sets to open sets is called **open**, a different property.
+
+  - type: text
+    id: eps-delta
+    title: The calculus definition is a special case
+    body: |
+      For $f\colon\mathbb{R}^k\to\mathbb{R}^m$, calculus calls $f$ continuous when, for every point $p$ and every accuracy $\varepsilon$, inputs close enough to $p$ land within $\varepsilon$ of $f(p)$:
+      $$\begin{aligned}&\forall p\ \ \forall\varepsilon>0\ \ \exists\delta>0:\\ &f\big(B_\delta(p)\big)\subseteq B_\varepsilon\big(f(p)\big).\end{aligned}$$
+      Here $B_r(p)$ is the open ball, the points at distance less than $r$ from $p$.
+
+      With the **standard topologies** on both sides, this says the same as the preimage definition. One direction: $B_\varepsilon(f(p))$ is open, so its preimage is open; it contains $p$, so it contains some ball $B_\delta(p)$, and that is the condition above. The other direction is the next card.
+
+  - type: order
+    id: eps-delta-proof
+    prompt: |
+      Let $f\colon\mathbb{R}^k\to\mathbb{R}^m$ satisfy: for every $p$ and every $\varepsilon > 0$ there is $\delta > 0$ with $f(B_\delta(p))\subseteq B_\varepsilon(f(p))$. Put in order the proof that the preimage of every open $\mathcal{V}\subseteq\mathbb{R}^m$ is open (standard topologies).
+    steps:
+      - 'Let $\mathcal{V}$ be open and $p\in\text{preim}_f(\mathcal{V})$, so $f(p)\in\mathcal{V}$.'
+      - 'Since $\mathcal{V}$ is open, some $\varepsilon > 0$ has $B_\varepsilon(f(p))\subseteq\mathcal{V}$.'
+      - 'By the assumption, some $\delta > 0$ has $f(B_\delta(p))\subseteq B_\varepsilon(f(p))$.'
+      - 'So every $x\in B_\delta(p)$ has $f(x)\in\mathcal{V}$: $B_\delta(p)\subseteq\text{preim}_f(\mathcal{V})$.'
+      - 'Each point of the preimage has a ball inside it, so the preimage is open.'
+    hint: Start from a point of the preimage. Openness of $\mathcal{V}$ gives the $\varepsilon$; the assumption turns it into a $\delta$.
+    explanation: |
+      The $\varepsilon$ comes from $\mathcal{V}$ being open, the $\delta$ from the assumption, and the ball $B_\delta(p)$ is exactly the room that $p$ needs inside the preimage. For other topologies there are no balls, and only the preimage definition makes sense.
+
+  - type: numeric
+    id: delta-linear
+    prompt: |
+      Let $f\colon\mathbb{R}\to\mathbb{R}$, $f(x) = 2x + 1$. Given a point $p$ and the accuracy $\varepsilon = 0.1$, what is the **largest** $\delta$ such that every $x$ with $|x - p| < \delta$ has $|f(x) - f(p)| < \varepsilon$?
+    answer: 0.05
+    tolerance: 0.0001
+    wrong:
+      - value: 0.2
+        feedback: |
+          That multiplies by $2$ instead of dividing. $|f(x) - f(p)| = 2|x - p|$: the map **stretches** distances by $2$, so the inputs must be twice as close as the accuracy you want.
+      - value: 0.1
+        feedback: |
+          With $|x - p|$ just below $0.1$, the outputs differ by $2|x - p|$, almost $0.2$, which exceeds $\varepsilon$.
+    hint: Compute $|f(x) - f(p)|$ in terms of $|x - p|$.
+    explanation: |
+      $|f(x) - f(p)| = |2x - 2p| = 2|x - p|$, and $2|x - p| < 0.1$ exactly when $|x - p| < 0.05$. So $\delta = \varepsilon/2$, here $0.05$. It does not depend on $p$, and any smaller $\delta$ works too.
+
+  - type: mcq
+    id: identity-topologies
+    prompt: |
+      Recall: the **discrete** topology on a set declares every subset open. Let $\iota(x) = x$, viewed as a map from $\mathbb{R}$ with the discrete topology to $\mathbb{R}$ with the standard topology. Is $\iota$ continuous, and is the same formula continuous in the other direction (standard to discrete)?
+    options:
+      - text: 'Discrete to standard: yes. Standard to discrete: no'
+        correct: true
+      - text: Both yes, since the formula $x\mapsto x$ cannot tear
+        feedback: |
+          Continuity depends on the topologies, not only on the formula. From standard to discrete, the set $\{0\}$ is open in the target and its preimage $\{0\}$ must be open in the source, where it is not.
+      - text: 'Discrete to standard: no. Standard to discrete: yes'
+        feedback: |
+          Swapped. A map **out of** a discrete space is always continuous: every preimage is some subset, and all subsets are open there. Trouble comes when the **target** has many open sets.
+    explanation: |
+      Discrete to standard: every preimage is a subset of $\mathbb{R}$, open in the discrete topology. Standard to discrete: $\{0\}$ is open in the discrete target, its preimage is $\{0\}$, and $\{0\}$ is not open in the standard topology (every ball around $0$ contains $r/2\neq 0$). The more open sets the **source** has, the easier continuity; the more the **target** has, the harder.
+
+  - type: order
+    id: composition-proof
+    prompt: |
+      Let $\phi\colon\mathcal{M}\to\mathcal{N}$ and $\psi\colon\mathcal{N}\to\mathcal{P}$ be continuous maps between topological spaces, and $\mathcal{W}$ open in $\mathcal{P}$. The composite is $(\psi\circ\phi)(p) := \psi(\phi(p))$. Put in order the proof that $\text{preim}_{\psi\circ\phi}(\mathcal{W})$ is open.
+    steps:
+      - '$p\in\text{preim}_{\psi\circ\phi}(\mathcal{W})$'
+      - '$\iff \psi(\phi(p))\in\mathcal{W}$'
+      - '$\iff \phi(p)\in\text{preim}_\psi(\mathcal{W})$'
+      - '$\iff p\in\text{preim}_\phi\big(\text{preim}_\psi(\mathcal{W})\big)$.'
+      - '$\text{preim}_\psi(\mathcal{W})$ is open in $\mathcal{N}$, as $\psi$ is continuous,'
+      - 'so its preimage under $\phi$ is open in $\mathcal{M}$, as $\phi$ is continuous.'
+    hint: Unfold the definition of the preimage one map at a time, outer map first.
+    explanation: |
+      The preimage of a composite is the composite of the preimages, taken in reverse order:
+      $$\text{preim}_{\psi\circ\phi} = \text{preim}_\phi\circ\text{preim}_\psi.$$
+      So a chain of maps that do not tear does not tear. This is used every time two changes of coordinates are done one after the other.
+
+  - type: text
+    id: def-homeo
+    title: Same space, only bent
+    body: |
+      A map $\phi\colon\mathcal{M}\to\mathcal{N}$ between topological spaces is a **homeomorphism** when:
+      1. $\phi$ is **bijective** (one-to-one and onto), so the inverse map $\phi^{-1}\colon\mathcal{N}\to\mathcal{M}$ exists;
+      2. $\phi$ is continuous;
+      3. $\phi^{-1}$ is continuous.
+
+      Two spaces related by a homeomorphism are **homeomorphic**: as topological spaces they are the same, with the points renamed. The name is Greek for "similar shape"; it has nothing to do with homomorphism (a map that respects algebra, like a linear map).
+
+      Condition 3 is the one that forbids **gluing**. A bijection can be continuous and still, run backwards, tear: then the forward map has glued together points that were far apart.
+
+  - type: mcq
+    id: image-is-preimage
+    prompt: |
+      Let $\phi\colon\mathcal{M}\to\mathcal{N}$ be a bijection with inverse $\phi^{-1}$, and $\mathcal{U}\subseteq\mathcal{M}$. Which set equals $\text{preim}_{\phi^{-1}}(\mathcal{U}) = \{n\in\mathcal{N} \mid \phi^{-1}(n)\in\mathcal{U}\}$?
+    options:
+      - text: 'The image $\phi(\mathcal{U}) = \{\phi(u) \mid u\in\mathcal{U}\}$'
+        correct: true
+      - text: '$\mathcal{U}$ itself'
+        feedback: |
+          $\mathcal{U}$ is a subset of $\mathcal{M}$, but a preimage under $\phi^{-1}\colon\mathcal{N}\to\mathcal{M}$ is a subset of $\mathcal{N}$, the domain of $\phi^{-1}$.
+      - text: '$\text{preim}_\phi(\mathcal{U})$'
+        feedback: |
+          This is not even defined: $\text{preim}_\phi$ takes subsets of the target $\mathcal{N}$, and $\mathcal{U}$ lies in $\mathcal{M}$.
+    explanation: |
+      For $n\in\mathcal{N}$: if $\phi^{-1}(n) = u\in\mathcal{U}$, then $n = \phi(u)\in\phi(\mathcal{U})$; conversely, if $n = \phi(u)$ with $u\in\mathcal{U}$, then $\phi^{-1}(n) = u\in\mathcal{U}$. So
+      $$\text{preim}_{\phi^{-1}}(\mathcal{U}) = \phi(\mathcal{U}).$$
+      Hence $\phi^{-1}$ is continuous exactly when $\phi$ sends open sets to open sets. A homeomorphism matches the open sets of the two spaces **in both directions**.
+
+  - type: numeric
+    id: delta-inverse
+    prompt: |
+      The map $f(x) = 2x + 1$ on $\mathbb{R}$ is a bijection with inverse $f^{-1}(y) = \tfrac{y - 1}{2}$. For the accuracy $\varepsilon = 0.1$, what is the largest $\delta$ such that $|y - y'| < \delta$ guarantees $|f^{-1}(y) - f^{-1}(y')| < \varepsilon$?
+    answer: 0.2
+    tolerance: 0.0001
+    wrong:
+      - value: 0.05
+        feedback: |
+          That is the $\delta$ for $f$, which stretches distances by $2$. The inverse **shrinks** them by $2$: $|f^{-1}(y) - f^{-1}(y')| = |y - y'|/2$.
+      - value: 0.1
+        feedback: |
+          Inputs can be farther apart than $\varepsilon$ here: halving $|y - y'| < 0.2$ already gives less than $0.1$.
+    hint: Compute $|f^{-1}(y) - f^{-1}(y')|$ in terms of $|y - y'|$.
+    explanation: |
+      $|f^{-1}(y) - f^{-1}(y')| = \tfrac{|y - y'|}{2} < 0.1$ exactly when $|y - y'| < 0.2$, so $\delta = 2\varepsilon = 0.2$. Both $f$ and $f^{-1}$ are continuous and $f$ is bijective: $f$ is a homeomorphism of $\mathbb{R}$. Stretching and shifting do not change the space.
+
+  - type: text
+    id: wrap-continuous
+    title: Back to the wrap
+    body: |
+      Give $[0, 2\pi)$ the topology inherited from $\mathbb{R}$ and $S^1$ the one inherited from $\mathbb{R}^2$, and take
+      $$\phi(\theta) = (\cos\theta,\ \sin\theta).$$
+      **Bijective:** each point of the circle is $(\cos\theta, \sin\theta)$ for exactly one angle $\theta\in[0, 2\pi)$.
+
+      **Continuous:** the straight distance between two points of the circle is at most the arc between them, so
+      $$\lVert\phi(\theta) - \phi(\theta')\rVert\le|\theta - \theta'|,$$
+      and $\delta = \varepsilon$ works. (The inherited topologies cause no trouble: an open set of $S^1$ is $S^1\cap\mathcal{U}$ with $\mathcal{U}$ open in the plane, and its preimage is an open set of the line cut down to $[0, 2\pi)$.)
+
+      **The inverse:** the set $\mathcal{V} = [0, \tfrac\pi2)$ is open in $[0, 2\pi)$, because
+      $$\mathcal{V} = [0, 2\pi)\cap(-\tfrac\pi2,\ \tfrac\pi2).$$
+      For $\phi^{-1}$ to be continuous, its preimage $\text{preim}_{\phi^{-1}}(\mathcal{V}) = \phi(\mathcal{V})$ must be open in $S^1$. That image is the quarter arc from $(1, 0)$, included, to $(0, 1)$, excluded.
+
+  - type: widget
+    id: probe-wrap
+    title: Is the quarter arc open in the circle?
+    widget: ball-probe
+    config:
+      dim: 2
+      set: { shape: arc, from: 0, to: 90, closed: [true, false] }
+      name: '\phi(\mathcal{V})'
+      p: 0
+      r: 0.4
+      rMax: 1.5
+    body: |
+      The ring is the circle $S^1$; the shaded arc is $\phi(\mathcal{V})$, the image of the angles $[0, \tfrac\pi2)$. Its end at $(1, 0)$, angle $0$, is included (filled dot); the end at $(0, 1)$ is not. The thick arc is the ball around $p$ cut down to the circle.
+
+      Start with $p$ at $(1, 0)$ and shrink $r$. Then drag $p$ into the middle of the arc.
+
+  - type: mcq
+    id: wrap-not-homeo
+    prompt: |
+      Let $\phi\colon[0, 2\pi)\to S^1$, $\phi(\theta) = (\cos\theta, \sin\theta)$, with the inherited topologies; $\phi$ is a continuous bijection. The set $\mathcal{V} = [0, \tfrac\pi2)$ is open in $[0, 2\pi)$. Why is $\phi$ **not** a homeomorphism?
+    options:
+      - text: 'Every arc of $S^1$ around $(1, 0)$ contains points just below it, at angles near $2\pi$, which are not in $\phi(\mathcal{V})$; so $\phi(\mathcal{V})$ is not open'
+        correct: true
+      - text: '$\phi$ is not continuous at $\theta = 0$'
+        feedback: |
+          Forward, nothing tears: angles near $0$ land near $(1, 0)$. The bound $\lVert\phi(\theta) - \phi(\theta')\rVert\le|\theta - \theta'|$ holds everywhere. The failure is in the inverse.
+      - text: '$\phi$ is not surjective: the point $(1, 0)$ is missed'
+        feedback: |
+          $(1, 0) = \phi(0)$, and $0\in[0, 2\pi)$. The interval excludes $2\pi$, not $0$, which is what makes $\phi$ one-to-one.
+      - text: '$\mathcal{V} = [0, \tfrac\pi2)$ is not open in $[0, 2\pi)$'
+        feedback: |
+          It is open there: $[0, \tfrac\pi2) = [0, 2\pi)\cap(-\tfrac\pi2, \tfrac\pi2)$, an open set of $\mathbb{R}$ cut down to the space. Inside $[0, 2\pi)$, nothing lies to the left of $0$.
+    explanation: |
+      Near $(1, 0)$ the circle continues below the axis, to angles just under $2\pi$, and those points are not in the quarter arc: $\phi(\mathcal{V})$ is not open in $S^1$. Since $\phi(\mathcal{V}) = \text{preim}_{\phi^{-1}}(\mathcal{V})$, the inverse $\phi^{-1}$ is not continuous. It tears the circle at $(1, 0)$: points just below it go to angles near $2\pi$, far from $\phi^{-1}(1, 0) = 0$. **A continuous bijection need not be a homeomorphism.** (In fact no homeomorphism between $[0, 2\pi)$ and $S^1$ exists at all, though proving that needs a tool beyond this course.)
+
+  - type: mcq
+    id: continuous-bijection-trap
+    prompt: |
+      A map $\phi\colon\mathcal{M}\to\mathcal{N}$ between topological spaces is a homeomorphism when it is bijective, continuous, and its inverse is continuous. Which statement is true?
+    options:
+      - text: Some continuous bijections are not homeomorphisms
+        correct: true
+      - text: Every continuous bijection is a homeomorphism, as the inverse of a continuous map is continuous
+        feedback: |
+          The inverse can tear even if the map does not. Example: $x\mapsto x$ from $\mathbb{R}$ with the discrete topology to $\mathbb{R}$ with the standard one is a continuous bijection; its inverse sends the open set $\{0\}$ back to $\{0\}$, which is not open in the standard topology.
+      - text: Every bijection is a homeomorphism, as it matches points one to one
+        feedback: |
+          Matching points says nothing about matching open sets. The bijection $x\mapsto x$ from $\mathbb{R}$ with the standard topology to $\mathbb{R}$ with the discrete one is not even continuous: the open set $\{0\}$ of the target has the non-open preimage $\{0\}$.
+    explanation: |
+      Condition 3 of the definition is independent of the other two. Two examples of continuous bijections with a discontinuous inverse: the identity $x\mapsto x$ from $(\mathbb{R}, \text{discrete})$ to $(\mathbb{R}, \text{standard})$, and the wrap of $[0, 2\pi)$ around $S^1$.
+
+  - type: text
+    id: wrap
+    title: What you now own
+    body: |
+      - The **preimage** $\text{preim}_\phi(\mathcal{V}) = \{p \mid \phi(p)\in\mathcal{V}\}$, defined for every map. A map is **continuous** when preimages of open sets are open. Tears show up as preimage points with no room (the jump $H$). Continuity says nothing about images, and depends on both topologies.
+      - For the standard topologies it agrees with the calculus $\varepsilon$-$\delta$ definition, and composites of continuous maps are continuous.
+      - A **homeomorphism** is a bijection, continuous in both directions: it matches the open sets of two spaces. $x\mapsto 2x + 1$ is one; the wrap $[0, 2\pi)\to S^1$ is a continuous bijection whose inverse tears the circle at $(1, 0)$.
+
+      **Next:** some spaces look harmless point by point and are still monsters. In a space with too few open sets, a sequence can converge to two different points at once, and a particle's path would have two endpoints. The next lesson adds the two conditions that rule such spaces out: **Hausdorff** and **second countable**.

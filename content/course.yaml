@@ -96,7 +96,11 @@ levels:
         kind: concept
         file: ch03/standard-topology.yaml
         summary: Is $[0, 1)$ open? Balls and the standard topology on $\mathbb{R}^d$, why only finite intersections, and the topology a subset inherits.
-      - { id: ch03-homeomorphisms, title: Continuity and Homeomorphisms, kind: concept }
+      - id: ch03-homeomorphisms
+        title: Continuity and Homeomorphisms
+        kind: concept
+        file: ch03/homeomorphisms.yaml
+        summary: Is a circle the same space as the interval wrapped around it? Preimages, continuity without distances, and homeomorphisms.
       - { id: ch03-hausdorff, title: Hausdorff and Second Countable, kind: concept }
       - { id: ch03-charts, title: Charts and Transition Maps, kind: concept }
       - { id: ch03-atlases, title: Atlases and Smooth Manifolds, kind: concept }
