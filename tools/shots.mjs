@@ -16,7 +16,9 @@ const args = process.argv.slice(2);
 const all = args.includes('--all');
 const [file, id, out] = args.filter(a => a !== '--all');
 const yaml = createRequire(import.meta.url)(`${repo}/vendor/js-yaml.min.js`);
-const lesson = yaml.load(readFileSync(`${repo}/content/${file}`, 'utf8'));
+// Map lessons (kind: map) have no cards: expand them as the app does.
+const { expandLesson } = await import(`${repo}/js/content.js`);
+const lesson = expandLesson(yaml.load(readFileSync(`${repo}/content/${file}`, 'utf8')));
 mkdirSync(out, { recursive: true });
 
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css',
@@ -33,7 +35,7 @@ const port = server.address().port;
 
 const exe = `${process.env.HOME}/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`;
 const b = await chromium.launch({ executablePath: exe });
-const shotTypes = new Set(all ? ['widget', 'build', 'order'] : ['widget']);
+const shotTypes = new Set(all ? ['widget', 'build', 'order', 'mapview'] : ['widget', 'mapview']);
 let problems = 0, shots = 0;
 for (const [w, hgt, tag] of [[390, 844, 'phone'], [1280, 860, 'desk']]) {
   const p = await b.newPage({ viewport: { width: w, height: hgt } });

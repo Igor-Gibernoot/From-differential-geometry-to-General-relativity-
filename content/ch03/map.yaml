@@ -1,0 +1,428 @@
+id: ch03-map
+title: "Content Map: Topological Manifolds"
+kind: map
+name: Chapter 3, Topological Manifolds
+
+intro: |
+  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition. An arrow goes from a concept to a concept that is built on it; a dashed arrow means "serves as the model example for".
+
+  You will rebuild the Chapter 3 map one box at a time, from a bare set all the way to smooth maps between manifolds. For each glowing box, pick the card that belongs there. The other cards look alike but each hides a classic mistake, so read the details.
+
+  Tap a finished box at any time to reread its card.
+
+cols: 3
+nodes:
+  - id: topology
+    title: 'Topology $\mathcal{O}_\mathcal{M}$'
+    row: 1
+    col: 1
+    span: 3
+    body: |
+      A collection $\mathcal{O}\subseteq\mathcal{P}(\mathcal{M})$ of subsets of a set $\mathcal{M}$ ($\mathcal{P}$ = powerset, the set of all subsets) such that
+
+      - $\emptyset\in\mathcal{O}$ and $\mathcal{M}\in\mathcal{O}$;
+      - $\mathcal{U}\cap\mathcal{V}\in\mathcal{O}$ for **any two** $\mathcal{U},\mathcal{V}\in\mathcal{O}$;
+      - **any** union of members of $\mathcal{O}$, even an infinite one, is in $\mathcal{O}$.
+
+      Members of $\mathcal{O}$ are the **open** sets; a set is **closed** when its complement is open.
+    decoys:
+      - body: |
+          A collection $\mathcal{O}\subseteq\mathcal{P}(\mathcal{M})$ of subsets of a set $\mathcal{M}$ ($\mathcal{P}$ = powerset, the set of all subsets) such that
+
+          - $\emptyset\in\mathcal{O}$ and $\mathcal{M}\in\mathcal{O}$;
+          - **any** intersection of members of $\mathcal{O}$, even an infinite one, is in $\mathcal{O}$;
+          - $\mathcal{U}\cup\mathcal{V}\in\mathcal{O}$ for **any two** $\mathcal{U},\mathcal{V}\in\mathcal{O}$.
+
+          Members of $\mathcal{O}$ are the **open** sets; a set is **closed** when its complement is open.
+        feedback: |
+          The finite and the infinite rules are swapped. In $\mathbb{R}$ the open intervals $(-\tfrac1n, \tfrac1n)$, $n = 1, 2, \dots$, intersect to the single point $\{0\}$, which contains no interval around $0$ and so is not open. Open sets survive **arbitrary unions** but only **finite intersections**.
+      - body: |
+          A collection $\mathcal{O}\subseteq\mathcal{P}(\mathcal{M})$ of subsets of a set $\mathcal{M}$ ($\mathcal{P}$ = powerset, the set of all subsets) such that
+
+          - $\emptyset\in\mathcal{O}$ and $\mathcal{M}\in\mathcal{O}$;
+          - $\mathcal{U}\cap\mathcal{V}\in\mathcal{O}$ for **any two** $\mathcal{U},\mathcal{V}\in\mathcal{O}$;
+          - **any** union of members of $\mathcal{O}$, even an infinite one, is in $\mathcal{O}$.
+
+          Members of $\mathcal{O}$ are the **open** sets; a set is **closed** when it is **not** open.
+        feedback: |
+          "Closed" is not the opposite of "open": a set is closed when its **complement** is open. A set can be both ($\emptyset$ and $\mathcal{M}$ always are) or neither (the half-open interval $[0,1)$ in $\mathbb{R}$: it is not open at $0$, and its complement is not open at $1$).
+    explanation: |
+      Everything in the chapter starts here. A topology is the least structure needed to say "near": no distances, no coordinates, just a declared list of open sets obeying three rules.
+
+  - id: standard
+    title: 'Standard topology on $\mathbb{R}^d$'
+    row: 2
+    col: 1
+    body: |
+      $\mathcal{U}\subseteq\mathbb{R}^d$ is open if **every** point of it has a ball around it inside $\mathcal{U}$:
+      $$\forall p\in\mathcal{U}\ \exists r>0:\ B_r(p)\subseteq\mathcal{U},$$
+      where the open ball $B_r(p)$ is the set of points at distance less than $r$ from $p$. The radius may depend on $p$.
+    decoys:
+      - body: |
+          $\mathcal{U}\subseteq\mathbb{R}^d$ is open if **some** point of it has a ball around it inside $\mathcal{U}$:
+          $$\exists p\in\mathcal{U}\ \exists r>0:\ B_r(p)\subseteq\mathcal{U},$$
+          where the open ball $B_r(p)$ is the set of points at distance less than $r$ from $p$. The radius may depend on $p$.
+        feedback: |
+          One good point is not enough. $[0,1)$ has the ball of radius $\tfrac14$ around $\tfrac12$ inside it, yet every ball around $0$ pokes out to negative numbers, so $[0,1)$ is not open. The condition must hold at **every** point.
+      - body: |
+          $\mathcal{U}\subseteq\mathbb{R}^d$ is open if there is **one radius** $r>0$ that works for every point of it:
+          $$\exists r>0\ \forall p\in\mathcal{U}:\ B_r(p)\subseteq\mathcal{U},$$
+          where the open ball $B_r(p)$ is the set of points at distance less than $r$ from $p$.
+        feedback: |
+          The order of the quantifiers matters. In $(0,1)$ the largest ball around $p$ that fits has radius $\min(p, 1-p)$, which shrinks to $0$ near the ends, so no single $r$ works; yet $(0,1)$ is open. The radius is chosen **after** the point.
+    explanation: |
+      $\mathbb{R}^d$ is the model every manifold is compared with. Its open sets are the ones with "room to move" around each point, which is exactly what derivatives need later.
+
+  - id: inherited
+    title: Inherited topology
+    row: 2
+    col: 2
+    body: |
+      For a subset $\mathcal{N}\subseteq\mathcal{M}$ of a topological space, the open sets of $\mathcal{N}$ are the traces of open sets of $\mathcal{M}$:
+      $$\mathcal{O}_\mathcal{N}\big|_\mathcal{M} := \{\mathcal{N}\cap\mathcal{U} : \mathcal{U}\in\mathcal{O}_\mathcal{M}\}.$$
+      Example: an open arc of the circle $S^1\subseteq\mathbb{R}^2$ is open in $S^1$, though not open in $\mathbb{R}^2$.
+    decoys:
+      - body: |
+          For a subset $\mathcal{N}\subseteq\mathcal{M}$ of a topological space, the open sets of $\mathcal{N}$ are the open sets of $\mathcal{M}$ that lie inside $\mathcal{N}$:
+          $$\mathcal{O}_\mathcal{N}\big|_\mathcal{M} := \{\mathcal{U}\in\mathcal{O}_\mathcal{M} : \mathcal{U}\subseteq\mathcal{N}\}.$$
+          Example: an open arc of the circle $S^1\subseteq\mathbb{R}^2$ is open in $S^1$, though not open in $\mathbb{R}^2$.
+        feedback: |
+          No nonempty open set of $\mathbb{R}^2$ fits inside the circle (every disc pokes off it), so this rule would leave $S^1$ with only $\emptyset$, and $S^1$ itself would not be open, breaking the first rule of a topology. It also contradicts its own example: the arc is not open in $\mathbb{R}^2$. The right rule **cuts** open sets down to $\mathcal{N}$.
+      - body: |
+          For a subset $\mathcal{N}\subseteq\mathcal{M}$ of a topological space, the open sets of $\mathcal{N}$ are the unions with open sets of $\mathcal{M}$:
+          $$\mathcal{O}_\mathcal{N}\big|_\mathcal{M} := \{\mathcal{N}\cup\mathcal{U} : \mathcal{U}\in\mathcal{O}_\mathcal{M}\}.$$
+          Example: an open arc of the circle $S^1\subseteq\mathbb{R}^2$ is open in $S^1$, though not open in $\mathbb{R}^2$.
+        feedback: |
+          $\mathcal{N}\cup\mathcal{U}$ usually contains points outside $\mathcal{N}$, so it is not even a subset of $\mathcal{N}$, let alone an open set of it. And every such set contains all of $\mathcal{N}$, so a small arc could never be open. The intersection, not the union, keeps only the part inside $\mathcal{N}$.
+    explanation: |
+      This is how a subset gets a topology for free. Charts need it twice: the chart domain carries the topology inherited from $\mathcal{M}$, and the image carries the one inherited from $\mathbb{R}^d$.
+
+  - id: continuity
+    title: Continuity
+    row: 2
+    col: 3
+    body: |
+      $\phi:\mathcal{M}\to\mathcal{N}$ is **continuous** if the **preimage** of every open set of $\mathcal{N}$ is open in $\mathcal{M}$, where
+      $$\mathrm{preim}_\phi(\mathcal{V}) := \{p\in\mathcal{M} \mid \phi(p)\in\mathcal{V}\}.$$
+      Between standard topologies this is the $\varepsilon$-$\delta$ definition.
+    decoys:
+      - body: |
+          $\phi:\mathcal{M}\to\mathcal{N}$ is **continuous** if the **image** of every open set of $\mathcal{M}$ is open in $\mathcal{N}$, where
+          $$\phi(\mathcal{U}) := \{\phi(p) \mid p\in\mathcal{U}\}.$$
+          Between standard topologies this is the $\varepsilon$-$\delta$ definition.
+        feedback: |
+          Images go the wrong way. A constant map $\phi(p) = c$ on $\mathbb{R}$ is as continuous as a map can be, yet it sends the open set $(0,1)$ to the single point $\{c\}$, which is not open. Continuity pulls open sets **back**: preimages, not images.
+      - body: |
+          $\phi:\mathcal{M}\to\mathcal{N}$ is **continuous** if the **preimage** of the whole space $\mathcal{N}$ is open in $\mathcal{M}$, where
+          $$\mathrm{preim}_\phi(\mathcal{V}) := \{p\in\mathcal{M} \mid \phi(p)\in\mathcal{V}\}.$$
+          Between standard topologies this is the $\varepsilon$-$\delta$ definition.
+        feedback: |
+          Every map passes that test: $\mathrm{preim}_\phi(\mathcal{N}) = \mathcal{M}$, which is always open. The step function ($0$ for $p<0$, $1$ for $p\ge 0$) would count as continuous. The condition must hold for **every** open $\mathcal{V}$; the step fails at $\mathcal{V} = (\tfrac12, \tfrac32)$, whose preimage is $[0,\infty)$.
+    explanation: |
+      Continuity only needs open sets, so it makes sense on any topological space. The preimage form is the one that generalizes $\varepsilon$-$\delta$ beyond $\mathbb{R}^d$.
+
+  - id: separation
+    title: Hausdorff and second countable
+    row: 3
+    col: 1
+    body: |
+      Two conditions on a topological space:
+
+      - **Hausdorff**: any two distinct points $p\neq q$ lie in **disjoint** open sets $\mathcal{U}\ni p$, $\mathcal{V}\ni q$;
+      - **second countable**: some **countable** family of open sets (a basis) builds every open set as a union of its members.
+
+      $\mathbb{R}^d$ has both: balls of half the distance; balls with rational centres and radii.
+    decoys:
+      - body: |
+          Two conditions on a topological space:
+
+          - **Hausdorff**: for any two distinct points $p\neq q$ there is an open set containing $p$ but not $q$;
+          - **second countable**: some **countable** family of open sets (a basis) builds every open set as a union of its members.
+
+          $\mathbb{R}^d$ has both: balls of half the distance; balls with rational centres and radii.
+        feedback: |
+          That separation is too weak. On the line with two origins $0_A, 0_B$ (two copies of $\mathbb{R}$ glued everywhere except at $0$), copy A is an open set containing $0_A$ but not $0_B$, and vice versa. Yet every neighbourhood of $0_A$ meets every neighbourhood of $0_B$, so a sequence $\tfrac1n$ converges to both. Hausdorff asks for **disjoint** open sets.
+      - body: |
+          Two conditions on a topological space:
+
+          - **Hausdorff**: any two distinct points $p\neq q$ lie in **disjoint** open sets $\mathcal{U}\ni p$, $\mathcal{V}\ni q$;
+          - **second countable**: some **countable** family of open sets (a basis) builds every open set as a union of its members.
+
+          Both hold automatically once every point has a neighbourhood that looks like an open set of $\mathbb{R}^d$.
+        feedback: |
+          Looking like $\mathbb{R}^d$ near each point is a **local** property; these two are **global**. The line with two origins is locally like $\mathbb{R}$ at every point but not Hausdorff, and the "long line" (uncountably many intervals glued end to end) is locally like $\mathbb{R}$ but not second countable. That is why a manifold has to demand both separately.
+    explanation: |
+      These conditions are defined for any topological space. The dashed arrow marks $\mathbb{R}^d$ as the model that has them; a manifold must demand them, because charts alone do not supply them. Hausdorff gives unique limits; second countable keeps the space from being too big.
+
+  - id: homeo
+    title: "Homeo\u00ADmorphism"
+    row: 3
+    col: 3
+    body: |
+      $\phi:\mathcal{M}\to\mathcal{N}$ such that
+
+      - $\phi$ is a **bijection**, so $\phi^{-1}$ exists;
+      - $\phi$ is continuous;
+      - $\phi^{-1}$ is continuous.
+
+      Homeomorphic spaces are the same topological space with the points renamed.
+    decoys:
+      - body: |
+          $\phi:\mathcal{M}\to\mathcal{N}$ such that
+
+          - $\phi$ is a **bijection**, so $\phi^{-1}$ exists;
+          - $\phi$ is continuous;
+          - then $\phi^{-1}$ is automatically continuous.
+
+          Homeomorphic spaces are the same topological space with the points renamed.
+        feedback: |
+          Not automatic. Wrapping $[0,2\pi)$ around the circle, $t\mapsto(\cos t, \sin t)$, is a continuous bijection onto $S^1$, but its inverse tears the circle at $(1,0)$: points just below $(1,0)$ go to values near $2\pi$, points at and just above it to values near $0$. Continuity of $\phi^{-1}$ is a separate condition.
+      - body: |
+          $\phi:\mathcal{M}\to\mathcal{N}$ such that
+
+          - $\phi$ is **surjective**;
+          - $\phi$ is continuous;
+          - $\phi$ sends open sets to open sets.
+
+          Homeomorphic spaces are the same topological space with the points renamed.
+        feedback: |
+          Without injectivity there is no renaming. The projection $\mathbb{R}^2\to\mathbb{R}$, $(q_1, q_2)\mapsto q_1$, is surjective, continuous and sends open sets to open sets, but it squashes a whole plane onto a line. A homeomorphism must be a **bijection**; then "sends open sets to open sets" is exactly continuity of $\phi^{-1}$.
+    explanation: |
+      Homeomorphism is the "sameness" of topology, just as isomorphism is for vector spaces. A chart is a homeomorphism, so this box feeds directly into the next one.
+
+  - id: chart
+    title: 'Chart $(\mathcal{U},\mathscr{X})$'
+    row: 3
+    col: 2
+    body: |
+      An **open** set $\mathcal{U}\in\mathcal{O}_\mathcal{M}$ and a map
+      $$\mathscr{X}:\mathcal{U}\to\mathscr{X}(\mathcal{U})\subseteq\mathbb{R}^d$$
+      whose image is **open** in $\mathbb{R}^d$ and which is a **homeomorphism** (both sides with inherited topologies). Its components $\mathscr{X}^i$ are the coordinate maps.
+    decoys:
+      - body: |
+          The **whole** space $\mathcal{M}$ and a map
+          $$\mathscr{X}:\mathcal{M}\to\mathscr{X}(\mathcal{M})\subseteq\mathbb{R}^d$$
+          whose image is **open** in $\mathbb{R}^d$ and which is a **homeomorphism** (both sides with inherited topologies). Its components $\mathscr{X}^i$ are the coordinate maps.
+        feedback: |
+          A chart covers only a piece. On the circle, the angle $\theta\in(0,2\pi)$ misses the point $(1,0)$, and no single chart can cover all of $S^1$: removing one point leaves the circle in one piece, while removing one point from any interval splits it. Charts are local; covering the space is the job of several charts together.
+      - body: |
+          An **open** set $\mathcal{U}\in\mathcal{O}_\mathcal{M}$ and a map
+          $$\mathscr{X}:\mathcal{U}\to\mathscr{X}(\mathcal{U})\subseteq\mathbb{R}^d$$
+          that is a **continuous bijection** onto **any** subset of $\mathbb{R}^d$. Its components $\mathscr{X}^i$ are the coordinate maps.
+        feedback: |
+          Two conditions are missing. The image must be **open**, so that partial derivatives (needed later on transition maps) are defined at every point of it. And $\mathscr{X}^{-1}$ must be continuous too, or the chart could tear the patch apart: a continuous bijection can have a discontinuous inverse, as wrapping $[0,2\pi)$ around the circle shows. Only a homeomorphism keeps the topology intact.
+    explanation: |
+      A chart is a local coordinate system: it lets a patch of $\mathcal{M}$ be described by $d$ numbers without breaking its topology. It uses the topology of $\mathcal{M}$, the standard and inherited topologies, and the notion of homeomorphism.
+
+  - id: atlas
+    title: 'Atlas $\mathcal{A}$'
+    row: 4
+    col: 2
+    body: |
+      A set of charts $\mathcal{A} = \{(\mathcal{U}_\alpha,\mathscr{X}_\alpha)\}_{\alpha\in A}$ whose domains **cover** the space:
+      $$\bigcup_{\alpha\in A}\mathcal{U}_\alpha = \mathcal{M}.$$
+      Every point lies in at least one chart; domains may overlap. The circle needs at least two charts.
+    decoys:
+      - body: |
+          A set of charts $\mathcal{A} = \{(\mathcal{U}_\alpha,\mathscr{X}_\alpha)\}_{\alpha\in A}$ whose images **cover** $\mathbb{R}^d$:
+          $$\bigcup_{\alpha\in A}\mathscr{X}_\alpha(\mathcal{U}_\alpha) = \mathbb{R}^d.$$
+          Every number lies in at least one chart image; images may overlap. The circle needs at least two charts.
+        feedback: |
+          What must be covered is the space $\mathcal{M}$, not $\mathbb{R}^d$. The angle charts of the circle have images $(0,2\pi)$ and $(-\pi,\pi)$, which together cover only $(-\pi, 2\pi)$, yet they form an atlas because their domains cover all of $S^1$.
+      - body: |
+          A set of charts $\mathcal{A} = \{(\mathcal{U}_\alpha,\mathscr{X}_\alpha)\}_{\alpha\in A}$ whose domains **cover** the space **without overlapping**:
+          $$\bigcup_{\alpha\in A}\mathcal{U}_\alpha = \mathcal{M}, \quad \mathcal{U}_\alpha\cap\mathcal{U}_\beta = \emptyset.$$
+          Every point lies in exactly one chart. The circle needs at least two charts.
+        feedback: |
+          Overlaps are essential, not forbidden. The circle cannot even be split into two or more disjoint nonempty open arcs that cover it (it is in one piece). And the overlaps are exactly where charts are compared through transition maps, which is what will let calculus be glued together.
+    explanation: |
+      One chart is a page; an atlas is the whole book of pages, overlapping at the edges. Its domains must cover every point of $\mathcal{M}$.
+
+  - id: transition
+    title: Transition maps
+    row: 4
+    col: 3
+    body: |
+      For charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ with $\mathcal{U}\cap\mathcal{V}\neq\emptyset$:
+      $$\mathscr{Y}\circ\mathscr{X}^{-1},$$
+      defined on $\mathscr{X}(\mathcal{U}\cap\mathcal{V})\subseteq\mathbb{R}^d$, and its inverse $\mathscr{X}\circ\mathscr{Y}^{-1}$. They take **numbers to numbers**, so calculus applies to them.
+    decoys:
+      - body: |
+          For charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ with $\mathcal{U}\cap\mathcal{V}\neq\emptyset$:
+          $$\mathscr{Y}\circ\mathscr{X}^{-1},$$
+          defined on all of $\mathscr{X}(\mathcal{U})\subseteq\mathbb{R}^d$, and its inverse $\mathscr{X}\circ\mathscr{Y}^{-1}$. They take **numbers to numbers**, so calculus applies to them.
+        feedback: |
+          $\mathscr{X}^{-1}$ turns numbers into points of $\mathcal{U}$, but $\mathscr{Y}$ can only read points of $\mathcal{V}$. So the transition map is defined only on $\mathscr{X}(\mathcal{U}\cap\mathcal{V})$. On the circle, from $\theta$ to $\varphi$ that is $(0,\pi)\cup(\pi,2\pi)$, in two pieces, not all of $(0,2\pi)$.
+      - body: |
+          For charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ with $\mathcal{U}\cap\mathcal{V}\neq\emptyset$:
+          $$\mathscr{X}^{-1}\circ\mathscr{Y},$$
+          defined on $\mathcal{U}\cap\mathcal{V}\subseteq\mathcal{M}$, and its inverse $\mathscr{Y}^{-1}\circ\mathscr{X}$. They take **points to points**, so calculus applies to them.
+        feedback: |
+          The order is reversed. $\mathscr{X}^{-1}\circ\mathscr{Y}$ would first read a point with $\mathscr{Y}$ and then feed the resulting numbers to $\mathscr{X}^{-1}$, which is a different map; and points of $\mathcal{M}$ carry no calculus. The transition map goes numbers $\to$ point $\to$ numbers, which is why derivatives make sense for it.
+    explanation: |
+      Where two charts overlap, a point gets two sets of coordinates; the transition map translates between them. Being a composition of homeomorphisms, it is always continuous; whether it is also smooth is the next question.
+
+  - id: topmanifold
+    title: Topological manifold
+    row: 5
+    col: 1
+    body: |
+      The triple $(\mathcal{M},\mathcal{O}_\mathcal{M},\mathcal{A})_d$: a topological space that is **Hausdorff** and **second countable**, together with an atlas $\mathcal{A}$ of charts into $\mathbb{R}^d$. Locally it looks like $\mathbb{R}^d$; globally it is well behaved.
+    decoys:
+      - body: |
+          The triple $(\mathcal{M},\mathcal{O}_\mathcal{M},\mathcal{A})_d$: a topological space that is **Hausdorff** and **second countable**, together with an atlas $\mathcal{A}$ of charts into $\mathbb{R}^d$ whose transition maps are all $C^\infty$. Locally it looks like $\mathbb{R}^d$; globally it is well behaved.
+        feedback: |
+          That is a smooth manifold, the next step up. A **topological** manifold asks for nothing beyond the charts: its transition maps are automatically continuous (compositions of homeomorphisms), and whether they are smooth is extra structure added afterwards.
+      - body: |
+          The triple $(\mathcal{M},\mathcal{O}_\mathcal{M},\mathcal{A})_d$: a **subset of some $\mathbb{R}^N$** with the inherited topology, together with an atlas $\mathcal{A}$ of charts into $\mathbb{R}^d$. Locally it looks like $\mathbb{R}^d$; globally it is well behaved.
+        feedback: |
+          The definition is **intrinsic**: no surrounding space is assumed. This matters in physics, since spacetime does not sit inside a bigger space. Such subsets are automatically Hausdorff and second countable, which is exactly why the abstract definition must demand both conditions explicitly.
+    explanation: |
+      Charts give "locally like $\mathbb{R}^d$"; Hausdorff and second countability rule out pathologies the charts cannot see, like the line with two origins.
+
+  - id: compatible
+    title: '$C^\infty$-compatible charts'
+    row: 5
+    col: 3
+    body: |
+      Charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ are **$C^\infty$-compatible** if either
+
+      - $\mathcal{U}\cap\mathcal{V} = \emptyset$, or
+      - **both** $\mathscr{Y}\circ\mathscr{X}^{-1}$ and $\mathscr{X}\circ\mathscr{Y}^{-1}$ are $C^\infty$: partial derivatives of all orders exist and are continuous.
+    decoys:
+      - body: |
+          Charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ are **$C^\infty$-compatible** if either
+
+          - $\mathcal{U}\cap\mathcal{V} = \emptyset$, or
+          - **both** $\mathscr{Y}\circ\mathscr{X}^{-1}$ and $\mathscr{X}\circ\mathscr{Y}^{-1}$ are **continuous**.
+        feedback: |
+          Continuity is automatic (transition maps are compositions of homeomorphisms), so every pair of charts would be compatible and the condition would say nothing. On $\mathbb{R}$, the charts $x(p) = p$ and $y(p) = p^3$ have continuous transitions $a\mapsto a^3$ and $b\mapsto\sqrt[3]{b}$; but $f(p) = p$ reads $a$ in one chart and $\sqrt[3]{b}$ in the other, smooth in one and not differentiable at $0$ in the other.
+      - body: |
+          Charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ are **$C^\infty$-compatible** if either
+
+          - $\mathcal{U}\cap\mathcal{V} = \emptyset$, or
+          - **one** of $\mathscr{Y}\circ\mathscr{X}^{-1}$ and $\mathscr{X}\circ\mathscr{Y}^{-1}$ is $C^\infty$: partial derivatives of all orders exist and are continuous.
+        feedback: |
+          One direction is not enough. For $x(p) = p$ and $y(p) = p^3$ on $\mathbb{R}$, the transition $a\mapsto a^3$ is smooth, but its inverse $b\mapsto\sqrt[3]{b}$ has no derivative at $0$. Smoothness of a function must pass from each chart to the other, which uses both transition maps.
+    explanation: |
+      Compatibility is where calculus enters: it is a condition on transition maps, the only maps in sight that go from numbers to numbers.
+
+  - id: structure
+    title: Smooth atlas and smooth structure
+    row: 6
+    col: 2
+    body: |
+      An atlas $\mathcal{A}_{C^\infty}$ is **smooth** if **every pair** of its charts is $C^\infty$-compatible. Adding every chart compatible with all of it gives its **maximal atlas**, a **smooth structure**. Two smooth atlases give the same structure exactly when their union is still smooth.
+    decoys:
+      - body: |
+          An atlas $\mathcal{A}_{C^\infty}$ is **smooth** if **every pair** of its charts is $C^\infty$-compatible. Adding every chart compatible with all of it gives its **maximal atlas**, a **smooth structure**. Any two smooth atlases on the same space give the same structure.
+        feedback: |
+          On $\mathbb{R}$, the atlases $\{x\}$ with $x(p) = p$ and $\{y\}$ with $y(p) = p^3$ are each smooth (one chart is always compatible with itself), but their union is not, since $b\mapsto\sqrt[3]{b}$ is not smooth at $0$. So they generate two **different** smooth structures on the same topological space.
+      - body: |
+          An atlas $\mathcal{A}_{C^\infty}$ is **smooth** if **every pair** of its charts is $C^\infty$-compatible. Adding **every chart of the space** (every homeomorphism of an open set onto an open set of $\mathbb{R}^d$) gives its **maximal atlas**, a **smooth structure**.
+        feedback: |
+          The collection of all charts is not smooth: on $\mathbb{R}$ it contains both $x(p) = p$ and $y(p) = p^3$, which are not compatible. The maximal atlas collects only the charts compatible with **all charts of the given smooth atlas**, and those are then compatible with each other.
+    explanation: |
+      The maximal atlas removes an arbitrary choice: $\{\theta, \varphi\}$ and $\{\theta, \sigma\}$ on the circle generate the same smooth structure, so they describe the same calculus.
+
+  - id: smoothmanifold
+    title: Smooth manifold
+    row: 7
+    col: 1
+    body: |
+      The triple $(\mathcal{M},\mathcal{O}_\mathcal{M},\mathcal{A}_{C^\infty})_d$: a topological manifold together with a **smooth atlas**, understood up to equivalence (its smooth structure). Calculus on $\mathcal{M}$ is done through its charts.
+    decoys:
+      - body: |
+          The triple $(\mathcal{M},\mathcal{O}_\mathcal{M},\mathcal{A}_{C^\infty})_d$: a topological manifold whose chart maps $\mathscr{X}:\mathcal{U}\to\mathbb{R}^d$ are themselves **differentiable**. Calculus on $\mathcal{M}$ is done through its charts.
+        feedback: |
+          Differentiating $\mathscr{X}$ would require calculus on $\mathcal{U}\subseteq\mathcal{M}$, which is exactly what we do not have yet. Smoothness can only be asked of maps between open sets of real spaces: the transition maps. That is why the definition goes through compatibility.
+      - body: |
+          The triple $(\mathcal{M},\mathcal{O}_\mathcal{M},\mathcal{A}_{C^\infty})_d$: a topological manifold, which carries **exactly one** smooth structure. Calculus on $\mathcal{M}$ is done through its charts.
+        feedback: |
+          A smooth structure is extra data, not automatic. Some topological manifolds admit no smooth structure at all, and some admit several genuinely different ones: $\mathbb{R}^4$ carries uncountably many, and the sphere $S^7$ carries 28 (up to orientation-preserving diffeomorphism).
+    explanation: |
+      A smooth manifold is the stage for the rest of the course: spacetime will be a 4-dimensional smooth manifold, with a metric added later.
+
+  - id: smoothmaps
+    title: Smooth maps
+    row: 7
+    col: 2
+    body: |
+      $f:\mathcal{M}\to\mathbb{R}$ is **smooth** if every chart representative $f\circ\mathscr{X}^{-1}$ is $C^\infty$; a continuous $\phi:\mathcal{M}\to\mathcal{N}$ is smooth if every $\mathscr{Y}\circ\phi\circ\mathscr{X}^{-1}$ is. Chart-independent, since
+      $$f\circ\mathscr{Y}^{-1} = (f\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\mathscr{Y}^{-1}).$$
+    decoys:
+      - body: |
+          $f:\mathcal{M}\to\mathbb{R}$ is **smooth** if every chart representative $f\circ\mathscr{X}$ is $C^\infty$; a continuous $\phi:\mathcal{M}\to\mathcal{N}$ is smooth if every $\mathscr{Y}\circ\phi\circ\mathscr{X}$ is. Chart-independent, since
+          $$f\circ\mathscr{Y} = (f\circ\mathscr{X})\circ(\mathscr{X}^{-1}\circ\mathscr{Y}).$$
+        feedback: |
+          These compositions do not fit together: $\mathscr{X}$ outputs numbers, while $f$ eats points of $\mathcal{M}$. The representative must first turn numbers back into a point, $\mathscr{X}^{-1}$, then apply $f$: it is a function of $d$ real variables, which ordinary calculus can test.
+      - body: |
+          $f:\mathcal{M}\to\mathbb{R}$ is **smooth** if every chart representative $f\circ\mathscr{X}^{-1}$ is $C^\infty$; a continuous $\phi:\mathcal{M}\to\mathcal{N}$ is smooth if every $\mathscr{Y}\circ\phi\circ\mathscr{X}^{-1}$ is. Chart-independent on **any topological manifold**, since
+          $$f\circ\mathscr{Y}^{-1} = (f\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\mathscr{Y}^{-1}).$$
+        feedback: |
+          The identity holds, but it only transfers smoothness if $\mathscr{X}\circ\mathscr{Y}^{-1}$ is smooth, and on a topological manifold it is merely continuous. With the charts $x(p) = p$ and $y(p) = p^3$ on $\mathbb{R}$, $f(p) = p$ reads $a$ (smooth) in one and $\sqrt[3]{b}$ (not differentiable at $0$) in the other. Chart independence needs $C^\infty$-compatibility.
+    explanation: |
+      This is the payoff of the whole construction: calculus on $\mathcal{M}$ means calculus on chart representatives, and compatibility makes the answer independent of the chart.
+
+  - id: diffeo
+    title: "Diffeo\u00ADmorphism"
+    row: 7
+    col: 3
+    body: |
+      $\phi:\mathcal{M}\to\mathcal{N}$ such that
+
+      - $\phi$ is a **bijection**;
+      - $\phi$ is smooth;
+      - $\phi^{-1}$ is smooth.
+
+      Diffeomorphic manifolds are the same smooth manifold with the points renamed.
+    decoys:
+      - body: |
+          $\phi:\mathcal{M}\to\mathcal{N}$ such that
+
+          - $\phi$ is a **bijection**;
+          - $\phi$ is smooth;
+          - then $\phi^{-1}$ is automatically smooth.
+
+          Diffeomorphic manifolds are the same smooth manifold with the points renamed.
+        feedback: |
+          Not automatic. On $\mathbb{R}$ with its standard structure, $\phi(p) = p^3$ is a smooth bijection, but its inverse $p\mapsto\sqrt[3]{p}$ has no derivative at $0$ (the slope of $p^3$ there is $0$). Smoothness of $\phi^{-1}$ is a separate condition, just as continuity of the inverse was for homeomorphisms.
+      - body: |
+          $\phi:\mathcal{M}\to\mathcal{N}$ such that
+
+          - $\phi$ is a **bijection**;
+          - $\phi$ is continuous;
+          - $\phi^{-1}$ is continuous.
+
+          Diffeomorphic manifolds are the same smooth manifold with the points renamed.
+        feedback: |
+          That is a homeomorphism, which only sees the topology. $\phi(p) = \sqrt[3]{p}$ on $\mathbb{R}$ is a homeomorphism (continuous, with continuous inverse $p^3$), but it is not differentiable at $0$, so it is not a diffeomorphism of the standard smooth line. Every diffeomorphism is a homeomorphism, not the other way round.
+    explanation: |
+      Diffeomorphism is the "sameness" of smooth manifolds, one level above homeomorphism. Two different smooth structures can still give diffeomorphic manifolds: $\mathbb{R}$ with the chart $p^3$ is diffeomorphic to the standard line.
+
+edges:
+  - [topology, standard]
+  - [topology, inherited]
+  - [topology, continuity]
+  - { from: standard, to: separation, dashed: true }
+  - [continuity, homeo]
+  - [standard, chart]
+  - [inherited, chart]
+  - [homeo, chart]
+  - [chart, atlas]
+  - [chart, transition]
+  - [atlas, topmanifold]
+  - [separation, topmanifold]
+  - [transition, compatible]
+  - [compatible, structure]
+  - [atlas, structure]
+  - [topmanifold, smoothmanifold]
+  - [structure, smoothmanifold]
+  - [smoothmanifold, smoothmaps]
+  - [smoothmaps, diffeo]
+
+outroTitle: Chapter 3 in one picture
+outro: |
+  Read it top to bottom. A **topology** says which sets are open; from it come the **standard** and **inherited** topologies and **continuity**, and continuity both ways gives **homeomorphisms**. A **chart** is a homeomorphism from an open patch onto an open set of $\mathbb{R}^d$; enough charts form an **atlas**, and with **Hausdorff** and **second countable** added we have a **topological manifold**. Where charts overlap, **transition maps** take numbers to numbers; asking them to be $C^\infty$ both ways gives **compatibility**, a **smooth structure** and a **smooth manifold**. Then **smooth maps** are tested on chart representatives, and **diffeomorphisms** are the smooth version of sameness.
+
+  **Next level:** Chapter 4 builds vectors on a manifold, where there are no arrows to draw. A tangent vector at $p$ will be the velocity of a curve, acting on smooth functions as a directional derivative, and the tangent space $T_p\mathcal{M}$ will be a $d$-dimensional vector space.

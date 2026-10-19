@@ -10,9 +10,8 @@ append a short entry at the end of **Log** (a few lines, ending with
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 built:** `ch03-open-sets`, `ch03-standard-topology`,
   `ch03-homeomorphisms`, `ch03-hausdorff`, `ch03-charts`, `ch03-atlases`,
-  `ch03-smooth-maps`, `ch03-circle`, `ch03-traps`. All had a screenshot pass; all widgets are documented.
-- **Queue (one unit each):** ⑦ `ch03-map` →
-  ⑧–⑨ `ch03-challenge`, then Chapters 4–10 (each with map and challenge).
+  `ch03-smooth-maps`, `ch03-circle`, `ch03-traps`, `ch03-map`. All had a screenshot pass; all widgets are documented.
+- **Queue (one unit each):** ⑧–⑨ `ch03-challenge`, then Chapters 4–10 (each with map and challenge).
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -27,12 +26,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   \mathscr{X}_\leftarrow$ read $q_2$ on $q_1 \gtrless 0$, coordinates $\alpha$
   (first chart) and $\beta$; transitions $\pm\sqrt{1-s^2}$ on $(0,1)$ or $(-1,0)$.
   Lessons write chart maps as `\mathscr{X}`; set is $S^1$ (not $\mathcal{S}^1$).
+  Maps: dashed edge = "model example for"; long box titles get a soft hyphen
+  (`"Homeo\u00ADmorphism"`) so they fit 3 columns at 390 px.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
   1280 px, saves widget screenshots (`*-widget.png` = widget alone; view that
-  one to check readouts). `#/lesson/<id>/<n>` is 1-based. Map lessons have no
-  `cards:`, so shots doesn't cover them yet (extend it in the map session).
+  one to check readouts). `#/lesson/<id>/<n>` is 1-based. Map lessons are
+  expanded with the app's `expandLesson` (checks option bodies and feedback);
+  map views (intro, complete) are always screenshotted.
 
 ## Log
 
@@ -120,3 +122,22 @@ different structures, closed-interval image) were replaced by variants.
 Also fixed QUICKREF: shots.mjs takes the path relative to content/.
 Conventions fixed here: traps lessons carry no `tag: Trap`; line with two
 origins written $0_A, 0_B$.
+
+Built `ch03-map` (content map, 15 boxes, 2 decoys each, 17 cards): topology
+(decoys: ∩/∪ rules swapped, closed = not open) → standard, inherited,
+continuity → homeomorphism; Hausdorff + second countable (dashed from ℝ^d:
+the book defines them for any space; a solid edge from the full-width top box
+would graze row 2); chart → atlas, transitions → topological manifold;
+compatibility → smooth atlas + maximal atlas (one box: the book has no maximal
+atlas, the lesson `ch03-atlases` does) → smooth manifold → smooth maps →
+diffeomorphism. Decoys: one radius for all points, open sets inside N, images
+instead of preimages, T1 instead of Hausdorff, locally Euclidean ⇒ both, chart
+on all of M, continuous bijection chart, images cover ℝ^d, disjoint domains,
+continuous / one-sided compatibility, all charts = maximal atlas, unique smooth
+structure, f∘𝒳, chart independence on topological manifolds, smooth bijection,
+homeomorphism ⇒ diffeo. TeX map's "Next: Chapter 4" aside moved to the outro.
+shots.mjs now expands map lessons via js/content.js `expandLesson` and
+screenshots `mapview` cards (2 lines changed); phone map viewed: fine after
+soft-hyphenating Homeomorphism/Diffeomorphism.
+Conventions fixed here: map dashed edge = "model example for"; soft hyphen in
+long box titles.
