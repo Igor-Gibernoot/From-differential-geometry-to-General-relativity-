@@ -64,7 +64,7 @@ export function runSession(root, { items, mode, startAt = 0, onFinish, onExit })
   // The Back button sits on the left of the footer on every card but the first.
   function setFoot(buttons) {
     const back = i > 0
-      ? h('button', { class: 'btn ghost back', type: 'button', 'aria-label': 'Previous card', 'data-tip': 'Previous card', html: icons.back, onclick: prev })
+      ? h('button', { class: 'btn ghost back', type: 'button', 'aria-label': 'Previous card', html: icons.back, onclick: prev })
       : null;
     footButtons = buttons;
     foot.replaceChildren(...[back, ...buttons].filter(Boolean));

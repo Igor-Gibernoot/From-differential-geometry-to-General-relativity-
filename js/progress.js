@@ -37,7 +37,7 @@ function merge(a, b) {
     const x = a.lessons[id], y = b.lessons[id];
     if (!x || !y) { out.lessons[id] = x ?? y; continue; }
     const newer = (y.last ?? 0) > (x.last ?? 0) ? y : x;
-    out.lessons[id] = { ...newer, done: x.done || y.done, best: Math.max(x.best ?? 0, y.best ?? 0), runs: Math.max(x.runs ?? 0, y.runs ?? 0) };
+    out.lessons[id] = { ...newer, done: x.done || y.done, best: Math.max(x.best ?? 0, y.best ?? 0), runs: Math.max(x.runs ?? 0, y.runs ?? 0), first: x.first ?? y.first };
   }
   for (const k of new Set([...Object.keys(a.cards), ...Object.keys(b.cards)])) {
     const x = a.cards[k], y = b.cards[k];
@@ -68,6 +68,7 @@ export const progress = {
     state.lessons[id] = {
       done: true,
       score, // latest run
+      first: prev ? (prev.first ?? prev.score ?? score) : score, // first run: what the trail accuracy uses
       best: Math.max(score, prev?.best ?? 0),
       runs: (prev?.runs ?? 0) + 1,
       last: today(),
@@ -91,9 +92,9 @@ export const progress = {
 
   finishReview() { bumpStreak(); save(); },
 
-  // Average first-try accuracy (latest run) over the finished lessons among ids.
+  // Average first-try accuracy (first run; replays don't change it) over the finished lessons among ids.
   accuracy(ids) {
-    const scores = ids.map(id => state.lessons[id]).filter(r => r?.done).map(r => r.score ?? r.best);
+    const scores = ids.map(id => state.lessons[id]).filter(r => r?.done).map(r => r.first ?? r.score ?? r.best);
     return scores.length ? scores.reduce((a, b) => a + b, 0) / scores.length : null;
   },
 
