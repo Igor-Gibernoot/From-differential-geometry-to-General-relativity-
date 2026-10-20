@@ -357,6 +357,11 @@ a { color: var(--accent); }
 .cedge.built { stroke: var(--muted); stroke-dasharray: none; }
 .cedge.live { stroke: var(--accent); stroke-width: 2px; stroke-dasharray: none; }
 .cedge.dashed { stroke-dasharray: 6 5; }
+.cmap.labeled { row-gap: 36px; }
+.cmap-labels { position: absolute; inset: 0; pointer-events: none; }
+.cedge-label { position: absolute; transform: translate(-50%, -50%); padding: 0 5px; border-radius: 8px; background: var(--bg); color: var(--muted); font-size: 11.5px; line-height: 16px; white-space: nowrap; opacity: .6; }
+.cedge-label.built { opacity: 1; }
+.cedge-label.live { opacity: 1; color: var(--accent); }
 .cnode {
   position: relative; z-index: 1; appearance: none; font-size: 13px; font-weight: 650; line-height: 1.25;
   min-height: 46px; padding: 8px 6px; border-radius: 11px; text-align: center; display: grid; place-items: center;

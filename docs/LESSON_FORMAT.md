@@ -462,12 +462,16 @@ nodes:                             # build order = list order
 edges:                             # arrows: from a concept to one built on it
   - [space, basis]
   - { from: maps, to: cob, dashed: true }   # dashed = "tool used in"
+  - { from: space, to: dual, label: dual space }  # optional label on the arrow
 outroTitle: Chapter 2 in one picture
 outro: |
   Markdown shown under the finished map.
 ```
 
-Lay the grid out so that no arrow passes behind a box. Keep decoys parallel to
+Lay the grid out so that no arrow passes behind a box. An edge `label` (inline
+Markdown, 1–3 words, read as "from *label* to") sits at the middle of its arrow,
+in the gap between rows; any label widens the row gap. Keep labelled arrows
+between different rows: two side-by-side boxes leave no room for one. Keep decoys parallel to
 the correct card (same format and length) so the reader has to read the details.
 
 ## Phone-safe layout (get it right on the first try)

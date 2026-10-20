@@ -161,6 +161,13 @@ append a short entry at the end of **Log** (a few lines, ending with
 
 ## Log
 
+### 2026-10-19 — engine: content-map edge labels
+- Map edges take an optional `label` (inline Markdown, 1–3 words), drawn at the arrow's midpoint
+  (js/cards.js mapDiagram, css .cedge-label; built/live/pending states like the arrow). Any label
+  widens the map's row gap to 36px. validate.mjs: label must be a string, warns past 18 chars.
+- `ch04-map` now labels all 14 arrows; the intro's four-readings legend is replaced by one line.
+- Conventions fixed here: map arrow labels read "from *label* to", 1–3 words, only between rows.
+
 ### 2026-10-19 — `ch04-challenge` session 2 (problems 4–5 + wrap-up); Chapter 4 complete
 - Appended 11 cards: p4-setup, p4-proof (order), p4-A, p4-S, p4-why, p5-setup, p5-X (build),
   p5-Y, p5-feed, p5-trace, wrap-up (teaser: Level 5, vector fields as smooth choices of $v_p$).

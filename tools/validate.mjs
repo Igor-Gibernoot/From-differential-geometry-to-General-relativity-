@@ -97,6 +97,10 @@ function checkMap(file, m) {
   for (const e of m.edges ?? []) {
     const [a, b] = Array.isArray(e) ? e : [e.from, e.to];
     if (!ids.has(a) || !ids.has(b)) err(file, `edge ${a} -> ${b} names an unknown node`);
+    if (e.label !== undefined) {
+      if (typeof e.label !== 'string') err(file, `edge ${a} -> ${b}: label must be a string`);
+      else if (e.label.length > 18) warn(file, `edge ${a} -> ${b}: label "${e.label}" is long for a phone (keep it to 1–3 words)`);
+    }
   }
 }
 

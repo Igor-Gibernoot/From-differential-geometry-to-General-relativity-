@@ -4,14 +4,9 @@ kind: map
 name: Chapter 4, Tangent Spaces
 
 intro: |
-  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition. An arrow goes from a concept to a concept built on it, and you can read it in one of four ways:
+  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition. An arrow goes from a concept to a concept built on it, and its label says how; read it as a sentence, for example "tangent space *has basis* chart-induced basis" or "Einstein summation *used in* tensor space".
 
-  - **defined from**: smooth curves and scalar fields → velocity;
-  - **basis of**: tangent space → chart-induced basis;
-  - **dual of**: tangent space → cotangent space;
-  - **built from**: for example, Einstein summation → tensor space.
-
-  A dashed arrow means "serves as the model example for": the running example, with two concrete charts of the plane, is where every basis and Jacobian of this level was checked by hand.
+  A dashed arrow marks the running example, with two concrete charts of the plane: it is where every basis and Jacobian of this level was checked by hand.
 
   You will rebuild the Chapter 4 map one box at a time, from a curve through a point $p$ of a manifold $\mathcal{M}$ to the tensors at $p$. For each glowing box, pick the card that belongs there. The other cards look alike but each hides a classic mistake of this level, so read the details.
 
@@ -356,20 +351,20 @@ nodes:
       Everything meets here: vectors are $(1,0)$-tensors, covectors $(0,1)$-tensors, and the laws of both boxes combine, one factor per index, written with Einstein summation.
 
 edges:
-  - [curves, velocity]
-  - [fields, velocity]
-  - [velocity, tangent]
-  - [tangent, basis]
-  - [chart, basis]
-  - [basis, jacobian]
-  - { from: example, to: basis, dashed: true }
-  - { from: example, to: jacobian, dashed: true }
-  - [tangent, cotangent]
-  - [cotangent, differential]
-  - [differential, dualbasis]
-  - [jacobian, einstein]
-  - [dualbasis, einstein]
-  - [einstein, tensor]
+  - { from: curves, to: velocity, label: define }
+  - { from: fields, to: velocity, label: acted on by }
+  - { from: velocity, to: tangent, label: fill out }
+  - { from: tangent, to: basis, label: has basis }
+  - { from: chart, to: basis, label: induces }
+  - { from: basis, to: jacobian, label: chart change }
+  - { from: example, to: basis, dashed: true, label: example }
+  - { from: example, to: jacobian, dashed: true, label: example }
+  - { from: tangent, to: cotangent, label: dual space }
+  - { from: cotangent, to: differential, label: contains }
+  - { from: differential, to: dualbasis, label: of coordinates }
+  - { from: jacobian, to: einstein, label: written with }
+  - { from: dualbasis, to: einstein, label: written with }
+  - { from: einstein, to: tensor, label: used in }
 
 outroTitle: Chapter 4 in one picture
 outro: |

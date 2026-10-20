@@ -323,7 +323,9 @@ function mapDiagram(map, { filled, current = -1 }) {
   svg.setAttribute('class', 'cmap-edges');
   svg.setAttribute('aria-hidden', 'true');
   const marker = `cmap-arrow-${++mapSeq}`;
-  grid.append(svg);
+  const labels = h('div', { class: 'cmap-labels', 'aria-hidden': 'true' });
+  if ((map.edges ?? []).some(e => e.label)) grid.classList.add('labeled');
+  grid.append(svg, labels);
   const detail = h('div', { class: 'cmap-detail prose', hidden: true });
 
   const boxes = new Map();
@@ -361,6 +363,7 @@ function mapDiagram(map, { filled, current = -1 }) {
     svg.setAttribute('viewBox', `0 0 ${g.width} ${g.height}`);
     svg.setAttribute('width', g.width);
     svg.setAttribute('height', g.height);
+    labels.replaceChildren();
     svg.innerHTML = `<defs><marker id="${marker}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="context-stroke"/></marker></defs>`;
     for (const e of map.edges ?? []) {
       const [a, b] = Array.isArray(e) ? e : [e.from, e.to];
@@ -376,6 +379,12 @@ function mapDiagram(map, { filled, current = -1 }) {
       line.setAttribute('class', `cedge${built ? ' built' : live ? ' live' : ''}${e.dashed ? ' dashed' : ''}`);
       line.setAttribute('marker-end', `url(#${marker})`);
       svg.append(line);
+      // An edge label sits on the middle of its arrow (in the gap between rows).
+      if (e.label) labels.append(h('span', {
+        class: `cedge-label${built ? ' built' : live ? ' live' : ''}`,
+        style: `left: ${(p.x + q.x) / 2}px; top: ${(p.y + q.y) / 2}px`,
+        html: mdInline(e.label),
+      }));
     }
   }
   new ResizeObserver(drawEdges).observe(grid);
