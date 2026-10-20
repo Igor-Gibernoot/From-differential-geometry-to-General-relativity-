@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 5 in progress)
+## Current (2026-10-20, Chapter 5 complete; Chapter 6 next)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -23,11 +23,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   `ch04-challenge` (36 cards, five problems: polar chart at $(1,1)$, reparametrization rune and Leibniz,
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
-- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` part 1 (22 cards, problems 1–3; problems 4–5 and wrap-up pending).
+- **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** Chapter 5 (Fields) in `course.yaml` order, next
-  `ch05-challenge` part 2 (problems 4–5 and wrap-up, appended after the Problem 3 block); then Chapters 6–10 (each with map and challenge).
+- **Queue (one unit each):** Chapter 6 (Covariant Derivative) in `course.yaml` order, next
+  `ch06-connections` (concept); then Chapters 7–10 (each with map and challenge). No TeX exercise file exists for Chapter 6:
+  use the book (6.1–6.4, B.9, B.10, C.5) as the only source.
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -225,6 +226,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   unit radial $\mathcal{E} := \tfrac1r\mathcal{P} = \partial y_1$ ($f = \pm1/r$ only); frame $\{\mathcal{E},\mathcal{R}\}$ (det $r$) with dual coframe $\{dr,\mathsf{A}\}$,
   $dr = \tfrac ar dx^1 + \tfrac br dx^2$; $\partial x_2 = \tfrac br\mathcal{E} + \tfrac a{r^2}\mathcal{R}$ ($3/25$ at $(3,4)$); zero divisor iff vanishing on an open interval
   (bump $\psi(t-\alpha)\psi(\beta-t)$), $\psi(1-t^2)$; $\{f\,\partial x_1\}$ independent iff $f$ not a zero divisor; axiom check $((a+b^2)\mathcal{R})\lfloor a\rceil = -10$ at $(1,2)$.
+  Challenge ch05 part 2: $\mathsf{B} = (2ab+b^2)dx^1 + (a^2+2ab)dx^2$ (components $\mathtt{b}_i$, (S) value $6$ at $(1,2)$), potential $a^2b+ab^2$ (naive glue gives $3\times$),
+  $\int_\gamma\mathsf{B} = 4$ from $(1,1)$ to $(2,1)$; $\mathsf{A}+d(a^3b)$ still $2\pi$ on radius-2 circle; half-plane potential $\arctan(b/a)$ (loop at $(3,0)$ gives 0);
+  $\mathsf{A} = d\theta$ on $\mathcal{V}$, $= d\varphi$ on $\mathcal{W}$ (plane minus $\{b=0,a\le0\}$), not exact on the union. Minkowski: $\mathbb{R}^2$ points $(t,a)$, $c = 1$,
+  $\eta := -dx^1\otimes dx^1 + dx^2\otimes dx^2$, $(\eta_\mathcal{U})_{ij} = \mathrm{diag}(-1,1)$ (4D in one sentence); boost $t' = \kappa(t - va)$, $a' = \kappa(a-vt)$,
+  Lorentz factor **$\kappa$** (not $\gamma$, which names curves); $\partial\mathscr{X}/\partial\mathscr{Y} = \kappa\begin{pmatrix}1&v\\v&1\end{pmatrix}$; $v = 3/5$, $\kappa = 5/4$; trap charts: rescale by 2
+  gives $\mathrm{diag}(-\tfrac14,\tfrac14)$, $45°$ rotation gives $\begin{pmatrix}0&1\\1&0\end{pmatrix}$; $\mathcal{W} = \partial x_1 + a\,\partial x_2$, $\eta(\mathcal{W},\mathcal{W}) = a^2 - 1$
+  (boosted components $(\tfrac78,-\tfrac18)$ at $a = \tfrac12$); timelike $<0$, spacelike $>0$, lightlike $=0$ (names only); "metric" only as Level 7 teaser.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -237,6 +245,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+
+### 2026-10-20 — ch05-challenge part 2 (problems 4–5, wrap-up)
+- `content/ch05/challenge.yaml` now 38 cards: Problem 4 (closed vs exact: $\mathsf{B}$, recipe, endpoint integral, $\mathsf{A}+dg$, half-plane order card,
+  patches trap), Problem 5 (Minkowski boost: inverse Jacobian, $(\eta_\mathcal{V})_{11}$, $(\eta_\mathcal{V})_{12}$, general $v$, chart trap, $\eta(\mathcal{W},\mathcal{W})$, timelike names), wrap-up with the level's laws. Chapter 5 complete.
+- Choices: 2D spacetime with points $(t,a)$ (matches the plane's $(a,b)$); Lorentz factor renamed $\kappa$ (C.5 later uses $\nabla^\kappa$, a different object, local to that example).
+- Conventions fixed here: Lorentz factor $\kappa$, $\eta$ components $(\eta_\mathcal{U})_{ij}$, timelike/spacelike/lightlike by sign with $\mathrm{diag}(-1,1)$.
 
 ### 2026-10-20 — ch05-differentials (guided)
 - `content/ch05/differentials.yaml`, 28 cards: hook (potential for a force), predict, `curve-velocity` θ widget, three scales
