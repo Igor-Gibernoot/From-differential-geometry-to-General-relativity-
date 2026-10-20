@@ -24,6 +24,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
 - **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards).
+- **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 5 (Fields) in `course.yaml` order, next
   `ch05-differentials` (guided); then `ch05-traps`, `ch05-map`, `ch05-challenge`; then Chapters 6–10 (each with map and challenge).
   Each planned node in `course.yaml` is one lesson.
@@ -210,6 +211,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+
+### 2026-10-19 — fix: labels vs powers
+- `ch02-axioms`: new cards `labels-not-powers` + `power-or-label` before the quadrant question; polynomial card contrasts label `p^1` with power `x^N`. One-line notes added to the hooks of `ch02-dual` and `ch02-basis`.
+- Audit: ch03 uses lower indices (`q_1`); ch04/ch05 already explain labels (tangent-space, einstein).
+- Conventions fixed here: raised index on vector entries is a label; parentheses mark a power, `(x^2)^2`.
 
 ### 2026-10-19 — engine: content-map edge labels
 - Map edges take an optional `label` (inline Markdown, 1–3 words), drawn at the arrow's midpoint

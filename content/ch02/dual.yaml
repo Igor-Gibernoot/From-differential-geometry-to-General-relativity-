@@ -7,7 +7,7 @@ cards:
     id: hook
     title: A machine that eats steps
     body: |
-      A hiker stands on a hillside where the temperature varies from place to place. For a small step $\mathcal{X}$, with components $(x^1, x^2)$ in metres east and north, the change in temperature is, to first order (that is what a derivative gives),
+      A hiker stands on a hillside where the temperature varies from place to place. For a small step $\mathcal{X}$, with components $(x^1, x^2)$ in metres east and north (the raised $1$ and $2$ are labels for "first" and "second" entry, **not** powers), the change in temperature is, to first order (that is what a derivative gives),
       $$\mathsf{L}(\mathcal{X}) = 1\cdot x^1 + \tfrac12\cdot x^2 \quad \text{(in °C)}.$$
       $\mathsf{L}$ is a **machine**: it eats a step and returns a number. It is not itself a step. It is a rule, "take the east part, add half the north part".
 

@@ -11,7 +11,7 @@ cards:
 
       Once you have the numbers, there is a natural machine that **reads off the first number** of each vector. It eats a vector and returns a number, linearly, so it is a covector.
 
-      Here is a puzzle about that machine. In the plane, take a basis $\{\hat{x}_1, \hat{x}_2\}$, so every vector is $\mathcal{X} = x^1\,\hat{x}_1 + x^2\,\hat{x}_2$. Now keep $\hat{x}_1$ but replace $\hat{x}_2$ by $\hat{x}_1 + \hat{x}_2$.
+      Here is a puzzle about that machine. In the plane, take a basis $\{\hat{x}_1, \hat{x}_2\}$, so every vector is $\mathcal{X} = x^1\,\hat{x}_1 + x^2\,\hat{x}_2$ (the raised $1$, $2$ label the components; they are not powers). Now keep $\hat{x}_1$ but replace $\hat{x}_2$ by $\hat{x}_1 + \hat{x}_2$.
 
   - type: mcq
     id: predict-reader

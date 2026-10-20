@@ -87,6 +87,40 @@ cards:
     explanation: |
       The rule links the two worlds: adding scalars first and then scaling gives the same vector as scaling separately and then adding vectors. Keeping $+$ and $\oplus$ apart is what makes rules like this checkable.
 
+  - type: text
+    id: labels-not-powers
+    title: A warning about small raised numbers
+    body: |
+      From here on you will see symbols like $x^1$ and $x^2$. **They are not powers.** In this course a small raised number or letter on a variable is usually a **label** that says *which entry*:
+      $$\mathcal{X} = (x^1, x^2)$$
+      means "the first entry is called $x^1$, the second entry is called $x^2$". The raised $1$ and $2$ are position names, like seat numbers. We write them up (not $x_1$, $x_2$) because later they will need to be told apart from labels written down, and the position will carry meaning.
+
+      Compare the two readings of the same symbol:
+
+      - if $x$ is a real number, $x^2 = x\cdot x$ is a **power**;
+      - if $\mathcal{X}$ is a vector with entries $x^1, x^2$, then $x^2$ is the **second entry**, and can be any real number, even $-3$ or $0$.
+
+      The context tells you which one: a raised symbol on a vector's entries ($x^i$, with $i$ running over $1,\dots,d$) is a label. To avoid confusion we will say "the second component $x^2$" when it is a label, and "$x$ squared" when it is a power. (The first card of this lesson used a true power: in $X^\alpha$, the raised $\alpha$ is an exponent.)
+
+  - type: mcq
+    id: power-or-label
+    prompt: |
+      Let $\mathcal{X} = (5, 3)$ be a vector of the plane with components $(x^1, x^2)$. What is $x^2$?
+    options:
+      - text: '$3$, the second component'
+        correct: true
+      - text: '$25$, since $x^2$ is $x$ squared'
+        feedback: |
+          Tempting, because $x^2$ looks like "$x$ squared". But $\mathcal{X}$ is a vector, not a single number $x$, so there is no number $x$ to square. The raised $2$ names the position.
+      - text: '$5^2 = 25$, using the first entry'
+        feedback: |
+          That squares the first entry, which would be written $(x^1)^2$ (parentheses to mark a power). Plain $x^2$ is the second entry.
+      - text: '$9$, the second component squared'
+        feedback: |
+          The second component is $3$. Squaring it would be written $(x^2)^2$, with parentheses, which would equal $9$.
+    explanation: |
+      $x^2 = 3$. To square the second component you must write $(x^2)^2 = 9$: the parentheses say "now take a power".
+
   - type: mcq
     id: quadrant
     prompt: |
@@ -208,7 +242,7 @@ cards:
     id: polynomials
     title: A space of functions
     body: |
-      A main example: the polynomials of degree at most $N$,
+      A main example: the polynomials of degree at most $N$. Here both readings of a raised symbol meet in one formula: in $p^1 x$ the raised $1$ on $p$ is a **label** (the coefficient number $1$), while in $x^N$ the raised $N$ is a **power** of the variable $x$.
       $$\begin{aligned}P_N := \{\,p(x) &= p^0 + p^1 x + \cdots + p^N x^N \\ &\mid p^i\in\mathbb{R}\,\},\end{aligned}$$
       with **pointwise** operations: the sum $p\oplus q$ is the polynomial whose value at each $x$ is $p(x) + q(x)$, and $(\alpha\odot p)(x) := \alpha\cdot p(x)$.
 
