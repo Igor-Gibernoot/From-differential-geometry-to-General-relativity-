@@ -19,10 +19,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   `wrap-up` ending with a teaser for the next level.
 - **Chapter 4 in progress:** `ch04-tangent-space` (26 cards),
   `ch04-velocity-operations` (23 cards), `ch04-coordinate-basis` (33 cards),
-  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards), `ch04-cotangent` (23 cards), `ch04-cotangent-basis` (35 cards) built; widget `chart-basis` built (coordinate lines of two charts, basis at
+  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards), `ch04-cotangent` (23 cards), `ch04-cotangent-basis` (35 cards), `ch04-tensor-space` (31 cards) built; widget `chart-basis` built (coordinate lines of two charts, basis at
   $p$, components, Jacobian).
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, next `ch04-tensor-space` (concept: tensor spaces at a point); then Chapters 5–10 (each with
+  order, next `ch04-traps` (traps round), then `ch04-map`, `ch04-challenge`; then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -119,6 +119,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   ways (feeding the vector basis law to $\mathsf{X}_p$, and substituting the dual basis law + independence); vector components in pairings $\dot\gamma^i_\mathcal{U}$, $\dot\gamma^i_\mathcal{V}$;
   every covector is $(d(\psi f))_p$ with bump $\psi$ (existence stated without proof); shorthand $(dx^i)_p$, $(dy^i)_p$,
   $\tilde{\mathtt{x}}^p_i$, $\tilde{\mathtt{y}}^p_i$ introduced and usable; look-alikes $x^i_p$ / $\mathtt{x}^p_i$ / $(dx^i)_p$ flagged.
+  Tensor space (`ch04-tensor-space`): $T_p^{(r,s)}\mathcal{M}$, $r$ covector slots first, slot labels $\mathsf{X}^{(1)}$, $\mathcal{X}_{(1)}$
+  positional; components $(T_\mathcal{U})^{i\dots}_{j\dots}$, $(T_\mathcal{V})^{k\dots}_{l\dots}$ (chart label in subscript of $T$); products
+  $(\mathsf{X}\otimes\mathsf{Y})(u,w) = \mathsf{X}(u)\mathsf{Y}(w)$, velocity factors first; expansion $(T_\mathcal{U})_{ij}(dx^i)_p\otimes(dx^j)_p$,
+  $(T_\mathcal{U})^i_j(\partial x_i)_p\otimes(dx^j)_p$; laws new-from-old ($\partial\mathscr{Y}/\partial\mathscr{X}$ per upper, $\partial\mathscr{X}/\partial\mathscr{Y}$ per lower)
+  and the book's old-from-new form, derived by feeding and by re-expanding; running example $T = (df)_p\otimes(df)_p$:
+  $\mathscr{X}$ $\begin{pmatrix}1&-1\\-1&1\end{pmatrix}$, $\mathscr{Y}$ $\begin{pmatrix}1&1/e\\1/e&1/e^2\end{pmatrix}$; $S_{ij}=\delta_{ij}$ in $\mathscr{X}$ gives
+  $\begin{pmatrix}5&-1/e\\-1/e&1/e^2\end{pmatrix}$ in $\mathscr{Y}$ (same matrix, different tensor from $\delta^i_j$); `machine-playground` readout shows
+  $\hat{\mathfrak{x}}^i$ (said to stand for $(dx^i)_p$).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -128,6 +136,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Concept lesson `ch04-tensor-space` (31 cards): hook = metric counts $d^2 = 16$, definition of
+$T_p^{(r,s)}\mathcal{M}$, special cases, `machine-playground` with $(df)_p\otimes(df)_p$ in $\mathscr{X}$-components,
+products, (0,2) and (1,1) expansions (build), independence proof (order), law by feeding and by
+re-expanding, running-example check ($1/e$, $1/e^2$), $\delta$ invariant, traps (Jacobian count, same
+matrix different tensor, slot order, slogan). Conventions fixed here: see Current, "Tensor space".
 
 Fixes after review: Jacobian rune $\text{ᛞ}$ introduced in `ch04-coordinate-basis` (definition,
 inverse identity, summary), runic webfont added; `chart-basis` widget gains `jacobian: false`

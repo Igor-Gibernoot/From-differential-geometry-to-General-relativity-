@@ -179,7 +179,11 @@ levels:
         kind: concept
         file: ch04/cotangent-basis.yaml
         summary: A chart's coordinate functions, differentiated, are the dual basis of its basis vectors. Covector components, the expansion of $(df)_p$, the transformation laws (basis contravariant, components covariant), the chart-free pairing, and why every covector is a differential.
-      - { id: ch04-tensor-space, title: Tensor Spaces at a Point, kind: concept }
+      - id: ch04-tensor-space
+        title: Tensor Spaces at a Point
+        kind: concept
+        file: ch04/tensor-space.yaml
+        summary: A machine that eats two velocities at $p$ needs $d^2$ numbers. The tensor space $T_p^{(r,s)}\mathcal{M}$, products of the chart bases, components, $\dim = d^{\,r+s}$, and the transformation law with one Jacobian per index.
       - { id: ch04-traps, title: Tangent Space Traps, kind: traps }
       - { id: ch04-map, title: "Content Map: Tangent Spaces", kind: map }
       - { id: ch04-review, title: Level Review, kind: review }
