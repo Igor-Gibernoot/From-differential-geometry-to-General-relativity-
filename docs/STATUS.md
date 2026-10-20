@@ -24,7 +24,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
-- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards). Next: `ch06-parallel-transport`.
+- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards); widget `parallel-transport` built. Next: `ch06-parallel-transport` (lesson).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 6 (Covariant Derivative) in `course.yaml` order, next
@@ -254,6 +254,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\nabla^{\mathrm{E}}_{\partial x_2}$swirl polar components $(-0.6, 0.16)$; $\partial x_2$ polar components $(b/r, a/r^2)$. $(\Gamma^{\mathrm{P}}_\mathscr{X})^2_{12}(1,0) = -1$. Invented connection
   $\Gamma^1_{22} = a$: $\nabla_{\partial x_2}(b\,\partial x_2) = 2\partial x_1 + \partial x_2$ at $(2,1)$. Normal coordinates stated in one card (symmetric part removable at a point).
   Widget preset: `chart-basis` polar first + cartesian, `basisOnly`, `chain` (labels $\partial/\partial r$ etc., mapped to $\partial y_i$ in the body).
+  Widget `parallel-transport` (built for `ch06-parallel-transport`): curves `circle` $\delta_{r_0}(\lambda) = (r_0\cos\lambda, r_0\sin\lambda)$, $\lambda\in[0,2\pi]$, `vertical` $\gamma_{x_0}(\lambda) = (x_0,\lambda)$,
+  `radial`, `radial-squared` ($\lambda^2$: autoparallel, not autoparallelly transported); transported vector $\mathcal{Z}$ with components $z^k$, velocity $v_\gamma$ (components $\dot\gamma^i$),
+  acceleration $a_\gamma = \nabla_{v_\gamma}v_\gamma$; transport equation $\dot z^k + \Gamma^k_{ji}z^j\dot\gamma^i = 0$; badge wording "autoparallel" ($a_\gamma = \text{ᚱ}\,v_\gamma$) vs "autoparallelly
+  transported" ($a_\gamma = 0$), the book's terms. $\nabla^{\mathrm{P}}$ transport stops where the curve leaves $\mathcal{V}$ (circle at $\lambda = \pi$). Check: $r_0 = 2$, $z_0 = (1,0)$, $\lambda = 1.2$ under $\nabla^{\mathrm{E}}$: polar $(0.36, -0.47)$.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -266,6 +270,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+
+### 2026-10-20 — widget `parallel-transport` (widget session)
+- `js/widgets.js`: new `parallelTransport` (curve presets, λ slider + Play, ∇ᴱ/∇ᴾ toggle, draggable start vector, faded trail, $v_\gamma$, $a_\gamma$ dashed, optional polar basis,
+  components in $\mathscr{X}$ and $\mathscr{Y}$, transport equation in numbers in the chart where Γ ≠ 0 (Γᴾ in cartesian by finite differences), "Autoparallel?" badge checked
+  along the whole curve). Label placer (`labelPlacer`, `tipCands`) moved to module scope, shared with `chart-basis`. `combo` no longer prints "−0". CSS `.pt-*`.
+- Docs: `#### parallel-transport` in `docs/LESSON_FORMAT.md`, QUICKREF line. Tested with a throwaway lesson (deleted), phone and desktop shots viewed, drag/Play/toggles checked.
+- Choices: ∇ᴾ transport stops at the cut/origin instead of continuing (it is defined only on $\mathcal{V}$); start vector labelled "start" ("λ₀" renders like "λo" in SVG);
+  view fixed by the initial curve (presets switching curve may need `view`); exact transport (constant components mapped by the Jacobian), no ODE solver.
+- Conventions fixed here: $\mathcal{Z}$, $z^k$, $v_\gamma$, $a_\gamma$, $\delta_{r_0}$, $\gamma_{x_0}$; "autoparallel" ($a_\gamma=\text{ᚱ}v_\gamma$) vs "autoparallelly transported" ($a_\gamma=0$).
 
 ### 2026-10-20 — ch05-challenge part 2 (problems 4–5, wrap-up)
 - `content/ch05/challenge.yaml` now 38 cards: Problem 4 (closed vs exact: $\mathsf{B}$, recipe, endpoint integral, $\mathsf{A}+dg$, half-plane order card,

@@ -521,3 +521,10 @@ polyline.w-level { fill: none; }
 .cb-cut { stroke: var(--ink); stroke-opacity: .6; stroke-width: 3.5px; stroke-dasharray: 0 7; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .widget .readout .cb-tag { color: var(--muted); font-size: 15px; }
 .widget .readout .cb-jac { display: flex; flex-wrap: wrap; gap: 4px 24px; }
+
+/* ---------- parallel-transport ---------- */
+.pt-ghost { opacity: .22; }
+.pt-start { opacity: .45; }
+.pt-acc line { stroke-dasharray: 5 4; }
+.pt-basis { stroke-width: 2px; opacity: .8; }
+.pt-lam { min-width: 5.5em; }

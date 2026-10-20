@@ -429,6 +429,65 @@ arrow tips, avoiding the arrows (including $v$), $p$ and each other. New charts 
 in `CB_CHARTS` (`js/widgets.js`: name, coordinate TeX and glyphs, rule, map,
 inverse, Jacobian of the map, steps).
 
+#### `parallel-transport`
+Parallel transport and autoparallels in the plane. A curve $\gamma$ (preset)
+is drawn with a slider for $\lambda$ (and a Play button); a vector $\mathcal{Z}$
+starts at $\gamma(\lambda_0)$ ($\lambda_0$ = start of the range; the start
+vector is faded, labelled "start", its tip draggable) and is parallelly
+transported along $\gamma$ under the chosen connection: $\nabla^{\mathrm{E}}$
+keeps its cartesian components constant, $\nabla^{\mathrm{P}}$ its polar
+components (chart $\mathscr{Y} = (r, \theta)$, $\theta \in (-\pi, \pi)$, cut
+$b = 0,\ a \le 0$ drawn dotted). $\nabla^{\mathrm{P}}$ exists only on the polar
+chart's domain: where the curve reaches the cut or the origin the transport
+stops (warning "at $\lambda \approx \dots$ the curve leaves the polar chart's
+domain") and $\mathcal{Z}$ is no longer drawn. A faded trail shows $\mathcal{Z}$
+at 7 earlier parameters; $\mathcal{Z}$ is blue, the velocity $v_\gamma$ (ink) and
+the acceleration $a_\gamma = \nabla_{v_\gamma}v_\gamma$ (ink, dashed) start at the
+gold point $\gamma(\lambda)$; `showBasis` adds $\partial y_1, \partial y_2$ in purple.
+The readout gives $\mathcal{Z}$, $v_\gamma$, $a_\gamma$ as combinations of
+$\partial x_k$ ($\mathscr{X}$, cartesian) and $\partial y_k$ ($\mathscr{Y}$), the
+transport equation $\dot z^k + \Gamma^k_{ji} z^j\dot\gamma^i = 0$ in numbers in
+the chart where the connection's coefficients do not vanish ($\mathscr{Y}$ for
+$\nabla^{\mathrm{E}}$, with $\Gamma^1_{22} = -r$, $\Gamma^2_{12} = \Gamma^2_{21} = 1/r$;
+$\mathscr{X}$ for $\nabla^{\mathrm{P}}$), and the badge **Autoparallel?**,
+checked along the whole curve (for $\nabla^{\mathrm{P}}$, the part inside the
+domain): "Yes, even autoparallelly transported" ($a_\gamma = 0$), "Yes, but not
+autoparallelly transported" ($a_\gamma = \text{ᚱ}(\lambda)\,v_\gamma$, with ᚱ at the
+current $\lambda$), or "No" (with a $\lambda$ where $a_\gamma \not\parallel v_\gamma$).
+Curves: `circle` $\delta_{r_0}(\lambda) = (r_0\cos\lambda, r_0\sin\lambda)$,
+$\lambda \in [0, 2\pi]$ (reaches the cut at $\lambda = \pi$); `vertical`
+$\gamma_{x_0}(\lambda) = (x_0, \lambda)$, $\lambda \in [-2.5, 2.5]$ (inside the domain
+iff $x_0 > 0$); `radial` $\lambda(\cos\theta_0, \sin\theta_0)$, $\lambda \in [0.5, 3]$;
+`radial-squared` $\lambda^2(\cos\theta_0, \sin\theta_0)$, $\lambda \in [0.7, 1.75]$
+(autoparallel but not autoparallelly transported). Expected badges: circle No
+under $\nabla^{\mathrm{E}}$, autoparallelly transported under $\nabla^{\mathrm{P}}$;
+vertical line the reverse; radial lines the same under both. Check
+($r_0 = 2$, $z_0 = (1, 0)$, $\lambda = 1.2$, $\nabla^{\mathrm{E}}$): polar components
+$(\cos\lambda, -\sin\lambda/2) = (0.36, -0.47)$, $\dot z^1 = -0.93$,
+$\Gamma^1_{ji}z^j\dot\gamma^i = 0.93$.
+```yaml
+config:
+  curve: circle               # circle | vertical | radial | radial-squared, or
+                              # { type: circle, r0: 2 } | { type: vertical, x0: 1 }
+                              # | { type: radial, theta0: 0.785 }; any type takes range: [l0, l1]
+  connection: E               # E | P
+  connections: [E, P]         # toggle buttons offered (one entry: none)
+  z0: [1, 0]                  # start vector, cartesian components (tip draggable)
+  lambda: 0                   # initial slider value (default: start of the range)
+  showVelocity: true
+  showAcceleration: true
+  showBasis: false            # polar basis at the current point (purple)
+  trail: true                 # faded copies of Z along the way
+  residual: true              # the transport equation in numbers
+  badge: true                 # the "Autoparallel?" badge
+  dragZ: true
+  snap: 0.25                  # grid for the tip of the start vector
+  view: { x: -3.2, y: -3.2, w: 6.4, h: 6.4 }   # default: fits the initial curve and its velocity
+  presets: [{ label: Vertical line, curve: { type: vertical, x0: 1 }, connection: P, z0: [1, 0], lambda: 0 }]
+```
+The view is fixed by the initial curve: give `view` when presets switch to a
+curve that does not fit it.
+
 ## Content-map lessons (`kind: map`)
 
 The file describes a graph; the engine turns it into cards: an intro, one

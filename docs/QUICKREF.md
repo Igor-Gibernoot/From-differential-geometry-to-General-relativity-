@@ -104,6 +104,7 @@ above"). Never name a theme-dependent colour; use labels or the fixed hues
 - `circle-charts`: θ/φ angle charts on $S^1$ (or `stereo: true` for $\sigma = x/(1-y)$), overlap pieces, draggable $p$, transition graph.
 - `curve-velocity`: two curves through $p$ (plane, or `circle: true` for $S^1$ with θ); drag velocity and bend handles; readouts $(f\circ\gamma)'(0)$, components $v^i$, "same velocity?" badge.
 - `chart-basis`: coordinate lines of one or two charts (cartesian, polar with `cut: right|left`, C.3 `X`, `Y`) in the plane, draggable $p$, basis $(\partial/\partial\mathscr{X}^i)_p$ in purple, draggable $v$; components per chart, Jacobian $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$, `chain`, `basisOnly`, `inverse`.
+- `parallel-transport`: a curve (circle $\delta_{r_0}$, vertical $\gamma_{x_0}$, radial, radial $\lambda^2$), λ slider and Play; a vector transported under $\nabla^{\mathrm{E}}$ (cartesian components constant) or $\nabla^{\mathrm{P}}$ (polar constant, stops at the cut/origin); components of $\mathcal{Z}, v_\gamma, a_\gamma$ in both charts, transport equation in numbers, "Autoparallel?" badge.
 
 ## Phone-safe layout
 

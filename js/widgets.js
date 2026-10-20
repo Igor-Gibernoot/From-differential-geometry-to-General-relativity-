@@ -15,6 +15,7 @@ const WIDGETS = {
   'circle-charts': circleCharts,
   'curve-velocity': curveVelocity,
   'chart-basis': chartBasis,
+  'parallel-transport': parallelTransport,
 };
 
 export function mountWidget(name, el, config) {
@@ -34,7 +35,7 @@ const fmt = x => (Math.abs(x) < 5e-3 ? '0' : String(Math.round(x * 100) / 100));
 
 // "a x̂1 + b x̂2" in TeX, with the sign folded into the operator.
 const combo = (name, [a, b], basis = '\\hat{x}') =>
-  `${name} = ${fmt(a)}\\,${basis}_1 ${b < 0 ? '-' : '+'} ${fmt(Math.abs(b))}\\,${basis}_2`;
+  `${name} = ${fmt(a)}\\,${basis}_1 ${b < 0 && fmt(b) !== '0' ? '-' : '+'} ${fmt(Math.abs(b))}\\,${basis}_2`;
 const dualCombo = (name, [a, b]) =>
   `${name} = ${fmt(a)}\\,\\hat{\\mathfrak{x}}^1 ${b < 0 ? '-' : '+'} ${fmt(Math.abs(b))}\\,\\hat{\\mathfrak{x}}^2`;
 
@@ -1346,6 +1347,43 @@ const inv2 = ([[a, b], [c, d]]) => { const D = a * d - b * c; return [[d / D, -b
 const mul2 = (A, B) => A.map(r => [0, 1].map(j => r[0] * B[0][j] + r[1] * B[1][j]));
 const mulv = (A, v) => A.map(r => r[0] * v[0] + r[1] * v[1]);
 
+// Label placement (chart-basis, parallel-transport): try spots in order of
+// preference and keep the first that clears the arrows (segments) and the
+// labels already placed (else the clearest one). Distances are measured in
+// label-sized units (labels are wide and short).
+const LW = 0.5, LH = 0.24;
+const dSeg = (q, a, b) => {
+  const A = [(a[0] - q[0]) / LW, (a[1] - q[1]) / LH], B = [(b[0] - q[0]) / LW, (b[1] - q[1]) / LH];
+  const d = [B[0] - A[0], B[1] - A[1]], dd = d[0] ** 2 + d[1] ** 2;
+  const t = dd ? Math.max(0, Math.min(1, -(A[0] * d[0] + A[1] * d[1]) / dd)) : 0;
+  return Math.hypot(A[0] + t * d[0], A[1] + t * d[1]);
+};
+function labelPlacer(view, layer) {
+  return (items, segs) => {
+    const placed = [];
+    for (const it of items) {
+      let best = null, bestS = -Infinity;
+      for (const c of it.cands) {
+        const inView = c[0] > view.x + 0.3 && c[0] < view.x + view.w - 0.3 && c[1] > view.y + 0.2 && c[1] < view.y + view.h - 0.2;
+        const sc = Math.min(...segs.map(([a, b]) => dSeg(c, a, b)),
+          ...placed.map(q => dSeg(c, q, q) / 2)) - (inView ? 0 : 5);
+        if (sc >= 1.1) { best = c; break; }
+        if (sc > bestS) { best = c; bestS = sc; }
+      }
+      placed.push(best);
+      layer.append(label(best, it.text, it.cls));
+    }
+  };
+}
+// candidate spots around the tip of the arrow from p along e: beyond it, then beside it
+const tipCands = (p, e, sg) => {
+  const Ln = Math.hypot(...e) || 1, u = [e[0] / Ln, e[1] / Ln], n = [-u[1], u[0]], tip = [p[0] + e[0], p[1] + e[1]];
+  const at = (al, be) => [tip[0] + al * u[0] + be * n[0], tip[1] + al * u[1] + be * n[1]];
+  const side = 0.22 + 0.25 * Math.abs(u[1]);
+  return [at(0.3, sg * side), at(0.3, -sg * side), at(0.5 + 0.3 * Math.abs(u[0]), 0), at(-0.35, sg * 0.4), at(-0.35, -sg * 0.4),
+    at(0.15, sg * (side + 0.45)), at(0.15, -sg * (side + 0.45)), at(0.9 + 0.3 * Math.abs(u[0]), 0)];
+};
+
 function chartBasis(el, cfg) {
   const sn = cfg.snap ?? 0.25, basisOnly = !!cfg.basisOnly, chain = !!cfg.chain, showInv = !!cfg.inverse, showJac = cfg.jacobian !== false;
   const dragP = cfg.dragP ?? true, nmax = cfg.lines ?? 8;
@@ -1453,39 +1491,7 @@ function chartBasis(el, cfg) {
     return out;
   }
 
-  // Label placement: try spots in order of preference and keep the first that
-  // clears the arrows, p and the labels already placed (else the clearest one).
-  // Distances are measured in label-sized units (labels are wide and short).
-  const LW = 0.5, LH = 0.24;
-  const dSeg = (q, a, b) => {
-    const A = [(a[0] - q[0]) / LW, (a[1] - q[1]) / LH], B = [(b[0] - q[0]) / LW, (b[1] - q[1]) / LH];
-    const d = [B[0] - A[0], B[1] - A[1]], dd = d[0] ** 2 + d[1] ** 2;
-    const t = dd ? Math.max(0, Math.min(1, -(A[0] * d[0] + A[1] * d[1]) / dd)) : 0;
-    return Math.hypot(A[0] + t * d[0], A[1] + t * d[1]);
-  };
-  function placeLabels(items, segs) {
-    const placed = [];
-    for (const it of items) {
-      let best = null, bestS = -Infinity;
-      for (const c of it.cands) {
-        const inView = c[0] > view.x + 0.3 && c[0] < view.x + view.w - 0.3 && c[1] > view.y + 0.2 && c[1] < view.y + view.h - 0.2;
-        const sc = Math.min(...segs.map(([a, b]) => dSeg(c, a, b)),
-          ...placed.map(q => dSeg(c, q, q) / 2)) - (inView ? 0 : 5);
-        if (sc >= 1.1) { best = c; break; }
-        if (sc > bestS) { best = c; bestS = sc; }
-      }
-      placed.push(best);
-      L.labels.append(label(best, it.text, it.cls));
-    }
-  }
-  // candidate spots around the tip of the arrow from p along e: beyond it, then beside it
-  const tipCands = (p, e, sg) => {
-    const Ln = Math.hypot(...e) || 1, u = [e[0] / Ln, e[1] / Ln], n = [-u[1], u[0]], tip = [p[0] + e[0], p[1] + e[1]];
-    const at = (al, be) => [tip[0] + al * u[0] + be * n[0], tip[1] + al * u[1] + be * n[1]];
-    const side = 0.22 + 0.25 * Math.abs(u[1]);
-    return [at(0.3, sg * side), at(0.3, -sg * side), at(0.5 + 0.3 * Math.abs(u[0]), 0), at(-0.35, sg * 0.4), at(-0.35, -sg * 0.4),
-      at(0.15, sg * (side + 0.45)), at(0.15, -sg * (side + 0.45)), at(0.9 + 0.3 * Math.abs(u[0]), 0)];
-  };
+  const placeLabels = labelPlacer(view, L.labels);
 
   function draw() {
     for (const k of ['lines', 'arrows', 'marks', 'labels']) L[k].replaceChildren();
@@ -1553,6 +1559,289 @@ function chartBasis(el, cfg) {
         for (const i of [0, 1])
           rows.push(h('div', { html: tex(`\\begin{aligned} ${bv(A, i)} &= ${coef(J[0][i], true)}\\, ${bv(B, 0)} \\\\ &\\quad ${coef(J[1][i], false)}\\, ${bv(B, 1)} \\end{aligned}`) }));
       }
+    }
+    readout.replaceChildren(...rows);
+  }
+  draw();
+}
+
+// ---------------------------------------------------------------------------
+// parallel-transport
+//
+// The plane with a curve γ (preset), a slider for λ (and Play), and a vector
+// 𝒵 parallelly transported along γ from its start γ(λ₀) under a chosen
+// connection: ∇ᴱ keeps the cartesian components constant, ∇ᴾ the polar ones
+// (only on the polar chart's domain 𝒱 = plane minus the half-line b = 0,
+// a ≤ 0, θ ∈ (−π, π): the transport stops where γ leaves 𝒱). Drawn: the curve,
+// the start vector (faded, its tip draggable), a faded trail, the current 𝒵
+// (blue), the velocity v_γ and the acceleration a_γ = ∇_{v_γ} v_γ (ink, a
+// dashed), optionally the polar basis ∂y₁, ∂y₂ (purple). Readout: components
+// of 𝒵, v_γ, a_γ in 𝒳 (cartesian) and 𝒴 (polar); the transport equation
+// ż^k + Γ^k_{ji} z^j γ̇^i = 0 in numbers in the chart where Γ ≠ 0; a badge
+// "autoparallel?" checked along the whole curve.
+//
+// config:
+//   curve:       'circle' | 'vertical' | 'radial' | 'radial-squared', or
+//                { type: 'circle', r0: 2 } | { type: 'vertical', x0: 1, range: [-2.5, 2.5] }
+//                | { type: 'radial', theta0: 0.785 }   (range: [λ₀, λ_end] for any type)
+//   connection:  'E' | 'P'
+//   connections: ['E', 'P']     buttons offered (one entry: no buttons)
+//   z0:          [1, 0]         start vector, cartesian components
+//   lambda:      λ₀             initial slider value
+//   showVelocity: true, showAcceleration: true, showBasis: false, trail: true,
+//   residual: true, badge: true, dragZ: true, snap: 0.25, view: { x, y, w, h }
+//   presets:     [{ label, curve, connection, z0, lambda }]
+// ---------------------------------------------------------------------------
+const PT_CURVES = {
+  circle: o => { const r0 = o.r0 ?? 2, R = fmt(r0); return { range: [0, TWO_PI], f: l => [r0 * Math.cos(l), r0 * Math.sin(l)],
+    md: `$\\delta_{r_0}(\\lambda) = (r_0\\cos\\lambda,\\ r_0\\sin\\lambda)$ with $r_0 = ${R}$` }; },
+  vertical: o => { const x0 = o.x0 ?? 1, X = fmt(x0); return { range: [-2.5, 2.5], f: l => [x0, l],
+    md: `$\\gamma_{x_0}(\\lambda) = (x_0, \\lambda)$ with $x_0 = ${X}$` }; },
+  radial: o => { const t = o.theta0 ?? Math.PI / 4, c = Math.cos(t), sn = Math.sin(t);
+    return { range: [0.5, 3], f: l => [l * c, l * sn], md: `$\\gamma(\\lambda) = \\lambda\\,(${fmt(c)}, ${fmt(sn)})$` }; },
+  'radial-squared': o => { const t = o.theta0 ?? Math.PI / 4, c = Math.cos(t), sn = Math.sin(t);
+    return { range: [0.7, 1.75], f: l => [l * l * c, l * l * sn], md: `$\\gamma(\\lambda) = \\lambda^2\\,(${fmt(c)}, ${fmt(sn)})$` }; },
+};
+// polar chart 𝒴 = (r, atan2(b, a)) on 𝒱 (θ ∈ (−π, π)); its Jacobian D𝒴 and inverse (columns ∂y₁, ∂y₂)
+const ptJ = ([a, b]) => { const r2 = a * a + b * b, r = Math.sqrt(r2); return [[a / r, b / r], [-b / r2, a / r2]]; };
+const ptJi = ([a, b]) => { const r = Math.hypot(a, b); return [[a / r, -b], [b / r, a]]; };
+const ptInV = ([a, b]) => Math.hypot(a, b) > 1e-9 && !(Math.abs(b) < 1e-9 && a <= 0);
+const ptPol = ([a, b]) => [Math.hypot(a, b), Math.atan2(b, a)];
+const ptD1 = (F, l, e = 1e-4) => { const A = F(l + e), B = F(l - e); return [0, 1].map(k => (A[k] - B[k]) / (2 * e)); };
+const ptD2 = (F, l, e = 1e-3) => { const A = F(l + e), M = F(l), B = F(l - e); return [0, 1].map(k => (A[k] - 2 * M[k] + B[k]) / (e * e)); };
+// polar representative near λ = l, with θ unwrapped around its value at l (for finite differences)
+const ptPolNear = (f, l) => { const t0 = ptPol(f(l))[1];
+  return x => { const [r, t] = ptPol(f(x)); return [r, t + TWO_PI * Math.round((t0 - t) / TWO_PI)]; }; };
+
+function parallelTransport(el, cfg) {
+  const sn = cfg.snap ?? 0.25;
+  const conns = cfg.connections ?? ['E', 'P'];
+  const NAB = { E: '\\nabla^{\\mathrm{E}}', P: '\\nabla^{\\mathrm{P}}' };
+  const mkCurve = spec => {
+    const o = typeof spec === 'string' ? { type: spec } : (spec ?? {});
+    const c = (PT_CURVES[o.type] ?? PT_CURVES.circle)(o);
+    if (o.range) c.range = [...o.range];
+    return c;
+  };
+  const init = () => ({ cv: mkCurve(cfg.curve ?? 'circle'), conn: cfg.connection ?? conns[0], z0: [...(cfg.z0 ?? [1, 0])], l: null });
+  let st = init();
+  st.l = cfg.lambda ?? st.cv.range[0];
+
+  // default view: the curve (and the origin) with a margin, square
+  const fitView = cv => {
+    let x0 = 0, x1 = 0, y0 = 0, y1 = 0;
+    for (let i = 0; i <= 100; i++) { const l = cv.range[0] + (cv.range[1] - cv.range[0]) * i / 100, q = cv.f(l), v = ptD1(cv.f, l);
+      for (const w of [q, [q[0] + v[0], q[1] + v[1]]]) {
+        x0 = Math.min(x0, w[0]); x1 = Math.max(x1, w[0]); y0 = Math.min(y0, w[1]); y1 = Math.max(y1, w[1]); } }
+    const w = Math.max(x1 - x0, y1 - y0) + 2.4, cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+    return { x: cx - w / 2, y: cy - w / 2, w, h: w };
+  };
+  const view = cfg.view ?? fitView(st.cv);
+  const { svg, layers: L } = planeSvg(view, 'A curve in the plane and a vector parallelly transported along it',
+    ['curve', 'arrows', 'marks', 'labels', 'handles']);
+  const placeLabels = labelPlacer(view, L.labels);
+  const readout = h('div', { class: 'readout' });
+  const slider = h('input', { type: 'range', 'aria-label': 'curve parameter lambda' });
+  slider.addEventListener('input', () => { stop(); st.l = +slider.value; draw(); });
+  const lamOut = h('span', { class: 'pt-lam' });
+  let anim = null;
+  const playBtn = h('button', { class: 'btn ghost', type: 'button', onclick: () => play() }, 'Play');
+  const connBtns = conns.length > 1 ? conns.map(k => h('button', { class: 'btn ghost', type: 'button', 'data-conn': k,
+    html: mdInline(`$${NAB[k]}$ ${k === 'E' ? 'cartesian' : 'polar'}`), onclick: () => { st.conn = k; draw(); } })) : [];
+  const btns = h('div', { class: 'wbtns' },
+    playBtn,
+    connBtns,
+    h('button', { class: 'btn ghost', type: 'button', onclick: () => { stop(); st = init(); st.l = cfg.lambda ?? st.cv.range[0]; draw(); } }, 'Reset'),
+    (cfg.presets ?? []).map(pr => h('button', { class: 'btn ghost', type: 'button', onclick: () => {
+      stop();
+      const cv = pr.curve ? mkCurve(pr.curve) : st.cv;
+      st = { cv, conn: pr.connection ?? st.conn, z0: pr.z0 ? [...pr.z0] : st.z0, l: pr.lambda ?? cv.range[0] };
+      draw();
+    } }, pr.label)));
+  el.append(h('div', { class: 'cc-panels single' }, svg), h('label', { class: 'wslider' }, lamOut, slider), readout, btns);
+
+  function stop() { if (anim) cancelAnimationFrame(anim); anim = null; playBtn.textContent = 'Play'; }
+  function play() {
+    if (anim) return stop();
+    const [a, b] = st.cv.range;
+    if (st.l >= b - 1e-9) st.l = a;
+    const l0 = st.l, dur = 5000 * (b - l0) / (b - a);
+    let t0 = null;
+    const step = t => {
+      if (!el.isConnected) return stop();
+      if (t0 === null) t0 = t;
+      const u = Math.min(1, (t - t0) / dur);
+      st.l = l0 + (b - l0) * u; draw();
+      if (u < 1) anim = requestAnimationFrame(step); else stop();
+    };
+    playBtn.textContent = 'Pause';
+    anim = requestAnimationFrame(step);
+  }
+
+  // drag the tip of the start vector
+  const zh = cfg.dragZ === false ? null : s('circle', { r: 0.17, class: 'w-handle vec', tabindex: 0, 'aria-label': 'start vector' });
+  if (zh) {
+    L.handles.append(zh);
+    zh.addEventListener('pointerdown', e => {
+      e.preventDefault(); stop();
+      zh.setPointerCapture(e.pointerId);
+      const move = ev => {
+        const q = svg.createSVGPoint(); q.x = ev.clientX; q.y = ev.clientY;
+        const m = q.matrixTransform(svg.getScreenCTM().inverse());
+        const g0 = st.cv.f(st.cv.range[0]);
+        const x = Math.max(view.x + 0.2, Math.min(view.x + view.w - 0.2, m.x)), y = Math.max(view.y + 0.2, Math.min(view.y + view.h - 0.2, -m.y));
+        const z = [x - g0[0], y - g0[1]].map(t => (sn ? Math.round(t / sn) * sn : t));
+        if (Math.hypot(...z) >= 0.2) { st.z0 = z; draw(); }
+      };
+      const up = () => { zh.removeEventListener('pointermove', move); zh.removeEventListener('pointerup', up); zh.removeEventListener('pointercancel', up); };
+      zh.addEventListener('pointermove', move); zh.addEventListener('pointerup', up); zh.addEventListener('pointercancel', up);
+    });
+  }
+
+  // first λ in [λ₀, λ_end] where γ leaves 𝒱 (cut crossed, origin hit), or null
+  function leaveAt(cv) {
+    const [a, b] = cv.range, f = cv.f;
+    if (!ptInV(f(a))) return a;
+    const bad = (x, y) => {
+      const q1 = f(x), q2 = f(y);
+      if (!ptInV(q2)) return true;
+      if (Math.abs(ptPol(q2)[1] - ptPol(q1)[1]) > Math.PI) return true;
+      const d = [q2[0] - q1[0], q2[1] - q1[1]], dd = d[0] ** 2 + d[1] ** 2;
+      const t = dd ? Math.max(0, Math.min(1, -(q1[0] * d[0] + q1[1] * d[1]) / dd)) : 0;
+      return Math.hypot(q1[0] + t * d[0], q1[1] + t * d[1]) < 1e-9;
+    };
+    let prev = a;
+    for (let i = 1; i <= 400; i++) {
+      const l = a + (b - a) * i / 400;
+      if (bad(prev, l)) {
+        let lo = prev, hi = l;
+        for (let k = 0; k < 40; k++) { const m = (lo + hi) / 2; if (bad(lo, m)) hi = m; else lo = m; }
+        return hi;
+      }
+      prev = l;
+    }
+    return null;
+  }
+  // acceleration a_γ = ∇_{v_γ} v_γ (cartesian components): Γᴱ_𝒳 = 0, Γᴾ_𝒴 = 0
+  const accel = (cv, conn, l) => (conn === 'E' ? ptD2(cv.f, l) : mulv(ptJi(cv.f(l)), ptD2(ptPolNear(cv.f, l), l)));
+  // autoparallel check along the whole curve (part inside 𝒱 for ∇ᴾ)
+  let cache = {};
+  function badgeInfo(cv, conn, stopL) {
+    const key = `${conn}|${cv.md}|${cv.range}`;
+    if (cache[key]) return cache[key];
+    const [a] = cv.range, b = conn === 'P' && stopL !== null ? stopL - 1e-2 : cv.range[1];
+    let zero = true, par = true, bad = null;
+    for (let i = 0; i <= 80 && b > a; i++) {
+      const l = a + (b - a) * i / 80, v = ptD1(cv.f, l), A = accel(cv, conn, l), vv = Math.hypot(...v);
+      const tol = 1e-4 * (1 + vv * vv);
+      if (Math.hypot(...A) > tol) zero = false;
+      if (Math.abs(A[0] * v[1] - A[1] * v[0]) / vv > tol) { par = false; if (bad === null) bad = l; }
+    }
+    return (cache[key] = { zero, par, bad });
+  }
+
+  const vec = a => `(${a.map(fmt).join(', ')})`;
+  function draw() {
+    for (const k of ['curve', 'arrows', 'marks', 'labels']) L[k].replaceChildren();
+    const { cv, conn } = st, f = cv.f, [a, b] = cv.range;
+    slider.min = a; slider.max = b; slider.step = (b - a) / 240; slider.value = st.l;
+    const l = st.l, q = f(l), l0 = a, g0 = f(l0);
+    lamOut.innerHTML = tex(`\\lambda = ${fmt(l)}`);
+    for (const bt of connBtns) bt.className = `btn ${bt.dataset.conn === conn ? 'primary' : 'ghost'}`;
+
+    // curve, cut, origin
+    const pts = [];
+    for (let i = 0; i <= 300; i++) pts.push(P(...f(a + (b - a) * i / 300)).join(','));
+    L.curve.append(s('polyline', { points: pts.join(' '), class: 'cv-curve' }));
+    L.curve.append(line([0, 0], [-30, 0], 'cb-cut'));
+    L.marks.append(s('circle', { cx: 0, cy: 0, r: 0.07, class: 'cv-dot' }));
+
+    // transport: ∇ᴱ keeps cartesian components, ∇ᴾ polar components (inside 𝒱 only)
+    const stopL = conn === 'P' ? leaveAt(cv) : null;
+    const zP = conn === 'P' && ptInV(g0) ? mulv(ptJ(g0), st.z0) : null;
+    const Zc = x => (conn === 'E' ? st.z0 : mulv(ptJi(f(x)), zP));
+    const reach = stopL === null ? b : stopL;
+    const alive = conn === 'E' || (zP && l < reach - 1e-9);
+    const segs = [], items = [];
+    const arr = (p, w, cls) => { const tip = [p[0] + w[0], p[1] + w[1]]; L.arrows.append(arrow(p, tip, cls)); segs.push([p, tip]); return tip; };
+    if (cfg.trail !== false && (conn === 'E' || zP)) {
+      const end = Math.min(l, reach - 1e-6);
+      for (let i = 1; i < 8 && end > l0; i++) { const x = l0 + (end - l0) * i / 8; if (Math.abs(x - l) > 1e-6) arr(f(x), Zc(x), 'w-uvec pt-ghost'); }
+    }
+    const zt = arr(g0, st.z0, 'w-uvec pt-start');
+    if (zh) placeHandle(zh, zt);
+    if (Math.abs(l - l0) > 1e-6) items.push({ text: 'start', cls: 'vec small', cands: tipCands(g0, st.z0, -1) });
+    const v = ptD1(f, l), A = accel(cv, conn, l);
+    const inV = ptInV(q);
+    let Z = null;
+    if (alive) { Z = Zc(l); arr(q, Z, 'w-uvec'); items.unshift({ text: '𝒵', cls: 'vec', cands: tipCands(q, Z, 1) }); }
+    if (cfg.showVelocity !== false) { arr(q, v, 'w-vec'); items.push({ text: 'v', cls: '', cands: tipCands(q, v, -1) }); }
+    const accOk = conn === 'E' || inV;
+    if (cfg.showAcceleration !== false && accOk && Math.hypot(...A) > 1e-3) { arr(q, A, 'w-vec pt-acc'); items.push({ text: 'a', cls: '', cands: tipCands(q, A, 1) }); }
+    if (cfg.showBasis && inV) {
+      const B = ptJi(q);
+      for (const i of [0, 1]) { const e = [B[0][i], B[1][i]]; arr(q, e, 'w-basis pt-basis'); items.push({ text: `∂y${'₁₂'[i]}`, cls: 'basis small', cands: tipCands(q, e, i ? 1 : -1) }); }
+    }
+    placeLabels(items, segs);
+    L.marks.append(s('circle', { cx: P(...q)[0], cy: P(...q)[1], r: 0.1, class: 'cv-p' }));
+
+    // readout
+    const rows = [
+      h('div', { class: 'wide', html: mdInline(`${cv.md}; the point at $\\lambda = ${fmt(l)}$ is $${vec(q)}$.`) }),
+      h('div', { class: 'wide', html: mdInline(conn === 'E'
+        ? `$${NAB.E}$: parallel transport keeps the **cartesian** components of $\\mathcal{Z}$ constant.`
+        : `$${NAB.P}$: parallel transport keeps the **polar** components of $\\mathcal{Z}$ constant; it is defined only on the polar chart's domain (no origin, no cut $b = 0,\\ a \\le 0$).`) }),
+    ];
+    if (conn === 'P' && !zP) rows.push(h('div', { class: 'wide warn', html: mdInline(`The curve starts outside the polar chart's domain: $${NAB.P}$ cannot transport anything from there.`) }));
+    else if (!alive) rows.push(h('div', { class: 'wide warn', html: mdInline(`At $\\lambda \\approx ${fmt(stopL)}$ the curve leaves the polar chart's domain (${Math.hypot(...f(stopL)) < 1e-6 ? 'it hits the origin' : 'it reaches the cut'}): $${NAB.P}$ is not defined there, so the transport stops.`) }));
+    const cell = (title, name) => {
+      const out = [h('div', { class: 'cb-tag', html: mdInline(title) })];
+      const conv = w => (name === 'x' ? w : mulv(ptJ(q), w));
+      if (Z) out.push(h('div', { class: 'c-vec', html: tex(combo('\\mathcal{Z}', conv(Z), `\\partial ${name}`)) }));
+      if (cfg.showVelocity !== false) out.push(h('div', { html: tex(combo('v_\\gamma', conv(v), `\\partial ${name}`)) }));
+      if (cfg.showAcceleration !== false && accOk) out.push(h('div', { html: tex(combo('a_\\gamma', conv(A), `\\partial ${name}`)) }));
+      return h('div', { class: 'cv-cell' }, ...out);
+    };
+    rows.push(cell('In $\\mathscr{X}$ (cartesian)', 'x'));
+    rows.push(inV ? cell('In $\\mathscr{Y}$ (polar)', 'y')
+      : h('div', { class: 'cv-cell cb-tag', html: mdInline('In $\\mathscr{Y}$ (polar): $\\gamma(\\lambda)$ is not in the domain (origin or cut), no polar components here.') }));
+
+    // the transport equation in numbers, in the chart where the coefficients do not vanish
+    if (cfg.residual !== false && Z && inV) {
+      const zIn = conn === 'E' ? x => mulv(ptJ(f(x)), st.z0) : x => Zc(x);          // components in 𝒴 (∇ᴱ) or 𝒳 (∇ᴾ)
+      const zc = zIn(l), zd = ptD1(zIn, l);
+      let G;
+      if (conn === 'E') {
+        const r = Math.hypot(...q), gd = mulv(ptJ(q), v);
+        G = [-r * zc[1] * gd[1], (zc[0] * gd[1] + zc[1] * gd[0]) / r];
+      } else {
+        // (Γᴾ_𝒳)^k_{ji} = Σ_m (D𝒴⁻¹)^k_m ∂_i (D𝒴)^m_j, by finite differences
+        const Ji = ptJi(q), e = 1e-5;
+        const dJ = [0, 1].map(i => { const dq = i ? [0, e] : [e, 0];
+          const Jp = ptJ([q[0] + dq[0], q[1] + dq[1]]), Jm = ptJ([q[0] - dq[0], q[1] - dq[1]]);
+          return Jp.map((row, m) => row.map((t, j) => (t - Jm[m][j]) / (2 * e))); });
+        G = [0, 1].map(k => { let t = 0;
+          for (const j of [0, 1]) for (const i of [0, 1]) for (const m of [0, 1]) t += Ji[k][m] * dJ[i][m][j] * zc[j] * v[i];
+          return t; });
+      }
+      const ch = conn === 'E' ? '\\mathscr{Y}' : '\\mathscr{X}';
+      rows.push(h('div', { class: 'wide', html: mdInline(`Transport equation in $${ch}$, where the coefficients of $${NAB[conn]}$ are not all zero:`) }));
+      rows.push(h('div', { class: 'wide', html: tex('\\dot z^k + \\Gamma^k_{ji}\\,z^j\\,\\dot\\gamma^i = 0') }));
+      for (const k of [0, 1])
+        rows.push(h('div', { class: 'cv-cell' },
+          h('div', { html: tex(`\\dot z^${k + 1} = ${fmt(zd[k])}`) }),
+          h('div', { html: tex(`\\Gamma^${k + 1}_{ji}\\,z^j\\,\\dot\\gamma^i = ${fmt(G[k])}`) })));
+    }
+
+    if (cfg.badge !== false) {
+      const bi = badgeInfo(cv, conn, stopL), Rnow = (A[0] * v[0] + A[1] * v[1]) / (v[0] ** 2 + v[1] ** 2);
+      const part = conn === 'P' && stopL !== null ? ' (checked on the part of the curve inside the polar chart\'s domain)' : '';
+      const txt = bi.zero
+        ? `**Autoparallel?** Yes${part}, even autoparallelly transported: $a_\\gamma = \\nabla_{v_\\gamma} v_\\gamma = 0$ at every $\\lambda$.`
+        : bi.par
+          ? `**Autoparallel?** Yes${part}, but not autoparallelly transported: $a_\\gamma = \\text{ᚱ}(\\lambda)\\, v_\\gamma$ with $\\text{ᚱ} \\ne 0$ (here $\\text{ᚱ} = ${fmt(Rnow)}$).`
+          : `**Autoparallel?** No${part}: $a_\\gamma$ is not a multiple of $v_\\gamma$ (for example at $\\lambda = ${fmt(bi.bad)}$).`;
+      rows.push(h('div', { class: `wide ${bi.par ? 'ok' : 'warn'}`, html: mdInline(txt) }));
     }
     readout.replaceChildren(...rows);
   }
