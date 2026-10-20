@@ -4,7 +4,7 @@ kind: map
 name: Chapter 2, Vector Spaces
 
 intro: |
-  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition or formula. An arrow goes from a concept to a concept that is built on it.
+  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition or formula. An arrow goes from a concept to a concept built on it, and its label says how; read it as a sentence, for example "basis *induces* dual basis" or "dual space *inputs for* tensors". The dashed arrow marks a tool rather than a step: bijections are what make a change of basis *invertible*.
 
   You will rebuild the Chapter 2 map one box at a time. For each glowing box, pick the card that belongs there. The other cards look alike but each hides a classic mistake, so read the details.
 
@@ -136,7 +136,7 @@ nodes:
 
   - id: dbasis
     title: 'Dual basis $\{\hat{\mathfrak{x}}^i\}$'
-    row: 3
+    row: 4
     col: 2
     body: |
       Given a basis $\{\hat{x}_i\}$, define covectors $\hat{\mathfrak{x}}^i$ by
@@ -182,7 +182,7 @@ nodes:
 
   - id: laws
     title: Transformation laws
-    row: 4
+    row: 5
     col: 3
     body: |
       Vector components are contravariant,
@@ -212,7 +212,7 @@ nodes:
 
   - id: tensors
     title: 'Tensors $T^{(r,s)}$'
-    row: 5
+    row: 6
     col: 1
     span: 3
     body: |
@@ -246,17 +246,18 @@ nodes:
       Tensors put everything together: they eat covectors (from the dual space) and vectors, and their components change by combining the vector and covector laws, one $J$ or $J^{-1}$ per index. The tensor product builds them from vectors and covectors: $T^{(r,s)}\cong V\otimes\cdots\otimes V\otimes V^*\otimes\cdots\otimes V^*$, with $r$ factors $V$ and $s$ factors $V^*$.
 
 edges:
-  - [space, hom]
-  - [space, basis]
-  - [hom, dual]
-  - [basis, dbasis]
-  - [dual, dbasis]
-  - [basis, cob]
-  - { from: maps, to: cob, dashed: true }
-  - [cob, laws]
-  - [dbasis, laws]
-  - [dual, tensors]
-  - [laws, tensors]
+  - { from: space, to: hom, label: maps }
+  - { from: space, to: basis, label: has basis }
+  - { from: hom, to: dual, label: 'into $\mathbb{R}$' }
+  - { from: basis, to: dbasis, label: induces }
+  - { from: dual, to: dbasis, label: has basis }
+  - { from: basis, to: cob, label: compare }
+  - { from: maps, to: cob, dashed: true, label: invertible }
+  - { from: cob, to: laws, label: governs }
+  - { from: dbasis, to: laws, label: for covectors }
+  - { from: dual, to: tensors, label: inputs for }
+  - { from: laws, to: tensors, label: extend to }
+
 
 outroTitle: Chapter 2 in one picture
 outro: |

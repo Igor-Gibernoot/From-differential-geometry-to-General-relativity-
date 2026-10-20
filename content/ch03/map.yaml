@@ -4,7 +4,7 @@ kind: map
 name: Chapter 3, Topological Manifolds
 
 intro: |
-  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition. An arrow goes from a concept to a concept that is built on it; a dashed arrow means "serves as the model example for".
+  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition. An arrow goes from a concept to a concept built on it, and its label says how; read it as a sentence, for example "continuity *both ways* homeomorphism" or "chart *overlaps give* transition maps". The dashed arrow means "serves as the model example for".
 
   You will rebuild the Chapter 3 map one box at a time, from a bare set all the way to smooth maps between manifolds. For each glowing box, pick the card that belongs there. The other cards look alike but each hides a classic mistake, so read the details.
 
@@ -123,7 +123,7 @@ nodes:
 
   - id: separation
     title: Hausdorff and second countable
-    row: 3
+    row: 4
     col: 1
     body: |
       Two conditions on a topological space:
@@ -192,7 +192,7 @@ nodes:
 
   - id: chart
     title: 'Chart $(\mathcal{U},\mathscr{X})$'
-    row: 3
+    row: 4
     col: 2
     body: |
       An **open** set $\mathcal{U}\in\mathcal{O}_\mathcal{M}$ and a map
@@ -216,7 +216,7 @@ nodes:
 
   - id: atlas
     title: 'Atlas $\mathcal{A}$'
-    row: 4
+    row: 5
     col: 2
     body: |
       A set of charts $\mathcal{A} = \{(\mathcal{U}_\alpha,\mathscr{X}_\alpha)\}_{\alpha\in A}$ whose domains **cover** the space:
@@ -240,7 +240,7 @@ nodes:
 
   - id: transition
     title: Transition maps
-    row: 4
+    row: 5
     col: 3
     body: |
       For charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ with $\mathcal{U}\cap\mathcal{V}\neq\emptyset$:
@@ -264,7 +264,7 @@ nodes:
 
   - id: topmanifold
     title: Topological manifold
-    row: 5
+    row: 6
     col: 1
     body: |
       The triple $(\mathcal{M},\mathcal{O}_\mathcal{M},\mathcal{A})_d$: a topological space that is **Hausdorff** and **second countable**, together with an atlas $\mathcal{A}$ of charts into $\mathbb{R}^d$. Locally it looks like $\mathbb{R}^d$; globally it is well behaved.
@@ -282,7 +282,7 @@ nodes:
 
   - id: compatible
     title: '$C^\infty$-compatible charts'
-    row: 5
+    row: 6
     col: 3
     body: |
       Charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ are **$C^\infty$-compatible** if either
@@ -309,7 +309,7 @@ nodes:
 
   - id: structure
     title: Smooth atlas and smooth structure
-    row: 6
+    row: 7
     col: 2
     body: |
       An atlas $\mathcal{A}_{C^\infty}$ is **smooth** if **every pair** of its charts is $C^\infty$-compatible. Adding every chart compatible with all of it gives its **maximal atlas**, a **smooth structure**. Two smooth atlases give the same structure exactly when their union is still smooth.
@@ -327,7 +327,7 @@ nodes:
 
   - id: smoothmanifold
     title: Smooth manifold
-    row: 7
+    row: 8
     col: 1
     body: |
       The triple $(\mathcal{M},\mathcal{O}_\mathcal{M},\mathcal{A}_{C^\infty})_d$: a topological manifold together with a **smooth atlas**, understood up to equivalence (its smooth structure). Calculus on $\mathcal{M}$ is done through its charts.
@@ -345,7 +345,7 @@ nodes:
 
   - id: smoothmaps
     title: Smooth maps
-    row: 7
+    row: 9
     col: 2
     body: |
       $f:\mathcal{M}\to\mathbb{R}$ is **smooth** if every chart representative $f\circ\mathscr{X}^{-1}$ is $C^\infty$; a continuous $\phi:\mathcal{M}\to\mathcal{N}$ is smooth if every $\mathscr{Y}\circ\phi\circ\mathscr{X}^{-1}$ is. Chart-independent, since
@@ -366,7 +366,7 @@ nodes:
 
   - id: diffeo
     title: "Diffeo\u00ADmorphism"
-    row: 7
+    row: 10
     col: 3
     body: |
       $\phi:\mathcal{M}\to\mathcal{N}$ such that
@@ -401,25 +401,26 @@ nodes:
       Diffeomorphism is the "sameness" of smooth manifolds, one level above homeomorphism. Two different smooth structures can still give diffeomorphic manifolds: $\mathbb{R}$ with the chart $p^3$ is diffeomorphic to the standard line.
 
 edges:
-  - [topology, standard]
-  - [topology, inherited]
-  - [topology, continuity]
-  - { from: standard, to: separation, dashed: true }
-  - [continuity, homeo]
-  - [standard, chart]
-  - [inherited, chart]
-  - [homeo, chart]
-  - [chart, atlas]
-  - [chart, transition]
-  - [atlas, topmanifold]
-  - [separation, topmanifold]
-  - [transition, compatible]
-  - [compatible, structure]
-  - [atlas, structure]
-  - [topmanifold, smoothmanifold]
-  - [structure, smoothmanifold]
-  - [smoothmanifold, smoothmaps]
-  - [smoothmaps, diffeo]
+  - { from: topology, to: standard, label: 'on $\mathbb{R}^d$' }
+  - { from: topology, to: inherited, label: on subsets }
+  - { from: topology, to: continuity, label: defines }
+  - { from: standard, to: separation, dashed: true, label: example }
+  - { from: continuity, to: homeo, label: both ways }
+  - { from: standard, to: chart, label: target of }
+  - { from: inherited, to: chart, label: domain of }
+  - { from: homeo, to: chart, label: made local }
+  - { from: chart, to: atlas, label: glued into }
+  - { from: chart, to: transition, label: overlaps give }
+  - { from: atlas, to: topmanifold, label: required by }
+  - { from: separation, to: topmanifold, label: required by }
+  - { from: transition, to: compatible, label: smooth both ways }
+  - { from: compatible, to: structure, label: all pairs }
+  - { from: atlas, to: structure, label: made smooth }
+  - { from: topmanifold, to: smoothmanifold, label: upgraded to }
+  - { from: structure, to: smoothmanifold, label: equips }
+  - { from: smoothmanifold, to: smoothmaps, label: maps between }
+  - { from: smoothmaps, to: diffeo, label: invertible }
+
 
 outroTitle: Chapter 3 in one picture
 outro: |

@@ -159,7 +159,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   expanded with the app's `expandLesson` (checks option bodies and feedback);
   map views (intro, complete) are always screenshotted.
 - **Map arrow labels:** edges take `label:` (1–3 words, read "from *label* to",
-  only on arrows between different rows); used in `ch04-map`.
+  only on arrows between different rows; labels of arrows leaving the same box must be short
+  enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
 
@@ -169,6 +170,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   widens the map's row gap to 36px. validate.mjs: label must be a string, warns past 18 chars.
 - `ch04-map` now labels all 14 arrows; the intro's four-readings legend is replaced by one line.
 - Conventions fixed here: map arrow labels read "from *label* to", 1–3 words, only between rows.
+
+### 2026-10-19 — ch02-map and ch03-map arrow labels
+- All 11 (ch02) and 19 (ch03) arrows labelled; intros now say to read each arrow as a sentence.
+- Boxes moved down a row where arrows ran side by side (ch02: dual basis, laws, tensors; ch03:
+  separation through diffeomorphism), so every arrow crosses a row gap. Build order unchanged.
+- Conventions fixed here: labels of arrows leaving the same box are kept short so they don't touch.
 
 ### 2026-10-19 — `ch04-challenge` session 2 (problems 4–5 + wrap-up); Chapter 4 complete
 - Appended 11 cards: p4-setup, p4-proof (order), p4-A, p4-S, p4-why, p5-setup, p5-X (build),
