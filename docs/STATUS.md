@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel, ch06-parallel-transport, ch06-torsion-curvature, ch06-torsion-tensor, ch06-three-connections done)
+## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel, ch06-parallel-transport, ch06-torsion-curvature, ch06-torsion-tensor, ch06-three-connections, ch06-traps done)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -24,7 +24,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
-- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards), `ch06-torsion-tensor` (guided, 19 cards), `ch06-three-connections` (guided C.5, 32 cards); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). Next: `ch06-traps` (traps).
+- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards), `ch06-torsion-tensor` (guided, 19 cards), `ch06-three-connections` (guided C.5, 32 cards), `ch06-traps` (21 cards); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). Next: `ch06-map` (map; no TeX map, build from the 6.1–6.4 headings and the ch06 lessons).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 6 (Covariant Derivative) in `course.yaml` order, next
@@ -284,6 +284,9 @@ append a short entry at the end of **Log** (a few lines, ending with
   agree (det 1), polar = $r\times$ frame; ∇^κ Riem from the definition ($\kappa = 2$); straightest curves $\ddot\gamma^1 + \kappa\gamma^1(\dot\gamma^2)^2 = 0$, $a = A\cos(\sqrt\kappa(b-b_0)+\psi)$ ($\kappa = 4$ from $(1,0)$
   with velocity $(0,1)$ crosses at $b = \pi/4$); holonomy $\kappa = \tfrac12$, $[0,2]\times[-1,1]$, $z = (1,2)$: $-4$ (shifted $[-2,0]\times[-1,1]$: left side does it); fourth box: $\Gamma^1_{22} = \kappa a$,
   $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$ gives $\mathrm{Riem}^1_{212} = \kappa+1$ (3 at $\kappa=2$), $\mathtt{T}^1_{12} = -2$. Widget `vertical` with `range: [-1, 1]` (∇ᵂ turns $90°$).
+  `ch06-traps`: sheared chart $\mathscr{Y} = (u,v) = (a,\ b - a^2)$, $\partial y_1 = \partial x_1 + 2a\,\partial x_2$, $(\Gamma^{\mathrm{E}}_\mathscr{Y})^2_{11} = 2$; ∇ᵂ $\Gamma^1_{12} = 0$ vs $\Gamma^1_{21} = -4/25$ at $(3,4)$;
+  $\nabla^{\mathrm{E}}_{\partial y_2}dr = r\,d\theta$ (component $5$); ∇^κ ($\kappa=1$) $(0,0)\to(1,1)$: right-then-up gives $z^1 = -1$, up-then-right $0$; $[b\,\partial x_1, a\,\partial x_2] = -a\,\partial x_1 + b\,\partial x_2$;
+  example $\Gamma^1_{12} = 3$, $\Gamma^1_{21} = 1$ ($\mathtt{T}^1_{12} = -2$, autoparallel term $4\dot\gamma^1\dot\gamma^2$, symmetrized $2,2$); symmetric part $\Gamma^k_{(ji)}$; Ricci contracts upper with middle index ($\mathrm{Ric}_{11} = \mathrm{Riem}^2_{121}$).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -296,6 +299,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch06-traps (traps, 21 cards)
+- 19 questions (10 numeric, 7 MCQ, 2 build), intro with notation (charts, Γ convention, ∇ᴱ, ∇ᵂ, ∇^κ), summary of rules as formulas, teaser for the map.
+  Traps: Γ zero in cartesian but $2$ in a sheared chart; index order (∇ᵂ $\Gamma^1_{12}$); scalar rule (same $0.6$ for all connections); covector $-\Gamma$ ($5$); Leibniz vs $C^\infty$-linear slot ($6$ vs $3$);
+  derivative needs the field near $p$; autoparallel vs autoparallelly transported ($(e^\lambda,e^\lambda)$); route dependence (∇^κ, $-1$); torsion does not cause route dependence (∇ᵂ); commutator first order and both terms;
+  torsion free ≠ $\nabla_XY = \nabla_YX$; torsion from the antisymmetric part; autoparallels see the symmetric part (build + symmetrized connection); symmetry chart-independent; Ricci contraction (build + numeric $2$); Γ(0)=0 but Riem $=2$ (∇^κ at origin).
+- Checks: every number by hand (sheared chart directly and via the law; ∇ᵂ $\nabla_{\partial x_2}\partial x_1 = -\tfrac a{r^2}\partial x_2$ from the frame; $dr$ via cartesian; routes vs holonomy law); validate 0/0; shots 21 cards, 0 problems.
+- Choices: plan item 8's $[e_1,e_2]\neq0$ already a question in `ch06-torsion-curvature` (`which-commute`), so mentioned only in feedback and replaced by a "both terms" commutator numeric; plan item 6 avoided the λ² ray (already `radial-squared`) and used $(e^\lambda,e^\lambda)$;
+  added two extra traps (derivative needs a neighbourhood; torsion free ≠ symmetric swap for non-commuting fields) and symmetric-in-every-chart.
+- Conventions fixed here: see Current, `ch06-traps` lines.
 ### 2026-10-20 — ch06-three-connections (guided, 32 cards)
 - Hook (three connections, 2×2 table, guess); early widget (vertical segment $(1,\lambda)$, $\lambda\in[-1,1]$, E/W/κ, compareE, torsion) + numeric $90°$, turning-is-not-curvature MCQ; tools card (Γ, T, Riem formulas);
   ∇ᴱ polar: derivation text, $-r\,\partial y_1$ MCQ, torsion MCQ, build of $\mathrm{Riem}^2_{112}$; ∇ᵂ: frame text, polar $\Gamma^2_{21}$ MCQ, $\mathtt{T}^2_{12} = 0.2$, cartesian build + numeric $-4/25$, torsion MCQs (cartesian, frame $-[e_1,e_2]$,
