@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-19)
+## Current (2026-10-19, Chapter 4 done)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -17,13 +17,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   Challenge file layout (reuse for later levels): `intro` (numbered problem
   list), one block per problem with `tag: Problem N · …` and ids `pN-…`, then
   `wrap-up` ending with a teaser for the next level.
-- **Chapter 4 in progress:** `ch04-tangent-space` (26 cards),
-  `ch04-velocity-operations` (23 cards), `ch04-coordinate-basis` (33 cards),
-  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards), `ch04-cotangent` (23 cards), `ch04-cotangent-basis` (35 cards), `ch04-tensor-space` (31 cards), `ch04-traps` (22 cards), `ch04-map` (13 boxes) built, `ch04-challenge` problems 1–3 built (25 cards; 4–5 and `wrap-up` pending); widget `chart-basis` built (coordinate lines of two charts, basis at
-  $p$, components, Jacobian).
-- **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, next `ch04-challenge` session 2 (problems 4–5 + `wrap-up`, append after the Problem 3 block); then Chapters 5–10 (each with
-  map and challenge). Each planned node in `course.yaml` is one lesson.
+- **Chapter 4 complete** (lessons, traps, map, challenge): `ch04-tangent-space`,
+  `ch04-velocity-operations`, `ch04-coordinate-basis`, `ch04-chart-basis` (guided B.5), `ch04-einstein`,
+  `ch04-cotangent`, `ch04-cotangent-basis`, `ch04-tensor-space`, `ch04-traps`, `ch04-map` (13 boxes),
+  `ch04-challenge` (36 cards, five problems: polar chart at $(1,1)$, reparametrization rune and Leibniz,
+  $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
+  widget `chart-basis` built.
+- **Queue (one unit each):** Chapter 5 (Fields) in `course.yaml` order, next
+  `ch05-vector-fields` (concept); then Chapters 6–10 (each with map and challenge).
+  Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
   on $S^1$: $\theta \in (0,2\pi)$ on $S^1\setminus\{(1,0)\}$, $\varphi \in (-\pi,\pi)$
@@ -145,6 +147,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   $v(fg) = f(p)v(g) + g(p)v(f)$ derived here; $S^1$ at $p = (\sqrt3/2, 1/2)$: $\theta_p = \pi/6$, $\sigma_p = \sqrt3$, $d\sigma/d\theta = 1/(1-\sin\theta) = 2$,
   $\sigma^{-1}(s) = (2s/(s^2+1), (s^2-1)/(s^2+1))$, curve $(\cos(\pi/6+3\lambda), \sin(\pi/6+3\lambda))$ ($v^\theta=3$, $v^\sigma=6$), height $f = q_2$
   ($\sqrt3/2 \to \sqrt3/4$, pairing $3\sqrt3/2$).
+  Challenge ch04 problems 4–5: trace $(T_\mathcal{U})^i_i$ of a $(1,1)$-tensor vs $\sum_i(S_\mathcal{U})_{ii}$ (same-height sum written
+  with $\Sigma$); matrix forms $T_\mathcal{V} = JT_\mathcal{U}J^{-1}$ ($J = (\partial\mathscr{Y}/\partial\mathscr{X})_p$), $S_\mathcal{V} = M^{\mathsf T}S_\mathcal{U}M$
+  ($M = (\partial\mathscr{X}/\partial\mathscr{Y})_p$); $T = v\otimes(df)_p$ with $T(\mathsf{X}_p,u) = \mathsf{X}_p(v)(df)_p(u)$, $(T_\mathcal{U})^i_j = x^i_p\mathtt{x}^p_j$:
+  $\mathscr{X}$ $\begin{pmatrix}2&-2\\-2&2\end{pmatrix}$, $\mathscr{Y}$ $\begin{pmatrix}1&1/e\\3e&3\end{pmatrix}$, trace $4 = (df)_p(v)$; $(\partial y_2)_p$ standard $(0,1/e)$.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -154,6 +160,17 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+### 2026-10-19 — `ch04-challenge` session 2 (problems 4–5 + wrap-up); Chapter 4 complete
+- Appended 11 cards: p4-setup, p4-proof (order), p4-A, p4-S, p4-why, p5-setup, p5-X (build),
+  p5-Y, p5-feed, p5-trace, wrap-up (teaser: Level 5, vector fields as smooth choices of $v_p$).
+- Choices: p5-Y asks one entry $(T_\mathcal{V})^2_1 = 3e$ by the law; a separate p5-feed card gets
+  $(T_\mathcal{V})^1_2 = 1/e$ by feeding basis elements (plan's "both ways" split into two cards).
+  p4-why says same-height sums need a metric (Level 7). Did not reread the book: all numbers come
+  from STATUS conventions, re-verified by hand ($JT_\mathcal{U}J^{-1}$, $M^{\mathsf T}M$, $A_\mathcal{V}$).
+- validate 0/0; shots 36 cards, 0 problems.
+- Conventions fixed here: trace $(T_\mathcal{U})^i_i$ vs explicit $\sum_i(S_\mathcal{U})_{ii}$; $T_\mathcal{V} = JT_\mathcal{U}J^{-1}$,
+  $S_\mathcal{V} = M^{\mathsf T}S_\mathcal{U}M$; $T = v\otimes(df)_p$, $(T_\mathcal{U})^i_j = x^i_p\mathtt{x}^p_j$, trace $= (df)_p(v) = 4$.
 
 Level challenge `ch04-challenge`, session 1 (25 cards): intro listing all five problems; P1 polar chart at
 $(1,1)$ (basis, Jacobian entry $-1/2$, $v^r = 3/\sqrt2$, $v^\theta = 1/2$, $(df)_p$ by feeding and by $F = f\circ\mathscr{P}^{-1}$,

@@ -495,3 +495,240 @@ cards:
     explanation: |
       $$\begin{aligned}\mathtt{y}^p_\sigma v^\sigma &= \Big(\frac{d\theta}{d\sigma}\Big)_p\mathtt{x}^p_\theta\,\Big(\frac{d\sigma}{d\theta}\Big)_p v^\theta\\ &= \mathtt{x}^p_\theta\, v^\theta,\end{aligned}$$
       because the two rates multiply to $1$, the one-dimensional inverse identity. In $d$ dimensions the same cancellation is $(\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p(\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p = \delta^i_j$.
+
+  # ---------------------------------------------------------------- Problem 4
+  - type: text
+    id: p4-setup
+    tag: Problem 4 · The trace
+    title: Summing the diagonal
+    body: |
+      Take a $(1,1)$-tensor $T\in T_p^{(1,1)}\mathcal{M}$ (one covector slot, then one velocity slot). In a chart $(\mathcal{U},\mathscr{X})$ its components are $(T_\mathcal{U})^i_j$, a $d\times d$ array with row $i$ (upper) and column $j$ (lower). Its **trace** is the sum of the diagonal, which Einstein summation writes in four symbols:
+      $$(T_\mathcal{U})^i_i = (T_\mathcal{U})^1_1 + \dots + (T_\mathcal{U})^d_d.$$
+      The repeated $i$ sits once up and once down, so this is a genuine Einstein sum.
+
+      Now take a $(0,2)$-tensor $S$ with components $(S_\mathcal{U})_{ij}$. Its diagonal can be summed too, but both indices are down. A same-height repeat is **not** an Einstein sum, so the sum must be written out:
+      $$\sum_{i=1}^d (S_\mathcal{U})_{ii}.$$
+
+      Question of this problem: does each diagonal sum give the same number in every chart? Recall the law for a $(1,1)$-tensor, one Jacobian factor per index, all evaluated at $p$:
+      $$(T_\mathcal{V})^k_l = \frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^i}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}(T_\mathcal{U})^i_j.$$
+
+  - type: order
+    id: p4-proof
+    tag: Problem 4 · The trace
+    prompt: |
+      Prove that the trace of a $(1,1)$-tensor $T$ is the same in the charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$, i.e. $(T_\mathcal{V})^k_k = (T_\mathcal{U})^i_i$. All Jacobians are evaluated at $p$. Put the steps in order.
+    steps:
+      - 'Start from the law $(T_\mathcal{V})^k_l = \frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^i}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}(T_\mathcal{U})^i_j$.'
+      - 'Set $l = k$; now $k$ is repeated up and down, so it is summed: $(T_\mathcal{V})^k_k = \frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^i}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^k}(T_\mathcal{U})^i_j$.'
+      - 'The factors are numbers, so reorder: the sum over $k$ is $\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^k}\frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^i}$.'
+      - 'By the inverse identity this sum is $\delta^j_i$, so $(T_\mathcal{V})^k_k = \delta^j_i(T_\mathcal{U})^i_j$.'
+      - '$\delta^j_i$ keeps only the terms with $j = i$: $(T_\mathcal{V})^k_k = (T_\mathcal{U})^i_i$.'
+    hint: 'The inverse identity reads $\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^k}\frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^i} = \delta^j_i$: it needs one $\partial\mathscr{Y}/\partial\mathscr{X}$ and one $\partial\mathscr{X}/\partial\mathscr{Y}$ sharing the summed index.'
+    explanation: |
+      The upper index brings a factor $\partial\mathscr{Y}/\partial\mathscr{X}$, the lower one a factor $\partial\mathscr{X}/\partial\mathscr{Y}$; contracting them makes the two factors meet and cancel to $\delta$. In matrix language (Jacobian $J$ with entries $(\partial\mathscr{Y}^k/\partial\mathscr{X}^i)_p$) the law is
+      $$T_\mathcal{V} = J\,T_\mathcal{U}\,J^{-1},$$
+      and the trace is unchanged under such a similarity. Nothing here used that the charts are linear: only the inverse identity at the single point $p$.
+
+  - type: numeric
+    id: p4-A
+    tag: Problem 4 · The trace
+    prompt: |
+      Running example: on $\mathbb{R}^2$, charts $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, at $p = (1,1)$:
+      $$\Big(\frac{\partial\mathscr{Y}}{\partial\mathscr{X}}\Big)_p = \begin{pmatrix}1/2&0\\e/2&-e\end{pmatrix},$$
+      $$\Big(\frac{\partial\mathscr{X}}{\partial\mathscr{Y}}\Big)_p = \begin{pmatrix}2&0\\1&-1/e\end{pmatrix}$$
+      (row = upper index). The $(1,1)$-tensor $A = (\partial x_1)_p\otimes(dx^1)_p$ has $\mathscr{X}$-components $(A_\mathcal{U})^i_j = \delta^i_1\delta^1_j$, trace $1$. Compute its trace in the chart $\mathscr{Y}$, $(A_\mathcal{V})^k_k$.
+    answer: 1
+    answerText: '1'
+    wrong:
+      - value: 3.7182818
+        feedback: |
+          $1 + e$ adds **every** entry of the $\mathscr{Y}$-matrix $\begin{pmatrix}1&0\\e&0\end{pmatrix}$. The trace adds only the diagonal, $(A_\mathcal{V})^1_1 + (A_\mathcal{V})^2_2$; the entry $e$ is off the diagonal.
+      - value: 0.5
+        feedback: |
+          $\tfrac12 = (\partial\mathscr{Y}^1/\partial\mathscr{X}^1)_p$ transforms only the upper index. The lower index needs its own factor $(\partial\mathscr{X}^1/\partial\mathscr{Y}^l)_p$, which brings a $2$ for $l = 1$: one Jacobian factor per index.
+      - value: 2
+        feedback: |
+          $2$ is the dimension, $\delta^i_i = 2$, the trace of the identity tensor. $A$ is not the identity: its only nonzero $\mathscr{X}$-component is $(A_\mathcal{U})^1_1 = 1$.
+    hint: 'Only $i = j = 1$ contributes, so $(A_\mathcal{V})^k_l = (\partial\mathscr{Y}^k/\partial\mathscr{X}^1)_p\,(\partial\mathscr{X}^1/\partial\mathscr{Y}^l)_p$: column 1 of the first matrix times row 1 of the second.'
+    explanation: |
+      Column 1 of $(\partial\mathscr{Y}/\partial\mathscr{X})_p$ is $(\tfrac12, \tfrac e2)$, row 1 of $(\partial\mathscr{X}/\partial\mathscr{Y})_p$ is $(2, 0)$, so
+      $$A_\mathcal{V} = \begin{pmatrix}1&0\\e&0\end{pmatrix}.$$
+      Trace $1 + 0 = 1$, as in $\mathscr{X}$, even though the matrix itself changed: the diagonal entries can move around, their sum cannot.
+
+  - type: numeric
+    id: p4-S
+    tag: Problem 4 · The trace
+    prompt: |
+      Running example at $p = (1,1)$, with
+      $$\Big(\frac{\partial\mathscr{X}}{\partial\mathscr{Y}}\Big)_p = \begin{pmatrix}2&0\\1&-1/e\end{pmatrix}$$
+      (row = upper index). The $(0,2)$-tensor $S$ has $\mathscr{X}$-components $(S_\mathcal{U})_{ij} = \delta_{ij}$, so $\sum_i (S_\mathcal{U})_{ii} = 2$. Its law is
+      $$(S_\mathcal{V})_{kl} = \frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}\delta_{ij}.$$
+      Compute $\sum_k (S_\mathcal{V})_{kk}$ in the chart $\mathscr{Y}$ (a decimal is fine).
+    answer: 5.1353353
+    tolerance: 0.001
+    answerText: '5 + 1/e^2 \approx 5.135'
+    wrong:
+      - value: 2
+        feedback: |
+          $2$ assumes the diagonal sum is invariant, as the trace of a $(1,1)$-tensor is. Here both indices are lower: two factors $\partial\mathscr{X}/\partial\mathscr{Y}$ and no $\partial\mathscr{Y}/\partial\mathscr{X}$ to cancel them. Compute the entries.
+      - value: 9.4863201
+        feedback: |
+          $\tfrac14 + \tfrac54e^2$ uses the matrix $(\partial\mathscr{Y}/\partial\mathscr{X})_p$, the law of **upper** indices. A lower index takes $(\partial\mathscr{X}/\partial\mathscr{Y})_p$.
+      - value: 4.1353353
+        feedback: |
+          $4 + 1/e^2$ squares only the diagonal entries $2$ and $-1/e$ of $(\partial\mathscr{X}/\partial\mathscr{Y})_p$. With $\delta_{ij}$, $(S_\mathcal{V})_{kk} = \sum_i \big((\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p\big)^2$: square **every** entry of column $k$ and add, so column 1 gives $2^2 + 1^2 = 5$.
+    hint: '$\delta_{ij}$ sets $j = i$, so $(S_\mathcal{V})_{kk} = \sum_i \big((\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p\big)^2$, the squared length of column $k$ of the matrix.'
+    explanation: |
+      Column 1 is $(2, 1)$, column 2 is $(0, -1/e)$:
+      $$S_\mathcal{V} = \begin{pmatrix}5&-1/e\\-1/e&1/e^2\end{pmatrix}.$$
+      Diagonal sum $5 + 1/e^2\approx 5.135\neq 2$. The same numbers $\delta$ that gave an invariant trace for the $(1,1)$-tensor give no invariant here: the law of $S$ is $S_\mathcal{V} = M^{\mathsf T}S_\mathcal{U}M$ with $M = (\partial\mathscr{X}/\partial\mathscr{Y})_p$, not a similarity.
+
+  - type: mcq
+    id: p4-why
+    tag: Problem 4 · The trace
+    prompt: |
+      A $(1,1)$-tensor $T$ and a $(0,2)$-tensor $S$ both have components equal to the identity matrix in a chart $\mathscr{X}$. In a second chart $\mathscr{Y}$, the trace $(T_\mathcal{V})^k_k$ is still $d$, but $\sum_k (S_\mathcal{V})_{kk}$ is in general not. What makes the difference?
+    options:
+      - text: 'The trace pairs an upper with a lower index, so a Jacobian factor meets its inverse and they cancel; two lower indices bring two inverse factors and nothing cancels'
+        correct: true
+      - text: 'Nothing: any sum of diagonal components is invariant, and a different value means a computing error'
+        feedback: |
+          Tempting because the trace of a $(1,1)$-tensor is invariant. But in the running example $S_{ij} = \delta_{ij}$ in $\mathscr{X}$ becomes $\begin{pmatrix}5&-1/e\\-1/e&1/e^2\end{pmatrix}$ in $\mathscr{Y}$, diagonal sum $\approx 5.135\neq 2$. Invariance must be proved from the law, and for $S$ the proof fails.
+      - text: 'The matrix decides: equal identity matrices in $\mathscr{X}$ behave the same in every chart'
+        feedback: |
+          A matrix of components is the tensor seen in one chart only; the index positions decide how it changes. $\delta^i_j$ and $\delta_{ij}$ are the same array in $\mathscr{X}$ but different tensors, and in $\mathscr{Y}$ their matrices differ.
+      - text: 'The trace is invariant only for linear chart changes; for the curved chart $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$ neither sum survives'
+        feedback: |
+          The proof uses only the inverse identity of the Jacobians at the point $p$, true for any pair of smooth charts. In the running example the trace of $A = (\partial x_1)_p\otimes(dx^1)_p$ is $1$ in both charts, although $\mathscr{Y}$ is not linear.
+    explanation: |
+      Contraction of an upper with a lower index is the invariant operation: $(\partial\mathscr{X}^j/\partial\mathscr{Y}^k)_p(\partial\mathscr{Y}^k/\partial\mathscr{X}^i)_p = \delta^j_i$. Einstein's rule (sum only over an up-down pair) is built to flag exactly the sums that mean something in every chart; a same-height sum like $\sum_i S_{ii}$ needs extra structure to become meaningful (with a metric, Level 7).
+
+  # ---------------------------------------------------------------- Problem 5
+  - type: text
+    id: p5-setup
+    tag: Problem 5 · A full tensor computation
+    title: One tensor, two charts, every route
+    body: |
+      Running example: on $\mathbb{R}^2$ (points $q = (q_1,q_2)$), at $p = (1,1)$, charts $\mathscr{X}(q) = (2q_1, -q_2)$ on $\mathcal{U}$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$ on $\mathcal{V}$. Take
+
+      - the velocity $v$ with standard components $(1,2)$: $\mathscr{X}$-components $x^i_p = (2,-2)$, $\mathscr{Y}$-components $y^i_p = (1, 3e)$;
+      - the field $f = q_1^2 + q_2$: $(df)_p$ has $\mathscr{X}$-components $\mathtt{x}^p_i = (1,-1)$ and $\mathscr{Y}$-components $\mathtt{y}^p_i = (1, 1/e)$.
+
+      Build the $(1,1)$-tensor
+      $$T := v\otimes(df)_p,$$
+      which eats a covector $\mathsf{X}_p$ and a velocity $u$:
+      $$T(\mathsf{X}_p, u) = \mathsf{X}_p(v)\,(df)_p(u).$$
+      Goal: its components in both charts, by the law and by feeding basis elements, and its trace.
+
+  - type: build
+    id: p5-X
+    tag: Problem 5 · A full tensor computation
+    prompt: |
+      For $T = v\otimes(df)_p$, with $T(\mathsf{X}_p, u) = \mathsf{X}_p(v)\,(df)_p(u)$, the $\mathscr{X}$-components are $(T_\mathcal{U})^i_j = T((dx^i)_p, (\partial x_j)_p)$. Here $x^i_p$ are the $\mathscr{X}$-components of $v$ and $\mathtt{x}^p_j$ those of $(df)_p$. Build $(T_\mathcal{U})^i_j$.
+    prefix: '(T_\mathcal{U})^i_j ='
+    tiles: ['x^i_p', '\mathtt{x}^p_j', 'x^j_p', '\mathtt{x}^p_i', '\delta^i_j']
+    answers:
+      - ['x^i_p', '\mathtt{x}^p_j']
+      - ['\mathtt{x}^p_j', 'x^i_p']
+    wrong:
+      - answer: ['x^j_p', '\mathtt{x}^p_i']
+        feedback: |
+          The indices are swapped: the vector $v$ fills the **covector** slot, so it meets $(dx^i)_p$ and gives $(dx^i)_p(v) = x^i_p$ with the upper $i$. The covector $(df)_p$ meets $(\partial x_j)_p$ and gives $\mathtt{x}^p_j$.
+      - answer: ['x^i_p', '\mathtt{x}^p_i']
+        feedback: |
+          Both factors carry $i$, so the free lower index $j$ has disappeared and $i$ would be summed: that is the trace, a single number, not the component array.
+    hint: 'Feed: $T((dx^i)_p, (\partial x_j)_p) = (dx^i)_p(v)\cdot(df)_p((\partial x_j)_p)$, and evaluate each factor with the dual-basis relation.'
+    explanation: |
+      $(dx^i)_p(v) = x^i_p$ and $(df)_p((\partial x_j)_p) = \mathtt{x}^p_j$, so $(T_\mathcal{U})^i_j = x^i_p\,\mathtt{x}^p_j$: column times row. With $(2,-2)$ and $(1,-1)$:
+      $$T_\mathcal{U} = \begin{pmatrix}2&-2\\-2&2\end{pmatrix}.$$
+
+  - type: numeric
+    id: p5-Y
+    tag: Problem 5 · A full tensor computation
+    prompt: |
+      For $T = v\otimes(df)_p$ in the running example, $T_\mathcal{U} = \begin{pmatrix}2&-2\\-2&2\end{pmatrix}$ (row = upper index). With
+      $$\Big(\frac{\partial\mathscr{Y}}{\partial\mathscr{X}}\Big)_p = \begin{pmatrix}1/2&0\\e/2&-e\end{pmatrix},$$
+      $$\Big(\frac{\partial\mathscr{X}}{\partial\mathscr{Y}}\Big)_p = \begin{pmatrix}2&0\\1&-1/e\end{pmatrix},$$
+      use the law $(T_\mathcal{V})^k_l = (\partial\mathscr{Y}^k/\partial\mathscr{X}^i)_p(\partial\mathscr{X}^j/\partial\mathscr{Y}^l)_p(T_\mathcal{U})^i_j$ to find $(T_\mathcal{V})^2_1$ (a decimal is fine).
+    answer: 8.1548455
+    tolerance: 0.001
+    answerText: '3e \approx 8.155'
+    wrong:
+      - value: 0.3678794
+        feedback: |
+          $1/e$ is $(T_\mathcal{V})^1_2$, the entry with the indices the other way round. Upper index $k = 2$ is the row ($\mathscr{Y}^2$-component of $v$, $3e$), lower $l = 1$ the column ($\mathtt{y}^p_1 = 1$).
+      - value: 3
+        feedback: |
+          $3 = (T_\mathcal{V})^2_2$: you used the column $l = 2$. For $l = 1$ the lower factor is $\mathtt{y}^p_1 = 1$, not $\mathtt{y}^p_2 = 1/e$.
+      - value: -2
+        feedback: |
+          $-2$ is the $\mathscr{X}$-component $(T_\mathcal{U})^2_1$, copied. The chart changed, so the components change by one Jacobian factor per index.
+    hint: 'In matrices, $T_\mathcal{V} = J\,T_\mathcal{U}\,J^{-1}$ with $J = (\partial\mathscr{Y}/\partial\mathscr{X})_p$. Or use the shortcut: $T_\mathcal{U}$ is (column $x_p$) times (row $\mathtt{x}^p$), and each factor transforms by its own law.'
+    explanation: |
+      By the law, $J\,T_\mathcal{U} = \begin{pmatrix}1&-1\\3e&-3e\end{pmatrix}$, then
+      $$T_\mathcal{V} = \begin{pmatrix}1&1/e\\3e&3\end{pmatrix}.$$
+      Shortcut: $(T_\mathcal{V})^k_l = y^k_p\,\mathtt{y}^p_l$ with $(1, 3e)$ and $(1, 1/e)$; for $k=2$, $l=1$: $3e\cdot 1 = 3e\approx 8.155$.
+
+  - type: numeric
+    id: p5-feed
+    tag: Problem 5 · A full tensor computation
+    prompt: |
+      For $T = v\otimes(df)_p$, $T(\mathsf{X}_p, u) = \mathsf{X}_p(v)\,(df)_p(u)$, in the running example: $v$ has $\mathscr{Y}$-components $(1, 3e)$, $f = q_1^2 + q_2$, and the basis vector $(\partial y_2)_p := (\partial/\partial\mathscr{Y}^2)_p$ has standard components $(0, 1/e)$. Compute $(T_\mathcal{V})^1_2 = T((dy^1)_p, (\partial y_2)_p)$ directly, without the transformation law (a decimal is fine).
+    answer: 0.3678794
+    tolerance: 0.001
+    answerText: '1/e \approx 0.368'
+    wrong:
+      - value: 8.1548455
+        feedback: |
+          $3e = (T_\mathcal{V})^2_1$: you fed $(dy^2)_p$ instead of $(dy^1)_p$. The upper index $1$ selects $(dy^1)_p(v) = y^1_p = 1$.
+      - value: 3
+        feedback: |
+          $3 = (T_\mathcal{V})^2_2$: you fed $(dy^2)_p$, getting $3e\cdot\tfrac1e$. The upper index $1$ selects $(dy^1)_p(v) = y^1_p = 1$.
+      - value: 1
+        feedback: |
+          $1 = (T_\mathcal{V})^1_1$: you fed $(\partial y_1)_p$, on which $(df)_p$ gives $1$. The lower index $2$ selects $(\partial y_2)_p = (0, 1/e)$, and $(df)_p((\partial y_2)_p) = 2\cdot 0 + \tfrac1e$.
+    hint: '$T((dy^1)_p, (\partial y_2)_p) = (dy^1)_p(v)\cdot(df)_p((\partial y_2)_p)$, and $(df)_p(u) = 2u^1 + u^2$ in standard components.'
+    explanation: |
+      $(dy^1)_p(v) = y^1_p = 1$, and $(df)_p((\partial y_2)_p) = 2\cdot 0 + \tfrac1e = \tfrac1e = \mathtt{y}^p_2$. Product $\tfrac1e$, the same entry the law gives in
+      $$T_\mathcal{V} = \begin{pmatrix}1&1/e\\3e&3\end{pmatrix}.$$
+      Two routes, one answer: feeding basis elements is the definition of components; the law is a shortcut for it.
+
+  - type: numeric
+    id: p5-trace
+    tag: Problem 5 · A full tensor computation
+    prompt: |
+      For $T = v\otimes(df)_p$ in the running example,
+      $$T_\mathcal{U} = \begin{pmatrix}2&-2\\-2&2\end{pmatrix},$$
+      $$T_\mathcal{V} = \begin{pmatrix}1&1/e\\3e&3\end{pmatrix}$$
+      (row = upper index). Compute the trace $(T_\mathcal{V})^k_k$.
+    answer: 4
+    answerText: '4'
+    wrong:
+      - value: 12.5227249
+        feedback: |
+          That adds all four entries. The trace adds only the diagonal, $(T_\mathcal{V})^1_1 + (T_\mathcal{V})^2_2$.
+      - value: 0
+        feedback: |
+          $0$ is the sum of all entries of $T_\mathcal{U}$. The trace keeps only the diagonal: $2 + 2$ in $\mathscr{X}$, $1 + 3$ in $\mathscr{Y}$.
+    hint: 'Add the two diagonal entries, then compare with the trace of $T_\mathcal{U}$.'
+    explanation: |
+      $1 + 3 = 4$, and in $\mathscr{X}$: $2 + 2 = 4$. Not a coincidence:
+      $$(T_\mathcal{U})^i_i = x^i_p\,\mathtt{x}^p_i = (df)_p(v),$$
+      and $(df)_p(v) = v(f) = 4$ is the running example's number. The trace of $v\otimes\mathsf{X}_p$ is the pairing $\mathsf{X}_p(v)$: contracting the two indices feeds the covector its vector.
+
+  # ---------------------------------------------------------------- wrap-up
+  - type: text
+    id: wrap-up
+    title: What you now own
+    body: |
+      Five problems, one level:
+
+      1. **Polar chart.** You computed a curved chart's basis $(\partial r)_p$, $(\partial\theta)_p$, the Jacobian and the components of $v$ and $(df)_p$ at $(1,1)$, and the pairing $4$ survived.
+      2. **Reparametrization.** $v_{\gamma\circ\text{ᚱ},p} = \text{ᚱ}'(\mu_0)\odot_T v_{\gamma,p}$, and the Leibniz rule $v(fg) = f(p)v(g) + g(p)v(f)$, which is why velocities kill constants.
+      3. **Circle.** Angle and stereographic charts rescale components in opposite ways; the pairing does not care.
+      4. **Trace.** Contracting an upper with a lower index is invariant; a same-height diagonal sum is not.
+      5. **A full tensor.** $v\otimes(df)_p$ in two charts, by the law and by feeding basis elements; its trace is $(df)_p(v)$.
+
+      The common thread: components belong to a chart, the objects $v$, $(df)_p$, $T$ do not, and every invariant number comes from an up-down pairing.
+
+      **Next, Level 5: Fields.** Everything so far lived at one point $p$. A physical velocity field, or the electromagnetic field, is a choice at **every** point: a vector field picks a $v_p\in T_p\mathcal{M}$ for each $p$, smoothly. How do you say "smoothly" when each $v_p$ lives in its own space $T_p\mathcal{M}$? That is the first puzzle of the next level.
