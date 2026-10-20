@@ -18,10 +18,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   list), one block per problem with `tag: Problem N · …` and ids `pN-…`, then
   `wrap-up` ending with a teaser for the next level.
 - **Chapter 4 in progress:** `ch04-tangent-space` (26 cards),
-  `ch04-velocity-operations` (23 cards) built; widget `chart-basis` built
-  (coordinate lines of two charts, basis at $p$, components, Jacobian).
+  `ch04-velocity-operations` (23 cards), `ch04-coordinate-basis` (33 cards)
+  built; widget `chart-basis` built (coordinate lines of two charts, basis at
+  $p$, components, Jacobian).
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, next `ch04-coordinate-basis` (uses `chart-basis`); then Chapters 5–10 (each with
+  order, next `ch04-chart-basis` (guided: B.5 proof that the chart-induced basis is a basis); then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -76,7 +77,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\mathscr{Y}$-components $(1,3e)$, Jacobian $\begin{pmatrix}1/2&0\\e/2&-e\end{pmatrix}$,
   inverse $\begin{pmatrix}2&0\\1&-1/e\end{pmatrix}$, $(\partial/\partial\mathscr{X}^1)_p = (1/2, 0)$,
   $(\partial/\partial\mathscr{X}^2)_p = (0,-1)$, $(\partial/\partial\mathscr{Y}^1)_p = (1,-1)$,
-  $(\partial/\partial\mathscr{Y}^2)_p = (0, 1/e)$ (standard components of $\mathbb{R}^2$).
+  $(\partial/\partial\mathscr{Y}^2)_p = (0, 1/e)$ (standard components of $\mathbb{R}^2$). Basis now named: $(\partial/\partial\mathscr{X}^i)_p(f) := \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$,
+  "chart-induced basis", coordinate curve $c_i(\lambda) = \mathscr{X}^{-1}(\mathscr{X}(p)+\lambda e_i)$;
+  components $\dot\gamma^i_\mathcal{U}(\lambda_0)$ (chart $\mathscr{X}$ on $\mathcal{U}$),
+  $\dot\gamma^i_\mathcal{V}$ (chart $\mathscr{Y}$ on $\mathcal{V}$), $\delta^i_j$; Jacobian written only
+  as $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ (the book's runic letters not used);
+  basis law uses column $i$ (covariant), component law row $i$ (contravariant);
+  Chapter 2 link $J_i^j = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p$ ($\mathscr{X}$ old, $\mathscr{Y}$ new);
+  polar chart $\mathscr{P}(q) = (r,\theta)$, $|(\partial/\partial\theta)_p| = r_p$; metric = Level 7.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -86,6 +94,19 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Concept lesson `ch04-coordinate-basis` (33 cards): hook (C.3 velocity $(2,-2)$
+vs $(1,3e)$), `chart-basis` explore (C.3 + cartesian/polar presets), chain rule
+split into $\dot\gamma^i_\mathcal{U}$ and $A_i(f)$, definition, evaluations with
+$f = q_1^2+q_2$ ($-1$, $v(f) = 4$), coordinate curves + `basisOnly` widget,
+$(\partial/\partial\mathscr{Y}^2)_p = (0,1/e)$, tilt of $(\partial/\partial\mathscr{Y}^1)_p$,
+$\delta^i_j$ build, Jacobian entry $e/2$, inverse proof + entry $1$, `inverse`,
+basis-law order proof + `basisOnly chain`, component-law build, hook resolved
+($3e$), `chain` widget, Chapter 2 link, three traps (summed index, Jacobian vs
+transition map, $|\partial/\partial\theta| = r$). Basis property stated without
+proof (next guided problem). Conventions fixed here: $\dot\gamma^i_\mathcal{U}$,
+$\dot\gamma^i_\mathcal{V}$ names; $c_i$ coordinate curves; Jacobian only as
+$(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$; $J_i^j = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p$.
 
 Fixes (ch04-tangent-space, chart-basis). Lesson card `chain-explore`: $\theta$
 is no longer called a field "smooth near $p$"; the card says $\theta\notin

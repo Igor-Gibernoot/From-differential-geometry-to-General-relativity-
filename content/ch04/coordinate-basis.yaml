@@ -1,0 +1,515 @@
+id: ch04-coordinate-basis
+title: Coordinate Bases and the Jacobian
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: One velocity, two lists of numbers
+    body: |
+      Take $\mathcal{M} = \mathbb{R}^2$ (points $q = (q_1, q_2)$) with two charts defined everywhere:
+      $$\mathscr{X}(q) := (2q_1,\ -q_2),$$
+      $$\mathscr{Y}(q) := (q_1,\ q_2\,e^{q_1}).$$
+      Recall: the components of the velocity of a curve $\gamma$ through $p$ (at $\lambda = 0$) in a chart $\mathscr{X}$ are the rates $(\mathscr{X}^i\circ\gamma)'(0)$, where $\mathscr{X}^i$ is the $i$-th entry of $\mathscr{X}$.
+
+      The straight curve $\gamma(\lambda) = (1 + \lambda,\ 1 + 2\lambda)$ passes through $p = (1, 1)$. Its components are
+      $$\text{in }\mathscr{X}\colon\ (2,\ -2),$$
+      $$\text{in }\mathscr{Y}\colon\ (1,\ 3e).$$
+      One curve, one velocity, two different pairs of numbers. This lesson finds the exact rule that turns one pair into the other.
+
+  - type: mcq
+    id: predict
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$ with charts $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, one velocity at $p = (1, 1)$ has components $(2, -2)$ in $\mathscr{X}$ and $(1, 3e)$ in $\mathscr{Y}$. Before any theory, guess: how are the two pairs related?
+    options:
+      - text: 'By a $2\times 2$ matrix that depends on the two charts and on the point $p$'
+        correct: true
+      - text: 'By the transition map: $(1, 3e) = (\mathscr{Y}\circ\mathscr{X}^{-1})(2, -2)$'
+        feedback: |
+          Tempting, since the transition map is what converts $\mathscr{X}$-coordinates into $\mathscr{Y}$-coordinates. But it converts coordinates of **points**: $(\mathscr{Y}\circ\mathscr{X}^{-1})(2, -2) = (1, 2e)$, not $(1, 3e)$. A velocity is a rate of change, so its conversion involves the **derivative** of the transition map.
+      - text: 'By one fixed matrix, the same at every point of $\mathbb{R}^2$'
+        feedback: |
+          That holds when both charts are linear, as in Chapter 2. Here $\mathscr{Y}$ multiplies by $e^{q_1}$, so the conversion changes from point to point: the matrix depends on $p$.
+      - text: 'They are unrelated: the two charts describe two different vectors'
+        feedback: |
+          The velocity is defined without any chart, as the map $f\mapsto (f\circ\gamma)'(0)$. Only its **description** by numbers uses a chart. So the two pairs must be linked by a rule.
+    explanation: |
+      The rule turns out to be linear, with a matrix built from derivatives of the transition map at $p$: the **Jacobian**. By the end of this lesson you will compute it and recover $(1, 3e)$ from $(2, -2)$.
+
+  - type: widget
+    id: explore
+    widget: chart-basis
+    config:
+      charts: [X, Y]
+      p: [1, 1]
+      v: [1, 2]
+      presets:
+        - { label: 'C.3 charts', charts: [X, Y], p: [1, 1], v: [1, 2] }
+        - { label: 'Cartesian and polar', charts: [cartesian, polar], p: [1, 1], v: [1, 2] }
+    body: |
+      Solid lines: the coordinate lines of $\mathscr{X}$ (where one coordinate is constant). Dashed lines: those of $\mathscr{Y}$. The blue arrow is the velocity $v$ of a straight curve through the point $p$; the purple arrows at $p$ belong to each chart (they get a name in a moment).
+
+      Drag the tip of $v$ and watch the two component readouts. Drag $p$. Then switch to **Cartesian and polar** ($\mathscr{C}$ with coordinates $x, y$; $\mathscr{P}$ with $r, \theta$) and do the same.
+
+  - type: mcq
+    id: what-changes
+    prompt: |
+      In the plane, one fixed velocity $v$ at a point $p$ is described in two charts (say the cartesian chart and the polar chart). Which of these differ between the two charts? Select all that apply.
+    multiple: true
+    options:
+      - text: 'The components (the list of numbers describing $v$)'
+        correct: true
+      - text: 'The purple arrows at $p$ that each chart provides'
+        correct: true
+      - text: 'The velocity $v$ itself'
+        feedback: |
+          $v$ is the rate of change along the curve, $f\mapsto (f\circ\gamma)'(0)$; no chart enters its definition. Switching charts redraws the coordinate lines, not the arrow $v$.
+      - text: 'The point $p$'
+        feedback: |
+          $p$ is a point of the manifold. Each chart gives it different coordinates, but it is the same point.
+    explanation: |
+      Like a vector in Chapter 2 expanded in two bases: the vector stays, the basis and the components change together. The purple arrows are the chart's basis, built next.
+
+  - type: text
+    id: chain-rule
+    title: Expanding a velocity in a chart
+    body: |
+      Let $(\mathcal{U}, \mathscr{X})$ be a chart with $p\in\mathcal{U}$, $\gamma$ a smooth curve with $\gamma(\lambda_0) = p$, and $f\in C^\infty(\mathcal{M})$ a scalar field. We cannot take partial derivatives on $\mathcal{M}$, but we can in $\mathbb{R}^d$. So insert $\mathscr{X}^{-1}\circ\mathscr{X}$ (the identity on $\mathcal{U}$) between $f$ and $\gamma$:
+      $$f\circ\gamma = (f\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\gamma).$$
+      The first factor maps $\mathbb{R}^d\to\mathbb{R}$, the second $\mathbb{R}\to\mathbb{R}^d$. Recall the chain rule: for $g\colon\mathbb{R}\to\mathbb{R}^d$ with entries $g_i$ and $F\colon\mathbb{R}^d\to\mathbb{R}$,
+      $$(F\circ g)'(\lambda) = \sum_{i=1}^d g_i'(\lambda)\,\partial_i F(g(\lambda)),$$
+      where $\partial_i$ is the partial derivative in the $i$-th slot. With $g = \mathscr{X}\circ\gamma$ and $F = f\circ\mathscr{X}^{-1}$:
+      $$\begin{aligned}v_{\gamma,p}(f) &= (f\circ\gamma)'(\lambda_0)\\ &= \sum_{i=1}^d \dot\gamma^i_\mathcal{U}(\lambda_0)\cdot A_i(f),\end{aligned}$$
+      with the two factors
+      $$\dot\gamma^i_\mathcal{U}(\lambda_0) := (\mathscr{X}^i\circ\gamma)'(\lambda_0),$$
+      $$A_i(f) := \partial_i\big[f\circ\mathscr{X}^{-1}\big](\mathscr{X}(p)).$$
+
+  - type: mcq
+    id: which-factor
+    prompt: |
+      In a chart $(\mathcal{U}, \mathscr{X})$ around $p = \gamma(\lambda_0)$, the chain rule gives
+      $$v_{\gamma,p}(f) = \sum_{i=1}^d \dot\gamma^i_\mathcal{U}(\lambda_0)\cdot A_i(f),$$
+      with $\dot\gamma^i_\mathcal{U}(\lambda_0) = (\mathscr{X}^i\circ\gamma)'(\lambda_0)$ and $A_i(f) = \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$. What does each factor depend on?
+    options:
+      - text: '$\dot\gamma^i_\mathcal{U}$: on $\gamma$ and the chart, not on $f$. $A_i(f)$: on $f$, the chart and $p$, not on $\gamma$'
+        correct: true
+      - text: 'Both factors depend on $\gamma$, since both come from differentiating $f\circ\gamma$'
+        feedback: |
+          Look at the formula for $A_i(f)$: it contains $f$, $\mathscr{X}$ and the point $\mathscr{X}(p)$, and no $\gamma$. The chain rule split the dependence: everything about the curve went into the numbers $\dot\gamma^i_\mathcal{U}$.
+      - text: '$\dot\gamma^i_\mathcal{U}$ depends on $f$ too, because the velocity acts on $f$'
+        feedback: |
+          $\dot\gamma^i_\mathcal{U}(\lambda_0) = (\mathscr{X}^i\circ\gamma)'(\lambda_0)$ contains only the chart and the curve. These are plain numbers, the same for every $f$.
+    explanation: |
+      This split is the whole point. The numbers $\dot\gamma^i_\mathcal{U}$ carry the curve; the maps $f\mapsto A_i(f)$ are $d$ fixed objects at $p$, the same for every curve. So every velocity at $p$ is a combination of the same $d$ objects $A_1,\dots,A_d$.
+
+  - type: text
+    id: definition
+    title: The chart-induced basis
+    body: |
+      The maps $A_i$ get a name. For a chart $(\mathcal{U}, \mathscr{X})$ with $p\in\mathcal{U}$ and every $f\in C^\infty(\mathcal{M})$:
+      $$\left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p\!(f) := \partial_i\big[f\circ\mathscr{X}^{-1}\big](\mathscr{X}(p)).$$
+      Read it as: write $f$ in the chart, take the $i$-th partial derivative, evaluate at the coordinates of $p$. The expansion becomes
+      $$v_{\gamma,p} = \sum_{i=1}^d \dot\gamma^i_\mathcal{U}(\lambda_0)\left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p.$$
+      - $\dot\gamma^i_\mathcal{U}(\lambda_0)$ is the $i$-th **coordinate component** of the velocity in the chart $\mathscr{X}$.
+      - The set $\{(\partial/\partial\mathscr{X}^1)_p, \dots, (\partial/\partial\mathscr{X}^d)_p\}$ is the **chart-induced basis** of $T_p\mathcal{M}$.
+
+      That it is a basis (each $(\partial/\partial\mathscr{X}^i)_p$ is itself a velocity, they span $T_p\mathcal{M}$ and are linearly independent) is stated here without proof; the next guided problem proves it. It follows that $\dim T_p\mathcal{M} = d$, the dimension of the manifold.
+
+      A warning: the symbol looks like an ordinary partial derivative "with respect to $\mathscr{X}^i$", as if the vector were made of coordinates. It is not: it is a velocity at $p$, and the chart only labels it.
+
+  - type: numeric
+    id: eval-basis
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$ (points $q = (q_1, q_2)$) take the chart $\mathscr{X}(q) = (2q_1, -q_2)$, with inverse $\mathscr{X}^{-1}(\alpha_1, \alpha_2) = (\alpha_1/2, -\alpha_2)$, the point $p = (1, 1)$ and the scalar field $f(q) = q_1^2 + q_2$. Using
+      $$\left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p\!(f) := \partial_i\big[f\circ\mathscr{X}^{-1}\big](\mathscr{X}(p)),$$
+      compute $(\partial/\partial\mathscr{X}^2)_p(f)$.
+    answer: -1
+    answerText: '-1'
+    wrong:
+      - value: 1
+        feedback: |
+          That is $\partial f/\partial q_2$, the derivative in the standard coordinates. In the chart, $q_2 = -\alpha_2$, so $f\circ\mathscr{X}^{-1}(\alpha) = \alpha_1^2/4 - \alpha_2$: the sign flips.
+      - value: 2
+        feedback: |
+          $2 = \partial f/\partial q_1$ at $p$: the wrong slot, and in standard coordinates. Write $f$ in the chart first, then differentiate in $\alpha_2$.
+    hint: |
+      $(f\circ\mathscr{X}^{-1})(\alpha_1, \alpha_2) = (\alpha_1/2)^2 + (-\alpha_2)$. Differentiate in $\alpha_2$ and evaluate at $\mathscr{X}(p) = (2, -1)$.
+    explanation: |
+      $$F(\alpha) := (f\circ\mathscr{X}^{-1})(\alpha) = \tfrac{\alpha_1^2}{4} - \alpha_2,$$
+      so $\partial_2 F = -1$ everywhere and $(\partial/\partial\mathscr{X}^2)_p(f) = -1$. Likewise $\partial_1 F(2, -1) = \alpha_1/2 = 1$, so $(\partial/\partial\mathscr{X}^1)_p(f) = 1$.
+
+  - type: numeric
+    id: eval-velocity
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$ with chart $\mathscr{X}(q) = (2q_1, -q_2)$, at $p = (1, 1)$ and for $f(q) = q_1^2 + q_2$, one has $(\partial/\partial\mathscr{X}^1)_p(f) = 1$ and $(\partial/\partial\mathscr{X}^2)_p(f) = -1$. A velocity $v$ at $p$ has $\mathscr{X}$-components $(2, -2)$. Compute $v(f)$ from the expansion
+      $$v = \sum_{i=1}^2 \dot\gamma^i_\mathcal{U}\left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p.$$
+    answer: 4
+    wrong:
+      - value: 0
+        feedback: |
+          Watch the signs: the second term is $(-2)\cdot(-1) = +2$, not $-2$.
+    hint: $v(f) = 2\cdot 1 + (-2)\cdot(-1)$.
+    explanation: |
+      $v(f) = 2\cdot 1 + (-2)\cdot(-1) = 4$. Check without any chart: these are the components of the straight curve $\gamma(\lambda) = (1 + \lambda, 1 + 2\lambda)$, and
+      $$f(\gamma(\lambda)) = (1+\lambda)^2 + 1 + 2\lambda,$$
+      whose derivative at $\lambda = 0$ is $2 + 2 = 4$.
+
+  - type: text
+    id: coordinate-curves
+    title: Basis vectors are velocities of coordinate curves
+    body: |
+      Which curve has velocity $(\partial/\partial\mathscr{X}^i)_p$? Move from $p$ along the $i$-th coordinate only, keeping all other coordinates fixed. With $e_i$ the $i$-th standard unit vector of $\mathbb{R}^d$, this **coordinate curve** is
+      $$c_i(\lambda) := \mathscr{X}^{-1}\big(\mathscr{X}(p) + \lambda e_i\big).$$
+      Then $f\circ c_i = (f\circ\mathscr{X}^{-1})(\mathscr{X}(p) + \lambda e_i)$, and its derivative at $\lambda = 0$ is by definition the $i$-th partial derivative:
+      $$(f\circ c_i)'(0) = \partial_i\big[f\circ\mathscr{X}^{-1}\big](\mathscr{X}(p)).$$
+      So $(\partial/\partial\mathscr{X}^i)_p = v_{c_i,p}$: a genuine velocity, tangent to the line along which only the $i$-th coordinate changes. In the plane we can draw it as an arrow with standard components $c_i'(0)$.
+
+  - type: widget
+    id: basis-arrows
+    widget: chart-basis
+    config:
+      charts: [X, Y]
+      p: [1, 1]
+      basisOnly: true
+    body: |
+      Only the bases now. Each purple arrow $(\partial/\partial\mathscr{X}^i)_p$ points along the coordinate line on which only $\mathscr{X}^i$ changes, at the rate set by the chart. Drag $p$: the $\mathscr{X}$ arrows never change (that chart is linear), while the dashed $\mathscr{Y}$ arrows turn and stretch with the bending lines.
+
+  - type: numeric
+    id: y2-arrow
+    prompt: |
+      On $\mathbb{R}^2$ (points $q = (q_1, q_2)$) take the chart $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, with inverse $\mathscr{Y}^{-1}(\beta_1, \beta_2) = (\beta_1, \beta_2e^{-\beta_1})$, and $p = (1, 1)$, so $\mathscr{Y}(p) = (1, e)$. The basis vector $(\partial/\partial\mathscr{Y}^2)_p$ is the velocity at $\lambda = 0$ of the coordinate curve
+      $$c_2(\lambda) = \mathscr{Y}^{-1}(1,\ e + \lambda).$$
+      Its standard components are $(0, a)$. What is $a$? (Four decimals.)
+    answer: 0.36788
+    tolerance: 0.001
+    answerText: '$1/e\approx 0.3679$'
+    wrong:
+      - value: 2.71828
+        feedback: |
+          $e$ is the rate at which $\mathscr{Y}^2 = q_2e^{q_1}$ grows when $q_2$ grows. The basis vector asks the reverse: how fast $q_2$ moves when $\mathscr{Y}^2$ grows at rate 1. That is $1/e$.
+      - value: 1
+        feedback: |
+          Moving at unit rate in $\mathscr{Y}^2$ is not moving at unit rate in $q_2$: compute $c_2(\lambda) = (1, (e + \lambda)e^{-1})$ and differentiate.
+    hint: $c_2(\lambda) = \big(1,\ (e+\lambda)\,e^{-1}\big)$.
+    explanation: |
+      $c_2(\lambda) = (1, 1 + \lambda/e)$, so $c_2'(0) = (0, 1/e)$. All four basis vectors at $p$, in standard components:
+      $$\begin{gathered}(\partial/\partial\mathscr{X}^1)_p = (\tfrac12, 0)\\ (\partial/\partial\mathscr{X}^2)_p = (0, -1)\\ (\partial/\partial\mathscr{Y}^1)_p = (1, -1)\\ (\partial/\partial\mathscr{Y}^2)_p = (0, \tfrac1e)\end{gathered}$$
+
+  - type: mcq
+    id: y1-tilt
+    prompt: |
+      On $\mathbb{R}^2$ (points $q = (q_1, q_2)$) the chart $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$ has first coordinate $\mathscr{Y}^1 = q_1$, exactly the standard first coordinate. Yet at $p = (1, 1)$ the basis vector $(\partial/\partial\mathscr{Y}^1)_p$ has standard components $(1, -1)$, not $(1, 0)$. Why?
+    options:
+      - text: 'Moving along $\mathscr{Y}^1$ keeps $\mathscr{Y}^2 = q_2e^{q_1}$ fixed, so $q_2$ must drop as $q_1$ grows'
+        correct: true
+      - text: 'It is a mistake: a basis vector depends only on its own coordinate function, so it must be $(1, 0)$'
+        feedback: |
+          This is the classic trap. $(\partial/\partial\mathscr{Y}^1)_p$ means "change $\mathscr{Y}^1$ while holding **all the other** coordinates fixed", so it depends on the whole chart. The coordinate curve is $\mathscr{Y}^{-1}(1 + \lambda, e) = (1 + \lambda, e^{-\lambda})$, with velocity $(1, -1)$.
+      - text: 'Because $\mathscr{Y}$ is not a valid chart at $p$'
+        feedback: |
+          $\mathscr{Y}$ is a smooth bijection with smooth inverse $\mathscr{Y}^{-1}(\beta) = (\beta_1, \beta_2e^{-\beta_1})$, defined on all of $\mathbb{R}^2$. The tilt has a different cause: the other coordinate is held fixed along the coordinate curve.
+    explanation: |
+      The coordinate curve is $c_1(\lambda) = \mathscr{Y}^{-1}(1 + \lambda, e) = (1 + \lambda, e^{-\lambda})$: it follows the curved line $q_2e^{q_1} = e$, so $c_1'(0) = (1, -1)$. A basis vector is determined by the full chart, not by one coordinate function alone.
+
+  - type: text
+    id: components
+    title: Reading off the components
+    body: |
+      Given a velocity, how do we get its components without knowing the curve's expansion? Feed it the coordinate function $\mathscr{X}^i$ (a scalar field on $\mathcal{U}$, enough since a velocity only looks near $p$):
+      $$v_{\gamma,p}(\mathscr{X}^i) = \sum_{j=1}^d \dot\gamma^j_\mathcal{U}(\lambda_0)\left(\frac{\partial}{\partial\mathscr{X}^j}\right)_p\!(\mathscr{X}^i).$$
+      To evaluate each basis vector on $\mathscr{X}^i$, write $\mathscr{X}^i$ in the chart: $\mathscr{X}^i\circ\mathscr{X}^{-1}$ sends $(\alpha^1, \dots, \alpha^d)$ to $\alpha^i$, the projection onto slot $i$. Its partial derivative in slot $j$ is $1$ if $j = i$ and $0$ otherwise. This is the **Kronecker delta**:
+      $$\delta^i_j := \begin{cases}1 & i = j\\ 0 & i\ne j\end{cases}$$
+
+  - type: build
+    id: build-delta
+    prompt: |
+      In a chart $(\mathcal{U}, \mathscr{X})$ around $p$, the basis vectors satisfy $(\partial/\partial\mathscr{X}^j)_p(\mathscr{X}^i) = \delta^i_j$ (Kronecker delta: $1$ if $i = j$, else $0$). Feeding the coordinate function $\mathscr{X}^i$ to the expansion $v_{\gamma,p} = \sum_j \dot\gamma^j_\mathcal{U}(\lambda_0)(\partial/\partial\mathscr{X}^j)_p$, build the right-hand side.
+    prefix: 'v_{\gamma,p}(\mathscr{X}^i) ='
+    tiles: ['\sum_{j=1}^d', '\dot\gamma^j_\mathcal{U}(\lambda_0)', '\delta^i_j', '1', '\mathscr{X}^i(p)']
+    answers:
+      - ['\sum_{j=1}^d', '\dot\gamma^j_\mathcal{U}(\lambda_0)', '\delta^i_j']
+      - ['\sum_{j=1}^d', '\delta^i_j', '\dot\gamma^j_\mathcal{U}(\lambda_0)']
+    wrong:
+      - answer: ['\sum_{j=1}^d', '\dot\gamma^j_\mathcal{U}(\lambda_0)', '1']
+        feedback: |
+          Only the term $j = i$ gets a $1$: the projection $\alpha\mapsto\alpha^i$ does not change when another slot $\alpha^j$, $j\ne i$, moves. With all $1$s you would get the sum of all components.
+      - answer: ['\sum_{j=1}^d', '\dot\gamma^j_\mathcal{U}(\lambda_0)', '\mathscr{X}^i(p)']
+        feedback: |
+          A velocity returns a **rate of change** of the field, not its value at $p$. The value $\mathscr{X}^i(p)$ is where the curve is, not how fast the coordinate changes.
+    hint: Each basis vector applied to $\mathscr{X}^i$ gives $\delta^i_j$.
+    explanation: |
+      $$v_{\gamma,p}(\mathscr{X}^i) = \sum_{j=1}^d \dot\gamma^j_\mathcal{U}(\lambda_0)\,\delta^i_j = \dot\gamma^i_\mathcal{U}(\lambda_0).$$
+      The delta kills every term except $j = i$. So the $i$-th component is what the velocity does to the $i$-th coordinate function:
+      $$\dot\gamma^i_\mathcal{U}(\lambda_0) = (\mathscr{X}^i\circ\gamma)'(\lambda_0).$$
+
+  - type: text
+    id: jacobian
+    title: The Jacobian of two charts
+    body: |
+      Now two charts $(\mathcal{U}, \mathscr{X})$ and $(\mathcal{V}, \mathscr{Y})$ with $p\in\mathcal{U}\cap\mathcal{V}$. Their transition map $\mathscr{Y}\circ\mathscr{X}^{-1}$ sends $\mathscr{X}$-coordinates to $\mathscr{Y}$-coordinates. Its matrix of partial derivatives at $\mathscr{X}(p)$ is the **Jacobian**:
+      $$\left(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\right)_p := \partial_j\big[\mathscr{Y}^i\circ\mathscr{X}^{-1}\big](\mathscr{X}(p)).$$
+      Row $i$ is the $\mathscr{Y}$ index, column $j$ the $\mathscr{X}$ index. Reversing the roles gives the Jacobian of $\mathscr{X}\circ\mathscr{Y}^{-1}$:
+      $$\left(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\right)_p := \partial_j\big[\mathscr{X}^i\circ\mathscr{Y}^{-1}\big](\mathscr{Y}(p)).$$
+      The notation is honest: comparing with the definition of the basis, $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ is exactly the basis vector $(\partial/\partial\mathscr{X}^j)_p$ applied to the scalar field $\mathscr{Y}^i$, the rate of change of $\mathscr{Y}^i$ along the $j$-th $\mathscr{X}$ coordinate curve.
+
+  - type: numeric
+    id: jac-entry
+    prompt: |
+      On $\mathbb{R}^2$ (points $q = (q_1, q_2)$) take $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, at $p = (1, 1)$, where $\mathscr{X}(p) = (2, -1)$. The transition map is
+      $$(\mathscr{Y}\circ\mathscr{X}^{-1})(\alpha) = \big(\tfrac{\alpha_1}{2},\ -\alpha_2\,e^{\alpha_1/2}\big).$$
+      Compute the Jacobian entry $(\partial\mathscr{Y}^2/\partial\mathscr{X}^1)_p = \partial_1[\mathscr{Y}^2\circ\mathscr{X}^{-1}](2, -1)$. (Four decimals.)
+    answer: 1.35914
+    tolerance: 0.001
+    answerText: '$e/2\approx 1.3591$'
+    wrong:
+      - value: 2.71828
+        feedback: |
+          The exponent is $\alpha_1/2$, so differentiating $e^{\alpha_1/2}$ in $\alpha_1$ brings down a factor $\tfrac12$.
+      - value: -1.35914
+        feedback: |
+          Check the sign at the point: $\alpha_2 = -1$ there, so $-\alpha_2\cdot\tfrac12 e^{\alpha_1/2} = +\tfrac12 e$.
+      - value: -2.71828
+        feedback: |
+          That is $\partial_2$, the derivative in $\alpha_2$ (the entry in column 2). Column 1 differentiates in $\alpha_1$.
+    hint: $\partial_1\big(-\alpha_2e^{\alpha_1/2}\big) = -\tfrac{\alpha_2}{2}e^{\alpha_1/2}$. Evaluate at $(2, -1)$.
+    explanation: |
+      $-\tfrac{\alpha_2}{2}e^{\alpha_1/2}$ at $(2, -1)$ is $\tfrac{e}{2}$. The full Jacobian at $p$ (row $i$ for $\mathscr{Y}^i$, column $j$ for $\mathscr{X}^j$):
+      $$\left(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\right)_p = \begin{pmatrix}\tfrac12 & 0\\ \tfrac e2 & -e\end{pmatrix}.$$
+
+  - type: text
+    id: inverse-proof
+    title: The two Jacobians are inverse matrices
+    body: |
+      Multiply the two Jacobians (row $i$ of one times column $j$ of the other) and use the chain rule backwards:
+      $$\begin{aligned}&\sum_{k=1}^d \Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\Big)_p\Big(\frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^j}\Big)_p\\ &= \partial_j\big[(\mathscr{X}^i\circ\mathscr{Y}^{-1})\circ(\mathscr{Y}\circ\mathscr{X}^{-1})\big]\\ &= \partial_j\big[\mathscr{X}^i\circ\mathscr{X}^{-1}\big] = \delta^i_j,\end{aligned}$$
+      all evaluated at $\mathscr{X}(p)$; the middle $\mathscr{Y}^{-1}\circ\mathscr{Y}$ cancels. So the product is the identity matrix: each Jacobian is the inverse of the other, and both are invertible at every point of the overlap. This is a consequence of the charts being smoothly compatible, and a handy sanity check on any computed Jacobian.
+
+  - type: numeric
+    id: inverse-entry
+    prompt: |
+      On $\mathbb{R}^2$ with $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, at $p = (1, 1)$ the Jacobian is
+      $$\left(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\right)_p = \begin{pmatrix}\tfrac12 & 0\\ \tfrac e2 & -e\end{pmatrix}.$$
+      The reverse transition is $(\mathscr{X}\circ\mathscr{Y}^{-1})(\beta) = (2\beta_1, -\beta_2e^{-\beta_1})$, and $\mathscr{Y}(p) = (1, e)$. Compute $(\partial\mathscr{X}^2/\partial\mathscr{Y}^1)_p$.
+    answer: 1
+    wrong:
+      - value: 0.73576
+        feedback: |
+          That is $1/(e/2)$, the reciprocal of one entry. Inverting a matrix is not inverting its entries: here $(\partial\mathscr{Y}^1/\partial\mathscr{X}^2)_p = 0$ would even have no reciprocal. Differentiate the reverse transition, or invert the whole matrix.
+      - value: -1
+        feedback: |
+          $\partial_1(-\beta_2e^{-\beta_1}) = +\beta_2e^{-\beta_1}$: the two minus signs cancel. At $(1, e)$ this is $e\cdot e^{-1} = 1$.
+    hint: $\partial_1\big(-\beta_2e^{-\beta_1}\big) = \beta_2e^{-\beta_1}$, evaluated at $\beta = (1, e)$.
+    explanation: |
+      $\beta_2e^{-\beta_1}$ at $(1, e)$ is $1$. The full inverse Jacobian:
+      $$\left(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\right)_p = \begin{pmatrix}2 & 0\\ 1 & -\tfrac1e\end{pmatrix}.$$
+      Check the product with the first Jacobian: row 2 times column 1 gives $1\cdot\tfrac12 - \tfrac1e\cdot\tfrac e2 = 0$, and row 2 times column 2 gives $0 + \tfrac1e\cdot e = 1$.
+
+  - type: widget
+    id: inverse-widget
+    widget: chart-basis
+    config:
+      charts: [X, Y]
+      p: [1, 1]
+      v: [1, 2]
+      inverse: true
+    body: |
+      Both Jacobians in numbers. At $p = (1, 1)$, read the readouts and check that their product is the identity. Then drag $p$: the entries of both change, but they stay inverse matrices at every point.
+
+  - type: text
+    id: basis-law
+    title: How the basis changes
+    body: |
+      Both charts give a basis of the same space $T_p\mathcal{M}$, so each $(\partial/\partial\mathscr{X}^i)_p$ must be a combination of the $(\partial/\partial\mathscr{Y}^j)_p$. The coefficients come from the chain rule. The result:
+      $$\begin{aligned}\Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p = \sum_{j=1}^d &\Big(\frac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\Big)_p\\ &\cdot\Big(\frac{\partial}{\partial\mathscr{Y}^j}\Big)_p.\end{aligned}$$
+      The coefficients of $(\partial/\partial\mathscr{X}^i)_p$ form **column** $i$ of the Jacobian. Objects that change this way are called **covariant**. The proof uses one trick: inside $f\circ\mathscr{X}^{-1}$, insert $\mathscr{Y}^{-1}\circ\mathscr{Y}$.
+
+  - type: order
+    id: basis-law-proof
+    prompt: |
+      Charts $(\mathcal{U}, \mathscr{X})$ and $(\mathcal{V}, \mathscr{Y})$ with $p\in\mathcal{U}\cap\mathcal{V}$, a scalar field $f$, and $(\partial/\partial\mathscr{X}^i)_p(f) := \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$. Put the proof of the basis law in order.
+    steps:
+      - 'Start from the definition: $(\partial/\partial\mathscr{X}^i)_p(f) = \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$.'
+      - 'Insert the identity: $f\circ\mathscr{X}^{-1} = (f\circ\mathscr{Y}^{-1})\circ(\mathscr{Y}\circ\mathscr{X}^{-1})$ near $\mathscr{X}(p)$.'
+      - 'Chain rule: a sum over $j$ of $\partial_i[\mathscr{Y}^j\circ\mathscr{X}^{-1}]$ times $\partial_j[f\circ\mathscr{Y}^{-1}]$, the latter at $(\mathscr{Y}\circ\mathscr{X}^{-1})(\mathscr{X}(p))$.'
+      - 'Simplify the evaluation point: $(\mathscr{Y}\circ\mathscr{X}^{-1})(\mathscr{X}(p)) = \mathscr{Y}(p)$.'
+      - 'Recognize the factors: $(\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p$ and $(\partial/\partial\mathscr{Y}^j)_p(f)$.'
+      - 'Since this holds for every $f\in C^\infty(\mathcal{M})$, the two velocities are equal.'
+    hint: Definition first, then the inserted identity, then the chain rule; the conclusion about all $f$ comes last.
+    explanation: |
+      $$\begin{aligned}\Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p\!(f) &= \sum_{j=1}^d \Big(\frac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\Big)_p\\ &\quad\cdot\Big(\frac{\partial}{\partial\mathscr{Y}^j}\Big)_p\!(f)\end{aligned}$$
+      for every $f$, which is the basis law. Two maps $C^\infty(\mathcal{M})\to\mathbb{R}$ are equal when they agree on every input.
+
+  - type: widget
+    id: basis-law-widget
+    widget: chart-basis
+    config:
+      charts: [X, Y]
+      p: [1, 1]
+      basisOnly: true
+      chain: true
+    body: |
+      The basis law in numbers: each $\mathscr{X}$ arrow is written as a combination of the two dashed $\mathscr{Y}$ arrows, with the coefficients from column $i$ of the Jacobian. Drag $p$ and watch the coefficients change while the combination keeps landing exactly on the solid arrow.
+
+  - type: numeric
+    id: basis-law-check
+    prompt: |
+      On $\mathbb{R}^2$ with $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, at $p = (1, 1)$, the Jacobian is
+      $$\left(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\right)_p = \begin{pmatrix}\tfrac12 & 0\\ \tfrac e2 & -e\end{pmatrix}$$
+      and in standard components $(\partial/\partial\mathscr{Y}^1)_p = (1, -1)$, $(\partial/\partial\mathscr{Y}^2)_p = (0, 1/e)$. Use the basis law $(\partial/\partial\mathscr{X}^i)_p = \sum_j (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p\,(\partial/\partial\mathscr{Y}^j)_p$ to find the **second** standard component of $(\partial/\partial\mathscr{X}^2)_p$.
+    answer: -1
+    wrong:
+      - value: -2.71828
+        feedback: |
+          $-e$ is the coefficient of $(\partial/\partial\mathscr{Y}^2)_p$, not the result. Multiply it by that vector's second component $1/e$, and add the first term $0\cdot(-1)$.
+      - value: 1
+        feedback: |
+          Keep the sign of the coefficient: column 2 of the Jacobian is $(0, -e)$, so the combination is $0\cdot(1, -1) + (-e)\cdot(0, 1/e)$.
+    hint: Column 2 of the Jacobian is $(0, -e)$. Compute $0\cdot(1, -1) + (-e)\cdot(0, 1/e)$.
+    explanation: |
+      $0\cdot(1, -1) + (-e)\cdot(0, \tfrac1e) = (0, -1)$, exactly the coordinate-curve velocity of $\mathscr{X}^{-1}(2, -1 + \lambda) = (1, 1 - \lambda)$. Column 1 works too: $\tfrac12(1, -1) + \tfrac e2(0, \tfrac1e) = (\tfrac12, 0)$.
+
+  - type: text
+    id: component-law
+    title: How the components change
+    body: |
+      The same velocity, expanded in both bases:
+      $$v_{\gamma,p} = \sum_{i=1}^d \dot\gamma^i_\mathcal{U}\Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p = \sum_{k=1}^d \dot\gamma^k_\mathcal{V}\Big(\frac{\partial}{\partial\mathscr{Y}^k}\Big)_p,$$
+      where $\dot\gamma^k_\mathcal{V}$ are the components in $\mathscr{Y}$ (we drop the $(\lambda_0)$). Substitute the basis law into the left side:
+      $$\sum_{i=1}^d\sum_{j=1}^d \dot\gamma^i_\mathcal{U}\Big(\frac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\Big)_p\Big(\frac{\partial}{\partial\mathscr{Y}^j}\Big)_p.$$
+      The $(\partial/\partial\mathscr{Y}^j)_p$ form a basis, so they are linearly independent and the coefficient of each must match on both sides.
+
+  - type: build
+    id: build-component-law
+    prompt: |
+      Charts $\mathscr{X}$, $\mathscr{Y}$ around $p$; a velocity has components $\dot\gamma^j_\mathcal{U}$ in $\mathscr{X}$ and $\dot\gamma^i_\mathcal{V}$ in $\mathscr{Y}$. The basis law is $(\partial/\partial\mathscr{X}^j)_p = \sum_i (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p(\partial/\partial\mathscr{Y}^i)_p$. Matching the coefficient of $(\partial/\partial\mathscr{Y}^i)_p$ in both expansions, build the component law.
+    prefix: '\dot\gamma^i_\mathcal{V} ='
+    tiles: ['\sum_{j=1}^d', '\big(\tfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\big)_p', '\big(\tfrac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\big)_p', '\big(\tfrac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\big)_p', '\dot\gamma^j_\mathcal{U}']
+    answers:
+      - ['\sum_{j=1}^d', '\big(\tfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\big)_p', '\dot\gamma^j_\mathcal{U}']
+      - ['\sum_{j=1}^d', '\dot\gamma^j_\mathcal{U}', '\big(\tfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\big)_p']
+    wrong:
+      - answer: ['\sum_{j=1}^d', '\big(\tfrac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\big)_p', '\dot\gamma^j_\mathcal{U}']
+        feedback: |
+          That is the transposed matrix. The coefficient of $(\partial/\partial\mathscr{Y}^i)_p$ collects, from each $(\partial/\partial\mathscr{X}^j)_p$, its $i$-th coefficient $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$: the $\mathscr{Y}$ index $i$ stays up top, the summed index $j$ goes with $\mathscr{X}$.
+      - answer: ['\sum_{j=1}^d', '\big(\tfrac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\big)_p', '\dot\gamma^j_\mathcal{U}']
+        feedback: |
+          That is the inverse Jacobian, which converts the other way ($\mathscr{Y}$-components into $\mathscr{X}$-components). To get $\mathscr{Y}$-components you need the derivatives of $\mathscr{Y}$: "new over old".
+      - answer: ['\sum_{j=1}^d', '\big(\tfrac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\big)_p', '\dot\gamma^j_\mathcal{U}', '\big(\tfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\big)_p']
+        feedback: |
+          One matrix is enough: the coefficient comes straight from the basis law. The two Jacobians multiplied together would give the identity.
+    hint: The basis law puts $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ in front of $(\partial/\partial\mathscr{Y}^i)_p$ inside $(\partial/\partial\mathscr{X}^j)_p$.
+    explanation: |
+      $$\dot\gamma^i_\mathcal{V} = \sum_{j=1}^d \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\dot\gamma^j_\mathcal{U}.$$
+      Components in $\mathscr{Y}$ = Jacobian times components in $\mathscr{X}$ (matrix times column): component $i$ uses **row** $i$ of the Jacobian, while basis vector $i$ used **column** $i$. The components change "the opposite way" to the basis, so that the vector itself stays the same. Objects that change like this are called **contravariant**.
+
+  - type: numeric
+    id: resolve-hook
+    prompt: |
+      On $\mathbb{R}^2$ with $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, at $p = (1, 1)$ the Jacobian is
+      $$\left(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\right)_p = \begin{pmatrix}\tfrac12 & 0\\ \tfrac e2 & -e\end{pmatrix}.$$
+      A velocity has $\mathscr{X}$-components $(2, -2)$. Use $\dot\gamma^i_\mathcal{V} = \sum_j (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\dot\gamma^j_\mathcal{U}$ to compute its second $\mathscr{Y}$-component. (Four decimals.)
+    answer: 8.15485
+    tolerance: 0.002
+    answerText: '$3e\approx 8.1548$'
+    wrong:
+      - value: 5.43656
+        feedback: |
+          You used column 2, $(0, -e)$, instead of row 2: that is the transposed matrix. The $i$-th new component is row $i$ times the column of old components: $\tfrac e2\cdot 2 + (-e)\cdot(-2)$.
+      - value: 2.73576
+        feedback: |
+          That uses the inverse Jacobian $\begin{pmatrix}2&0\\1&-1/e\end{pmatrix}$, which converts $\mathscr{Y}$-components into $\mathscr{X}$-components. Going from $\mathscr{X}$ to $\mathscr{Y}$ needs $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$.
+      - value: 0
+        feedback: |
+          Check the sign of the second term: $(-e)\cdot(-2) = +2e$.
+    hint: Row 2 of the Jacobian times $(2, -2)$.
+    explanation: |
+      $\tfrac e2\cdot 2 + (-e)\cdot(-2) = e + 2e = 3e$, and row 1 gives $\tfrac12\cdot 2 + 0 = 1$. So $(1, 3e)$: the hook's puzzle is solved. The matrix depends on $p$ through $e^{q_1}$ and $q_2$, which is why no fixed matrix could do it, and it is the derivative of the transition map, not the transition map itself.
+
+  - type: widget
+    id: chain-widget
+    widget: chart-basis
+    config:
+      charts: [X, Y]
+      p: [1, 1]
+      v: [1, 2]
+      chain: true
+    body: |
+      The component law in numbers: Jacobian times the $\mathscr{X}$-components gives the $\mathscr{Y}$-components. Drag the tip of $v$ (the matrix stays, the columns change) and then $p$ (the matrix changes too).
+
+  - type: mcq
+    id: chapter2-link
+    prompt: |
+      In Chapter 2, a change of basis from an old basis $\{\hat{x}_i\}$ to a new one $\{\hat{y}_j\}$ is written $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$ (old in terms of new), and the components then change as $y^i = \sum_j J^i_j\,x^j$. At a point $p$, take the chart $\mathscr{X}$ as old and $\mathscr{Y}$ as new, with $\hat{x}_i = (\partial/\partial\mathscr{X}^i)_p$ and $\hat{y}_j = (\partial/\partial\mathscr{Y}^j)_p$. What is $J_i^j$?
+    options:
+      - text: '$(\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p$'
+        correct: true
+      - text: '$(\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p$'
+        feedback: |
+          That matrix expresses the new basis in terms of the old one, $(\partial/\partial\mathscr{Y}^i)_p = \sum_j (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p(\partial/\partial\mathscr{X}^j)_p$. Chapter 2's $J$ writes the **old** basis in terms of the new.
+      - text: '$(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)_p$'
+        feedback: |
+          This is the inverse Jacobian (with indices placed as in Chapter 2's $J^{-1}$). The basis law $(\partial/\partial\mathscr{X}^i)_p = \sum_j (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p(\partial/\partial\mathscr{Y}^j)_p$ needs derivatives of the new coordinates $\mathscr{Y}^j$.
+    explanation: |
+      Matching $\hat{x}_i = \sum_j J_i^j\hat{y}_j$ with the basis law gives $J_i^j = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p$; then $y^i = \sum_j J^i_j x^j$ is exactly the component law. Nothing new: a chart change at $p$ is a Chapter 2 change of basis whose matrix $J$ is the Jacobian, a different matrix at each point.
+
+  - type: mcq
+    id: trap-summed-index
+    title: Which index is summed?
+    prompt: |
+      For charts $\mathscr{X}$, $\mathscr{Y}$ around $p$, which formula is the correct basis law?
+    options:
+      - text: '$(\partial/\partial\mathscr{X}^i)_p = \sum_j (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p\,(\partial/\partial\mathscr{Y}^j)_p$'
+        correct: true
+      - text: '$(\partial/\partial\mathscr{X}^i)_p = \sum_j (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,(\partial/\partial\mathscr{Y}^j)_p$'
+        feedback: |
+          This uses row $i$ of the Jacobian instead of column $i$, the pattern of the component law. Test it on $\mathscr{X}(q) = (2q_1, -q_2)$, $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$ at $p = (1, 1)$: it gives $\tfrac12(1, -1) + 0 = (\tfrac12, -\tfrac12)$, but $(\partial/\partial\mathscr{X}^1)_p = (\tfrac12, 0)$.
+      - text: '$(\partial/\partial\mathscr{X}^i)_p = \sum_j (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p\,(\partial/\partial\mathscr{Y}^j)_p$'
+        feedback: |
+          The inverse Jacobian (transposed) appears in the reverse law, $(\partial/\partial\mathscr{Y}^i)_p = \sum_j (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p(\partial/\partial\mathscr{X}^j)_p$. Writing an $\mathscr{X}$ basis vector needs derivatives of the $\mathscr{Y}$ coordinates.
+    explanation: |
+      A quick check: the left side is about $\mathscr{X}^i$, so on the right $i$ must stay attached to $\mathscr{X}$ (in the denominator, as on the left), and the summed $j$ must pair $\mathscr{Y}^j$ with $(\partial/\partial\mathscr{Y}^j)_p$. So basis vector $i$ uses **column** $i$ of the Jacobian, while component $i$ (component law) uses **row** $i$.
+
+  - type: mcq
+    id: trap-transition
+    title: Jacobian or transition map?
+    prompt: |
+      For charts $\mathscr{X}$, $\mathscr{Y}$ on a manifold of dimension $d$ and a point $p$ in both domains, what kind of object is the Jacobian $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$, compared with the transition map $\mathscr{Y}\circ\mathscr{X}^{-1}$?
+    options:
+      - text: 'A $d\times d$ matrix of numbers: the derivative of the transition map at $\mathscr{X}(p)$'
+        correct: true
+      - text: 'The transition map itself, written as a matrix'
+        feedback: |
+          A transition map is generally not linear (here $\alpha\mapsto(\alpha_1/2, -\alpha_2e^{\alpha_1/2})$), so it is not a matrix. The Jacobian is its best linear approximation at one point: it acts on velocities, while the transition map acts on coordinates of points.
+      - text: 'The ratio of coordinates, entry by entry: $\mathscr{Y}^i(p)/\mathscr{X}^j(p)$'
+        feedback: |
+          The fraction notation is suggestive, not a quotient of values: each entry is a partial derivative of the transition map. With $\mathscr{X}(q) = (2q_1, -q_2)$, $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$ at $p = (1, 1)$, the ratio $\mathscr{Y}^1(p)/\mathscr{X}^2(p) = 1/(-1) = -1$, but the entry $(\partial\mathscr{Y}^1/\partial\mathscr{X}^2)_p$ is $0$: $\mathscr{Y}^1 = q_1$ does not change along the $\mathscr{X}^2$ coordinate curve.
+    explanation: |
+      Points convert with $\mathscr{Y}\circ\mathscr{X}^{-1}$; velocities (and basis vectors) convert with its derivative at the point. Two different jobs, two different objects.
+
+  - type: numeric
+    id: trap-polar-length
+    title: Basis vectors need not be unit vectors
+    prompt: |
+      In the plane, the polar chart is $\mathscr{P}(q) = (r, \theta)$ with inverse $\mathscr{P}^{-1}(r, \theta) = (r\cos\theta, r\sin\theta)$. The basis vector $(\partial/\partial\theta)_p$ is the velocity of the coordinate curve $\lambda\mapsto\mathscr{P}^{-1}(r_p, \theta_p + \lambda)$. At $p = (1, 1)$, what is the length of this arrow in the standard plane (standard components, usual length)? (Four decimals.)
+    answer: 1.41421
+    tolerance: 0.001
+    answerText: '$\sqrt2\approx 1.4142$'
+    wrong:
+      - value: 1
+        feedback: |
+          Basis vectors of a chart are not normalized. The coordinate curve is a circle of radius $r_p = \sqrt2$, traced at angular rate 1, so its speed is $r_p$: the velocity is $(-r\sin\theta, r\cos\theta)$.
+    hint: The velocity is $(-r_p\sin\theta_p,\ r_p\cos\theta_p)$, with $r_p = \sqrt2$.
+    explanation: |
+      $(\partial/\partial\theta)_p = (-r\sin\theta, r\cos\theta) = (-1, 1)$ at $p = (1, 1)$, of length $\sqrt2 = r_p$. Two cautions: a chart-induced basis is generally not orthonormal, and even "length" is extra structure here (we borrowed the standard dot product of $\mathbb{R}^2$; on a general manifold that structure is the metric, Level 7). Nothing in this lesson needed it.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      - **Chart-induced basis:** $(\partial/\partial\mathscr{X}^i)_p(f) := \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$, the velocity of the $i$-th coordinate curve; every velocity is $\sum_i \dot\gamma^i_\mathcal{U}(\partial/\partial\mathscr{X}^i)_p$, so $\dim T_p\mathcal{M} = d$.
+      - **Components:** $\dot\gamma^i_\mathcal{U} = v_{\gamma,p}(\mathscr{X}^i)$, thanks to $(\partial/\partial\mathscr{X}^j)_p(\mathscr{X}^i) = \delta^i_j$.
+      - **Jacobian:** $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p = \partial_j[\mathscr{Y}^i\circ\mathscr{X}^{-1}](\mathscr{X}(p))$, the derivative of the transition map; the two Jacobians are inverse matrices.
+      - **Basis law (covariant):** $(\partial/\partial\mathscr{X}^i)_p = \sum_j (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p(\partial/\partial\mathscr{Y}^j)_p$.
+      - **Component law (contravariant):** $\dot\gamma^i_\mathcal{V} = \sum_j (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\dot\gamma^j_\mathcal{U}$; a chart change at $p$ is a Chapter 2 change of basis with $J$ = the Jacobian.
+
+      **Next:** we called $\{(\partial/\partial\mathscr{X}^i)_p\}$ a basis without proof. In *Guided Problem: The Chart-Induced Basis* you prove it: each one is a velocity, they span $T_p\mathcal{M}$, and they are linearly independent.
