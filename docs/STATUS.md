@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel done)
+## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel, ch06-parallel-transport done)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -24,7 +24,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
-- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards); widget `parallel-transport` built. Next: `ch06-parallel-transport` (lesson).
+- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards); widget `parallel-transport` built. Next: `ch06-torsion-curvature` (concept).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 6 (Covariant Derivative) in `course.yaml` order, next
@@ -258,6 +258,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   `radial`, `radial-squared` ($\lambda^2$: autoparallel, not autoparallelly transported); transported vector $\mathcal{Z}$ with components $z^k$, velocity $v_\gamma$ (components $\dot\gamma^i$),
   acceleration $a_\gamma = \nabla_{v_\gamma}v_\gamma$; transport equation $\dot z^k + \Gamma^k_{ji}z^j\dot\gamma^i = 0$; badge wording "autoparallel" ($a_\gamma = \text{ᚱ}\,v_\gamma$) vs "autoparallelly
   transported" ($a_\gamma = 0$), the book's terms. $\nabla^{\mathrm{P}}$ transport stops where the curve leaves $\mathcal{V}$ (circle at $\lambda = \pi$). Check: $r_0 = 2$, $z_0 = (1,0)$, $\lambda = 1.2$ under $\nabla^{\mathrm{E}}$: polar $(0.36, -0.47)$.
+  `ch06-parallel-transport`: field along $\gamma$ $\mathcal{X}_\gamma(\lambda)\in T_{\gamma(\lambda)}\mathcal{M}$, components $x^k_\gamma(\lambda) := (dx^k)_{\gamma(\lambda)}(\mathcal{X}_\gamma(\lambda))$, dot $= d/d\lambda$,
+  velocity components $\dot\gamma^i$ (chart label dropped), $v_\gamma(\lambda)$; figure-eight $\gamma(\lambda) = (\sin\lambda, \tfrac12\sin2\lambda)$ (velocities $(1,1)$, $(-1,1)$ at the origin);
+  $\nabla_{v_\gamma}$ with properties ($\mathbb{R}$-linear, Leibniz with ᚱ a function of $\lambda$, compatibility); chart formula labelled $(**)$ $(\nabla_{v_\gamma}\mathcal{X}_\gamma)^k = \dot x^k_\gamma + \Gamma^k_{ji}x^j_\gamma\dot\gamma^i$;
+  autoparallel equation labelled (6.1); $a^k_\gamma = \ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j$; reparametrization written $\lambda = \lambda(\mu)$ (new acceleration $\lambda''v + (\lambda')^2a$), not with ᚱ;
+  antisymmetric example $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$ (cartesian): straight-line autoparallels, transport of $(0,1)$ along $(\lambda,0)$ gives $(\lambda,1)$ (torsion teaser);
+  vertical line check at $x_0 = \lambda = 1$: $r = \sqrt2$, $\dot\gamma = (1/\sqrt2, 1/2)$, $\ddot\gamma = (\sqrt2/4, -1/2)$; radial $\lambda^2$: $\text{ᚱ} = 1/\lambda$; sphere holonomy ($90°$) stated without proof.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -270,6 +276,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+
+### 2026-10-20 — ch06-parallel-transport (concept, 31 cards)
+- Hook "is the circle straight?" (guess for ∇ᴱ/∇ᴾ), early widget (circle, badge and acceleration hidden), fields along curves with figure-eight, $\nabla_{v_\gamma}$ (theorem, Leibniz MCQ, order card for the uniqueness derivation, build of $(**)$), transport ODE and linear map, circle in polar (solution MCQ, numeric $\dot z^1(1.2) = -0.93$), parallel vs parallelly transported, autoparallel equation, symmetric-part trap plus antisymmetric transport numeric, vertical line in polar (two numerics), circle acceleration and reparametrization, second widget (badge presets), hook resolved, radial λ² (ᚱ = 2/3 at 1.5), holonomy text + MCQ, summary.
+- Choices: used the book's equation label (6.1) and $(**)$ as in-lesson names; GR "free fall = autoparallel" mentioned once (metric connection Level 7); sphere holonomy stated without proof.
+- Conventions fixed here: field along $\gamma$ $x^k_\gamma$, dot $= d/d\lambda$, $(**)$, (6.1), reparametrization $\lambda(\mu)$ (not ᚱ), antisymmetric example $\Gamma^1_{12} = -\Gamma^1_{21} = 1$.
 
 ### 2026-10-20 — widget `parallel-transport` (widget session)
 - `js/widgets.js`: new `parallelTransport` (curve presets, λ slider + Play, ∇ᴱ/∇ᴾ toggle, draggable start vector, faded trail, $v_\gamma$, $a_\gamma$ dashed, optional polar basis,

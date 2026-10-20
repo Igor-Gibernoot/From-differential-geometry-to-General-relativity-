@@ -263,7 +263,11 @@ levels:
         kind: concept
         file: ch06/christoffel.yaml
         summary: In a chart a connection is d³ functions Γ, which give every covariant derivative in components; they change chart with an extra second-derivative term, so they are not a tensor.
-      - { id: ch06-parallel-transport, title: Parallel Transport and Autoparallels, kind: concept }
+      - id: ch06-parallel-transport
+        title: Parallel Transport and Autoparallels
+        kind: concept
+        file: ch06/parallel-transport.yaml
+        summary: A connection carries a vector along a curve by a linear ODE, and the curves that carry their own velocity are the autoparallels. Whether a circle is straight depends on the connection.
       - { id: ch06-torsion-curvature, title: Torsion and Curvature, kind: concept }
       - { id: ch06-torsion-tensor, title: "Guided Problem: Torsion Is a Tensor", kind: guided }
       - { id: ch06-three-connections, title: "Guided Problem: Three Connections on the Plane", kind: guided }

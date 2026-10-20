@@ -1,0 +1,535 @@
+id: ch06-parallel-transport
+title: Parallel Transport and Autoparallels
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: Is the circle straight?
+    body: |
+      Recall: a **connection** $\nabla$ turns a tangent vector $\mathcal{X}_p$ and a vector field $\mathcal{Y}$ into $\nabla_{\mathcal{X}_p}\mathcal{Y}\in T_p\mathcal{M}$, the covariant derivative of $\mathcal{Y}$ along $\mathcal{X}_p$. On the plane we met two: $\nabla^{\mathrm{E}}$, which differentiates **cartesian** components (chart $\mathscr{X}$), and $\nabla^{\mathrm{P}}$, which differentiates **polar** components (chart $\mathscr{Y} = (r,\theta)$, $\theta\in(-\pi,\pi)$, defined off the half-line $\{b = 0,\ a\le0\}$).
+
+      Call a curve **straight** if it never turns: its velocity, compared with itself along the way by the connection, never changes. Take the circle of radius $r_0$,
+      $$\delta_{r_0}(\lambda) = (r_0\cos\lambda,\ r_0\sin\lambda).$$
+      **Before any theory, guess.** The circle is straight
+      - for both connections;
+      - for neither;
+      - for $\nabla^{\mathrm{P}}$ only;
+      - for $\nabla^{\mathrm{E}}$ only.
+
+      Keep your guess. By the end you will have an equation that decides it, and you will see why "straight" is not a property of the curve alone.
+
+  - type: widget
+    id: transport-circle
+    title: Carry a vector around the circle
+    widget: parallel-transport
+    config:
+      curve: { type: circle, r0: 2 }
+      connection: E
+      connections: [E, P]
+      z0: [1, 0]
+      showAcceleration: false
+      badge: false
+      residual: true
+      presets:
+        - { label: '∇ᴱ, start (1, 0)', curve: { type: circle, r0: 2 }, connection: E, z0: [1, 0], lambda: 0 }
+        - { label: '∇ᴱ, λ = 1.2', curve: { type: circle, r0: 2 }, connection: E, z0: [1, 0], lambda: 1.2 }
+        - { label: '∇ᴾ, start (1, 0)', curve: { type: circle, r0: 2 }, connection: P, z0: [1, 0], lambda: 0 }
+        - { label: '∇ᴾ, start (0, 1)', curve: { type: circle, r0: 2 }, connection: P, z0: [0, 1], lambda: 0 }
+    body: |
+      The gold point runs along the circle $\delta_2$ as you move the $\lambda$ slider (or press Play). The blue vector $\mathcal{Z}$ starts as the faded vector labelled "start" (drag its tip) and is **carried along** the curve by the chosen connection; faded copies show where it has been. The readout writes $\mathcal{Z}$ in the cartesian basis $\partial x_k$ and in the polar basis $\partial y_k$ ($\partial y_1$ radial, $\partial y_2$ around the circle).
+
+      1. With $\nabla^{\mathrm{E}}$, play the whole turn. Watch the two rows of components.
+      2. Switch to $\nabla^{\mathrm{P}}$ and play again. Where does the transport stop, and why?
+
+  - type: mcq
+    id: what-constant
+    title: What stays constant?
+    multiple: true
+    prompt: |
+      On the plane, a vector $\mathcal{Z}$ starts at $(2,0)$ with cartesian components $(1,0)$ and is carried around the circle $\delta_2(\lambda) = (2\cos\lambda, 2\sin\lambda)$, either by $\nabla^{\mathrm{E}}$ (which differentiates cartesian components) or by $\nabla^{\mathrm{P}}$ (which differentiates polar components, chart $\mathscr{Y} = (r,\theta)$). Select every true statement.
+    options:
+      - text: 'Under $\nabla^{\mathrm{E}}$ the cartesian components stay $(1,0)$: the arrow keeps pointing the same way while its polar components change'
+        correct: true
+      - text: 'Under $\nabla^{\mathrm{P}}$ the polar components stay $(1,0)$: the arrow stays radial and turns with the circle'
+        correct: true
+      - text: 'Under $\nabla^{\mathrm{E}}$ the polar components stay constant too, since the vector does not change'
+        feedback: |
+          The **vector** keeps its cartesian direction, but the polar basis turns as you go around: at $\lambda = \pi/2$ the radial basis vector $\partial y_1$ points up, so a vector pointing right is no longer "$1\cdot\partial y_1$". Components depend on the basis they are read in.
+      - text: 'Both connections carry the vector the same way, because "not changing" means the same thing everywhere'
+        feedback: |
+          "Not changing" means "covariant derivative zero", and the two connections differentiate different components. Under $\nabla^{\mathrm{E}}$ the arrow keeps pointing right; under $\nabla^{\mathrm{P}}$ it stays radial and so points up at $\lambda = \pi/2$. Which vector counts as "the same" is a choice: the connection.
+    explanation: |
+      Each connection declares some components constant: $\nabla^{\mathrm{E}}$ the cartesian ones, $\nabla^{\mathrm{P}}$ the polar ones. Under $\nabla^{\mathrm{P}}$ the transport stops at $\lambda = \pi$, where the circle reaches the half-line $\{b = 0,\ a\le0\}$ on which the polar chart, and so $\nabla^{\mathrm{P}}$, is not defined.
+
+  - type: text
+    id: along-curve
+    title: Vector fields along a curve
+    body: |
+      What the widget carries is not a vector field on the plane: it is one vector at each point **of the curve**. Let $\gamma\colon\mathbb{R}\to\mathcal{M}$ be a smooth curve. A **vector field along** $\gamma$ is a map
+      $$\mathcal{X}_\gamma\colon\ \mathbb{R}\to T\mathcal{M}$$
+      $$\mathcal{X}_\gamma(\lambda)\in T_{\gamma(\lambda)}\mathcal{M}$$
+      that is smooth: in a chart $(\mathcal{U},\mathscr{X})$ its **component functions**
+      $$x^i_\gamma(\lambda) := (dx^i)_{\gamma(\lambda)}\big(\mathcal{X}_\gamma(\lambda)\big)$$
+      are smooth functions of $\lambda$ (wherever $\gamma(\lambda)\in\mathcal{U}$). So $\mathcal{X}_\gamma(\lambda) = x^i_\gamma(\lambda)\,(\partial x_i)_{\gamma(\lambda)}$.
+
+      Two examples:
+      - the **velocity** $v_\gamma\colon\lambda\mapsto v_\gamma(\lambda)$, the velocity of $\gamma$ at $\gamma(\lambda)$, with components $\dot\gamma^i(\lambda) := (\mathscr{X}^i\circ\gamma)'(\lambda)$;
+      - the **restriction** $\mathcal{Y}\circ\gamma$ of a vector field $\mathcal{Y}|_\mathcal{U} = \tilde x^j\,\partial x_j$, with components $\tilde x^j\circ\gamma$.
+
+      A dot always means $d/d\lambda$.
+
+  - type: mcq
+    id: figure-eight
+    title: A curve that crosses itself
+    prompt: |
+      A vector field along a curve $\gamma$ assigns to each parameter $\lambda$ a vector $\mathcal{X}_\gamma(\lambda)\in T_{\gamma(\lambda)}\mathcal{M}$. On the plane, the figure-eight
+      $$\gamma(\lambda) = \big(\sin\lambda,\ \tfrac12\sin2\lambda\big)$$
+      passes through the origin at $\lambda = 0$ and at $\lambda = \pi$, with cartesian velocity components $(\cos\lambda, \cos2\lambda)$: $(1,1)$ the first time, $(-1,1)$ the second. Which statement is right?
+    options:
+      - text: 'The velocity $v_\gamma$ is a vector field along $\gamma$, but it is not the restriction $\mathcal{Y}\circ\gamma$ of any vector field $\mathcal{Y}$ on the plane'
+        correct: true
+      - text: '$v_\gamma$ is not a vector field along $\gamma$, because it takes two values at the origin'
+        feedback: |
+          A field along $\gamma$ is a function of the **parameter** $\lambda$, not of the point. At $\lambda = 0$ and $\lambda = \pi$ it may take different values even though $\gamma(0) = \gamma(\pi)$. It is a field on the plane, $\mathcal{Y}$, that must give one vector per point.
+      - text: '$v_\gamma = \mathcal{Y}\circ\gamma$ for the field $\mathcal{Y}$ that equals the velocity at each point of the curve'
+        feedback: |
+          At the origin such a $\mathcal{Y}$ would need two values, $(1,1)$ and $(-1,1)$, at once. A vector field on the plane gives **one** vector per point, so no $\mathcal{Y}$ restricts to $v_\gamma$.
+    explanation: |
+      Restrictions of vector fields are fields along $\gamma$, but not conversely: whenever $\gamma(\lambda_1) = \gamma(\lambda_2)$ with $\mathcal{X}_\gamma(\lambda_1)\neq\mathcal{X}_\gamma(\lambda_2)$ there is no field to restrict. So $\nabla_{v_\gamma(\lambda)}$ cannot be applied directly to $v_\gamma$: we need a derivative made for fields along curves.
+
+  - type: text
+    id: covariant-along
+    title: The covariant derivative along a curve
+    body: |
+      **Theorem.** Given a connection $\nabla$ and a smooth curve $\gamma$, there is exactly one operator $\nabla_{v_\gamma}$, the **covariant derivative along** $\gamma$, sending smooth fields along $\gamma$ to smooth fields along $\gamma$, such that for all fields $\mathcal{X}_\gamma,\mathcal{Y}_\gamma$ along $\gamma$, numbers $\alpha\in\mathbb{R}$ and smooth functions $\text{ᚱ}\colon\mathbb{R}\to\mathbb{R}$ (the rune ᚱ names a function of the parameter):
+      1. **$\mathbb{R}$-linearity**:
+      $$\begin{aligned}&\nabla_{v_\gamma}(\mathcal{X}_\gamma + \alpha\,\mathcal{Y}_\gamma)\\ &\ = \nabla_{v_\gamma}\mathcal{X}_\gamma + \alpha\,\nabla_{v_\gamma}\mathcal{Y}_\gamma\end{aligned}$$
+      2. **Leibniz rule**:
+      $$\nabla_{v_\gamma}(\text{ᚱ}\,\mathcal{X}_\gamma) = \text{ᚱ}'\,\mathcal{X}_\gamma + \text{ᚱ}\,\nabla_{v_\gamma}\mathcal{X}_\gamma$$
+      3. **Compatibility with $\nabla$**: if $\mathcal{X}_\gamma = \mathcal{Y}\circ\gamma$, then
+      $$(\nabla_{v_\gamma}\mathcal{X}_\gamma)(\lambda) = \nabla_{v_\gamma(\lambda)}\mathcal{Y}.$$
+
+      Property 3 says: where a field on $\mathcal{M}$ exists, nothing new happens. Properties 1 and 2 extend the derivative to every field along $\gamma$, such as the figure-eight's velocity. Next you derive the formula in a chart; it proves uniqueness, and defining $\nabla_{v_\gamma}$ by that formula chart by chart proves existence (on overlaps both chart formulas obey 1–3, so uniqueness makes them agree).
+
+  - type: mcq
+    id: leibniz-along
+    title: Leibniz along the curve
+    prompt: |
+      The covariant derivative along a curve $\gamma$ obeys the Leibniz rule
+      $$\nabla_{v_\gamma}(\text{ᚱ}\,\mathcal{X}_\gamma) = \text{ᚱ}'\,\mathcal{X}_\gamma + \text{ᚱ}\,\nabla_{v_\gamma}\mathcal{X}_\gamma$$
+      for a smooth function $\text{ᚱ}$ of the parameter $\lambda$. A field $\mathcal{X}_\gamma$ along $\gamma$ has $\nabla_{v_\gamma}\mathcal{X}_\gamma = 0$. What is $\nabla_{v_\gamma}(\lambda^2\,\mathcal{X}_\gamma)$?
+    options:
+      - text: '$2\lambda\,\mathcal{X}_\gamma$'
+        correct: true
+      - text: '$0$'
+        feedback: |
+          That keeps only the second term, $\lambda^2\,\nabla_{v_\gamma}\mathcal{X}_\gamma = 0$. The factor $\lambda^2$ changes along the curve, and its derivative $2\lambda$ gives the first term $2\lambda\,\mathcal{X}_\gamma$.
+      - text: '$\lambda^2\,\mathcal{X}_\gamma$'
+        feedback: |
+          The Leibniz rule differentiates the factor: $\text{ᚱ}(\lambda) = \lambda^2$ contributes $\text{ᚱ}'(\lambda) = 2\lambda$, not $\lambda^2$ itself.
+    explanation: |
+      With $\text{ᚱ}(\lambda) = \lambda^2$: $\text{ᚱ}'\,\mathcal{X}_\gamma + \text{ᚱ}\cdot0 = 2\lambda\,\mathcal{X}_\gamma$. A field with zero derivative stops having zero derivative once rescaled by a non-constant factor.
+
+  - type: order
+    id: derive-along
+    title: Derive the chart formula
+    prompt: |
+      Let $\nabla_{v_\gamma}$ be the covariant derivative along $\gamma$ (properties: $\mathbb{R}$-linear, Leibniz rule with a function $\text{ᚱ}$ of $\lambda$, and compatibility $(\nabla_{v_\gamma}(\mathcal{Y}\circ\gamma))(\lambda) = \nabla_{v_\gamma(\lambda)}\mathcal{Y}$). In a chart with basis fields $\partial x_j$ and coefficients $\nabla_{\partial x_i}\partial x_j = \Gamma^k_{ji}\,\partial x_k$, put the derivation of $(\nabla_{v_\gamma}\mathcal{X}_\gamma)(\lambda)$ in order.
+    steps:
+      - 'Write $\mathcal{X}_\gamma = x^j_\gamma\,(\partial x_j\circ\gamma)$, a sum of functions of $\lambda$ times restricted basis fields.'
+      - 'Linearity and Leibniz (with $\text{ᚱ} = x^j_\gamma$) give $\dot x^j_\gamma\,(\partial x_j\circ\gamma) + x^j_\gamma\,\nabla_{v_\gamma}(\partial x_j\circ\gamma)$.'
+      - 'Compatibility: $\nabla_{v_\gamma}(\partial x_j\circ\gamma)$ at $\lambda$ is $\nabla_{v_\gamma(\lambda)}\partial x_j$.'
+      - 'Linearity of $\nabla$ in the direction, with $v_\gamma(\lambda) = \dot\gamma^i\,(\partial x_i)_{\gamma(\lambda)}$, gives $\dot\gamma^i\,\nabla_{(\partial x_i)_{\gamma(\lambda)}}\partial x_j$.'
+      - 'Insert $\nabla_{\partial x_i}\partial x_j = \Gamma^k_{ji}\,\partial x_k$, rename $j\to k$ in the first term and read off the $k$-th component.'
+    hint: |
+      Start by expanding the field in the basis; the connection coefficients enter only at the very end.
+    explanation: |
+      Every step was forced by the three properties, so the operator is unique. ($\partial x_j$ lives only on the chart domain; as for $\nabla$ itself, $\nabla_{v_\gamma}$ only looks near $\lambda$, so that is enough.)
+
+  - type: build
+    id: build-star
+    title: The formula in a chart
+    prompt: |
+      A field $\mathcal{X}_\gamma$ along a curve $\gamma$ has component functions $x^k_\gamma(\lambda)$ in a chart; the curve has velocity components $\dot\gamma^i(\lambda)$, and the connection has coefficients $\Gamma^k_{ji}$ (evaluated at $\gamma(\lambda)$; upper index output, first lower index the differentiated basis field, **last** lower index the direction), defined by $\nabla_{\partial x_i}\partial x_j = \Gamma^k_{ji}\,\partial x_k$. Build the $k$-th component of $\nabla_{v_\gamma}\mathcal{X}_\gamma$.
+    prefix: '(\nabla_{v_\gamma}\mathcal{X}_\gamma)^k ='
+    tiles: ['\dot x^k_\gamma', '+', '-', '\Gamma^k_{ji}\,x^j_\gamma\,\dot\gamma^i', '\Gamma^k_{ij}\,x^j_\gamma\,\dot\gamma^i']
+    answers:
+      - ['\dot x^k_\gamma', '+', '\Gamma^k_{ji}\,x^j_\gamma\,\dot\gamma^i']
+      - ['\Gamma^k_{ji}\,x^j_\gamma\,\dot\gamma^i', '+', '\dot x^k_\gamma']
+    wrong:
+      - answer: ['\dot x^k_\gamma', '+', '\Gamma^k_{ij}\,x^j_\gamma\,\dot\gamma^i']
+        feedback: |
+          Here the field's index $j$ sits last, in the direction slot. The direction is the velocity, $\dot\gamma^i$, so $i$ goes last: $\Gamma^k_{ji}\,x^j_\gamma\,\dot\gamma^i$. For a connection with $\Gamma^k_{ji}\neq\Gamma^k_{ij}$ the two differ.
+      - answer: ['\dot x^k_\gamma']
+        feedback: |
+          That says the basis fields do not change along the curve, true only where all $\Gamma$'s vanish (like $\nabla^{\mathrm{E}}$ in cartesian coordinates). In polar coordinates even $\nabla^{\mathrm{E}}$ has $\Gamma^1_{22} = -r$.
+      - answer: ['\dot x^k_\gamma', '-', '\Gamma^k_{ji}\,x^j_\gamma\,\dot\gamma^i']
+        feedback: |
+          The minus sign belongs to **covector** components ($-\Gamma$ per lower index). A vector, with an upper index, gets $+\Gamma$.
+    hint: |
+      One term differentiates the components, which are functions of $\lambda$ only; the other comes from the turning basis.
+    explanation: |
+      $$\begin{aligned}&(\nabla_{v_\gamma}\mathcal{X}_\gamma)(\lambda)\\ &= \big(\dot x^k_\gamma + \Gamma^k_{ji}\,x^j_\gamma\,\dot\gamma^i\big)(\partial x_k)_{\gamma(\lambda)}\end{aligned}$$
+      with $\Gamma^k_{ji}$ taken at $\gamma(\lambda)$. Call it $(**)$. For a restriction $x^k_\gamma = \tilde x^k\circ\gamma$ the chain rule gives $\dot x^k_\gamma = v_\gamma(\lambda)(\tilde x^k)$, and $(**)$ is the familiar component formula of $\nabla_{v_\gamma(\lambda)}\mathcal{Y}$: property 3 holds.
+
+  - type: text
+    id: transport-def
+    title: Parallel transport
+    body: |
+      A field $\mathcal{Z}$ along $\gamma$ is **parallelly transported** along $\gamma$ if
+      $$\nabla_{v_\gamma}\mathcal{Z} = 0.$$
+      With components $z^k(\lambda)$, formula $(**)$ turns this into the **transport equation**
+      $$\dot z^k + \Gamma^k_{ji}\,z^j\,\dot\gamma^i = 0,$$
+      ($k = 1,\dots,d$, $\Gamma$ at $\gamma(\lambda)$). It is a system of $d$ **linear** first-order ordinary differential equations (ODEs) for $z^1,\dots,z^d$. A standard ODE theorem (stated here without proof) gives exactly one solution for each starting vector $z^k(\lambda_0)$. So a vector at $\gamma(\lambda_0)$ is carried along the curve in exactly one way, and the result depends linearly on the start: parallel transport is a linear map
+      $$T_{\gamma(\lambda_0)}\mathcal{M}\to T_{\gamma(\lambda_1)}\mathcal{M}.$$
+      This is how a connection "connects" tangent spaces at different points, which, without it, have nothing to do with each other.
+
+  - type: mcq
+    id: euclid-transport
+    title: Transport with zero coefficients
+    prompt: |
+      Parallel transport of a vector with components $z^k(\lambda)$ along a curve with velocity components $\dot\gamma^i$ obeys $\dot z^k + \Gamma^k_{ji}\,z^j\,\dot\gamma^i = 0$. For the connection $\nabla^{\mathrm{E}}$ on the plane, all coefficients vanish in the cartesian chart $\mathscr{X}$. What does transport along an **arbitrary** curve do?
+    options:
+      - text: 'It keeps the cartesian components constant, whatever the curve'
+        correct: true
+      - text: 'It keeps the cartesian components constant only along straight lines'
+        feedback: |
+          With all $\Gamma^k_{ji} = 0$ the equation is $\dot z^k = 0$ for **every** curve: the velocity $\dot\gamma^i$ multiplies zero. The shape of the curve plays no role.
+      - text: 'It keeps all components constant, in every chart'
+        feedback: |
+          Only in the chart where the coefficients vanish. In polar coordinates $\nabla^{\mathrm{E}}$ has $\Gamma^1_{22} = -r$ and $\Gamma^2_{12} = \Gamma^2_{21} = 1/r$, so the polar components of a transported vector change, as the circle showed.
+    explanation: |
+      $\dot z^k = 0$: the transported vector has constant cartesian components. That is the "keep pointing the same way" of the plane, now as a theorem about $\nabla^{\mathrm{E}}$.
+
+  - type: text
+    id: circle-polar
+    title: The circle in polar coordinates
+    body: |
+      Now the same transport read in the polar chart $\mathscr{Y} = (r,\theta)$, where $\nabla^{\mathrm{E}}$ has
+      $$\begin{gathered}\Gamma^1_{22} = -r\\ \Gamma^2_{12} = \Gamma^2_{21} = \tfrac1r\end{gathered}$$
+      and all other coefficients zero. Along $\delta_{r_0}$ (for $0\le\lambda<\pi$) the polar coordinates are $(r,\theta) = (r_0,\lambda)$, so
+      $$\dot\gamma^1 = 0,\quad \dot\gamma^2 = 1.$$
+      Only terms with $i = 2$ survive in $\Gamma^k_{ji}z^j\dot\gamma^i$, and the transport equation becomes
+      $$\begin{gathered}\dot z^1 - r_0\,z^2 = 0\\ \dot z^2 + \tfrac1{r_0}\,z^1 = 0\end{gathered}$$
+      Two coupled equations: each component feeds the other. Expect sines and cosines.
+
+  - type: mcq
+    id: circle-solution
+    title: Solve the transport equation
+    prompt: |
+      Under $\nabla^{\mathrm{E}}$, the polar components $z^1, z^2$ of a vector transported along the circle $\delta_{r_0}(\lambda) = (r_0\cos\lambda, r_0\sin\lambda)$ obey
+      $$\begin{gathered}\dot z^1 = r_0\,z^2\\ \dot z^2 = -\tfrac1{r_0}\,z^1\end{gathered}$$
+      At $\lambda = 0$ the vector is $\partial x_1 = \partial y_1$, so $(z^1, z^2) = (1, 0)$. Which is the solution?
+    options:
+      - text: '$z^1 = \cos\lambda$, $z^2 = -\tfrac1{r_0}\sin\lambda$'
+        correct: true
+      - text: '$z^1 = \cos\lambda$, $z^2 = \tfrac1{r_0}\sin\lambda$'
+        feedback: |
+          Check the second equation: $\dot z^2 = \tfrac1{r_0}\cos\lambda$, but $-\tfrac1{r_0}z^1 = -\tfrac1{r_0}\cos\lambda$. The sign is off: the polar basis turns **counterclockwise** with the circle, so a fixed arrow turns **clockwise** relative to it.
+      - text: '$z^1 = 1$, $z^2 = 0$'
+        feedback: |
+          Constant polar components is transport under $\nabla^{\mathrm{P}}$. Here $\dot z^2 = -\tfrac1{r_0}z^1 = -\tfrac1{r_0}\neq0$, so $z^2$ must change.
+    explanation: |
+      $\dot z^1 = -\sin\lambda = r_0\cdot(-\tfrac1{r_0}\sin\lambda) = r_0z^2$ and $\dot z^2 = -\tfrac1{r_0}\cos\lambda = -\tfrac1{r_0}z^1$. Back in cartesian components (with $\partial y_1 = (\cos\lambda,\sin\lambda)$, $\partial y_2 = (-r_0\sin\lambda, r_0\cos\lambda)$):
+      $$\begin{aligned}&\cos\lambda\,z^1 - r_0\sin\lambda\,z^2\\ &= \cos^2\lambda + \sin^2\lambda = 1\end{aligned}$$
+      and $\sin\lambda\,z^1 + r_0\cos\lambda\,z^2 = 0$: the cartesian components stay $(1,0)$, as they must.
+
+  - type: numeric
+    id: circle-number
+    title: A number to check
+    prompt: |
+      Under $\nabla^{\mathrm{E}}$ on the plane, a vector starting at $(2,0)$ as $\partial x_1$ is transported along the circle $\delta_2(\lambda) = (2\cos\lambda, 2\sin\lambda)$. Its polar components are
+      $$z^1 = \cos\lambda,\quad z^2 = -\tfrac12\sin\lambda.$$
+      The transport equation in polar coordinates says $\dot z^1 = r_0\,z^2$ with $r_0 = 2$. Compute $\dot z^1$ at $\lambda = 1.2$ (two decimals).
+    answer: -0.932
+    tolerance: 0.01
+    answerText: '-0.93'
+    wrong:
+      - { value: -0.466, feedback: 'That is $z^2(1.2) = -\tfrac12\sin1.2 \approx -0.466$. The equation multiplies it by $r_0 = 2$.' }
+      - { value: 0.932, feedback: 'Sign: $z^2(1.2) = -\tfrac12\sin1.2$ is negative, so $\dot z^1 = 2z^2$ is negative too. Directly: $\dot z^1 = -\sin1.2$.' }
+    hint: |
+      $\sin1.2\approx0.932$. Either use $\dot z^1 = 2z^2$ or differentiate $\cos\lambda$.
+    explanation: |
+      $\dot z^1 = 2\cdot(-\tfrac12\sin1.2) = -\sin1.2\approx-0.93$, and indeed $\tfrac{d}{d\lambda}\cos\lambda = -\sin\lambda$. At $\lambda = 1.2$ the polar components are $(0.36, -0.47)$; the widget's preset "∇ᴱ, λ = 1.2" shows these numbers, with $\Gamma^1_{ji}z^j\dot\gamma^i = -2z^2 = 0.93$ cancelling $\dot z^1$.
+
+  - type: text
+    id: parallel-def
+    title: Parallel, or parallelly transported?
+    body: |
+      Requiring $\nabla_{v_\gamma}\mathcal{X}_\gamma = 0$ fixes the length as well as the direction. A weaker notion asks only that the direction be kept. For a field $\mathcal{X}_\gamma$ along $\gamma$:
+      - **parallelly transported**: $\nabla_{v_\gamma}\mathcal{X}_\gamma = 0$;
+      - **parallel**: there is a smooth function $\text{ᚱ}\colon\mathbb{R}\to\mathbb{R}$ with
+      $$(\nabla_{v_\gamma}\mathcal{X}_\gamma)(\lambda) = \text{ᚱ}(\lambda)\,\mathcal{X}_\gamma(\lambda).$$
+
+      Apply the same words to the velocity. The **acceleration** of $\gamma$ is the field along $\gamma$
+      $$a_\gamma(\lambda) := (\nabla_{v_\gamma}v_\gamma)(\lambda)\in T_{\gamma(\lambda)}\mathcal{M}.$$
+      A curve is
+      - **autoparallelly transported** if $a_\gamma = 0$;
+      - **autoparallel** if $a_\gamma(\lambda) = \text{ᚱ}(\lambda)\,v_\gamma(\lambda)$.
+
+      Autoparallels are the **straight** curves of the hook: the velocity may speed up or slow down, but never turns. Autoparallelly transported ones also keep their speed. Note that "acceleration" needs a connection: without one there is no way to compare velocities at different points.
+
+  - type: mcq
+    id: classify-field
+    title: Classify a field along a curve
+    prompt: |
+      On the plane with $\nabla^{\mathrm{E}}$ (all coefficients zero in the cartesian chart, so $(\nabla_{v_\gamma}\mathcal{X}_\gamma)^k = \dot x^k_\gamma$ there), take any curve $\gamma$ and the field along it
+      $$\mathcal{X}_\gamma(\lambda) = e^\lambda\,(\partial x_1)_{\gamma(\lambda)}.$$
+      A field is **parallel** if $\nabla_{v_\gamma}\mathcal{X}_\gamma = \text{ᚱ}\,\mathcal{X}_\gamma$ for some function $\text{ᚱ}$ of $\lambda$, and **parallelly transported** if $\nabla_{v_\gamma}\mathcal{X}_\gamma = 0$. Which is it?
+    options:
+      - text: 'Parallel (with $\text{ᚱ} = 1$) but not parallelly transported'
+        correct: true
+      - text: 'Parallelly transported, because it always points along $\partial x_1$'
+        feedback: |
+          Pointing the same way is not enough: its length $e^\lambda$ grows. Its cartesian components $(e^\lambda, 0)$ have derivative $(e^\lambda, 0)\neq0$.
+      - text: 'Neither, because its length changes'
+        feedback: |
+          "Parallel" allows a changing length: $\nabla_{v_\gamma}\mathcal{X}_\gamma = (e^\lambda,0) = 1\cdot\mathcal{X}_\gamma$, so the condition holds with $\text{ᚱ}(\lambda) = 1$.
+    explanation: |
+      $\nabla_{v_\gamma}\mathcal{X}_\gamma = e^\lambda\,\partial x_1 = \mathcal{X}_\gamma$: parallel with $\text{ᚱ}\equiv1$. Every parallelly transported field is parallel (take $\text{ᚱ}\equiv0$), not conversely.
+
+  - type: text
+    id: autoparallel-eq
+    title: The autoparallel equation
+    body: |
+      Apply $(**)$ to the velocity itself: its components are $x^k_\gamma = \dot\gamma^k$, whose derivative is the second derivative
+      $$\ddot\gamma^k(\lambda) := (\mathscr{X}^k\circ\gamma)''(\lambda).$$
+      So the acceleration has components
+      $$a^k_\gamma = \ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\,\dot\gamma^j.$$
+      Since the $(\partial x_k)_{\gamma(\lambda)}$ form a basis, "autoparallel" becomes, component by component,
+      $$\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = \text{ᚱ}\,\dot\gamma^k$$
+      and "autoparallelly transported" ($\text{ᚱ}\equiv0$) is the **autoparallel equation**
+      $$\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = 0,\qquad(6.1)$$
+      with $\Gamma^k_{ji}$ at $\gamma(\lambda)$: $d$ second-order ODEs for the chart representative $(\mathscr{X}\circ\gamma)(\lambda)$. In general relativity, freely falling bodies follow such curves (for the connection built from the metric, Level 7): (6.1) is the law of motion that replaces Newton's $\ddot x = F/m$, with gravity hidden in the $\Gamma$'s.
+
+  - type: mcq
+    id: euclid-autoparallels
+    title: Straight lines come back
+    prompt: |
+      The autoparallel equation $\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = 0$ decides which curves are autoparallelly transported. For $\nabla^{\mathrm{E}}$ on the plane, every coefficient vanishes in the cartesian chart. Which curves solve it?
+    options:
+      - text: 'The lines $\lambda\mapsto(a_0,b_0) + \lambda\,(u,w)$, run at constant speed'
+        correct: true
+      - text: 'All straight lines, however they are parametrized'
+        feedback: |
+          The equation is $\ddot\gamma^k = 0$, which also fixes the **speed**. The line $\lambda\mapsto(\lambda^3, 0)$ has $\ddot\gamma^1 = 6\lambda\neq0$: it is autoparallel (its acceleration is along its velocity), but not autoparallelly transported.
+      - text: 'Every curve, since the coefficients are zero'
+        feedback: |
+          Zero coefficients remove the $\Gamma$ term, but $\ddot\gamma^k$ remains: $\ddot\gamma^k = 0$. A circle has $\ddot\gamma^k\neq0$.
+    explanation: |
+      $\ddot\gamma^k = 0$ integrates twice to $\gamma^k(\lambda) = \gamma^k(0) + \lambda\,\dot\gamma^k(0)$. The autoparallels of $\nabla^{\mathrm{E}}$ are the straight lines of school geometry, now characterized by a connection rather than by a ruler.
+
+  - type: mcq
+    id: symmetric-part
+    title: What the autoparallels see
+    prompt: |
+      On the plane, define a connection $\nabla$ by its cartesian coefficients ($\nabla_{\partial x_i}\partial x_j = \Gamma^k_{ji}\,\partial x_k$):
+      $$\Gamma^1_{12} = 1,\quad\Gamma^1_{21} = -1,$$
+      all others zero. Its autoparallelly transported curves solve $\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = 0$. Which curves are they?
+    options:
+      - text: 'The constant-speed straight lines, the same as for $\nabla^{\mathrm{E}}$'
+        correct: true
+      - text: 'Curves that spiral, because the coefficients are nonzero'
+        feedback: |
+          Look at the sum for $k = 1$: $\Gamma^1_{12}\dot\gamma^2\dot\gamma^1 + \Gamma^1_{21}\dot\gamma^1\dot\gamma^2 = (1 - 1)\,\dot\gamma^1\dot\gamma^2 = 0$. The product $\dot\gamma^i\dot\gamma^j$ is symmetric in $i,j$, so it cancels the antisymmetric coefficients.
+      - text: 'There are none, since the coefficients are not symmetric'
+        feedback: |
+          Any choice of coefficients defines a connection, and the autoparallel equation always has solutions (one for each starting point and velocity, by the ODE theorem). Here the $\Gamma$ term cancels and the equation is $\ddot\gamma^k = 0$.
+    explanation: |
+      Because $\dot\gamma^i\dot\gamma^j = \dot\gamma^j\dot\gamma^i$, only the **symmetric part** $\tfrac12(\Gamma^k_{ji} + \Gamma^k_{ij})$ enters (6.1). Two connections with the same symmetric part have the same autoparallels. The antisymmetric part is invisible to them, but not to parallel transport: see the next question.
+
+  - type: numeric
+    id: antisym-transport
+    title: Same straight lines, different transport
+    prompt: |
+      On the plane, a connection has cartesian coefficients $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$, all others zero (convention $\nabla_{\partial x_i}\partial x_j = \Gamma^k_{ji}\,\partial x_k$). Its autoparallels are the ordinary straight lines. Transport the vector $z(0) = (0,1)$ along the line $\gamma(\lambda) = (\lambda, 0)$, using $\dot z^k + \Gamma^k_{ji}\,z^j\,\dot\gamma^i = 0$. What is the first component $z^1$ at $\lambda = 1$?
+    answer: 1
+    tolerance: 0.01
+    wrong:
+      - { value: 0, feedback: 'That is transport under $\nabla^{\mathrm{E}}$. Here $\dot\gamma = (1,0)$, so for $k = 1$ only $i = 1$ survives: $\dot z^1 + \Gamma^1_{21}z^2 = \dot z^1 - z^2 = 0$, and $z^2$ stays $1$.' }
+      - { value: -1, feedback: 'Sign: the term is $\Gamma^1_{21}z^2\dot\gamma^1 = -z^2$, so $\dot z^1 - z^2 = 0$ and $\dot z^1 = +z^2 = 1$.' }
+    hint: |
+      With $\dot\gamma = (1,0)$ only the direction index $i = 1$ survives. Find the equations for $z^2$ (all $\Gamma^2 = 0$) and then for $z^1$.
+    explanation: |
+      $\dot z^2 = 0$ gives $z^2 = 1$; then $\dot z^1 = -\Gamma^1_{21}z^2 = 1$, so $z^1 = \lambda$ and $z(1) = (1,1)$. Along a straight line that this connection itself calls straight, a transported vector still tilts. The antisymmetric part of the coefficients, invisible to autoparallels, is the **torsion** of the next lesson.
+
+  - type: text
+    id: vertical-polar
+    title: A straight line in polar coordinates
+    body: |
+      The vertical line $\gamma_{x_0}(\lambda) = (x_0,\lambda)$, $x_0>0$, solves (6.1) for $\nabla^{\mathrm{E}}$ in the cartesian chart: $\ddot\gamma^k = 0$. A solution of a chart-independent condition ($a_\gamma = 0$) must solve the polar version too, where the representative is curved and the $\Gamma$'s are $-r$ and $1/r$. With $r = \sqrt{x_0^2+\lambda^2}$ and $\theta = \arctan(\lambda/x_0)$:
+      $$\begin{gathered}\dot\gamma^1 = \frac{\lambda}{\sqrt{x_0^2+\lambda^2}}\\ \dot\gamma^2 = \frac{x_0}{x_0^2+\lambda^2}\end{gathered}$$
+      $$\begin{gathered}\ddot\gamma^1 = \frac{x_0^2}{(x_0^2+\lambda^2)^{3/2}}\\ \ddot\gamma^2 = -\frac{2x_0\lambda}{(x_0^2+\lambda^2)^2}\end{gathered}$$
+      In polar form (6.1) reads
+      $$\begin{gathered}\ddot\gamma^1 - r\,(\dot\gamma^2)^2 = 0\\ \ddot\gamma^2 + \tfrac2r\,\dot\gamma^1\dot\gamma^2 = 0\end{gathered}$$
+      (in the second line, $\Gamma^2_{12}$ and $\Gamma^2_{21}$ both contribute). Check it at $x_0 = 1$, $\lambda = 1$, where $r = \sqrt2$, $\dot\gamma = (1/\sqrt2,\ 1/2)$ and $\ddot\gamma = (1/(2\sqrt2),\ -1/2)$.
+
+  - type: numeric
+    id: vertical-k1
+    title: Check the radial equation
+    prompt: |
+      Under $\nabla^{\mathrm{E}}$ in the polar chart ($\Gamma^1_{22} = -r$, $\Gamma^2_{12} = \Gamma^2_{21} = 1/r$), the radial component of the autoparallel equation is $\ddot\gamma^1 - r\,(\dot\gamma^2)^2 = 0$. Along the vertical line $\gamma_1(\lambda) = (1,\lambda)$, at $\lambda = 1$: $r = \sqrt2$ and $\dot\gamma^2 = \dot\theta = 1/2$. What value of $\ddot\gamma^1$ does the equation demand? (Three decimals.)
+    answer: 0.3536
+    tolerance: 0.002
+    answerText: '\sqrt2/4 \approx 0.354'
+    wrong:
+      - { value: 0.7071, feedback: 'Square the velocity component: $(\dot\gamma^2)^2 = 1/4$, so $r(\dot\gamma^2)^2 = \sqrt2/4$, not $\sqrt2/2$.' }
+      - { value: -0.3536, feedback: 'Sign: the equation is $\ddot\gamma^1 = +r(\dot\gamma^2)^2$, because $\Gamma^1_{22} = -r$ enters with a plus.' }
+    hint: |
+      $\ddot\gamma^1 = r\,(\dot\gamma^2)^2$.
+    explanation: |
+      $\ddot\gamma^1 = \sqrt2\cdot\tfrac14 = \tfrac{\sqrt2}4\approx0.354$. Differentiating $r = \sqrt{1+\lambda^2}$ twice gives $(1+\lambda^2)^{-3/2} = 2^{-3/2} = \tfrac{\sqrt2}4$ at $\lambda = 1$. ✓ The radius speeds up its growth exactly as the $\Gamma$ term requires, a "centrifugal" term of the polar chart.
+
+  - type: numeric
+    id: vertical-k2
+    title: Check the angular equation
+    prompt: |
+      Under $\nabla^{\mathrm{E}}$ in the polar chart, $\Gamma^2_{12} = \Gamma^2_{21} = 1/r$ and the angular component of the autoparallel equation is $\ddot\gamma^2 + \Gamma^2_{12}\dot\gamma^1\dot\gamma^2 + \Gamma^2_{21}\dot\gamma^2\dot\gamma^1 = 0$. Along the vertical line $\gamma_1(\lambda) = (1,\lambda)$, at $\lambda = 1$: $r = \sqrt2$, $\dot\gamma^1 = 1/\sqrt2$, $\dot\gamma^2 = 1/2$. Compute the $\Gamma$ term $\Gamma^2_{12}\dot\gamma^1\dot\gamma^2 + \Gamma^2_{21}\dot\gamma^2\dot\gamma^1$.
+    answer: 0.5
+    tolerance: 0.005
+    wrong:
+      - { value: 0.25, feedback: 'That counts only one of $\Gamma^2_{12}$, $\Gamma^2_{21}$. The sum over $i,j$ contains both $(i,j) = (1,2)$ and $(2,1)$, each giving $\tfrac1{\sqrt2}\cdot\tfrac1{\sqrt2}\cdot\tfrac12 = \tfrac14$.' }
+    hint: |
+      Each of the two terms equals $\tfrac1{\sqrt2}\cdot\tfrac1{\sqrt2}\cdot\tfrac12$.
+    explanation: |
+      $2\cdot\tfrac14 = \tfrac12$, so the equation demands $\ddot\gamma^2 = -\tfrac12$, and indeed $-2x_0\lambda/(x_0^2+\lambda^2)^2 = -2/4 = -\tfrac12$. ✓ A curved polar representative, yet a straight line: the $\Gamma$'s exactly undo the bending that the chart introduces.
+
+  - type: text
+    id: circle-accel
+    title: The circle's acceleration
+    body: |
+      Now the circle under $\nabla^{\mathrm{E}}$. In polar coordinates $\dot\delta = (0,1)$ and $\ddot\delta = (0,0)$, so
+      $$\begin{aligned}a^1 &= 0 + \Gamma^1_{22}\cdot1\cdot1 = -r_0\\ a^2 &= 0 + 2\cdot\tfrac1{r_0}\cdot0\cdot1 = 0\end{aligned}$$
+      $$a_\delta = -r_0\,\partial y_1.$$
+      In cartesian coordinates, $\ddot\delta = (-r_0\cos\lambda, -r_0\sin\lambda)$, the same vector (along the curve $\partial y_1 = \cos\lambda\,\partial x_1 + \sin\lambda\,\partial x_2$): it points to the centre. The velocity is $\partial y_2$, around the circle. So $a_\delta$ is not a multiple of $v_\delta$: the circle is **not even autoparallel** for $\nabla^{\mathrm{E}}$.
+
+  - type: mcq
+    id: reparametrize
+    title: Can a new parameter help?
+    prompt: |
+      Under $\nabla^{\mathrm{E}}$, the circle $\delta_{r_0}$ has velocity $v = \partial y_2$ and acceleration $a = -r_0\,\partial y_1$ (towards the centre). Run it with a new parameter $\mu$, $\lambda = \lambda(\mu)$, with $\lambda'(\mu)\neq0$. The chain rule and $(**)$ give the new velocity $\lambda'\,v$ and the new acceleration
+      $$\lambda''\,v + (\lambda')^2\,a.$$
+      Can some choice of $\lambda(\mu)$ make the circle autoparallel (acceleration a multiple of velocity)?
+    options:
+      - text: |
+          No: the new parameter only adds multiples of $v$, while the part $(\lambda')^2 a$, along $\partial y_1$, never vanishes
+        correct: true
+      - text: |
+          Yes: choose $\lambda(\mu)$ so that the speed changes in a way that cancels the acceleration
+        feedback: |
+          Changing the speed only produces the term $\lambda''\,v$, along $\partial y_2$. The part $(\lambda')^2\,a = -(\lambda')^2r_0\,\partial y_1$ points to the centre and is nonzero since $\lambda'\neq0$. No multiple of $\partial y_2$ cancels a $\partial y_1$ component.
+      - text: |
+          Yes: run the circle at constant speed, $\lambda = \mu$
+        feedback: |
+          That is the original parametrization, with $a = -r_0\,\partial y_1$ not a multiple of $v = \partial y_2$. Constant speed does not make a curve straight; it must also not turn.
+    explanation: |
+      Being autoparallel is a property of the **path**, independent of the parametrization, and the circle fails it for $\nabla^{\mathrm{E}}$. Being autoparallelly transported also depends on the parametrization: the radial curve $\lambda\mapsto\lambda^2(\cos\theta_0,\sin\theta_0)$ is autoparallel but not autoparallelly transported.
+
+  - type: widget
+    id: autoparallel-widget
+    title: Which curves are straight?
+    widget: parallel-transport
+    config:
+      curve: { type: circle, r0: 2 }
+      connection: E
+      connections: [E, P]
+      z0: [1, 0]
+      showAcceleration: true
+      badge: true
+      residual: false
+      trail: false
+      view: { x: -3.2, y: -3.2, w: 6.4, h: 6.4 }
+      presets:
+        - { label: 'Circle, ∇ᴱ', curve: { type: circle, r0: 2 }, connection: E, z0: [1, 0], lambda: 0.8 }
+        - { label: 'Circle, ∇ᴾ', curve: { type: circle, r0: 2 }, connection: P, z0: [0, 1], lambda: 0.8 }
+        - { label: 'Vertical, ∇ᴱ', curve: { type: vertical, x0: 1 }, connection: E, z0: [0, 1], lambda: 1 }
+        - { label: 'Vertical, ∇ᴾ', curve: { type: vertical, x0: 1 }, connection: P, z0: [0, 1], lambda: 1 }
+        - { label: 'Radial λ², ∇ᴱ', curve: radial-squared, connection: E, z0: [1, 1], lambda: 1.5 }
+    body: |
+      The gold point is $\gamma(\lambda)$; from it start the velocity $v_\gamma$ (solid) and the acceleration $a_\gamma = \nabla_{v_\gamma}v_\gamma$ (dashed), computed with the chosen connection. The badge **Autoparallel?** checks the whole curve: "Yes, even autoparallelly transported" ($a_\gamma = 0$), "Yes, but not autoparallelly transported" ($a_\gamma = \text{ᚱ}\,v_\gamma$), or "No".
+
+      1. Press the two circle presets. Compare the dashed arrow and the badge.
+      2. Press the two vertical-line presets.
+      3. Press "Radial λ², ∇ᴱ": the point runs along a ray, $\gamma(\lambda) = \lambda^2(\cos\theta_0,\sin\theta_0)$. Read $a_\gamma$ and $v_\gamma$.
+
+  - type: mcq
+    id: hook-resolved
+    title: Is the circle straight? Resolved
+    multiple: true
+    prompt: |
+      On the plane, $\nabla^{\mathrm{E}}$ has zero coefficients in the cartesian chart, and $\nabla^{\mathrm{P}}$ has zero coefficients in the polar chart $\mathscr{Y} = (r,\theta)$ (defined off the half-line $\{b = 0,\ a\le0\}$). A curve is autoparallelly transported if its acceleration $a_\gamma = \nabla_{v_\gamma}v_\gamma$ vanishes. Select every true statement about the circle $\delta_{r_0}(\lambda) = (r_0\cos\lambda, r_0\sin\lambda)$ and the vertical line $\gamma_{x_0}(\lambda) = (x_0,\lambda)$, $x_0>0$.
+    options:
+      - text: 'Under $\nabla^{\mathrm{P}}$ the circle is autoparallelly transported (where the chart is defined)'
+        correct: true
+      - text: 'Under $\nabla^{\mathrm{E}}$ the circle is not even autoparallel'
+        correct: true
+      - text: 'Under $\nabla^{\mathrm{P}}$ the vertical line is autoparallel, since it is a straight line'
+        feedback: |
+          "Straight line" is the verdict of $\nabla^{\mathrm{E}}$. Under $\nabla^{\mathrm{P}}$, with zero polar coefficients, the acceleration is $\ddot\gamma^k$ in polar coordinates, $(1/(2\sqrt2),\ -1/2)$ at $x_0 = \lambda = 1$, while the velocity is $(1/\sqrt2,\ 1/2)$: not proportional. So it is not autoparallel for $\nabla^{\mathrm{P}}$.
+      - text: 'The circle is autoparallel or not regardless of the connection, since it is a fixed set of points'
+        feedback: |
+          The acceleration $\nabla_{v_\gamma}v_\gamma$ is computed **with** a connection. Under $\nabla^{\mathrm{P}}$ the circle has constant polar velocity components $(0,1)$ and zero coefficients, so $a = 0$; under $\nabla^{\mathrm{E}}$, $a = -r_0\,\partial y_1\neq0$.
+    explanation: |
+      Under $\nabla^{\mathrm{P}}$ the polar representative of $\delta_{r_0}$ is $(r_0,\lambda)$, with $\ddot\gamma^k = 0$ and $\Gamma^{\mathrm{P}}_\mathscr{Y} = 0$: autoparallelly transported. The roles swap for the vertical line. "Straight" belongs to the pair (curve, connection), not to the curve. The answer to the hook: the circle is straight for $\nabla^{\mathrm{P}}$ only.
+
+  - type: numeric
+    id: radial-squared
+    title: Autoparallel, not transported
+    prompt: |
+      On the plane with $\nabla^{\mathrm{E}}$ (cartesian coefficients zero, so $a_\gamma$ has cartesian components $\ddot\gamma^k$), take the ray run as
+      $$\gamma(\lambda) = \lambda^2\,(\cos\theta_0,\ \sin\theta_0),\quad \lambda>0.$$
+      Its acceleration is a multiple of its velocity, $a_\gamma(\lambda) = \text{ᚱ}(\lambda)\,v_\gamma(\lambda)$, so it is autoparallel. Find $\text{ᚱ}(1.5)$ (three decimals).
+    answer: 0.6667
+    tolerance: 0.005
+    answerText: '2/3'
+    wrong:
+      - { value: 1.5, feedback: 'That is $\lambda$, not $\text{ᚱ}(\lambda)$. With $v = 2\lambda\,u$ and $a = 2u$ ($u$ the unit direction), $a = \tfrac1\lambda v$.' }
+      - { value: 0, feedback: '$a_\gamma = 0$ would make the curve autoparallelly transported. Here the speed $2\lambda$ grows, so $\ddot\gamma = 2u\neq0$.' }
+      - { value: 3, feedback: 'That is the speed $2\lambda$ at $\lambda = 1.5$. The ratio is $a/v = 2/(2\lambda) = 1/\lambda$.' }
+    hint: |
+      With $u = (\cos\theta_0,\sin\theta_0)$: $v_\gamma = 2\lambda\,u$ and $a_\gamma = 2u$.
+    explanation: |
+      $a_\gamma = 2u = \tfrac1\lambda\,(2\lambda u)$, so $\text{ᚱ}(\lambda) = 1/\lambda$ and $\text{ᚱ}(1.5) = 2/3$. The path is a straight ray, run at increasing speed: the direction never turns, but the speed changes. The new parameter $\mu = \lambda^2$ makes it autoparallelly transported.
+
+  - type: text
+    id: holonomy
+    title: Going all the way round
+    body: |
+      Transport under $\nabla^{\mathrm{E}}$ along the full circle, $\lambda$ from $0$ to $2\pi$: the polar components $(\cos\lambda, -\tfrac1{r_0}\sin\lambda)$ return to $(1,0)$, and the cartesian components never moved. The vector comes back to itself.
+
+      That is special. Transport is defined **along a curve**, and two curves from $p$ to $q$ may carry the same vector to different results. Then the transported vectors are not the values of any vector field on $\mathcal{M}$, and a vector carried around a closed loop can come back **rotated**. A preview (stated here without proof): on a sphere, carry a vector from the north pole down to the equator, a quarter of the way along it, and back up, always "without turning"; it returns rotated by $90°$. This failure to return is the **holonomy** of $\nabla$. For $\nabla^{\mathrm{E}}$ there is none: the plane is flat. What measures it is the **curvature**.
+
+  - type: mcq
+    id: holonomy-check
+    title: Back where you started
+    prompt: |
+      On the plane, a vector starting at $(r_0,0)$ with cartesian components $(1,0)$ is transported once around the circle $\delta_{r_0}(\lambda) = (r_0\cos\lambda, r_0\sin\lambda)$ under $\nabla^{\mathrm{E}}$. Along the way its polar components are $z^1 = \cos\lambda$, $z^2 = -\tfrac1{r_0}\sin\lambda$. What comes back at $\lambda = 2\pi$?
+    options:
+      - text: 'The same vector, $\partial x_1$: no holonomy'
+        correct: true
+      - text: 'The vector rotated by $2\pi$ relative to the polar basis, so a different vector'
+        feedback: |
+          At $\lambda = 2\pi$ the polar basis is back to its starting position too, and $(z^1,z^2) = (\cos2\pi, -\tfrac1{r_0}\sin2\pi) = (1,0)$: the same vector. The rotation **relative to the basis** happened only because the basis turned.
+      - text: 'Nothing can be said, because polar coordinates fail at $\lambda = \pi$'
+        feedback: |
+          The chart $\theta\in(-\pi,\pi)$ misses the point at $\lambda = \pi$, but $\nabla^{\mathrm{E}}$ lives on the whole plane: in cartesian components the transport is $\dot z^k = 0$ along the whole circle. (It is $\nabla^{\mathrm{P}}$ that stops at $\lambda = \pi$, since it is defined only on the chart domain.)
+    explanation: |
+      Cartesian components stay $(1,0)$ all the way. For $\nabla^{\mathrm{E}}$ transport is independent of the path: the plane with $\nabla^{\mathrm{E}}$ is flat.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      - **Field along $\gamma$**: $\mathcal{X}_\gamma(\lambda)\in T_{\gamma(\lambda)}\mathcal{M}$, components $x^k_\gamma(\lambda)$. Velocities are such fields, not always restrictions of fields (figure-eight).
+      - **Covariant derivative along $\gamma$**, the unique $\mathbb{R}$-linear operator with $\nabla_{v_\gamma}(\text{ᚱ}\,\mathcal{X}_\gamma) = \text{ᚱ}'\,\mathcal{X}_\gamma + \text{ᚱ}\,\nabla_{v_\gamma}\mathcal{X}_\gamma$ that agrees with $\nabla$ on restrictions:
+      $$(\nabla_{v_\gamma}\mathcal{X}_\gamma)^k = \dot x^k_\gamma + \Gamma^k_{ji}\,x^j_\gamma\,\dot\gamma^i\quad(**)$$
+      - **Parallelly transported** $\nabla_{v_\gamma}\mathcal{Z} = 0$, **parallel** $\nabla_{v_\gamma}\mathcal{X}_\gamma = \text{ᚱ}\,\mathcal{X}_\gamma$. Transport equation:
+      $$\dot z^k + \Gamma^k_{ji}\,z^j\,\dot\gamma^i = 0$$
+      a linear ODE: one transported vector per start, a linear map between tangent spaces.
+      - **Acceleration** $a_\gamma := \nabla_{v_\gamma}v_\gamma$, $a^k_\gamma = \ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j$. **Autoparallel** $a_\gamma = \text{ᚱ}\,v_\gamma$, **autoparallelly transported** $a_\gamma = 0$:
+      $$\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = 0\quad(6.1)$$
+      Only the symmetric part of $\Gamma$ enters (6.1).
+      - **The plane**: under $\nabla^{\mathrm{E}}$ transport keeps cartesian components, autoparallels are constant-speed lines; along $\delta_{r_0}$ in polar, $\dot z^1 = r_0z^2$, $\dot z^2 = -z^1/r_0$, and $a_\delta = -r_0\,\partial y_1$. Under $\nabla^{\mathrm{P}}$ the circle is the straight one.
+
+      **Next: torsion and curvature.** Two things this lesson left open become tensors: the antisymmetric part of the $\Gamma$'s, which autoparallels ignore but which tilted a transported vector along a straight line (**torsion**), and the failure of transport around a loop to return a vector to itself (**curvature**).
