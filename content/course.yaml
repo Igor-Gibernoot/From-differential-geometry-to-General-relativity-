@@ -294,7 +294,11 @@ levels:
         file: ch06/map.yaml
         summary: Rebuild the chapter's map box by box, from the chart-dependence of component derivatives to the connection, its coefficients, transport, autoparallels, torsion and curvature, among look-alike cards that hide the classic mistakes.
       - { id: ch06-review, title: Level Review, kind: review }
-      - { id: ch06-challenge, title: Level Challenge, kind: challenge }
+      - id: ch06-challenge
+        title: Level Challenge
+        kind: challenge
+        file: ch06/challenge.yaml
+        summary: "Five problems: the straightest curves of ∇ᵂ (circles, rays, logarithmic spirals), a connection that is curved and twisted, the sheared chart where coordinate lines bend, the difference of two connections as a tensor, and normal coordinates where every Γ vanishes at a point but the curvature survives."
 
   - id: ch07
     number: 7

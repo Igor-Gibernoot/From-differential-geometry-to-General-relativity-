@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel, ch06-parallel-transport, ch06-torsion-curvature, ch06-torsion-tensor, ch06-three-connections, ch06-traps, ch06-map done)
+## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel, ch06-parallel-transport, ch06-torsion-curvature, ch06-torsion-tensor, ch06-three-connections, ch06-traps, ch06-map, ch06-challenge part 1 done)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -24,11 +24,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
-- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards), `ch06-torsion-tensor` (guided, 19 cards), `ch06-three-connections` (guided C.5, 32 cards), `ch06-traps` (21 cards), `ch06-map` (14 boxes, 8 rows); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). Next: `ch06-challenge` (two sessions: problems 1–3, then 4–5).
+- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards), `ch06-torsion-tensor` (guided, 19 cards), `ch06-three-connections` (guided C.5, 32 cards), `ch06-traps` (21 cards), `ch06-map` (14 boxes, 8 rows); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). `ch06-challenge` part 1 (30 cards: intro + problems 1–3). Next: `ch06-challenge` part 2 (problems 4–5 + wrap-up).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** next `ch06-challenge` (two sessions: problems 1–3,
-  then 4–5); then Chapter 7 (Metric) in `course.yaml` order, and Chapters 8–10 (each with map and challenge). No TeX exercise file exists for Chapter 6:
+- **Queue (one unit each):** next `ch06-challenge` part 2 (problems 4–5 + wrap-up); then Chapter 7 (Metric) in `course.yaml` order, and Chapters 8–10 (each with map and challenge). No TeX exercise file exists for Chapter 6:
   use the book (6.1–6.4, B.9, B.10, C.5) as the only source.
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -292,6 +291,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   "antisym. part", "subtracted in", "around loops", "contract", "$= 0$" (×2); two-row vertical edges (law→torsion, torsion→flat) pass empty cells. No dashed edges.
   Long defining formulas ($\mathtt{T}$, $\mathrm{Riem}$) written as `aligned` with the arguments on their own line (`&\mathtt{T}(\dots)\\ &:= \dots`); `{[\mathcal{X},\mathcal{Y}]}^k`
   braced at the start of `aligned`. Outro teases ∇ᵂ autoparallels (circles, rays or spirals?).
+  `ch06-challenge` (part 1): ∇ᵂ polar autoparallels $\ddot r = 0$, $\ddot\theta + \tfrac1r\dot r\dot\theta = 0$, frame components $v_\gamma = \dot r\,e_1 + r\dot\theta\,e_2$ constant ($c_1, c_2$):
+  rays, circles about the origin, log spirals $r = r_*e^{(c_1/c_2)\theta}$; spiral from $(1,0)$ with $c_1 = c_2 = 1$: $r = e^\theta$ ($e^{\pi/2}\approx4.810$), $r = 1+\lambda$,
+  $\theta = \ln(1+\lambda)$, ∇ᴱ $a^1 = -\tfrac12$ at $\lambda = 1$; ∇ᴱ conserves $r^2\dot\theta$, ∇ᵂ $r\dot\theta$; symmetric part of ∇ᵂ ($\Gamma^2_{12} = \Gamma^2_{21} = \tfrac1{2r}$) curved,
+  $\mathrm{Riem}^2_{112} = -\tfrac1{4r^2}$. Label **$\nabla^{\mathrm{F}}$** ("F" for fourth box; mine): $\Gamma^1_{22} = \kappa a$, $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$; $\mathrm{Ric} = (\kappa+1)dx^2\otimes dx^2$
+  (4 at $\kappa = 3$), flat at $\kappa = -1$; transport along $(1,\lambda)$ from $(0,1)$: $z^1 = \kappa(e^{-\lambda}-1)$ ($-0.632$) vs ∇^κ $-\kappa\lambda$. Sheared chart
+  for ∇ᴱ: only $\Gamma^2_{11} = 2$, equations $\ddot u = 0$, $\ddot v + 2\dot u^2 = 0$; tangent line $(1+\lambda, 1+2\lambda)$ at $(1,1)$ has $v = -\lambda^2$ (vs parabola $v = 0$).
+  Widget preset new: `parallel-transport` circle $r_0 = 2$ under W (badge: autoparallelly transported), presets circle E, ray W, vertical W.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -304,6 +310,16 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch06-challenge part 1 (problems 1–3, 30 cards)
+- Intro lists all five problems (recalls Γ convention, acceleration, transport, T, Riem, the three connections). P1 ∇ᵂ straightest curves: guess,
+  widget (circle W/E, ray, vertical), why-circle MCQ, polar Γ re-derived, radial MCQ, angular build, conserved $r\dot\theta$ build, frame-route text,
+  cases multi-select, spiral numeric, spiral under ∇ᴱ numeric, flat-but-not-torsion-free trap, summary. P2 ∇ᶠ: setup table, other Riem components,
+  Ricci, flat κ, autoparallels = ∇^κ, transport numeric, moral multi-select, summary. P3 sheared chart: count (1), equation build, which curves,
+  tangent line $\dot v = 0$, same start MCQ, flat MCQ, summary. Wrap-up deferred to part 2.
+- Choices: transport numeric along the vertical line $(1,\lambda)$ (exponential answer) rather than $(\lambda,0)$, already asked in
+  ch06-parallel-transport; Riem/torsion of ∇ᶠ stated in setup (asked in three-connections) and new questions asked instead; widget $z_0 = (1,0)$
+  on circles so $\mathcal{Z}$ does not overlap $v_\gamma$; added the symmetric part of ∇ᵂ being curved as the explanation of the trap card.
+- Conventions fixed here: see Current, "Chapter 6 conventions so far" (`ch06-challenge` lines).
 ### 2026-10-20 — ch06-map (map, 14 boxes)
 - No TeX map: built from the chapter headings and the ch06 lessons. Boxes: chart-dependent component derivatives, connection (five rules, product rule), affine manifold, Γ, $\pm\Gamma$ rule,
   transformation law, derivative along a curve, parallel transport, autoparallels, commutator, torsion, Riemann, Ricci, flat + torsion free; two decoys each (Γ a tensor, torsion → route dependence,
