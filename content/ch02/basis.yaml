@@ -1,6 +1,12 @@
 id: ch02-basis
 title: Bases and the Dual Basis
 kind: concept
+own: |
+  - A **basis** writes every vector in exactly one way, {{ $\mathcal{X} = \sum_i x^i\,\hat{x}_i$ }}: spanning gives existence, independence gives uniqueness. All bases have $d = \dim V$ elements.
+  - Each basis has a **dual basis** {{ $\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j$ }}, a basis of $V^*$. Its covector $\hat{\mathfrak{x}}^i$ reads off the $i$-th component, {{ $\hat{\mathfrak{x}}^i(\mathcal{X}) = x^i$ }}, and it depends on the **whole** basis.
+  - Covector components are found by feeding the basis: $\mathsf{X} = \sum_i \mathtt{x}_i\,\hat{\mathfrak{x}}^i$ with {{ $\mathtt{x}_i = \mathsf{X}(\hat{x}_i)$ }}.
+  - Index positions: vector components up ($x^i$), basis vectors down ($\hat{x}_i$); covector components down ($\mathtt{x}_i$), dual basis up ($\hat{\mathfrak{x}}^i$).
+
 
 cards:
   - type: text
@@ -290,9 +296,4 @@ cards:
     id: wrap
     title: What you now own
     body: |
-      - A **basis** writes every vector in exactly one way, $\mathcal{X} = \sum_i x^i\,\hat{x}_i$: spanning gives existence, independence gives uniqueness. All bases have $d = \dim V$ elements.
-      - Each basis has a **dual basis** $\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j$, a basis of $V^*$. Its covector $\hat{\mathfrak{x}}^i$ reads off the $i$-th component, $\hat{\mathfrak{x}}^i(\mathcal{X}) = x^i$, and it depends on the **whole** basis.
-      - Covector components are found by feeding the basis: $\mathsf{X} = \sum_i \mathtt{x}_i\,\hat{\mathfrak{x}}^i$ with $\mathtt{x}_i = \mathsf{X}(\hat{x}_i)$.
-      - Index positions: vector components up ($x^i$), basis vectors down ($\hat{x}_i$); covector components down ($\mathtt{x}_i$), dual basis up ($\hat{\mathfrak{x}}^i$).
-
       **Next:** different observers bring different bases. Same vector, different numbers: how do their components translate?

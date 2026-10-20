@@ -50,7 +50,10 @@ whole `$$…$$` line. Marking rules:
 - **3–6 blanks** per summary (validator: at least 2, no nesting, balanced);
 - each blank recallable from its own sentence; no two blanks that give each
   other away;
-- prefer whole formulas (`{{ $\nabla_\mathcal{X}f = \mathcal{X}(f)$ }}`) over bare symbols.
+- prefer whole formulas (`{{ $\nabla_\mathcal{X}f = \mathcal{X}(f)$ }}`) over bare symbols;
+- **blank the defining formulas** (a `{{ $$…$$ }}` line for displayed ones), not prose: never hide the verb or
+  key word of a sentence ("{{ respects adding and scaling }}" is unguessable). Prose blanks only when the
+  sentence itself recalls the answer (a name such as "they are {{ **contravariant** }}" after its formula).
 
 Shared optional fields: `title`, `tag`. Question cards also take
 `explanation` and `review: false` (only for cards that make no sense alone,

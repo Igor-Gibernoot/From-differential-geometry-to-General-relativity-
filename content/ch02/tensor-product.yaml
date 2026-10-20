@@ -1,6 +1,12 @@
 id: ch02-tensor-product
 title: The Tensor Product
 kind: concept
+own: |
+  - The **tensor product** multiplies tensors slot by slot: {{ $(\mathsf{X}\otimes\mathsf{Y})(\mathcal{X}, \mathcal{Y}) = \mathsf{X}(\mathcal{X})\cdot\mathsf{Y}(\mathcal{Y})$ }}, with components $\mathtt{x}_i\,\mathtt{y}_j$. Order matters.
+  - **Not every tensor is a product**: the signed area is $\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2 - \hat{\mathfrak{x}}^2\otimes\hat{\mathfrak{x}}^1$, a sum of two, and no single product (its $T_{11}T_{22} - T_{12}T_{21}$ is $1$, a product's is $0$).
+  - $V\otimes W$ is the space of **finite sums of simple tensors** $v\otimes w$, with $\otimes$ bilinear. Its basis is {{ $\hat{x}_i\otimes\hat{y}_j$ }}, so $\dim = m\cdot n$ (not $m + n$, which is $V\times W$).
+  - The **product basis** of $T^{(r,s)}$ evaluates on basis inputs to a product of deltas. It gives {{ $T = \sum T^{i_1\dots}_{j_1\dots}\,\hat{x}_{i_1}\otimes\cdots\otimes\hat{\mathfrak{x}}^{j_s}$ }}, explains $\dim T^{(r,s)} = d^{\,r+s}$, and identifies {{ $T^{(r,s)}\cong V^{\otimes r}\otimes(V^*)^{\otimes s}$ }} ($r$ factors $V$, $s$ factors $V^*$).
+
 
 cards:
   - type: text
@@ -412,9 +418,4 @@ cards:
     id: wrap
     title: What you now own
     body: |
-      - The **tensor product** multiplies tensors slot by slot: $(\mathsf{X}\otimes\mathsf{Y})(\mathcal{X}, \mathcal{Y}) = \mathsf{X}(\mathcal{X})\cdot\mathsf{Y}(\mathcal{Y})$, with components $\mathtt{x}_i\,\mathtt{y}_j$. Order matters.
-      - **Not every tensor is a product**: the signed area is $\hat{\mathfrak{x}}^1\otimes\hat{\mathfrak{x}}^2 - \hat{\mathfrak{x}}^2\otimes\hat{\mathfrak{x}}^1$, a sum of two, and no single product (its $T_{11}T_{22} - T_{12}T_{21}$ is $1$, a product's is $0$).
-      - $V\otimes W$ is the space of **finite sums of simple tensors** $v\otimes w$, with $\otimes$ bilinear. Its basis is $\hat{x}_i\otimes\hat{y}_j$, so $\dim = m\cdot n$ (not $m + n$, which is $V\times W$).
-      - The **product basis** of $T^{(r,s)}$ evaluates on basis inputs to a product of deltas. It gives $T = \sum T^{i_1\dots}_{j_1\dots}\,\hat{x}_{i_1}\otimes\cdots\otimes\hat{\mathfrak{x}}^{j_s}$, explains $\dim T^{(r,s)} = d^{\,r+s}$, and identifies $T^{(r,s)}\cong V^{\otimes r}\otimes(V^*)^{\otimes s}$ ($r$ factors $V$, $s$ factors $V^*$).
-
       **Next:** Level 2 is complete. Rebuild it as a content map, then test it in the level challenge. In Level 4 the same algebra is done at each point of a manifold, and $\otimes$ builds the tensor spaces there.

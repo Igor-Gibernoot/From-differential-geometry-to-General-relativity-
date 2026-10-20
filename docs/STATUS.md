@@ -28,8 +28,8 @@ append a short entry at the end of **Log** (a few lines, ending with
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Recap (`own:`) rule:** every concept lesson carries `own:` (its "what you now own" summary with 3–6 `{{ }}` blanks on the main
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
-  write it from the start. **Backfill pending:** no existing lesson has `own:` yet (sessions: Chapters 2–3, then 4–5, then 6; pilot one
-  lesson first and wait for Igor's approval of the marking style). Never edit a blank's text without need: its progress is keyed by its hash.
+  write it from the start. **Backfill:** Chapter 2 done (7 concept lessons, style approved by Igor); pending: Chapter 3, then 4–5, then 6 (no pilot needed now;
+  list each chapter's blanks for Igor's veto at the end). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** first the `own:` backfill (above), then Chapter 7 (Metric) in `course.yaml` order: next `ch07-metric`, then `ch07-signature`, `ch07-length`,
   `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, traps, map, challenge (two sessions);
@@ -323,6 +323,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — own: backfill, Chapter 2 (maps, axioms, dual, basis, change-of-basis, tensors, tensor-product)
+- Summary moved from the wrap card into `own:` (wording unchanged, blanks added); the card keeps id, title and only the "**Next:**" teaser.
+  Blanks: maps 3, axioms 5 (commutativity, inverses, scaling associativity, distributive 1, unit), dual 3, basis 4, change-of-basis 3, tensors 4,
+  tensor-product 4. Axioms skipped the rules a marked one gives away (neutral element given by inverses, distributive 2 by distributive 1).
+- Conventions fixed here: blank the defining formulas (`{{ $…$ }}` for displayed ones), not prose; never hide a sentence's verb or key word;
+  a prose blank only when its own sentence recalls it (e.g. "contravariant" after the transformation formula); of a pair of rules that give each
+  other away, mark one. Igor's pilot feedback: "focus on defining formulas".
 ### 2026-10-20 — ch06-challenge part 2 (problems 4–5 + wrap-up, 19 cards); Chapter 6 complete
 - P4 difference tensor: setup (two non-tensors, name $\mathcal{Q}$), Leibniz build, properties multi-select, cartesian $Q^2_{11} = 4/25$ by hand,
   polar components MCQ, plain tensor law numeric ($5 = r$ at $(3,4)$), torsion build, connection-plus-tensor multi-select, summary. P5 normal
