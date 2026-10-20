@@ -360,7 +360,7 @@ cards:
     title: What you now own
     body: |
       - **Convergence** with open sets: $p_n\to p$ when every open neighbourhood of $p$ traps the whole tail. In the indiscrete topology, every sequence converges to every point.
-      - **Hausdorff**: distinct points have disjoint open neighbourhoods. Then limits are unique. $\mathbb{R}^d$ is Hausdorff (balls of radius half the distance), and so is every subset. The line with two origins looks like $\mathbb{R}$ everywhere and is not Hausdorff.
+      - **Hausdorff**: for all $p\neq q$ there are open $\mathcal{U}\ni p$ and $\mathcal{V}\ni q$ with $\mathcal{U}\cap\mathcal{V} = \emptyset$. Then limits are unique. $\mathbb{R}^d$ is Hausdorff (balls of radius half the distance), and so is every subset. The line with two origins looks like $\mathbb{R}$ everywhere and is not Hausdorff.
       - **Basis**: open sets whose unions give every open set. **Second countable**: a countable basis exists. $\mathbb{R}^d$ has the rational balls; the discrete $\mathbb{R}$ and uncountably many lines have none.
       - Physics: unique motion needs Hausdorff; integrals over spacetime need second countability.
 

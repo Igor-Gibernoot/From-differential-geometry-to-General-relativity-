@@ -302,7 +302,12 @@ cards:
     title: What you now own
     body: |
       - The **powerset** $\mathcal{P}(\mathcal{M})$ is the set of all subsets; a set with $n$ elements has $2^n$ of them.
-      - A **topology** $\mathcal{O}_\mathcal{M}\subseteq\mathcal{P}(\mathcal{M})$ contains $\emptyset$ and $\mathcal{M}$, the intersection of two (hence finitely many) members, and the union of any family of members. Its members are the **open sets**; $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ is a **topological space**.
+      - A **topology** $\mathcal{O}_\mathcal{M}\subseteq\mathcal{P}(\mathcal{M})$ obeys three rules:
+        1. $\emptyset\in\mathcal{O}_\mathcal{M}$ and $\mathcal{M}\in\mathcal{O}_\mathcal{M}$;
+        2. $\mathcal{U}, \mathcal{V}\in\mathcal{O}_\mathcal{M}\Rightarrow\mathcal{U}\cap\mathcal{V}\in\mathcal{O}_\mathcal{M}$ (hence finitely many);
+        3. $\mathcal{U}_\alpha\in\mathcal{O}_\mathcal{M}\ \forall\alpha\Rightarrow\bigcup_\alpha\mathcal{U}_\alpha\in\mathcal{O}_\mathcal{M}$ (any family).
+
+        Its members are the **open sets**; $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ is a **topological space**.
       - A topology is a **choice**: two points already carry 4. The discrete ($\mathcal{P}(\mathcal{M})$) and indiscrete ($\{\emptyset, \mathcal{M}\}$) ones exist on every set.
       - **Closed** means the complement is open. Open and closed are not opposites: a set can be either, both or neither; $\emptyset$ and $\mathcal{M}$ are always clopen.
 
