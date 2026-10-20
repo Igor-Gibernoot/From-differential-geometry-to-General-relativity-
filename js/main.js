@@ -2,6 +2,7 @@
 //   #/                      trail map
 //   #/lesson/<id>           play a lesson
 //   #/lesson/<id>/<n>       jump to card n (1-based) — handy while authoring
+//   #/read/<id>             read a lesson with answers shown, nothing recorded
 //   #/review                spaced-repetition session (due cards, all levels)
 //   #/review/<levelId>      level review (that level's cards, most urgent first)
 //   #/settings              progress export/import/reset
