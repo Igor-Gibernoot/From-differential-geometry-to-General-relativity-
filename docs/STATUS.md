@@ -24,7 +24,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
-- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards); widget `parallel-transport` built. Next: `ch06-torsion-curvature` (concept).
+- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). Next: `ch06-torsion-curvature` (concept).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 6 (Covariant Derivative) in `course.yaml` order, next
@@ -264,6 +264,9 @@ append a short entry at the end of **Log** (a few lines, ending with
   "autoparallel equation" labelled (A) (`\tag{A}`; book equation numbers never used); $a^k_\gamma = \ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j$; reparametrization rune as in ch04, $\delta\circ\text{ᚱ}$ (new acceleration $\text{ᚱ}''v + (\text{ᚱ}')^2a$); ᚱ also the factor in "parallel"/"autoparallel" as in the book;
   antisymmetric example $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$ (cartesian): straight-line autoparallels, transport of $(0,1)$ along $(\lambda,0)$ gives $(\lambda,1)$ (torsion teaser);
   vertical line check at $x_0 = \lambda = 1$: $r = \sqrt2$, $\dot\gamma = (1/\sqrt2, 1/2)$, $\ddot\gamma = (\sqrt2/4, -1/2)$; radial $\lambda^2$: $\text{ᚱ} = 1/\lambda$; sphere holonomy ($90°$) stated without proof.
+  Widget extension for `ch06-torsion-curvature`: connection labels $\nabla^{\mathrm{W}}$ (frame $e_1$ radial, $e_2$ angular unit fields declared parallel, plane minus origin; book's label, "teleparallel"/Weitzenböck)
+  and $\nabla^{\kappa}$ ($(\Gamma^\kappa_\mathscr{X})^1_{22} = \kappa a$); torsion components $\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}$ (book order), Riemann $\mathrm{Riem}^i_{jkm}$ (book), holonomy
+  $\Delta z^1 = -\mathrm{Riem}^1_{212}\,z^2\times\text{area}$ for counterclockwise loops; rectangle loop one side per unit of $\lambda\in[0,4]$; check $\kappa=1$, $[1,2]\times[0,1]$, $z_0=(0,1)$: $\Delta z = (-1,0)$.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -276,6 +279,17 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+
+### 2026-10-20 — widget `parallel-transport` extended for `ch06-torsion-curvature` (widget session)
+- `js/widgets.js`: connections `W` (𝒵 keeps its $e_1,e_2$ components, i.e. rotates by the change of polar angle; stops at the origin) and `kappa` ($\dot z^1 = -\kappa a z^2\dot\gamma^2$,
+  integrated by a 2400-step midpoint table, exact on the rectangle); curve `rectangle` with exact piecewise velocity; "After the loop" $\Delta z$ + prediction row (replaces the
+  badge on closed curves); `compareE` (dashed ∇ᴱ copy + angle), `torsion` ($\mathtt{T}^1_{12},\mathtt{T}^2_{12}$ in $\mathscr{X}$); acceleration/transport equation for W, κ in $\mathscr{X}$.
+  Fixed: ∇ᴾ on a curve that never leaves $\mathcal{V}$ no longer loses 𝒵 at the end of the range. CSS `.pt-cmp`.
+- Verified: κ = 1, $[1,2]\times[0,1]$, $z_0=(0,1)$ gives $\Delta z = (-1,0)$ = prediction (sign matches the book); W loop around the origin $\Delta z = 0$; W along $\gamma_1$
+  turns 𝒵 by $124.5°$ at $\lambda = 1.5$. ch06-parallel-transport and ch06-christoffel shots pass; throwaway lesson deleted, course.yaml restored.
+- Choices: the torsion hint uses the vertical line (autoparallel of ∇ᴱ, not of ∇ᵂ: ∇ᵂ's only straight autoparallels are radial lines, where ∇ᵂ and ∇ᴱ agree); the lesson
+  should say so. Button words: "frame" (W), "curved" (κ). Prediction for flat connections shown as $\Delta z = 0$.
+- Conventions fixed here: $\nabla^{\mathrm{W}}$, $\nabla^{\kappa}$, $\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}$, $\mathrm{Riem}^1_{212}$, holonomy $\Delta z^1 = -\mathrm{Riem}^1_{212}z^2\times$area, rectangle CCW one side per unit λ.
 
 ### 2026-10-20 — ch06-parallel-transport (concept, 31 cards)
 - Hook "is the circle straight?" (guess for ∇ᴱ/∇ᴾ), early widget (circle, badge and acceleration hidden), fields along curves with figure-eight, $\nabla_{v_\gamma}$ (theorem, Leibniz MCQ, order card for the uniqueness derivation, build of $(**)$), transport ODE and linear map, circle in polar (solution MCQ, numeric $\dot z^1(1.2) = -0.93$), parallel vs parallelly transported, autoparallel equation, symmetric-part trap plus antisymmetric transport numeric, vertical line in polar (two numerics), circle acceleration and reparametrization, second widget (badge presets), hook resolved, radial λ² (ᚱ = 2/3 at 1.5), holonomy text + MCQ, summary.

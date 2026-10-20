@@ -465,13 +465,50 @@ vertical line the reverse; radial lines the same under both. Check
 ($r_0 = 2$, $z_0 = (1, 0)$, $\lambda = 1.2$, $\nabla^{\mathrm{E}}$): polar components
 $(\cos\lambda, -\sin\lambda/2) = (0.36, -0.47)$, $\dot z^1 = -0.93$,
 $\Gamma^1_{ji}z^j\dot\gamma^i = 0.93$.
+
+Two more connections (for torsion and curvature). `W` is $\nabla^{\mathrm{W}}$:
+the unit radial and angular fields $e_1 = (a\,\partial x_1 + b\,\partial x_2)/r$,
+$e_2 = (-b\,\partial x_1 + a\,\partial x_2)/r$ are declared parallel, on the plane
+minus the origin; $\mathcal{Z}$ keeps its $e_1, e_2$ components, i.e. turns with
+the polar angle of $\gamma(\lambda)$ (the transport stops if the curve hits the
+origin). Its nonzero coefficients in $\mathscr{X}$: $\Gamma^2_{11} = b/r^2$,
+$\Gamma^2_{12} = -a/r^2$, $\Gamma^1_{21} = -b/r^2$, $\Gamma^1_{22} = a/r^2$ (flat, with
+torsion $\mathtt{T}^1_{12} = -b/r^2$, $\mathtt{T}^2_{12} = a/r^2$, where
+$\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}$). `kappa` is $\nabla^{\kappa}$ with the
+single coefficient $\Gamma^1_{22} = \kappa a$ in $\mathscr{X}$ (`kappa:`, default 1;
+torsion free, $\mathrm{Riem}^1_{212} = \kappa$): $\dot z^1 = -\kappa\,a\,z^2\dot\gamma^2$,
+$\dot z^2 = 0$, integrated along the curve (midpoint rule, 2400 steps; exact on
+the rectangle). For both, the transport equation and the acceleration are shown
+in $\mathscr{X}$. Curve `rectangle` $[x_0, x_1]\times[b_0, b_1]$: closed,
+counterclockwise from $(x_0, b_0)$ (bottom, right side up, top, left side
+down), one side per unit of $\lambda \in [0, 4]$, exact piecewise velocity;
+no autoparallel badge (corners), instead **After the loop**: $\Delta z =
+z(4) - z(0)$ (cartesian) next to the **Prediction**: for $\nabla^{\kappa}$,
+$\Delta z^1 = -\mathrm{Riem}^1_{212}\,z^2\times\text{area}$, $\Delta z^2 = 0$ (exact for any
+loop, by $\oint a\,db = $ area); for the flat ones $\Delta z = 0$ ($\nabla^{\mathrm{P}}$
+stops at the cut if the loop surrounds the origin; $\nabla^{\mathrm{W}}$ returns
+even around the origin). `compareE: true` draws, for connections other than
+$\nabla^{\mathrm{E}}$, the $\nabla^{\mathrm{E}}$ copy of $\mathcal{Z}$ (start vector at
+$\gamma(\lambda)$, dashed, labelled "∇ᴱ copy") and the angle from it to $\mathcal{Z}$
+(torsion hint: $\nabla^{\mathrm{W}}$ along the vertical line $\gamma_1$ turns
+$\mathcal{Z}$ by the change of polar angle, $124.5^\circ$ from $\lambda = -2.5$ to
+$1.5$; along radial lines the two agree). `torsion: true` adds
+$\mathtt{T}^1_{12}, \mathtt{T}^2_{12}$ at $\gamma(\lambda)$. Check ($\kappa = 1$,
+rectangle $[1,2]\times[0,1]$, $z_0 = (0,1)$): $z = (-1, 1)$ at $\lambda = 1.5$ and
+$\Delta z = (-1, 0)$ after the loop (right side $-2$, left side $+1$). The view
+is fitted to the curve only; give `view` when $\mathcal{Z}$ is long.
 ```yaml
 config:
   curve: circle               # circle | vertical | radial | radial-squared, or
                               # { type: circle, r0: 2 } | { type: vertical, x0: 1 }
                               # | { type: radial, theta0: 0.785 }; any type takes range: [l0, l1]
-  connection: E               # E | P
+                              # | { type: rectangle, x0: 1, x1: 2, b0: 0, b1: 1 }
+  connection: E               # E | P | W | kappa
   connections: [E, P]         # toggle buttons offered (one entry: none)
+  kappa: 1                    # κ of ∇^κ
+  compareE: false             # dashed ∇ᴱ copy of Z and the angle to it
+  torsion: false              # readout T¹₁₂, T²₁₂ at γ(λ)
+  holonomy: true              # closed curves: Δz after the loop and the prediction
   z0: [1, 0]                  # start vector, cartesian components (tip draggable)
   lambda: 0                   # initial slider value (default: start of the range)
   showVelocity: true

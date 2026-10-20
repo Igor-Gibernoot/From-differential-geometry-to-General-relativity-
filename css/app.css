@@ -526,5 +526,7 @@ polyline.w-level { fill: none; }
 .pt-ghost { opacity: .22; }
 .pt-start { opacity: .45; }
 .pt-acc line { stroke-dasharray: 5 4; }
+.pt-cmp { opacity: .6; }
+.pt-cmp line { stroke-dasharray: 3 4; }
 .pt-basis { stroke-width: 2px; opacity: .8; }
 .pt-lam { min-width: 5.5em; }
