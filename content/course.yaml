@@ -258,7 +258,11 @@ levels:
         kind: concept
         file: ch06/connections.yaml
         summary: Differentiating components depends on the chart. A connection is the extra structure that differentiates vector and tensor fields, fixed by five rules; the plane carries more than one.
-      - { id: ch06-christoffel, title: Connection Coefficient Functions, kind: concept }
+      - id: ch06-christoffel
+        title: Connection Coefficient Functions
+        kind: concept
+        file: ch06/christoffel.yaml
+        summary: In a chart a connection is d³ functions Γ, which give every covariant derivative in components; they change chart with an extra second-derivative term, so they are not a tensor.
       - { id: ch06-parallel-transport, title: Parallel Transport and Autoparallels, kind: concept }
       - { id: ch06-torsion-curvature, title: Torsion and Curvature, kind: concept }
       - { id: ch06-torsion-tensor, title: "Guided Problem: Torsion Is a Tensor", kind: guided }

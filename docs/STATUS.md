@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 6 in progress: ch06-connections done)
+## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel done)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -24,7 +24,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
-- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards). Next: `ch06-christoffel`.
+- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards). Next: `ch06-parallel-transport`.
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 6 (Covariant Derivative) in `course.yaml` order, next
@@ -247,6 +247,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\nabla^{\mathrm{E}}_{\partial x_2}$swirl $= -\partial x_1$, $\nabla^{\mathrm{E}}_{\text{swirl}}\partial x_2 = 0$, $\nabla^{\mathrm{P}}_{\partial x_2}$swirl $= 0$ (swirl $=\partial y_2$); $f = a^2b$: $\nabla_{(\partial x_2)_p}f = 9$
   at $(3,1)$, $(\nabla^{\mathrm{E}}_{(\partial x_2)_p}df)(\partial x_1) = 2a = 6$. Rule-4 numeric: directions $\partial x_1\to(1,2)$, $\partial x_2\to(0,5)$. Words: connection = structure, covariant
   derivative = output; Ehresmann/gauge remark in one card. $\Gamma_\mathscr{X}$ teased with note "unrelated to $\Gamma T\mathcal{M}$". Lorentz factor $\kappa$ of ch05 unrelated.
+  `ch06-christoffel`: book's index order $(\Gamma_\mathscr{X})^i_{jk}(p) := (dx^i)_p(\nabla_{(\partial x_k)_p}\partial x_j)$, **last lower index = direction**; components
+  $(\nabla_\mathcal{X}\mathcal{Y})^k = \mathcal{X}\lfloor\tilde x^k\rceil + \Gamma^k_{ji}\tilde x^jx^i$, $(\nabla_\mathcal{X}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil - \Gamma^j_{ki}\mathtt{x}_jx^i$, $\tilde\Gamma = -\Gamma$; (1,1) rule with $m,\ell$.
+  Transformation law with summation index $m$ (book's $p$, renamed to avoid the point $p$); second derivative $\partial^2\mathscr{X}^s/\partial\mathscr{Y}^k\partial\mathscr{Y}^j$ of $\text{ᛖ}_{\mathcal{V}\mathcal{U}} = \mathscr{X}\circ\mathscr{Y}^{-1}$.
+  Polar $\nabla^{\mathrm{E}}$: $(\Gamma^{\mathrm{E}}_\mathscr{Y})^1_{22} = -r$, $(\Gamma^{\mathrm{E}}_\mathscr{Y})^2_{12} = (\Gamma^{\mathrm{E}}_\mathscr{Y})^2_{21} = 1/r$ (numeric indices, not $r\theta$); check point $(3,4)$: $-5$, $0.2$,
+  $\nabla^{\mathrm{E}}_{\partial x_2}$swirl polar components $(-0.6, 0.16)$; $\partial x_2$ polar components $(b/r, a/r^2)$. $(\Gamma^{\mathrm{P}}_\mathscr{X})^2_{12}(1,0) = -1$. Invented connection
+  $\Gamma^1_{22} = a$: $\nabla_{\partial x_2}(b\,\partial x_2) = 2\partial x_1 + \partial x_2$ at $(2,1)$. Normal coordinates stated in one card (symmetric part removable at a point).
+  Widget preset: `chart-basis` polar first + cartesian, `basisOnly`, `chain` (labels $\partial/\partial r$ etc., mapped to $\partial y_i$ in the body).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -679,3 +686,12 @@ long box titles.
 - Choices: followed the book's pointwise definition (not field-level axioms); generic field named $\mathcal{Y}$ (book) rather than $\mathcal{Z}$; invented
   $\nabla^{\mathrm{P}}$ to show that each chart's naive rule is a different connection; plain plane instead of the egg carton; no autoparallels or $\Gamma$ yet.
 - Conventions fixed here: see Current, "Chapter 6 conventions so far".
+- 2026-10-20 `ch06-christoffel` (concept, 28 cards): hook "how many numbers fix a connection?" (four guesses); widget `chart-basis` polar+cartesian
+  basisOnly/chain at five presets; which-basis-changes multi-select; locality + chart expansion, product-rule build; definition (book order), index-order MCQ,
+  component build, count ($4^3 = 64$), any-choice sketch, invented connection numeric; covector setup + build (both derivations); valence-sign MCQ; $\nabla^{\mathrm{E}}$
+  polar coefficients directly ($-5$ at $(3,4)$, $\tfrac1r\partial y_2$ MCQ); transformation law in three cards (setup, origin MCQ, law) + numeric via law ($0.2$);
+  tensor-or-not multi-select (difference, antisymmetric part); normal coordinates text; C.5.2 check in polar ($-0.6$); traps (zero here/zero everywhere,
+  $\nabla^{\mathrm{P}}$ in cartesian $-1$, zero in both charts); summary with formulas.
+- Choices: added normal coordinates (in the book's 6.2) as one text card; used the "Christoffel symbols" name only as an aside; renamed the book's
+  summation index $p$ to $m$; widget charts listed polar first so `chain` expands the polar basis in the cartesian one.
+- Conventions fixed here: see Current, "Chapter 6 conventions so far" (`ch06-christoffel` lines).
