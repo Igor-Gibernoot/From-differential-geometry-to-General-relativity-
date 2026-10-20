@@ -1,6 +1,11 @@
 id: ch02-change-of-basis
 title: Same Arrow, Different Numbers
 kind: concept
+own: |
+  - A change of basis leaves {{ the vector alone and changes only its components }}.
+  - The dictionary {{ $\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$ }} writes old in terms of new. It exists and is invertible because {{ **both** sets are bases of the same finite-dimensional $V$ }}.
+  - Components transform the opposite way, {{ $y^j = \sum_i J_i^j\, x^i$ }}: they are **contravariant**.
+  - A component is not "how much along that basis vector"; it depends on the whole basis.
 
 cards:
   - type: text
@@ -305,9 +310,4 @@ cards:
     id: wrap
     title: What you now own
     body: |
-      - A change of basis leaves the vector alone and changes its components.
-      - The dictionary $\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$ writes old in terms of new. It exists and is invertible because **both** sets are bases of the same finite-dimensional $V$.
-      - Components transform the opposite way, $y^j = \sum_i J_i^j\, x^i$: they are **contravariant**.
-      - A component is not "how much along that basis vector"; it depends on the whole basis.
-
       **Next:** a covector eats a vector and returns a number. Vector components shrink when the basis grows. What must covector components do so that the number stays the same? That is the next guided problem.
