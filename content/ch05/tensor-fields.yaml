@@ -1,0 +1,405 @@
+id: ch05-tensor-fields
+title: Tensor Fields
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: Machines that eat fields
+    body: |
+      The central objects of general relativity are not vector fields. The **metric** (Level 7) eats two velocities at each point and returns a number, a length or an angle; the curvature and the stress-energy tensor have even more slots. Recall that at one point $p$ such objects are tensors in $T_p^{(r,s)}\mathcal{M}$: multilinear maps on $r$ covectors and $s$ velocities. A physicist wants them at **every** point at once, fed with **fields**, returning a **function**.
+
+      Recall the two ways a field acts. A vector field $\mathcal{X}$ acts on a function $f$, giving the function $\mathcal{X}\lfloor f\rceil(p) := \mathcal{X}(p)(f)$. A covector field $\mathsf{X}$ acts on a vector field, giving $\mathsf{X}\lceil\mathcal{X}\rfloor(p) := \mathsf{X}(p)(\mathcal{X}(p))$. Both return smooth functions.
+
+      So both look like "machines that eat something and return a function". The puzzle for this lesson: which rules of this kind deserve the name **tensor field**, and is the action $f\mapsto\mathcal{X}\lfloor f\rceil$ one of them?
+
+  - type: mcq
+    id: predict-pull-out
+    title: Predict first
+    multiple: true
+    prompt: |
+      On a manifold $\mathcal{M}$, fix a vector field $\mathcal{X}$, a covector field $\mathsf{X}$ and a function $f$. For each map below, ask: can a smooth function $g$ always be pulled out of its slot, (map of $g$ times input) $= g\cdot$(map of input)? Select all maps for which it can.
+    options:
+      - text: '$\mathcal{Z}\mapsto\mathsf{X}\lceil\mathcal{Z}\rfloor$, fed a vector field $\mathcal{Z}$'
+        correct: true
+      - text: '$\mathcal{Z}\mapsto\mathcal{Z}\lfloor f\rceil$, fed a vector field $\mathcal{Z}$'
+        correct: true
+      - text: '$\mathsf{Z}\mapsto\mathsf{Z}\lceil\mathcal{X}\rfloor$, fed a covector field $\mathsf{Z}$'
+        correct: true
+      - text: '$h\mapsto\mathcal{X}\lfloor h\rceil$, fed a function $h$'
+        feedback: |
+          A velocity obeys the Leibniz rule: $\mathcal{X}\lfloor g h\rceil = g\,\mathcal{X}\lfloor h\rceil + h\,\mathcal{X}\lfloor g\rceil$. The extra term $h\,\mathcal{X}\lfloor g\rceil$ is nonzero whenever $g$ changes along $\mathcal{X}$, so $g$ does not simply pull out. Differentiating sees how the input **varies**, not only its value.
+    explanation: |
+      Each field value acts on another value at the **same point**: $(g\mathcal{Z})(p) = g(p)\mathcal{Z}(p)$, and $g(p)$ is a number, so it pulls out of $\mathsf{X}(p)$ and out of the velocity $\mathcal{Z}(p)$ alike. The exception is $h\mapsto\mathcal{X}\lfloor h\rceil$, which differentiates its input: by the Leibniz rule,
+      $$\mathcal{X}\lfloor gh\rceil = g\,\mathcal{X}\lfloor h\rceil + h\,\mathcal{X}\lfloor g\rceil.$$
+      "Functions pull out" will be the defining test of a tensor field.
+
+  - type: text
+    id: definition
+    title: Tensor fields
+    body: |
+      Recall that $\Gamma T\mathcal{M}$ (smooth vector fields) and $\Gamma T^*\mathcal{M}$ (smooth covector fields) are modules over the ring $C^\infty(\mathcal{M})$ of smooth functions: a field can be multiplied by a function, $(g\mathcal{X})(p) = g(p)\mathcal{X}(p)$.
+
+      A map $T$ from several fields into $C^\infty(\mathcal{M})$ is **$C^\infty(\mathcal{M})$-multilinear** if, in each slot separately (the other slots held fixed), for all functions $g$ and fields $A, B$ of that slot's kind,
+      $$\begin{aligned}&T(\dots, gA + B, \dots)\\ &= g\,T(\dots, A, \dots) + T(\dots, B, \dots).\end{aligned}$$
+
+      A **(smooth) $(r,s)$-tensor field** is a $C^\infty(\mathcal{M})$-multilinear map
+      $$T\colon\underbrace{\Gamma T^*\mathcal{M}\times\cdots}_{r}\times\underbrace{\Gamma T\mathcal{M}\times\cdots}_{s}\to C^\infty(\mathcal{M}),$$
+      with $r$ covector-field slots first, then $s$ vector-field slots, exactly as for tensors at a point. We write $\Gamma T^{(r,s)}\mathcal{M}$ for the set of $(r,s)$-tensor fields; adding them and multiplying them by functions, value by value, makes it a $C^\infty(\mathcal{M})$-module too.
+
+  - type: mcq
+    id: count-01
+    title: The smallest cases
+    prompt: |
+      A $(r,s)$-tensor field on $\mathcal{M}$ is a $C^\infty(\mathcal{M})$-multilinear map with $r$ slots for covector fields and $s$ slots for vector fields, returning a smooth function. What is a $(0,1)$-tensor field?
+    options:
+      - text: 'A $C^\infty(\mathcal{M})$-linear map $\Gamma T\mathcal{M}\to C^\infty(\mathcal{M})$, the job of a covector field $\mathsf{X}$ via $\mathcal{Z}\mapsto\mathsf{X}\lceil\mathcal{Z}\rfloor$'
+        correct: true
+      - text: 'A vector field, since $1$ in the second place counts vectors'
+        feedback: |
+          $s = 1$ counts **slots** that are fed a vector field, not what the tensor is. Something that eats one vector field and returns a function is a covector field. Counting slots without asking what they eat is the classic slip.
+      - text: 'A $C^\infty(\mathcal{M})$-linear map $C^\infty(\mathcal{M})\to C^\infty(\mathcal{M})$, such as $h\mapsto\mathcal{X}\lfloor h\rceil$'
+        feedback: |
+          Tensor-field slots are fed vector or covector fields, never functions. And $h\mapsto\mathcal{X}\lfloor h\rceil$ is not even $C^\infty(\mathcal{M})$-linear: the Leibniz rule adds the term $h\,\mathcal{X}\lfloor g\rceil$ when $g$ multiplies the input.
+    explanation: |
+      A $(0,1)$-tensor field eats one vector field: that is a covector field. Symmetrically, a vector field $\mathcal{X}$ is a $(1,0)$-tensor field through $\mathsf{Z}\mapsto\mathsf{Z}\lceil\mathcal{X}\rfloor$, which pulls functions out: $(g\mathsf{Z})\lceil\mathcal{X}\rfloor = g\,\mathsf{Z}\lceil\mathcal{X}\rfloor$. Conversely, every $C^\infty(\mathcal{M})$-linear map on covector fields (on vector fields) comes from exactly one vector field (covector field); we will see why once we know that tensor fields work point by point. A $(0,0)$-tensor field is just a function.
+
+  - type: widget
+    id: machine
+    title: The machine at one point, then another
+    widget: machine-playground
+    config:
+      slots: 2
+      name: T
+      tensor: [[0, 0], [0, 1]]
+      u: [0, 1]
+      v: [-1.5708, 3.1416]
+      snap: 0.5
+      presets:
+        - { label: 'At (π, π/2)', tensor: [[0, 0], [0, 1]], u: [0, 1], v: [-1.5708, 3.1416] }
+        - { label: 'At (π/2, π/4)', tensor: [[0.5, 0], [0, 0]], u: [0, 1], v: [-0.7854, 1.5708] }
+        - { label: 'At (π/3, π/6)', tensor: [[0.5625, 0.1875], [0.1875, 0.0625]], u: [0, 1], v: [-0.5236, 1.0472] }
+    body: |
+      The running example, the **egg carton**: the surface $\mathcal{M}$ that is the graph of $h(a,b) = \cos a\cos b + 1$, with the chart $\mathscr{X}(a,b,c) = (a,b)$ and basis fields $\partial x_1$, $\partial x_2$. The height $f = \cos a\cos b + 1$ has differential $df = \mathtt{X}_1\,dx^1 + \mathtt{X}_2\,dx^2$ with
+      $$\mathtt{X}_1 = -\sin a\cos b,$$
+      $$\mathtt{X}_2 = -\cos a\sin b.$$
+      Feed $T := df\otimes df$, $T(\mathcal{X}_1,\mathcal{X}_2) := df\lceil\mathcal{X}_1\rfloor\cdot df\lceil\mathcal{X}_2\rfloor$, the vertical field $\mathcal{X} = \partial x_2$ (components $(0,1)$) and the swirl $\mathcal{Y} = -b\,\partial x_1 + a\,\partial x_2$. The widget shows **one point at a time**: the tensor $T(p)$ (each point button loads its components $\mathtt{X}_i(p)\mathtt{X}_j(p)$), fed the two velocities $\mathcal{X}(p)$, $\mathcal{Y}(p)$.
+
+      1. Read $T(\mathcal{X},\mathcal{Y})$ at $(\pi,\pi/2)$. Press **Double 𝒳**: scaling an input at one point is multiplying by one number.
+      2. Press the other two points. The machine, its inputs and the output all change: the output is a **function** of the point.
+
+  - type: numeric
+    id: widget-value
+    title: Read the function
+    review: false
+    prompt: |
+      On the egg carton (chart coordinates $(a,b)$), $T = df\otimes df$ with $df = -\sin a\cos b\,dx^1 - \cos a\sin b\,dx^2$, the vertical field $\mathcal{X} = \partial x_2$ and the swirl $\mathcal{Y} = -b\,\partial x_1 + a\,\partial x_2$. What is the number $T(\mathcal{X},\mathcal{Y})(p)$ at the point $p$ with coordinates $(\pi,\pi/2)$?
+    answer: 3.14159
+    tolerance: 0.01
+    answerText: '$\pi$'
+    wrong:
+      - { value: 1, feedback: 'That is $df\lceil\mathcal{X}\rfloor(p) = -\cos\pi\sin(\pi/2) = 1$, only one factor. The other factor is $df\lceil\mathcal{Y}\rfloor(p) = (0)(-\pi/2) + (1)(\pi) = \pi$.' }
+      - { value: 0, feedback: 'At $(\pi,\pi/2)$ the components of $df$ are $(-\sin\pi\cos\frac\pi2, -\cos\pi\sin\frac\pi2) = (0, 1)$, not zero, and the swirl there is $(-\pi/2, \pi)$, with second component $\pi$.' }
+    hint: |
+      $T(\mathcal{X},\mathcal{Y})(p) = df\lceil\mathcal{X}\rfloor(p)\cdot df\lceil\mathcal{Y}\rfloor(p)$, and $df\lceil\mathcal{Z}\rfloor(p) = \mathtt{X}_1(p)z^1(p) + \mathtt{X}_2(p)z^2(p)$ for a field with components $z^i$.
+    explanation: |
+      At $(\pi,\pi/2)$: $\mathtt{X} = (0,1)$, $\mathcal{X}(p)$ has components $(0,1)$ and $\mathcal{Y}(p)$ has $(-\pi/2,\pi)$. So $df\lceil\mathcal{X}\rfloor(p) = 1$, $df\lceil\mathcal{Y}\rfloor(p) = \pi$ and $T(\mathcal{X},\mathcal{Y})(p) = \pi$. At $(\pi/2,\pi/4)$ the widget gave $0$, because $df\lceil\mathcal{X}\rfloor = -\cos a\sin b$ vanishes where $a = \pi/2$. As a whole,
+      $$T(\mathcal{X},\mathcal{Y}) = df\lceil\mathcal{X}\rfloor\cdot df\lceil\mathcal{Y}\rfloor,$$
+      a smooth function on $\mathcal{M}$.
+
+  - type: text
+    id: pointwise-claim
+    title: Does a tensor field look only at one point?
+    body: |
+      In the widget, the output at $p$ used only the **values** $\mathcal{X}(p)$, $\mathcal{Y}(p)$. For $df\otimes df$ that is visible from the formula. Is it true for **every** tensor field? The definition only says functions pull out; it says nothing about points.
+
+      **Pointwise principle.** If $T$ is $C^\infty(\mathcal{M})$-linear in a vector-field slot and two fields agree at $p$, $\mathcal{Z}(p) = \mathcal{Z}'(p)$, then $T(\mathcal{Z})(p) = T(\mathcal{Z}')(p)$ (other slots fixed). Same for covector-field slots.
+
+      By linearity it suffices to show: **if $\mathcal{Z}(p) = 0$, then $T(\mathcal{Z})(p) = 0$** (apply it to $\mathcal{Z} - \mathcal{Z}'$). The tool is a **bump function**: a smooth $\psi\colon\mathcal{M}\to\mathbb{R}$ with $\psi(p) = 1$ that vanishes outside a closed set inside a chart domain $\mathcal{U}$ around $p$ (its existence is stated here without proof). Multiplying by $\psi$ turns objects that live only on $\mathcal{U}$, such as the basis fields $\partial x_i$ and the component functions $z^i$ of $\mathcal{Z}$, into objects on all of $\mathcal{M}$, extended by $0$.
+
+  - type: order
+    id: pointwise-proof
+    title: Build the proof
+    prompt: |
+      Claim: if $T$ is $C^\infty(\mathcal{M})$-linear in a vector-field slot and $\mathcal{Z}(p) = 0$, then $T(\mathcal{Z})(p) = 0$. Here $(\mathcal{U},\mathscr{X})$ is a chart around $p$, $\mathcal{Z}|_\mathcal{U} = z^i\,\partial x_i$, and $\psi$ is a bump function with $\psi(p) = 1$ that vanishes outside a closed set inside $\mathcal{U}$. Put the steps in order.
+    steps:
+      - '$\psi z^i$ and $\psi\,\partial x_i$, extended by $0$ outside $\mathcal{U}$, are a smooth function and a smooth vector field on all of $\mathcal{M}$.'
+      - 'On all of $\mathcal{M}$, $\psi^2\mathcal{Z} = (\psi z^i)(\psi\,\partial x_i)$: on $\mathcal{U}$ by the expansion of $\mathcal{Z}$, and outside $\mathcal{U}$ both sides are $0$.'
+      - 'Feed both sides to $T$ and pull the functions out: $\psi^2\,T(\mathcal{Z}) = (\psi z^i)\,T(\psi\,\partial x_i)$.'
+      - 'Evaluate at $p$: $\psi(p) = 1$, and $z^i(p) = 0$ because $\mathcal{Z}(p) = 0$.'
+      - 'Hence $T(\mathcal{Z})(p) = 0$.'
+    hint: |
+      First make everything global with $\psi$, then use the expansion, then use the defining property of $T$, and only at the end look at the point $p$.
+    explanation: |
+      The key step is the third: $C^\infty(\mathcal{M})$-linearity pulls out the **functions** $\psi^2$ and $\psi z^i$, whose values at $p$ are $1$ and $0$. Linearity over $\mathbb{R}$ alone could only pull out constants, and the components $z^i$ are not constant. So for a tensor field, $T(p)$ is a well-defined multilinear map on $T_p^*\mathcal{M}$ and $T_p\mathcal{M}$: a tensor in $T_p^{(r,s)}\mathcal{M}$ at each point, varying smoothly.
+
+  - type: text
+    id: leibniz-fails
+    title: A rule that is not pointwise
+    body: |
+      Now a rule that fails. On the plane with points $q = (q_1,q_2)$ and the cartesian chart $\mathscr{X}(q) = (q_1,q_2)$, define for a vector field $\mathcal{Z}$ with components $z^i$
+      $$D(\mathcal{Z}) := \partial x_1\lfloor dx^1\lceil\mathcal{Z}\rfloor\rceil = \partial x_1\lfloor z^1\rceil,$$
+      the derivative of the first component in the $q_1$ direction. It sends fields to smooth functions and is linear over $\mathbb{R}$. Multiply the input by a function $g$; by the Leibniz rule,
+      $$D(g\mathcal{Z}) = g\,D(\mathcal{Z}) + z^1\,\partial x_1\lfloor g\rceil.$$
+      The extra term means $D$ is **not** $C^\infty(\mathbb{R}^2)$-linear. The same happens for any $\mathcal{Z}\mapsto\mathcal{Y}\lfloor\mathsf{X}\lceil\mathcal{Z}\rfloor\rceil$: a field acting on the output of another differentiates it.
+
+  - type: numeric
+    id: leibniz-value
+    title: Same value, different output
+    prompt: |
+      On the plane with cartesian chart $\mathscr{X}(q) = (q_1,q_2)$, let $D(\mathcal{Z}) := \partial x_1\lfloor z^1\rceil$, the $q_1$-derivative of the first component of $\mathcal{Z}$. Take $\mathcal{Z} = \partial x_1$ (components $(1,0)$) and $\mathcal{Z}' = (1+\mathscr{X}^1)\,\partial x_1$ (components $(1+q_1, 0)$). Both have the same value at the origin. What is $D(\mathcal{Z}')$ at the origin?
+    answer: 1
+    wrong:
+      - { value: 0, feedback: 'That is $D(\mathcal{Z})(0,0)$: the constant component $1$ has derivative $0$. For $\mathcal{Z}''$ the first component is $1+q_1$, whose $q_1$-derivative is $1$ everywhere, the origin included.' }
+    hint: |
+      $D$ differentiates the first component $1 + q_1$ with respect to $q_1$.
+    explanation: |
+      $D(\mathcal{Z}')(0,0) = 1$ while $D(\mathcal{Z})(0,0) = 0$, although $\mathcal{Z}(0,0) = \mathcal{Z}'(0,0)$. So $D$ is not pointwise, and by the pointwise principle it cannot be $C^\infty(\mathbb{R}^2)$-linear: $D$ is **not** a tensor field. It sees how the field varies near the point. Derivatives of fields that do compare nearby points are the connections of Level 6, and their failure to be tensors is exactly this Leibniz term.
+
+  - type: mcq
+    id: real-vs-smooth
+    title: Which linearity?
+    prompt: |
+      A map $L\colon\Gamma T\mathcal{M}\to C^\infty(\mathcal{M})$ satisfies $L(c\mathcal{Z} + \mathcal{W}) = cL(\mathcal{Z}) + L(\mathcal{W})$ for every **real number** $c$ and all vector fields $\mathcal{Z},\mathcal{W}$. Is $L$ a $(0,1)$-tensor field?
+    options:
+      - text: 'Not necessarily: linearity over $\mathbb{R}$ allows maps that differentiate, such as $\mathcal{Z}\mapsto\partial x_1\lfloor z^1\rceil$ on the plane'
+        correct: true
+      - text: 'Yes: real numbers are constant functions, so linearity over $\mathbb{R}$ is the same as over $C^\infty(\mathcal{M})$'
+        feedback: |
+          Constants are only some of the functions. $C^\infty(\mathcal{M})$-linearity is the stronger demand: it must also hold for $g$ that varies, and that is what the pointwise proof needed (it pulled out $\psi z^i$). The map $\mathcal{Z}\mapsto\partial x_1\lfloor z^1\rceil$ passes the real test and fails the function test.
+      - text: 'Yes, as long as $L$ returns smooth functions'
+        feedback: |
+          Smoothness of the output is part of the definition but not the heart of it. $\mathcal{Z}\mapsto\partial x_1\lfloor z^1\rceil$ returns smooth functions and is $\mathbb{R}$-linear, yet its value at the origin differs for $\partial x_1$ and $(1+\mathscr{X}^1)\partial x_1$, which agree there.
+    explanation: |
+      A tensor field must be linear over the **ring** $C^\infty(\mathcal{M})$. Every $C^\infty(\mathcal{M})$-linear map is $\mathbb{R}$-linear (take constant $g$), not conversely. The space of vector fields is a real vector space of infinite dimension, and it carries many $\mathbb{R}$-linear maps that are not pointwise.
+
+  - type: text
+    id: components
+    title: Component functions
+    body: |
+      Recall the chart-induced basis fields on a chart domain $\mathcal{U}$: $\partial x_i := \partial/\partial\mathscr{X}^i$ and $dx^i := d\mathscr{X}^i$, with $dx^i\lceil\partial x_j\rfloor = \delta^i_j$. They live on $\mathcal{U}$ only. By the pointwise principle a tensor field can still be fed them: $T$ restricts to a tensor field $T|_\mathcal{U}$ on $\mathcal{U}$, computed point by point. The **component functions** of an $(r,s)$-tensor field are
+      $$T^{i_1\dots i_r}_{j_1\dots j_s} := T(dx^{i_1},\dots,\partial x_{j_1},\dots),$$
+      smooth functions on $\mathcal{U}$, one for each choice of indices. For a $(0,2)$-tensor field: $T_{ij} := T(\partial x_i,\partial x_j)$. At each point they are the components of the tensor $T(p)$ at $p$.
+
+      The **tensor product** of fields is defined value by value, for example
+      $$(\mathsf{X}\otimes\mathsf{Y})(\mathcal{Z}_1,\mathcal{Z}_2) := \mathsf{X}\lceil\mathcal{Z}_1\rfloor\,\mathsf{Y}\lceil\mathcal{Z}_2\rfloor,$$
+      and $(\partial x_i\otimes dx^j)(\mathsf{Z},\mathcal{Z}) := \mathsf{Z}\lceil\partial x_i\rfloor\,dx^j\lceil\mathcal{Z}\rfloor$.
+
+  - type: mcq
+    id: expansion-step
+    title: Why the expansion works
+    prompt: |
+      On a chart domain $\mathcal{U}$, a $(0,2)$-tensor field $T$ has component functions $T_{ij} := T(\partial x_i,\partial x_j)$, and two vector fields are $\mathcal{Z}_1|_\mathcal{U} = z_1^i\,\partial x_i$, $\mathcal{Z}_2|_\mathcal{U} = z_2^j\,\partial x_j$ with component functions $z_1^i, z_2^j$. Which property justifies
+      $$T(\mathcal{Z}_1,\mathcal{Z}_2) = z_1^i\,z_2^j\,T_{ij}$$
+      on $\mathcal{U}$?
+    options:
+      - text: 'Linearity over $C^\infty(\mathcal{U})$ in each slot: the component functions $z_1^i$, $z_2^j$ pull out'
+        correct: true
+      - text: 'Linearity over $\mathbb{R}$ in each slot'
+        feedback: |
+          Over $\mathbb{R}$ only constants pull out, but $z_1^i$ and $z_2^j$ are functions that vary over $\mathcal{U}$. For the non-tensor $D(\mathcal{Z}) = \partial x_1\lfloor z^1\rceil$ on the plane, the formula $D(\mathcal{Z}) = z^i D(\partial x_i)$ indeed fails: the right side is $0$ for every field.
+      - text: 'The symmetry $T_{ij} = T_{ji}$'
+        feedback: |
+          No symmetry was assumed; the expansion holds for every $(0,2)$-tensor field, symmetric or not (the signed area $T_{12} = 1 = -T_{21}$ obeys it too). The order of slots is kept by the indices: $i$ goes with the first slot, $j$ with the second.
+    explanation: |
+      Pulling out the component functions slot by slot,
+      $$T(z_1^i\partial x_i, z_2^j\partial x_j) = z_1^i z_2^j\,T(\partial x_i,\partial x_j).$$
+      Since $z_1^i = dx^i\lceil\mathcal{Z}_1\rfloor$, this says
+      $$T|_\mathcal{U} = T_{ij}\,dx^i\otimes dx^j,$$
+      and in general
+      $$T|_\mathcal{U} = T^{i_1\dots}_{j_1\dots}\,\partial x_{i_1}\otimes\cdots\otimes dx^{j_1}\otimes\cdots$$
+      with function coefficients (Einstein summation over each repeated index pair, now with functions).
+
+  - type: numeric
+    id: component-value
+    title: One entry by hand
+    prompt: |
+      On the egg carton with chart coordinates $(a,b)$, the height has differential $df = \mathtt{X}_i\,dx^i$ with $\mathtt{X}_1 = -\sin a\cos b$ and $\mathtt{X}_2 = -\cos a\sin b$. For the $(0,2)$-tensor field $T = df\otimes df$, the component functions are $T_{ij} = T(\partial x_i,\partial x_j)$. What is $T_{12}$ at the point with coordinates $(\pi/3,\pi/6)$?
+    answer: 0.1875
+    tolerance: 0.001
+    answerText: '$3/16$'
+    wrong:
+      - { value: 0.5625, feedback: 'That is $T_{11} = \mathtt{X}_1^2 = (3/4)^2$. The entry $T_{12}$ pairs the two different components: $\mathtt{X}_1\mathtt{X}_2$.' }
+      - { value: -0.1875, feedback: 'Both components are negative at this point, $\mathtt{X}_1 = -3/4$ and $\mathtt{X}_2 = -1/4$, so their product is positive.' }
+    hint: |
+      $T_{12} = df\lceil\partial x_1\rfloor\,df\lceil\partial x_2\rfloor = \mathtt{X}_1\mathtt{X}_2$. Use $\sin\frac\pi3 = \cos\frac\pi6 = \frac{\sqrt3}2$ and $\cos\frac\pi3 = \sin\frac\pi6 = \frac12$.
+    explanation: |
+      $\mathtt{X}_1 = -\frac{\sqrt3}2\cdot\frac{\sqrt3}2 = -\frac34$ and $\mathtt{X}_2 = -\frac12\cdot\frac12 = -\frac14$, so $T_{12} = \frac3{16}$. As functions,
+      $$T_{ij} = \mathtt{X}_i\mathtt{X}_j,$$
+      $$T_{12} = \sin a\cos a\sin b\cos b,$$
+      $$T_{11} = \sin^2 a\cos^2 b,$$
+      $$T_{22} = \cos^2 a\sin^2 b.$$
+      These are the widget's numbers at $(\pi/3,\pi/6)$: $\begin{pmatrix}9/16&3/16\\3/16&1/16\end{pmatrix}$.
+
+  - type: text
+    id: chart-change
+    title: Changing chart, now with functions
+    body: |
+      Take a second chart $(\mathcal{V},\mathscr{Y})$ and write $(T_\mathcal{U})_{ij}$, $(T_\mathcal{V})_{kl}$ for the component functions in the two charts. Recall the basis-field law on the overlap $\mathcal{U}\cap\mathcal{V}$,
+      $$\partial y_k = \frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\,\partial x_i,$$
+      where the Jacobian entries are now **functions** on $\mathcal{U}\cap\mathcal{V}$:
+      $$\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}(p) := \partial_k[\mathscr{X}^i\circ\mathscr{Y}^{-1}](\mathscr{Y}(p)),$$
+      the entries $(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_k$ of the Jacobian of $\text{ᛖ}_{\mathcal{V}\mathcal{U}} = \mathscr{X}\circ\mathscr{Y}^{-1}$ (first subscript = chart of the row index $i$). Feeding $\partial y_k$, $\partial y_l$ to $T$ and pulling the function coefficients out gives the law.
+
+  - type: build
+    id: law-02
+    title: Build the (0,2) law
+    prompt: |
+      On the overlap $\mathcal{U}\cap\mathcal{V}$ of charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$, the basis fields satisfy $\partial y_k = (\partial\mathscr{X}^i/\partial\mathscr{Y}^k)\,\partial x_i$. Feed $\partial y_k$ and $\partial y_l$ to a $(0,2)$-tensor field $T$ and build its $\mathscr{Y}$-components from its $\mathscr{X}$-components $(T_\mathcal{U})_{ij}$.
+    prefix: '(T_\mathcal{V})_{kl} ='
+    tiles: ['\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}', '\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}', '(T_\mathcal{U})_{ij}', '\frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^i}', '\frac{\partial\mathscr{Y}^l}{\partial\mathscr{X}^j}']
+    answers:
+      - ['\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}', '\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}', '(T_\mathcal{U})_{ij}']
+      - ['\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}', '\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}', '(T_\mathcal{U})_{ij}']
+      - ['(T_\mathcal{U})_{ij}', '\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}', '\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}']
+      - ['(T_\mathcal{U})_{ij}', '\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}', '\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}']
+      - ['\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}', '(T_\mathcal{U})_{ij}', '\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}']
+      - ['\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}', '(T_\mathcal{U})_{ij}', '\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}']
+    wrong:
+      - answer: ['\frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^i}', '\frac{\partial\mathscr{Y}^l}{\partial\mathscr{X}^j}', '(T_\mathcal{U})_{ij}']
+        feedback: |
+          That is the factor for **upper** indices (the law of vector components). Lower indices follow the basis fields: $\partial y_k$ is expanded with $\partial\mathscr{X}^i/\partial\mathscr{Y}^k$, and each slot of $T$ is fed one such expansion.
+    hint: |
+      $(T_\mathcal{V})_{kl} = T(\partial y_k,\partial y_l)$. Substitute the expansion of each basis field and pull out the function coefficients, one per slot.
+    explanation: |
+      $$\begin{aligned}(T_\mathcal{V})_{kl} &= T(\partial y_k,\partial y_l)\\ &= \tfrac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\tfrac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}\,T(\partial x_i,\partial x_j).\end{aligned}$$
+      This is the law of tensors at a point, now read as an identity of functions on $\mathcal{U}\cap\mathcal{V}$: one Jacobian factor per index, $\partial\mathscr{Y}/\partial\mathscr{X}$ for each upper index and $\partial\mathscr{X}/\partial\mathscr{Y}$ for each lower one.
+
+  - type: mcq
+    id: law-11
+    title: A mixed field
+    prompt: |
+      A $(1,1)$-tensor field $A$ has component functions $(A_\mathcal{U})^i_j := A(dx^i,\partial x_j)$ in a chart $(\mathcal{U},\mathscr{X})$ and $(A_\mathcal{V})^k_l := A(dy^k,\partial y_l)$ in $(\mathcal{V},\mathscr{Y})$. On $\mathcal{U}\cap\mathcal{V}$ the basis laws are $dy^k = (\partial\mathscr{Y}^k/\partial\mathscr{X}^i)\,dx^i$ and $\partial y_l = (\partial\mathscr{X}^j/\partial\mathscr{Y}^l)\,\partial x_j$. Which law holds?
+    options:
+      - text: '$(A_\mathcal{V})^k_l = \frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^i}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}(A_\mathcal{U})^i_j$'
+        correct: true
+      - text: '$(A_\mathcal{V})^k_l = \frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}(A_\mathcal{U})^i_j$'
+        feedback: |
+          This treats the upper index like a lower one; it even breaks Einstein's rule ($i$ appears twice upstairs). The covector slot is fed $dy^k$, whose expansion carries $\partial\mathscr{Y}^k/\partial\mathscr{X}^i$.
+      - text: '$(A_\mathcal{V})^k_l = (A_\mathcal{U})^k_l$, since a $(1,1)$ field has one up and one down index, which cancel'
+        feedback: |
+          The two Jacobian factors do not cancel entry by entry: in matrix form the law reads $A_\mathcal{V} = J A_\mathcal{U} J^{-1}$ with $J = \partial\mathscr{Y}/\partial\mathscr{X}$, a similarity transformation. Only invariants such as the trace $(A_\mathcal{V})^k_k = (A_\mathcal{U})^i_i$ survive unchanged.
+    explanation: |
+      Feed the two expansions into the two slots and pull out the function coefficients: one factor $\partial\mathscr{Y}^k/\partial\mathscr{X}^i$ for the upper index, one factor $\partial\mathscr{X}^j/\partial\mathscr{Y}^l$ for the lower one, both functions on $\mathcal{U}\cap\mathcal{V}$.
+
+  - type: text
+    id: polar-recall
+    title: The egg carton in polar coordinates
+    body: |
+      Recall the polar chart $\mathscr{Y} = (r,\theta)$ on the egg carton, $r = \sqrt{a^2+b^2}$, $\theta = \operatorname{atan2}(b,a)$, so $a = r\cos\theta$ and $b = r\sin\theta$. The Jacobian functions $\partial\mathscr{X}^i/\partial\mathscr{Y}^k$ (row $i$ for $a, b$; column $k$ for $r,\theta$) are
+      $$\begin{pmatrix}\partial a/\partial r&\partial a/\partial\theta\\ \partial b/\partial r&\partial b/\partial\theta\end{pmatrix} = \begin{pmatrix}a/r&-b\\ b/r&a\end{pmatrix}.$$
+      For $T = df\otimes df$ the law gives
+      $$(T_\mathcal{V})_{kl} = \frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}\,\mathtt{X}_i\mathtt{X}_j = \mathtt{Y}_k\mathtt{Y}_l,$$
+      where $\mathtt{Y}_k = (\partial\mathscr{X}^i/\partial\mathscr{Y}^k)\,\mathtt{X}_i$ are the polar components of $df$: the law splits into one covector law per slot, as it should for a product.
+
+  - type: numeric
+    id: polar-value
+    title: A polar component
+    prompt: |
+      On the egg carton, $T = df\otimes df$ has $\mathscr{X}$-components $(T_\mathcal{U})_{ij} = \mathtt{X}_i\mathtt{X}_j$ with $\mathtt{X}_1 = -\sin a\cos b$, $\mathtt{X}_2 = -\cos a\sin b$. The polar chart $\mathscr{Y} = (r,\theta)$ has $a = r\cos\theta$, $b = r\sin\theta$. At the point with coordinates $(a,b) = (\pi,\pi/2)$, find $(T_\mathcal{V})_{22} = T(\partial\theta,\partial\theta)$.
+    answer: 9.8696
+    tolerance: 0.01
+    answerText: '$\pi^2$'
+    wrong:
+      - { value: 1, feedback: 'That is $(T_\mathcal{U})_{22}$, the cartesian-chart entry. A change of chart multiplies by Jacobian functions: here $(\partial b/\partial\theta)^2 = a^2 = \pi^2$.' }
+      - { value: 3.14159, feedback: 'One Jacobian factor per lower index, and $(T_\mathcal{V})_{22}$ has two: $(\partial b/\partial\theta)(\partial b/\partial\theta)\cdot 1 = \pi\cdot\pi$.' }
+    hint: |
+      At $(\pi,\pi/2)$ only $\mathtt{X}_2 = 1$ is nonzero, so only $(T_\mathcal{U})_{22} = 1$ survives. Then $(T_\mathcal{V})_{22} = (\partial b/\partial\theta)^2\,(T_\mathcal{U})_{22}$ with $\partial b/\partial\theta = r\cos\theta = a$.
+    explanation: |
+      $(T_\mathcal{V})_{22} = a^2\cdot 1 = \pi^2\approx 9.87$. Check with the product form: $\mathtt{Y}_2 = -b\,\mathtt{X}_1 + a\,\mathtt{X}_2 = \pi$, so $\mathtt{Y}_2\mathtt{Y}_2 = \pi^2$. The components changed from $1$ to $\pi^2$; the tensor field did not. Components are chart-dependent functions; $T$ is one object.
+
+  - type: text
+    id: notation
+    title: One letter, many fonts
+    body: |
+      From now on fields are written in the compact notation, with Einstein summation over any index repeated once up and once down, now with functions as coefficients:
+      $$\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i,$$
+      $$\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i,$$
+      $$T|_\mathcal{U} = T^{i}_{j}\,\partial x_i\otimes dx^j.$$
+      When one chart is in play we write $T^{i\dots}_{j\dots}$; with two charts, $(T_\mathcal{U})$ and $(T_\mathcal{V})$. The letter $x$ now appears in several fonts, each with its own meaning:
+
+      - $\mathscr{X}^i$: the coordinate functions of the chart;
+      - $x^i_p$, $\mathtt{x}^p_i$: real numbers, components at the point $p$;
+      - $x^i$, $\mathtt{x}_i$: functions on $\mathcal{U}$, component functions of fields;
+      - $(\partial x_i)_p$, $(dx^i)_p$: basis elements at $p$;
+      - $\partial x_i$, $dx^i$: basis fields over $\mathcal{U}$.
+
+  - type: mcq
+    id: notation-sort
+    title: Read the symbols
+    multiple: true
+    prompt: |
+      In a chart $(\mathcal{U},\mathscr{X})$, a vector field is written $\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i$, and at a point $\mathcal{X}(p) = x^i_p\,(\partial x_i)_p$. Select every symbol that denotes a **smooth function on $\mathcal{U}$** (not a number, not a field of vectors).
+    options:
+      - text: '$x^1$'
+        correct: true
+      - text: '$\mathscr{X}^1$'
+        correct: true
+      - text: '$x^1_p$'
+        feedback: |
+          The subscript $p$ marks a value at one point: $x^1_p = x^1(p)$ is a real number, the first component of the velocity $\mathcal{X}(p)$.
+      - text: '$\partial x_1$'
+        feedback: |
+          $\partial x_1$ is a basis **vector field** on $\mathcal{U}$: it puts the velocity $(\partial x_1)_p$ at each point. It eats functions ($\partial x_1\lfloor g\rceil$) but is not one.
+      - text: '$dx^1$'
+        feedback: |
+          $dx^1$ is a basis **covector field**: at each point the covector $(dx^1)_p$. It returns a function only once it is fed a vector field, $dx^1\lceil\mathcal{X}\rfloor = x^1$.
+    explanation: |
+      $x^1 = dx^1\lceil\mathcal{X}\rfloor$ is the first component function of the field, and $\mathscr{X}^1$ is the first coordinate function of the chart; both are functions on $\mathcal{U}$, and different ones (for the swirl on the plane $x^1 = -\mathscr{X}^2$). Index position and font are the only clues; read them carefully.
+
+  - type: mcq
+    id: trap-components
+    title: Field or components?
+    prompt: |
+      A $(0,2)$-tensor field $S$ on the plane has, in the cartesian chart $\mathscr{X}$, constant component functions $(S_\mathcal{U})_{ij} = \delta_{ij}$ (identity matrix). Which statement is true?
+    options:
+      - text: 'In another chart its component functions are usually different and need not be constant'
+        correct: true
+      - text: 'Its components are the identity matrix in every chart, because $S$ does not depend on the chart'
+        feedback: |
+          The **field** does not depend on the chart; its **components** do. In the polar chart the law gives $(S_\mathcal{V})_{kl} = \sum_i(\partial\mathscr{X}^i/\partial\mathscr{Y}^k)(\partial\mathscr{X}^i/\partial\mathscr{Y}^l)$, which equals $\begin{pmatrix}1&0\\0&r^2\end{pmatrix}$: not constant.
+      - text: '$S$ is a constant, so it is a $(0,0)$-tensor field'
+        feedback: |
+          $S$ has two vector-field slots, so it is a $(0,2)$-tensor field whatever its components look like. Constant components in one chart are a property of the pair (field, chart), not of the field.
+    explanation: |
+      With the polar Jacobian $\begin{pmatrix}\cos\theta&-r\sin\theta\\ \sin\theta&r\cos\theta\end{pmatrix}$ (rows: cartesian coordinates; columns: $r,\theta$): $(S_\mathcal{V})_{11} = \cos^2\theta+\sin^2\theta = 1$, $(S_\mathcal{V})_{12} = -r\cos\theta\sin\theta + r\sin\theta\cos\theta = 0$, $(S_\mathcal{V})_{22} = r^2$. This $S$ is the Euclidean dot product, and $\begin{pmatrix}1&0\\0&r^2\end{pmatrix}$ is the familiar "$dr^2 + r^2d\theta^2$": a preview of the metric, Level 7. (The sum over the repeated lower $i$ is written with $\Sigma$, since Einstein's rule needs one index up and one down.)
+
+  - type: mcq
+    id: trap-tensor-test
+    title: Tensor or not?
+    multiple: true
+    prompt: |
+      On the plane with cartesian chart $\mathscr{X}$, vector fields $\mathcal{Z}$, $\mathcal{W}$ have component functions $z^i$, $w^i$. Select every map that is a $(0,2)$-tensor field.
+    options:
+      - text: '$(\mathcal{Z},\mathcal{W})\mapsto z^1w^2 - z^2w^1$'
+        correct: true
+      - text: '$(\mathcal{Z},\mathcal{W})\mapsto e^{\mathscr{X}^1}\,z^1w^1$'
+        correct: true
+      - text: '$(\mathcal{Z},\mathcal{W})\mapsto \partial x_1\lfloor z^1\rceil\,w^2$'
+        feedback: |
+          Multiply $\mathcal{Z}$ by $g$: the Leibniz rule gives $g\,\partial x_1\lfloor z^1\rceil w^2 + z^1\,\partial x_1\lfloor g\rceil w^2$, and the extra term spoils $C^\infty$-linearity in the first slot. It differentiates the field, so it is not pointwise.
+      - text: '$(\mathcal{Z},\mathcal{W})\mapsto z^1 + w^1$'
+        feedback: |
+          A tensor field is linear in **each** slot separately. Doubling $\mathcal{Z}$ alone should double the output, but $2z^1 + w^1\neq 2(z^1 + w^1)$ unless $w^1 = 0$.
+    explanation: |
+      The signed area $z^1w^2 - z^2w^1$ and $e^{\mathscr{X}^1}z^1w^1$ only multiply component values at the same point, so functions pull out of each slot; a coefficient that varies over the plane, like $e^{\mathscr{X}^1}$, is allowed. A derivative of a component, or a sum of the slots, breaks the test.
+
+  - type: text
+    id: resolve
+    title: Back to the puzzle
+    body: |
+      The hook asked which "machines returning a function" are **tensor fields**. The answer: the $C^\infty(\mathcal{M})$-multilinear ones, the rules out of whose slots functions pull out. And the pointwise principle shows what that buys: such a machine only reads the **values** of its inputs at each point, so it is a smooth family of tensors $T(p)\in T_p^{(r,s)}\mathcal{M}$.
+
+      The action $h\mapsto\mathcal{X}\lfloor h\rceil$ fails the test (Leibniz rule): it differentiates, and its value at $p$ depends on $h$ near $p$. A vector field is still a tensor field, of type $(1,0)$, but through its other role: it eats **covector fields**, $\mathsf{Z}\mapsto\mathsf{Z}\lceil\mathcal{X}\rfloor$.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      - **$(r,s)$-tensor field**: $C^\infty(\mathcal{M})$-multilinear map on $r$ covector fields and $s$ vector fields into $C^\infty(\mathcal{M})$; the module $\Gamma T^{(r,s)}\mathcal{M}$. $(0,1)$ = covector fields, $(1,0)$ = vector fields.
+      - **Pointwise principle** (bump function): $T(\dots)(p)$ depends only on the inputs' values at $p$. $\mathbb{R}$-linear maps that differentiate, like $\mathcal{Z}\mapsto\partial x_1\lfloor z^1\rceil$, are not tensor fields.
+      - **Component functions** $T^{i\dots}_{j\dots} := T(dx^i,\dots,\partial x_j,\dots)\in C^\infty(\mathcal{U})$ and the expansion $T|_\mathcal{U} = T^{i\dots}_{j\dots}\,\partial x_i\otimes\cdots\otimes dx^j\otimes\cdots$.
+      - **Chart change**: one Jacobian function per index, on $\mathcal{U}\cap\mathcal{V}$. Egg carton: $T = df\otimes df$, $T_{ij} = \mathtt{X}_i\mathtt{X}_j$, $(T_\mathcal{V})_{22} = \pi^2$ at $(\pi,\pi/2)$.
+      - **Compact notation** with Einstein summation for fields; $x$ in five roles.
+
+      **Next:** every function $f$ gives a covector field $df$. Is every covector field a $df$? A guided problem finds the test, and the angle field $d\theta$ on the punctured plane shows where it gets subtle.

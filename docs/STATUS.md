@@ -23,9 +23,9 @@ append a short entry at the end of **Log** (a few lines, ending with
   `ch04-challenge` (36 cards, five problems: polar chart at $(1,1)$, reparametrization rune and Leibniz,
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
-- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards).
+- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards).
 - **Queue (one unit each):** Chapter 5 (Fields) in `course.yaml` order, next
-  `ch05-tensor-fields` (concept); then Chapters 6–10 (each with map and challenge).
+  `ch05-differentials` (guided); then `ch05-traps`, `ch05-map`, `ch05-challenge`; then Chapters 6–10 (each with map and challenge).
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -187,6 +187,17 @@ append a short entry at the end of **Log** (a few lines, ending with
   parallelizable/free; hairy ball stated without proof; egg carton $\mathcal{X}+\mathcal{Y} = -b\,\partial x_1 + (1+a)\partial x_2$, $f\mathcal{X} = (\cos a\cos b+1)\partial x_2$,
   zero at $(\pi,0)$; $(f\,df)\lceil\mathcal{X}\rfloor = -3\sqrt3/4$ at $(0,\pi/3)$; $\Gamma T\mathbb{R}^2$ infinite-dimensional over $\mathbb{R}$; connections named as Level 6.
   Widget: `chart-basis` with one cartesian chart, presets placing swirl vs unit arrows, view `{x: -1, y: -1.5, w: 4.5, h: 4.5}` (keeps $p = (2,0)$ and its basis on screen at 390 px).
+  Tensor fields (`ch05-tensor-fields`): $C^\infty(\mathcal{M})$-multilinear in each slot, $r$ covector-field slots first; $\Gamma T^{(r,s)}\mathcal{M}$ (a module);
+  vector field as $(1,0)$ via $\mathsf{Z}\mapsto\mathsf{Z}\lceil\mathcal{X}\rfloor$ (not via $h\mapsto\mathcal{X}\lfloor h\rceil$, Leibniz); generic slot fields $\mathcal{Z},\mathcal{W}$ with components
+  $z^i, w^i$, $\mathsf{Z}$; pointwise principle proved with bump $\psi$ ($\psi^2\mathcal{Z} = (\psi z^i)(\psi\,\partial x_i)$), converse "every $C^\infty$-linear map on
+  covector fields is a vector field" stated; non-tensor $D(\mathcal{Z}) := \partial x_1\lfloor z^1\rceil$ on the plane ($\partial x_1$ vs $(1+\mathscr{X}^1)\partial x_1$: $0$ vs $1$ at origin);
+  products of fields $(\mathsf{X}\otimes\mathsf{Y})(\mathcal{Z}_1,\mathcal{Z}_2) := \mathsf{X}\lceil\mathcal{Z}_1\rfloor\mathsf{Y}\lceil\mathcal{Z}_2\rfloor$; components $T^{i\dots}_{j\dots}$ (one chart),
+  $(T_\mathcal{U})_{ij}$, $(T_\mathcal{V})_{kl}$ (two charts), fed basis fields via restriction $T|_\mathcal{U}$; Jacobian functions
+  $\partial\mathscr{X}^i/\partial\mathscr{Y}^k = (\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_k$. Egg carton $T = df\otimes df$: $T_{ij} = \mathtt{X}_i\mathtt{X}_j$, $T_{12} = 3/16$ at $(\pi/3,\pi/6)$
+  (matrix $\begin{pmatrix}9/16&3/16\\3/16&1/16\end{pmatrix}$), $T(\mathcal{X},\mathcal{Y}) = \pi$ at $(\pi,\pi/2)$, polar Jacobian $\begin{pmatrix}a/r&-b\\b/r&a\end{pmatrix}$,
+  $(T_\mathcal{V})_{kl} = \mathtt{Y}_k\mathtt{Y}_l$, $(T_\mathcal{V})_{22} = \pi^2$ at $(\pi,\pi/2)$; Euclidean $\delta_{ij}$ becomes $\mathrm{diag}(1,r^2)$ in polar (metric preview).
+  Five roles of $x$ listed ($\mathscr{X}^i$, $x^i_p$/$\mathtt{x}^p_i$, $x^i$/$\mathtt{x}_i$, $(\partial x_i)_p$/$(dx^i)_p$, $\partial x_i$/$dx^i$). Widget `machine-playground`
+  slots 2 with presets per point (tensor + inputs $\mathcal{X} = (0,1)$, swirl) at $(\pi,\pi/2)$, $(\pi/2,\pi/4)$, $(\pi/3,\pi/6)$.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -567,3 +578,9 @@ long box titles.
   included); unit-radial problem replaced by the unit swirl (same obstruction); polar frame extended past its chart to illustrate "frame ≠ chart"
   (the book's non-chart frame example is in a later appendix section, not used).
 - Conventions fixed here: see Current, "Module (`ch05-module`)".
+- 2026-10-19 `ch05-tensor-fields` (concept, 25 cards): hook (which maps let functions pull out; Leibniz fails), definition, $(0,1)$ count,
+  `machine-playground` at three egg-carton points, pointwise principle (order card, bump proof), non-tensor $D$, $\mathbb{R}$- vs $C^\infty$-linearity,
+  components and expansion, $T_{12}$ by hand, $(0,2)$ law build, $(1,1)$ law, polar $(T_\mathcal{V})_{22} = \pi^2$, notation roles, three traps, resolve, summary.
+- Choices: no new widget (machine shows one point, presets switch point); the converse "(1,0) fields = vector fields" stated, not proved;
+  Euclidean $\mathrm{diag}(1,r^2)$ used as a trap (from the TeX); Minkowski boost left for the challenge.
+- Conventions fixed here: see Current, "Tensor fields (`ch05-tensor-fields`)".
