@@ -1,0 +1,380 @@
+id: ch04-map
+title: "Content Map: Tangent Spaces"
+kind: map
+name: Chapter 4, Tangent Spaces
+
+intro: |
+  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition. An arrow goes from a concept to a concept built on it, and you can read it in one of four ways:
+
+  - **defined from**: smooth curves and scalar fields → velocity;
+  - **basis of**: tangent space → chart-induced basis;
+  - **dual of**: tangent space → cotangent space;
+  - **built from**: for example, Einstein summation → tensor space.
+
+  A dashed arrow means "serves as the model example for": the running example, with two concrete charts of the plane, is where every basis and Jacobian of this level was checked by hand.
+
+  You will rebuild the Chapter 4 map one box at a time, from a curve through a point $p$ of a manifold $\mathcal{M}$ to the tensors at $p$. For each glowing box, pick the card that belongs there. The other cards look alike but each hides a classic mistake of this level, so read the details.
+
+  Tap a finished box at any time to reread its card.
+
+cols: 3
+nodes:
+  - id: curves
+    title: Smooth curves
+    row: 1
+    col: 1
+    body: |
+      A **smooth curve** through a point $p$ of a manifold $\mathcal{M}$ is a smooth map
+      $$\gamma\colon\mathbb{R}\to\mathcal{M},\quad\gamma(\lambda_0) = p.$$
+      "Smooth" is tested in a chart $(\mathcal{U},\mathscr{X})$: the chart representative $\mathscr{X}\circ\gamma$ is a $C^\infty$ map into $\mathbb{R}^d$ near $\lambda_0$. The curve is the **map**, parameter included: $\lambda\mapsto\gamma(2\lambda)$ is a different curve with the same image.
+    decoys:
+      - body: |
+          A **smooth curve** through a point $p$ of a manifold $\mathcal{M}$ is a subset of $\mathcal{M}$ that looks like a line near $p$.
+          "Smooth" means the subset has no corners near $p$. Two parametrizations of the same subset, such as $\lambda\mapsto\gamma(\lambda)$ and $\lambda\mapsto\gamma(2\lambda)$, are the same curve.
+        feedback: |
+          A curve is a map $\lambda\mapsto\gamma(\lambda)$, not its image, and the parametrization matters: a velocity is built from derivatives with respect to $\lambda$. Running along the same path twice as fast, $\lambda\mapsto\gamma(2\lambda)$, doubles every rate $(f\circ\gamma)'$ and so gives twice the velocity. An image alone cannot tell you how fast you pass $p$.
+      - body: |
+          A **smooth curve** through a point $p$ of a manifold $\mathcal{M}$ is a smooth map
+          $$\gamma\colon\mathbb{R}\to\mathcal{M},\quad\gamma(\lambda_0) = p.$$
+          "Smooth" means $\gamma$ is differentiable as a map into the space around $\mathcal{M}$, so that its derivative $\gamma'(\lambda_0)$ is an arrow at $p$.
+        feedback: |
+          A manifold comes with no space around it: spacetime is not drawn inside anything, and even $S^1$ is defined without the plane. All we have is charts, so smoothness of $\gamma$ means smoothness of the chart representative $\mathscr{X}\circ\gamma\colon\mathbb{R}\to\mathbb{R}^d$, which is a map between number spaces where derivatives make sense.
+    explanation: |
+      One of the two raw ingredients of a velocity. A curve says how a point moves through $\mathcal{M}$; the arrow down to the velocity box reads "defined from".
+
+  - id: fields
+    title: 'Scalar fields $C^\infty(\mathcal{M})$'
+    row: 1
+    col: 3
+    body: |
+      The functions $f\colon\mathcal{M}\to\mathbb{R}$ whose chart representative $f\circ\mathscr{X}^{-1}$ is $C^\infty$ for every chart $(\mathcal{U},\mathscr{X})$.
+      They form a real vector space with operations point by point,
+      $$(f\oplus g)(q) := f(q) + g(q),$$
+      and they can also be multiplied, $(fg)(q) := f(q)g(q)$. This space is **infinite**-dimensional.
+    decoys:
+      - body: |
+          The functions $f\colon\mathcal{M}\to\mathbb{R}$ whose composite $f\circ\mathscr{X}$ is $C^\infty$ for every chart $(\mathcal{U},\mathscr{X})$.
+          They form a real vector space with operations point by point,
+          $$(f\oplus g)(q) := f(q) + g(q),$$
+          and they can also be multiplied, $(fg)(q) := f(q)g(q)$. This space is **infinite**-dimensional.
+        feedback: |
+          Check the types. A chart map $\mathscr{X}$ sends points of $\mathcal{U}$ to numbers in $\mathbb{R}^d$, while $f$ eats points of $\mathcal{M}$, so $f\circ\mathscr{X}$ would feed numbers to $f$ and makes no sense. The chart representative goes the other way: $f\circ\mathscr{X}^{-1}$ takes coordinates back to a point and then reads $f$ there, a map from an open set of $\mathbb{R}^d$ to $\mathbb{R}$.
+      - body: |
+          The functions $f\colon\mathcal{M}\to\mathbb{R}$ whose chart representative $f\circ\mathscr{X}^{-1}$ is $C^\infty$ for every chart $(\mathcal{U},\mathscr{X})$.
+          They form a real vector space with operations point by point,
+          $$(f\oplus g)(q) := f(q) + g(q),$$
+          and they can also be multiplied, $(fg)(q) := f(q)g(q)$. This space has dimension $d = \dim\mathcal{M}$.
+        feedback: |
+          No finite list of smooth functions spans them all: on $\mathbb{R}$ already $1, q, q^2, q^3,\dots$ are independent. The $d$-dimensional space of this level is the tangent space at a point, the space of velocities, which is much smaller than the space of fields it acts on.
+    explanation: |
+      The second raw ingredient. A velocity is measured by watching how scalar fields change along a curve, so this box also points to the velocity box ("defined from").
+
+  - id: velocity
+    title: 'Velocity $v_{\gamma,p}$'
+    row: 2
+    col: 2
+    body: |
+      For a smooth curve $\gamma$ with $\gamma(\lambda_0) = p$, the **velocity** of $\gamma$ at $p$ is the map $C^\infty(\mathcal{M})\to\mathbb{R}$
+      $$v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0),$$
+      the rate of change of each field $f$ as the curve passes $p$. It is linear and obeys the Leibniz rule
+      $$v(fg) = f(p)\,v(g) + g(p)\,v(f).$$
+      Different curves can have the same velocity.
+    decoys:
+      - body: |
+          For a smooth curve $\gamma$ with $\gamma(\lambda_0) = p$, the **velocity** of $\gamma$ at $p$ is the arrow
+          $$v_{\gamma,p} := \gamma'(\lambda_0),$$
+          tangent to the curve at $p$ in the space around $\mathcal{M}$. It is linear and obeys the Leibniz rule
+          $$v(fg) = f(p)\,v(g) + g(p)\,v(f).$$
+          Different curves can have the same velocity.
+        feedback: |
+          This is the picture from curves in $\mathbb{R}^3$, and it fails on a manifold: there is no space around $\mathcal{M}$ for the arrow to live in, and points of $\mathcal{M}$ cannot be subtracted to form $\gamma'$. What can always be differentiated is a real number along the curve, $f(\gamma(\lambda))$. So a velocity is defined by what it does to every scalar field, $v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0)$.
+      - body: |
+          For a smooth curve $\gamma$ with $\gamma(\lambda_0) = p$, fix one test field $f_0\in C^\infty(\mathcal{M})$. The **velocity** of $\gamma$ at $p$ is the number
+          $$v_{\gamma,p} := (f_0\circ\gamma)'(\lambda_0),$$
+          the rate of change of $f_0$ as the curve passes $p$. It is linear and obeys the Leibniz rule
+          $$v(fg) = f(p)\,v(g) + g(p)\,v(f).$$
+          Different curves can have the same velocity.
+        feedback: |
+          One field cannot tell directions apart. In the plane take $p = (1,1)$, $\gamma_1(\lambda) = (\lambda, 1)$ at $\lambda_0 = 1$ and $\gamma_2(\lambda) = (1, 2\lambda)$ at $\lambda_0 = \tfrac12$. The field $f(q) = q_1^2 + q_2$ changes at rate $2$ along both, yet the field $g(q) = q_1$ changes at rate $1$ along $\gamma_1$ and $0$ along $\gamma_2$. A velocity must record the rate for **every** field.
+    explanation: |
+      The central definition: a tangent vector is a directional derivative, a machine that eats a scalar field and returns its rate of change at $p$. No arrow, no ambient space.
+
+  - id: tangent
+    title: 'Tangent space $T_p\mathcal{M}$'
+    row: 3
+    col: 2
+    body: |
+      The set of all velocities $v_{\gamma,p}$ of smooth curves through $p$, with operations defined **field by field**:
+      $$(v\oplus_T w)(f) := v(f) + w(f),$$
+      $$(\alpha\odot_T v)(f) := \alpha\,v(f).$$
+      The results are again velocities: in a chart, adding the chart representatives of two curves gives a curve with velocity $v\oplus_T w$. Its elements are the **vectors** at $p$, and $\dim T_p\mathcal{M} = d$.
+    decoys:
+      - body: |
+          The set of all velocities $v_{\gamma,p}$ of smooth curves through $p$, with operations defined **curve by curve**:
+          $$v_{\gamma_1,p}\oplus_T v_{\gamma_2,p} := v_{\gamma_1+\gamma_2,\,p},$$
+          the velocity of the curve $\lambda\mapsto\gamma_1(\lambda)+\gamma_2(\lambda)$, and $\alpha\odot_T v_{\gamma,p} := v_{\alpha\gamma,p}$. Its elements are the **vectors** at $p$, and $\dim T_p\mathcal{M} = d$.
+        feedback: |
+          Points of a manifold cannot be added. On the circle $S^1$, the "sum" of two curves through $(1,0)$ passes through $(1,0)+(1,0) = (2,0)$, which is not on the circle; even in the plane the summed curve passes through $2p$, not $p$. That is why $\oplus_T$ is defined field by field, $(v\oplus_T w)(f) := v(f)+w(f)$, and a curve with that velocity is built afterwards by adding **chart representatives**, which are numbers.
+      - body: |
+          The set of all smooth curves $\gamma$ through $p$, with operations defined **field by field**:
+          $$(\gamma_1\oplus_T\gamma_2)(f) := v_{\gamma_1,p}(f) + v_{\gamma_2,p}(f),$$
+          and similarly for $\odot_T$. Its elements, the curves through $p$, are the **vectors** at $p$, and $\dim T_p\mathcal{M} = d$.
+        feedback: |
+          Many curves have the same velocity: in the plane, $\lambda\mapsto p+\lambda u$ and $\lambda\mapsto p+\lambda u+\lambda^2 a$ change every field at the same rate at $\lambda = 0$. A set of curves would count these as different elements, and it is not even finite-dimensional. The vectors are the velocities $v_{\gamma,p}$ themselves, one for each possible list of rates.
+    explanation: |
+      Velocities become a vector space. The arrow to the chart-induced basis reads "basis of", and the arrow to the cotangent space reads "dual of".
+
+  - id: chart
+    title: 'Chart $(\mathcal{U},\mathscr{X})$'
+    row: 3
+    col: 1
+    body: |
+      Recall: an open set $\mathcal{U}\ni p$ and a homeomorphism $\mathscr{X}\colon\mathcal{U}\to\mathscr{X}(\mathcal{U})\subseteq\mathbb{R}^d$ with smooth **coordinate functions** $\mathscr{X}^1,\dots,\mathscr{X}^d$. A second chart $(\mathcal{V},\mathscr{Y})$ around $p$ is related to the first by the smooth transition map
+      $$\text{ᛖ}_{\mathcal{U}\mathcal{V}} := \mathscr{Y}\circ\mathscr{X}^{-1},$$
+      which turns $\mathscr{X}$-coordinates into $\mathscr{Y}$-coordinates.
+    decoys:
+      - body: |
+          Recall: a homeomorphism $\mathscr{X}\colon\mathcal{M}\to\mathbb{R}^d$ from the **whole** manifold, with smooth **coordinate functions** $\mathscr{X}^1,\dots,\mathscr{X}^d$. A second chart $\mathscr{Y}$ is related to the first by the smooth transition map
+          $$\text{ᛖ}_{\mathcal{U}\mathcal{V}} := \mathscr{Y}\circ\mathscr{X}^{-1},$$
+          which turns $\mathscr{X}$-coordinates into $\mathscr{Y}$-coordinates.
+        feedback: |
+          A chart only covers an open patch $\mathcal{U}$. Many manifolds have no chart on the whole space: the circle $S^1$ needs at least two (an angle $\theta\in(0,2\pi)$ misses the point $(1,0)$), and so does a sphere. Everything in this level needs only a chart around the one point $p$.
+      - body: |
+          Recall: an open set $\mathcal{U}\ni p$ and a homeomorphism $\mathscr{X}\colon\mathcal{U}\to\mathscr{X}(\mathcal{U})\subseteq\mathbb{R}^d$ with smooth **coordinate functions** $\mathscr{X}^1,\dots,\mathscr{X}^d$. A second chart $(\mathcal{V},\mathscr{Y})$ around $p$ is related to the first by the smooth transition map
+          $$\text{ᛖ}_{\mathcal{U}\mathcal{V}} := \mathscr{X}\circ\mathscr{Y}^{-1},$$
+          which turns $\mathscr{X}$-coordinates into $\mathscr{Y}$-coordinates.
+        feedback: |
+          Read the composite from right to left: $\mathscr{X}\circ\mathscr{Y}^{-1}$ first undoes $\mathscr{Y}$ (takes $\mathscr{Y}$-coordinates to a point) and then applies $\mathscr{X}$, so it turns $\mathscr{Y}$-coordinates into $\mathscr{X}$-coordinates. The map from $\mathscr{X}$-coordinates to $\mathscr{Y}$-coordinates is $\text{ᛖ}_{\mathcal{U}\mathcal{V}} = \mathscr{Y}\circ\mathscr{X}^{-1}$, and its Jacobian holds the partials $\partial\mathscr{Y}^i/\partial\mathscr{X}^j$.
+    explanation: |
+      Brought in from the previous level. A chart is what turns abstract vectors into lists of numbers: it supplies the basis, and two charts supply the Jacobian.
+
+  - id: basis
+    title: Chart-induced basis
+    row: 4
+    col: 1
+    body: |
+      In a chart $(\mathcal{U},\mathscr{X})$ around $p$, the $d$ vectors
+      $$\begin{aligned}&\Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p(f) :=\\ &\quad\partial_i\big[f\circ\mathscr{X}^{-1}\big]\big(\mathscr{X}(p)\big),\end{aligned}$$
+      the velocities of the coordinate curves (only $\mathscr{X}^i$ changes). Feeding them the coordinate functions gives $\delta^i_j$, so they are independent; they also span, so they are a basis and $\dim T_p\mathcal{M} = d$. Each one depends on the **whole** chart.
+    decoys:
+      - body: |
+          In a chart $(\mathcal{U},\mathscr{X})$ around $p$, the $d$ vectors
+          $$\begin{aligned}&\Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p(f) :=\\ &\quad\partial_i\big[f\circ\mathscr{X}^{-1}\big]\big(\mathscr{X}(p)\big),\end{aligned}$$
+          the velocities of the coordinate curves (only $\mathscr{X}^i$ changes). Feeding them the coordinate functions gives $\delta^i_j$, so they are independent; they also span, so they are a basis and $\dim T_p\mathcal{M} = d$. Each one depends only on its own coordinate function $\mathscr{X}^i$.
+        feedback: |
+          Moving along the $\mathscr{X}^1$ coordinate curve means changing $\mathscr{X}^1$ **while all other coordinates stay fixed**, so the other coordinates matter. In the plane, the cartesian chart $(x, y)$ and the chart $\mathscr{Z}(q) = (q_1, q_2 - q_1)$ share the first coordinate function, yet $(\partial/\partial x)_p$ has standard components $(1,0)$ while $(\partial/\partial\mathscr{Z}^1)_p$ has $(1,1)$: keeping $q_2 - q_1$ fixed forces $q_2$ to grow with $q_1$.
+      - body: |
+          In a chart $(\mathcal{U},\mathscr{X})$ around $p$, the $d$ vectors
+          $$\begin{aligned}&\Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p(f) :=\\ &\quad\partial_i\big[f\circ\mathscr{X}^{-1}\big]\big(\mathscr{X}(p)\big),\end{aligned}$$
+          the velocities of the coordinate curves (only $\mathscr{X}^i$ changes). They always span $T_p\mathcal{M}$, but they are independent only when the coordinate lines are straight, as in a cartesian chart. Each one depends on the **whole** chart.
+        feedback: |
+          Independence holds in every chart. If $\sum_i a^i(\partial/\partial\mathscr{X}^i)_p$ is the zero vector, feed it the coordinate function $\mathscr{X}^j$: since $(\partial/\partial\mathscr{X}^i)_p(\mathscr{X}^j) = \delta^j_i$, the result is $a^j$, so every $a^j = 0$. Curved coordinate lines, as in the polar chart, change the lengths and angles of the basis vectors, never their independence.
+    explanation: |
+      A chart turns the abstract space $T_p\mathcal{M}$ into $\mathbb{R}^d$. Arrows in: "basis of" from the tangent space, "defined from" from the chart.
+
+  - id: jacobian
+    title: "Compo­nents and Jacobian"
+    row: 6
+    col: 1
+    body: |
+      Each vector expands as $v = \sum_i \dot\gamma^i_\mathcal{U}\,(\partial/\partial\mathscr{X}^i)_p$, with components $\dot\gamma^i_\mathcal{U} = v(\mathscr{X}^i)$. The Jacobian $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j := (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ (row $i$ from $\mathscr{Y}$) changes charts. Components use row $i$ (**contravariant**):
+      $$\dot\gamma^i_\mathcal{V} = \sum_{j=1}^d \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\dot\gamma^j_\mathcal{U}.$$
+      The basis uses column $j$ (**covariant**):
+      $$\Big(\frac{\partial}{\partial\mathscr{X}^j}\Big)_p = \sum_{i=1}^d \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\Big(\frac{\partial}{\partial\mathscr{Y}^i}\Big)_p.$$
+    decoys:
+      - body: |
+          Each vector expands as $v = \sum_i \dot\gamma^i_\mathcal{U}\,(\partial/\partial\mathscr{X}^i)_p$, with components $\dot\gamma^i_\mathcal{U} = v(\mathscr{X}^i)$. The Jacobian $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j := (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ (row $i$ from $\mathscr{Y}$) changes charts. Components use the inverse:
+          $$\dot\gamma^i_\mathcal{V} = \sum_{j=1}^d \Big(\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\Big)_p\dot\gamma^j_\mathcal{U}.$$
+          The basis uses column $j$ (**covariant**):
+          $$\Big(\frac{\partial}{\partial\mathscr{X}^j}\Big)_p = \sum_{i=1}^d \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\Big(\frac{\partial}{\partial\mathscr{Y}^i}\Big)_p.$$
+        feedback: |
+          Test with units. On a line let $x$ be meters and $y = 100x$ centimeters, so $\partial y/\partial x = 100$. A curve moving at $1$ meter per unit $\lambda$ moves at $100$ centimeters per unit $\lambda$: the component **grows** by $100$, the factor $\partial\mathscr{Y}/\partial\mathscr{X}$. The inverse factor $\partial\mathscr{X}/\partial\mathscr{Y} = \tfrac1{100}$ would shrink it. Components follow $\partial\mathscr{Y}^i/\partial\mathscr{X}^j$; that is the chain rule applied to $(\mathscr{Y}^i\circ\gamma)'$.
+      - body: |
+          Each vector expands as $v = \sum_i \dot\gamma^i_\mathcal{U}\,(\partial/\partial\mathscr{X}^i)_p$, with components $\dot\gamma^i_\mathcal{U} = v(\mathscr{X}^i)$. The Jacobian $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j := (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ (row $i$ from $\mathscr{Y}$) changes charts. Components use row $i$ (**contravariant**):
+          $$\dot\gamma^i_\mathcal{V} = \sum_{j=1}^d \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\dot\gamma^j_\mathcal{U}.$$
+          The basis also uses row $i$:
+          $$\Big(\frac{\partial}{\partial\mathscr{Y}^i}\Big)_p = \sum_{j=1}^d \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\Big(\frac{\partial}{\partial\mathscr{X}^j}\Big)_p.$$
+        feedback: |
+          Components and basis must change in **opposite** ways, so that $v = \sum_i(\text{component})^i(\text{basis})_i$ stays the same vector. With meters $x$ and centimeters $y = 100x$: components grow by $100$, while $(\partial/\partial y)_p f = \tfrac1{100}(\partial/\partial x)_p f$, so the basis vector shrinks by $100$. This law would make both grow, and $v$ would come out $10^4$ times too big.
+    explanation: |
+      A vector has many lists of components, one per chart; the Jacobian converts between them. The dashed arrow from the running example marks where these laws were checked with numbers.
+
+  - id: example
+    title: Running example
+    row: 5
+    col: 2
+    body: |
+      In $\mathbb{R}^2$ at $p = (1,1)$, the charts
+      $$\begin{gathered}\mathscr{X}(q) = (2q_1, -q_2)\\ \mathscr{Y}(q) = (q_1, q_2e^{q_1})\end{gathered}$$
+      and the vector $v$ with standard components $(1,2)$. Its $\mathscr{X}$-components are $(2,-2)$ and its $\mathscr{Y}$-components $(1, 3e)$, related by
+      $$\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p = \begin{pmatrix}1/2 & 0\\ e/2 & -e\end{pmatrix}.$$
+      For $f = q_1^2+q_2$: $(df)_p(v) = 4$ in both charts.
+    decoys:
+      - body: |
+          In $\mathbb{R}^2$ at $p = (1,1)$, the charts
+          $$\begin{gathered}\mathscr{X}(q) = (2q_1, -q_2)\\ \mathscr{Y}(q) = (q_1, q_2e^{q_1})\end{gathered}$$
+          and the vector $v$ with standard components $(1,2)$. Its $\mathscr{X}$-components are $(2,-2)$ and its $\mathscr{Y}$-components $(1, 2e)$, related by
+          $$\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p = \begin{pmatrix}1/2 & 0\\ e/2 & -e\end{pmatrix}.$$
+          For $f = q_1^2+q_2$: $(df)_p(v) = 4$ in both charts.
+        feedback: |
+          The second $\mathscr{Y}$-component is $v(\mathscr{Y}^2)$ with $\mathscr{Y}^2(q) = q_2e^{q_1}$, a product. By the product rule its rate is $v^2e^{q_1} + q_2e^{q_1}v^1 = 2e + e = 3e$ at $p = (1,1)$, not $2e$. The Jacobian confirms it: row 2 times $(2,-2)$ gives $\tfrac e2\cdot2 + (-e)(-2) = 3e$.
+      - body: |
+          In $\mathbb{R}^2$ at $p = (1,1)$, the charts
+          $$\begin{gathered}\mathscr{X}(q) = (2q_1, -q_2)\\ \mathscr{Y}(q) = (q_1, q_2e^{q_1})\end{gathered}$$
+          and the vector $v$ with standard components $(1,2)$. Its $\mathscr{X}$-components are $(2,-2)$ and its $\mathscr{Y}$-components $(1, 3e)$, related by
+          $$\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p = \begin{pmatrix}1/2 & e/2\\ 0 & -e\end{pmatrix}.$$
+          For $f = q_1^2+q_2$: $(df)_p(v) = 4$ in both charts.
+        feedback: |
+          The matrix is transposed. Row $i$ belongs to $\mathscr{Y}^i$: $\mathscr{Y}^1 = q_1 = \tfrac12\mathscr{X}^1$ gives row $(\tfrac12, 0)$, and $\mathscr{Y}^2 = -\mathscr{X}^2e^{\mathscr{X}^1/2}$ gives row $(\tfrac e2, -e)$ at $\mathscr{X}(p) = (2,-1)$. The transposed matrix sends $(2,-2)$ to $(1-e, 2e)$, not to the true $\mathscr{Y}$-components $(1, 3e)$.
+    explanation: |
+      Every basis vector, component list and Jacobian of this level was computed by hand on this example; dashed arrows go to the basis and the components boxes.
+
+  - id: cotangent
+    title: 'Cotangent space $T_p^*\mathcal{M}$'
+    row: 4
+    col: 3
+    body: |
+      The **dual** of the tangent space,
+      $$T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(T_p\mathcal{M},\mathbb{R}),$$
+      the linear maps from vectors to numbers (Hom = homomorphism), with $\oplus_T^*$, $\odot_T^*$ defined value by value. Its elements are **covectors** $\mathsf{X}_p$; it has dimension $d$. It is defined without any chart.
+    decoys:
+      - body: |
+          The **dual** of the scalar fields,
+          $$T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(C^\infty(\mathcal{M}),\mathbb{R}),$$
+          the linear maps from fields to numbers (Hom = homomorphism), with $\oplus_T^*$, $\odot_T^*$ defined value by value. Its elements are **covectors** $\mathsf{X}_p$; it has dimension $d$. It is defined without any chart.
+        feedback: |
+          Velocities already eat scalar fields: $v_{\gamma,p}$ is a linear map $C^\infty(\mathcal{M})\to\mathbb{R}$. Covectors are one step further: they eat **vectors**. And the space of all linear maps on the infinite-dimensional $C^\infty(\mathcal{M})$ is far bigger than $d$-dimensional, while $\mathrm{Hom}_\mathbb{R}(T_p\mathcal{M},\mathbb{R})$ has dimension $d$.
+      - body: |
+          The **dual** of the tangent space,
+          $$T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(T_p\mathcal{M},\mathbb{R}),$$
+          the linear maps from vectors to numbers (Hom = homomorphism), with $\oplus_T^*$, $\odot_T^*$ defined value by value. Its elements are **covectors** $\mathsf{X}_p$; it has dimension $d$. It needs a chart around $p$ to be defined.
+        feedback: |
+          "Linear map from $T_p\mathcal{M}$ to $\mathbb{R}$" uses only the vector space $T_p\mathcal{M}$, which is itself chart-free (velocities are defined by curves and fields). Charts enter only when we want **components**, through the dual chart-induced basis.
+    explanation: |
+      The arrow from the tangent space reads "dual of". Vectors and covectors are different kinds of objects; pairing one of each gives a number.
+
+  - id: differential
+    title: "Differ­ential $(df)_p$"
+    row: 5
+    col: 3
+    body: |
+      Each field $f\in C^\infty(\mathcal{M})$ gives a covector, its **differential** at $p$:
+      $$(df)_p(v) := v(f)$$
+      for every $v\in T_p\mathcal{M}$, read as one symbol. It is linear because $\oplus_T$ is field by field. In the running example, $f = q_1^2+q_2$ at $p = (1,1)$ gives $(df)_p(v) = 2v^1+v^2$: it sends to $0$ the direction $(1,-2)$ along the level line. Every covector is some $(df)_p$.
+    decoys:
+      - body: |
+          Each field $f\in C^\infty(\mathcal{M})$ gives a vector, its **differential** at $p$: the gradient arrow, perpendicular to the level line of $f$. In the running example, $f = q_1^2+q_2$ at $p = (1,1)$ gives the arrow $(df)_p$ with standard components $(2,1)$, pointing where $f$ grows fastest.
+        feedback: |
+          "Perpendicular" and "fastest growth per unit length" need lengths and angles, that is, a metric (Level 7). Without one, $(df)_p$ is not an arrow but a linear map, $(df)_p(v) = v(f)$, pictured by the line of vectors it sends to $0$: here $2v^1+v^2 = 0$, the direction $(1,-2)$ along the level line. Change to centimeters and covector components shrink while vector components grow, so the two kinds never match as arrows.
+      - body: |
+          Each field $f\in C^\infty(\mathcal{M})$ gives a number, its **differential** at $p$: an infinitesimally small change of $f$ near $p$, to be neglected beside finite changes. In the running example, $f = q_1^2+q_2$ at $p = (1,1)$ gives $(df)_p = 2\,dq_1 + dq_2$, a tiny number.
+        feedback: |
+          Here $(df)_p$ is nothing small or vague: it is an exact linear map that eats a vector and returns a finite number, $(df)_p(v) := v(f)$. For $f = q_1^2+q_2$ at $p = (1,1)$ and $v$ with components $(1,2)$, $(df)_p(v) = 2\cdot1 + 2 = 4$. The old "infinitesimal" reading is replaced by this precise definition.
+    explanation: |
+      Every scalar field produces a covector, and every covector arises this way. The arrow down to the dual basis reads "built from": the dual basis is the differentials of the coordinate functions.
+
+  - id: dualbasis
+    title: Dual chart-induced basis
+    row: 6
+    col: 3
+    body: |
+      The differentials of the coordinate functions, $(d\mathscr{X}^i)_p$, satisfy
+      $$(d\mathscr{X}^i)_p\Big(\Big(\frac{\partial}{\partial\mathscr{X}^j}\Big)_p\Big) = \delta^i_j,$$
+      the **dual** of the chart-induced basis. Components $\mathtt{x}^p_i := \mathsf{X}_p((\partial/\partial\mathscr{X}^i)_p)$, so $\mathsf{X}_p = \sum_i\mathtt{x}^p_i(d\mathscr{X}^i)_p$. The basis is contravariant and the components **covariant**:
+      $$\mathtt{y}^p_i = \sum_{j=1}^d\Big(\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\Big)_p\mathtt{x}^p_j.$$
+      Each $(d\mathscr{X}^i)_p$ depends only on its own function $\mathscr{X}^i$.
+    decoys:
+      - body: |
+          The differentials of the coordinate functions, $(d\mathscr{X}^i)_p$, satisfy
+          $$(d\mathscr{X}^i)_p\Big(\Big(\frac{\partial}{\partial\mathscr{X}^j}\Big)_p\Big) = \delta^i_j,$$
+          the **dual** of the chart-induced basis. Components $\mathtt{x}^p_i := \mathsf{X}_p((\partial/\partial\mathscr{X}^i)_p)$, so $\mathsf{X}_p = \sum_i\mathtt{x}^p_i(d\mathscr{X}^i)_p$. The components change like vector components:
+          $$\mathtt{y}^p_i = \sum_{j=1}^d\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\mathtt{x}^p_j.$$
+          Each $(d\mathscr{X}^i)_p$ depends only on its own function $\mathscr{X}^i$.
+        feedback: |
+          Covector components must change **opposite** to vector components, so that the pairing $\mathsf{X}_p(v) = \sum_i\mathtt{x}^p_iv^i$ is the same number in every chart. With meters $x$ and centimeters $y = 100x$: the vector component grows by $100$, so the covector component must shrink by $100$, the factor $\partial\mathscr{X}/\partial\mathscr{Y}$. In the running example $(df)_p$ has components $(1,-1)$ in $\mathscr{X}$ and $(1,1/e)$ in $\mathscr{Y}$, and both pair with $v$ to give $4$.
+      - body: |
+          The differentials of the coordinate functions, $(d\mathscr{X}^i)_p$, satisfy
+          $$(d\mathscr{X}^i)_p\Big(\Big(\frac{\partial}{\partial\mathscr{X}^j}\Big)_p\Big) = \delta^i_j,$$
+          the **dual** of the chart-induced basis. Components $\mathtt{x}^p_i := \mathsf{X}_p((\partial/\partial\mathscr{X}^i)_p)$, so $\mathsf{X}_p = \sum_i\mathtt{x}^p_i(d\mathscr{X}^i)_p$. The basis is contravariant and the components **covariant**:
+          $$\mathtt{y}^p_i = \sum_{j=1}^d\Big(\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\Big)_p\mathtt{x}^p_j.$$
+          Like $(\partial/\partial\mathscr{X}^i)_p$, each $(d\mathscr{X}^i)_p$ depends on the whole chart.
+        feedback: |
+          Here the two bases differ. A differential depends only on its function: $(d\mathscr{X}^i)_p(v) = v(\mathscr{X}^i)$. In the plane, the cartesian chart $(x,y)$ and $\mathscr{Z}(q) = (q_1, q_2-q_1)$ share the first coordinate function, so $(d\mathscr{Z}^1)_p = (dx)_p$, even though $(\partial/\partial\mathscr{Z}^1)_p\ne(\partial/\partial x)_p$. The vector basis needs the other coordinates (which ones stay fixed); the covector basis does not.
+    explanation: |
+      Built from the differential box (differentials of $\mathscr{X}^i$); it is the dual of the chart-induced basis, so the Jacobian appears again, with the roles of rows and columns swapped.
+
+  - id: einstein
+    title: "Einstein summa­tion"
+    row: 7
+    col: 2
+    body: |
+      In a term, an index that appears **once up and once down** is summed over $1,\dots,d$ and the $\sum$ is dropped. An index in a denominator counts as lower; labels like $\mathcal{U}$, $p$ are not indices. Free indices match on both sides. For example
+      $$\dot\gamma^i_\mathcal{V} = \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\dot\gamma^j_\mathcal{U},$$
+      and $\delta^i_i = d$. A repeat at the **same** height is never written.
+    decoys:
+      - body: |
+          In a term, **any** index that appears twice is summed over $1,\dots,d$ and the $\sum$ is dropped. An index in a denominator counts as lower; labels like $\mathcal{U}$, $p$ are not indices. Free indices match on both sides. For example
+          $$v^iw^i = v^1w^1 + \dots + v^dw^d,$$
+          and $\delta^i_i = d$.
+        feedback: |
+          A same-height sum like $v^iw^i$ depends on the chart. With meters $x$ and centimeters $y = 100x$, both vector components grow by $100$, so $v^iw^i$ grows by $10^4$: it is not a property of the two vectors. Up-down pairs are exactly the sums whose Jacobian factors cancel. A sum like $v^iw^i$ needs extra structure, the metric (Level 7).
+      - body: |
+          In a term, an index that appears **once up and once down** is summed over $1,\dots,d$ and the $\sum$ is dropped. An index in a denominator counts as lower; labels like $\mathcal{U}$, $p$ are not indices. Free indices match on both sides. For example
+          $$\dot\gamma^i_\mathcal{V} = \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\dot\gamma^j_\mathcal{U},$$
+          and $\delta^i_i = 1$, a single diagonal entry.
+        feedback: |
+          In $\delta^i_i$ the index $i$ appears once up and once down, so it is summed: $\delta^1_1 + \dots + \delta^d_d = 1 + \dots + 1 = d$. A single diagonal entry would be written with a fixed number, such as $\delta^1_1 = 1$.
+    explanation: |
+      Built from both transformation laws (vectors and covectors), which it writes compactly. Notation, but with content: the up-down rule tracks how each index transforms, so a well-formed expression is automatically chart-independent where it should be.
+
+  - id: tensor
+    title: 'Tensor space $T_p^{(r,s)}\mathcal{M}$'
+    row: 8
+    col: 1
+    span: 3
+    body: |
+      The multilinear maps $T\colon(T_p^*\mathcal{M})^r\times(T_p\mathcal{M})^s\to\mathbb{R}$, with the $r$ covector slots first. Components: feed basis elements,
+      $$\begin{aligned}&(T_\mathcal{U})^{i_1\dots i_r}_{j_1\dots j_s} :=\\ &\quad T\big((dx^{i_1})_p,\dots,(\partial x_{j_1})_p,\dots\big).\end{aligned}$$
+      Products of the chart bases form a basis, so $\dim T_p^{(r,s)}\mathcal{M} = d^{\,r+s}$. Changing charts takes **one Jacobian per index**: $\partial\mathscr{Y}/\partial\mathscr{X}$ for each upper index, $\partial\mathscr{X}/\partial\mathscr{Y}$ for each lower one:
+      $$(T_\mathcal{V})^k_l = \frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^i}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}(T_\mathcal{U})^i_j.$$
+    decoys:
+      - body: |
+          The multilinear maps $T\colon(T_p^*\mathcal{M})^r\times(T_p\mathcal{M})^s\to\mathbb{R}$, with the $r$ covector slots first. Components: feed basis elements,
+          $$\begin{aligned}&(T_\mathcal{U})^{i_1\dots i_r}_{j_1\dots j_s} :=\\ &\quad T\big((dx^{i_1})_p,\dots,(\partial x_{j_1})_p,\dots\big).\end{aligned}$$
+          Products of the chart bases form a basis, so $\dim T_p^{(r,s)}\mathcal{M} = (r+s)\,d$. Changing charts takes **one Jacobian per index**: $\partial\mathscr{Y}/\partial\mathscr{X}$ for each upper index, $\partial\mathscr{X}/\partial\mathscr{Y}$ for each lower one:
+          $$(T_\mathcal{V})^k_l = \frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^i}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}(T_\mathcal{U})^i_j.$$
+        feedback: |
+          Each of the $r+s$ indices runs over $d$ values **independently**, so the number of components, and of basis products, is $d\cdot d\cdots d = d^{\,r+s}$. In spacetime ($d = 4$), a type $(1,3)$ tensor such as the curvature has $4^4 = 256$ components, not $4\cdot4 = 16$.
+      - body: |
+          The multilinear maps $T\colon(T_p^*\mathcal{M})^r\times(T_p\mathcal{M})^s\to\mathbb{R}$, with the $r$ covector slots first. Components: feed basis elements,
+          $$\begin{aligned}&(T_\mathcal{U})^{i_1\dots i_r}_{j_1\dots j_s} :=\\ &\quad T\big((dx^{i_1})_p,\dots,(\partial x_{j_1})_p,\dots\big).\end{aligned}$$
+          Products of the chart bases form a basis, so $\dim T_p^{(r,s)}\mathcal{M} = d^{\,r+s}$. Changing charts takes **one Jacobian per index**, the same factor $\partial\mathscr{Y}/\partial\mathscr{X}$ for every index, upper or lower:
+          $$(T_\mathcal{V})^k_l = \frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^i}\frac{\partial\mathscr{Y}^l}{\partial\mathscr{X}^j}(T_\mathcal{U})^i_j.$$
+        feedback: |
+          A lower index sits in a **vector** slot, so it is filled by the vector basis, and its components change like covector components, with the inverse factor $\partial\mathscr{X}/\partial\mathscr{Y}$. With meters $x$ and centimeters $y = 100x$, the components of $(df)_p\otimes(df)_p$ (two lower indices) shrink by $100^2$; this law would make them grow by $100^2$. Also the free index $l$ would end up as an upper index on the right and a lower one on the left.
+    explanation: |
+      Everything meets here: vectors are $(1,0)$-tensors, covectors $(0,1)$-tensors, and the laws of both boxes combine, one factor per index, written with Einstein summation.
+
+edges:
+  - [curves, velocity]
+  - [fields, velocity]
+  - [velocity, tangent]
+  - [tangent, basis]
+  - [chart, basis]
+  - [basis, jacobian]
+  - { from: example, to: basis, dashed: true }
+  - { from: example, to: jacobian, dashed: true }
+  - [tangent, cotangent]
+  - [cotangent, differential]
+  - [differential, dualbasis]
+  - [jacobian, einstein]
+  - [dualbasis, einstein]
+  - [einstein, tensor]
+
+outroTitle: Chapter 4 in one picture
+outro: |
+  Read it top to bottom. A **smooth curve** and the **scalar fields** define the **velocity** $v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0)$, a directional derivative with no arrow behind it. All velocities at $p$, added **field by field**, form the **tangent space** $T_p\mathcal{M}$. A **chart** gives the **chart-induced basis** $(\partial/\partial\mathscr{X}^i)_p$, so $\dim T_p\mathcal{M} = d$; two charts give **components** related by the **Jacobian**, contravariantly, while the basis changes covariantly.
+
+  On the right, the **dual of** $T_p\mathcal{M}$ is the **cotangent space**; each field gives a **differential** $(df)_p(v) := v(f)$, and the differentials of the coordinates are the **dual basis**, with covariant components. **Einstein summation** writes both sets of laws with the up-down rule, and at the bottom **tensors** combine them: one Jacobian factor per index. The **running example** is where every one of these laws was checked with numbers.
+
+  **Next: the Level Challenge.** Harder problems that combine the whole map: proving facts about velocities, bases and duals, and pushing the running example and new charts through the transformation laws of vectors, covectors and tensors.

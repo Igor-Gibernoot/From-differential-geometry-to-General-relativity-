@@ -19,10 +19,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   `wrap-up` ending with a teaser for the next level.
 - **Chapter 4 in progress:** `ch04-tangent-space` (26 cards),
   `ch04-velocity-operations` (23 cards), `ch04-coordinate-basis` (33 cards),
-  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards), `ch04-cotangent` (23 cards), `ch04-cotangent-basis` (35 cards), `ch04-tensor-space` (31 cards), `ch04-traps` (22 cards) built; widget `chart-basis` built (coordinate lines of two charts, basis at
+  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards), `ch04-cotangent` (23 cards), `ch04-cotangent-basis` (35 cards), `ch04-tensor-space` (31 cards), `ch04-traps` (22 cards), `ch04-map` (13 boxes) built; widget `chart-basis` built (coordinate lines of two charts, basis at
   $p$, components, Jacobian).
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, next `ch04-map` (content map), then `ch04-challenge`; then Chapters 5–10 (each with
+  order, next `ch04-challenge` (two sessions: problems 1–3, then 4–5); then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -132,6 +132,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   mixed pairing $(d\mathscr{Y}^k)_p((\partial/\partial\mathscr{X}^j)_p) = (\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p$, C.3 $(d\mathscr{X}^1)_p((\partial/\partial\mathscr{Y}^1)_p) = 2$;
   meters/centimeters chart $y = 100x$ for contra- vs covariant; $A = (\partial x_1)_p\otimes(dx^1)_p$ has $\mathscr{Y}$-matrix
   $\begin{pmatrix}1&0\\e&0\end{pmatrix}$; $g = q_1$ with $(dg)_p(v) = v_1$; curvature as a $(1,3)$-tensor, $4^4 = 256$ components (named only).
+  Map ch04 (`ch04-map`, 13 boxes, 8 rows): no horizontal edges between adjacent boxes (too short to show at 390 px; use
+  diagonals or skip a row); edge readings ("defined from", "basis of", "dual of", "built from") given in the intro legend
+  (the engine has no edge labels); Einstein box placed after both laws (compact form of vector and covector laws), so map
+  cards before it write explicit sums.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -141,6 +145,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Content map `ch04-map` (13 boxes, 15 cards): curves, scalar fields → velocity → $T_p\mathcal{M}$; chart +
+$T_p\mathcal{M}$ → chart-induced basis → components and Jacobian (ᛞ); running example dashed to basis and Jacobian;
+$T_p\mathcal{M}$ → $T_p^*\mathcal{M}$ → $(df)_p$ → dual basis; both laws → Einstein summation → $T_p^{(r,s)}\mathcal{M}$. Decoys on the
+traps (image vs map curve, ambient arrow, one test field, curve sum, curves as vectors, whole-chart vs one-function,
+inverse/row laws, $3e$ product rule, transposed Jacobian, same-height sum, $\delta^i_i$, gradient arrow, infinitesimal,
+$(r+s)d$, all-$\partial\mathscr{Y}/\partial\mathscr{X}$ law). Choices: no edge labels (engine lacks them; legend in intro);
+Einstein built after the dual basis to avoid horizontal edges, which vanish at 390 px.
+Conventions fixed here: Map ch04 (`ch04-map`, 13 boxes, 8 rows): no horizontal edges between adjacent boxes (too short to show at 390 px; use diagonals or skip a row); edge readings ("defined from", "basis of", "dual of", "built from") given in the intro legend (the engine has no edge labels); Einstein box placed after both laws (compact form of vector and covector laws), so map cards before it write explicit sums.
 
 Traps round `ch04-traps` (22 cards, 20 questions): velocity as a map, bent curve same velocity,
 reparametrization scales ($6$), curve sum on $S^1$ leaves the circle, $\partial/\partial\mathscr{Z}^1$ depends on the

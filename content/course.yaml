@@ -189,7 +189,11 @@ levels:
         kind: traps
         file: ch04/traps.yaml
         summary: Fast questions on the level's classic mistakes, from velocities and curve sums to the chart-induced basis, Einstein summation, covectors and tensor components.
-      - { id: ch04-map, title: "Content Map: Tangent Spaces", kind: map }
+      - id: ch04-map
+        title: "Content Map: Tangent Spaces"
+        kind: map
+        file: ch04/map.yaml
+        summary: Rebuild the level box by box, from curves and scalar fields to velocities, the tangent and cotangent spaces, chart bases, Jacobians and tensors, among decoys that hide the level's classic mistakes.
       - { id: ch04-review, title: Level Review, kind: review }
       - { id: ch04-challenge, title: Level Challenge, kind: challenge }
 
