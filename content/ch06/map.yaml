@@ -1,0 +1,385 @@
+id: ch06-map
+title: "Content Map: Covariant Derivative"
+kind: map
+name: Chapter 6, Covariant Derivative
+
+intro: |
+  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition. An arrow goes from a concept to a concept built on it, and its label says how; read it as a sentence, for example "connection *in a chart* coefficients $\Gamma$", "derivative along a curve *$= 0$* parallel transport" or "Riemann curvature *contract* Ricci curvature".
+
+  You will rebuild the Chapter 6 map one box at a time, starting from the problem that forces a new structure on a manifold $\mathcal{M}$: derivatives of components of a vector field change with the chart. For each glowing box, pick the card that belongs there. The other cards look alike but each hides a classic mistake of this level, so read the details.
+
+  Tap a finished box at any time to reread its card.
+
+cols: 3
+nodes:
+  - id: problem
+    title: "Compo­nents depend on the chart"
+    row: 1
+    col: 1
+    body: |
+      To differentiate a vector field $\mathcal{Y}$ along $\mathcal{X}_p$, differentiating its components fails. With $\mathcal{Y}|_\mathcal{U} = \tilde x^j\,\partial x_j$ and components $\tilde y^k$ in a second chart, the product rule gives the vector law **plus**
+      $$\tilde x^j(p)\,x^i_p\,\partial_i\partial_j(\text{ᛖ}_{\mathcal{U}\mathcal{V}})^k,$$
+      second derivatives of the transition map $\text{ᛖ}_{\mathcal{U}\mathcal{V}} = \mathscr{Y}\circ\mathscr{X}^{-1}$ (at $\mathscr{X}(p)$). Example: $\partial x_1$ has constant cartesian components $(1,0)$ but polar components $(a/r,\,-b/r^2)$.
+    decoys:
+      - body: |
+          To differentiate a vector field $\mathcal{Y}$ along $\mathcal{X}_p$, take a curve $\gamma$ with $\gamma(0) = p$ and velocity $\mathcal{X}_p$, and the difference quotient
+          $$\lim_{\lambda\to0}\frac{\mathcal{Y}_{\gamma(\lambda)} - \mathcal{Y}_p}{\lambda}.$$
+          No chart is involved, so the result is a vector at $p$ that every chart agrees on.
+        feedback: |
+          The subtraction is not defined: $\mathcal{Y}_{\gamma(\lambda)}\in T_{\gamma(\lambda)}\mathcal{M}$ and $\mathcal{Y}_p\in T_p\mathcal{M}$ live in **different** vector spaces. Subtracting their components instead brings the chart back in, and with it the second-derivative term. Comparing vectors at different points is exactly what needs new structure.
+      - body: |
+          To differentiate a vector field $\mathcal{Y}$ along $\mathcal{X}_p$, differentiate its components. With $\mathcal{Y}|_\mathcal{U} = \tilde x^j\,\partial x_j$ and components $\tilde y^k$ in a second chart, the product rule gives the vector law plus
+          $$\tilde x^j(p)\,x^i_p\,\partial_i\partial_j(\text{ᛖ}_{\mathcal{U}\mathcal{V}})^k,$$
+          and this extra term always vanishes, because the Jacobian of the transition map is invertible.
+        feedback: |
+          Invertibility is about **first** derivatives; the extra term contains **second** derivatives. It vanishes for every $\mathcal{Y}$ only when the transition map is affine (a rotation, a rescaling, a shift). Cartesian to polar is not: $\partial x_1$ has constant cartesian components $(1,0)$, yet its polar components $(a/r,\,-b/r^2)$ change from point to point.
+    explanation: |
+      The problem that opens the level. The arrow reads "fixed by": a new structure, the connection, decides how vectors at nearby points are compared.
+
+  - id: conn
+    title: 'Connection $\nabla$'
+    row: 2
+    col: 2
+    body: |
+      A rule giving, for each $\mathcal{X}_p\in T_p\mathcal{M}$ and tensor field $T$, a tensor $\nabla_{\mathcal{X}_p}T$ at $p$, the **covariant derivative** of $T$ along $\mathcal{X}_p$, with five rules: (1) on functions
+      $$\nabla_{\mathcal{X}_p}f = \mathcal{X}_p(f),$$
+      (2) additive in $T$, (3) Leibniz in every slot, (4) linear in $\mathcal{X}_p$, (5) smooth in $p$. Consequence, the product rule:
+      $$\nabla_{\mathcal{X}_p}(g\mathcal{Y}) = \mathcal{X}_p(g)\mathcal{Y}_p + g(p)\nabla_{\mathcal{X}_p}\mathcal{Y}.$$
+    decoys:
+      - body: |
+          A rule giving, for each $\mathcal{X}_p\in T_p\mathcal{M}$ and tensor field $T$, a tensor $\nabla_{\mathcal{X}_p}T$ at $p$, the **covariant derivative** of $T$ along $\mathcal{X}_p$, with five rules: (1) on functions, a correction depending on the connection,
+          $$\nabla_{\mathcal{X}_p}f = \mathcal{X}_p(f) + (\text{correction}),$$
+          (2) additive in $T$, (3) Leibniz in every slot, (4) linear in $\mathcal{X}_p$, (5) smooth in $p$.
+        feedback: |
+          Functions need no correction. The values $f(q)$ at different points are all numbers in the same $\mathbb{R}$, so the derivative $\mathcal{X}_p(f) = (df)_p(\mathcal{X}_p)$ is already the same in every chart. The comparison problem only exists for vectors and covectors, which live in different spaces at different points; rule 1 says $\nabla$ agrees with the ordinary derivative on functions.
+      - body: |
+          A rule giving, for each $\mathcal{X}_p\in T_p\mathcal{M}$ and tensor field $T$, a tensor $\nabla_{\mathcal{X}_p}T$ at $p$, the **covariant derivative** of $T$ along $\mathcal{X}_p$, with five rules, among them linearity over functions in **both** arguments:
+          $$\nabla_{\mathcal{X}_p}(g\mathcal{Y}) = g(p)\,\nabla_{\mathcal{X}_p}\mathcal{Y}.$$
+        feedback: |
+          A map that is $C^\infty(\mathcal{M})$-linear in $\mathcal{Y}$ only sees the value $\mathcal{Y}_p$ (it would be a tensor), so it cannot differentiate anything. The Leibniz rule with rule 1 forces the extra term: $\nabla_{\mathcal{X}_p}(g\mathcal{Y}) = \mathcal{X}_p(g)\mathcal{Y}_p + g(p)\nabla_{\mathcal{X}_p}\mathcal{Y}$. Only the **direction** slot is linear over functions.
+    explanation: |
+      The new structure. Down-left it is read "in a chart" (its coefficients); down-right it becomes part of the manifold itself.
+
+  - id: affine
+    title: "Affine manifold"
+    row: 3
+    col: 3
+    body: |
+      A smooth manifold together with a chosen connection, the quadruple
+      $$(\mathcal{M},\mathcal{O},\mathcal{A},\nabla).$$
+      The connection is **extra** structure: the plane carries many, for example $\nabla^{\mathrm{E}}$ (cartesian components constant), $\nabla^{\mathrm{W}}$ (radial and angular unit fields constant) and $\nabla^{\kappa}$ ($\Gamma^1_{22} = \kappa a$). In physics, choosing it is part of the law of motion.
+    decoys:
+      - body: |
+          A smooth manifold together with its connection, the quadruple
+          $$(\mathcal{M},\mathcal{O},\mathcal{A},\nabla).$$
+          Every smooth manifold carries exactly one connection, fixed by its atlas $\mathcal{A}$, so the fourth entry adds no information: on the plane it is always $\nabla^{\mathrm{E}}$.
+        feedback: |
+          The five rules leave the coefficients $\Gamma$ free: any $d^3$ smooth functions in one chart define a connection. On the plane $\nabla^{\mathrm{E}}$, $\nabla^{\mathrm{W}}$ and $\nabla^\kappa$ all obey the rules and disagree (they even have different torsion and curvature). Choosing $\nabla$ is a real choice, and in gravity it is where the physics sits.
+      - body: |
+          A smooth manifold whose atlas contains only **affine** transition maps $\text{ᛖ}_{\mathcal{U}\mathcal{V}}(\alpha) = A\alpha + c$, so that the second-derivative term vanishes and component derivatives agree in all charts:
+          $$(\mathcal{M},\mathcal{O},\mathcal{A}).$$
+        feedback: |
+          The name tempts this reading, but an affine manifold is the **quadruple** $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla)$: any smooth atlas plus a connection. Restricting charts would throw away polar coordinates on the plane, and a sphere admits no such atlas at all (stated here without proof). The connection solves the problem without forbidding any chart.
+    explanation: |
+      The stage for the rest of the level and for gravity: spacetime will be an affine manifold whose connection is fixed by the metric (Level 7).
+
+  - id: gamma
+    title: 'Coefficients $\Gamma^i_{jk}$'
+    row: 3
+    col: 1
+    body: |
+      In a chart $(\mathcal{U},\mathscr{X})$ the only data the rules leave free are $d^3$ functions,
+      $$(\Gamma_\mathscr{X})^i_{jk}(p) := (dx^i)_p\big(\nabla_{(\partial x_k)_p}\partial x_j\big),$$
+      the **last** lower index labelling the direction. They are **not** the components of a tensor: $\nabla^{\mathrm{E}}$ has all $\Gamma = 0$ in cartesian coordinates, yet in polar coordinates $\Gamma^1_{22} = -r$.
+    decoys:
+      - body: |
+          In a chart $(\mathcal{U},\mathscr{X})$ the only data the rules leave free are $d^3$ functions,
+          $$(\Gamma_\mathscr{X})^i_{jk}(p) := (dx^i)_p\big(\nabla_{(\partial x_k)_p}\partial x_j\big),$$
+          the components of a $(1,2)$-tensor field: one upper and two lower indices, each changing with one Jacobian.
+        feedback: |
+          Indices alone do not make a tensor; the transformation law decides. A tensor that vanishes in one chart vanishes in all of them, but $\nabla^{\mathrm{E}}$ has all $\Gamma = 0$ in cartesian coordinates and $(\Gamma^{\mathrm{E}}_\mathscr{Y})^1_{22} = -r$ in polar ones. The extra second-derivative term in the law is what breaks the tensor rule.
+      - body: |
+          In a chart $(\mathcal{U},\mathscr{X})$ the only data the rules leave free are $d^3$ functions,
+          $$(\Gamma_\mathscr{X})^i_{jk}(p) := (dx^i)_p\big(\nabla_{(\partial x_k)_p}\partial x_j\big),$$
+          and the order of the two lower indices does not matter, since always $\Gamma^i_{jk} = \Gamma^i_{kj}$.
+        feedback: |
+          Symmetry holds only for torsion-free connections. For $\nabla^{\mathrm{W}}$ (radial and angular unit fields constant) at $(3,4)$ in cartesian coordinates, $\Gamma^1_{12} = 0$ while $\Gamma^1_{21} = -4/25$. The convention "last lower index = direction" matters, and the antisymmetric part is the torsion.
+    explanation: |
+      The connection seen through a chart. Two arrows leave it: down, the components of every covariant derivative; to the right, how the $\Gamma$'s change with the chart.
+
+  - id: comp
+    title: 'The $\pm\Gamma$ rule'
+    row: 4
+    col: 1
+    body: |
+      Components of covariant derivatives, $\mathcal{X} = x^i\partial x_i$:
+      $$(\nabla_\mathcal{X}\mathcal{Y})^k = \mathcal{X}\lfloor\tilde x^k\rceil + \Gamma^k_{ji}\tilde x^jx^i,$$
+      $$(\nabla_\mathcal{X}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil - \Gamma^j_{ki}\mathtt{x}_jx^i.$$
+      Each upper index brings a $+\Gamma$ term, each lower index a $-\Gamma$ term. The sign comes from the Leibniz rule on the constant $dx^j\lceil\partial x_k\rfloor = \delta^j_k$.
+    decoys:
+      - body: |
+          Components of covariant derivatives, $\mathcal{X} = x^i\partial x_i$:
+          $$(\nabla_\mathcal{X}\mathcal{Y})^k = \mathcal{X}\lfloor\tilde x^k\rceil + \Gamma^k_{ji}\tilde x^jx^i,$$
+          $$(\nabla_\mathcal{X}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil + \Gamma^j_{ki}\mathtt{x}_jx^i.$$
+          Every index, upper or lower, brings a $+\Gamma$ term.
+        feedback: |
+          Apply the Leibniz rule to the constant function $dx^j\lceil\partial x_k\rfloor = \delta^j_k$, whose derivative is $0$ by rule 1: $0 = (\nabla_{\partial x_i}dx^j)\lceil\partial x_k\rfloor + \Gamma^j_{ki}$. So the covector coefficients are $-\Gamma$: a covector must change oppositely to the vectors it eats so that their pairing changes like a function.
+      - body: |
+          Components of covariant derivatives, $\mathcal{X} = x^i\partial x_i$:
+          $$(\nabla_\mathcal{X}\mathcal{Y})^k = \mathcal{X}\lfloor\tilde x^k\rceil + \Gamma^k_{ij}\tilde x^jx^i,$$
+          $$(\nabla_\mathcal{X}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil - \Gamma^j_{ik}\mathtt{x}_jx^i.$$
+          Each upper index brings a $+\Gamma$ term, each lower index a $-\Gamma$ term.
+        feedback: |
+          The direction index $i$ sits in the wrong slot. $\nabla_{\partial x_i}\partial x_j = \Gamma^k_{ji}\partial x_k$: the **last** lower index labels the direction. With torsion the two orders differ, so $\Gamma^k_{ij}\tilde x^jx^i$ is the derivative for a different connection (its transpose).
+    explanation: |
+      How to compute with a connection. Down, the same formula along a curve.
+
+  - id: law
+    title: "Trans­formation law"
+    row: 4
+    col: 3
+    body: |
+      From the vector and covector laws and the product rule:
+      $$\begin{aligned}(\Gamma_\mathscr{Y})^i_{jk} &= \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}\\ &\quad + (\text{tensor law of }\Gamma_\mathscr{X}).\end{aligned}$$
+      The first (**inhomogeneous**) term is symmetric in $j,k$ (mixed partials commute). Hence the antisymmetric part of $\Gamma$ obeys the tensor law, and the symmetric part can be removed at one point $p$ (normal coordinates).
+    decoys:
+      - body: |
+          From the vector and covector laws and the product rule:
+          $$\begin{aligned}(\Gamma_\mathscr{Y})^i_{jk} &= \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^l}\frac{\partial\mathscr{X}^s}{\partial\mathscr{Y}^j}\\ &\qquad\cdot\frac{\partial\mathscr{X}^m}{\partial\mathscr{Y}^k}\,(\Gamma_\mathscr{X})^l_{sm},\end{aligned}$$
+          one Jacobian per index, so $\Gamma = 0$ in one chart means $\Gamma = 0$ in every chart.
+        feedback: |
+          The product rule adds a term: $\partial y_j = \frac{\partial\mathscr{X}^s}{\partial\mathscr{Y}^j}\partial x_s$ has non-constant coefficients, and differentiating them gives $\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}$. That is why $\nabla^{\mathrm{E}}$ has $\Gamma = 0$ in cartesian coordinates but $\Gamma^1_{22} = -r$ in polar ones.
+      - body: |
+          From the vector and covector laws and the product rule:
+          $$\begin{aligned}(\Gamma_\mathscr{Y})^i_{jk} &= \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}\\ &\quad + (\text{tensor law of }\Gamma_\mathscr{X}).\end{aligned}$$
+          The first term is antisymmetric in $j,k$. Hence the symmetric part of $\Gamma$ obeys the tensor law, and the antisymmetric part can be removed at one point $p$.
+        feedback: |
+          Second partial derivatives of a smooth map commute (Schwarz): $\partial_k\partial_j = \partial_j\partial_k$. The inhomogeneous term is **symmetric** in $j,k$, so it cancels in $\Gamma^i_{kj} - \Gamma^i_{jk}$: the antisymmetric part is the tensor (the torsion), and only the symmetric part can be removed at a point.
+    explanation: |
+      Why $\Gamma$ is not a tensor, and which part of it is. Down, the antisymmetric part becomes the torsion.
+
+  - id: along
+    title: "Deriva­tive along a curve"
+    row: 5
+    col: 1
+    body: |
+      For a vector field $\mathcal{X}_\gamma$ **along** a curve $\gamma$ (a vector at each $\gamma(\lambda)$, possibly not coming from any field on $\mathcal{M}$), there is a unique $\nabla_{v_\gamma}$, with components
+      $$(\nabla_{v_\gamma}\mathcal{X}_\gamma)^k = \dot x^k_\gamma + \Gamma^k_{ji}x^j_\gamma\dot\gamma^i,$$
+      where the dot is $d/d\lambda$ and $\dot\gamma^i$ the velocity components. It needs only the values on the curve.
+    decoys:
+      - body: |
+          For a vector field $\mathcal{X}_\gamma$ **along** a curve $\gamma$ (a vector at each $\gamma(\lambda)$), the derivative along $\gamma$ is the derivative of the components:
+          $$(\nabla_{v_\gamma}\mathcal{X}_\gamma)^k = \dot x^k_\gamma,$$
+          where the dot is $d/d\lambda$. No connection is needed, since only one curve is involved.
+        feedback: |
+          This is the opening problem again: $\dot x^k_\gamma$ changes with the chart by a second-derivative term. Along the unit circle, the constant vector $\partial x_1$ has constant cartesian components but changing polar ones. The $\Gamma^k_{ji}x^j_\gamma\dot\gamma^i$ term is what makes the result a vector.
+      - body: |
+          For a vector field $\mathcal{X}_\gamma$ along a curve $\gamma$, the derivative is defined only when $\mathcal{X}_\gamma = \mathcal{Y}\circ\gamma$ for a vector field $\mathcal{Y}$ on $\mathcal{M}$, as
+          $$(\nabla_{v_\gamma}\mathcal{X}_\gamma)(\lambda) = \nabla_{v_\gamma(\lambda)}\mathcal{Y}.$$
+          So a curve's own velocity can always be differentiated this way.
+        feedback: |
+          Many fields along a curve come from no field on $\mathcal{M}$. The figure-eight $\gamma(\lambda) = (\sin\lambda, \tfrac12\sin2\lambda)$ passes the origin with velocities $(1,1)$ and $(-1,1)$: no single field has both values there. The chart formula with $\dot x^k_\gamma$ needs only the values on the curve, and it agrees with $\nabla_{v_\gamma(\lambda)}\mathcal{Y}$ when a field $\mathcal{Y}$ exists.
+    explanation: |
+      The connection applied along one curve. Two arrows leave it: set the derivative to zero (transport), or feed the curve its own velocity (autoparallels).
+
+  - id: transport
+    title: "Parallel transport"
+    row: 6
+    col: 1
+    body: |
+      $\mathcal{Z}$ is **parallelly transported** along $\gamma$ if $\nabla_{v_\gamma}\mathcal{Z} = 0$:
+      $$\dot z^k + \Gamma^k_{ji}z^j\dot\gamma^i = 0.$$
+      A **linear** ODE in $z$: each starting vector has a unique transport along the whole curve, and $z(0)\mapsto z(\lambda)$ is linear. The result depends on the **route**: around a closed loop the vector may come back changed (holonomy).
+    decoys:
+      - body: |
+          $\mathcal{Z}$ is **parallelly transported** along $\gamma$ if $\nabla_{v_\gamma}\mathcal{Z} = 0$:
+          $$\dot z^k + \Gamma^k_{ji}z^j\dot\gamma^i = 0.$$
+          A **linear** ODE in $z$: each starting vector has a unique transport. The result depends only on the endpoints of $\gamma$, so transporting all vectors from $p$ defines a vector field.
+        feedback: |
+          The route matters. For $\nabla^\kappa$ ($\Gamma^1_{22} = \kappa a$) with $\kappa = 1$, carrying $z = (0,1)$ counterclockwise around the rectangle $[1,2]\times[0,1]$ returns $z = (-1,1)$: the vector comes back changed, so two routes between the same points disagree. Only when the curvature vanishes is transport route independent (locally).
+      - body: |
+          $\mathcal{Z}$ is **parallelly transported** along $\gamma$ if $\nabla_{v_\gamma}\mathcal{Z} = 0$:
+          $$\dot z^k + \Gamma^k_{ji}z^j\dot\gamma^i = 0.$$
+          A **nonlinear** ODE, so a transported vector may blow up partway along the curve, and transporting $2z(0)$ need not give $2z(\lambda)$.
+        feedback: |
+          The unknown $z$ appears only to the first power: $\Gamma$ and $\dot\gamma$ are known functions of $\lambda$ along the curve. A linear ODE with smooth coefficients has a unique solution on the whole interval, and sums and multiples of solutions are solutions, so transport is a linear map $T_{\gamma(0)}\mathcal{M}\to T_{\gamma(\lambda)}\mathcal{M}$.
+    explanation: |
+      The connection's way of comparing vectors at different points, along a chosen route. Down, the route dependence around small loops is the Riemann curvature.
+
+  - id: autopar
+    title: "Auto­parallels"
+    row: 6
+    col: 2
+    body: |
+      Feed the curve its own velocity: acceleration $a_\gamma := \nabla_{v_\gamma}v_\gamma$. The **autoparallels**, the straightest curves of $\nabla$, keep the direction of their velocity:
+      $$\ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j = \text{ᚱ}\,\dot\gamma^k,$$
+      with $\text{ᚱ} = 0$ for **autoparallelly transported** curves. Since $\dot\gamma^i\dot\gamma^j$ is symmetric, only the symmetric part of $\Gamma$ enters.
+    decoys:
+      - body: |
+          Feed the curve its own velocity: acceleration $a_\gamma := \nabla_{v_\gamma}v_\gamma$. The **autoparallels**, the straightest curves of $\nabla$, keep the direction of their velocity:
+          $$\ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j = \text{ᚱ}\,\dot\gamma^k.$$
+          The antisymmetric part of $\Gamma$ (the torsion) bends them, so connections with different torsion have different autoparallels.
+        feedback: |
+          In $\Gamma^k_{ji}\dot\gamma^i\dot\gamma^j$ the product $\dot\gamma^i\dot\gamma^j$ is symmetric in $i,j$, so the antisymmetric part of $\Gamma$ drops out. Example: $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$ in cartesian coordinates has torsion, yet its autoparallels are straight lines. Torsion shows up in the transport of **other** vectors: $(0,1)$ carried along $(\lambda,0)$ becomes $(\lambda,1)$.
+      - body: |
+          Feed the curve its own velocity: acceleration $a_\gamma := \nabla_{v_\gamma}v_\gamma$. A curve is **autoparallel** only if its acceleration vanishes exactly:
+          $$\ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j = 0.$$
+          The ray $(\lambda^2, 0)$ for $\lambda > 0$ is therefore not autoparallel for $\nabla^{\mathrm{E}}$.
+        feedback: |
+          The equation with $0$ defines **autoparallelly transported** curves. Autoparallel allows $a_\gamma = \text{ᚱ}\,v_\gamma$: the curve goes straight but may speed up. The ray $(\lambda^2,0)$ has velocity $(2\lambda,0)$ and acceleration $(2,0) = \tfrac1\lambda(2\lambda,0)$, so it is autoparallel with $\text{ᚱ} = 1/\lambda$, a reparametrized straight line.
+    explanation: |
+      The free-fall curves of the connection: in gravity, freely falling particles follow autoparallels.
+
+  - id: bracket
+    title: 'Commutator $[\mathcal{X},\mathcal{Y}]$'
+    row: 5
+    col: 2
+    body: |
+      Built from two vector fields alone, no connection:
+      $$[\mathcal{X},\mathcal{Y}]\lfloor f\rceil := \mathcal{X}\lfloor\mathcal{Y}\lfloor f\rceil\rceil - \mathcal{Y}\lfloor\mathcal{X}\lfloor f\rceil\rceil.$$
+      The second derivatives cancel, so it is again a vector field, with components $[\mathcal{X},\mathcal{Y}]^k = \mathcal{X}\lfloor\tilde x^k\rceil - \mathcal{Y}\lfloor x^k\rceil$. Chart basis fields commute: $[\partial x_j,\partial x_k] = 0$.
+    decoys:
+      - body: |
+          Built from two vector fields alone, no connection:
+          $$[\mathcal{X},\mathcal{Y}]\lfloor f\rceil := \mathcal{X}\lfloor\mathcal{Y}\lfloor f\rceil\rceil,$$
+          the composite of the two derivatives, again a vector field. Chart basis fields give $[\partial x_j,\partial x_k] = \partial x_j\partial x_k$.
+        feedback: |
+          A composite of two derivatives is a **second** derivative, not a vector field: it breaks the Leibniz rule. With $\mathcal{X} = \mathcal{Y} = \partial x_1$ and $f = a\cdot a$, the composite gives $2$ at the origin, while any vector field $\mathcal{V}$ would give $\mathcal{V}\lfloor a\cdot a\rceil = 2a\,\mathcal{V}\lfloor a\rceil = 0$ there. Subtracting the reversed composite cancels the second derivatives.
+      - body: |
+          Built from two vector fields and the connection:
+          $$\begin{aligned}{[\mathcal{X},\mathcal{Y}]}^k &= \mathcal{X}\lfloor\tilde x^k\rceil - \mathcal{Y}\lfloor x^k\rceil\\ &\quad + \Gamma^k_{ji}\tilde x^jx^i - \Gamma^k_{ij}\tilde x^jx^i,\end{aligned}$$
+          so it changes with the connection. Chart basis fields commute only when $\Gamma$ is symmetric.
+        feedback: |
+          The commutator is defined by its action on functions, $\mathcal{X}\lfloor\mathcal{Y}\lfloor f\rceil\rceil - \mathcal{Y}\lfloor\mathcal{X}\lfloor f\rceil\rceil$, with no $\nabla$ at all; $[\partial x_j,\partial x_k] = 0$ because mixed partials commute. The whole expression is $\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X}$, not the commutator: its $\Gamma$ terms are the torsion, the part the commutator does **not** account for.
+    explanation: |
+      Pure field calculus, from before any connection. Its arrow reads "subtracted in": the torsion is what is left of $\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X}$ after removing it.
+
+  - id: torsion
+    title: 'Torsion $\mathtt{T}$'
+    row: 6
+    col: 3
+    body: |
+      The $(1,2)$-tensor field
+      $$\begin{aligned}&\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y})\\ &:= \mathsf{X}\big\lceil\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X}\\ &\qquad - [\mathcal{X},\mathcal{Y}]\big\rfloor.\end{aligned}$$
+      The non-tensorial terms of the two pieces cancel. Components: $\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}$, the antisymmetric part of $\Gamma$. Torsion free $\Leftrightarrow$ $\Gamma$ symmetric in every chart.
+    decoys:
+      - body: |
+          The $(1,2)$-tensor field
+          $$\begin{aligned}&\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y})\\ &:= \mathsf{X}\big\lceil\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X}\big\rfloor.\end{aligned}$$
+          Components: $\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}$, the antisymmetric part of $\Gamma$. Torsion free $\Leftrightarrow$ $\Gamma$ symmetric in every chart.
+        feedback: |
+          Without the commutator the map is not a tensor. For the flat torsion-free $\nabla^{\mathrm{E}}$, $\nabla^{\mathrm{E}}_{ab\,\partial x_2}\partial x_1 - \nabla^{\mathrm{E}}_{\partial x_1}(ab\,\partial x_2) = -b\,\partial x_2 \neq 0$. On basis fields the commutator vanishes, which is why the components look the same, but the definition must hold for all fields; $-[\mathcal{X},\mathcal{Y}]$ cancels exactly the extra $\mathcal{X}\lfloor g\rceil$ terms.
+      - body: |
+          The $(1,2)$-tensor field
+          $$\begin{aligned}&\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y})\\ &:= \mathsf{X}\big\lceil\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X}\\ &\qquad - [\mathcal{X},\mathcal{Y}]\big\rfloor.\end{aligned}$$
+          Components: $\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}$. Torsion is what makes parallel transport depend on the route: around a loop, a vector comes back changed exactly when $\mathtt{T}\neq0$.
+        feedback: |
+          Route dependence is **curvature**, not torsion. $\nabla^{\mathrm{W}}$ (radial and angular unit fields declared constant) has torsion, $\mathtt{T}^2_{12} = a/r^2$ in cartesian coordinates, yet its Riemann curvature vanishes: transport around any loop brings every vector back unchanged. Conversely $\nabla^\kappa$ is torsion free and changes vectors around loops.
+    explanation: |
+      The first tensor hidden in a connection. Down, setting it to zero is half of being flat and torsion free.
+
+  - id: riem
+    title: "Riemann curvature"
+    row: 7
+    col: 2
+    body: |
+      The $(1,3)$-tensor field
+      $$\begin{aligned}&\mathrm{Riem}(\mathsf{X},\mathcal{Z},\mathcal{X},\mathcal{Y})\\ &:= \mathsf{X}\lceil\nabla_\mathcal{X}\nabla_\mathcal{Y}\mathcal{Z} - \nabla_\mathcal{Y}\nabla_\mathcal{X}\mathcal{Z}\\ &\qquad - \nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}\rfloor,\end{aligned}$$
+      $$\begin{aligned}\mathrm{Riem}^i_{jkm} &= \partial x_k\lfloor\Gamma^i_{jm}\rceil - \partial x_m\lfloor\Gamma^i_{jk}\rceil\\ &\quad + \Gamma^i_{nk}\Gamma^n_{jm} - \Gamma^i_{nm}\Gamma^n_{jk}.\end{aligned}$$
+      It measures the loop mismatch of transport: for $\nabla^\kappa$, $\mathrm{Riem}^1_{212} = \kappa$ and a small counterclockwise loop changes $z^1$ by $-\kappa\,z^2\times\text{area}$.
+    decoys:
+      - body: |
+          A $(1,3)$ array built from $\Gamma$,
+          $$\begin{aligned}\mathrm{Riem}^i_{jkm} &= \partial x_k\lfloor\Gamma^i_{jm}\rceil - \partial x_m\lfloor\Gamma^i_{jk}\rceil\\ &\quad + \Gamma^i_{nk}\Gamma^n_{jm} - \Gamma^i_{nm}\Gamma^n_{jk},\end{aligned}$$
+          not a tensor, since $\Gamma$ is not one. In particular, in a chart where $\Gamma(p) = 0$ also $\mathrm{Riem}(p) = 0$: curvature can be removed at any point.
+        feedback: |
+          $\mathrm{Riem}$ **is** a tensor: its non-tensorial terms cancel against those of $\nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}$. And $\Gamma(p) = 0$ kills only the $\Gamma\Gamma$ products, not the **derivatives** $\partial x_k\lfloor\Gamma^i_{jm}\rceil$. For $\nabla^\kappa$ at the origin, $\Gamma(0) = 0$ in cartesian coordinates, yet $\mathrm{Riem}^1_{212} = \kappa\neq0$ there.
+      - body: |
+          The $(1,3)$-tensor field
+          $$\begin{aligned}&\mathrm{Riem}(\mathsf{X},\mathcal{Z},\mathcal{X},\mathcal{Y})\\ &:= \mathsf{X}\lceil\nabla_\mathcal{X}\nabla_\mathcal{Y}\mathcal{Z} - \nabla_\mathcal{Y}\nabla_\mathcal{X}\mathcal{Z}\rfloor,\end{aligned}$$
+          the failure of two covariant derivatives to commute. On basis fields it gives the usual components in $\partial x\lfloor\Gamma\rceil$ and $\Gamma\Gamma$.
+        feedback: |
+          Without $-\nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}$ the map is not $C^\infty(\mathcal{M})$-linear in $\mathcal{X}$: replacing $\mathcal{X}$ by $g\mathcal{X}$ produces an extra $-\mathcal{Y}\lfloor g\rceil\nabla_\mathcal{X}\mathcal{Z}$, and that term is cancelled exactly by the commutator piece. On basis fields $[\partial x_k,\partial x_m] = 0$, which is why the components hide the difference.
+    explanation: |
+      The second tensor hidden in a connection, and the one gravity is made of. Down-left, a contraction; down-right, its vanishing.
+
+  - id: ricci
+    title: "Ricci curvature"
+    row: 8
+    col: 1
+    body: |
+      The $(0,2)$-tensor field obtained by contracting the upper index of $\mathrm{Riem}$ with its third slot:
+      $$\mathrm{Ric}_{ab} = \mathrm{Riem}^m_{amb}.$$
+      The sum over $m$ is the same in every chart (the two Jacobians give $\delta$). For $\nabla^\kappa$, $\mathrm{Ric} = \kappa\,dx^2\otimes dx^2$. For a general connection it need not be symmetric.
+    decoys:
+      - body: |
+          The $(0,2)$-tensor field obtained by contracting the upper index of $\mathrm{Riem}$ with its second slot:
+          $$\mathrm{Ric}_{ab} = \mathrm{Riem}^m_{mab}.$$
+          The sum over $m$ is the same in every chart (the two Jacobians give $\delta$).
+        feedback: |
+          $\mathrm{Riem}^i_{jkm}$ is antisymmetric in its last two indices, so $\mathrm{Riem}^m_{mab} = -\mathrm{Riem}^m_{mba}$: this contraction is always antisymmetric in $a,b$, a different object. For $\nabla^\kappa$ it vanishes, while the true Ricci has $\mathrm{Ric}_{22} = \mathrm{Riem}^1_{212} = \kappa$. The Ricci contraction pairs the upper index with the **third** slot, the first direction.
+      - body: |
+          The $(0,2)$-tensor field obtained by contracting the upper index of $\mathrm{Riem}$ with its third slot:
+          $$\mathrm{Ric}_{ab} = \mathrm{Riem}^m_{amb}.$$
+          The sum over $m$ is the same in every chart, and $\mathrm{Ric}$ is always symmetric, $\mathrm{Ric}_{ab} = \mathrm{Ric}_{ba}$.
+        feedback: |
+          Symmetry of $\mathrm{Ric}$ is not automatic: the definition only uses the antisymmetry of $\mathrm{Riem}$ in its **last** two indices, which says nothing about swapping $a$ and $b$. For a general connection $\mathrm{Ric}$ need not be symmetric; extra structure (the metric of Level 7) is what makes it so.
+    explanation: |
+      The trace of the curvature: the piece that will appear in Einstein's equations.
+
+  - id: flat
+    title: "Flat and torsion free"
+    row: 8
+    col: 3
+    body: |
+      $\mathrm{Riem} = 0$ and $\mathtt{T} = 0$ everywhere $\Leftrightarrow$ around every point there is a chart in which **all** $\Gamma = 0$. ($\Leftarrow$ is immediate: their components vanish there, and they are tensors.) Without these, $\Gamma$ can be made zero only at one point: normal coordinates remove its symmetric part at $p$, never its derivatives.
+    decoys:
+      - body: |
+          Normal coordinates make all $\Gamma = 0$ at any chosen point $p$, for **every** connection. Since the curvature is built from $\Gamma$, it can always be removed at a point, so $\mathrm{Riem}(p) = 0$ in those coordinates.
+        feedback: |
+          Two mistakes. Normal coordinates remove only the **symmetric** part of $\Gamma(p)$; the antisymmetric part is the torsion, a tensor. And $\mathrm{Riem}$ contains the derivatives $\partial x_k\lfloor\Gamma^i_{jm}\rceil$, which do not vanish with $\Gamma(p)$. $\mathrm{Riem}$ is a tensor: zero in one chart means zero in all, so no chart removes it.
+      - body: |
+          $\mathrm{Riem} = 0$ everywhere $\Leftrightarrow$ around every point there is a chart in which **all** $\Gamma = 0$. Torsion plays no role: it measures something else.
+        feedback: |
+          In a chart with all $\Gamma = 0$, the torsion components $\Gamma^i_{kj} - \Gamma^i_{jk}$ vanish too, and a tensor zero in one chart is zero. So such a chart needs $\mathtt{T} = 0$ as well. Example: $\nabla^{\mathrm{W}}$ is flat but has torsion $\mathtt{T}^2_{12} = a/r^2$, so no chart makes its $\Gamma$'s vanish.
+    explanation: |
+      What the two tensors measure together: whether the connection is just "constant components" in disguise. In gravity, the curvature is the part no chart removes.
+
+edges:
+  - { from: problem, to: conn, label: fixed by }
+  - { from: conn, to: gamma, label: in a chart }
+  - { from: conn, to: affine, label: equips }
+  - { from: gamma, to: comp, label: assemble }
+  - { from: gamma, to: law, label: new chart }
+  - { from: comp, to: along, label: on a curve }
+  - { from: along, to: transport, label: '$= 0$' }
+  - { from: along, to: autopar, label: 'on $v_\gamma$' }
+  - { from: law, to: torsion, label: antisym. part }
+  - { from: bracket, to: torsion, label: subtracted in }
+  - { from: transport, to: riem, label: around loops }
+  - { from: riem, to: ricci, label: contract }
+  - { from: riem, to: flat, label: '$= 0$' }
+  - { from: torsion, to: flat, label: '$= 0$' }
+
+outroTitle: Chapter 6 in one picture
+outro: |
+  Read it top to bottom. Derivatives of **components** change with the chart, because the transition map has second derivatives. A **connection** fixes this; it obeys five rules, with the product rule
+  $$\nabla_{\mathcal{X}_p}(g\mathcal{Y}) = \mathcal{X}_p(g)\mathcal{Y}_p + g(p)\nabla_{\mathcal{X}_p}\mathcal{Y},$$
+  and a manifold with one is an **affine manifold**. In a chart it is $d^3$ **coefficients**
+  $$(\Gamma_\mathscr{X})^i_{jk} := dx^i\lceil\nabla_{\partial x_k}\partial x_j\rfloor,$$
+  assembled by the $\pm\Gamma$ rule:
+  $$(\nabla_\mathcal{X}\mathcal{Y})^k = \mathcal{X}\lfloor\tilde x^k\rceil + \Gamma^k_{ji}\tilde x^jx^i,$$
+  $$(\nabla_\mathcal{X}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil - \Gamma^j_{ki}\mathtt{x}_jx^i.$$
+  They change with an extra symmetric term, so $\Gamma$ is not a tensor:
+  $$\begin{aligned}(\Gamma_\mathscr{Y})^i_{jk} &= \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}\\ &\quad + (\text{tensor law of }\Gamma_\mathscr{X}).\end{aligned}$$
+  Along a curve, **parallel transport** and **autoparallels** solve
+  $$\dot z^k + \Gamma^k_{ji}z^j\dot\gamma^i = 0,$$
+  $$\ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j = \text{ᚱ}\,\dot\gamma^k.$$
+  Two tensors characterize $\nabla$. The **torsion**, built with the **commutator**, is the antisymmetric part of $\Gamma$:
+  $$\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}.$$
+  The **Riemann curvature** measures the loop mismatch of transport, and **Ricci** is its contraction:
+  $$\begin{aligned}\mathrm{Riem}^i_{jkm} &= \partial x_k\lfloor\Gamma^i_{jm}\rceil - \partial x_m\lfloor\Gamma^i_{jk}\rceil\\ &\quad + \Gamma^i_{nk}\Gamma^n_{jm} - \Gamma^i_{nm}\Gamma^n_{jk},\end{aligned}$$
+  $$\mathrm{Ric}_{ab} = \mathrm{Riem}^m_{amb}.$$
+  Both vanish exactly when some chart around each point has all $\Gamma = 0$.
+
+  **Next: the Level Challenge.** Harder problems that combine the whole map. Under $\nabla^{\mathrm{W}}$, where the radial and angular unit fields are declared constant, which curves are the straightest ones: circles, rays, or spirals?

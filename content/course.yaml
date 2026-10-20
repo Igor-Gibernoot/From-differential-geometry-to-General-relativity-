@@ -288,7 +288,11 @@ levels:
         kind: traps
         file: ch06/traps.yaml
         summary: Fast questions on the classic connection mistakes, from Γ's that look like a tensor and swapped indices to torsion seen by autoparallels and curvature removed at a point.
-      - { id: ch06-map, title: "Content Map: Covariant Derivative", kind: map }
+      - id: ch06-map
+        title: "Content Map: Covariant Derivative"
+        kind: map
+        file: ch06/map.yaml
+        summary: Rebuild the chapter's map box by box, from the chart-dependence of component derivatives to the connection, its coefficients, transport, autoparallels, torsion and curvature, among look-alike cards that hide the classic mistakes.
       - { id: ch06-review, title: Level Review, kind: review }
       - { id: ch06-challenge, title: Level Challenge, kind: challenge }
 

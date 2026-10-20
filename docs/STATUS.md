@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel, ch06-parallel-transport, ch06-torsion-curvature, ch06-torsion-tensor, ch06-three-connections, ch06-traps done)
+## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel, ch06-parallel-transport, ch06-torsion-curvature, ch06-torsion-tensor, ch06-three-connections, ch06-traps, ch06-map done)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -24,11 +24,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
-- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards), `ch06-torsion-tensor` (guided, 19 cards), `ch06-three-connections` (guided C.5, 32 cards), `ch06-traps` (21 cards); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). Next: `ch06-map` (map; no TeX map, build from the 6.1–6.4 headings and the ch06 lessons).
+- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards), `ch06-torsion-tensor` (guided, 19 cards), `ch06-three-connections` (guided C.5, 32 cards), `ch06-traps` (21 cards), `ch06-map` (14 boxes, 8 rows); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). Next: `ch06-challenge` (two sessions: problems 1–3, then 4–5).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** Chapter 6 (Covariant Derivative) in `course.yaml` order, next
-  `ch06-connections` (concept); then Chapters 7–10 (each with map and challenge). No TeX exercise file exists for Chapter 6:
+- **Queue (one unit each):** next `ch06-challenge` (two sessions: problems 1–3,
+  then 4–5); then Chapter 7 (Metric) in `course.yaml` order, and Chapters 8–10 (each with map and challenge). No TeX exercise file exists for Chapter 6:
   use the book (6.1–6.4, B.9, B.10, C.5) as the only source.
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -287,6 +287,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   `ch06-traps`: sheared chart $\mathscr{Y} = (u,v) = (a,\ b - a^2)$, $\partial y_1 = \partial x_1 + 2a\,\partial x_2$, $(\Gamma^{\mathrm{E}}_\mathscr{Y})^2_{11} = 2$; ∇ᵂ $\Gamma^1_{12} = 0$ vs $\Gamma^1_{21} = -4/25$ at $(3,4)$;
   $\nabla^{\mathrm{E}}_{\partial y_2}dr = r\,d\theta$ (component $5$); ∇^κ ($\kappa=1$) $(0,0)\to(1,1)$: right-then-up gives $z^1 = -1$, up-then-right $0$; $[b\,\partial x_1, a\,\partial x_2] = -a\,\partial x_1 + b\,\partial x_2$;
   example $\Gamma^1_{12} = 3$, $\Gamma^1_{21} = 1$ ($\mathtt{T}^1_{12} = -2$, autoparallel term $4\dot\gamma^1\dot\gamma^2$, symmetrized $2,2$); symmetric part $\Gamma^k_{(ji)}$; Ricci contracts upper with middle index ($\mathrm{Ric}_{11} = \mathrm{Riem}^2_{121}$).
+  Map ch06 (`ch06-map`, 14 boxes, 8 rows): problem (r1c1); conn (r2c2); gamma c1, affine c3; comp ($\pm\Gamma$ rule) c1, law c3; along c1, bracket c2;
+  transport, autopar, torsion; riem (r7c2); ricci c1, flat c3. Labels "fixed by", "in a chart", "equips", "assemble", "new chart", "on a curve", "$= 0$", "on $v_\gamma$",
+  "antisym. part", "subtracted in", "around loops", "contract", "$= 0$" (×2); two-row vertical edges (law→torsion, torsion→flat) pass empty cells. No dashed edges.
+  Long defining formulas ($\mathtt{T}$, $\mathrm{Riem}$) written as `aligned` with the arguments on their own line (`&\mathtt{T}(\dots)\\ &:= \dots`); `{[\mathcal{X},\mathcal{Y}]}^k`
+  braced at the start of `aligned`. Outro teases ∇ᵂ autoparallels (circles, rays or spirals?).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -299,6 +304,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch06-map (map, 14 boxes)
+- No TeX map: built from the chapter headings and the ch06 lessons. Boxes: chart-dependent component derivatives, connection (five rules, product rule), affine manifold, Γ, $\pm\Gamma$ rule,
+  transformation law, derivative along a curve, parallel transport, autoparallels, commutator, torsion, Riemann, Ricci, flat + torsion free; two decoys each (Γ a tensor, torsion → route dependence,
+  Γ for functions, normal coordinates remove curvature, autoparallels see torsion, plus sign/index-slot, missing commutator terms, Ricci on the wrong slot or always symmetric, etc.).
+- Choices: no model-example box (14 boxes already); 8 rows so every labelled edge crosses rows; label "added to $\mathcal{M}$" shortened to "equips" (validator); no soft hyphen in "Affine manifold" (wrapped badly).
+- Checks: facts against the lessons (∇ᴱ polar $\Gamma^1_{22}=-r$, ∇ᵂ $\Gamma^1_{21} = -4/25$, holonomy $(0,1)\to(-1,1)$, $S(ab\,\partial x_2,\partial x_1) = -b\,\partial x_2$, $\mathrm{Riem}^m_{mab}$ antisymmetric);
+  validate 0/0; shots 0 problems (after breaking T, Riem, commutator formulas); phone complete-map screenshot viewed, layout clean at 390 px.
+- Also fixed the stale Queue line. Conventions fixed here: see Current, "Map ch06" lines.
 ### 2026-10-20 — ch06-traps (traps, 21 cards)
 - 19 questions (10 numeric, 7 MCQ, 2 build), intro with notation (charts, Γ convention, ∇ᴱ, ∇ᵂ, ∇^κ), summary of rules as formulas, teaser for the map.
   Traps: Γ zero in cartesian but $2$ in a sheared chart; index order (∇ᵂ $\Gamma^1_{12}$); scalar rule (same $0.6$ for all connections); covector $-\Gamma$ ($5$); Leibniz vs $C^\infty$-linear slot ($6$ vs $3$);
