@@ -1,0 +1,470 @@
+id: ch05-differentials
+title: "Guided Problem: Which Covector Fields Are Differentials?"
+kind: guided
+
+cards:
+  - type: text
+    id: hook
+    title: A potential for every force?
+    body: |
+      In physics a force field is often the gradient of a potential, and then the work done along a path depends only on its endpoints. Not every force is like that: a whirlpool pushes you around in circles. The same question lives on any manifold.
+
+      Recall: every smooth function $f$ on a manifold $\mathcal{M}$ gives a covector field $df$, its **differential**, with $df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil$ for every vector field $\mathcal{X}$. A covector field of this form is called **exact**. And at **one point** every covector is a differential: $\mathsf{X}_p = (df)_p$ for some $f$.
+
+      **The problem:** given a smooth covector field $\mathsf{X}$, is there a **single** function $f$ with $\mathsf{X} = df$ at every point at once?
+
+      Two candidates, both in the plane with cartesian chart $\mathscr{X}(q) = (a, b)$ and $r := \sqrt{a^2+b^2}$:
+      $$\mathsf{Z} := -b\,dx^1 + a\,dx^2,$$
+      on all of $\mathbb{R}^2$, and the **angle field**
+      $$\mathsf{A} := -\frac{b}{r^2}\,dx^1 + \frac{a}{r^2}\,dx^2,$$
+      on the punctured plane $\mathbb{R}^2\setminus\{0\}$ (it blows up at the origin).
+
+  - type: mcq
+    id: predict
+    title: Predict first
+    prompt: |
+      On the punctured plane $\mathbb{R}^2\setminus\{0\}$ with cartesian coordinates $(a, b)$, $r = \sqrt{a^2+b^2}$, consider the angle field
+      $$\mathsf{A} = -\frac{b}{r^2}\,dx^1 + \frac{a}{r^2}\,dx^2.$$
+      Its components are the partial derivatives of the polar angle $\theta$. Before any theory, guess: is there a smooth function $f$ on the **whole** punctured plane with $\mathsf{A} = df$?
+    options:
+      - text: 'No, although near every point $\mathsf{A}$ is the differential of some function'
+        correct: true
+      - text: 'Yes, $f = \theta$, the polar angle'
+        feedback: |
+          Tempting, since the components are those of $d\theta$. But the polar angle cannot be a smooth function on the whole punctured plane: going once around the origin it increases by $2\pi$, so somewhere it must jump back. Where it jumps it has no differential. The lesson shows that **no** other function works either.
+      - text: 'No, and near no point is it a differential'
+        feedback: |
+          Near any point not at the origin, a branch of the polar angle (cut along a half-line that avoids the point) is smooth, and its differential is $\mathsf{A}$. The obstruction is global, not local: it only appears when you go all the way around the origin.
+    explanation: |
+      Near every point $\mathsf{A}$ is $d\theta$ for a suitable branch of the angle, but there is no single smooth function on the whole punctured plane with differential $\mathsf{A}$. Proving both halves is the problem of this lesson. The answer will depend on the **scale**: one point, a small region, or the whole manifold.
+
+  - type: widget
+    id: angle-widget
+    title: The angle and its rate of change
+    widget: curve-velocity
+    config:
+      p: [0, 1]
+      f: theta
+      fields: [theta, x2y]
+      chain: true
+      graph: true
+      bend: false
+      curves:
+        - { v: [-1, 0] }
+        - { v: [0, 0.5] }
+      view: { x: -2.5, y: -1.5, w: 5, h: 5 }
+    body: |
+      The plane with points $q = (q_1, q_2)$, $p = (0,1)$ in gold, and $f = \theta$, the polar angle in $(0, 2\pi)$. Its dashed orange level lines are rays from the origin, every $\pi/12$. Two straight curves $\gamma_1$, $\gamma_2$ pass through $p$ with blue velocities $v$; each readout is $(\theta\circ\gamma)'(0) = (d\theta)_p(v)$, expanded as $\partial_1\theta(p)\,v^1 + \partial_2\theta(p)\,v^2$.
+
+      1. Read the partials $\partial_1\theta(p)$, $\partial_2\theta(p)$ in the expansion. Compare with the components of $\mathsf{A}$ at $p$: $(-b/r^2, a/r^2) = (-1, 0)$.
+      2. $\gamma_1$ moves along the circle (velocity $(-1,0)$), $\gamma_2$ moves outward (velocity $(0, \tfrac12)$). Which one changes the angle?
+      3. Drag $\gamma_1$'s arrow to $(-2, 0)$ and then to $(-1, 1)$: only the part of $v$ along the circle counts.
+
+  - type: numeric
+    id: angle-rate
+    title: How fast does the angle turn?
+    prompt: |
+      In the plane with cartesian coordinates $(a, b)$, $r = \sqrt{a^2+b^2}$, the angle field is
+      $$\mathsf{A} = -\frac{b}{r^2}\,dx^1 + \frac{a}{r^2}\,dx^2.$$
+      At the point $p = (0, 2)$, feed it the velocity $v$ with components $(-1, 0)$ (speed $1$ along the circle of radius $2$). What is $\mathsf{A}_p(v)$?
+    answer: 0.5
+    answerText: '$\tfrac12$'
+    wrong:
+      - { value: 1, feedback: 'That would be the answer on the unit circle. At $p = (0,2)$, $r^2 = 4$, so the first component is $-b/r^2 = -2/4 = -\tfrac12$, and $\mathsf{A}_p(v) = (-\tfrac12)(-1) + 0\cdot 0 = \tfrac12$.' }
+      - { value: -0.5, feedback: 'Watch both signs: the component is $-b/r^2 = -\tfrac12$ and $v^1 = -1$, so the product is $+\tfrac12$. Moving to the left at the top of the circle is turning counterclockwise, the direction in which $\theta$ grows.' }
+      - { value: 2, feedback: 'The components divide by $r^2 = 4$, they do not multiply: $-b/r^2 = -\tfrac12$.' }
+    hint: |
+      $\mathsf{A}_p(v) = \mathtt{a}_1(p)\,v^1 + \mathtt{a}_2(p)\,v^2$ with $\mathtt{a}_1 = -b/r^2$, $\mathtt{a}_2 = a/r^2$ evaluated at $(a,b) = (0,2)$.
+    explanation: |
+      At $(0,2)$ the components are $(-2/4,\ 0) = (-\tfrac12, 0)$, so $\mathsf{A}_p(v) = \tfrac12$. Speed $1$ on a circle of radius $2$ sweeps angle at rate $\tfrac12$: the angle field measures **turning around the origin**, whatever the radius.
+
+  - type: text
+    id: scale-point
+    title: "Scale 1: at a point"
+    body: |
+      Recall why every covector at a point is a differential. Take a chart $(\mathcal{U},\mathscr{X})$ around $p$. The dual basis covectors $(dx^i)_p = (d\mathscr{X}^i)_p$ are differentials already, and the components $\mathtt{x}^p_i$ of $\mathsf{X}_p$ are **numbers**. Constants move freely inside $d$ (the differential is linear, and $d$ of a constant is $0$), so
+      $$\mathsf{X}_p = \mathtt{x}^p_i\,(d\mathscr{X}^i)_p = (df_p)_p,$$
+      with the **linear** function
+      $$f_p := \mathtt{x}^p_i\,\mathscr{X}^i.$$
+      (It lives on $\mathcal{U}$; a bump function extends it to $\mathcal{M}$ without changing its differential at $p$.)
+
+      The catch: $f_p$ depends on $p$. A field has components that are **functions**, so each point gets its own linear $f_p$.
+
+  - type: mcq
+    id: naive-glue
+    title: The naive glue
+    prompt: |
+      On $\mathbb{R}^2$ with cartesian chart $\mathscr{X} = (a, b)$, let $\mathsf{Z} = -b\,dx^1 + a\,dx^2$, components $\mathtt{z}_1 = -b$, $\mathtt{z}_2 = a$. At each point, $\mathsf{Z}_p = (df_p)_p$ with $f_p = \mathtt{z}_i(p)\,\mathscr{X}^i$. Gluing all of them by letting the coefficients vary gives
+      $$f := \mathtt{z}_i\,\mathscr{X}^i = (-b)\,a + a\,b.$$
+      What is $df$, and why?
+    options:
+      - text: '$df = 0$: $f$ is the zero function, because the Leibniz rule adds the extra term $\mathscr{X}^i\,d\mathtt{z}_i$, which here cancels $\mathsf{Z}$'
+        correct: true
+      - text: '$df = \mathsf{Z}$, because at each point $f$ agrees with the linear function that works there'
+        feedback: |
+          Agreeing in **value** at $p$ is not enough: the differential sees how $f$ varies near $p$, and $f$ varies differently from $f_p$ because its coefficients change too. Indeed $f = -ba + ab = 0$, so $df = 0$.
+      - text: '$df = 2\mathsf{Z}$, since each term contributes once from the coefficient and once from $\mathscr{X}^i$'
+        feedback: |
+          The two contributions do not add up to $\mathsf{Z}$ twice. The extra term is $\mathscr{X}^i\,d\mathtt{z}_i = a\,d(-b) + b\,d(a) = -a\,dx^2 + b\,dx^1 = -\mathsf{Z}$, which **cancels** the first one: $df = \mathsf{Z} - \mathsf{Z} = 0$.
+    explanation: |
+      By the Leibniz rule $d(gh) = g\,dh + h\,dg$,
+      $$d(\mathtt{z}_i\,\mathscr{X}^i) = \mathtt{z}_i\,d\mathscr{X}^i + \mathscr{X}^i\,d\mathtt{z}_i.$$
+      The first sum is $\mathsf{Z}$; the extra term comes entirely from the components varying across the region. Here it is $-\mathsf{Z}$, and indeed $f = 0$. The naive glue fails, but a cleverer $f$ might work. We need a test.
+
+  - type: text
+    id: necessary
+    title: "Scale 2: a necessary condition"
+    body: |
+      Suppose $\mathsf{X} = df$ on a chart domain $\mathcal{U}$, and write $\partial x_i := \partial/\partial\mathscr{X}^i$ for the basis fields. Feeding $\partial x_i$ gives the components:
+      $$\mathtt{x}_i = df\lceil\partial x_i\rfloor = \partial x_i\lfloor f\rceil.$$
+      In the chart, $\partial x_i\lfloor f\rceil$ is the ordinary partial derivative $\partial_i F$ of the chart representative $F := f\circ\mathscr{X}^{-1}$. So all $d$ components are partial derivatives of **one and the same** function $F$. Differentiate once more.
+
+  - type: build
+    id: build-s
+    title: Differentiate once more
+    prompt: |
+      If $\mathsf{X} = df$ on a chart domain, its components are $\mathtt{x}_i = \partial x_i\lfloor f\rceil$, the partials $\partial_i F$ of $F = f\circ\mathscr{X}^{-1}$. Apply the basis field $\partial x_j$ to $\mathtt{x}_i$ and rewrite with ordinary partials of $F$.
+    prefix: '\partial x_j\lfloor\mathtt{x}_i\rceil ='
+    tiles: ['\partial_j', '\partial_i', 'F', 'f', '\mathtt{x}_j']
+    answers:
+      - ['\partial_j', '\partial_i', 'F']
+      - ['\partial_i', '\partial_j', 'F']
+    wrong:
+      - { answer: ['\partial_j', '\mathtt{x}_j'], feedback: 'That differentiates the wrong component. We apply $\partial x_j$ to $\mathtt{x}_i = \partial_i F$, which gives a second partial derivative of $F$.' }
+      - { answer: ['\partial_j', '\partial_i', 'f'], feedback: 'Ordinary partials act on functions of coordinates, so they act on the chart representative $F = f\circ\mathscr{X}^{-1}$, not on $f$, whose inputs are points of $\mathcal{M}$.' }
+    hint: |
+      $\mathtt{x}_i = \partial_i F$ (as functions of the coordinates). Now take $\partial_j$ of that.
+    explanation: |
+      $\partial x_j\lfloor\mathtt{x}_i\rceil = \partial_j\partial_i F$ (evaluated at $\mathscr{X}(p)$). Mixed partial derivatives of a smooth function commute (Schwarz's theorem), so swapping $i$ and $j$ changes nothing:
+      $$\partial x_j\lfloor\mathtt{x}_i\rceil = \partial x_i\lfloor\mathtt{x}_j\rceil.\tag{S}$$
+      This holds for all $i, j$ whenever $\mathsf{X}$ is a differential. A covector field obeying (S) is called **closed**.
+
+  - type: numeric
+    id: z-not-closed
+    title: Testing the whirlpool
+    prompt: |
+      On $\mathbb{R}^2$ with cartesian chart $\mathscr{X} = (a, b)$, let $\mathsf{Z} = -b\,dx^1 + a\,dx^2$, so $\mathtt{z}_1 = -b$, $\mathtt{z}_2 = a$. A differential must satisfy $\partial x_1\lfloor\mathtt{z}_2\rceil = \partial x_2\lfloor\mathtt{z}_1\rceil$. Compute the difference
+      $$\partial x_1\lfloor\mathtt{z}_2\rceil - \partial x_2\lfloor\mathtt{z}_1\rceil.$$
+    answer: 2
+    wrong:
+      - { value: 0, feedback: '$\partial x_1\lfloor\mathtt{z}_2\rceil = \partial a/\partial a = 1$ and $\partial x_2\lfloor\mathtt{z}_1\rceil = \partial(-b)/\partial b = -1$. They differ: $1 - (-1) = 2$.' }
+      - { value: -2, feedback: 'Order: the first term differentiates $\mathtt{z}_2 = a$ by $a$, giving $1$; the second differentiates $\mathtt{z}_1 = -b$ by $b$, giving $-1$. So $1 - (-1) = 2$.' }
+    hint: |
+      $\partial x_1$ is $\partial/\partial a$ in the cartesian chart and $\partial x_2$ is $\partial/\partial b$.
+    explanation: |
+      $1 - (-1) = 2 \ne 0$ at **every** point, so $\mathsf{Z}$ is not closed. Hence $\mathsf{Z}$ is not $df$ on the whole plane, nor on any open set however small. Yet at each single point $\mathsf{Z}_p = (df_p)_p$ with $f_p = -b_p\,\mathscr{X}^1 + a_p\,\mathscr{X}^2$: pointwise everything is fine; what fails is choosing one $f$ for all points.
+
+  - type: mcq
+    id: not-a-module
+    title: Multiplying a differential by a function
+    prompt: |
+      On $\mathbb{R}^2$ with cartesian chart $\mathscr{X} = (a, b)$, the field $dx^2 = d\mathscr{X}^2$ is a differential. Is the field $\mathscr{X}^1\,dx^2$ (components $(0, a)$) a differential on $\mathbb{R}^2$?
+    options:
+      - text: 'No: $\partial x_1\lfloor a\rceil = 1$ but $\partial x_2\lfloor 0\rceil = 0$, so (S) fails'
+        correct: true
+      - text: 'Yes: $\mathscr{X}^1\,dx^2 = d(\mathscr{X}^1\mathscr{X}^2)$'
+        feedback: |
+          The Leibniz rule gives $d(\mathscr{X}^1\mathscr{X}^2) = \mathscr{X}^1\,dx^2 + \mathscr{X}^2\,dx^1$: there is an extra term $b\,dx^1$. In fact no function works, because the symmetry test fails: $\partial x_1\lfloor a\rceil = 1 \ne 0 = \partial x_2\lfloor 0\rceil$.
+      - text: 'Yes: a differential times a function is a differential, since at each point the function is just a number'
+        feedback: |
+          At **one** point the function is a number and $(g\,df)_p = g(p)(df)_p$ is a differential. Over a region the number changes, and the Leibniz rule $g\,df = d(gf) - f\,dg$ leaves the term $-f\,dg$, which is in general not a differential.
+    explanation: |
+      Differentials are closed under addition, $df + dg = d(f+g)$, but not under multiplication by functions:
+      $$g\,df = d(gf) - f\,dg.$$
+      That is why the module of covector fields had to contain **all** smooth sections, not only differentials, and why a generic covector field is written $\mathsf{X}$ and the symbol $df$ is reserved for exact ones.
+
+  - type: text
+    id: chart-free
+    title: Is (S) a property of the field?
+    body: |
+      (S) was written in one chart. If it held in one chart and failed in another, "closed" would be meaningless. Check it. Take a second chart $(\mathcal{V},\mathscr{Y})$ with basis fields $\partial y_i$. Recall the two laws on the overlap:
+      $$\mathtt{y}_i = \frac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^i}\,\mathtt{x}_k,$$
+      $$\partial y_j = \frac{\partial\mathscr{X}^l}{\partial\mathscr{Y}^j}\,\partial x_l.$$
+      Apply $\partial y_j$ to $\mathtt{y}_i$. The Leibniz rule (on the product of functions) and then the basis law give
+      $$\begin{aligned}\partial y_j\lfloor\mathtt{y}_i\rceil &= \frac{\partial^2\mathscr{X}^k}{\partial\mathscr{Y}^j\partial\mathscr{Y}^i}\,\mathtt{x}_k\\ &\quad+\frac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^i}\frac{\partial\mathscr{X}^l}{\partial\mathscr{Y}^j}\,\partial x_l\lfloor\mathtt{x}_k\rceil.\end{aligned}$$
+      Here $\partial^2\mathscr{X}^k/\partial\mathscr{Y}^j\partial\mathscr{Y}^i$ is the second partial $\partial_j\partial_i$ of the transition $\mathscr{X}^k\circ\mathscr{Y}^{-1}$.
+
+  - type: mcq
+    id: chart-free-why
+    title: Where the second derivatives go
+    prompt: |
+      Under a change of chart from $\mathscr{X}$ to $\mathscr{Y}$, with $\mathtt{y}_i = (\partial\mathscr{X}^k/\partial\mathscr{Y}^i)\,\mathtt{x}_k$, one finds
+      $$\begin{aligned}\partial y_j\lfloor\mathtt{y}_i\rceil &= \frac{\partial^2\mathscr{X}^k}{\partial\mathscr{Y}^j\partial\mathscr{Y}^i}\,\mathtt{x}_k\\ &\quad+\frac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^i}\frac{\partial\mathscr{X}^l}{\partial\mathscr{Y}^j}\,\partial x_l\lfloor\mathtt{x}_k\rceil.\end{aligned}$$
+      In the difference $\partial y_j\lfloor\mathtt{y}_i\rceil - \partial y_i\lfloor\mathtt{y}_j\rceil$, what happens to the second-derivative term?
+    options:
+      - text: 'It cancels: mixed partials of the transition map are symmetric in $i$ and $j$'
+        correct: true
+      - text: 'It survives, so (S) depends on the chart'
+        feedback: |
+          Swapping $i$ and $j$ in $\partial_j\partial_i(\mathscr{X}^k\circ\mathscr{Y}^{-1})$ gives $\partial_i\partial_j(\mathscr{X}^k\circ\mathscr{Y}^{-1})$, the same function by Schwarz's theorem. So the term is identical in both parts of the difference and cancels.
+      - text: 'It cancels only if the transition map is linear'
+        feedback: |
+          For a linear transition the term is zero, but cancellation needs much less: only that the term is the **same** after swapping $i$ and $j$, which holds for every smooth transition (Schwarz's theorem).
+    explanation: |
+      The second-derivative term is symmetric in $i, j$ and drops out. In the remaining term, swap $i\leftrightarrow j$ and rename $k\leftrightarrow l$:
+      $$\begin{aligned}&\partial y_j\lfloor\mathtt{y}_i\rceil - \partial y_i\lfloor\mathtt{y}_j\rceil\\ &= \frac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^i}\frac{\partial\mathscr{X}^l}{\partial\mathscr{Y}^j}\big(\partial x_l\lfloor\mathtt{x}_k\rceil - \partial x_k\lfloor\mathtt{x}_l\rceil\big).\end{aligned}$$
+      If (S) holds in $\mathscr{X}$, the bracket is $0$ and (S) holds in $\mathscr{Y}$. So **closed** is a property of the field, not of the chart.
+
+  - type: numeric
+    id: z-polar
+    title: The whirlpool in polar coordinates
+    prompt: |
+      In the plane, $\mathsf{Z} = -b\,dx^1 + a\,dx^2$ has cartesian difference $\partial x_1\lfloor\mathtt{z}_2\rceil - \partial x_2\lfloor\mathtt{z}_1\rceil = 2$. In the polar chart $\mathscr{Y} = (r, \theta)$ its components are $\mathtt{y}_1 = 0$, $\mathtt{y}_2 = r^2$ (that is, $\mathsf{Z} = r^2\,d\theta$). Compute the polar difference
+      $$\partial y_1\lfloor\mathtt{y}_2\rceil - \partial y_2\lfloor\mathtt{y}_1\rceil$$
+      at a point with $r = 3$.
+    answer: 6
+    wrong:
+      - { value: 2, feedback: 'The number is not the same in both charts; only its being zero or not is. Here $\partial y_1 = \partial/\partial r$ acting on $r^2$ gives $2r = 6$, and $\partial/\partial\theta$ of $0$ is $0$.' }
+      - { value: 9, feedback: 'That is $\mathtt{y}_2$ itself. Differentiate it by $r$: $\partial y_1\lfloor r^2\rceil = 2r = 6$.' }
+    hint: |
+      $\partial y_1 = \partial/\partial r$ and $\partial y_2 = \partial/\partial\theta$ in the polar chart.
+    explanation: |
+      $2r - 0 = 6$. The value changed from $2$ to $2r$: by the formula above, the difference picks up Jacobian factors, here the determinant $r$ of $\partial\mathscr{X}/\partial\mathscr{Y}$. What cannot change is whether it is **zero**: $\mathsf{Z}$ fails (S) in every chart.
+
+  - type: numeric
+    id: a-closed
+    title: Is the angle field closed?
+    prompt: |
+      On the punctured plane with cartesian coordinates $(a, b)$, $r^2 = a^2 + b^2$, the angle field has components $\mathtt{a}_1 = -b/r^2$, $\mathtt{a}_2 = a/r^2$. By the quotient rule,
+      $$\partial x_1\lfloor\mathtt{a}_2\rceil = \frac{b^2 - a^2}{r^4}.$$
+      Compute $\partial x_2\lfloor\mathtt{a}_1\rceil$ at the point $(a,b) = (1, 2)$.
+    answer: 0.12
+    answerText: '$\tfrac{3}{25}$'
+    wrong:
+      - { value: -0.12, feedback: 'Watch the sign: $\partial_b(-b/r^2) = \dfrac{-r^2 + 2b^2}{r^4} = \dfrac{b^2 - a^2}{r^4} = \dfrac{4-1}{25}$.' }
+      - { value: -0.2, feedback: 'That forgets that $r^2$ depends on $b$ too. Quotient rule: $\partial_b(-b/r^2) = \dfrac{-r^2 - (-b)(2b)}{r^4} = \dfrac{b^2-a^2}{r^4}$.' }
+    hint: |
+      Quotient rule on $-b/(a^2+b^2)$ with respect to $b$: numerator derivative $-1$, denominator derivative $2b$.
+    explanation: |
+      $$\partial x_2\lfloor\mathtt{a}_1\rceil = \frac{-r^2 + 2b^2}{r^4} = \frac{b^2-a^2}{r^4},$$
+      equal to $\partial x_1\lfloor\mathtt{a}_2\rceil$ **everywhere** on the punctured plane: $3/25$ at $(1,2)$ for both. So $\mathsf{A}$ is closed: unlike $\mathsf{Z}$, it passes the local test.
+
+  - type: mcq
+    id: a-polar
+    title: The angle field in polar coordinates
+    prompt: |
+      On the punctured plane, the polar chart $\mathscr{Y} = (r,\theta)$, $\theta\in(0,2\pi)$, is defined on $\mathcal{V}$, the plane minus the half-line $\{b = 0,\ a\ge 0\}$. Its Jacobian functions are $\partial a/\partial r = a/r$, $\partial b/\partial r = b/r$, $\partial a/\partial\theta = -b$, $\partial b/\partial\theta = a$. With $\mathtt{y}_i = (\partial\mathscr{X}^k/\partial\mathscr{Y}^i)\,\mathtt{a}_k$, what are the polar components of $\mathsf{A} = -\frac{b}{r^2}dx^1 + \frac{a}{r^2}dx^2$?
+    options:
+      - text: '$(\mathtt{y}_1, \mathtt{y}_2) = (0, 1)$, so $\mathsf{A} = d\theta$ on $\mathcal{V}$'
+        correct: true
+      - text: '$(\mathtt{y}_1, \mathtt{y}_2) = (1, 0)$, so $\mathsf{A} = dr$'
+        feedback: |
+          $\mathtt{y}_1 = \frac ar\cdot\frac{-b}{r^2} + \frac br\cdot\frac{a}{r^2} = 0$: the angle field does not change along the radial direction. The second one is $\mathtt{y}_2 = (-b)\frac{-b}{r^2} + a\frac{a}{r^2} = 1$.
+      - text: '$(\mathtt{y}_1, \mathtt{y}_2) = (0, r^2)$'
+        feedback: |
+          That is the whirlpool $\mathsf{Z} = -b\,dx^1 + a\,dx^2$, which lacks the $1/r^2$. With it, $\mathtt{y}_2 = (b^2 + a^2)/r^2 = 1$.
+    explanation: |
+      $$\mathtt{y}_1 = \frac ar\cdot\frac{-b}{r^2} + \frac br\cdot\frac a{r^2} = 0,$$
+      $$\mathtt{y}_2 = (-b)\cdot\frac{-b}{r^2} + a\cdot\frac a{r^2} = 1.$$
+      So $\mathsf{A}|_\mathcal{V} = d\theta$ (with $d\theta := d\mathscr{Y}^2$): on $\mathcal{V}$ it **is** a differential. Constant components also pass (S) trivially in this chart. Cutting along another half-line instead (e.g. $\theta\in(-\pi,\pi)$) covers the remaining points, so $\mathsf{A}$ is a differential near **every** point.
+
+  - type: text
+    id: loop
+    title: "Scale 3: going around"
+    body: |
+      Is there one $f$ on the whole punctured plane? Test it along a curve, with nothing but one-variable calculus.
+
+      Let $\gamma\colon[\lambda_a,\lambda_b]\to\mathcal{M}$ be a smooth curve, and write $\dot\gamma(\lambda) := v_{\gamma,\gamma(\lambda)}$ for its velocity at the point $\gamma(\lambda)$. If $\mathsf{X} = df$, then by the definition of the differential and of the velocity,
+      $$\mathsf{X}_{\gamma(\lambda)}(\dot\gamma(\lambda)) = (f\circ\gamma)'(\lambda).$$
+      The left side is a number for each $\lambda$, an ordinary function of $\lambda$; call its integral from $\lambda_a$ to $\lambda_b$ the **integral of $\mathsf{X}$ along $\gamma$**, $\int_\gamma\mathsf{X}$. By the fundamental theorem of calculus,
+      $$\int_\gamma df = f(\gamma(\lambda_b)) - f(\gamma(\lambda_a)).$$
+      It depends only on the endpoints. For a **closed** curve, $\gamma(\lambda_b) = \gamma(\lambda_a)$, it is $0$.
+
+  - type: numeric
+    id: loop-integral
+    title: Once around the origin
+    prompt: |
+      On the punctured plane with cartesian coordinates $(a,b)$, the angle field is $\mathsf{A} = -\frac{b}{r^2}dx^1 + \frac{a}{r^2}dx^2$. Along the unit circle $\gamma(\lambda) = (\cos\lambda, \sin\lambda)$, $\lambda\in[0, 2\pi]$, the velocity has components $(-\sin\lambda, \cos\lambda)$. Compute
+      $$\int_0^{2\pi}\mathsf{A}_{\gamma(\lambda)}(\dot\gamma(\lambda))\,d\lambda.$$
+    answer: 6.28319
+    tolerance: 0.01
+    answerText: '$2\pi$'
+    wrong:
+      - { value: 0, feedback: 'That is what a differential would give on a closed curve. Compute the integrand: on the unit circle $r = 1$, the components are $(-\sin\lambda, \cos\lambda)$, and $(-\sin\lambda)(-\sin\lambda) + \cos\lambda\cos\lambda = 1$. The integral of $1$ over $[0,2\pi]$ is $2\pi$.' }
+      - { value: 1, feedback: '$1$ is the integrand at every $\lambda$, not the integral. Integrate it over $[0, 2\pi]$.' }
+    hint: |
+      On the unit circle $r = 1$, so $\mathsf{A}_{\gamma(\lambda)}$ has components $(-\sin\lambda, \cos\lambda)$. Pair them with the velocity components.
+    explanation: |
+      The integrand is $\sin^2\lambda + \cos^2\lambda = 1$, so the integral is $2\pi \ne 0$. If $\mathsf{A} = df$ for a smooth $f$ on the punctured plane, it would be $f(\gamma(2\pi)) - f(\gamma(0)) = 0$, since $\gamma(2\pi) = \gamma(0) = (1,0)$. **No such $f$ exists.** The same $2\pi$ comes out on a circle of any radius around the origin.
+
+  - type: order
+    id: loop-proof
+    title: The argument in order
+    prompt: |
+      Put in order the proof that the angle field $\mathsf{A} = -\frac{b}{r^2}dx^1 + \frac{a}{r^2}dx^2$ is not $df$ for any smooth $f$ on the punctured plane.
+    steps:
+      - 'Suppose $\mathsf{A} = df$ for a smooth $f$ on the punctured plane.'
+      - 'Along $\gamma(\lambda) = (\cos\lambda,\sin\lambda)$, $\mathsf{A}_{\gamma(\lambda)}(\dot\gamma(\lambda)) = (f\circ\gamma)''(\lambda)$.'
+      - 'Integrating over $[0,2\pi]$ gives $f(\gamma(2\pi)) - f(\gamma(0)) = 0$, a closed curve.'
+      - 'But the integrand is $\sin^2\lambda + \cos^2\lambda = 1$, so the integral is $2\pi$.'
+      - '$2\pi\ne0$: the assumption is false, $\mathsf{A}$ is closed but not exact.'
+    hint: |
+      Assume, translate into a one-variable derivative, integrate, then compute the same integral directly.
+    explanation: |
+      Assumption, then the defining identity of $df$ along the curve, the fundamental theorem of calculus, a direct computation, and the contradiction. Only one-variable calculus was used.
+
+  - type: mcq
+    id: theta-trap
+    title: But θ is defined everywhere
+    prompt: |
+      On the punctured plane, define $\theta(q)\in[0, 2\pi)$ as the polar angle of every point $q$, including the positive $q_1$-axis where $\theta = 0$. Then $\theta$ is defined at every point, and $d\theta$ equals the angle field $\mathsf{A}$ wherever $\theta$ is smooth. Why does this not make $\mathsf{A}$ exact?
+    options:
+      - text: '$\theta$ jumps from near $2\pi$ to $0$ across the positive $q_1$-axis, so it is not smooth (not even continuous) there and has no differential'
+        correct: true
+      - text: 'It does make $\mathsf{A}$ exact; only the $2\pi$ integral was miscomputed'
+        feedback: |
+          The integral is solidly $2\pi$, and an exact field integrates to $0$ around a closed curve. The flaw is in $\theta$: being defined everywhere is not enough, $f$ must be **smooth** everywhere for $df$ to exist.
+      - text: 'Because $\theta$ is not defined at the origin'
+        feedback: |
+          The origin is not part of the punctured plane, so that is no defect. The problem is on the positive $q_1$-axis, where $\theta$ jumps by $2\pi$.
+    explanation: |
+      Following $\theta$ once around the origin it grows by $2\pi$; a single-valued function must jump back somewhere. Any smooth $f$ with $df = \mathsf{A}$ would satisfy $d(f - \theta) = 0$ on the connected set $\mathcal{V}$ (plane minus the cut), so $f = \theta + c$ there, and then $f$ would have to jump across the cut too. Local branches of the angle exist everywhere; they just cannot be glued into one function.
+
+  - type: text
+    id: poincare
+    title: "Back to scale 2: closed is enough on a disc"
+    body: |
+      Is (S) also **sufficient** near each point? Take a chart whose image $\mathscr{X}(\mathcal{U})$ is a ball centred at $0\in\mathbb{R}^d$ (shift the chart if needed), and write $\bar{\mathtt{x}}_i := \mathtt{x}_i\circ\mathscr{X}^{-1}$ for the components as functions of the coordinates $\alpha = (\alpha^1,\dots,\alpha^d)$.
+
+      Idea: add up the field along the straight segment $t\mapsto t\alpha$, $t\in[0,1]$, from the centre to $\alpha$. Its velocity has components $\alpha^i$, so (Einstein summation over $i$)
+      $$F(\alpha) := \int_0^1\bar{\mathtt{x}}_i(t\alpha)\,\alpha^i\,dt,$$
+      and $f := F\circ\mathscr{X}$. The segment stays inside the ball, which is why the ball shape matters. Before proving that $df = \mathsf{X}$, try it.
+
+  - type: numeric
+    id: poincare-example
+    title: Build a potential
+    prompt: |
+      On $\mathbb{R}^2$ with cartesian coordinates $(a,b)$, the field $\mathsf{X} = 2ab\,dx^1 + a^2\,dx^2$ is closed ($\partial_b(2ab) = 2a = \partial_a(a^2)$). The straight-segment recipe is
+      $$F(\alpha) = \int_0^1\bar{\mathtt{x}}_i(t\alpha)\,\alpha^i\,dt.$$
+      Compute $F$ at $\alpha = (1, 2)$.
+    answer: 2
+    wrong:
+      - { value: 6, feedback: 'The integrand is $2(t)(2t)(1) + (t)^2(2) = 6t^2$, but you still have to integrate: $\int_0^1 6t^2\,dt = 2$.' }
+      - { value: 4, feedback: 'Both components get evaluated at the point $t\alpha = (t, 2t)$, so each carries $t^2$: integrand $4t^2 + 2t^2 = 6t^2$, integral $2$.' }
+    hint: |
+      At $t\alpha = (t, 2t)$: $\bar{\mathtt{x}}_1 = 2(t)(2t)$, $\bar{\mathtt{x}}_2 = t^2$. Multiply by $\alpha^1 = 1$ and $\alpha^2 = 2$, add, integrate in $t$.
+    explanation: |
+      Integrand $4t^2 + 2t^2 = 6t^2$, integral $2$. In general $F(\alpha) = 3(\alpha^1)^2\alpha^2\int_0^1t^2\,dt = (\alpha^1)^2\alpha^2$, i.e. $f = a^2b$, and indeed $d(a^2b) = 2ab\,dx^1 + a^2\,dx^2$.
+
+  - type: build
+    id: total-derivative
+    title: A total derivative in t
+    prompt: |
+      In the proof that the straight-segment function $F(\alpha) = \int_0^1\bar{\mathtt{x}}_i(t\alpha)\,\alpha^i\,dt$ has $\partial_jF = \bar{\mathtt{x}}_j$, a total $t$-derivative appears. By the product and chain rules (Einstein summation over $i$),
+      $$\frac{d}{dt}\big[t\,\bar{\mathtt{x}}_j(t\alpha)\big] = \ ?$$
+    prefix: '\bar{\mathtt{x}}_j(t\alpha) +'
+    tiles: ['t', '\alpha^i', '(\partial_i\bar{\mathtt{x}}_j)(t\alpha)', '(\partial_j\bar{\mathtt{x}}_i)(t\alpha)', 't^2']
+    answers:
+      - ['t', '\alpha^i', '(\partial_i\bar{\mathtt{x}}_j)(t\alpha)']
+      - ['\alpha^i', 't', '(\partial_i\bar{\mathtt{x}}_j)(t\alpha)']
+      - ['t', '(\partial_i\bar{\mathtt{x}}_j)(t\alpha)', '\alpha^i']
+    wrong:
+      - { answer: ['t', '\alpha^i', '(\partial_j\bar{\mathtt{x}}_i)(t\alpha)'], feedback: 'The chain rule differentiates $\bar{\mathtt{x}}_j$, so its own index $j$ stays on it: $\frac{d}{dt}\bar{\mathtt{x}}_j(t\alpha) = \alpha^i(\partial_i\bar{\mathtt{x}}_j)(t\alpha)$. Turning $\partial_i\bar{\mathtt{x}}_j$ into $\partial_j\bar{\mathtt{x}}_i$ is exactly what needs (S).' }
+    hint: |
+      Product rule: $\frac{d}{dt}t = 1$. Chain rule: the point $t\alpha$ moves with velocity $\alpha$, so $\frac{d}{dt}\bar{\mathtt{x}}_j(t\alpha) = \alpha^i(\partial_i\bar{\mathtt{x}}_j)(t\alpha)$.
+    explanation: |
+      $$\frac{d}{dt}\big[t\,\bar{\mathtt{x}}_j(t\alpha)\big] = \bar{\mathtt{x}}_j(t\alpha) + t\,\alpha^i(\partial_i\bar{\mathtt{x}}_j)(t\alpha).$$
+      Its integral over $[0,1]$ is $1\cdot\bar{\mathtt{x}}_j(\alpha) - 0 = \bar{\mathtt{x}}_j(\alpha)$.
+
+  - type: order
+    id: poincare-proof
+    title: The proof in order
+    prompt: |
+      Put in order the proof that $F(\alpha) = \int_0^1\bar{\mathtt{x}}_i(t\alpha)\,\alpha^i\,dt$ satisfies $\partial_jF(\alpha) = \bar{\mathtt{x}}_j(\alpha)$ when the field is closed. (Einstein summation over $i$.)
+    steps:
+      - 'Differentiate under the integral: $\partial_jF = \int_0^1[\bar{\mathtt{x}}_j(t\alpha) + t\alpha^i(\partial_j\bar{\mathtt{x}}_i)(t\alpha)]dt$.'
+      - 'Use (S), $\partial_j\bar{\mathtt{x}}_i = \partial_i\bar{\mathtt{x}}_j$, to swap the indices.'
+      - 'Recognize the integrand as $\frac{d}{dt}[t\,\bar{\mathtt{x}}_j(t\alpha)]$.'
+      - 'Fundamental theorem of calculus: the integral is $\bar{\mathtt{x}}_j(\alpha)$.'
+    hint: |
+      The first step only uses the product rule ($\partial_j\alpha^i = \delta^i_j$) and the chain rule (the point $t\alpha$ depends on $\alpha^j$ with factor $t$).
+    explanation: |
+      Differentiate, swap with (S), spot the total derivative, integrate. So $\mathtt{x}_j = \partial x_j\lfloor f\rceil$, i.e. $\mathsf{X}|_\mathcal{U} = df$. Every point has a chart whose image is a ball, so: **a covector field is a differential near every point if and only if it is closed.** This is the **Poincaré lemma** (in its general form: on any region that can be shrunk continuously to a point).
+
+  - type: mcq
+    id: z-recipe
+    title: Running the recipe without (S)
+    prompt: |
+      On $\mathbb{R}^2$ with cartesian coordinates $(a,b)$, apply the straight-segment recipe
+      $$F(\alpha) = \int_0^1\bar{\mathtt{x}}_i(t\alpha)\,\alpha^i\,dt$$
+      to the whirlpool $\mathsf{Z} = -b\,dx^1 + a\,dx^2$, which is **not** closed. What happens?
+    options:
+      - text: '$F = 0$, so $dF = 0 \ne \mathsf{Z}$: without (S) the recipe still outputs a function, but the wrong one'
+        correct: true
+      - text: 'The integral diverges'
+        feedback: |
+          The integrand is perfectly finite: $-t\alpha^2\cdot\alpha^1 + t\alpha^1\cdot\alpha^2 = 0$. So $F = 0$, a fine function, whose differential is simply not $\mathsf{Z}$.
+      - text: '$F$ is a potential for $\mathsf{Z}$ on a small disc around the origin'
+        feedback: |
+          The integrand vanishes, so $F = 0$ and $dF = 0$, not $\mathsf{Z}$. No function works for $\mathsf{Z}$ on any open set, since (S) fails everywhere.
+    explanation: |
+      The integrand is $-t\alpha^2\alpha^1 + t\alpha^1\alpha^2 = 0$. Pushing the whirlpool along a radial segment does no work, so $F = 0$. The step "use (S) to swap the indices" is where the proof needs closedness; without it the recipe produces a function whose differential is not the field.
+
+  - type: mcq
+    id: why-fails-globally
+    title: Where the disc proof breaks
+    prompt: |
+      The angle field $\mathsf{A}$ on the punctured plane is closed, and the straight-segment recipe builds a potential on any disc. Why can't the recipe build one potential on the whole punctured plane?
+    options:
+      - text: 'There is no base point from which every point is reached by a straight segment inside the punctured plane: the hole is in the way'
+        correct: true
+      - text: '(S) fails at some points of the punctured plane'
+        feedback: |
+          (S) holds at every point: $\partial x_1\lfloor\mathtt{a}_2\rceil = \partial x_2\lfloor\mathtt{a}_1\rceil = (b^2-a^2)/r^4$. The local condition is fine; the shape of the region is what goes wrong.
+      - text: 'The recipe needs cartesian coordinates, and the punctured plane has none'
+        feedback: |
+          The cartesian chart covers the whole punctured plane. What fails is the segments: from any base point $q_0$, the segment to the point $-q_0$ on the opposite side passes through the origin, which is missing.
+    explanation: |
+      On a disc (or any region where one point sees all others along segments) the recipe works. On the punctured plane every candidate base point has some segment blocked by the hole, and the loop integral $2\pi$ proves that no other construction can succeed. Whether **closed** implies **exact** depends on the **shape** of the manifold.
+
+  - type: mcq
+    id: traps
+    title: Closed and exact
+    multiple: true
+    prompt: |
+      A covector field $\mathsf{X}$ is **exact** if $\mathsf{X} = df$ for a smooth $f$ on all of $\mathcal{M}$, and **closed** if $\partial x_j\lfloor\mathtt{x}_i\rceil = \partial x_i\lfloor\mathtt{x}_j\rceil$ in every chart. Select all true statements.
+    options:
+      - text: 'Every exact field is closed'
+        correct: true
+      - text: 'On $\mathbb{R}^2$ (or any ball) every closed field is exact'
+        correct: true
+      - text: 'Every closed field is exact'
+        feedback: |
+          The angle field on the punctured plane is closed (both mixed partials are $(b^2-a^2)/r^4$) but integrates to $2\pi$ around the unit circle, so it is not $df$ for any smooth $f$.
+      - text: 'If $\mathsf{X}_p = (df_p)_p$ at every point $p$ (with $f_p$ depending on $p$), then $\mathsf{X}$ is exact'
+        feedback: |
+          That holds for **every** covector field, exact or not: at one point the components are numbers and $f_p = \mathtt{x}_i(p)\,\mathscr{X}^i$ works. The whirlpool $\mathsf{Z} = -b\,dx^1 + a\,dx^2$ is an example that is not exact anywhere.
+      - text: 'A field that fails (S) at one point can still be exact'
+        feedback: |
+          An exact field satisfies (S) at **every** point, by symmetry of second partials. One failing point already rules out $\mathsf{X} = df$, even near that point.
+    explanation: |
+      Exact $\Rightarrow$ closed always (Schwarz). Closed $\Rightarrow$ exact on a ball (straight-segment construction), but not on the punctured plane. Pointwise, every covector is a differential, which says nothing about fields.
+
+  - type: text
+    id: names
+    title: Three scales, and the names of things
+    body: |
+      - **At a point:** every covector is a differential, $\mathsf{X}_p = (df_p)_p$, because its components are numbers.
+      - **Near every point:** $\mathsf{X}$ is a differential if and only if it is **closed**, (S); the straight-segment construction is the **Poincaré lemma**.
+      - **On all of $\mathcal{M}$:** a closed field is **exact** if and only if its integral along every closed curve vanishes (then $f(p) := \int_\gamma\mathsf{X}$ along any curve from a fixed $p_0$ to $p$ is well defined; stated here with this sketch). On a ball this always holds; around a hole it can fail.
+
+      In the literature covector fields are **1-forms**, and (S) is written $d\mathsf{X} = 0$ with the **exterior derivative** $d$. The **first de Rham cohomology** collects closed fields up to exact ones; it is trivial for $\mathbb{R}^d$ and non-trivial for the punctured plane and the circle $S^1$: it detects one-dimensional holes. Topology shows up in calculus.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      - **Exact:** $\mathsf{X} = df$ on all of $\mathcal{M}$. **Closed:** in a chart, for all $i, j$,
+      $$\partial x_j\lfloor\mathtt{x}_i\rceil = \partial x_i\lfloor\mathtt{x}_j\rceil.$$
+      Exact $\Rightarrow$ closed (mixed partials commute), and closedness does not depend on the chart.
+      - **The obstruction from Leibniz:**
+      $$g\,df = d(gf) - f\,dg.$$
+      - **Integral along a curve** and its key property:
+      $$\int_\gamma df = f(\gamma(\lambda_b)) - f(\gamma(\lambda_a)).$$
+      - **Poincaré lemma** on a ball centred at $0$: if $\mathsf{X}$ is closed, $f = F\circ\mathscr{X}$ with
+      $$F(\alpha) = \int_0^1\bar{\mathtt{x}}_i(t\alpha)\,\alpha^i\,dt.$$
+      - **Examples:** $\mathsf{Z} = -b\,dx^1 + a\,dx^2$ is not closed; the angle field
+      $$\mathsf{A} = -\frac{b}{r^2}dx^1 + \frac{a}{r^2}dx^2$$
+      is closed, equals $d\theta$ off a cut, and has $\int\mathsf{A} = 2\pi$ around the origin: not exact.
+
+      Integration on manifolds in general is Level 8. **Next:** the field traps, a fast round on the misconceptions of this whole level.

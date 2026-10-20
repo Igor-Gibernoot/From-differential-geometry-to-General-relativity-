@@ -226,7 +226,11 @@ levels:
         kind: concept
         file: ch05/tensor-fields.yaml
         summary: Machines that eat several fields and return a function, linear over functions in each slot. $C^\infty(\mathcal{M})$-multilinearity, the pointwise principle, component functions, the chart-change law with Jacobian functions, and the compact notation for fields.
-      - { id: ch05-differentials, title: "Guided Problem: Which Covector Fields Are Differentials?", kind: guided }
+      - id: ch05-differentials
+        title: "Guided Problem: Which Covector Fields Are Differentials?"
+        kind: guided
+        file: ch05/differentials.yaml
+        summary: Every function gives a covector field df, but which covector fields come from a function? A local symmetry test, a construction on a disc, and an angle field that passes the test yet fails around the origin.
       - { id: ch05-traps, title: Field Traps, kind: traps }
       - { id: ch05-map, title: "Content Map: Fields", kind: map }
       - { id: ch05-review, title: Level Review, kind: review }

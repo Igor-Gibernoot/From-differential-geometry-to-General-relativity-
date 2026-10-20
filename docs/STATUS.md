@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-19, Chapter 5 in progress)
+## Current (2026-10-20, Chapter 5 in progress)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -23,11 +23,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   `ch04-challenge` (36 cards, five problems: polar chart at $(1,1)$, reparametrization rune and Leibniz,
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
-- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards).
+- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 5 (Fields) in `course.yaml` order, next
-  `ch05-differentials` (guided); then `ch05-traps`, `ch05-map`, `ch05-challenge`; then Chapters 6–10 (each with map and challenge).
+  `ch05-traps`; then `ch05-map`, `ch05-challenge`; then Chapters 6–10 (each with map and challenge).
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -200,6 +200,16 @@ append a short entry at the end of **Log** (a few lines, ending with
   $(T_\mathcal{V})_{kl} = \mathtt{Y}_k\mathtt{Y}_l$, $(T_\mathcal{V})_{22} = \pi^2$ at $(\pi,\pi/2)$; Euclidean $\delta_{ij}$ becomes $\mathrm{diag}(1,r^2)$ in polar (metric preview).
   Five roles of $x$ listed ($\mathscr{X}^i$, $x^i_p$/$\mathtt{x}^p_i$, $x^i$/$\mathtt{x}_i$, $(\partial x_i)_p$/$(dx^i)_p$, $\partial x_i$/$dx^i$). Widget `machine-playground`
   slots 2 with presets per point (tensor + inputs $\mathcal{X} = (0,1)$, swirl) at $(\pi,\pi/2)$, $(\pi/2,\pi/4)$, $(\pi/3,\pi/6)$.
+  Differentials (`ch05-differentials`): exact $= df$ on all of $\mathcal{M}$, closed = (S) $\partial x_j\lfloor\mathtt{x}_i\rceil = \partial x_i\lfloor\mathtt{x}_j\rceil$ (written with `\tag{S}`);
+  whirlpool $\mathsf{Z} = -b\,dx^1 + a\,dx^2$ (components $\mathtt{z}_i$, difference $2$; polar $\mathtt{y} = (0,r^2)$, difference $2r$ = det factor); angle field
+  $\mathsf{A} = -\tfrac b{r^2}dx^1 + \tfrac a{r^2}dx^2$ on $\mathbb{R}^2\setminus\{0\}$ (components $\mathtt{a}_i$, mixed partials $(b^2-a^2)/r^4$, $3/25$ at $(1,2)$), polar
+  $(0,1)$ so $\mathsf{A}|_\mathcal{V} = d\theta := d\mathscr{Y}^2$ with $\theta\in(0,2\pi)$, $\mathcal{V}$ = plane minus $\{b=0, a\ge0\}$; velocity along a curve
+  $\dot\gamma(\lambda) := v_{\gamma,\gamma(\lambda)}$, $\int_\gamma\mathsf{X} := \int\mathsf{X}_{\gamma(\lambda)}(\dot\gamma(\lambda))d\lambda$ (one-variable only; general integration = Level 8);
+  unit-circle integral $2\pi$; naive glue $f = \mathtt{z}_i\mathscr{X}^i = 0$; $g\,df = d(gf) - f\,dg$ (differentials not a module, $\mathscr{X}^1dx^2$);
+  chart-independence of (S) derived (second-derivative term symmetric); Poincaré recipe $F(\alpha) = \int_0^1\bar{\mathtt{x}}_i(t\alpha)\alpha^idt$,
+  $\bar{\mathtt{x}}_i := \mathtt{x}_i\circ\mathscr{X}^{-1}$, example $2ab\,dx^1 + a^2dx^2 \to F = (\alpha^1)^2\alpha^2$ ($F(1,2) = 2$), recipe on $\mathsf{Z}$ gives $F=0$;
+  global criterion (all closed-curve integrals vanish) stated with sketch; 1-forms, $d\mathsf{X}=0$, de Rham $H^1$ named only. Widget `curve-velocity`
+  $p = (0,1)$, $f = \theta$, curves $(-1,0)$, $(0,\tfrac12)$, view `{x: -2.5, y: -1.5, w: 5, h: 5}`. Minkowski boost problem from the TeX file kept for `ch05-challenge`.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -212,6 +222,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+
+### 2026-10-20 — ch05-differentials (guided)
+- `content/ch05/differentials.yaml`, 28 cards: hook (potential for a force), predict, `curve-velocity` θ widget, three scales
+  (point, closed/Poincaré, loop integral $2\pi$), chart-independence of (S), traps on closed vs exact, names (1-form, de Rham), summary.
+- Choices: angle field named $\mathsf{A}$; polar cut on the positive axis to match the widget's $\theta\in(0,2\pi)$.
+- Conventions fixed here: closed (S) with `\tag{S}`, $\mathsf{Z}$, $\mathsf{A}$, $\dot\gamma(\lambda)$, $\int_\gamma\mathsf{X}$ by one-variable calculus, $\bar{\mathtt{x}}_i$.
 
 ### 2026-10-19 — fix: labels vs powers
 - `ch02-axioms`: new cards `labels-not-powers` + `power-or-label` before the quadrant question; polynomial card contrasts label `p^1` with power `x^N`. One-line notes added to the hooks of `ch02-dual` and `ch02-basis`.
