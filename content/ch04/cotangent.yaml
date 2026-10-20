@@ -1,6 +1,12 @@
 id: ch04-cotangent
 title: The Cotangent Space
 kind: concept
+own: |
+  - The **cotangent space** {{ $T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(T_p\mathcal{M}, \mathbb{R})$ }}, the linear maps on velocities at $p$, with $\oplus_T^*$, $\odot_T^*$ defined value by value. Its elements $\mathsf{X}_p$ are **covectors**.
+  - {{ $\dim T_p^*\mathcal{M} = d$ }}, because finite-dimensional duals have the dimension of the original space.
+  - The **differential** {{ $(df)_p(v) := v(f)$ }}, the rate of $f$ along $v$. It is linear by the field-by-field operations of $T_p\mathcal{M}$, so $(df)_p\in T_p^*\mathcal{M}$. It depends only on $f$ near $p$, and needs no chart and no metric.
+  - A covector is not an arrow in $T_p\mathcal{M}$: it eats arrows. Its numbers carry lower indices, typewriter $\mathtt{x}^p_i$.
+  - Example: $f = q_1^2 + q_2$ at $p = (1,1)$ gives {{ $(df)_p(v) = 2v^1 + v^2$ }}, which is $2$ on both velocities $(1,0)$ and $(0,2)$ and $0$ along the level line.
 
 cards:
   - type: text
@@ -356,10 +362,4 @@ cards:
     id: summary
     title: What you now own
     body: |
-      - The **cotangent space** $T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(T_p\mathcal{M}, \mathbb{R})$, the linear maps on velocities at $p$, with $\oplus_T^*$, $\odot_T^*$ defined value by value. Its elements $\mathsf{X}_p$ are **covectors**.
-      - $\dim T_p^*\mathcal{M} = d$, because finite-dimensional duals have the dimension of the original space.
-      - The **differential** $(df)_p(v) := v(f)$, the rate of $f$ along $v$. It is linear by the field-by-field operations of $T_p\mathcal{M}$, so $(df)_p\in T_p^*\mathcal{M}$. It depends only on $f$ near $p$, and needs no chart and no metric.
-      - A covector is not an arrow in $T_p\mathcal{M}$: it eats arrows. Its numbers carry lower indices, typewriter $\mathtt{x}^p_i$.
-      - Example: $f = q_1^2 + q_2$ at $p = (1,1)$ gives $(df)_p(v) = 2v^1 + v^2$, which is $2$ on both velocities $(1,0)$ and $(0,2)$ and $0$ along the level line.
-
       **Next: Differentials as a Basis.** A chart gives $d$ special fields, its coordinate functions $\mathscr{X}^i$. Their differentials $(d\mathscr{X}^i)_p$ turn out to be exactly the dual basis of $(\partial/\partial\mathscr{X}^i)_p$, and every covector is a combination of them. How do its components change when the chart changes?

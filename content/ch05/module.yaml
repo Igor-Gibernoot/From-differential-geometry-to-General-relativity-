@@ -1,6 +1,12 @@
 id: ch05-module
 title: The $C^\infty(\mathcal{M})$-Module Structure
 kind: concept
+own: |
+  - The **ring** $(C^\infty(\mathcal{M}),\oplus_{C^\infty},\odot_{C^\infty})$: commutative and unitary, not a field; $f$ is invertible iff {{ it never vanishes }}; zero divisors such as $\psi(t)$, $\psi(-t)$.
+  - **Modules**: vector-space axioms with ring scalars. $(\Gamma T\mathcal{M},\oplus_\Gamma,\odot_\Gamma)$ and $(\Gamma T^*\mathcal{M},\oplus^*_\Gamma,\odot^*_\Gamma)$, with {{ $(f\,\mathcal{X})(p) = f(p)\,\mathcal{X}(p)$ }}: only values of $f$ enter.
+  - Over a ring, **independent does not imply spanning**: $t\,\partial x_1$ on $\mathbb{R}$; the egg-carton $\mathcal{X}$, $\mathcal{Y}$.
+  - A module basis is {{ a basis of $T_p\mathcal{M}$ at **every** point }}. **Frames** exist over chart domains ($\partial x_i$, dual $dx^i$) and sometimes beyond (polar frame off the origin).
+  - **Parallelizable** = {{ a global frame }}: $\mathbb{R}^2$, $S^1$, $T^2$; not $S^2$ (hairy ball).
 
 cards:
   - type: text
@@ -422,10 +428,4 @@ cards:
     id: summary
     title: What you now own
     body: |
-      - The **ring** $(C^\infty(\mathcal{M}),\oplus_{C^\infty},\odot_{C^\infty})$: commutative and unitary, not a field; $f$ is invertible iff it never vanishes; zero divisors such as $\psi(t)$, $\psi(-t)$.
-      - **Modules**: vector-space axioms with ring scalars. $(\Gamma T\mathcal{M},\oplus_\Gamma,\odot_\Gamma)$ and $(\Gamma T^*\mathcal{M},\oplus^*_\Gamma,\odot^*_\Gamma)$, with $(f\,\mathcal{X})(p) = f(p)\,\mathcal{X}(p)$: only values of $f$ enter.
-      - Over a ring, **independent does not imply spanning**: $t\,\partial x_1$ on $\mathbb{R}$; the egg-carton $\mathcal{X}$, $\mathcal{Y}$.
-      - A module basis is a basis of $T_p\mathcal{M}$ at **every** point. **Frames** exist over chart domains ($\partial x_i$, dual $dx^i$) and sometimes beyond (polar frame off the origin).
-      - **Parallelizable** = global frame: $\mathbb{R}^2$, $S^1$, $T^2$; not $S^2$ (hairy ball).
-
       **Next:** a covector field eats a vector field and returns a function, and functions pull out of its slot: $\mathsf{X}\lceil f\,\mathcal{X}\rfloor = f\,\mathsf{X}\lceil\mathcal{X}\rfloor$. **Tensor fields** are exactly such machines with several slots, linear over $C^\infty(\mathcal{M})$ in each one. Which familiar operations pass this test, and which fail?

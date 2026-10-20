@@ -1,6 +1,12 @@
 id: ch05-vector-fields
 title: Vector Fields and the Tangent Bundle
 kind: concept
+own: |
+  - The **tangent bundle** $T\mathcal{M} = \dot\bigcup_p T_p\mathcal{M}$, disjoint so that the projection $\pi(v_{\gamma,p}) = p$ is well defined; with the bundle charts {{ $\xi_{\mathscr{X}}(\mathcal{X}_p) = (\mathscr{X}(p)\,;\,x^i_p)$ }} it is a smooth manifold of dimension $2d$.
+  - A **smooth vector field** is a smooth section, $\mathcal{X}\colon\mathcal{M}\to T\mathcal{M}$ with {{ $\pi\circ\mathcal{X} = \mathrm{id}_\mathcal{M}$ }}; they form $\Gamma T\mathcal{M}$.
+  - On a chart, $\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i$ with **component functions** {{ $x^i = \mathcal{X}|_\mathcal{U}\lfloor\mathscr{X}^i\rceil$ }}; smooth means smooth components, and the law {{ $y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,x^j$ }} with point-dependent Jacobian makes this chart independent.
+  - A field eats scalar fields: {{ $\mathcal{X}\lfloor f\rceil(p) = \mathcal{X}(p)(f) = x^i(p)\,\mathtt{x}^p_i$ }}, a new scalar field.
+  - Running example: $\mathcal{X}|_\mathcal{U} = \partial x_2$, the swirl $\mathcal{Y}$ with components $(-b,a)$ and $\mathcal{Y}|_\mathcal{V} = \partial y_2$, vanishing at the origin.
 
 cards:
   - type: text
@@ -455,10 +461,4 @@ cards:
     id: summary
     title: What you now own
     body: |
-      - The **tangent bundle** $T\mathcal{M} = \dot\bigcup_p T_p\mathcal{M}$, disjoint so that the projection $\pi(v_{\gamma,p}) = p$ is well defined; with the bundle charts $\xi_{\mathscr{X}}(\mathcal{X}_p) = (\mathscr{X}(p)\,;\,x^i_p)$ it is a smooth manifold of dimension $2d$.
-      - A **smooth vector field** is a smooth section, $\mathcal{X}\colon\mathcal{M}\to T\mathcal{M}$ with $\pi\circ\mathcal{X} = \mathrm{id}_\mathcal{M}$; they form $\Gamma T\mathcal{M}$.
-      - On a chart, $\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i$ with **component functions** $x^i = \mathcal{X}|_\mathcal{U}\lfloor\mathscr{X}^i\rceil$; smooth means smooth components, and the law $y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,x^j$ with point-dependent Jacobian makes this chart independent.
-      - A field eats scalar fields: $\mathcal{X}\lfloor f\rceil(p) = \mathcal{X}(p)(f) = x^i(p)\,\mathtt{x}^p_i$, a new scalar field.
-      - Running example: $\mathcal{X}|_\mathcal{U} = \partial x_2$, the swirl $\mathcal{Y}$ with components $(-b,a)$ and $\mathcal{Y}|_\mathcal{V} = \partial y_2$, vanishing at the origin.
-
       **Next:** the same construction one floor up. Gluing all the cotangent spaces $T_p^*\mathcal{M}$ gives the **cotangent bundle**, and its sections are **covector fields**, such as the differential $df$ of a scalar field, at every point at once.

@@ -1,6 +1,12 @@
 id: ch04-cotangent-basis
 title: Differentials as a Basis
 kind: concept
+own: |
+  - A chart's coordinate functions give covectors $(d\mathscr{X}^i)_p$ with {{ $(d\mathscr{X}^i)_p((\partial/\partial\mathscr{X}^j)_p) = \delta^i_j$ }}: the **dual chart-induced basis** of $T_p^*\mathcal{M}$. $(d\mathscr{X}^i)_p$ reads the $i$-th component of a velocity and is pictured as the line where $\mathscr{X}^i$ is constant.
+  - **Components** {{ $\mathtt{x}^p_i := \mathsf{X}_p((\partial/\partial\mathscr{X}^i)_p)$ }}, expansion $\mathsf{X}_p = \mathtt{x}^p_i(d\mathscr{X}^i)_p$, pairing {{ $\mathsf{X}_p(v) = \mathtt{x}^p_iv^i$ }}.
+  - {{ $(df)_p = \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))\,(d\mathscr{X}^i)_p$ }}. Running example: $(1, -1)$ in $\mathscr{X}$, $(1, 1/e)$ in $\mathscr{Y}$.
+  - Laws: $(d\mathscr{Y}^i)_p = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p(d\mathscr{X}^j)_p$ (contravariant), {{ $\mathtt{y}^p_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p\mathtt{x}^p_j$ }} (covariant); the pairing is the same in every chart.
+  - Every covector is some $(df)_p$ (bump function). Shorthand $(dx^i)_p$, $(dy^i)_p$.
 
 cards:
   - type: text
@@ -555,10 +561,4 @@ cards:
     id: summary
     title: What you now own
     body: |
-      - A chart's coordinate functions give covectors $(d\mathscr{X}^i)_p$ with $(d\mathscr{X}^i)_p((\partial/\partial\mathscr{X}^j)_p) = \delta^i_j$: the **dual chart-induced basis** of $T_p^*\mathcal{M}$. $(d\mathscr{X}^i)_p$ reads the $i$-th component of a velocity and is pictured as the line where $\mathscr{X}^i$ is constant.
-      - **Components** $\mathtt{x}^p_i := \mathsf{X}_p((\partial/\partial\mathscr{X}^i)_p)$, expansion $\mathsf{X}_p = \mathtt{x}^p_i(d\mathscr{X}^i)_p$, pairing $\mathsf{X}_p(v) = \mathtt{x}^p_iv^i$.
-      - $(df)_p = \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))\,(d\mathscr{X}^i)_p$. Running example: $(1, -1)$ in $\mathscr{X}$, $(1, 1/e)$ in $\mathscr{Y}$.
-      - Laws: $(d\mathscr{Y}^i)_p = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p(d\mathscr{X}^j)_p$ (contravariant), $\mathtt{y}^p_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p\mathtt{x}^p_j$ (covariant); the pairing is the same in every chart.
-      - Every covector is some $(df)_p$ (bump function). Shorthand $(dx^i)_p$, $(dy^i)_p$.
-
       **Next: Tensor Spaces at a Point.** At each $p$ we now have two vector spaces of dimension $d$, $T_p\mathcal{M}$ and $T_p^*\mathcal{M}$, each with a basis from the chart. Chapter 2 built tensors over any vector space. What are tensors at $p$, which basis do they get from a chart, and how many Jacobians does each component pick up when the chart changes?

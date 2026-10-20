@@ -1,6 +1,12 @@
 id: ch04-coordinate-basis
 title: Coordinate Bases and the Jacobian
 kind: concept
+own: |
+  - **Chart-induced basis:** {{ $(\partial/\partial\mathscr{X}^i)_p(f) := \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$ }}, the velocity of the $i$-th coordinate curve; every velocity is $\sum_i \dot\gamma^i_\mathcal{U}(\partial/\partial\mathscr{X}^i)_p$, so $\dim T_p\mathcal{M} = d$.
+  - **Components:** {{ $\dot\gamma^i_\mathcal{U} = v_{\gamma,p}(\mathscr{X}^i)$ }}, thanks to $(\partial/\partial\mathscr{X}^j)_p(\mathscr{X}^i) = \delta^i_j$.
+  - **Jacobian:** {{ $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p = \partial_j[\mathscr{Y}^i\circ\mathscr{X}^{-1}](\mathscr{X}(p))$ }}, the derivative of the transition map; the two Jacobians are inverse matrices.
+  - **Basis law (covariant):** $(\partial/\partial\mathscr{X}^i)_p = \sum_j (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p(\partial/\partial\mathscr{Y}^j)_p$.
+  - **Component law (contravariant):** {{ $\dot\gamma^i_\mathcal{V} = \sum_j (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\dot\gamma^j_\mathcal{U}$ }}; a chart change at $p$ is a Chapter 2 change of basis with $J$ = the Jacobian.
 
 cards:
   - type: text
@@ -509,10 +515,4 @@ cards:
     id: summary
     title: What you now own
     body: |
-      - **Chart-induced basis:** $(\partial/\partial\mathscr{X}^i)_p(f) := \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$, the velocity of the $i$-th coordinate curve; every velocity is $\sum_i \dot\gamma^i_\mathcal{U}(\partial/\partial\mathscr{X}^i)_p$, so $\dim T_p\mathcal{M} = d$.
-      - **Components:** $\dot\gamma^i_\mathcal{U} = v_{\gamma,p}(\mathscr{X}^i)$, thanks to $(\partial/\partial\mathscr{X}^j)_p(\mathscr{X}^i) = \delta^i_j$.
-      - **Jacobian:** $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p = \partial_j[\mathscr{Y}^i\circ\mathscr{X}^{-1}](\mathscr{X}(p))$, the derivative of the transition map; the two Jacobians are inverse matrices.
-      - **Basis law (covariant):** $(\partial/\partial\mathscr{X}^i)_p = \sum_j (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p(\partial/\partial\mathscr{Y}^j)_p$.
-      - **Component law (contravariant):** $\dot\gamma^i_\mathcal{V} = \sum_j (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\dot\gamma^j_\mathcal{U}$; a chart change at $p$ is a Chapter 2 change of basis with $J$ = the Jacobian.
-
       **Next:** we called $\{(\partial/\partial\mathscr{X}^i)_p\}$ a basis without proof. In *Guided Problem: The Chart-Induced Basis* you prove it: each one is a velocity, they span $T_p\mathcal{M}$, and they are linearly independent.

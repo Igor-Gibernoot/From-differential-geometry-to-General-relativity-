@@ -1,6 +1,12 @@
 id: ch04-einstein
 title: Einstein Summation
 kind: concept
+own: |
+  - **Einstein summation:** an index appearing once up and once down in a term is summed over $1,\dots,d$; an index in a denominator counts as lower; labels such as $\mathcal{U}$, $p$ are not indices.
+  - **Free and dummy indices:** dummies can be renamed to unused letters; free indices must match, letter and height, in every term; no letter appears three times; same-height repeats are not summed (and chart-dependent).
+  - **Laws in Einstein form:** $(\partial x_i)_p = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p(\partial y_j)_p$ (covariant, free index down) and {{ $y^i_p = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,x^j_p$ }} (contravariant, free index up).
+  - **Delta:** {{ $\delta^i_ja^j = a^i$ }}, {{ $\delta^i_i = d$ }}, and {{ $(\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p(\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p = \delta^i_j$ }}.
+  - **Shorthand:** {{ $\mathcal{X}_p = x^i_p(\partial x_i)_p$ }}, components $x^i_p$, basis $(\partial x_i)_p$.
 
 cards:
   - type: text
@@ -394,10 +400,4 @@ cards:
     id: summary
     title: What you now own
     body: |
-      - **Einstein summation:** an index appearing once up and once down in a term is summed over $1,\dots,d$; an index in a denominator counts as lower; labels such as $\mathcal{U}$, $p$ are not indices.
-      - **Free and dummy indices:** dummies can be renamed to unused letters; free indices must match, letter and height, in every term; no letter appears three times; same-height repeats are not summed (and chart-dependent).
-      - **Laws in Einstein form:** $(\partial x_i)_p = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p(\partial y_j)_p$ (covariant, free index down) and $y^i_p = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,x^j_p$ (contravariant, free index up).
-      - **Delta:** $\delta^i_ja^j = a^i$, $\delta^i_i = d$, and $(\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p(\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p = \delta^i_j$.
-      - **Shorthand:** $\mathcal{X}_p = x^i_p(\partial x_i)_p$, components $x^i_p$, basis $(\partial x_i)_p$.
-
       **Next:** in Chapter 2 every vector space had a dual, the space of linear maps to $\mathbb{R}$. In *The Cotangent Space* we build the dual of $T_p\mathcal{M}$: covectors at $p$, whose components carry **lower** indices, so that pairing a covector with a vector is an up-down contraction.

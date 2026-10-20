@@ -1,6 +1,12 @@
 id: ch05-covector-fields
 title: Covector Fields and the Cotangent Bundle
 kind: concept
+own: |
+  - The **cotangent bundle** $T^*\mathcal{M} = \dot\bigcup_p T_p^*\mathcal{M}$, projection $\pi^*(\mathsf{X}_p) = p$, bundle charts {{ $\xi^*_{\mathscr{X}}(\mathsf{X}_p) = (\mathscr{X}(p)\,;\,\mathtt{x}^p_i)$ }}; fibre coordinates change with the inverse Jacobian $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$; a smooth manifold of dimension $2d$.
+  - A **smooth covector field** is a smooth section $\mathsf{X}\colon\mathcal{M}\to T^*\mathcal{M}$, {{ $\pi^*\circ\mathsf{X} = \mathrm{id}_\mathcal{M}$ }}; they form $\Gamma T^*\mathcal{M}$.
+  - On a chart, $\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i$; smooth means smooth component functions, and the law {{ $\mathtt{y}_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)\,\mathtt{x}_j$ }} makes that chart independent.
+  - A covector field eats vector fields: {{ $\mathsf{X}\lceil\mathcal{X}\rfloor(p) = \mathsf{X}_p(\mathcal{X}(p)) = \mathtt{x}_i(p)\,x^i(p)$ }}, and functions pull out of the slot. For the differential, {{ $df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil$ }}.
+  - **Exact** fields $df$ are special: $-b\,dx^1 + a\,dx^2$ is not one. Draw covector fields as level lines, never as arrows.
 
 cards:
   - type: text
@@ -384,10 +390,4 @@ cards:
     id: summary
     title: What you now own
     body: |
-      - The **cotangent bundle** $T^*\mathcal{M} = \dot\bigcup_p T_p^*\mathcal{M}$, projection $\pi^*(\mathsf{X}_p) = p$, bundle charts $\xi^*_{\mathscr{X}}(\mathsf{X}_p) = (\mathscr{X}(p)\,;\,\mathtt{x}^p_i)$; fibre coordinates change with the inverse Jacobian $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$; a smooth manifold of dimension $2d$.
-      - A **smooth covector field** is a smooth section $\mathsf{X}\colon\mathcal{M}\to T^*\mathcal{M}$, $\pi^*\circ\mathsf{X} = \mathrm{id}_\mathcal{M}$; they form $\Gamma T^*\mathcal{M}$.
-      - On a chart, $\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i$; smooth means smooth component functions, and the law $\mathtt{y}_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)\,\mathtt{x}_j$ makes that chart independent.
-      - A covector field eats vector fields: $\mathsf{X}\lceil\mathcal{X}\rfloor(p) = \mathsf{X}_p(\mathcal{X}(p)) = \mathtt{x}_i(p)\,x^i(p)$, and functions pull out of the slot. For the differential, $df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil$.
-      - **Exact** fields $df$ are special: $-b\,dx^1 + a\,dx^2$ is not one. Draw covector fields as level lines, never as arrows.
-
       **Next:** fields can be added and multiplied by **functions**, point by point. The scalars are now the ring $C^\infty(\mathcal{M})$, where not everything can be divided, and $\Gamma T\mathcal{M}$, $\Gamma T^*\mathcal{M}$ become **modules** rather than vector spaces. Do they still have bases?

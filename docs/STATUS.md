@@ -28,7 +28,7 @@ append a short entry at the end of **Log** (a few lines, ending with
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Recap (`own:`) rule:** every concept lesson carries `own:` (its "what you now own" summary with 3–6 `{{ }}` blanks on the main
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
-  write it from the start. **Backfill:** Chapter 2-3 done, pending 4-5 then 6 (no pilot needed now;
+  write it from the start. **Backfill:** Chapter 2-5 done, pending 6 (no pilot needed now;
   list each chapter's blanks for Igor's veto at the end). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** first the `own:` backfill (above), then Chapter 7 (Metric) in `course.yaml` order: next `ch07-metric`, then `ch07-signature`, `ch07-length`,
@@ -323,6 +323,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — own: backfill, Chapters 4-5 (tangent-space, cotangent, coordinate-basis, cotangent-basis, tensor-space, einstein; module, vector-fields, covector-fields, tensor-fields)
+- Summary moved into `own:` (wording unchanged, blanks added); card keeps id, title and the "**Next:**" teaser. Guided lessons (`velocity-operations`,
+  `chart-basis`, `differentials`) skipped. Blanks: tangent-space 4, cotangent 4, coordinate-basis 4, cotangent-basis 4, tensor-space 4, einstein 5,
+  module 4, vector-fields 5, covector-fields 5, tensor-fields 5. validate 0/0, shots 0 problems.
+- Conventions fixed here: long chains (Jacobian rune chain) are blanked whole; of a covariant/contravariant pair of laws mark one (the contravariant
+  component law, or the covariant lower-index one); bundle charts and section conditions ($\pi\circ\mathcal{X} = \mathrm{id}$) are defining formulas;
+  an iff/definition prose blank keeps the term and hides only the condition ("invertible iff {{ it never vanishes }}").
 ### 2026-10-20 — own: backfill, Chapter 3 (open-sets, standard-topology, homeomorphisms, hausdorff, charts, atlases, smooth-maps) + Back/retry fix
 - Summary moved into `own:` (wording unchanged, blanks added); card keeps id, title and the "**Next:**" teaser. `circle` is `guided`, skipped.
   Blanks: open-sets 5 (three topology rules, discrete, indiscrete), standard-topology 3, homeomorphisms 3, hausdorff 3, charts 3, atlases 3, smooth-maps 3.
