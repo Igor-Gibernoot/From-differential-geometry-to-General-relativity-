@@ -253,7 +253,11 @@ levels:
     title: Covariant Derivative
     blurb: Differentiating vector fields needs extra structure, a connection, and its torsion and curvature characterize it.
     lessons:
-      - { id: ch06-connections, title: Connections and Affine Manifolds, kind: concept }
+      - id: ch06-connections
+        title: Connections and Affine Manifolds
+        kind: concept
+        file: ch06/connections.yaml
+        summary: Differentiating components depends on the chart. A connection is the extra structure that differentiates vector and tensor fields, fixed by five rules; the plane carries more than one.
       - { id: ch06-christoffel, title: Connection Coefficient Functions, kind: concept }
       - { id: ch06-parallel-transport, title: Parallel Transport and Autoparallels, kind: concept }
       - { id: ch06-torsion-curvature, title: Torsion and Curvature, kind: concept }

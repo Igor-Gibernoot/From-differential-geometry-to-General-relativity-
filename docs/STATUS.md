@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 5 complete; Chapter 6 next)
+## Current (2026-10-20, Chapter 6 in progress: ch06-connections done)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -24,6 +24,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
+- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards). Next: `ch06-christoffel`.
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 6 (Covariant Derivative) in `course.yaml` order, next
@@ -233,6 +234,19 @@ append a short entry at the end of **Log** (a few lines, ending with
   Lorentz factor **$\kappa$** (not $\gamma$, which names curves); $\partial\mathscr{X}/\partial\mathscr{Y} = \kappa\begin{pmatrix}1&v\\v&1\end{pmatrix}$; $v = 3/5$, $\kappa = 5/4$; trap charts: rescale by 2
   gives $\mathrm{diag}(-\tfrac14,\tfrac14)$, $45°$ rotation gives $\begin{pmatrix}0&1\\1&0\end{pmatrix}$; $\mathcal{W} = \partial x_1 + a\,\partial x_2$, $\eta(\mathcal{W},\mathcal{W}) = a^2 - 1$
   (boosted components $(\tfrac78,-\tfrac18)$ at $a = \tfrac12$); timelike $<0$, spacelike $>0$, lightlike $=0$ (names only); "metric" only as Level 7 teaser.
+- **Chapter 6 conventions so far** (`ch06-connections`): plane, points $(a,b)$, cartesian $\mathscr{X}$ on $\mathbb{R}^2$, polar $\mathscr{Y} = (r,\operatorname{atan2}(b,a))$,
+  $\theta\in(-\pi,\pi)$, on $\mathcal{V}$ = plane minus $\{b=0,a\le0\}$ (widget `cut: left`); $\partial x_1$ polar components $(a/r,-b/r^2)$, $(0,-1)$ at $(0,1)$.
+  Pointwise definition as in the book: $\nabla\colon T_p\mathcal{M}\times\Gamma T^{(r,s)}\mathcal{M}\to T_p^{(r,s)}\mathcal{M}$, $\nabla_{\mathcal{X}_p}T$ "covariant derivative of $T$ along $\mathcal{X}_p$";
+  "Rules" 1–5 in the book's order (scalar $\nabla_{\mathcal{X}_p}f = \mathcal{X}_p(f)$, additivity, Leibniz written for $(1,1)$ $T(\mathsf{X},\mathcal{Y})$ with values $T_p,\mathsf{X}_p,\mathcal{Y}_p$,
+  linearity in direction with $\alpha$, smoothness $\nabla_\mathcal{X}T$); $C^\infty$-linearity in direction derived ($\alpha = f(p)$); $\oplus_\Gamma$ now written $+$.
+  Tangent vector acting on functions written $\mathcal{X}_p(f)$ (book), field level $\mathcal{X}\lfloor g\rceil$. Generic differentiated field $\mathcal{Y}$ with components $\tilde x^j$ ($\mathscr{X}$),
+  $\tilde y^k$ ($\mathscr{Y}$), direction components $x^i_p$; $\partial_i$ = slot derivative on $\mathbb{R}^d$, extra term $\tilde x^j(p)x^i_p\partial_i\partial_j(\text{ᛖ}_{\mathcal{U}\mathcal{V}})^k$ ($=-1$ for $\partial x_1$
+  along $\partial x_2$ at $(1,0)$). Product rule $\nabla_{\mathcal{X}_p}(g\mathcal{Y}) = \mathcal{X}_p(g)\mathcal{Y}_p + g(p)\nabla_{\mathcal{X}_p}\mathcal{Y}$ (derived via $\mathcal{Y}(\mathsf{X}) := \mathsf{X}\lceil\mathcal{Y}\rfloor$);
+  covector rule $(\nabla_{\mathcal{X}_p}\mathsf{X})(\mathcal{Y}_p) = \mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor) - \mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y})$. Affine manifold $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla)$.
+  Connections $\nabla^{\mathrm{E}}$ (constant cartesian components, book's label) and **$\nabla^{\mathrm{P}}$** (constant polar components, on $\mathcal{V}$; my label, not the book's);
+  $\nabla^{\mathrm{E}}_{\partial x_2}$swirl $= -\partial x_1$, $\nabla^{\mathrm{E}}_{\text{swirl}}\partial x_2 = 0$, $\nabla^{\mathrm{P}}_{\partial x_2}$swirl $= 0$ (swirl $=\partial y_2$); $f = a^2b$: $\nabla_{(\partial x_2)_p}f = 9$
+  at $(3,1)$, $(\nabla^{\mathrm{E}}_{(\partial x_2)_p}df)(\partial x_1) = 2a = 6$. Rule-4 numeric: directions $\partial x_1\to(1,2)$, $\partial x_2\to(0,5)$. Words: connection = structure, covariant
+  derivative = output; Ehresmann/gauge remark in one card. $\Gamma_\mathscr{X}$ teased with note "unrelated to $\Gamma T\mathcal{M}$". Lorentz factor $\kappa$ of ch05 unrelated.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -657,3 +671,11 @@ long box titles.
 - Choices: registered in `course.yaml` now with a summary covering all five problems; no wrap-up yet (validate accepts); repeats of
   ch05-module (unit swirl, $t\,\partial x_1$ alone, $(fg)\mathcal{X}$ axiom) avoided by switching to sign freedom, coframe and $\psi$-killed fields; no widget.
 - Conventions fixed here: see Current, "Challenge ch05 (`ch05-challenge`, part 1)".
+- 2026-10-20 `ch06-connections` (concept, 28 cards): hook "is $\partial x_1$ constant?" (polar components, recall $D(\mathcal{Z})$); widget `chart-basis`
+  cartesian + polar `cut: left` with $v = \partial x_1$ at four presets; naive polar derivative ($-1$), extra second-derivative term, affine-only MCQ;
+  why-not-subtract; definition and Rules 1–5 one card each with a question (value 9, zero field, term count 6, Rule-4 numeric, $C^\infty$ in direction);
+  product-rule build (derivation in explanation), tensorial-slot multi-select, covector build; affine manifold with $\nabla^{\mathrm{E}}$ and $\nabla^{\mathrm{P}}$, swirl numerics,
+  $\nabla^{\mathrm{E}}df$, hook resolved, "word on words" (B.9), summary with rules as formulas, teaser $(\Gamma_\mathscr{X})^i_{jk}$.
+- Choices: followed the book's pointwise definition (not field-level axioms); generic field named $\mathcal{Y}$ (book) rather than $\mathcal{Z}$; invented
+  $\nabla^{\mathrm{P}}$ to show that each chart's naive rule is a different connection; plain plane instead of the egg carton; no autoparallels or $\Gamma$ yet.
+- Conventions fixed here: see Current, "Chapter 6 conventions so far".

@@ -1,0 +1,450 @@
+id: ch06-connections
+title: Connections and Affine Manifolds
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: Is this field constant?
+    body: |
+      Take the plane $\mathbb{R}^2$, points with coordinates $(a,b)$, and two charts: the cartesian chart $\mathscr{X}(a,b) = (a,b)$ on all of $\mathbb{R}^2$, and the polar chart $\mathscr{Y} = (r,\theta)$, with $r = \sqrt{a^2+b^2}$ and $\theta = \operatorname{atan2}(b,a)\in(-\pi,\pi)$, on $\mathcal{V}$ = the plane minus the half-line $\{b = 0,\ a\le 0\}$. Recall the basis fields $\partial x_i := \partial/\partial\mathscr{X}^i$ and $\partial y_i := \partial/\partial\mathscr{Y}^i$.
+
+      Look at the field $\partial x_1$, "one step to the right" at every point. Is it **constant**? Its cartesian components are $(1,0)$ everywhere. But by the field law $y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,x^j$ its polar components are
+      $$(y^1, y^2) = \Big(\frac ar,\ -\frac b{r^2}\Big),$$
+      which change from point to point.
+
+      Recall also a warning from tensor fields: the rule $D(\mathcal{Z}) := \partial x_1\lfloor z^1\rceil$, "differentiate the first component", gave $0$ at the origin for $\mathcal{Z} = \partial x_1$ but $1$ for $\mathcal{Z} = (1+\mathscr{X}^1)\,\partial x_1$, although both fields agree there. Differentiating components is not a tensor operation.
+
+      The puzzle of this lesson: what could "the derivative of a vector field" possibly mean, so that "constant field" has an answer?
+
+  - type: widget
+    id: turning-basis
+    title: The polar basis turns
+    widget: chart-basis
+    config:
+      charts:
+        - { chart: cartesian, name: '\mathscr{X}' }
+        - { chart: polar, name: '\mathscr{Y}', cut: left }
+      p: [1, 1]
+      v: [1, 0]
+      view: { x: -2, y: -1.5, w: 5, h: 5 }
+      presets:
+        - { label: 'p = (1, 0)', p: [1, 0], v: [1, 0] }
+        - { label: 'p = (0, 1)', p: [0, 1], v: [1, 0] }
+        - { label: 'p = (−1, 1)', p: [-1, 1], v: [1, 0] }
+        - { label: 'p = (0, 2)', p: [0, 2], v: [1, 0] }
+    body: |
+      Solid lines: the cartesian chart $\mathscr{X}$; dashed: the polar chart $\mathscr{Y} = (r,\theta)$, undefined on the dotted half-line. The draggable arrow is the value of $\partial x_1$ at $p$: standard components $(1,0)$.
+
+      1. Press the presets. The arrow never changes, yet the polar basis vectors at $p$ (dashed purple) turn with $p$, so the polar components of the same arrow change.
+      2. At $p = (0,1)$, see which polar basis vector the arrow lines up with.
+
+  - type: mcq
+    id: polar-at-top
+    title: Same arrow, new components
+    prompt: |
+      In the plane with polar chart $\mathscr{Y} = (r,\theta)$, at the point $p = (0,1)$ the polar basis vectors are $(\partial y_1)_p$, pointing radially outward (standard components $(0,1)$), and $(\partial y_2)_p$, the counterclockwise velocity of the circle through $p$ (standard components $(-1,0)$). What are the polar components $(y^1,y^2)$ of the value of $\partial x_1$ at $p$ (standard components $(1,0)$)?
+    options:
+      - text: '$(0,-1)$'
+        correct: true
+      - text: '$(1,0)$'
+        feedback: |
+          That would hold if the polar basis were aligned with the cartesian one, as it is at $(1,0)$. At $(0,1)$ the radial direction is "up", so $(\partial y_1)_p$ is $(0,1)$, and "right" is not radial at all.
+      - text: '$(0,1)$'
+        feedback: |
+          Right direction, wrong sign: $(\partial y_2)_p$ points to the **left** at $(0,1)$ (counterclockwise motion at the top of the circle), so "right" is $-(\partial y_2)_p$.
+      - text: '$(1,1)$'
+        feedback: |
+          Components are not "how much the arrow overlaps each basis vector, added up". Solve $(1,0) = y^1(0,1) + y^2(-1,0)$: $y^1 = 0$, $y^2 = -1$.
+    explanation: |
+      $(1,0) = 0\cdot(0,1) + (-1)\cdot(-1,0)$, so $(y^1,y^2) = (0,-1)$, matching the formula $(a/r,\ -b/r^2)$ at $(a,b) = (0,1)$. One fixed arrow, components that depend on where the basis has turned.
+
+  - type: text
+    id: naive-rule
+    title: Differentiate the components?
+    body: |
+      The obvious guess for "the derivative of a vector field $\mathcal{Y}$ along a tangent vector $\mathcal{X}_p$ at $p$": expand $\mathcal{Y}$ in a chart, $\mathcal{Y}|_\mathcal{U} = \tilde x^j\,\partial x_j$ (component functions $\tilde x^j$), let $\mathcal{X}_p$ act on each component function and keep the basis:
+      $$\mathcal{X}_p(\tilde x^j)\,(\partial x_j)_p.$$
+      (Einstein summation over the repeated $j$.)
+
+      For $\mathcal{Y} = \partial x_1$ in the cartesian chart the components $(1,0)$ are constant, so this gives $0$ along every direction: "constant field". Now try the polar chart.
+
+  - type: numeric
+    id: naive-polar
+    title: The polar verdict
+    prompt: |
+      In the plane, the field $\partial x_1$ has polar components $\tilde y^1 = a/r$, $\tilde y^2 = -b/r^2$ (functions of the cartesian coordinates $(a,b)$, $r = \sqrt{a^2+b^2}$). Differentiate the components along $(\partial x_2)_p$ at $p = (1,0)$, which acts on functions as $\partial/\partial b$. What is $(\partial x_2)_p(\tilde y^2)$?
+    answer: -1
+    answerText: '$-1$'
+    wrong:
+      - { value: 0, feedback: 'Zero is what the **cartesian** components give, since $(1,0)$ is constant. Here differentiate $-b/r^2$ with respect to $b$: $-(r^2 - 2b^2)/r^4$, which at $(1,0)$ is $-1$.' }
+      - { value: 1, feedback: 'Check the sign: $\partial(-b/r^2)/\partial b = -(r^2-2b^2)/r^4$, which is $-1$ at $(a,b) = (1,0)$.' }
+    hint: |
+      $\partial(r^2)/\partial b = 2b$, so $\partial(b/r^2)/\partial b = (r^2 - 2b^2)/r^4$.
+    explanation: |
+      $\partial(-b/r^2)/\partial b = -(r^2-2b^2)/r^4 = -1$ at $(1,0)$, while $\partial(a/r)/\partial b = -ab/r^3 = 0$ there. So the polar recipe gives
+      $$0\cdot(\partial y_1)_p - 1\cdot(\partial y_2)_p = -(\partial x_2)_p,$$
+      since at $(1,0)$ the circle's velocity $(\partial y_2)_p$ points straight up. The cartesian recipe gave $0$. Same field, same direction, two different vectors: "differentiate the components" depends on the chart.
+
+  - type: text
+    id: where-from
+    title: Where the extra term comes from
+    body: |
+      Recall the transition map $\text{ᛖ}_{\mathcal{U}\mathcal{V}} := \mathscr{Y}\circ\mathscr{X}^{-1}$ (from $\mathscr{X}$-coordinates to $\mathscr{Y}$-coordinates) and write $\partial_i$ for the partial derivative of a function on $\mathbb{R}^d$ in its $i$-th slot. Take $\mathcal{X}_p = x^i_p\,(\partial x_i)_p$ and a field $\mathcal{Y}$ with components $\tilde x^j$ in $\mathscr{X}$ and
+      $$\tilde y^k = \frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^j}\,\tilde x^j$$
+      in $\mathscr{Y}$. Both factors are functions, so the product rule for $\mathcal{X}_p$ gives
+      $$\begin{aligned}&\mathcal{X}_p(\tilde y^k)\\ &= \Big(\frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^j}\Big)_p\mathcal{X}_p(\tilde x^j)\\ &\quad + \tilde x^j(p)\,x^i_p\,\partial_i\partial_j(\text{ᛖ}_{\mathcal{U}\mathcal{V}})^k\end{aligned}$$
+      with the second derivative evaluated at $\mathscr{X}(p)$. The first term is the transformation law of a vector: alone, it would make $\mathcal{X}_p(\tilde x^j)$ the components of one chart-independent vector. The second term, made of **second derivatives of the transition map**, spoils it.
+
+      Check on the polar verdict: $\tilde x = (1,0)$, $x_p = (0,1)$, so the extra term is $\partial_2\partial_1(\text{ᛖ}_{\mathcal{U}\mathcal{V}})^2 = \partial_b(-b/r^2) = -1$ at $(1,0)$.
+
+  - type: mcq
+    id: affine-only
+    title: When is the recipe safe?
+    prompt: |
+      Differentiating the component functions of a vector field $\mathcal{Y}$ along $\mathcal{X}_p$ gives, in a second chart, the extra term $\tilde x^j(p)\,x^i_p\,\partial_i\partial_j(\text{ᛖ}_{\mathcal{U}\mathcal{V}})^k$, where $\text{ᛖ}_{\mathcal{U}\mathcal{V}} = \mathscr{Y}\circ\mathscr{X}^{-1}$ is the transition map. For which pairs of charts does this term vanish for **every** field and direction?
+    options:
+      - text: 'When the transition map is affine, $\text{ᛖ}_{\mathcal{U}\mathcal{V}}(\alpha) = A\alpha + c$ (a constant matrix $A$ and vector $c$), e.g. cartesian vs rotated and shifted cartesian'
+        correct: true
+      - text: 'When the Jacobian of the transition map is the identity at $p$'
+        feedback: |
+          The identity Jacobian at one point controls first derivatives there, not second ones. Polar coordinates centred far away look almost cartesian near a point, yet their second derivatives are not zero.
+      - text: 'Never, whatever the charts'
+        feedback: |
+          If all second derivatives of the transition map vanish, the term is zero. That happens exactly for affine transition maps, as between two cartesian charts.
+      - text: 'Whenever both charts are defined on the same domain'
+        feedback: |
+          The domain is irrelevant: the cartesian and polar charts can be restricted to the same $\mathcal{V}$ and the term is still $-1$ for $\partial x_1$ along $\partial x_2$ at $(1,0)$. What matters is how curved the change of coordinates is.
+    explanation: |
+      $\partial_i\partial_j(\text{ᛖ}_{\mathcal{U}\mathcal{V}})^k = 0$ everywhere means each coordinate of the transition map is affine. Between cartesian charts the naive recipe is consistent; that is why "differentiate the components" works in special relativity with inertial coordinates (Lorentz maps are linear), and fails as soon as coordinates are curved.
+
+  - type: text
+    id: what-we-want
+    title: What we want
+    body: |
+      Why not compare directly? A difference quotient along a curve $\gamma$ with $\gamma(0) = p$ would subtract $\mathcal{Y}(\gamma(\lambda))\in T_{\gamma(\lambda)}\mathcal{M}$ and $\mathcal{Y}(p)\in T_p\mathcal{M}$: vectors in **different** vector spaces. Nothing in a smooth manifold says which vector at one point "equals" a vector at another point.
+
+      Physics needs that comparison. The **acceleration** of a particle is the change of its velocity along its own velocity; Newton's first law, "free particles have zero acceleration", needs it, and so does general relativity, where free particles move along the "straightest" curves of the structure we are about to build. "Parallel" vector fields, constant along a direction, need it too.
+
+      So we add structure, and ask of it what any derivative should do:
+      - on functions, the usual directional derivative;
+      - additive and with a product rule in what is differentiated;
+      - linear in the direction, which is a single tangent vector at $p$;
+      - smooth results when the direction varies smoothly.
+
+  - type: mcq
+    id: why-not-subtract
+    title: The obstruction
+    prompt: |
+      On a smooth manifold $\mathcal{M}$, why can a vector field $\mathcal{Y}$ not be differentiated along a curve $\gamma$ through $p = \gamma(0)$ by the quotient $\big(\mathcal{Y}(\gamma(\lambda)) - \mathcal{Y}(p)\big)/\lambda$?
+    options:
+      - text: 'The two vectors lie in different vector spaces, $T_{\gamma(\lambda)}\mathcal{M}$ and $T_p\mathcal{M}$, so their difference is undefined'
+        correct: true
+      - text: 'The limit $\lambda\to0$ may fail to exist for a smooth field'
+        feedback: |
+          The problem comes before any limit: for $\lambda\neq0$ the subtraction itself is not defined, since the two vectors live in different tangent spaces.
+      - text: 'One would need a metric to subtract vectors'
+        feedback: |
+          Tempting, since length and angle feel like what "same vector" means. But subtraction only needs the vectors to be in **one** vector space; what is missing is a way to carry a vector from one point to another, and that is exactly what the new structure (a connection) provides. A metric (Level 7) will single out a preferred one, but it is not needed for the definition.
+      - text: 'Vector fields are only defined on chart domains'
+        feedback: |
+          A vector field is defined on all of $\mathcal{M}$; only its **components** need a chart. The trouble is that $\mathcal{Y}(\gamma(\lambda))$ and $\mathcal{Y}(p)$ are elements of different spaces.
+    explanation: |
+      In $\mathbb{R}^2$ we silently identify all tangent spaces with one copy of $\mathbb{R}^2$ (the cartesian components); a general manifold has no such identification, and the chart-dependence of the naive recipe shows that charts do not supply one either.
+
+  - type: text
+    id: definition
+    title: Connections
+    body: |
+      A (linear) **connection** $\nabla$ (read "nabla") on a smooth manifold $(\mathcal{M},\mathcal{O},\mathcal{A})$ assigns to every tangent vector $\mathcal{X}_p\in T_p\mathcal{M}$, at any point $p$, and to every tensor field $T\in\Gamma T^{(r,s)}\mathcal{M}$, of any valence $(r,s)$, a tensor at $p$:
+      $$\nabla\colon T_p\mathcal{M}\times\Gamma T^{(r,s)}\mathcal{M}\to T_p^{(r,s)}\mathcal{M},$$
+      $$(\mathcal{X}_p, T)\mapsto\nabla_{\mathcal{X}_p}T,$$
+      called the **covariant derivative** of $T$ along $\mathcal{X}_p$.
+
+      The two inputs play different roles. The **direction** is a single tangent vector at $p$. The **tensor field** is genuinely differentiated: $\nabla_{\mathcal{X}_p}T$ may depend on the values of $T$ around $p$. The rules it must obey come next, one card each.
+
+  - type: text
+    id: axiom-1
+    title: 'Rule 1: scalar fields'
+    body: |
+      **1. Action on scalar fields.** For every function $f\in C^\infty(\mathcal{M})$ (a $(0,0)$-tensor field),
+      $$\nabla_{\mathcal{X}_p}f = \mathcal{X}_p(f).$$
+      On functions there is nothing to invent: a tangent vector already differentiates functions, and the connection must agree with it.
+
+  - type: numeric
+    id: axiom-1-value
+    title: Rule 1 in numbers
+    prompt: |
+      On the plane with cartesian coordinates $(a,b)$, let $f = a^2b$ and let $\nabla$ be any connection. Rule 1 says $\nabla_{\mathcal{X}_p}f = \mathcal{X}_p(f)$. What is $\nabla_{(\partial x_2)_p}f$ at $p = (3,1)$, where $(\partial x_2)_p$ acts on functions as $\partial/\partial b$?
+    answer: 9
+    wrong:
+      - { value: 6, feedback: 'That is $\partial f/\partial a = 2ab$ at $(3,1)$. The direction $(\partial x_2)_p$ differentiates with respect to $b$: $\partial(a^2b)/\partial b = a^2$.' }
+      - { value: 0, feedback: 'The choice of connection does not matter here, but the derivative is not zero: on functions every connection gives the directional derivative, $\partial(a^2b)/\partial b = a^2 = 9$.' }
+    explanation: |
+      $\nabla_{(\partial x_2)_p}f = \partial(a^2b)/\partial b = a^2 = 9$ at $(3,1)$, for **every** connection: on functions all connections agree.
+
+  - type: text
+    id: axiom-2
+    title: 'Rule 2: additivity'
+    body: |
+      **2. Additivity in the tensor field.** For tensor fields $T_1, T_2\in\Gamma T^{(r,s)}\mathcal{M}$ of the same valence,
+      $$\nabla_{\mathcal{X}_p}(T_1 + T_2) = \nabla_{\mathcal{X}_p}T_1 + \nabla_{\mathcal{X}_p}T_2.$$
+      Here $+$ is the sum of fields, value by value (written $\oplus_\Gamma$ when the module was built; from now on simply $+$, and multiplication of a field by a function by juxtaposition).
+
+  - type: mcq
+    id: zero-field
+    title: The zero field
+    prompt: |
+      A connection $\nabla$ is additive in the tensor field: $\nabla_{\mathcal{X}_p}(T_1 + T_2) = \nabla_{\mathcal{X}_p}T_1 + \nabla_{\mathcal{X}_p}T_2$. What is $\nabla_{\mathcal{X}_p}0$, the covariant derivative of the zero vector field?
+    options:
+      - text: 'The zero vector of $T_p\mathcal{M}$, for every connection'
+        correct: true
+      - text: 'It depends on the connection'
+        feedback: |
+          Additivity alone fixes it: $\nabla_{\mathcal{X}_p}0 = \nabla_{\mathcal{X}_p}(0 + 0) = \nabla_{\mathcal{X}_p}0 + \nabla_{\mathcal{X}_p}0$, and subtracting $\nabla_{\mathcal{X}_p}0$ from both sides leaves $0$.
+      - text: 'It is undefined, since the zero field has no direction'
+        feedback: |
+          The zero field is a perfectly good smooth vector field (all components $0$), so $\nabla$ must assign it a vector at $p$; additivity forces that vector to be $0$.
+    explanation: |
+      $\nabla_{\mathcal{X}_p}0 = \nabla_{\mathcal{X}_p}(0+0) = 2\,\nabla_{\mathcal{X}_p}0$, so $\nabla_{\mathcal{X}_p}0 = 0$. The same argument works in every valence.
+
+  - type: text
+    id: axiom-3
+    title: 'Rule 3: Leibniz'
+    body: |
+      **3. Leibniz rule.** Feed a tensor field with fields and you get a function; differentiate that function and you get one term per ingredient, like $(fg)' = f'g + fg'$. For a $(1,1)$-tensor field $T$, a covector field $\mathsf{X}\in\Gamma T^*\mathcal{M}$ and a vector field $\mathcal{Y}\in\Gamma T\mathcal{M}$:
+      $$\begin{aligned}&\nabla_{\mathcal{X}_p}\big(T(\mathsf{X},\mathcal{Y})\big)\\ &= (\nabla_{\mathcal{X}_p}T)(\mathsf{X}_p,\mathcal{Y}_p)\\ &\quad + T_p(\nabla_{\mathcal{X}_p}\mathsf{X},\mathcal{Y}_p)\\ &\quad + T_p(\mathsf{X}_p,\nabla_{\mathcal{X}_p}\mathcal{Y}).\end{aligned}$$
+      The left side is the covariant derivative of the function $T(\mathsf{X},\mathcal{Y})$, so by Rule 1 it is $\mathcal{X}_p\big(T(\mathsf{X},\mathcal{Y})\big)$. Here $T_p$, $\mathsf{X}_p$, $\mathcal{Y}_p$ are the values at $p$. Tensor fields of any valence work the same way: one term with $\nabla T$, plus one term per argument.
+
+  - type: numeric
+    id: leibniz-count
+    title: Count the terms
+    prompt: |
+      The Leibniz rule of a connection: for an $(r,s)$-tensor field $T$ fed $r$ covector fields and $s$ vector fields, $\nabla_{\mathcal{X}_p}$ of the function $T(\dots)$ is a sum with one term where $\nabla_{\mathcal{X}_p}$ hits $T$ and one term for each argument it hits. How many terms are on the right-hand side for a $(2,3)$-tensor field?
+    answer: 6
+    wrong:
+      - { value: 5, feedback: 'Five terms differentiate the five arguments, but $T$ itself also varies from point to point: the term $(\nabla_{\mathcal{X}_p}T)(\dots)$ makes six.' }
+      - { value: 1, feedback: 'If only $T$ were differentiated, then a fixed function times a field could not change. Every ingredient that varies gets its own term, as in $(fg)'' = f''g + fg''$.' }
+    explanation: |
+      $1 + r + s = 1 + 2 + 3 = 6$: one term for $\nabla_{\mathcal{X}_p}T$ fed the values of all arguments, and one per argument, where that argument is replaced by its covariant derivative.
+
+  - type: text
+    id: axiom-4-5
+    title: 'Rules 4 and 5: direction and smoothness'
+    body: |
+      **4. Linearity in the direction.** For $\mathcal{X}_p, \mathcal{Y}_p\in T_p\mathcal{M}$ and $\alpha\in\mathbb{R}$,
+      $$\nabla_{\alpha\mathcal{X}_p + \mathcal{Y}_p}T = \alpha\,\nabla_{\mathcal{X}_p}T + \nabla_{\mathcal{Y}_p}T.$$
+
+      **5. Smoothness.** For every vector field $\mathcal{X}\in\Gamma T\mathcal{M}$, the map $p\mapsto\nabla_{\mathcal{X}(p)}T$ is a smooth tensor field, written
+      $$\nabla_\mathcal{X}T\in\Gamma T^{(r,s)}\mathcal{M}.$$
+
+      Rule 5 gives a field-level map $(\mathcal{X},T)\mapsto\nabla_\mathcal{X}T$, from $\Gamma T\mathcal{M}\times\Gamma T^{(r,s)}\mathcal{M}$ to $\Gamma T^{(r,s)}\mathcal{M}$. For vector fields: $\nabla_\mathcal{X}\mathcal{Y}$ is a new vector field, "the change of $\mathcal{Y}$ along $\mathcal{X}$".
+
+  - type: numeric
+    id: axiom-4-value
+    title: Rule 4 in numbers
+    prompt: |
+      A connection $\nabla$ on the plane and a vector field $\mathcal{Y}$ satisfy, at a point $p$, $\nabla_{(\partial x_1)_p}\mathcal{Y} = (\partial x_1)_p + 2(\partial x_2)_p$ and $\nabla_{(\partial x_2)_p}\mathcal{Y} = 5(\partial x_2)_p$. Using linearity in the direction, what is the second component (the coefficient of $(\partial x_2)_p$) of $\nabla_{3(\partial x_1)_p - (\partial x_2)_p}\mathcal{Y}$?
+    answer: 1
+    wrong:
+      - { value: 11, feedback: 'The direction is $3(\partial x_1)_p - (\partial x_2)_p$: the second covariant derivative enters with coefficient $-1$, so the second component is $3\cdot2 - 5 = 1$.' }
+      - { value: 7, feedback: 'Each covariant derivative must be multiplied by the matching coefficient of the direction: $3\cdot2 + (-1)\cdot5 = 1$.' }
+    explanation: |
+      $$\begin{aligned}&\nabla_{3(\partial x_1)_p - (\partial x_2)_p}\mathcal{Y}\\ &= 3\,\nabla_{(\partial x_1)_p}\mathcal{Y} - \nabla_{(\partial x_2)_p}\mathcal{Y}\\ &= 3(\partial x_1)_p + (6-5)(\partial x_2)_p.\end{aligned}$$
+      Knowing $\nabla$ along the basis vectors fixes it along every direction at $p$.
+
+  - type: mcq
+    id: cinf-direction
+    title: Functions in the direction slot
+    prompt: |
+      A connection satisfies, at each point, $\nabla_{\alpha\mathcal{X}_p + \mathcal{Y}_p}T = \alpha\,\nabla_{\mathcal{X}_p}T + \nabla_{\mathcal{Y}_p}T$ for real $\alpha$. For vector fields $\mathcal{X},\mathcal{Y}$ and a smooth function $f$, what is the field $\nabla_{f\mathcal{X} + \mathcal{Y}}T$?
+    options:
+      - text: '$f\,\nabla_\mathcal{X}T + \nabla_\mathcal{Y}T$'
+        correct: true
+      - text: '$f\,\nabla_\mathcal{X}T + \mathcal{X}\lfloor f\rceil\,T + \nabla_\mathcal{Y}T$'
+        feedback: |
+          A derivative of $f$ would appear if $f$ multiplied the field being **differentiated**. In the direction slot, at each point $p$ the value $f(p)$ is just a number $\alpha$, and Rule 4 pulls numbers out: no derivative of $f$ is ever taken.
+      - text: 'Nothing general can be said, since the rule only allows constant $\alpha$'
+        feedback: |
+          The rule is applied point by point: at $p$, use $\alpha = f(p)$, $(f\mathcal{X})(p) = f(p)\,\mathcal{X}(p)$. Doing this at every point gives the field identity.
+    explanation: |
+      At each $p$, Rule 4 with $\alpha = f(p)$ gives $\nabla_{f(p)\mathcal{X}(p) + \mathcal{Y}(p)}T = f(p)\,\nabla_{\mathcal{X}(p)}T + \nabla_{\mathcal{Y}(p)}T$. So the field-level map is $C^\infty(\mathcal{M})$-linear in the direction:
+      $$\nabla_{f\mathcal{X}+\mathcal{Y}}T = f\,\nabla_\mathcal{X}T + \nabla_\mathcal{Y}T.$$
+      Many texts take this field-level map as the definition, with $C^\infty$-linearity as an axiom; the two definitions are equivalent. The pointwise one suits curves, whose velocity exists only at the points of the curve.
+
+  - type: build
+    id: product-rule
+    title: Predict the product rule
+    prompt: |
+      A connection $\nabla$ satisfies Rule 1 ($\nabla_{\mathcal{X}_p}f = \mathcal{X}_p(f)$ on functions) and the Leibniz rule. For a function $g$ and a vector field $\mathcal{Y}$, what is $\nabla_{\mathcal{X}_p}(g\,\mathcal{Y})$? Build it.
+    prefix: '\nabla_{\mathcal{X}_p}(g\,\mathcal{Y}) ='
+    tiles: ['\mathcal{X}_p(g)\,\mathcal{Y}_p', '+', 'g(p)\,\nabla_{\mathcal{X}_p}\mathcal{Y}', '\mathcal{X}_p(g)\,\nabla_{\mathcal{X}_p}\mathcal{Y}', '-']
+    answers:
+      - ['\mathcal{X}_p(g)\,\mathcal{Y}_p', '+', 'g(p)\,\nabla_{\mathcal{X}_p}\mathcal{Y}']
+      - ['g(p)\,\nabla_{\mathcal{X}_p}\mathcal{Y}', '+', '\mathcal{X}_p(g)\,\mathcal{Y}_p']
+    wrong:
+      - answer: ['g(p)\,\nabla_{\mathcal{X}_p}\mathcal{Y}']
+        feedback: |
+          That would let $g$ pull out like a number. But $g$ varies around $p$, and a derivative sees variation: the term $\mathcal{X}_p(g)\,\mathcal{Y}_p$ records how fast $g$ changes along $\mathcal{X}_p$.
+      - answer: ['\mathcal{X}_p(g)\,\nabla_{\mathcal{X}_p}\mathcal{Y}']
+        feedback: |
+          The product rule differentiates **one** factor per term: $(fg)' = f'g + fg'$, never $f'g'$. Here: $\mathcal{X}_p(g)\,\mathcal{Y}_p + g(p)\,\nabla_{\mathcal{X}_p}\mathcal{Y}$.
+    hint: |
+      Think of $(fg)' = f'g + fg'$: one term differentiates $g$ (Rule 1), the other differentiates $\mathcal{Y}$.
+    explanation: |
+      Derivation. View $\mathcal{Y}$ as a $(1,0)$-tensor field, $\mathcal{Y}(\mathsf{X}) := \mathsf{X}\lceil\mathcal{Y}\rfloor$. The Leibniz rule reads
+      $$\begin{aligned}&\mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor)\\ &= (\nabla_{\mathcal{X}_p}\mathcal{Y})(\mathsf{X}_p) + \mathcal{Y}_p(\nabla_{\mathcal{X}_p}\mathsf{X}).\end{aligned}$$
+      Apply it to $g\,\mathcal{Y}$, and expand the left side with the product rule of $\mathcal{X}_p$ on the function $g\,\mathsf{X}\lceil\mathcal{Y}\rfloor$:
+      $$\begin{aligned}&\big(\nabla_{\mathcal{X}_p}(g\mathcal{Y})\big)(\mathsf{X}_p) + g(p)\,\mathcal{Y}_p(\nabla_{\mathcal{X}_p}\mathsf{X})\\ &= \mathcal{X}_p(g)\,\mathcal{Y}_p(\mathsf{X}_p)\\ &\quad + g(p)\,(\nabla_{\mathcal{X}_p}\mathcal{Y})(\mathsf{X}_p)\\ &\quad + g(p)\,\mathcal{Y}_p(\nabla_{\mathcal{X}_p}\mathsf{X}).\end{aligned}$$
+      The last terms cancel; since every covector at $p$ is the value of some covector field, the product rule follows:
+      $$\nabla_{\mathcal{X}_p}(g\mathcal{Y}) = \mathcal{X}_p(g)\,\mathcal{Y}_p + g(p)\,\nabla_{\mathcal{X}_p}\mathcal{Y}.$$
+      The same holds for $g\,T$ with $T$ of any valence.
+
+  - type: mcq
+    id: which-tensorial
+    title: Tensor in which slot?
+    multiple: true
+    prompt: |
+      Let $\nabla$ be a connection on $\mathcal{M}$ and use its field-level form $\nabla_\mathcal{X}\mathcal{Y}$ for vector fields $\mathcal{X}, \mathcal{Y}$. A map is $C^\infty(\mathcal{M})$-linear if a smooth function multiplying its input pulls out, with no extra term. Select every map that is $C^\infty(\mathcal{M})$-linear.
+    options:
+      - text: '$\mathcal{X}\mapsto\nabla_\mathcal{X}\mathcal{Y}$ (direction varies, $\mathcal{Y}$ fixed)'
+        correct: true
+      - text: '$\mathcal{Y}\mapsto\nabla_\mathcal{X}\mathcal{Y}$ (field varies, $\mathcal{X}$ fixed)'
+        feedback: |
+          The product rule gives $\nabla_\mathcal{X}(g\mathcal{Y}) = \mathcal{X}\lfloor g\rceil\,\mathcal{Y} + g\,\nabla_\mathcal{X}\mathcal{Y}$, with the extra term $\mathcal{X}\lfloor g\rceil\,\mathcal{Y}$. It must be there: a connection **differentiates** $\mathcal{Y}$, so it sees how $g$ varies, just as $D(\mathcal{Z}) = \partial x_1\lfloor z^1\rceil$ did.
+      - text: '$\mathcal{X}\mapsto\mathcal{X}\lfloor f\rceil$ for a fixed function $f$'
+        correct: true
+      - text: '$f\mapsto\nabla_\mathcal{X}f$ for a fixed vector field $\mathcal{X}$'
+        feedback: |
+          By Rule 1, $\nabla_\mathcal{X}f = \mathcal{X}\lfloor f\rceil$, and a vector field obeys the Leibniz rule on products: $\mathcal{X}\lfloor gf\rceil = g\,\mathcal{X}\lfloor f\rceil + f\,\mathcal{X}\lfloor g\rceil$.
+    explanation: |
+      The direction slot is pointwise (only $\mathcal{X}(p)$ matters, Rule 4), so functions pull out. The differentiated slot is not: $\nabla_\mathcal{X}\mathcal{Y}$ is $\mathbb{R}$-linear but **not** $C^\infty(\mathcal{M})$-linear in $\mathcal{Y}$, so $(\mathsf{Z},\mathcal{X},\mathcal{Y})\mapsto\mathsf{Z}\lceil\nabla_\mathcal{X}\mathcal{Y}\rfloor$ is **not** a tensor field. Example: on the plane, if $\nabla_{\partial x_2}\partial x_1 = 0$, then
+      $$\nabla_{\partial x_2}(b\,\partial x_1) = \partial x_1 \neq b\cdot 0.$$
+
+  - type: build
+    id: covector-rule
+    title: Covector fields come for free
+    prompt: |
+      A connection $\nabla$ obeys the Leibniz rule for the function $\mathsf{X}\lceil\mathcal{Y}\rfloor$ (covector field $\mathsf{X}$ fed vector field $\mathcal{Y}$):
+      $$\begin{aligned}&\mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor)\\ &= (\nabla_{\mathcal{X}_p}\mathsf{X})(\mathcal{Y}_p) + \mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y}).\end{aligned}$$
+      Solve for the covariant derivative of the covector field, fed $\mathcal{Y}_p$.
+    prefix: '(\nabla_{\mathcal{X}_p}\mathsf{X})(\mathcal{Y}_p) ='
+    tiles: ['\mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor)', '-', '+', '\mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y})', '\mathsf{X}_p(\mathcal{X}_p)']
+    answers:
+      - ['\mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor)', '-', '\mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y})']
+    wrong:
+      - answer: ['\mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor)', '+', '\mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y})']
+        feedback: |
+          Moving $\mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y})$ to the other side flips its sign. This minus sign is why covector components will pick up correction terms with the opposite sign to vector components.
+      - answer: ['\mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor)']
+        feedback: |
+          That is "differentiate the pairing and stop", which ignores that $\mathcal{Y}$ itself changes along $\mathcal{X}_p$. The term $\mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y})$ must be subtracted.
+    hint: |
+      Isolate the first term on the right-hand side.
+    explanation: |
+      $$\begin{aligned}&(\nabla_{\mathcal{X}_p}\mathsf{X})(\mathcal{Y}_p)\\ &= \mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor) - \mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y}).\end{aligned}$$
+      Every vector at $p$ is the value $\mathcal{Y}_p$ of some field, so this fixes the covector $\nabla_{\mathcal{X}_p}\mathsf{X}$ completely: **the connection on vector fields determines it on covector fields**. In the same way, for a $(1,1)$-tensor field,
+      $$\begin{aligned}&(\nabla_{\mathcal{X}_p}T)(\mathsf{X}_p,\mathcal{Y}_p)\\ &= \mathcal{X}_p\big(T(\mathsf{X},\mathcal{Y})\big)\\ &\quad - T_p(\nabla_{\mathcal{X}_p}\mathsf{X},\mathcal{Y}_p)\\ &\quad - T_p(\mathsf{X}_p,\nabla_{\mathcal{X}_p}\mathcal{Y}),\end{aligned}$$
+      and likewise in every valence: all of $\nabla$ is fixed by its action on vector fields.
+
+  - type: text
+    id: affine-manifold
+    title: Affine manifolds, and a choice
+    body: |
+      An **affine manifold** is the quadruple $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla)$: a smooth manifold equipped with a connection. The connection is **extra structure**, chosen on top of the atlas, and there are many.
+
+      Two examples on the plane:
+      - $\nabla^{\mathrm{E}}$ ("E" for Euclidean): differentiate the **cartesian** components, $\nabla^{\mathrm{E}}_{\mathcal{X}_p}\mathcal{Y} := \mathcal{X}_p(\tilde x^j)\,(\partial x_j)_p$, and likewise for every tensor field. The cartesian chart covers the whole plane, so this is defined everywhere, and Rules 1 to 5 hold (Rule 3 because $\mathcal{X}_p$ obeys the product rule on component functions).
+      - $\nabla^{\mathrm{P}}$ ("P" for polar): differentiate the **polar** components, $\nabla^{\mathrm{P}}_{\mathcal{X}_p}\mathcal{Y} := \mathcal{X}_p(\tilde y^k)\,(\partial y_k)_p$. It is a connection on $\mathcal{V}$ (the plane minus the cut, a manifold in its own right).
+
+      So the chart-dependence found earlier is not a failure: "differentiate the components in chart $\mathscr{X}$" **is** a connection, and different charts give **different** connections. The axioms do not choose one; we do.
+
+  - type: numeric
+    id: euclid-swirl
+    title: The swirl under ∇ᴱ
+    prompt: |
+      On the plane with cartesian coordinates $(a,b)$, $\nabla^{\mathrm{E}}$ differentiates cartesian components: $\nabla^{\mathrm{E}}_\mathcal{X}\mathcal{Y} = \mathcal{X}\lfloor\tilde x^j\rceil\,\partial x_j$ for $\mathcal{Y} = \tilde x^j\,\partial x_j$. Take $\mathcal{X} = \partial x_2$ and the swirl $\mathcal{Y} = -b\,\partial x_1 + a\,\partial x_2$. What is the coefficient of $\partial x_1$ in $\nabla^{\mathrm{E}}_\mathcal{X}\mathcal{Y}$?
+    answer: -1
+    answerText: '$-1$'
+    wrong:
+      - { value: 0, feedback: 'The swirl''s first component $-b$ changes along $\partial x_2$, which acts as $\partial/\partial b$: $\partial(-b)/\partial b = -1$. (Zero is the coefficient of $\partial x_2$, since $\partial a/\partial b = 0$.)' }
+      - { value: 1, feedback: 'Watch the sign of the component: $\tilde x^1 = -b$, so $\partial x_2\lfloor -b\rceil = -1$.' }
+    explanation: |
+      $$\begin{aligned}\nabla^{\mathrm{E}}_{\partial x_2}\mathcal{Y} &= \partial x_2\lfloor -b\rceil\,\partial x_1 + \partial x_2\lfloor a\rceil\,\partial x_2\\ &= -\partial x_1.\end{aligned}$$
+      Moving up, the swirl's arrows turn towards the left. Conversely, $\nabla^{\mathrm{E}}_\mathcal{Y}\mathcal{X} = \mathcal{Y}\lfloor 0\rceil\,\partial x_1 + \mathcal{Y}\lfloor 1\rceil\,\partial x_2 = 0$, since $\mathcal{X} = \partial x_2$ has constant components: $\nabla_\mathcal{X}\mathcal{Y}\neq\nabla_\mathcal{Y}\mathcal{X}$ in general.
+
+  - type: mcq
+    id: polar-swirl
+    title: The swirl under ∇ᴾ
+    prompt: |
+      On $\mathcal{V}$ (the plane minus the half-line $\{b=0,\ a\le0\}$), with polar chart $\mathscr{Y} = (r,\theta)$, the swirl $\mathcal{Y} = -b\,\partial x_1 + a\,\partial x_2$ equals $\partial y_2$, so its polar components are $(0,1)$ everywhere. The connection $\nabla^{\mathrm{P}}$ differentiates polar components; $\nabla^{\mathrm{E}}$ differentiates cartesian ones and gives $\nabla^{\mathrm{E}}_{\partial x_2}\mathcal{Y} = -\partial x_1$. What is $\nabla^{\mathrm{P}}_{\partial x_2}\mathcal{Y}$?
+    options:
+      - text: '$0$: by $\nabla^{\mathrm{P}}$ the swirl is a parallel (constant) field'
+        correct: true
+      - text: '$-\partial x_1$, since a covariant derivative cannot depend on the chart'
+        feedback: |
+          A **given** connection gives chart-independent answers. But $\nabla^{\mathrm{E}}$ and $\nabla^{\mathrm{P}}$ are two different connections, each defined by "constant components" in its own chart, and they disagree.
+      - text: 'It is undefined, because $\partial x_2$ is not a polar basis field'
+        feedback: |
+          Any vector field can be the direction; only the components of the differentiated field are used: $\nabla^{\mathrm{P}}_{\partial x_2}\mathcal{Y} = \partial x_2\lfloor 0\rceil\,\partial y_1 + \partial x_2\lfloor 1\rceil\,\partial y_2$.
+    explanation: |
+      Constant polar components differentiate to $0$: $\nabla^{\mathrm{P}}_{\partial x_2}\mathcal{Y} = 0$, while $\nabla^{\mathrm{E}}_{\partial x_2}\mathcal{Y} = -\partial x_1$. Which one is "right" is not a question the smooth structure can answer. In the plane with its usual lengths and angles, the metric (Level 7) singles out $\nabla^{\mathrm{E}}$, whose straightest curves are the straight lines.
+
+  - type: numeric
+    id: euclid-df
+    title: A covector field under ∇ᴱ
+    prompt: |
+      On the plane with cartesian coordinates $(a,b)$, $\nabla^{\mathrm{E}}$ satisfies $\nabla^{\mathrm{E}}_{\mathcal{X}_p}\partial x_k = 0$ for every basis field. For a covector field, $(\nabla_{\mathcal{X}_p}\mathsf{X})(\mathcal{Y}_p) = \mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor) - \mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y})$. Let $f = a^2b$, so $df = 2ab\,dx^1 + a^2\,dx^2$. What is $(\nabla^{\mathrm{E}}_{(\partial x_2)_p}df)\big((\partial x_1)_p\big)$ at $p = (3,1)$?
+    answer: 6
+    wrong:
+      - { value: 9, feedback: '$9 = a^2$ is the value of the second component of $df$ at $(3,1)$, not a derivative of the first one. Feed $\partial x_1$: $df\lceil\partial x_1\rfloor = 2ab$, and $\partial(2ab)/\partial b = 2a = 6$.' }
+      - { value: 0, feedback: 'The correction term is $0$ (since $\nabla^{\mathrm{E}}\partial x_1 = 0$), but the first term is not: $df\lceil\partial x_1\rfloor = 2ab$ changes with $b$, $\partial(2ab)/\partial b = 2a = 6$.' }
+    hint: |
+      Take $\mathcal{Y} = \partial x_1$: then $df\lceil\partial x_1\rfloor = 2ab$ and the correction term vanishes.
+    explanation: |
+      With $\mathcal{Y} = \partial x_1$,
+      $$\begin{aligned}&(\nabla^{\mathrm{E}}_{(\partial x_2)_p}df)\big((\partial x_1)_p\big)\\ &= \partial_b(2ab) - df_p(0) = 2a = 6.\end{aligned}$$
+      The components of $\nabla^{\mathrm{E}}df$ are the ordinary second partial derivatives of $f$, here $\partial_b\partial_a(a^2b) = 2a$.
+
+  - type: mcq
+    id: resolve-constant
+    title: Back to the puzzle
+    prompt: |
+      On the plane minus the half-line $\{b=0,\ a\le0\}$, $\nabla^{\mathrm{E}}$ differentiates cartesian components and $\nabla^{\mathrm{P}}$ differentiates polar components. The field $\partial x_1$ has cartesian components $(1,0)$ and polar components $(a/r,\ -b/r^2)$. Which statement is correct?
+    options:
+      - text: '$\partial x_1$ is parallel for $\nabla^{\mathrm{E}}$ ($\nabla^{\mathrm{E}}_{\mathcal{X}_p}\partial x_1 = 0$ for all $\mathcal{X}_p$) but not for $\nabla^{\mathrm{P}}$'
+        correct: true
+      - text: '$\partial x_1$ is constant, full stop: one arrow, "one step to the right", everywhere'
+        feedback: |
+          "The same arrow everywhere" uses the cartesian identification of all tangent spaces, which is one particular connection, $\nabla^{\mathrm{E}}$. For $\nabla^{\mathrm{P}}$, $\nabla^{\mathrm{P}}_{(\partial x_2)_p}\partial x_1 = -(\partial x_2)_p$ at $p = (1,0)$.
+      - text: '$\partial x_1$ is parallel for both, because a field cannot be constant in one chart and not in another'
+        feedback: |
+          Its components are constant in the cartesian chart and not in the polar one: $\partial(-b/r^2)/\partial b = -1$ at $(1,0)$. Each connection declares "constant" the fields with constant components in its own chart.
+    explanation: |
+      "Constant vector field" means $\nabla_{\mathcal{X}_p}\mathcal{Y} = 0$ for all directions, and that depends on the connection. $\nabla^{\mathrm{E}}$ calls $\partial x_1$ constant; $\nabla^{\mathrm{P}}$ calls the swirl $\partial y_2$ constant instead. The hook's question only has an answer once the affine manifold is fixed.
+
+  - type: text
+    id: words
+    title: A word on words
+    body: |
+      Here **connection** names the whole structure $\nabla$ and **covariant derivative** what it produces, $\nabla_{\mathcal{X}_p}T$; the two words are used almost interchangeably.
+
+      In wider differential geometry a connection is more general: on any bundle it is a choice of "horizontal" directions (moving along the base without moving in the fibre), which also works when the fibres are not vector spaces. Gauge theories are the physics example: the gauge potential $A$ is such a connection, and the familiar covariant derivative $D_j = \partial_j - iA_j$ appears only when it acts on matter fields. In general relativity every object is built from the tangent bundle, a bundle of vector spaces, and there the two notions coincide.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      - **Why**: "differentiate the components" depends on the chart, through the second derivatives $\partial_i\partial_j(\text{ᛖ}_{\mathcal{U}\mathcal{V}})^k$ of the transition map; vectors at different points cannot be subtracted.
+      - **Connection** $\nabla\colon T_p\mathcal{M}\times\Gamma T^{(r,s)}\mathcal{M}\to T_p^{(r,s)}\mathcal{M}$, $(\mathcal{X}_p,T)\mapsto\nabla_{\mathcal{X}_p}T$, with the rules
+      $$\begin{gathered}\nabla_{\mathcal{X}_p}f = \mathcal{X}_p(f)\\ \nabla_{\mathcal{X}_p}(T_1+T_2) = \nabla_{\mathcal{X}_p}T_1 + \nabla_{\mathcal{X}_p}T_2\\ \nabla_{\alpha\mathcal{X}_p+\mathcal{Y}_p}T = \alpha\nabla_{\mathcal{X}_p}T + \nabla_{\mathcal{Y}_p}T\end{gathered}$$
+      plus the Leibniz rule, one term per ingredient,
+      $$\begin{aligned}&\mathcal{X}_p\big(T(\mathsf{X},\mathcal{Y})\big)\\ &= (\nabla_{\mathcal{X}_p}T)(\mathsf{X}_p,\mathcal{Y}_p)\\ &\quad + T_p(\nabla_{\mathcal{X}_p}\mathsf{X},\mathcal{Y}_p)\\ &\quad + T_p(\mathsf{X}_p,\nabla_{\mathcal{X}_p}\mathcal{Y}),\end{aligned}$$
+      and smoothness: $\nabla_\mathcal{X}T\in\Gamma T^{(r,s)}\mathcal{M}$.
+      - **Consequences**:
+      $$\begin{gathered}\nabla_{f\mathcal{X}+\mathcal{Y}}T = f\nabla_\mathcal{X}T + \nabla_\mathcal{Y}T\\ \nabla_\mathcal{X}(g\mathcal{Y}) = \mathcal{X}\lfloor g\rceil\mathcal{Y} + g\nabla_\mathcal{X}\mathcal{Y}\end{gathered}$$
+      $$\begin{aligned}&(\nabla_{\mathcal{X}_p}\mathsf{X})(\mathcal{Y}_p)\\ &= \mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor) - \mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y})\end{aligned}$$
+      A tensor in the direction, not in the differentiated field; fixed on all tensor fields by its action on vector fields.
+      - **Affine manifold** $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla)$; the connection is a choice. On the plane: $\nabla^{\mathrm{E}}_{\partial x_2}(-b\,\partial x_1 + a\,\partial x_2) = -\partial x_1$, while $\nabla^{\mathrm{P}}$ (constant polar components) gives $0$.
+
+      **Next:** how much freedom do the rules leave? In a chart, everything reduces to the vectors $\nabla_{(\partial x_k)_p}\partial x_j$, whose components are the **connection coefficient functions** $(\Gamma_\mathscr{X})^i_{jk}$. (This $\Gamma$ is unrelated to the $\Gamma$ of $\Gamma T\mathcal{M}$, the set of fields; both symbols are standard.) For $\nabla^{\mathrm{E}}$ they all vanish in the cartesian chart, but not in the polar one.
