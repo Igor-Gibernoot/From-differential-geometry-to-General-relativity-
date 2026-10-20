@@ -23,9 +23,9 @@ append a short entry at the end of **Log** (a few lines, ending with
   `ch04-challenge` (36 cards, five problems: polar chart at $(1,1)$, reparametrization rune and Leibniz,
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
-- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards).
+- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards).
 - **Queue (one unit each):** Chapter 5 (Fields) in `course.yaml` order, next
-  `ch05-module` (concept); then Chapters 6–10 (each with map and challenge).
+  `ch05-tensor-fields` (concept); then Chapters 6–10 (each with map and challenge).
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -177,6 +177,16 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\mathcal{X}$ polar comps $(1/\sqrt5, 4/(5\pi))$, $df\lceil\mathcal{X}\rfloor = 1$. Non-exact example $\mathsf{Z} = -b\,dx^1 + a\,dx^2$ (mixed partials $-1$ vs $1$; $= r^2dy^2$ in polar);
   $d\theta$-like field $(-b/r^2, a/r^2)$ on the punctured plane left as teaser for `ch05-differentials`. Widget: `curve-velocity` with fields `[x2y, x, theta]`,
   level lines as the picture of the whole field $df$.
+  Module (`ch05-module`): ring ops $\oplus_{C^\infty}$, $\odot_{C^\infty}$ (vs $\oplus$, $\odot$ of the real vector space); field ops $\oplus_\Gamma$, $\odot_\Gamma$,
+  $\oplus^*_\Gamma$, $\odot^*_\Gamma$ defined by action ($\lfloor\ \rceil$, $\lceil\ \rfloor$), shown equal to pointwise $(f\,\mathcal{X})(p) = f(p)\mathcal{X}(p)$; short forms
+  $f\,\mathcal{X}$, $\mathcal{X}_1+\mathcal{X}_2$, $h\,\mathsf{X}$ allowed from here on; module axioms listed in a `gathered`; zero divisors $\psi(t) = e^{-1/t}$ ($t>0$), $\psi(-t)$
+  (smoothness stated without proof); "$\mathbb{R}$-algebra" named; $\mathbb{Z}$ example $\{2\}$; on $\mathbb{R}$ chart $\mathscr{X}(t) = t$, $\mathcal{W} = \mathscr{X}\,\partial x_1$
+  (independent, not spanning); egg-carton $\mathcal{X},\mathcal{Y}$ pointwise determinant $b$, independent over $C^\infty$ but not spanning, basis on $b\neq0$
+  ($g = -1/b$, $f = a/b$ for $\partial x_1$); frame $\{e_a\}$ with index $a$, coefficients $f^a$/$w^a$; polar frame $(\partial r)_q = (q_1/r, q_2/r)$,
+  $(\partial\theta)_q = (-q_2,q_1)$ is a frame on the plane minus the origin (beyond the chart domain), determinant $r$; $S^1$: $\partial\varphi = \partial\theta$ on both arcs;
+  parallelizable/free; hairy ball stated without proof; egg carton $\mathcal{X}+\mathcal{Y} = -b\,\partial x_1 + (1+a)\partial x_2$, $f\mathcal{X} = (\cos a\cos b+1)\partial x_2$,
+  zero at $(\pi,0)$; $(f\,df)\lceil\mathcal{X}\rfloor = -3\sqrt3/4$ at $(0,\pi/3)$; $\Gamma T\mathbb{R}^2$ infinite-dimensional over $\mathbb{R}$; connections named as Level 6.
+  Widget: `chart-basis` with one cartesian chart, presets placing swirl vs unit arrows, view `{x: -1, y: -1.5, w: 4.5, h: 4.5}` (keeps $p = (2,0)$ and its basis on screen at 390 px).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -546,3 +556,14 @@ long box titles.
 - Choices: the book's brackets $\mathsf{X}\lceil\mathcal{X}\rfloor$ (the unit prompt wrote $\lfloor\ \rceil$); non-exact example given fully by mixed
   partials (elementary), leaving closed-not-exact ($d\theta$ on the punctured plane) for the guided problem; $\oplus_\Gamma$, frames left for `ch05-module`.
 - Conventions fixed here: see Current, "Covector fields (`ch05-covector-fields`)".
+
+### 2026-10-19 — ch05-module (concept)
+- 27 cards: hook (normalise the swirl by $1/r$), `chart-basis` widget (swirl vs unit arrows, one chart), predict-unit, predict-basis,
+  ring and field definitions, invertible functions (multi-select), zero divisors and cancellation, $\oplus_\Gamma$/$\odot_\Gamma$/$\oplus^*_\Gamma$/$\odot^*_\Gamma$,
+  module axioms, axiom check (M3), independence/spanning over a ring ($\mathbb{Z}$), $t\,\partial x_1$ on $\mathbb{R}$, egg-carton pair, order proof
+  (basis ⇒ pointwise basis), frames and dual frames, polar frame off the origin, parallelizable + hairy ball, $S^1$ frame, $S^2$ no basis,
+  egg-carton operations (two numerics), real vs $C^\infty$ dimension trap, resolve, summary with teaser for tensor fields.
+- Choices: egg-carton $\mathcal{X},\mathcal{Y}$ used as the field-level "independent but not spanning" example (the TeX used $t\,\partial_t$ on $\mathbb{R}$; both
+  included); unit-radial problem replaced by the unit swirl (same obstruction); polar frame extended past its chart to illustrate "frame ≠ chart"
+  (the book's non-chart frame example is in a later appendix section, not used).
+- Conventions fixed here: see Current, "Module (`ch05-module`)".

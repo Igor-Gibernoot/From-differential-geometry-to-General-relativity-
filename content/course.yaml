@@ -216,7 +216,11 @@ levels:
         kind: concept
         file: ch05/covector-fields.yaml
         summary: A covector at every point, such as the differential $df$ of a height map. The cotangent bundle $T^*\mathcal{M}$, covector fields as smooth sections, the covariant law for component functions, the action on vector fields, and a field that is no $df$.
-      - { id: ch05-module, title: "The $C^\\infty(\\mathcal{M})$-Module Structure", kind: concept }
+      - id: ch05-module
+        title: "The $C^\\infty(\\mathcal{M})$-Module Structure"
+        kind: concept
+        file: ch05/module.yaml
+        summary: Fields can be scaled by functions, a different factor at every point. The ring $C^\infty(\mathcal{M})$, which is not a field, the modules $\Gamma T\mathcal{M}$ and $\Gamma T^*\mathcal{M}$, independence without spanning, frames, and why the sphere has no global basis.
       - { id: ch05-tensor-fields, title: Tensor Fields, kind: concept }
       - { id: ch05-differentials, title: "Guided Problem: Which Covector Fields Are Differentials?", kind: guided }
       - { id: ch05-traps, title: Field Traps, kind: traps }
