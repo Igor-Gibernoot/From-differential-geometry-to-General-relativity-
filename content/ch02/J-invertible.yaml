@@ -9,7 +9,7 @@ cards:
     body: |
       Let $\{\hat{x}_1,\dots,\hat{x}_d\}$ ("old") and $\{\hat{y}_1,\dots,\hat{y}_d\}$ ("new") be two bases of the same vector space $V$. The change-of-basis matrix $J$ writes old in terms of new:
       $$\hat{x}_i = \sum_{j=1}^d J_i^j\,\hat{y}_j .$$
-      Everything about transformation laws used the inverse matrix $J^{-1}$. The book states that $J$ is invertible "as a direct consequence of both sets being bases". Here you prove it.
+      Everything about transformation laws used the inverse matrix $J^{-1}$. $J$ should be invertible "as a direct consequence of both sets being bases". Here you prove it.
 
       > **Show** that there is a matrix $K$ with
       > $$\sum_{j=1}^d J_i^j\,K_j^k = \delta_i^k$$
@@ -114,7 +114,7 @@ cards:
     explanation: |
       This time uniqueness of components in the **new** basis $\{\hat{y}_l\}$ does the work. Together:
       $$JK = \mathbb{1}\quad\text{and}\quad KJ = \mathbb{1},$$
-      so $J$ is invertible with $J^{-1} = K$. In the book's notation, $(J^{-1})_j^k := K_j^k$ and
+      so $J$ is invertible with $J^{-1} = K$. We write $(J^{-1})_j^k := K_j^k$ and
       $$\hat{y}_j = \sum_{k=1}^d (J^{-1})_j^k\,\hat{x}_k .$$
 
   - type: mcq

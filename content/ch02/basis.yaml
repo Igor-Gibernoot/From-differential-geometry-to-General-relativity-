@@ -112,7 +112,7 @@ cards:
       $$\hat{\mathfrak{x}}^i(\hat{x}_j) := \delta^i_j ,$$
       where $\delta^i_j$ is the **Kronecker delta**: $1$ if $i = j$ and $0$ otherwise. On any other vector, $\hat{\mathfrak{x}}^i$ is fixed by linearity.
 
-      The covectors $\hat{\mathfrak{x}}^1,\dots,\hat{\mathfrak{x}}^d$ form the **dual basis** (the book calls it the "induced dual cobasis"). The letter is a fraktur x, $\hat{\mathfrak{x}}$, and its index is **up**.
+      The covectors $\hat{\mathfrak{x}}^1,\dots,\hat{\mathfrak{x}}^d$ form the **dual basis** (also called the "induced dual cobasis"). The letter is a fraktur x, $\hat{\mathfrak{x}}$, and its index is **up**.
 
       In words: $\hat{\mathfrak{x}}^i$ gives $1$ on its partner $\hat{x}_i$ and $0$ on **every other** basis vector. That second half is why it depends on the whole basis.
 

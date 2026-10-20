@@ -114,7 +114,7 @@ cards:
     body: |
       Allow any number of slots, of both kinds. Recall: $V$ is a real vector space, its dual $V^*$ holds the covectors (linear maps $V\to\mathbb{R}$). An **$(r,s)$-tensor** is a map
       $$T: \underbrace{V^*\times\cdots\times V^*}_{r\ \text{copies}}\times\underbrace{V\times\cdots\times V}_{s\ \text{copies}}\to\mathbb{R}$$
-      that is **multilinear**: linear in each of its $r + s$ slots separately, with the others held fixed. The pair $(r, s)$ is its **type**: $r$ covector slots (the book lists them first), then $s$ vector slots. The symbol $\times$ is the Cartesian product: an input is a list of $r$ covectors and $s$ vectors.
+      that is **multilinear**: linear in each of its $r + s$ slots separately, with the others held fixed. The pair $(r, s)$ is its **type**: $r$ covector slots (listed first), then $s$ vector slots. The symbol $\times$ is the Cartesian product: an input is a list of $r$ covectors and $s$ vectors.
 
       Examples: the area machine $A$ is a $(0,2)$-tensor; a covector is a $(0,1)$-tensor; a number is a $(0,0)$-tensor (no slots at all).
 

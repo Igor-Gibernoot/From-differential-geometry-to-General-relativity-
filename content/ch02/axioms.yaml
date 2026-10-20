@@ -208,7 +208,7 @@ cards:
     id: polynomials
     title: A space of functions
     body: |
-      A main example in the book: the polynomials of degree at most $N$,
+      A main example: the polynomials of degree at most $N$,
       $$\begin{aligned}P_N := \{\,p(x) &= p^0 + p^1 x + \cdots + p^N x^N \\ &\mid p^i\in\mathbb{R}\,\},\end{aligned}$$
       with **pointwise** operations: the sum $p\oplus q$ is the polynomial whose value at each $x$ is $p(x) + q(x)$, and $(\alpha\odot p)(x) := \alpha\cdot p(x)$.
 

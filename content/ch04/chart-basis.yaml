@@ -301,7 +301,7 @@ cards:
       $$\dim T_p\mathcal{M} = d,$$
       the dimension of the manifold. A remarkable outcome: $T_p\mathcal{M}$ was defined as a set of maps on $C^\infty(\mathcal{M})$, a huge space, yet only $d$ directions survive.
 
-      The book adds a caution. One chart around $p$ gives the result at the points of $\mathcal{U}$. That $T_p\mathcal{M}$ has the same dimension at **every** point is a global fact: the atlas covers $\mathcal{M}$ with charts that all land in open subsets of the same $\mathbb{R}^d$. The dimension is a property of the whole manifold, not of one coordinate patch.
+      A caution. One chart around $p$ gives the result at the points of $\mathcal{U}$. That $T_p\mathcal{M}$ has the same dimension at **every** point is a global fact: the atlas covers $\mathcal{M}$ with charts that all land in open subsets of the same $\mathbb{R}^d$. The dimension is a property of the whole manifold, not of one coordinate patch.
 
   - type: mcq
     id: two-dimensions

@@ -11,7 +11,7 @@ cards:
       $$\hat{x}_i = \sum_{j=1}^d J_i^j\,\hat{y}_j ,$$
       with $J$ invertible, so that $\hat{y}_k = \sum_m (J^{-1})_k^m\,\hat{x}_m$. Each basis has its dual basis in $V^*$:
       $$\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j ,\qquad \hat{\mathfrak{y}}^i(\hat{y}_j) = \delta^i_j .$$
-      Both $\{\hat{\mathfrak{x}}^i\}$ and $\{\hat{\mathfrak{y}}^i\}$ are bases of $V^*$, so they are related by **some** matrix. The book claims it is built from the same $J$ (its Appendix B.3).
+      Both $\{\hat{\mathfrak{x}}^i\}$ and $\{\hat{\mathfrak{y}}^i\}$ are bases of $V^*$, so they are related by **some** matrix. It turns out to be built from the same $J$, and here you prove it.
 
       > **(a)** Express each $\hat{\mathfrak{x}}^i$ in terms of the $\hat{\mathfrak{y}}^j$.
       >
@@ -183,7 +183,7 @@ cards:
     hint: Expand the covector in both dual bases, substitute the dual basis law, regroup, and compare components.
     explanation: |
       $$\mathtt{x}_j = \sum_{i=1}^d J_j^i\,\mathtt{y}_i ,$$
-      the same pattern as the basis vectors $\hat{x}_j = \sum_i J_j^i\,\hat{y}_i$: covector components are **covariant**. This is the route the book takes. It agrees with the shortcut $\mathtt{y}_j = \mathsf{X}(\hat{y}_j) = \sum_i (J^{-1})_j^i\,\mathtt{x}_i$; multiply by $J$ to go from one form to the other.
+      the same pattern as the basis vectors $\hat{x}_j = \sum_i J_j^i\,\hat{y}_i$: covector components are **covariant**. It agrees with the shortcut $\mathtt{y}_j = \mathsf{X}(\hat{y}_j) = \sum_i (J^{-1})_j^i\,\mathtt{x}_i$; multiply by $J$ to go from one form to the other.
 
   - type: mcq
     id: covariant-list

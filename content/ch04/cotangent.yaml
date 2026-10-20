@@ -220,7 +220,7 @@ cards:
         feedback: |
           A map may send different inputs to the same output; it only must not send one input to two outputs. Here $(df)_p$ is linear, and its difference of inputs $v_{\gamma_1,p} - v_{\gamma_2,p}$, with components $(1, -2)$, is tangent to the level line through $p$, where $(df)_p$ vanishes.
     explanation: |
-      Linearity explains the coincidence: $(df)_p$ vanishes on the difference $(1,0) - (0,2) = (1,-2)$, the direction of the level line $q_2 = 2 - q_1^2$ at $p$. The book draws a covector as exactly this line of velocities it sends to $0$, not as an arrow.
+      Linearity explains the coincidence: $(df)_p$ vanishes on the difference $(1,0) - (0,2) = (1,-2)$, the direction of the level line $q_2 = 2 - q_1^2$ at $p$. We picture a covector as exactly this line of velocities it sends to $0$, not as an arrow.
 
   - type: mcq
     id: sum-product-rules
@@ -360,6 +360,6 @@ cards:
       - $\dim T_p^*\mathcal{M} = d$, because finite-dimensional duals have the dimension of the original space.
       - The **differential** $(df)_p(v) := v(f)$, the rate of $f$ along $v$. It is linear by the field-by-field operations of $T_p\mathcal{M}$, so $(df)_p\in T_p^*\mathcal{M}$. It depends only on $f$ near $p$, and needs no chart and no metric.
       - A covector is not an arrow in $T_p\mathcal{M}$: it eats arrows. Its numbers carry lower indices, typewriter $\mathtt{x}^p_i$.
-      - Example: $f = q_1^2 + q_2$ at $p = (1,1)$ gives $(df)_p(v) = 2v^1 + v^2$, which is $2$ on both C.3 velocities and $0$ along the level line.
+      - Example: $f = q_1^2 + q_2$ at $p = (1,1)$ gives $(df)_p(v) = 2v^1 + v^2$, which is $2$ on both velocities $(1,0)$ and $(0,2)$ and $0$ along the level line.
 
       **Next: Differentials as a Basis.** A chart gives $d$ special fields, its coordinate functions $\mathscr{X}^i$. Their differentials $(d\mathscr{X}^i)_p$ turn out to be exactly the dual basis of $(\partial/\partial\mathscr{X}^i)_p$, and every covector is a combination of them. How do its components change when the chart changes?

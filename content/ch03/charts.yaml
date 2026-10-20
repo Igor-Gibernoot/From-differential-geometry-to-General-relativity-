@@ -154,7 +154,7 @@ cards:
 
       For charts $(\mathcal{U}, \mathscr{X})$ and $(\mathcal{V}, \mathscr{Y})$ with $\mathcal{U}\cap\mathcal{V}\neq\emptyset$, the transition map from $\mathscr{X}$-coordinates to $\mathscr{Y}$-coordinates is
       $$\mathscr{Y}\circ\mathscr{X}^{-1}\colon\mathscr{X}(\mathcal{U}\cap\mathcal{V})\to\mathscr{Y}(\mathcal{U}\cap\mathcal{V}).$$
-      The book names it with the rune $\text{ᛖ}$:
+      It is named with the rune $\text{ᛖ}$:
       $$\text{ᛖ}_{\mathcal{U}\mathcal{V}} := \mathscr{Y}\circ\mathscr{X}^{-1},$$
       and the reverse translation is $\text{ᛖ}_{\mathcal{V}\mathcal{U}} := \mathscr{X}\circ\mathscr{Y}^{-1}$.
 
@@ -251,7 +251,7 @@ cards:
       2. **second countable**: some countable family of open sets builds every open set by unions;
       3. **locally Euclidean**: every point $p$ lies in the domain of some chart $(\mathcal{U}, \mathscr{X})$ with $\mathscr{X}(\mathcal{U})\subseteq\mathbb{R}^d$.
 
-      A set of charts whose domains together cover $\mathcal{M}$ is an **atlas** (the subject of the next lesson). The book writes the manifold as the triple $(\mathcal{M}, \mathcal{O}_\mathcal{M}, \mathcal{A})_d$, with $\mathcal{A}$ an atlas.
+      A set of charts whose domains together cover $\mathcal{M}$ is an **atlas** (the subject of the next lesson). We write the manifold as the triple $(\mathcal{M}, \mathcal{O}_\mathcal{M}, \mathcal{A})_d$, with $\mathcal{A}$ an atlas.
 
       Example: $S^1$ inherits Hausdorff and second countable from $\mathbb{R}^2$ (every subset of $\mathbb{R}^d$ has both), and the charts $\theta$ and $\varphi$ cover it. So $S^1$ is a topological manifold.
 

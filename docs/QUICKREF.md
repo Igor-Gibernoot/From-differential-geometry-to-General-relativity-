@@ -62,7 +62,7 @@ above"). Never name a theme-dependent colour; use labels or the fixed hues
   tolerance: 0.001       # optional
   answerText: '-1'       # optional
   wrong:                 # optional targeted feedback
-    - { value: 0, feedback: … }
+    - { value: 0, feedback: … }   # matches within 0.5% (or the card tolerance, or its own `tolerance:`)
   hint: …
   explanation: …         # reader may type decimals or fractions
 

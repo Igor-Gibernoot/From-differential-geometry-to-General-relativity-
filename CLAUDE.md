@@ -90,7 +90,9 @@ and put the weight on understanding and on the physics.
    $T_p^*\mathcal{M}$. Chapter 2 writes sums explicitly; Einstein summation
    only from Chapter 4, where the book introduces it. Later conventions are
    listed in `docs/STATUS.md` (Current).
-10. **Self-contained.** No bare references to book sections. End each lesson
+10. **Self-contained.** Never mention "the book" or its section labels
+    (C.3, B.5: say "the running example"); where the book derives a result
+    another way, give both derivations in the lesson. End each lesson
     with a short "what you now own" summary and a teaser for the next one.
 11. **Card-sized steps for flow.** One idea per card, many small
     questions, immediate feedback. Mix question types (not only MCQ). Add a

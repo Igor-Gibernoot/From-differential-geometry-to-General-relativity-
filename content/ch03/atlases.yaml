@@ -49,7 +49,7 @@ cards:
       $$\bigcup_{\alpha\in A}\mathcal{U}_\alpha = \mathcal{M}.$$
       Equivalently: every point $p$ lies in the domain of at least one chart of $\mathcal{A}$. Like a road atlas, each page shows one region, and the pages overlap.
 
-      A topological manifold comes with one; the book writes it as the triple $(\mathcal{M}, \mathcal{O}_\mathcal{M}, \mathcal{A})_d$.
+      A topological manifold comes with one; we write it as the triple $(\mathcal{M}, \mathcal{O}_\mathcal{M}, \mathcal{A})_d$.
 
       Examples on the unit circle $S^1$: the angle $\theta\in(0, 2\pi)$ misses $(1, 0)$, the angle $\varphi\in(-\pi, \pi)$ misses $(-1, 0)$, and the stereographic chart $\sigma = x/(1-y)$ misses $(0, 1)$. Both $\{\theta, \varphi\}$ and $\{\theta, \sigma\}$ are atlases. On $\mathbb{R}$, $\{x\}$ alone is an atlas, and so is $\{y\}$.
 

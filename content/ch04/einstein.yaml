@@ -364,7 +364,7 @@ cards:
     id: shorthand
     title: Shorter names
     body: |
-      With the sums gone, the book also shortens the names. For a velocity $v_{\gamma,p}$ and charts $\mathscr{X}$, $\mathscr{Y}$ around $p$:
+      With the sums gone, we also shorten the names. For a velocity $v_{\gamma,p}$ and charts $\mathscr{X}$, $\mathscr{Y}$ around $p$:
       $$\begin{gathered}\mathcal{X}_p := v_{\gamma,p},\\ (\partial x_i)_p := \Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p,\\ x^i_p := \dot\gamma^i_\mathcal{U}(\lambda_0),\\ y^i_p := \dot\gamma^i_\mathcal{V}(\lambda_0),\end{gathered}$$
       and $(\partial y_i)_p$ for the $\mathscr{Y}$ basis. A second vector $\mathcal{Y}_p := v_{\delta,p}$ (curve $\delta$) gets components $\tilde x^i_p$, $\tilde y^i_p$. The index on $(\partial x_i)_p$ is now written down explicitly. The laws become
       $$\begin{gathered}\mathcal{X}_p = x^i_p(\partial x_i)_p = y^i_p(\partial y_i)_p,\\ (\partial x_i)_p = \Big(\frac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\Big)_p(\partial y_j)_p,\\ y^i_p = \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p x^j_p.\end{gathered}$$

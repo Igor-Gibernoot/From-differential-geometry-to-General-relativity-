@@ -74,7 +74,7 @@ cards:
       Let $(V, \oplus_V, \odot_V)$ and $(W, \oplus_W, \odot_W)$ be vector spaces. A map $\phi: V\to W$ is **linear** if, for all $\mathcal{X}, \mathcal{Y}\in V$ and $\alpha\in\mathbb{R}$,
       $$\phi(\mathcal{X}\oplus_V\mathcal{Y}) = \phi(\mathcal{X})\oplus_W\phi(\mathcal{Y}),$$
       $$\phi(\alpha\odot_V\mathcal{X}) = \alpha\odot_W\phi(\mathcal{X}).$$
-      The subscripts say **which space** adds: on the left we add in $V$ before mapping, on the right we add in $W$ after mapping. Linear means "add (or scale) first, then map" equals "map first, then add (or scale)". The book marks linear maps with a tilde on the arrow, $\phi: V\xrightarrow{\sim}W$.
+      The subscripts say **which space** adds: on the left we add in $V$ before mapping, on the right we add in $W$ after mapping. Linear means "add (or scale) first, then map" equals "map first, then add (or scale)". Linear maps are marked with a tilde on the arrow, $\phi: V\xrightarrow{\sim}W$.
 
       Warning: the school phrase "linear function $y = ax + b$" is **not** linear in this sense unless $b = 0$.
 
@@ -117,7 +117,7 @@ cards:
     id: poly-examples
     title: Linear maps on polynomials
     body: |
-      Recall the vector space $P_N$ of polynomials of degree at most $N$, with pointwise operations. Two linear maps from the book:
+      Recall the vector space $P_N$ of polynomials of degree at most $N$, with pointwise operations. Two linear maps:
 
       - the **derivative** $\delta: P_N\to P_N$, $\delta(p) := p'$. Linear because $(p + q)' = p' + q'$ and $(\alpha p)' = \alpha p'$;
       - the **integral** $I: P_N\to\mathbb{R}$,

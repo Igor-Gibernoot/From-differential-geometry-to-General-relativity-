@@ -121,7 +121,9 @@ Every wrong option should carry `feedback` that names the misconception behind i
   hint: Shown after a wrong answer with no specific feedback.
   explanation: ...
 ```
-The reader may type decimals or fractions (`1/2`).
+The reader may type decimals or fractions (`1/2`). A `wrong` value matches
+within 0.5% of itself (at least the card's tolerance; override with its own
+`tolerance:`), so rounded inputs such as 1.36 for $e/2$ still get its feedback.
 
 ### `build` — assemble an expression from tiles
 ```yaml
@@ -397,7 +399,8 @@ times column). With `basisOnly: true`, $v$ and the components are hidden and
 `chain` instead expands each $(\partial/\partial\mathscr{X}^i)_p =
 \sum_j (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p\,(\partial/\partial\mathscr{Y}^j)_p$
 in numbers (column $i$ of the Jacobian). `inverse: true` also shows
-$(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)_p$. Check (C.3, $p = (1,1)$,
+$(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)_p$. `jacobian: false` hides the
+Jacobian and the component-law lines (for cards before the Jacobian is taught). Check (C.3, $p = (1,1)$,
 $v = (1,2)$): $\mathscr{X}$-components $(2, -2)$, $\mathscr{Y}$-components
 $(1, 3e) \approx (1, 8.15)$, Jacobian $\begin{pmatrix} 1/2 & 0 \\ e/2 & -e\end{pmatrix}$.
 ```yaml

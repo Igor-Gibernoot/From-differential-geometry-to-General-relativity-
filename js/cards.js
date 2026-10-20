@@ -145,7 +145,10 @@ function numeric(card, el) {
   setTimeout(() => input.focus({ preventScroll: true }), 50);
 
   const tol = card.tolerance ?? 1e-6 * Math.max(1, Math.abs(card.answer));
-  const near = (a, b) => Math.abs(a - b) <= tol;
+  const near = (a, b, t = tol) => Math.abs(a - b) <= t;
+  // A wrong value matches looser than the answer (0.5%, or its own tolerance),
+  // so a rounded 1.36 still gets the feedback written for e/2.
+  const wrongTol = w => w.tolerance ?? Math.max(tol, 0.005 * Math.max(1, Math.abs(w.value)));
 
   return {
     kind: 'question',
@@ -156,7 +159,7 @@ function numeric(card, el) {
       input.disabled = true;
       const correct = near(v, card.answer);
       input.classList.add(correct ? 'correct' : 'wrong');
-      const match = (card.wrong ?? []).find(w => near(v, w.value));
+      const match = (card.wrong ?? []).find(w => near(v, w.value, wrongTol(w)));
       return { correct, feedback: correct ? '' : match?.feedback ?? card.hint ?? '' };
     },
     retry() { input.disabled = false; input.select(); ev.fire(); },

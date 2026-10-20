@@ -14,7 +14,7 @@ cards:
       \hat{y}_1 &= 2\,\hat{x}_1 + \hat{x}_2 \\
       \hat{y}_2 &= 3\,\hat{x}_1 + 2\,\hat{x}_2
       \end{aligned}$$
-      Recall the book's convention: the change of basis matrix $J$ writes **old in terms of new**,
+      Recall the convention: the change of basis matrix $J$ writes **old in terms of new**,
       $$\hat{x}_i = \sum_{j=1}^2 J_i^j\,\hat{y}_j ,$$
       so these two lines give the entries of $J^{-1}$: $\hat{y}_i = \sum_j (J^{-1})_i^j\,\hat{x}_j$.
 

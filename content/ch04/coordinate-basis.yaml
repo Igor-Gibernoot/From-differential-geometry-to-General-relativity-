@@ -43,8 +43,9 @@ cards:
       charts: [X, Y]
       p: [1, 1]
       v: [1, 2]
+      jacobian: false
       presets:
-        - { label: 'C.3 charts', charts: [X, Y], p: [1, 1], v: [1, 2] }
+        - { label: 'Charts X and Y', charts: [X, Y], p: [1, 1], v: [1, 2] }
         - { label: 'Cartesian and polar', charts: [cartesian, polar], p: [1, 1], v: [1, 2] }
     body: |
       Solid lines: the coordinate lines of $\mathscr{X}$ (where one coordinate is constant). Dashed lines: those of $\mathscr{Y}$. The blue arrow is the velocity $v$ of a straight curve through the point $p$; the purple arrows at $p$ belong to each chart (they get a name in a moment).
@@ -171,6 +172,7 @@ cards:
       charts: [X, Y]
       p: [1, 1]
       basisOnly: true
+      jacobian: false
     body: |
       Only the bases now. Each purple arrow $(\partial/\partial\mathscr{X}^i)_p$ points along the coordinate line on which only $\mathscr{X}^i$ changes, at the rate set by the chart. Drag $p$: the $\mathscr{X}$ arrows never change (that chart is linear), while the dashed $\mathscr{Y}$ arrows turn and stretch with the bending lines.
 
@@ -246,10 +248,11 @@ cards:
     id: jacobian
     title: The Jacobian of two charts
     body: |
-      Now two charts $(\mathcal{U}, \mathscr{X})$ and $(\mathcal{V}, \mathscr{Y})$ with $p\in\mathcal{U}\cap\mathcal{V}$. Their transition map $\mathscr{Y}\circ\mathscr{X}^{-1}$ sends $\mathscr{X}$-coordinates to $\mathscr{Y}$-coordinates. Its matrix of partial derivatives at $\mathscr{X}(p)$ is the **Jacobian**:
-      $$\left(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\right)_p := \partial_j\big[\mathscr{Y}^i\circ\mathscr{X}^{-1}\big](\mathscr{X}(p)).$$
-      Row $i$ is the $\mathscr{Y}$ index, column $j$ the $\mathscr{X}$ index. Reversing the roles gives the Jacobian of $\mathscr{X}\circ\mathscr{Y}^{-1}$:
-      $$\left(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\right)_p := \partial_j\big[\mathscr{X}^i\circ\mathscr{Y}^{-1}\big](\mathscr{Y}(p)).$$
+      Now two charts $(\mathcal{U}, \mathscr{X})$ and $(\mathcal{V}, \mathscr{Y})$ with $p\in\mathcal{U}\cap\mathcal{V}$. Recall their transition map $\text{ᛖ}_{\mathcal{U}\mathcal{V}} := \mathscr{Y}\circ\mathscr{X}^{-1}$, which sends $\mathscr{X}$-coordinates to $\mathscr{Y}$-coordinates. Its matrix of partial derivatives at $\mathscr{X}(p)$ is the **Jacobian**, named with the rune $\text{ᛞ}$:
+      $$\begin{aligned}(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j(\mathscr{X}(p)) &:= \left(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\right)_p\\ &:= \partial_j\big[\mathscr{Y}^i\circ\mathscr{X}^{-1}\big](\mathscr{X}(p)).\end{aligned}$$
+      Row $i$ is the $\mathscr{Y}$ index, column $j$ the $\mathscr{X}$ index. Mind the subscripts: $\text{ᛞ}_{\mathcal{V}\mathcal{U}}$ is the Jacobian of $\text{ᛖ}_{\mathcal{U}\mathcal{V}}$. The first subscript names the chart of the row index ($\mathscr{Y}$, on $\mathcal{V}$), the second that of the column index. Reversing the roles gives the Jacobian of $\text{ᛖ}_{\mathcal{V}\mathcal{U}} = \mathscr{X}\circ\mathscr{Y}^{-1}$:
+      $$\begin{aligned}(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j(\mathscr{Y}(p)) &:= \left(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\right)_p\\ &:= \partial_j\big[\mathscr{X}^i\circ\mathscr{Y}^{-1}\big](\mathscr{Y}(p)).\end{aligned}$$
+      We mostly write the fraction form: it shows which chart sits in which index.
       The notation is honest: comparing with the definition of the basis, $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ is exactly the basis vector $(\partial/\partial\mathscr{X}^j)_p$ applied to the scalar field $\mathscr{Y}^i$, the rate of change of $\mathscr{Y}^i$ along the $j$-th $\mathscr{X}$ coordinate curve.
 
   - type: numeric
@@ -282,7 +285,7 @@ cards:
     body: |
       Multiply the two Jacobians (row $i$ of one times column $j$ of the other) and use the chain rule backwards:
       $$\begin{aligned}&\sum_{k=1}^d \Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\Big)_p\Big(\frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^j}\Big)_p\\ &= \partial_j\big[(\mathscr{X}^i\circ\mathscr{Y}^{-1})\circ(\mathscr{Y}\circ\mathscr{X}^{-1})\big]\\ &= \partial_j\big[\mathscr{X}^i\circ\mathscr{X}^{-1}\big] = \delta^i_j,\end{aligned}$$
-      all evaluated at $\mathscr{X}(p)$; the middle $\mathscr{Y}^{-1}\circ\mathscr{Y}$ cancels. So the product is the identity matrix: each Jacobian is the inverse of the other, and both are invertible at every point of the overlap. This is a consequence of the charts being smoothly compatible, and a handy sanity check on any computed Jacobian.
+      all evaluated at $\mathscr{X}(p)$; the middle $\mathscr{Y}^{-1}\circ\mathscr{Y}$ cancels. With the runes, $\sum_k (\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_k\,(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^k_j = \delta^i_j$. So the product is the identity matrix: each Jacobian is the inverse of the other, and both are invertible at every point of the overlap. This is a consequence of the charts being smoothly compatible, and a handy sanity check on any computed Jacobian.
 
   - type: numeric
     id: inverse-entry
@@ -508,7 +511,7 @@ cards:
     body: |
       - **Chart-induced basis:** $(\partial/\partial\mathscr{X}^i)_p(f) := \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$, the velocity of the $i$-th coordinate curve; every velocity is $\sum_i \dot\gamma^i_\mathcal{U}(\partial/\partial\mathscr{X}^i)_p$, so $\dim T_p\mathcal{M} = d$.
       - **Components:** $\dot\gamma^i_\mathcal{U} = v_{\gamma,p}(\mathscr{X}^i)$, thanks to $(\partial/\partial\mathscr{X}^j)_p(\mathscr{X}^i) = \delta^i_j$.
-      - **Jacobian:** $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p = \partial_j[\mathscr{Y}^i\circ\mathscr{X}^{-1}](\mathscr{X}(p))$, the derivative of the transition map; the two Jacobians are inverse matrices.
+      - **Jacobian:** $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p = \partial_j[\mathscr{Y}^i\circ\mathscr{X}^{-1}](\mathscr{X}(p))$, the derivative of the transition map; the two Jacobians are inverse matrices.
       - **Basis law (covariant):** $(\partial/\partial\mathscr{X}^i)_p = \sum_j (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p(\partial/\partial\mathscr{Y}^j)_p$.
       - **Component law (contravariant):** $\dot\gamma^i_\mathcal{V} = \sum_j (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\dot\gamma^j_\mathcal{U}$; a chart change at $p$ is a Chapter 2 change of basis with $J$ = the Jacobian.
 

@@ -150,7 +150,7 @@ cards:
         feedback: |
           They behave exactly like the basis vectors, which is precisely the definition of covariant.
     explanation: |
-      Covector components transform **with** the basis, so they are covariant. The book also writes the law the other way round (multiply by $J$ and use $JJ^{-1} = \mathbb{1}$):
+      Covector components transform **with** the basis, so they are covariant. The law can also be written the other way round (multiply by $J$ and use $JJ^{-1} = \mathbb{1}$):
       $$\mathtt{x}_j = \sum_i J^i_j\,\mathtt{y}_i ,$$
       which has the same shape as $\hat{x}_j = \sum_i J_j^i\cdot\hat{y}_i$. This is why covector components carry their index **down**.
 

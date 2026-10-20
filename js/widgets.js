@@ -1302,6 +1302,7 @@ function curveVelocity(el, cfg) {
 //   chain:     false            the law in numbers (components, or the basis
 //                               law when basisOnly)
 //   inverse:   false            also show the inverse Jacobian (∂𝒳ⁱ/∂𝒴ʲ)_p
+//   jacobian:  true             false hides the Jacobian and the component law
 //   dragP:     true             p draggable
 //   snap:      0.25
 //   lines:     8                at most this many coordinate lines on each side of p
@@ -1346,7 +1347,7 @@ const mul2 = (A, B) => A.map(r => [0, 1].map(j => r[0] * B[0][j] + r[1] * B[1][j
 const mulv = (A, v) => A.map(r => r[0] * v[0] + r[1] * v[1]);
 
 function chartBasis(el, cfg) {
-  const sn = cfg.snap ?? 0.25, basisOnly = !!cfg.basisOnly, chain = !!cfg.chain, showInv = !!cfg.inverse;
+  const sn = cfg.snap ?? 0.25, basisOnly = !!cfg.basisOnly, chain = !!cfg.chain, showInv = !!cfg.inverse, showJac = cfg.jacobian !== false;
   const dragP = cfg.dragP ?? true, nmax = cfg.lines ?? 8;
   const mkChart = spec => {
     const o = typeof spec === 'string' ? { chart: spec } : spec;
@@ -1533,9 +1534,9 @@ function chartBasis(el, cfg) {
       }
       rows.push(h('div', { class: 'cv-cell' }, ...cell));
     });
-    if (chs.length === 2 && !(inD[0] && inD[1])) {
+    if (chs.length === 2 && showJac && !(inD[0] && inD[1])) {
       rows.push(h('div', { class: 'wide cb-tag', html: mdInline('The Jacobian needs $p$ in the domains of both charts.') }));
-    } else if (chs.length === 2) {
+    } else if (chs.length === 2 && showJac) {
       const [A, B] = chs;
       const J = mul2(Ds[1], Bs[0]);       // (∂𝒴ⁱ/∂𝒳ʲ)_p = D𝒴 · (D𝒳)⁻¹
       const mat = M => `\\begin{pmatrix} ${fmt(M[0][0])} & ${fmt(M[0][1])} \\\\ ${fmt(M[1][0])} & ${fmt(M[1][1])} \\end{pmatrix}`;

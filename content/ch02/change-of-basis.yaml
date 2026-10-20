@@ -190,7 +190,7 @@ cards:
     hint: Components in a basis are unique, so compare what multiplies $\hat{y}_j$ in the two expansions.
     explanation: |
       $$y^j = \sum_{i=1}^d J_i^j\, x^i .$$
-      Check the index bookkeeping. The free index $j$ is **up** on both sides. The summed index $i$ appears once up ($x^i$) and once down ($J_i^j$). The book writes the same law with the letters swapped: $y^i = \sum_j J_j^i\, x^j$.
+      Check the index bookkeeping. The free index $j$ is **up** on both sides. The summed index $i$ appears once up ($x^i$) and once down ($J_i^j$). The same law is often written with the letters swapped: $y^i = \sum_j J_j^i\, x^j$.
 
   - type: widget
     id: playground

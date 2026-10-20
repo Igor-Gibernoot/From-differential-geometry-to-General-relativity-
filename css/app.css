@@ -1,3 +1,7 @@
+/* Runes (the transition map ᛖ, the Jacobian ᛞ) are not in the KaTeX fonts:
+   extend KaTeX_Main with a runic subset so every device draws them. */
+@font-face { font-family: 'KaTeX_Main'; src: url(../vendor/fonts/NotoSansRunic-runic.woff2) format('woff2'); unicode-range: U+16A0-16F8; }
+
 /* ---------- Tokens ---------- */
 :root {
   --bg: #f6f5f1;

@@ -80,8 +80,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   $(\partial/\partial\mathscr{Y}^2)_p = (0, 1/e)$ (standard components of $\mathbb{R}^2$). Basis now named: $(\partial/\partial\mathscr{X}^i)_p(f) := \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$,
   "chart-induced basis", coordinate curve $c_i(\lambda) = \mathscr{X}^{-1}(\mathscr{X}(p)+\lambda e_i)$;
   components $\dot\gamma^i_\mathcal{U}(\lambda_0)$ (chart $\mathscr{X}$ on $\mathcal{U}$),
-  $\dot\gamma^i_\mathcal{V}$ (chart $\mathscr{Y}$ on $\mathcal{V}$), $\delta^i_j$; Jacobian written only
-  as $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ (the book's runic letters not used);
+  $\dot\gamma^i_\mathcal{V}$ (chart $\mathscr{Y}$ on $\mathcal{V}$), $\delta^i_j$; Jacobian named with the
+  book's rune, $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j(\mathscr{X}(p)) := (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ (Jacobian of
+  $\text{ᛖ}_{\mathcal{U}\mathcal{V}} = \mathscr{Y}\circ\mathscr{X}^{-1}$; first subscript = chart of the row index), fraction form used
+  in laws; runes render via `vendor/fonts/NotoSansRunic-runic.woff2` (extends `KaTeX_Main`);
+  **never mention "the book" or its section numbers (C.3, B.5) in lessons**: say "the running example";
   basis law uses column $i$ (covariant), component law row $i$ (contravariant);
   Chapter 2 link $J_i^j = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p$ ($\mathscr{X}$ old, $\mathscr{Y}$ new);
   polar chart $\mathscr{P}(q) = (r,\theta)$, $|(\partial/\partial\theta)_p| = r_p$; metric = Level 7.
@@ -112,8 +115,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   $v = (1,2)$ gives $4$ in both; $(d\mathscr{Y}^1)_p = \tfrac12(d\mathscr{X}^1)_p$, $(d\mathscr{Y}^2)_p = \tfrac e2(d\mathscr{X}^1)_p - e(d\mathscr{X}^2)_p$,
   $(d\mathscr{X}^1)_p = 2(d\mathscr{Y}^1)_p$, $(d\mathscr{X}^2)_p = (d\mathscr{Y}^1)_p - \tfrac1e(d\mathscr{Y}^2)_p$; laws written as
   $(d\mathscr{Y}^i)_p = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p(d\mathscr{X}^j)_p$ (row $i$, "contravariant") and
-  $\mathtt{y}^p_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p\mathtt{x}^p_j$ (column $i$ of inverse, "covariant"), components law derived by
-  feeding the vector basis law to $\mathsf{X}_p$; vector components in pairings $\dot\gamma^i_\mathcal{U}$, $\dot\gamma^i_\mathcal{V}$;
+  $\mathtt{y}^p_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p\mathtt{x}^p_j$ (column $i$ of inverse, "covariant"), components law derived both
+  ways (feeding the vector basis law to $\mathsf{X}_p$, and substituting the dual basis law + independence); vector components in pairings $\dot\gamma^i_\mathcal{U}$, $\dot\gamma^i_\mathcal{V}$;
   every covector is $(d(\psi f))_p$ with bump $\psi$ (existence stated without proof); shorthand $(dx^i)_p$, $(dy^i)_p$,
   $\tilde{\mathtt{x}}^p_i$, $\tilde{\mathtt{y}}^p_i$ introduced and usable; look-alikes $x^i_p$ / $\mathtt{x}^p_i$ / $(dx^i)_p$ flagged.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
@@ -125,6 +128,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Fixes after review: Jacobian rune $\text{ᛞ}$ introduced in `ch04-coordinate-basis` (definition,
+inverse identity, summary), runic webfont added; `chart-basis` widget gains `jacobian: false`
+(used on the first two widget cards so the Jacobian numbers no longer appear before they are
+asked); numeric `wrong` values now match within 0.5% (engine, documented); `ch04-cotangent-basis`
+derives the covector component law by both routes (prediction MCQ moved before them, new text +
+build card); every mention of "the book" and of C.3/B.3 removed from lessons. Conventions fixed
+here: rune $\text{ᛞ}_{\mathcal{V}\mathcal{U}}$ for $(\partial\mathscr{Y}/\partial\mathscr{X})_p$; lessons never cite the book.
 
 Concept lesson `ch04-cotangent-basis` (35 cards): hook (a chart gives $d$ fields $\mathscr{X}^i$),
 predict $(d\mathscr{X}^i)_p((\partial/\partial\mathscr{X}^j)_p)$, compute via projection MCQ, dual cobasis recall,
