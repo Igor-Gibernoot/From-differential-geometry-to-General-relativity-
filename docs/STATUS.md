@@ -19,10 +19,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   `wrap-up` ending with a teaser for the next level.
 - **Chapter 4 in progress:** `ch04-tangent-space` (26 cards),
   `ch04-velocity-operations` (23 cards), `ch04-coordinate-basis` (33 cards),
-  `ch04-chart-basis` (24 cards, guided B.5) built; widget `chart-basis` built (coordinate lines of two charts, basis at
+  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards) built; widget `chart-basis` built (coordinate lines of two charts, basis at
   $p$, components, Jacobian).
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, next `ch04-einstein` (concept: Einstein summation); then Chapters 5–10 (each with
+  order, next `ch04-cotangent` (concept: the cotangent space); then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -90,6 +90,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   ("a velocity only looks near $p$", bump existence stated without proof); C.3 example
   $w = (\partial/\partial\mathscr{X}^1)_p + (\partial/\partial\mathscr{X}^2)_p$ kills $f = q_1^2+q_2$ but $w(\mathscr{X}^1) = 1$;
   polar $c_\theta$ at $p=(1,1)$ defined for $\lambda\in(-\pi/4, 7\pi/4)$.
+  **Einstein summation from `ch04-einstein` on** (strict form: sum only over an index once up and
+  once down in a term, range $1,\dots,d$; index in a denominator counts as lower; labels
+  $\mathcal{U}$, $\mathcal{V}$, $p$ are not indices; same-height repeats never written). Book shorthand
+  introduced and usable: $\mathcal{X}_p := v_{\gamma,p}$, $(\partial x_i)_p := (\partial/\partial\mathscr{X}^i)_p$,
+  $x^i_p := \dot\gamma^i_\mathcal{U}(\lambda_0)$, $y^i_p$, $(\partial y_i)_p$, second vector $\mathcal{Y}_p = v_{\delta,p}$
+  with $\tilde x^i_p$, $\tilde y^i_p$; inverse identity
+  $(\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p(\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p = \delta^i_j$; $\delta^i_i = d$.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -99,6 +106,18 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Concept lesson `ch04-einstein` (23 cards): hook (sums written out), predict the summed
+index in the basis law, rule card (range $1..d$, denominator = lower, labels not indices,
+strict form), up-or-down MCQ, free/dummy card, rename MCQ, free-match trap, count terms
+($d^2 = 4$), build basis and component laws, same-height traps (MCQ, plus a numeric showing
+$\sum_i(\dot\gamma^i)^2$ is 8 in $\mathscr{X}$ but $1+9e^2$ in $\mathscr{Y}$), three-times trap,
+$\delta^i_ja^j$, $\delta^i_i = 4$, `chart-basis` chain widget (preset reused), C.3 numeric $3e$,
+inverse identity (text, MCQ, round-trip numeric $-2$), book shorthand table, chart-dependence MCQ,
+summary. Choice: included the book's shorthand ($\mathcal{X}_p$, $x^i_p$, $(\partial x_i)_p$) here,
+since 4.1.2 introduces it with the convention and no other node covers it. Validate and shots clean.
+Conventions fixed here: Einstein summation (strict) from now on; denominator index is lower;
+book shorthand $\mathcal{X}_p$, $x^i_p$, $(\partial x_i)_p$, $y^i_p$, $(\partial y_i)_p$ usable.
 
 Guided lesson `ch04-chart-basis` (24 cards, B.5): hook (three claims), predict,
 step 1 coordinate curve ($\lambda$ near 0 by openness of $\mathscr{X}(\mathcal{U})$,

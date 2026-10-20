@@ -1,0 +1,403 @@
+id: ch04-einstein
+title: Einstein Summation
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: Too many sigmas
+    body: |
+      Recall: on a smooth manifold $\mathcal{M}$ of dimension $d$, with charts $(\mathcal{U}, \mathscr{X})$ and $(\mathcal{V}, \mathscr{Y})$ around $p$, a velocity $v_{\gamma,p}$ has components $\dot\gamma^i_\mathcal{U}$ in the chart-induced basis $(\partial/\partial\mathscr{X}^i)_p$ and $\dot\gamma^i_\mathcal{V}$ in $(\partial/\partial\mathscr{Y}^i)_p$ (we drop the $(\lambda_0)$). So far we wrote every sum out:
+      $$v_{\gamma,p} = \sum_{i=1}^d \dot\gamma^i_\mathcal{U}\Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p,$$
+      and the component law, with the Jacobian $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ (row $i$, column $j$):
+      $$\dot\gamma^i_\mathcal{V} = \sum_{j=1}^d \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\dot\gamma^j_\mathcal{U}.$$
+      Look at where the indices sit. In each sum, the summed index appears **exactly twice**, once **up** and once **down** (a $\mathscr{X}^j$ in a denominator sits "below the fraction bar"). Every index that is not summed appears once on each side. The $\Sigma$ carries no information the indices do not already carry. Physicists noticed this and dropped the $\Sigma$. Can you still read the formulas?
+
+  - type: mcq
+    id: predict
+    title: Read it without the sigma
+    prompt: |
+      Charts $(\mathcal{U}, \mathscr{X})$ and $(\mathcal{V}, \mathscr{Y})$ around $p$ on a manifold of dimension $d$. The basis law with its summation sign erased reads
+      $$\Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p = \Big(\frac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\Big)_p\Big(\frac{\partial}{\partial\mathscr{Y}^j}\Big)_p.$$
+      Before any rule, guess: which index was summed over $1,\dots,d$?
+    options:
+      - text: '$j$'
+        correct: true
+      - text: '$i$'
+        feedback: |
+          $i$ also appears on the left side, so it labels **which** basis vector we are writing: the equation is really $d$ equations, one for each value of $i$. An index that survives on both sides is fixed in each equation, not summed.
+      - text: 'Both $i$ and $j$'
+        feedback: |
+          Summing over $i$ would mix all the $(\partial/\partial\mathscr{X}^i)_p$ together, but the left side is one single basis vector, $(\partial/\partial\mathscr{X}^i)_p$ for a given $i$. Only $j$ is used up inside the right side.
+      - text: 'There is no way to tell without the $\Sigma$'
+        feedback: |
+          The positions tell you. $j$ appears twice on the right, once up (in $\mathscr{Y}^j$ in the numerator) and once down (in the denominator of $\partial/\partial\mathscr{Y}^j$), and not at all on the left. $i$ appears once on each side. That pattern pins down the sum, which is why it can be dropped.
+    explanation: |
+      $j$ appears twice in one term, once up and once down, and never on the left: it is the summed index. $i$ appears once on each side: it names which of the $d$ equations we are reading. Written out:
+      $$\Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p = \sum_{j=1}^d\Big(\frac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\Big)_p\Big(\frac{\partial}{\partial\mathscr{Y}^j}\Big)_p.$$
+
+  - type: text
+    id: rule
+    title: The Einstein summation convention
+    body: |
+      **Rule.** Whenever an index appears **once as an upper index and once as a lower index** within a single term, a sum over all its values is understood. For instance
+      $$A^iB_i := \sum_{i=1}^d A^iB_i.$$
+      The details, in the conventions of these notes:
+      - **Range.** "All its values" means $1,\dots,d$, where $d$ is the dimension of the space the index counts (here $\dim T_p\mathcal{M} = d$). The formula itself does not show $d$; the context does.
+      - **Denominators.** An index in the denominator of a derivative counts as **lower**: in $(\partial/\partial\mathscr{X}^i)_p$ the $i$ is down, in $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ the $i$ is up and the $j$ is down.
+      - **Labels are not indices.** The $\mathcal{U}$ in $\dot\gamma^i_\mathcal{U}$ and the $p$ in $(\cdot)_p$ name a chart and a point. They are never summed.
+      - **Strict form only.** An index repeated twice at the **same** height is not summed. These notes never write such expressions.
+
+      From now on, Einstein summation is used throughout. Nothing new is defined: only the $\Sigma$ signs disappear.
+
+  - type: mcq
+    id: denominator
+    title: Up or down?
+    prompt: |
+      With the Einstein summation convention (sum over an index appearing once up and once down in one term), a velocity at $p$ in the chart $(\mathcal{U}, \mathscr{X})$ on a manifold of dimension $d$ is written
+      $$v_{\gamma,p} = \dot\gamma^i_\mathcal{U}\Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p.$$
+      Is $i$ summed here?
+    options:
+      - text: 'Yes: the $i$ in the denominator of $\partial/\partial\mathscr{X}^i$ counts as a lower index, so $i$ appears once up and once down'
+        correct: true
+      - text: 'No: $i$ is written as a superscript both times, so it is twice upstairs'
+        feedback: |
+          Typographically $\mathscr{X}^i$ carries a superscript, but it sits **below the fraction bar** of the derivative, and a superscript in a denominator counts as lower. This is not arbitrary: $(\partial/\partial\mathscr{X}^i)_p$ changes between charts with the covariant (basis) law, like an object with a lower index.
+      - text: 'No: the subscript $\mathcal{U}$ is the lower partner, so nothing is summed'
+        feedback: |
+          $\mathcal{U}$ is a label naming the chart, not an index running over $1,\dots,d$. Labels never take part in the summation rule.
+    explanation: |
+      Up in $\dot\gamma^i_\mathcal{U}$, down in the denominator of $(\partial/\partial\mathscr{X}^i)_p$: summed over $i = 1,\dots,d$, giving back
+      $$v_{\gamma,p} = \sum_{i=1}^d\dot\gamma^i_\mathcal{U}\Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p.$$
+
+  - type: text
+    id: free-dummy
+    title: Free indices and dummy indices
+    body: |
+      Every index in an equation is of one of two kinds:
+      - **Dummy** (summed) index: appears twice in one term, once up and once down. It is used up by the sum, so its name does not matter, exactly like the integration variable in $\int_0^1 t^2\,dt = \int_0^1 s^2\,ds$.
+      - **Free** index: appears once in each term. The equation holds for each of its values $1,\dots,d$ separately, so it is really $d$ equations.
+
+      Two bookkeeping rules follow, and they catch most index mistakes:
+      1. A dummy index can be renamed to any letter **not already used** in that term.
+      2. Every term, on both sides of an equation, carries the **same free indices at the same height**.
+
+      In the component law $\dot\gamma^i_\mathcal{V} = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\dot\gamma^j_\mathcal{U}$, the index $j$ is dummy and $i$ is free (up on both sides).
+
+  - type: mcq
+    id: rename
+    title: Renaming a dummy
+    prompt: |
+      With Einstein summation, charts $\mathscr{X}$, $\mathscr{Y}$ around $p$ and a velocity with components $\dot\gamma^j_\mathcal{U}$ in $\mathscr{X}$, which expressions are equal to
+      $$\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\dot\gamma^j_\mathcal{U}$$
+      for every $i$? Select all that apply.
+    multiple: true
+    options:
+      - text: '$(\partial\mathscr{Y}^i/\partial\mathscr{X}^k)_p\,\dot\gamma^k_\mathcal{U}$'
+        correct: true
+      - text: '$\dot\gamma^m_\mathcal{U}\,(\partial\mathscr{Y}^i/\partial\mathscr{X}^m)_p$'
+        correct: true
+      - text: '$(\partial\mathscr{Y}^i/\partial\mathscr{X}^i)_p\,\dot\gamma^i_\mathcal{U}$'
+        feedback: |
+          Renaming the dummy $j$ to $i$ collides with the free index $i$ already in the term. Now $i$ appears three times and the expression means nothing: is it summed? which component is it? A dummy may only be renamed to a letter **not already used** in the term.
+      - text: '$(\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p\,\dot\gamma^j_\mathcal{U}$'
+        feedback: |
+          This renames the **free** index $i$ to $k$ in this term only. The value of a free index says which component we compute; you may rename it only everywhere in the equation at once. As written, it is component $k$, not component $i$.
+    explanation: |
+      The dummy $j$ can become $k$ or $m$ (any unused letter), and factors are numbers, so they commute. The free index $i$ must stay $i$.
+
+  - type: mcq
+    id: free-match
+    title: Free indices must match
+    prompt: |
+      With Einstein summation, charts $\mathscr{X}$, $\mathscr{Y}$ around $p$, velocity components $\dot\gamma^i_\mathcal{U}$ (chart $\mathscr{X}$) and $\dot\gamma^i_\mathcal{V}$ (chart $\mathscr{Y}$), and basis vectors $(\partial/\partial\mathscr{X}^i)_p$, $(\partial/\partial\mathscr{Y}^i)_p$. Which equation is well formed (a valid index pattern)?
+    options:
+      - text: '$\dot\gamma^i_\mathcal{V} = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\dot\gamma^j_\mathcal{U}$'
+        correct: true
+      - text: '$\dot\gamma^k_\mathcal{V} = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\dot\gamma^j_\mathcal{U}$'
+        feedback: |
+          The free index on the left is $k$, on the right $i$. Such an equation would claim that component $k$ equals component $i$ for **every** pair $(k, i)$, so all components would be equal. Free indices must be the same letters on both sides.
+      - text: '$\dot\gamma^i_\mathcal{V} = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\dot\gamma^k_\mathcal{U}$'
+        feedback: |
+          On the right, $j$ (down) and $k$ (up) each appear once, so neither is summed and both are free; the left has neither. The sum needs the **same** letter up and down: $j$ and $j$.
+      - text: '$(\partial/\partial\mathscr{X}^i)_p = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,(\partial/\partial\mathscr{Y}^j)_p$'
+        feedback: |
+          The letters match but the heights do not: on the left $i$ is in a denominator (down), on the right it is in the numerator $\mathscr{Y}^i$ (up). This is the tempting mix-up of the basis law with the component law. The correct basis law keeps $i$ down: $(\partial/\partial\mathscr{X}^i)_p = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p(\partial/\partial\mathscr{Y}^j)_p$.
+    explanation: |
+      Only the component law passes both checks: the dummy $j$ is once up and once down on the right, and the free $i$ is up on both sides. Checking index heights does not prove a formula, but it rejects many wrong ones in a second.
+
+  - type: numeric
+    id: count-terms
+    title: Two sums in one term
+    prompt: |
+      With Einstein summation on a manifold of dimension $d = 2$, how many terms does
+      $$\dot\gamma^i_\mathcal{U}\Big(\frac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\Big)_p\Big(\frac{\partial}{\partial\mathscr{Y}^j}\Big)_p$$
+      stand for, once all sums are written out?
+    answer: 4
+    wrong:
+      - value: 2
+        feedback: |
+          That counts one sum. Both $i$ (up in $\dot\gamma^i_\mathcal{U}$, down in the denominator $\mathscr{X}^i$) and $j$ (up in $\mathscr{Y}^j$, down in $\partial/\partial\mathscr{Y}^j$) are paired, so there are two sums, each over 2 values: $2\times 2$ terms.
+      - value: 1
+        feedback: |
+          Without $\Sigma$ signs it looks like one term, but each up-down pair hides a sum over $1,\dots,d$. Here there are two pairs, $i$ and $j$.
+    hint: Count the index letters appearing once up and once down; each gives a sum over $d = 2$ values.
+    explanation: |
+      Two dummy indices, so a double sum with $d^2 = 4$ terms:
+      $$\sum_{i=1}^2\sum_{j=1}^2\dot\gamma^i_\mathcal{U}\Big(\frac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\Big)_p\Big(\frac{\partial}{\partial\mathscr{Y}^j}\Big)_p.$$
+      This is the expression that appears when the basis law is substituted into $v_{\gamma,p} = \dot\gamma^i_\mathcal{U}(\partial/\partial\mathscr{X}^i)_p$, the step that proves the component law. The convention keeps such double sums short.
+
+  - type: build
+    id: build-basis-law
+    title: The basis law, Einstein form
+    prompt: |
+      Charts $\mathscr{X}$, $\mathscr{Y}$ around $p$. Recall the basis law: basis vector $i$ of $\mathscr{X}$ is a combination of the $(\partial/\partial\mathscr{Y}^j)_p$ with coefficients from **column** $i$ of the Jacobian $(\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p$ (row $j$). Build it with Einstein summation (no $\Sigma$).
+    prefix: '\big(\tfrac{\partial}{\partial\mathscr{X}^i}\big)_p ='
+    tiles: ['\big(\tfrac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\big)_p', '\big(\tfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\big)_p', '\big(\tfrac{\partial}{\partial\mathscr{Y}^j}\big)_p', '\big(\tfrac{\partial}{\partial\mathscr{Y}^i}\big)_p']
+    answers:
+      - ['\big(\tfrac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\big)_p', '\big(\tfrac{\partial}{\partial\mathscr{Y}^j}\big)_p']
+    wrong:
+      - answer: ['\big(\tfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\big)_p', '\big(\tfrac{\partial}{\partial\mathscr{Y}^j}\big)_p']
+        feedback: |
+          Here $j$ is down twice (two denominators), so it is not summed, and the free $i$ is up on the right but down on the left. Row $i$ belongs to the component law; a basis vector uses column $i$, which keeps $i$ in the denominator.
+      - answer: ['\big(\tfrac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\big)_p', '\big(\tfrac{\partial}{\partial\mathscr{Y}^i}\big)_p']
+        feedback: |
+          Now $j$ appears only once (free on the right, absent on the left) and $i$ is down twice on the right. The summed index must pair the numerator $\mathscr{Y}^j$ with the basis vector $(\partial/\partial\mathscr{Y}^j)_p$.
+    hint: The free index $i$ is down on the left (in a denominator), so it must be down on the right. The dummy index $j$ must appear once up and once down.
+    explanation: |
+      $$\Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p = \Big(\frac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\Big)_p\Big(\frac{\partial}{\partial\mathscr{Y}^j}\Big)_p.$$
+      Free $i$: down on both sides. Dummy $j$: up in $\mathscr{Y}^j$, down in $\partial/\partial\mathscr{Y}^j$. It reads almost like cancelling $\partial\mathscr{Y}^j$, a useful mnemonic (not a proof).
+
+  - type: build
+    id: build-component-law
+    title: The component law, Einstein form
+    prompt: |
+      Charts $\mathscr{X}$, $\mathscr{Y}$ around $p$; a velocity has components $\dot\gamma^j_\mathcal{U}$ in $\mathscr{X}$ and $\dot\gamma^i_\mathcal{V}$ in $\mathscr{Y}$. Recall the component law: component $i$ in $\mathscr{Y}$ uses **row** $i$ of the Jacobian. Build it with Einstein summation (no $\Sigma$).
+    prefix: '\dot\gamma^i_\mathcal{V} ='
+    tiles: ['\big(\tfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\big)_p', '\big(\tfrac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\big)_p', '\dot\gamma^j_\mathcal{U}', '\dot\gamma^i_\mathcal{U}']
+    answers:
+      - ['\big(\tfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\big)_p', '\dot\gamma^j_\mathcal{U}']
+      - ['\dot\gamma^j_\mathcal{U}', '\big(\tfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\big)_p']
+    wrong:
+      - answer: ['\big(\tfrac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\big)_p', '\dot\gamma^j_\mathcal{U}']
+        feedback: |
+          Here $j$ is up twice ($\mathscr{Y}^j$ and $\dot\gamma^j_\mathcal{U}$), which is not a sum in our convention, and the free $i$ is down on the right but up on the left. This is the transposed matrix: column $i$ instead of row $i$.
+      - answer: ['\big(\tfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\big)_p', '\dot\gamma^i_\mathcal{U}']
+        feedback: |
+          Now $i$ appears three times (left side, numerator, component) and $j$ only once. The component $\dot\gamma_\mathcal{U}$ must carry the dummy index that pairs with the denominator $\mathscr{X}^j$.
+    hint: The free $i$ is up on the left, so it must be up on the right. The dummy must appear once in a denominator (down) and once on $\dot\gamma_\mathcal{U}$ (up).
+    explanation: |
+      $$\dot\gamma^i_\mathcal{V} = \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\dot\gamma^j_\mathcal{U}.$$
+      Compare with the basis law: there the free index is down and sits in the Jacobian's denominator (column $i$, covariant); here it is up and sits in the numerator (row $i$, contravariant). The heights of the indices record how each object transforms.
+
+  - type: mcq
+    id: trap-same-height
+    title: Twice upstairs
+    prompt: |
+      In these notes the Einstein summation convention is used in its strict form (sum only over an index appearing once up and once down in a term). How is the expression $A^iB^i$ treated?
+    options:
+      - text: 'It is not a sum, and these notes avoid writing it'
+        correct: true
+      - text: 'It means $\sum_i A^iB^i$, as in many physics texts'
+        feedback: |
+          That is the extended usage, common in texts working in orthonormal Euclidean bases, and these notes deliberately avoid it. The reason: a same-height sum depends on the basis (next card). An up-down sum of the kind that will appear with covectors does not.
+      - text: 'It means the single product $A^1B^1$'
+        feedback: |
+          Repeated indices never pick out the value 1. Under the strict rule $i$ is just not summed, so $A^iB^i$ would be a list of $d$ separate products $A^1B^1, A^2B^2,\dots$, which no formula of these notes ever needs.
+    explanation: |
+      Only up-down pairs are summed. A repeated index at the same height is a warning sign: it usually means a misplaced index, or a hidden extra structure (a metric, Level 7) that the formula forgot to show.
+
+  - type: numeric
+    id: same-height-check
+    title: A same-height sum depends on the chart
+    prompt: |
+      On $\mathbb{R}^2$ with the charts $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, the velocity $v = (1, 2)$ (standard components) at $p = (1,1)$ has $\mathscr{X}$-components $\dot\gamma^i_\mathcal{U} = (2, -2)$ and $\mathscr{Y}$-components $\dot\gamma^i_\mathcal{V} = (1, 3e)$. In $\mathscr{X}$ the same-height sum is $\sum_i(\dot\gamma^i_\mathcal{U})^2 = 4 + 4 = 8$. Compute the same sum in $\mathscr{Y}$, $\sum_i(\dot\gamma^i_\mathcal{V})^2$.
+    answer: 67.5015
+    tolerance: 0.01
+    answerText: '1 + 9e^2 \approx 67.50'
+    wrong:
+      - value: 8
+        feedback: |
+          It would be 8 if the sum were chart-independent, but it is not: $1^2 + (3e)^2 = 1 + 9e^2\approx 67.50$. The same vector gives different "squared lengths" in different charts.
+      - value: 9.15485
+        feedback: |
+          That is $1 + 3e$, the sum of the components. Square each one first: $1^2 + (3e)^2$.
+    hint: $(3e)^2 = 9e^2$ and $e^2\approx 7.389$.
+    explanation: |
+      $1 + 9e^2\approx 67.50\ne 8$. A same-height sum of components is not a property of the vector: it changes with the chart, so it has no geometric meaning on its own. A length needs a metric (Level 7), and with it the indices pair up and down again. That is why the strict convention only sums up-down pairs.
+
+  - type: mcq
+    id: trap-three
+    title: Three times
+    prompt: |
+      With the strict Einstein summation convention (sum over an index appearing once up and once down in a term), what is $A^iB_iC^i$?
+    options:
+      - text: 'Ill-formed: an index may appear at most twice in a term'
+        correct: true
+      - text: '$\sum_i A^iB_iC^i$'
+        feedback: |
+          Such a triple sum is never a valid contraction: there is no way to pair three slots up-and-down. If you meet one, an index was misnamed, usually a dummy that collided with a free index.
+      - text: '$\big(\sum_i A^iB_i\big)C^i$'
+        feedback: |
+          Then the leftover $i$ on $C^i$ would be a free index with the same name as the dummy that was just summed, so the expression cannot say which $i$ it means. Name them differently: $(A^jB_j)\,C^i$.
+    explanation: |
+      Each letter in a term appears either once (free) or twice, once up and once down (dummy). Three times is always an error; the usual fix is renaming the dummy, as in $A^jB_jC^i$.
+
+  - type: mcq
+    id: delta
+    title: The Kronecker delta in Einstein form
+    prompt: |
+      The Kronecker delta is $\delta^i_j = 1$ if $i = j$ and $0$ otherwise, for $i, j\in\{1,\dots,d\}$. With Einstein summation, what is $\delta^i_ja^j$ for numbers $a^1,\dots,a^d$?
+    options:
+      - text: '$a^i$'
+        correct: true
+      - text: '$a^j$'
+        feedback: |
+          $j$ is the dummy index: it is summed and disappears. The result can only carry the free index $i$, the one left on $\delta^i_j$.
+      - text: '$a^1 + \dots + a^d$'
+        feedback: |
+          The sum is over $j$, but $\delta^i_j$ is zero for every $j$ except $j = i$, so only one term survives.
+      - text: '$1$'
+        feedback: |
+          The delta multiplies $a^j$; it does not replace it. Of the $d$ terms $\delta^i_ja^j$, the one with $j = i$ survives, and it is $1\cdot a^i$.
+    explanation: |
+      $$\delta^i_ja^j = \sum_{j=1}^d\delta^i_ja^j = a^i.$$
+      Contracting with $\delta$ just renames an index ($j\to i$). This is the identity matrix in index form.
+
+  - type: numeric
+    id: delta-trace
+    title: A delta with itself
+    prompt: |
+      With Einstein summation on a space of dimension $d = 4$, and the Kronecker delta $\delta^i_j$ ($1$ if $i = j$, else $0$), compute $\delta^i_i$.
+    answer: 4
+    wrong:
+      - value: 1
+        feedback: |
+          $\delta^i_i$ is not "the delta with equal indices" but a **sum**: $i$ is up once and down once, so $\delta^i_i = \delta^1_1+\delta^2_2+\delta^3_3+\delta^4_4$, four ones.
+    hint: $i$ appears once up and once down, so it is summed over $1,\dots,4$.
+    explanation: |
+      $\delta^i_i = \sum_{i=1}^4\delta^i_i = 4 = d$: the trace of the identity matrix. Repeating an index up and down always triggers the sum, even inside one symbol.
+
+  - type: widget
+    id: chain-widget
+    widget: chart-basis
+    config:
+      charts: [X, Y]
+      p: [1, 1]
+      v: [1, 2]
+      chain: true
+    body: |
+      The charts $\mathscr{X}(q) = (2q_1, -q_2)$ (solid lines) and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$ (dashed) on $\mathbb{R}^2$, at $p = (1,1)$ with $v = (1, 2)$. The readout shows the component law $\dot\gamma^i_\mathcal{V} = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\dot\gamma^j_\mathcal{U}$ as a matrix product: the sum over $j$ is "row $i$ times the column of components". Drag the tip of $v$ and watch both component lists.
+
+  - type: numeric
+    id: component-check
+    title: The component law in numbers
+    prompt: |
+      On $\mathbb{R}^2$ with $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, at $p = (1,1)$ the Jacobian (row $i$, column $j$) is
+      $$\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p = \begin{pmatrix}\tfrac12 & 0\\ \tfrac e2 & -e\end{pmatrix},$$
+      and a velocity has $\mathscr{X}$-components $\dot\gamma^j_\mathcal{U} = (2, -2)$. With Einstein summation, compute
+      $$\dot\gamma^2_\mathcal{V} = \Big(\frac{\partial\mathscr{Y}^2}{\partial\mathscr{X}^j}\Big)_p\dot\gamma^j_\mathcal{U}.$$
+    answer: 8.15485
+    tolerance: 0.01
+    answerText: '3e \approx 8.155'
+    wrong:
+      - value: 5.43656
+        feedback: |
+          That is $0\cdot 2 + (-e)(-2) = 2e$, using **column** 2 of the matrix. The free index $2$ is in the numerator $\mathscr{Y}^2$, which is the row index; $j$ runs along row 2.
+      - value: -2.71828
+        feedback: |
+          Check the second term: $(-e)\cdot(-2) = +2e$, so the total is $e + 2e$.
+    hint: The sum over $j$ is row 2 times the components, $\tfrac e2\cdot 2 + (-e)\cdot(-2)$.
+    explanation: |
+      $$\begin{aligned}\dot\gamma^2_\mathcal{V} &= \tfrac e2\cdot 2 + (-e)(-2)\\ &= e + 2e = 3e.\end{aligned}$$
+      With row 1, $\tfrac12\cdot 2 + 0 = 1$, so the $\mathscr{Y}$-components are $(1, 3e)$, as the widget shows.
+
+  - type: text
+    id: inverse
+    title: The inverse Jacobian as a delta
+    body: |
+      Recall: the two Jacobians at $p$ are inverse matrices, by the chain rule applied to $(\mathscr{X}\circ\mathscr{Y}^{-1})\circ(\mathscr{Y}\circ\mathscr{X}^{-1}) = \mathrm{id}$ (id = identity map). Row $i$ of one times column $j$ of the other gives the identity matrix, which in Einstein form is
+      $$\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\Big)_p\Big(\frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^j}\Big)_p = \delta^i_j.$$
+      Read the indices: $k$ is the dummy (down in $\partial\mathscr{Y}^k$ below the bar, up in $\mathscr{Y}^k$ on top), $i$ is free and up on both sides, $j$ is free and down on both sides. A matrix product is always a contraction of the inner indices.
+
+      It makes the round trip explicit: go $\mathscr{X}\to\mathscr{Y}$ with one Jacobian and back with the other, and $\delta$ renames the index,
+      $$\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\Big)_p\dot\gamma^k_\mathcal{V} = \delta^i_j\dot\gamma^j_\mathcal{U} = \dot\gamma^i_\mathcal{U}.$$
+
+  - type: mcq
+    id: inverse-pattern
+    title: Which product is the identity?
+    prompt: |
+      Charts $\mathscr{X}$, $\mathscr{Y}$ around $p$; their Jacobians at $p$ are inverse matrices. With Einstein summation, which equation expresses this correctly?
+    options:
+      - text: '$(\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p\,(\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p = \delta^i_j$'
+        correct: true
+      - text: '$(\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p\,(\partial\mathscr{Y}^j/\partial\mathscr{X}^k)_p = \delta^i_j$'
+        feedback: |
+          Here $k$ sits in two denominators, down twice, so it is not summed under the strict rule, and the free $j$ is up on the left but down on the right. As a matrix product it would be "row times row", not the product of the two matrices.
+      - text: '$(\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p\,(\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p = \delta^i_k$'
+        feedback: |
+          $k$ is the dummy index: it is summed away on the left and cannot appear on the right. The free indices left over on the left are $i$ (up) and $j$ (down), so the right side must be $\delta^i_j$.
+    explanation: |
+      Dummy $k$ once up, once down; free $i$ up and free $j$ down on both sides. Index heights alone single out the correct identity.
+
+  - type: numeric
+    id: inverse-check
+    title: Round trip in numbers
+    prompt: |
+      On $\mathbb{R}^2$ with $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, at $p = (1,1)$ the inverse Jacobian (row $i$, column $k$) is
+      $$\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\Big)_p = \begin{pmatrix}2 & 0\\ 1 & -\tfrac1e\end{pmatrix}.$$
+      A velocity has $\mathscr{Y}$-components $\dot\gamma^k_\mathcal{V} = (1, 3e)$. With Einstein summation, compute
+      $$\dot\gamma^2_\mathcal{U} = \Big(\frac{\partial\mathscr{X}^2}{\partial\mathscr{Y}^k}\Big)_p\dot\gamma^k_\mathcal{V}.$$
+    answer: -2
+    wrong:
+      - value: 4
+        feedback: |
+          Check the sign: $(-\tfrac1e)(3e) = -3$, so the total is $1 - 3$.
+      - value: -3
+        feedback: |
+          That is only the $k = 2$ term. The sum over $k$ has two terms: $1\cdot 1 + (-\tfrac1e)(3e)$.
+    hint: Row 2 times the components, $1\cdot 1 + (-\tfrac1e)\cdot 3e$.
+    explanation: |
+      $1 - 3 = -2$, and row 1 gives $2\cdot 1 + 0 = 2$: back to the $\mathscr{X}$-components $(2, -2)$ we started from. The identity $(\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p(\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p = \delta^i_j$ guarantees this round trip for every vector.
+
+  - type: text
+    id: shorthand
+    title: Shorter names
+    body: |
+      With the sums gone, the book also shortens the names. For a velocity $v_{\gamma,p}$ and charts $\mathscr{X}$, $\mathscr{Y}$ around $p$:
+      $$\begin{gathered}\mathcal{X}_p := v_{\gamma,p},\\ (\partial x_i)_p := \Big(\frac{\partial}{\partial\mathscr{X}^i}\Big)_p,\\ x^i_p := \dot\gamma^i_\mathcal{U}(\lambda_0),\\ y^i_p := \dot\gamma^i_\mathcal{V}(\lambda_0),\end{gathered}$$
+      and $(\partial y_i)_p$ for the $\mathscr{Y}$ basis. A second vector $\mathcal{Y}_p := v_{\delta,p}$ (curve $\delta$) gets components $\tilde x^i_p$, $\tilde y^i_p$. The index on $(\partial x_i)_p$ is now written down explicitly. The laws become
+      $$\begin{gathered}\mathcal{X}_p = x^i_p(\partial x_i)_p = y^i_p(\partial y_i)_p,\\ (\partial x_i)_p = \Big(\frac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^i}\Big)_p(\partial y_j)_p,\\ y^i_p = \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p x^j_p.\end{gathered}$$
+      Similar letters, different objects: $\mathscr{X}$ is the chart map, $\mathcal{X}_p$ a tangent vector, $x^i_p$ numbers, $(\partial x_i)_p$ basis vectors. (The $x^i_p$ are not the coordinate function $x(q) = q_1$ of the plane.)
+
+  - type: mcq
+    id: shorthand-chart
+    title: What depends on the chart?
+    prompt: |
+      In the shorthand $\mathcal{X}_p = x^i_p(\partial x_i)_p$, with Einstein summation, $\mathcal{X}_p$ is a tangent vector at $p$, $x^i_p$ its components in the chart $\mathscr{X}$ and $(\partial x_i)_p := (\partial/\partial\mathscr{X}^i)_p$ the chart-induced basis. Which of these change when the chart $\mathscr{X}$ is replaced by another chart around $p$? Select all that apply.
+    multiple: true
+    options:
+      - text: 'The components $x^i_p$'
+        correct: true
+      - text: 'The basis vectors $(\partial x_i)_p$'
+        correct: true
+      - text: 'The vector $\mathcal{X}_p$'
+        feedback: |
+          $\mathcal{X}_p = v_{\gamma,p}$ is defined by a curve and acts on scalar fields with no chart involved: it is the same object in every chart. Only its description changes.
+      - text: 'The sum $x^i_p(\partial x_i)_p$'
+        feedback: |
+          Each factor changes, but the sum is $\mathcal{X}_p$ itself. The components change with the Jacobian and the basis vectors the opposite way, so the two effects cancel: $y^i_p(\partial y_i)_p = x^i_p(\partial x_i)_p$.
+    explanation: |
+      Components and basis vectors depend on the chart; their contraction does not. A complete up-down contraction with no free index left is the typical shape of a chart-independent statement.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      - **Einstein summation:** an index appearing once up and once down in a term is summed over $1,\dots,d$; an index in a denominator counts as lower; labels such as $\mathcal{U}$, $p$ are not indices.
+      - **Free and dummy indices:** dummies can be renamed to unused letters; free indices must match, letter and height, in every term; no letter appears three times; same-height repeats are not summed (and chart-dependent).
+      - **Laws in Einstein form:** $(\partial x_i)_p = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p(\partial y_j)_p$ (covariant, free index down) and $y^i_p = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,x^j_p$ (contravariant, free index up).
+      - **Delta:** $\delta^i_ja^j = a^i$, $\delta^i_i = d$, and $(\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p(\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p = \delta^i_j$.
+      - **Shorthand:** $\mathcal{X}_p = x^i_p(\partial x_i)_p$, components $x^i_p$, basis $(\partial x_i)_p$.
+
+      **Next:** in Chapter 2 every vector space had a dual, the space of linear maps to $\mathbb{R}$. In *The Cotangent Space* we build the dual of $T_p\mathcal{M}$: covectors at $p$, whose components carry **lower** indices, so that pairing a covector with a vector is an up-down contraction.

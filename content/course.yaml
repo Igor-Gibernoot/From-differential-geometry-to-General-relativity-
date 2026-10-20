@@ -164,7 +164,11 @@ levels:
         kind: guided
         file: ch04/chart-basis.yaml
         summary: We called $(\partial/\partial\mathscr{X}^i)_p$ a basis without proof. Show that each one is a velocity, that they span $T_p\mathcal{M}$ and are linearly independent, and conclude $\dim T_p\mathcal{M} = d$.
-      - { id: ch04-einstein, title: Einstein Summation, kind: concept }
+      - id: ch04-einstein
+        title: Einstein Summation
+        kind: concept
+        file: ch04/einstein.yaml
+        summary: Drop the summation signs. An index once up and once down in a term is summed; free indices must match. Rewrite the basis and component laws, the Kronecker delta and the inverse Jacobian in Einstein form.
       - { id: ch04-cotangent, title: The Cotangent Space, kind: concept }
       - { id: ch04-cotangent-basis, title: Differentials as a Basis, kind: concept }
       - { id: ch04-tensor-space, title: Tensor Spaces at a Point, kind: concept }
