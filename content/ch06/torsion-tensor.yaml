@@ -1,0 +1,333 @@
+id: ch06-torsion-tensor
+title: "Guided Problem: Torsion Is a Tensor"
+kind: guided
+
+cards:
+  - type: text
+    id: hook
+    title: Two failures, one tensor
+    body: |
+      Recall: on a manifold $\mathcal{M}$, a connection $\nabla$ turns two vector fields $\mathcal{X},\mathcal{Y}$ into the vector field $\nabla_\mathcal{X}\mathcal{Y}$ (the covariant derivative of $\mathcal{Y}$ along $\mathcal{X}$), and the **commutator** is the vector field defined on every smooth function $f$ by
+      $$[\mathcal{X},\mathcal{Y}]\lfloor f\rceil := \mathcal{X}\big\lfloor\mathcal{Y}\lfloor f\rceil\big\rceil - \mathcal{Y}\big\lfloor\mathcal{X}\lfloor f\rceil\big\rceil.$$
+      Neither is a tensor field: scale one input by a smooth function $g$ and a term with a **derivative** of $g$ appears. Yet their combination, the vector field
+      $$\begin{aligned}&\mathcal{V}(\mathcal{X},\mathcal{Y})\\ &:= \nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}],\end{aligned}$$
+      fed to a covector field $\mathsf{X}$, is claimed to be a tensor field, the **torsion**:
+      $$\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) := \mathsf{X}\big\lceil\mathcal{V}(\mathcal{X},\mathcal{Y})\big\rfloor.$$
+      Here $\mathsf{X}\lceil\mathcal{Z}\rfloor$ is the function $p\mapsto\mathsf{X}_p(\mathcal{Z}(p))$, and $\mathcal{V}$ is just a name for the bracketed vector field, nothing to do with a chart domain.
+
+      **The problem:** prove that $\mathtt{T}$ is a $(1,2)$-tensor field. Bad terms must cancel. Before computing, guess how.
+
+  - type: mcq
+    id: guess
+    title: Guess the rescue
+    prompt: |
+      For a connection $\nabla$ on a manifold, let $\mathcal{V}(\mathcal{X},\mathcal{Y}) := \nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]$, where $[\mathcal{X},\mathcal{Y}]$ is the commutator of vector fields. Replace $\mathcal{X}$ by $g\,\mathcal{X}$ for a smooth, non-constant function $g$. Before computing, guess what happens to the terms involving a derivative of $g$.
+    options:
+      - text: 'Two of the three terms each produce one, with opposite signs, and they cancel'
+        correct: true
+      - text: 'None appears: each of the three terms is already $C^\infty(\mathcal{M})$-linear in $\mathcal{X}$'
+        feedback: |
+          Each term is linear over constants, but not over functions. The commutator, for instance, has $\mathcal{X}$ inside a derivative: $\mathcal{Y}\lfloor g\,\mathcal{X}\lfloor f\rceil\rceil$ differentiates $g$ too, by the Leibniz rule.
+      - text: 'Only the commutator produces one, so the torsion is not a tensor field after all'
+        feedback: |
+          The commutator does produce one, but so does $\nabla_\mathcal{Y}\mathcal{X}$: there $\mathcal{X}$ sits in the **differentiated** slot of $\nabla$, where the product rule acts. The two terms cancel.
+      - text: 'All three produce one, and their sum vanishes'
+        feedback: |
+          In $\nabla_\mathcal{X}\mathcal{Y}$ the field $\mathcal{X}$ is the **direction**, and a connection is $C^\infty(\mathcal{M})$-linear in its direction: $\nabla_{g\mathcal{X}}\mathcal{Y} = g\,\nabla_\mathcal{X}\mathcal{Y}$. No derivative of $g$ comes from that term.
+    explanation: |
+      The direction slot of $\nabla$ is $C^\infty(\mathcal{M})$-linear, so $\nabla_{g\mathcal{X}}\mathcal{Y}$ is harmless. The other two terms each produce $\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$ (the derivative of $g$ along $\mathcal{Y}$, times $\mathcal{X}$), with opposite signs. The rest of the lesson proves it.
+
+  - type: text
+    id: goal
+    title: What must be shown
+    body: |
+      Recall: a **$(1,2)$-tensor field** is a map from one covector field and two vector fields to $C^\infty(\mathcal{M})$ (the smooth functions) that is **$C^\infty(\mathcal{M})$-linear in each slot**: for every smooth function $g$ and fields of the right kind,
+      $$\begin{aligned}&\mathtt{T}(g\,\mathsf{X}+\mathsf{Y},\mathcal{X},\mathcal{Y})\\ &= g\,\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) + \mathtt{T}(\mathsf{Y},\mathcal{X},\mathcal{Y}),\end{aligned}$$
+      $$\begin{aligned}&\mathtt{T}(\mathsf{X},g\,\mathcal{X}+\mathcal{Z},\mathcal{Y})\\ &= g\,\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) + \mathtt{T}(\mathsf{X},\mathcal{Z},\mathcal{Y}),\end{aligned}$$
+      and the same in the third slot. The payoff (the pointwise principle): the value of $\mathtt{T}$ at $p$ then depends only on $\mathsf{X}_p$, $\mathcal{X}(p)$, $\mathcal{Y}(p)$.
+
+      The facts the proof uses, all known:
+      - **(a)** a covector field acts $C^\infty(\mathcal{M})$-linearly: $\mathsf{X}\lceil g\,\mathcal{X}+\mathcal{Z}\rfloor = g\,\mathsf{X}\lceil\mathcal{X}\rfloor + \mathsf{X}\lceil\mathcal{Z}\rfloor$, point by point.
+      - **(b)** module operations act point by point: $(g\,\mathcal{X}+\mathcal{Z})\lfloor f\rceil = g\,\mathcal{X}\lfloor f\rceil + \mathcal{Z}\lfloor f\rceil$, and $(g\,\mathsf{X}+\mathsf{Y})\lceil\mathcal{X}\rfloor = g\,\mathsf{X}\lceil\mathcal{X}\rfloor + \mathsf{Y}\lceil\mathcal{X}\rfloor$.
+      - **(c)** a vector field is $\mathbb{R}$-linear and obeys the **Leibniz rule**: $\mathcal{Y}\lfloor g f\rceil = \mathcal{Y}\lfloor g\rceil\,f + g\,\mathcal{Y}\lfloor f\rceil$.
+      - **(d)** the connection is additive in each slot, $C^\infty(\mathcal{M})$-linear in the direction, $\nabla_{g\mathcal{X}+\mathcal{Z}}\mathcal{Y} = g\,\nabla_\mathcal{X}\mathcal{Y} + \nabla_\mathcal{Z}\mathcal{Y}$, and obeys the **product rule** in the differentiated slot:
+      $$\nabla_\mathcal{Y}(g\,\mathcal{X}) = \mathcal{Y}\lfloor g\rceil\,\mathcal{X} + g\,\nabla_\mathcal{Y}\mathcal{X}.$$
+
+  - type: mcq
+    id: constants-not-enough
+    title: Why functions, not constants
+    prompt: |
+      To show that a map $\mathtt{T}$ of one covector field and two vector fields is a tensor field, one checks $\mathtt{T}(\mathsf{X},g\,\mathcal{X}+\mathcal{Z},\mathcal{Y}) = g\,\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) + \mathtt{T}(\mathsf{X},\mathcal{Z},\mathcal{Y})$ (and likewise in the other slots). Why must $g$ range over all smooth functions, not only constants?
+    options:
+      - text: 'Linearity over constants holds for the covariant derivative and the commutator too, and they are not tensors; only pulling out functions forces the value at $p$ to depend on the inputs at $p$ alone'
+        correct: true
+      - text: 'Because a constant $g$ would make the check trivially true for every map'
+        feedback: |
+          It is not trivial: a map can fail even for constants (for example $\mathcal{X}\mapsto\mathsf{X}\lceil\mathcal{X}\rfloor^2$ fails $2\mathcal{X}$). The point is the converse: passing for constants is not enough, since $\nabla_\mathcal{X}\mathcal{Y}$ and $[\mathcal{X},\mathcal{Y}]$ pass for constants yet are not tensorial.
+      - text: 'Constants are not elements of $C^\infty(\mathcal{M})$'
+        feedback: |
+          Constant functions are smooth, so they are in $C^\infty(\mathcal{M})$. They are just too few: a derivative of a constant vanishes, so terms like $\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$, which spoil tensoriality, never show up with constants.
+    explanation: |
+      For a constant $g$, every derivative $\mathcal{Y}\lfloor g\rceil$ vanishes, so non-tensorial terms are invisible. A non-constant $g$ exposes them. $C^\infty(\mathcal{M})$-linearity is what makes $\mathtt{T}$ read only the values of its inputs at each point.
+
+  - type: mcq
+    id: first-slot
+    title: The covector slot
+    prompt: |
+      The torsion of a connection is $\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) := \mathsf{X}\lceil\mathcal{V}(\mathcal{X},\mathcal{Y})\rfloor$, with the vector field $\mathcal{V}(\mathcal{X},\mathcal{Y}) := \nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]$. Why is
+      $$\begin{aligned}&\mathtt{T}(g\,\mathsf{X}+\mathsf{Y},\mathcal{X},\mathcal{Y})\\ &= g\,\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) + \mathtt{T}(\mathsf{Y},\mathcal{X},\mathcal{Y})\end{aligned}$$
+      immediate, for every smooth $g$?
+    options:
+      - text: '$\mathcal{V}(\mathcal{X},\mathcal{Y})$ does not involve the covector field at all; the covector only evaluates it, and $(g\,\mathsf{X}+\mathsf{Y})\lceil\mathcal{V}\rfloor = g\,\mathsf{X}\lceil\mathcal{V}\rfloor + \mathsf{Y}\lceil\mathcal{V}\rfloor$ point by point'
+        correct: true
+      - text: 'Because the connection obeys a product rule for covector fields'
+        feedback: |
+          No covariant derivative of $\mathsf{X}$ appears in the torsion: $\nabla$ acts only on the vector fields $\mathcal{X},\mathcal{Y}$. The covector field is fed the finished vector field $\mathcal{V}(\mathcal{X},\mathcal{Y})$, so only the module rule for covector fields is used.
+      - text: 'It follows from antisymmetry of $\mathtt{T}$ in its vector slots'
+        feedback: |
+          Antisymmetry swaps the two **vector** slots; it says nothing about the covector slot. That slot is easy for a different reason: nothing differentiates the covector field.
+      - text: 'It needs the Leibniz rule, $\mathsf{X}\lceil g\,\mathcal{Z}\rfloor = \mathcal{Z}\lfloor g\rceil + g\,\mathsf{X}\lceil\mathcal{Z}\rfloor$'
+        feedback: |
+          A covector field does not differentiate the vector field it is fed: at each point $\mathsf{X}_p$ is a linear map on $T_p\mathcal{M}$, so $\mathsf{X}\lceil g\,\mathcal{Z}\rfloor = g\,\mathsf{X}\lceil\mathcal{Z}\rfloor$, with no derivative of $g$.
+    explanation: |
+      $\mathcal{V}(\mathcal{X},\mathcal{Y})$ is fixed once $\mathcal{X},\mathcal{Y}$ are, and covector fields add and scale point by point:
+      $$\begin{aligned}&(g\,\mathsf{X}+\mathsf{Y})\lceil\mathcal{V}\rfloor\\ &= g\,\mathsf{X}\lceil\mathcal{V}\rfloor + \mathsf{Y}\lceil\mathcal{V}\rfloor.\end{aligned}$$
+      The real work is in the vector slots.
+
+  - type: text
+    id: plan
+    title: The second slot, term by term
+    body: |
+      Put $g\,\mathcal{X}+\mathcal{Z}$ in the second slot. Then $\mathcal{V}(g\,\mathcal{X}+\mathcal{Z},\mathcal{Y})$ has three terms:
+      $$\nabla_{g\mathcal{X}+\mathcal{Z}}\mathcal{Y},$$
+      $$-\nabla_\mathcal{Y}(g\,\mathcal{X}+\mathcal{Z}),$$
+      $$-[g\,\mathcal{X}+\mathcal{Z},\mathcal{Y}].$$
+      Start with the commutator, the one that needs real work. It is a vector field defined by its action on functions, so let it act on an arbitrary smooth $f$ and expand.
+
+  - type: order
+    id: commutator-chain
+    title: Expanding the commutator
+    prompt: |
+      To find the vector field $[g\,\mathcal{X}+\mathcal{Z},\mathcal{Y}]$ (with $g$ a smooth function, $\mathcal{X},\mathcal{Y},\mathcal{Z}$ vector fields), let it act on an arbitrary smooth $f$. Put the steps in order.
+    steps:
+      - 'Write the definition: $(g\mathcal{X}+\mathcal{Z})\lfloor\mathcal{Y}\lfloor f\rceil\rceil - \mathcal{Y}\lfloor(g\mathcal{X}+\mathcal{Z})\lfloor f\rceil\rceil$'
+      - 'Split both sums point by point (module rule): $g\,\mathcal{X}\lfloor\cdot\rceil + \mathcal{Z}\lfloor\cdot\rceil$, and $\mathcal{Y}$ is additive'
+      - 'Apply the Leibniz rule to $\mathcal{Y}\lfloor g\,\mathcal{X}\lfloor f\rceil\rceil$, a derivative of a product'
+      - 'Regroup the four second-order terms into two commutators acting on $f$'
+      - 'Since $f$ was arbitrary, read the identity as an equality of vector fields'
+    hint: |
+      You cannot apply the Leibniz rule until the product $g\cdot\mathcal{X}\lfloor f\rceil$ stands alone inside $\mathcal{Y}\lfloor\cdot\rceil$, which needs the sums split first.
+    explanation: |
+      $$\begin{aligned}&[g\mathcal{X}+\mathcal{Z},\mathcal{Y}]\lfloor f\rceil\\ &= g\,\mathcal{X}\lfloor\mathcal{Y}\lfloor f\rceil\rceil + \mathcal{Z}\lfloor\mathcal{Y}\lfloor f\rceil\rceil\\ &\quad - \mathcal{Y}\lfloor g\,\mathcal{X}\lfloor f\rceil\rceil - \mathcal{Y}\lfloor\mathcal{Z}\lfloor f\rceil\rceil.\end{aligned}$$
+      By the Leibniz rule,
+      $$\begin{aligned}&\mathcal{Y}\lfloor g\,\mathcal{X}\lfloor f\rceil\rceil\\ &= \mathcal{Y}\lfloor g\rceil\,\mathcal{X}\lfloor f\rceil + g\,\mathcal{Y}\lfloor\mathcal{X}\lfloor f\rceil\rceil.\end{aligned}$$
+      The terms with $g$ in front pair into $g\,[\mathcal{X},\mathcal{Y}]\lfloor f\rceil$, the $\mathcal{Z}$ terms into $[\mathcal{Z},\mathcal{Y}]\lfloor f\rceil$, and one term is left over.
+
+  - type: build
+    id: commutator-rule
+    title: The commutator is not tensorial
+    prompt: |
+      For smooth $g$ and vector fields $\mathcal{X},\mathcal{Y},\mathcal{Z}$, expanding $[g\,\mathcal{X}+\mathcal{Z},\mathcal{Y}]\lfloor f\rceil$ with the module rule and the Leibniz rule $\mathcal{Y}\lfloor g\,h\rceil = \mathcal{Y}\lfloor g\rceil\,h + g\,\mathcal{Y}\lfloor h\rceil$ gives, for every $f$, two commutators plus one leftover term. Build the vector field.
+    prefix: '[g\mathcal{X}+\mathcal{Z},\mathcal{Y}] ='
+    tiles: ['g[\mathcal{X},\mathcal{Y}]', '[\mathcal{Z},\mathcal{Y}]', '\mathcal{Y}\lfloor g\rceil\mathcal{X}', '\mathcal{X}\lfloor g\rceil\mathcal{Y}', '+', '+', '-']
+    answers:
+      - ['g[\mathcal{X},\mathcal{Y}]', '+', '[\mathcal{Z},\mathcal{Y}]', '-', '\mathcal{Y}\lfloor g\rceil\mathcal{X}']
+      - ['[\mathcal{Z},\mathcal{Y}]', '+', 'g[\mathcal{X},\mathcal{Y}]', '-', '\mathcal{Y}\lfloor g\rceil\mathcal{X}']
+      - ['g[\mathcal{X},\mathcal{Y}]', '-', '\mathcal{Y}\lfloor g\rceil\mathcal{X}', '+', '[\mathcal{Z},\mathcal{Y}]']
+      - ['[\mathcal{Z},\mathcal{Y}]', '-', '\mathcal{Y}\lfloor g\rceil\mathcal{X}', '+', 'g[\mathcal{X},\mathcal{Y}]']
+    wrong:
+      - { answer: ['g[\mathcal{X},\mathcal{Y}]', '+', '[\mathcal{Z},\mathcal{Y}]', '+', '\mathcal{Y}\lfloor g\rceil\mathcal{X}'], feedback: 'Sign: the leftover comes from the **subtracted** half of the commutator, $-\mathcal{Y}\lfloor g\,\mathcal{X}\lfloor f\rceil\rceil$, whose Leibniz expansion contains $-\mathcal{Y}\lfloor g\rceil\,\mathcal{X}\lfloor f\rceil$.' }
+      - { answer: ['g[\mathcal{X},\mathcal{Y}]', '+', '[\mathcal{Z},\mathcal{Y}]', '-', '\mathcal{X}\lfloor g\rceil\mathcal{Y}'], feedback: 'Which field differentiates $g$? In $\mathcal{Y}\lfloor g\,\mathcal{X}\lfloor f\rceil\rceil$ it is $\mathcal{Y}$, and what multiplies the result is $\mathcal{X}\lfloor f\rceil$, the action of $\mathcal{X}$. So the leftover is $\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$. (The swapped term $\mathcal{X}\lfloor g\rceil\,\mathcal{Y}$ belongs to $[\mathcal{X},g\,\mathcal{Y}]$, with $g$ in the other slot.)' }
+      - { answer: ['g[\mathcal{X},\mathcal{Y}]', '+', '[\mathcal{Z},\mathcal{Y}]'], feedback: 'That would make the commutator $C^\infty(\mathcal{M})$-linear, but the Leibniz rule leaves one term where $\mathcal{Y}$ differentiates $g$ itself: $-\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$.' }
+    hint: |
+      The only term where something differentiates $g$ is $-\mathcal{Y}\lfloor g\,\mathcal{X}\lfloor f\rceil\rceil$. Expand it with the Leibniz rule.
+    explanation: |
+      $$\begin{aligned}&[g\mathcal{X}+\mathcal{Z},\mathcal{Y}]\lfloor f\rceil\\ &= g\,[\mathcal{X},\mathcal{Y}]\lfloor f\rceil + [\mathcal{Z},\mathcal{Y}]\lfloor f\rceil\\ &\quad - \mathcal{Y}\lfloor g\rceil\,\mathcal{X}\lfloor f\rceil,\end{aligned}$$
+      for every $f$, so (module rule once more)
+      $$\begin{aligned}&[g\mathcal{X}+\mathcal{Z},\mathcal{Y}]\\ &= g[\mathcal{X},\mathcal{Y}] + [\mathcal{Z},\mathcal{Y}] - \mathcal{Y}\lfloor g\rceil\,\mathcal{X}.\end{aligned}$$
+      Additive, but not $C^\infty(\mathcal{M})$-linear: the last term involves a derivative of $g$.
+
+  - type: numeric
+    id: commutator-check
+    title: Check it on the plane
+    prompt: |
+      On the plane, with points $(a,b)$ and cartesian basis fields $\partial x_1,\partial x_2$, recall the commutator in components: if $\mathcal{W} = w^i\,\partial x_i$ and $\mathcal{Y} = \tilde x^j\,\partial x_j$, then
+      $$[\mathcal{W},\mathcal{Y}]^k = \mathcal{W}\lfloor\tilde x^k\rceil - \mathcal{Y}\lfloor w^k\rceil.$$
+      Take $g = a$, $\mathcal{X} = \partial x_2$, $\mathcal{Z} = \partial x_1$, $\mathcal{Y} = b\,\partial x_1$, so $\mathcal{W} := g\,\mathcal{X}+\mathcal{Z} = \partial x_1 + a\,\partial x_2$. What is the $\partial x_2$-component of $[\mathcal{W},\mathcal{Y}]$ at the point $(3,2)$?
+    answer: -2
+    wrong:
+      - { value: 0, feedback: 'That is the naive guess $g[\mathcal{X},\mathcal{Y}] + [\mathcal{Z},\mathcal{Y}] = a\,\partial x_1$, which has no $\partial x_2$-component. The term $-\mathcal{Y}\lfloor w^2\rceil = -b\,\partial x_1\lfloor a\rceil = -b$ is exactly the extra $-\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$.' }
+      - { value: 2, feedback: 'Sign: the formula subtracts $\mathcal{Y}\lfloor w^2\rceil$. With $w^2 = a$ and $\mathcal{Y} = b\,\partial x_1$, $\mathcal{Y}\lfloor a\rceil = b = 2$, so the component is $0 - 2 = -2$.' }
+      - { value: 3, feedback: 'That is the $\partial x_1$-component, $\mathcal{W}\lfloor b\rceil - \mathcal{Y}\lfloor 1\rceil = a = 3$. The question asks for the $\partial x_2$-component.' }
+    hint: |
+      $\mathcal{W}$ has components $w^1 = 1$, $w^2 = a$; $\mathcal{Y}$ has $\tilde x^1 = b$, $\tilde x^2 = 0$. For $k = 2$: $\mathcal{W}\lfloor 0\rceil - \mathcal{Y}\lfloor a\rceil$.
+    explanation: |
+      $k=1$: $\mathcal{W}\lfloor b\rceil - \mathcal{Y}\lfloor 1\rceil = a$. $k=2$: $\mathcal{W}\lfloor 0\rceil - b\,\partial x_1\lfloor a\rceil = -b$. So $[\mathcal{W},\mathcal{Y}] = a\,\partial x_1 - b\,\partial x_2$, which is $3\,\partial x_1 - 2\,\partial x_2$ at $(3,2)$.
+
+      The rule predicts the same, term by term: $[\partial x_2, b\,\partial x_1] = \partial x_1$, so $g[\mathcal{X},\mathcal{Y}] = a\,\partial x_1$; $[\partial x_1,b\,\partial x_1] = 0$; and
+      $$-\mathcal{Y}\lfloor g\rceil\,\mathcal{X} = -b\,\partial x_2.$$
+      The whole $\partial x_2$-component comes from the non-tensorial term.
+
+  - type: mcq
+    id: which-nabla
+    title: The covariant derivative terms
+    prompt: |
+      A connection $\nabla$ is $C^\infty(\mathcal{M})$-linear in its direction, $\nabla_{g\mathcal{X}+\mathcal{Z}}\mathcal{Y} = g\,\nabla_\mathcal{X}\mathcal{Y} + \nabla_\mathcal{Z}\mathcal{Y}$, additive in the differentiated field, and obeys the product rule $\nabla_\mathcal{Y}(g\,\mathcal{X}) = \mathcal{Y}\lfloor g\rceil\,\mathcal{X} + g\,\nabla_\mathcal{Y}\mathcal{X}$. In the torsion's vector field $\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]$, replace $\mathcal{X}$ by $g\,\mathcal{X}+\mathcal{Z}$. Which covariant-derivative term produces $\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$?
+    options:
+      - text: '$\nabla_\mathcal{Y}(g\,\mathcal{X}+\mathcal{Z})$, where $g\,\mathcal{X}+\mathcal{Z}$ is the field being differentiated'
+        correct: true
+      - text: '$\nabla_{g\mathcal{X}+\mathcal{Z}}\mathcal{Y}$, since it differentiates along $g\,\mathcal{X}$'
+        feedback: |
+          Differentiating **along** $g\,\mathcal{X}$ just rescales the result at each point: at $p$ the direction is $g(p)\,\mathcal{X}(p)$, a tangent vector, and the derivative is linear in it. Nothing differentiates $g$, so $\nabla_{g\mathcal{X}}\mathcal{Y} = g\,\nabla_\mathcal{X}\mathcal{Y}$.
+      - text: 'Both, and they cancel each other'
+        feedback: |
+          The direction term $\nabla_{g\mathcal{X}+\mathcal{Z}}\mathcal{Y}$ is $C^\infty(\mathcal{M})$-linear, so it produces nothing extra. The cancellation does happen, but against the commutator, not between the two $\nabla$ terms.
+      - text: 'Neither: a connection is $C^\infty(\mathcal{M})$-linear in both slots'
+        feedback: |
+          Only in the direction. In the differentiated slot the product rule holds: $\nabla_\mathcal{Y}(g\,\mathcal{X}) = \mathcal{Y}\lfloor g\rceil\,\mathcal{X} + g\,\nabla_\mathcal{Y}\mathcal{X}$. That is why $\nabla_\mathcal{Y}\mathcal{X}$ is not a tensor field in $\mathcal{X}$.
+    explanation: |
+      $$\nabla_{g\mathcal{X}+\mathcal{Z}}\mathcal{Y} = g\,\nabla_\mathcal{X}\mathcal{Y} + \nabla_\mathcal{Z}\mathcal{Y},$$
+      $$\begin{aligned}&\nabla_\mathcal{Y}(g\mathcal{X}+\mathcal{Z})\\ &= \mathcal{Y}\lfloor g\rceil\,\mathcal{X} + g\,\nabla_\mathcal{Y}\mathcal{X} + \nabla_\mathcal{Y}\mathcal{Z}.\end{aligned}$$
+      Only the second carries a derivative of $g$, and it enters the torsion with a minus sign.
+
+  - type: text
+    id: three-pieces
+    title: Three pieces on the table
+    body: |
+      For a smooth $g$ and vector fields $\mathcal{X},\mathcal{Y},\mathcal{Z}$, the three terms of $\mathcal{V}(g\,\mathcal{X}+\mathcal{Z},\mathcal{Y})$ expand as
+      $$\nabla_{g\mathcal{X}+\mathcal{Z}}\mathcal{Y} = g\,\nabla_\mathcal{X}\mathcal{Y} + \nabla_\mathcal{Z}\mathcal{Y},$$
+      $$\begin{aligned}&\nabla_\mathcal{Y}(g\mathcal{X}+\mathcal{Z})\\ &= \mathcal{Y}\lfloor g\rceil\,\mathcal{X} + g\,\nabla_\mathcal{Y}\mathcal{X} + \nabla_\mathcal{Y}\mathcal{Z},\end{aligned}$$
+      $$\begin{aligned}&[g\mathcal{X}+\mathcal{Z},\mathcal{Y}]\\ &= g[\mathcal{X},\mathcal{Y}] + [\mathcal{Z},\mathcal{Y}] - \mathcal{Y}\lfloor g\rceil\,\mathcal{X}.\end{aligned}$$
+      The torsion's vector field takes the first, **minus** the second, **minus** the third. Watch the signs of the two $\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$ terms.
+
+  - type: build
+    id: collect
+    title: Collect the terms
+    prompt: |
+      With $\mathcal{V}(\mathcal{X},\mathcal{Y}) := \nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]$ and the expansions $\nabla_{g\mathcal{X}+\mathcal{Z}}\mathcal{Y} = g\,\nabla_\mathcal{X}\mathcal{Y} + \nabla_\mathcal{Z}\mathcal{Y}$, $\nabla_\mathcal{Y}(g\mathcal{X}+\mathcal{Z}) = \mathcal{Y}\lfloor g\rceil\,\mathcal{X} + g\,\nabla_\mathcal{Y}\mathcal{X} + \nabla_\mathcal{Y}\mathcal{Z}$ and $[g\mathcal{X}+\mathcal{Z},\mathcal{Y}] = g[\mathcal{X},\mathcal{Y}] + [\mathcal{Z},\mathcal{Y}] - \mathcal{Y}\lfloor g\rceil\,\mathcal{X}$, collect the terms. Use only the tiles you need.
+    prefix: '\mathcal{V}(g\mathcal{X}+\mathcal{Z},\mathcal{Y}) ='
+    tiles: ['g\,\mathcal{V}(\mathcal{X},\mathcal{Y})', '\mathcal{V}(\mathcal{Z},\mathcal{Y})', '2\,\mathcal{Y}\lfloor g\rceil\mathcal{X}', '+', '+', '-']
+    answers:
+      - ['g\,\mathcal{V}(\mathcal{X},\mathcal{Y})', '+', '\mathcal{V}(\mathcal{Z},\mathcal{Y})']
+      - ['\mathcal{V}(\mathcal{Z},\mathcal{Y})', '+', 'g\,\mathcal{V}(\mathcal{X},\mathcal{Y})']
+    wrong:
+      - { answer: ['g\,\mathcal{V}(\mathcal{X},\mathcal{Y})', '+', '\mathcal{V}(\mathcal{Z},\mathcal{Y})', '-', '2\,\mathcal{Y}\lfloor g\rceil\mathcal{X}'], feedback: 'The two terms have opposite signs. $-\nabla_\mathcal{Y}(g\mathcal{X}+\mathcal{Z})$ contributes $-\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$, but $-[g\mathcal{X}+\mathcal{Z},\mathcal{Y}]$ contributes $-(-\mathcal{Y}\lfloor g\rceil\,\mathcal{X}) = +\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$: they cancel.' }
+      - { answer: ['g\,\mathcal{V}(\mathcal{X},\mathcal{Y})', '+', '\mathcal{V}(\mathcal{Z},\mathcal{Y})', '+', '2\,\mathcal{Y}\lfloor g\rceil\mathcal{X}'], feedback: 'The commutator term does give $+\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$, but the covariant derivative term enters with a minus sign, $-\nabla_\mathcal{Y}(g\mathcal{X}+\mathcal{Z})$, so its $\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$ comes with $-$. Sum: zero.' }
+    hint: |
+      List the two non-tensorial contributions with their signs in $\mathcal{V}$: one from $-\nabla_\mathcal{Y}(\dots)$, one from $-[\dots,\mathcal{Y}]$.
+    explanation: |
+      $$\begin{aligned}&\mathcal{V}(g\mathcal{X}+\mathcal{Z},\mathcal{Y})\\ &= g\,\nabla_\mathcal{X}\mathcal{Y} + \nabla_\mathcal{Z}\mathcal{Y}\\ &\quad - \mathcal{Y}\lfloor g\rceil\mathcal{X} - g\,\nabla_\mathcal{Y}\mathcal{X} - \nabla_\mathcal{Y}\mathcal{Z}\\ &\quad - g[\mathcal{X},\mathcal{Y}] - [\mathcal{Z},\mathcal{Y}] + \mathcal{Y}\lfloor g\rceil\mathcal{X}\\ &= g\,\mathcal{V}(\mathcal{X},\mathcal{Y}) + \mathcal{V}(\mathcal{Z},\mathcal{Y}).\end{aligned}$$
+      The two terms $\mp\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$, one from the product rule and one from the commutator, cancel exactly.
+
+  - type: text
+    id: conclude
+    title: The second slot, done
+    body: |
+      Feed the result to the covector field $\mathsf{X}$. A covector field acts $C^\infty(\mathcal{M})$-linearly on vector fields (point by point, $\mathsf{X}_p$ is linear), so
+      $$\begin{aligned}&\mathtt{T}(\mathsf{X},g\mathcal{X}+\mathcal{Z},\mathcal{Y})\\ &= \mathsf{X}\lceil g\,\mathcal{V}(\mathcal{X},\mathcal{Y}) + \mathcal{V}(\mathcal{Z},\mathcal{Y})\rfloor\\ &= g\,\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) + \mathtt{T}(\mathsf{X},\mathcal{Z},\mathcal{Y}).\end{aligned}$$
+      Two slots done. Neither ingredient is tensorial; the torsion is, because each ingredient's defect is the other's with the opposite sign. That is why the commutator is in the definition at all.
+
+      One slot left: the third.
+
+  - type: mcq
+    id: third-slot
+    title: The third slot for free
+    prompt: |
+      The torsion $\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) := \mathsf{X}\lceil\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]\rfloor$ is known to be $C^\infty(\mathcal{M})$-linear in its first slot (the covector field) and its second slot ($\mathcal{X}$). How does one get $C^\infty(\mathcal{M})$-linearity in the third slot ($\mathcal{Y}$)?
+    options:
+      - text: 'From antisymmetry: $[\mathcal{Y},\mathcal{X}] = -[\mathcal{X},\mathcal{Y}]$, so $\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) = -\mathtt{T}(\mathsf{X},\mathcal{Y},\mathcal{X})$, and the third slot becomes the second'
+        correct: true
+      - text: 'It needs a separate computation: in the third slot the product rule hits $\nabla_\mathcal{X}\mathcal{Y}$ instead of $\nabla_\mathcal{Y}\mathcal{X}$, so the cancellation must be checked again'
+        feedback: |
+          Tempting, since the bad term does come from a different place ($\nabla_\mathcal{X}(g\,\mathcal{Y})$ and $[\mathcal{X},g\,\mathcal{Y}]$). But no new check is needed: swapping $\mathcal{X}$ and $\mathcal{Y}$ flips every term of the definition, so $\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) = -\mathtt{T}(\mathsf{X},\mathcal{Y},\mathcal{X})$, and the second-slot result covers the third slot.
+      - text: 'It follows from linearity in the first slot'
+        feedback: |
+          The first slot holds the covector field; its linearity says nothing about how the vector fields enter. The bridge between the two **vector** slots is antisymmetry.
+      - text: 'It does not hold: the torsion is $C^\infty(\mathcal{M})$-linear only in its first two slots'
+        feedback: |
+          Swapping the two vector fields flips every term of the definition, so $\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) = -\mathtt{T}(\mathsf{X},\mathcal{Y},\mathcal{X})$. Whatever holds for the second slot then holds for the third.
+    explanation: |
+      With antisymmetry and the second-slot result,
+      $$\begin{aligned}&\mathtt{T}(\mathsf{X},\mathcal{X},g\mathcal{Y}+\mathcal{Z})\\ &= -\mathtt{T}(\mathsf{X},g\mathcal{Y}+\mathcal{Z},\mathcal{X})\\ &= -g\,\mathtt{T}(\mathsf{X},\mathcal{Y},\mathcal{X}) - \mathtt{T}(\mathsf{X},\mathcal{Z},\mathcal{X})\\ &= g\,\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) + \mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Z}).\end{aligned}$$
+      All three slots are $C^\infty(\mathcal{M})$-linear: $\mathtt{T}$ is a $(1,2)$-tensor field. $\square$
+
+  - type: text
+    id: contrast
+    title: Drop the commutator and it breaks
+    body: |
+      Recall the connection $\nabla^{\mathrm{E}}$ on the plane: it differentiates cartesian components, so for $\mathcal{Y} = \tilde x^k\,\partial x_k$,
+      $$\nabla^{\mathrm{E}}_\mathcal{X}\mathcal{Y} = \mathcal{X}\lfloor\tilde x^k\rceil\,\partial x_k.$$
+      Define the candidate without the commutator,
+      $$S(\mathcal{X},\mathcal{Y}) := \nabla^{\mathrm{E}}_\mathcal{X}\mathcal{Y} - \nabla^{\mathrm{E}}_\mathcal{Y}\mathcal{X}.$$
+      For the constant fields $\partial x_2, \partial x_1$ every term vanishes, so $S(\partial x_2,\partial x_1) = 0$. If $S$ were $C^\infty(\mathcal{M})$-linear in its first slot, then $S(g\,\partial x_2,\partial x_1)$ would be $g\cdot 0 = 0$ for every function $g$. Test it.
+
+  - type: numeric
+    id: contrast-number
+    title: The candidate fails
+    prompt: |
+      On the plane with points $(a,b)$, the connection $\nabla^{\mathrm{E}}$ acts by $\nabla^{\mathrm{E}}_\mathcal{X}(\tilde x^k\,\partial x_k) = \mathcal{X}\lfloor\tilde x^k\rceil\,\partial x_k$. Let $S(\mathcal{X},\mathcal{Y}) := \nabla^{\mathrm{E}}_\mathcal{X}\mathcal{Y} - \nabla^{\mathrm{E}}_\mathcal{Y}\mathcal{X}$, with no commutator term. Note $S(\partial x_2,\partial x_1) = 0$. With $g = ab$, what is the $\partial x_2$-component of $S(g\,\partial x_2,\partial x_1)$ at the point $(2,5)$?
+    answer: -5
+    wrong:
+      - { value: 0, feedback: 'That is what $C^\infty(\mathcal{M})$-linearity would give, $g\,S(\partial x_2,\partial x_1) = 0$. But $-\nabla^{\mathrm{E}}_{\partial x_1}(ab\,\partial x_2) = -\partial x_1\lfloor ab\rceil\,\partial x_2 = -b\,\partial x_2$ survives.' }
+      - { value: 5, feedback: 'Sign: the term $\nabla^{\mathrm{E}}_{\partial x_1}(ab\,\partial x_2) = b\,\partial x_2$ is **subtracted** in $S$.' }
+      - { value: -2, feedback: 'The derivative is along $\partial x_1$ (the direction of the subtracted term), so it differentiates in $a$: $\partial x_1\lfloor ab\rceil = b = 5$, not $a$.' }
+    hint: |
+      $\nabla^{\mathrm{E}}_{ab\,\partial x_2}\partial x_1 = 0$ (constant components). The other term differentiates the component $ab$ along $\partial x_1$.
+    explanation: |
+      $$\begin{aligned}&S(ab\,\partial x_2,\partial x_1)\\ &= 0 - \partial x_1\lfloor ab\rceil\,\partial x_2\\ &= -b\,\partial x_2,\end{aligned}$$
+      which is $-5\,\partial x_2$ at $(2,5)$, not $0$: $S$ is not a tensor field. Now restore the commutator. By the rule $[g\mathcal{X},\mathcal{Y}] = g[\mathcal{X},\mathcal{Y}] - \mathcal{Y}\lfloor g\rceil\,\mathcal{X}$,
+      $$[ab\,\partial x_2,\partial x_1] = -b\,\partial x_2,$$
+      so $S - [\cdot,\cdot] = 0 = g\cdot 0$, as tensoriality demands (here the torsion of $\nabla^{\mathrm{E}}$ is zero).
+
+  - type: text
+    id: riemann-same
+    title: Curvature works the same way
+    body: |
+      Recall the Riemann curvature of $\nabla$:
+      $$\begin{aligned}&\mathrm{Riem}(\mathsf{X},\mathcal{Z},\mathcal{X},\mathcal{Y})\\ &:= \mathsf{X}\lceil\nabla_\mathcal{X}\nabla_\mathcal{Y}\mathcal{Z} - \nabla_\mathcal{Y}\nabla_\mathcal{X}\mathcal{Z}\\ &\qquad - \nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}\rfloor.\end{aligned}$$
+      Replace $\mathcal{X}$ by $g\,\mathcal{X}$. The first term is harmless ($g\mathcal{X}$ is a direction): $g\,\nabla_\mathcal{X}\nabla_\mathcal{Y}\mathcal{Z}$. The second is not: $\nabla_{g\mathcal{X}}\mathcal{Z} = g\,\nabla_\mathcal{X}\mathcal{Z}$ is then **differentiated** along $\mathcal{Y}$, and the product rule gives
+      $$\begin{aligned}&\nabla_\mathcal{Y}(g\,\nabla_\mathcal{X}\mathcal{Z})\\ &= \mathcal{Y}\lfloor g\rceil\,\nabla_\mathcal{X}\mathcal{Z} + g\,\nabla_\mathcal{Y}\nabla_\mathcal{X}\mathcal{Z}.\end{aligned}$$
+      So $-\nabla_\mathcal{Y}\nabla_{g\mathcal{X}}\mathcal{Z}$ leaves the bad term $-\mathcal{Y}\lfloor g\rceil\,\nabla_\mathcal{X}\mathcal{Z}$. Something must cancel it.
+
+  - type: mcq
+    id: riemann-cancel
+    title: What rescues the curvature?
+    prompt: |
+      In $\mathrm{Riem}(\mathsf{X},\mathcal{Z},\mathcal{X},\mathcal{Y}) := \mathsf{X}\lceil\nabla_\mathcal{X}\nabla_\mathcal{Y}\mathcal{Z} - \nabla_\mathcal{Y}\nabla_\mathcal{X}\mathcal{Z} - \nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}\rfloor$, replacing $\mathcal{X}$ by $g\,\mathcal{X}$ makes the term $-\nabla_\mathcal{Y}\nabla_{g\mathcal{X}}\mathcal{Z}$ produce $-\mathcal{Y}\lfloor g\rceil\,\nabla_\mathcal{X}\mathcal{Z}$. Which term cancels it?
+    options:
+      - text: '$-\nabla_{[g\mathcal{X},\mathcal{Y}]}\mathcal{Z}$, since $[g\mathcal{X},\mathcal{Y}] = g[\mathcal{X},\mathcal{Y}] - \mathcal{Y}\lfloor g\rceil\,\mathcal{X}$ and the direction slot is $C^\infty(\mathcal{M})$-linear'
+        correct: true
+      - text: '$\nabla_{g\mathcal{X}}\nabla_\mathcal{Y}\mathcal{Z}$, by the product rule'
+        feedback: |
+          In this term $g\,\mathcal{X}$ is the **direction**, and the direction slot is $C^\infty(\mathcal{M})$-linear: $\nabla_{g\mathcal{X}}\nabla_\mathcal{Y}\mathcal{Z} = g\,\nabla_\mathcal{X}\nabla_\mathcal{Y}\mathcal{Z}$. No derivative of $g$ appears.
+      - text: 'Nothing: the curvature is tensorial only in $\mathsf{X}$ and $\mathcal{Z}$'
+        feedback: |
+          The commutator term is there precisely to cancel it: $-\nabla_{[g\mathcal{X},\mathcal{Y}]}\mathcal{Z} = -g\,\nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z} + \mathcal{Y}\lfloor g\rceil\,\nabla_\mathcal{X}\mathcal{Z}$. The curvature is $C^\infty(\mathcal{M})$-linear in all four slots.
+      - text: 'Antisymmetry in $\mathcal{X},\mathcal{Y}$ makes it vanish'
+        feedback: |
+          Antisymmetry relates the third slot to the fourth; it cannot make a single term zero. The cancellation comes from the commutator term, whose direction $[g\mathcal{X},\mathcal{Y}]$ contains $-\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$.
+    explanation: |
+      $$\begin{aligned}&-\nabla_{[g\mathcal{X},\mathcal{Y}]}\mathcal{Z}\\ &= -\nabla_{g[\mathcal{X},\mathcal{Y}] - \mathcal{Y}\lfloor g\rceil\mathcal{X}}\mathcal{Z}\\ &= -g\,\nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z} + \mathcal{Y}\lfloor g\rceil\,\nabla_\mathcal{X}\mathcal{Z}.\end{aligned}$$
+      The last term cancels $-\mathcal{Y}\lfloor g\rceil\,\nabla_\mathcal{X}\mathcal{Z}$, exactly as for the torsion: the commutator's defect pays for the product rule's. The slot of $\mathcal{Z}$ takes a longer computation of the same kind.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      **The hook, resolved.** Neither $\nabla_\mathcal{X}\mathcal{Y}$ nor $[\mathcal{X},\mathcal{Y}]$ is tensorial, but each produces the same defect $\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$ with opposite signs in the torsion, so the torsion is a $(1,2)$-tensor field.
+
+      - **Torsion** and its vector field:
+      $$\begin{aligned}&\mathcal{V}(\mathcal{X},\mathcal{Y})\\ &:= \nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]\end{aligned}$$
+      $$\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) := \mathsf{X}\lceil\mathcal{V}(\mathcal{X},\mathcal{Y})\rfloor$$
+      - **Commutator rule** (additive, not $C^\infty(\mathcal{M})$-linear):
+      $$\begin{aligned}&[g\mathcal{X}+\mathcal{Z},\mathcal{Y}]\\ &= g[\mathcal{X},\mathcal{Y}] + [\mathcal{Z},\mathcal{Y}] - \mathcal{Y}\lfloor g\rceil\,\mathcal{X}\end{aligned}$$
+      - **Connection rules** (direction linear, product rule in the differentiated slot):
+      $$\nabla_{g\mathcal{X}+\mathcal{Z}}\mathcal{Y} = g\,\nabla_\mathcal{X}\mathcal{Y} + \nabla_\mathcal{Z}\mathcal{Y}$$
+      $$\nabla_\mathcal{Y}(g\,\mathcal{X}) = \mathcal{Y}\lfloor g\rceil\,\mathcal{X} + g\,\nabla_\mathcal{Y}\mathcal{X}$$
+      - **The cancellation**:
+      $$\mathcal{V}(g\mathcal{X}+\mathcal{Z},\mathcal{Y}) = g\,\mathcal{V}(\mathcal{X},\mathcal{Y}) + \mathcal{V}(\mathcal{Z},\mathcal{Y})$$
+      - **Three slots**: the covector slot only evaluates; the second by the cancellation; the third by antisymmetry,
+      $$\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) = -\mathtt{T}(\mathsf{X},\mathcal{Y},\mathcal{X}).$$
+      - **Check**: under $\nabla^{\mathrm{E}}$, $S(ab\,\partial x_2,\partial x_1) = -b\,\partial x_2 \neq 0$ without the commutator; the Riemann curvature is rescued the same way, by $-\nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}$.
+
+      **Next: "Three Connections on the Plane".** With tensoriality in hand, torsion and curvature can be computed from components alone. The next guided problem does it for the three plane connections $\nabla^{\mathrm{E}}$, $\nabla^{\mathrm{W}}$, $\nabla^{\kappa}$: one flat and torsion free, one flat with torsion, one curved.

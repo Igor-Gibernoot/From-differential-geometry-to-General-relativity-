@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel, ch06-parallel-transport, ch06-torsion-curvature done)
+## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel, ch06-parallel-transport, ch06-torsion-curvature, ch06-torsion-tensor done)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -24,7 +24,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
-- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). Next: `ch06-torsion-tensor` (guided, B.10).
+- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards), `ch06-torsion-tensor` (guided, 19 cards); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). Next: `ch06-three-connections` (guided, C.5).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 6 (Covariant Derivative) in `course.yaml` order, next
@@ -274,6 +274,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\mathrm{Riem}(\mathsf{X},\mathcal{Z},\mathcal{X},\mathcal{Y})$ (book form), summation index $n$ (never $r$) in $\mathrm{Riem}^i_{jkm} = \partial x_k\lfloor\Gamma^i_{jm}\rceil - \partial x_m\lfloor\Gamma^i_{jk}\rceil + \Gamma^i_{nk}\Gamma^n_{jm} - \Gamma^i_{nm}\Gamma^n_{jk}$;
   2D: 4 components $\mathrm{Riem}^i_{j12}$; ∇ᴱ polar $\mathrm{Riem}^1_{212} = -1+1 = 0$; ∇^κ $\mathrm{Riem}^1_{212} = \kappa$, $\mathrm{Ric}_{ab} = \mathrm{Riem}^m_{amb}$, $\mathrm{Ric} = \kappa\,dx^2\otimes dx^2$; holonomy numeric κ=2, $[1,2]\times[0,3]$,
   $z=(5,2)$: $-12$; square $[-1,1]^2$ under κ=1: $-4$; flat+torsion-free ⇔ local chart with Γ=0 stated (both directions named, easy one shown); Bianchi named (component form).
+  `ch06-torsion-tensor`: torsion vector field $\mathcal{V}(\mathcal{X},\mathcal{Y}) := \nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]$ (book's name; said to be unrelated to a chart domain),
+  $\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) := \mathsf{X}\lceil\mathcal{V}\rfloor$ with general covector fields $\mathsf{X},\mathsf{Y}$ (book uses $df, dh$); facts labelled (a)–(d) inside the lesson (book's own list);
+  rule $[g\mathcal{X}+\mathcal{Z},\mathcal{Y}] = g[\mathcal{X},\mathcal{Y}] + [\mathcal{Z},\mathcal{Y}] - \mathcal{Y}\lfloor g\rceil\mathcal{X}$; check $[\partial x_1 + a\,\partial x_2, b\,\partial x_1] = a\,\partial x_1 - b\,\partial x_2$ ($(3,-2)$ at $(3,2)$);
+  contrast $S := \nabla^{\mathrm{E}}_\mathcal{X}\mathcal{Y} - \nabla^{\mathrm{E}}_\mathcal{Y}\mathcal{X}$, $S(ab\,\partial x_2,\partial x_1) = -b\,\partial x_2$ ($-5$ at $(2,5)$); Riem rescued by $-\nabla_{[g\mathcal{X},\mathcal{Y}]}\mathcal{Z}$ (only the $\mathcal{X}$ slot shown).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -286,6 +290,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch06-torsion-tensor (guided, 19 cards)
+- Hook (two non-tensors, one tensor; $\mathcal{V}$ and $\mathtt{T}$) + guess MCQ; goal (C^∞-linearity per slot, pointwise principle, facts (a)–(d)) + constants-not-enough MCQ; first slot MCQ;
+  commutator: order card (5 steps), build of the rule, numeric check $-2$ on the plane; which-∇-term MCQ; three-pieces card; collect build (cancellation); conclusion;
+  third slot by antisymmetry MCQ (trap: separate computation); contrast $S$ under ∇ᴱ numeric $-5$; Riem remark + MCQ on $-\nabla_{[g\mathcal{X},\mathcal{Y}]}\mathcal{Z}$; summary with formulas.
+- Checks: both numerics verified by hand (commutator rule both sides; $S$ and $[ab\,\partial x_2,\partial x_1]$ both $-b\,\partial x_2$); validate 0/0; shots 19 cards, 0 problems; no widget.
+- Choices: general covector fields $\mathsf{X},\mathsf{Y}$ instead of the book's $df,dh$; book's footnote (third-slot cancellation) left to the previous lesson's card; Riem's $\mathcal{Z}$ slot only mentioned.
+- Conventions fixed here: $\mathcal{V}(\mathcal{X},\mathcal{Y})$ for the torsion's vector field, facts (a)–(d), commutator rule in the first slot (see Current, `ch06-torsion-tensor`).
+
 ### 2026-10-20 — ch06-torsion-curvature (concept, 35 cards)
 - Hook "once around a loop" (∇ᴱ, ∇ᵂ, ∇^κ introduced), early widget (rectangle $[1,2]\times[0,1]$, κ vs E, holonomy hidden) + numeric $\Delta z^1 = -1$, who-returns MCQ;
   commutator (second-order trap $D(a^2)$, chart computation, Schwarz MCQ, component build, numeric $-6$, which-commute incl. $[e_1,e_2]$); torsion (definition, build

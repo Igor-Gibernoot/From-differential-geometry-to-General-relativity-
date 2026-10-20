@@ -273,7 +273,11 @@ levels:
         kind: concept
         file: ch06/torsion-curvature.yaml
         summary: Two tensors hidden in a connection. Torsion measures whether swapping two derivatives matches the commutator; curvature measures whether a vector carried around a loop comes back to itself.
-      - { id: ch06-torsion-tensor, title: "Guided Problem: Torsion Is a Tensor", kind: guided }
+      - id: ch06-torsion-tensor
+        title: "Guided Problem: Torsion Is a Tensor"
+        kind: guided
+        file: ch06/torsion-tensor.yaml
+        summary: Neither the covariant derivative nor the commutator is a tensor, yet the torsion is. Prove it slot by slot and watch the two defects cancel.
       - { id: ch06-three-connections, title: "Guided Problem: Three Connections on the Plane", kind: guided }
       - { id: ch06-traps, title: Connection Traps, kind: traps }
       - { id: ch06-map, title: "Content Map: Covariant Derivative", kind: map }
