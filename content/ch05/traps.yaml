@@ -1,0 +1,429 @@
+id: ch05-traps
+title: Field Traps
+kind: traps
+
+cards:
+  - type: text
+    id: intro
+    title: Trap round
+    body: |
+      Fast round: each question hides a tempting mistake from this level, from the tangent bundle to closed and exact covector fields. Answer quickly, then read the feedback, especially when you got it right for a shaky reason.
+
+      Notation used below: $\mathcal{M}$ is a smooth manifold of dimension $d$. A **vector field** $\mathcal{X}$ (calligraphic letter) is a smooth section of the tangent bundle $T\mathcal{M} = \dot\bigcup_p T_p\mathcal{M}$; a **chart** $(\mathcal{U},\mathscr{X})$ is written with a script letter. On a chart,
+      $$\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i,$$
+      with component functions $x^i$ and basis fields $\partial x_i := \partial/\partial\mathscr{X}^i$ (Einstein summation over $i$). A covector field is $\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i$. A field acts on a scalar field $f$ as $\mathcal{X}\lfloor f\rceil$, a covector field on a vector field as $\mathsf{X}\lceil\mathcal{X}\rfloor$; both outputs are scalar fields.
+
+      Several questions use the **running example**, the egg-carton surface $\mathcal{M}$: the graph of $h(a,b) = \cos a\cos b + 1$, with the chart $\mathscr{X}(a,b,c) = (a,b)$ on all of $\mathcal{M}$ and the polar chart $\mathscr{Y} = (r,\theta)$, $r = \sqrt{a^2+b^2}$, defined away from the half-line $a\le0$, $b = 0$.
+
+  - type: mcq
+    id: which-x
+    title: One letter, which role?
+    prompt: |
+      On a chart $(\mathcal{U},\mathscr{X})$ of $\mathcal{M}$, a vector field $\mathcal{X}$ is expanded as $\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i$. What is $x^1$?
+    options:
+      - text: 'A smooth function $\mathcal{U}\to\mathbb{R}$, $p\mapsto\mathcal{X}(p)(\mathscr{X}^1)$'
+        correct: true
+      - text: 'The first coordinate function $\mathscr{X}^1$ of the chart'
+        feedback: |
+          Same letter, different role. $\mathscr{X}^1$ belongs to the chart alone; $x^1$ also depends on the field: it is what the vector $\mathcal{X}(p)$ does to $\mathscr{X}^1$. The vertical field on the egg carton has $x^1 = 0$ everywhere, while $\mathscr{X}^1 = a$ is not zero.
+      - text: 'The real number $x^1_p$, the first component of $\mathcal{X}$ at one point'
+        feedback: |
+          $x^1_p$ (with the point as a label) is one value. In a field expansion the point has been dropped because it moves: $x^1$ is the whole function $p\mapsto x^1_p$, and $x^1(p) = x^1_p$.
+      - text: 'The square of a function $x$'
+        feedback: |
+          Raised indices are labels, not powers: $x^1$ and $x^2$ are the first and second component functions. A square would be written $(x^1)^2$.
+    explanation: |
+      $x^i(p) := \mathcal{X}(p)(\mathscr{X}^i)$, the $i$-th component of the vector $\mathcal{X}(p)$ in the chart-induced basis, as a function of $p\in\mathcal{U}$. Chart $\mathscr{X}$ (script), field $\mathcal{X}$ (calligraphic), components $x^i$ (functions), numbers $x^i_p$.
+
+  - type: numeric
+    id: swirl-component
+    title: Component, not coordinate
+    prompt: |
+      On the egg-carton surface (graph of $h(a,b) = \cos a\cos b + 1$, chart $\mathscr{X}(a,b,c) = (a,b)$), the swirl is the vector field
+      $$\mathcal{Y} = -b\,\partial x_1 + a\,\partial x_2,$$
+      with component functions $\tilde X^1 = -b$, $\tilde X^2 = a$. At the point $p$ with $\mathscr{X}(p) = (2,3)$, what is $\tilde X^1(p)$?
+    answer: -3
+    wrong:
+      - { value: 2, feedback: 'That is $\mathscr{X}^1(p) = a = 2$, the first **coordinate** of the point. The first **component** of the field is the coefficient of $\partial x_1$, here $-b = -3$.' }
+      - { value: 3, feedback: 'Right entry, lost sign: the coefficient of $\partial x_1$ is $-b$, so $\tilde X^1(p) = -3$. The swirl turns counterclockwise, so above the $a$-axis it points towards negative $a$.' }
+    hint: 'Read off the coefficient of $\partial x_1$ and evaluate it at $a = 2$, $b = 3$.'
+    explanation: |
+      $\tilde X^1(p) = -b = -3$ and $\tilde X^2(p) = a = 2$: the vector $\mathcal{Y}(p) = -3(\partial x_1)_p + 2(\partial x_2)_p$. The coordinates of the point, $(2,3)$, and the components of the vector there, $(-3,2)$, are different pairs of numbers.
+
+  - type: mcq
+    id: zero-vectors
+    title: How many zeros?
+    prompt: |
+      The zero field $\mathcal{O}$ on $\mathcal{M} = \mathbb{R}^2$ assigns to each point $p$ the zero vector $0_p$ of $T_p\mathcal{M}$. As velocities, all these zero vectors are the same map $f\mapsto 0$. How many elements of the tangent bundle $T\mathcal{M}$ does $\mathcal{O}$ hit?
+    options:
+      - text: 'Infinitely many: one zero vector for each point $p$'
+        correct: true
+      - text: 'Exactly one, the map $f\mapsto0$'
+        feedback: |
+          True for the ordinary union, and that is why the bundle is a **disjoint** union: there each element remembers its base point, so $0_p$ and $0_q$ for $p\neq q$ are different elements (think of the pairs $(p,0)$ and $(q,0)$). Otherwise the projection $\pi(0_p) = p$ would not be defined.
+      - text: 'None: the zero field is not a section, since it carries no information'
+        feedback: |
+          A section only needs $\pi\circ\mathcal{O} = \mathrm{id}$, and $\pi(0_p) = p$ holds. Its components are the constant $0$, smooth in every chart: $\mathcal{O}$ is a perfectly good smooth vector field, the zero of the module of fields.
+    explanation: |
+      In $T\mathcal{M} = \dot\bigcup_pT_p\mathcal{M}$ each zero vector carries its point, so the image of $\mathcal{O}$ is a copy of $\mathcal{M}$ inside $T\mathcal{M}$, one element per point.
+
+  - type: numeric
+    id: dim-bundle
+    title: How big is the sphere's bundle?
+    prompt: |
+      The sphere $S^2$ is a smooth manifold of dimension $2$; picture it inside $\mathbb{R}^3$ with a tangent plane at each point. What is the dimension of its tangent bundle $TS^2$ as a manifold?
+    answer: 4
+    wrong:
+      - { value: 2, feedback: 'That is the dimension of each fibre $T_pS^2$. A bundle chart also needs the $2$ coordinates of the base point: $\xi_{\mathscr{X}}(\mathcal{X}_p) = (\mathscr{X}(p)\,;\,x^1_p, x^2_p)$, four numbers.' }
+      - { value: 6, feedback: 'Counting a point of $\mathbb{R}^3$ plus an arrow of $\mathbb{R}^3$ uses the surrounding space, which the manifold does not have. Intrinsically, the base point needs $2$ coordinates and a tangent vector $2$ components.' }
+      - { value: 3, feedback: 'The surrounding $\mathbb{R}^3$ plays no role. The bundle chart records $2$ coordinates of the point and $2$ components of the vector: $2d = 4$.' }
+    hint: 'A bundle chart records the coordinates of the base point and the components of the vector.'
+    explanation: |
+      $\dim T\mathcal{M} = 2d$: $d$ numbers locate the point, $d$ more the vector. For $S^2$, $4$; for spacetime, $8$. A vector field uses only $d$ functions (its components), because the point is the input.
+
+  - type: mcq
+    id: section-test
+    title: Which maps are sections?
+    multiple: true
+    prompt: |
+      Take the bundle $\pi\colon\mathbb{R}^2\to\mathbb{R}$, $\pi(a,b) = a$. A **section** is a map $\sigma\colon\mathbb{R}\to\mathbb{R}^2$ with $\pi\circ\sigma = \mathrm{id}_\mathbb{R}$. Select all the maps that are sections.
+    options:
+      - text: '$\sigma(t) = (t, t^2)$'
+        correct: true
+      - text: '$\sigma(t) = (t, |t|)$'
+        correct: true
+      - text: '$\sigma(t) = (t^2, t)$'
+        feedback: |
+          Its image is a nice curve, but $\pi(\sigma(t)) = t^2\neq t$ (for $t = 2$ it gives $4$). A section must put the value over $t$ **itself**: it chooses one element of each fibre $\pi^{-1}(t)$.
+      - text: '$\sigma(t) = (0, t)$'
+        feedback: |
+          This map runs along a single fibre, the one over $0$: $\pi(\sigma(t)) = 0$ for every $t$. A section visits every fibre exactly once.
+    explanation: |
+      $\pi\circ\sigma = \mathrm{id}$ means $\sigma(t) = (t, \text{anything})$. Both $(t, t^2)$ and $(t,|t|)$ are sections; the second is not smooth at $t = 0$. Being a section and being smooth are separate conditions: a vector field must satisfy both.
+
+  - type: mcq
+    id: smooth-kink
+    title: Once differentiable is not enough
+    prompt: |
+      On the egg-carton surface with chart $\mathscr{X}(a,b,c) = (a,b)$, define the section
+      $$\mathcal{W} := b\,|b|\,\partial x_1.$$
+      Its component $b|b|$ has derivative $2|b|$ in $b$, which exists everywhere. Is $\mathcal{W}$ a smooth vector field?
+    options:
+      - text: 'No: the second derivative of $b|b|$ is $2$ for $b>0$ and $-2$ for $b<0$, so the component is not $C^\infty$'
+        correct: true
+      - text: 'Yes: its component is differentiable everywhere, and that is what smooth means'
+        feedback: |
+          Smooth means $C^\infty$: derivatives of **every** order. $b|b|$ is $C^1$ (its derivative $2|b|$ is continuous) but $2|b|$ has a kink at $b = 0$, so the second derivative jumps from $-2$ to $2$.
+      - text: 'Yes: every section is smooth, because $\pi\circ\mathcal{W} = \mathrm{id}$ is smooth'
+        feedback: |
+          $\pi\circ\mathcal{W} = \mathrm{id}$ holds for every section, smooth or not, so it cannot decide smoothness. In a bundle chart the first block of $\mathcal{W}$ is the identity; all the information sits in the components, and $b|b|$ fails.
+    explanation: |
+      A section is a smooth vector field exactly when its component functions are $C^\infty$ in every chart (equivalently, in the charts of an atlas). $b|b|$ is $C^1$ but not $C^2$ along the line $b = 0$, so $\mathcal{W}\notin\Gamma T\mathcal{M}$. The kinked $|b|\,\partial x_1$ fails already at first order.
+
+  - type: mcq
+    id: radial-limit
+    title: Fill in the origin
+    prompt: |
+      On the egg-carton surface, the polar basis field $\partial y_1 = \partial/\partial r$ is defined on the polar chart's domain (the origin excluded), where its components in the chart $\mathscr{X}(a,b,c) = (a,b)$ are $(a/r,\ b/r)$. Someone extends it to the origin by its limit along the positive $a$-axis, $(1,0)$. Is the extended field continuous at the origin?
+    options:
+      - text: 'No: along the positive $b$-axis the components are $(0,1)$, so the arrows near the origin do not approach $(1,0)$'
+        correct: true
+      - text: 'Yes: a limit along one path fixes the value, and the field is smooth everywhere else'
+        feedback: |
+          Continuity needs the same limit along **every** approach. At $(0,\varepsilon)$ the components are $(0/\varepsilon, \varepsilon/\varepsilon) = (0,1)$, at $(-\varepsilon, \varepsilon')$ close to the negative axis they approach $(-1,0)$: the arrows point away from the origin in all directions at once.
+      - text: 'Yes, because every chart-induced basis field is defined on all of $\mathcal{M}$'
+        feedback: |
+          A basis field $\partial y_i$ is defined only on its chart's domain. Whether it extends beyond is a separate question, answered case by case: here no value at the origin works.
+    explanation: |
+      $(a/r)^2 + (b/r)^2 = 1$, so $\partial y_1$ always has unit components and points radially; no single vector at the origin is the limit of all of them. Basis fields live on their chart domain; only on it is $\mathcal{X}|_\mathcal{V} = y^i\,\partial y_i$ available.
+
+  - type: build
+    id: vector-law
+    title: The vector field law
+    prompt: |
+      On the overlap $\mathcal{U}\cap\mathcal{V}$ of two charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$, a **vector** field has component functions $x^j$ (chart $\mathscr{X}$) and $y^i$ (chart $\mathscr{Y}$). Build the new components from the old (Einstein summation).
+    prefix: 'y^i ='
+    tiles: ['\dfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}', '\dfrac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}', 'x^j', '\mathtt{x}_j', 'x^i']
+    answers:
+      - ['\dfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}', 'x^j']
+      - ['x^j', '\dfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}']
+    wrong:
+      - { answer: ['\dfrac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}', 'x^j'], feedback: 'That is the matrix of the **covector** law $\mathtt{y}_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)\,\mathtt{x}_j$. The index check catches it: $i$ would sit down on the right and up on the left, and $j$ twice up. Vector components change with the Jacobian $\partial\mathscr{Y}/\partial\mathscr{X}$, row $i$.' }
+      - { answer: ['\dfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}', 'x^i'], feedback: 'Then $j$ appears only once, in the Jacobian, with nothing to sum against, and $i$ appears twice up. The sum runs over the **old** components $x^j$.' }
+      - { answer: ['\dfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}', '\mathtt{x}_j'], feedback: '$\mathtt{x}_j$ (typewriter, index down) are covector components. A vector field has components $x^j$, index up; besides, $j$ would then appear twice down, not an allowed sum.' }
+    hint: 'Index check: $i$ up on both sides, $j$ once up and once down.'
+    explanation: |
+      $$y^i = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,x^j$$
+      holds as an equation of functions on $\mathcal{U}\cap\mathcal{V}$, with a Jacobian that changes from point to point. The covector law uses the inverse Jacobian, read along a column: $\mathtt{y}_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)\,\mathtt{x}_j$.
+
+  - type: numeric
+    id: vector-polar
+    title: A vector field in polar components
+    prompt: |
+      On the egg-carton surface, with chart $\mathscr{X}(a,b,c) = (a,b)$ and polar chart $\mathscr{Y} = (r,\theta)$, $r = \sqrt{a^2+b^2}$, the Jacobian is
+      $$\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j} = \begin{pmatrix}a/r & b/r\\ -b/r^2 & a/r^2\end{pmatrix}$$
+      (row $i$, column $j$), with inverse
+      $$\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j} = \begin{pmatrix}a/r & -b\\ b/r & a\end{pmatrix}.$$
+      The vector field $\partial x_1$ has components $(1,0)$ in $\mathscr{X}$. What is its second polar component $y^2$ at the point with $(a,b) = (3,4)$?
+    answer: -0.16
+    answerText: '-4/25'
+    wrong:
+      - { value: -4, feedback: 'That is $\partial\mathscr{X}^1/\partial\mathscr{Y}^2 = -b$, an entry of the inverse Jacobian: the covector law, which gives a component of $dx^1$. A vector field uses $y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,x^j$, so $y^2 = -b/r^2$.' }
+      - { value: 0.8, feedback: 'That is $b/r$, the entry in row $1$, column $2$. With $x = (1,0)$ the law picks **column** $1$: $y^2 = (\partial\mathscr{Y}^2/\partial\mathscr{X}^1)\cdot1 = -b/r^2$.' }
+    hint: 'With $(x^1,x^2) = (1,0)$, $y^2 = \partial\mathscr{Y}^2/\partial\mathscr{X}^1$. Here $r = 5$.'
+    explanation: |
+      $y^2 = -b/r^2 = -4/25$ and $y^1 = a/r = 3/5$, so at that point $\partial x_1 = \tfrac35\,\partial y_1 - \tfrac4{25}\,\partial y_2$: moving in the $a$ direction there increases $r$ and turns clockwise.
+
+  - type: numeric
+    id: covector-polar
+    title: The same entries, the other law
+    prompt: |
+      On the egg-carton surface, with chart $\mathscr{X}(a,b,c) = (a,b)$ and polar chart $\mathscr{Y} = (r,\theta)$, $r = \sqrt{a^2+b^2}$, the inverse Jacobian is
+      $$\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j} = \begin{pmatrix}a/r & -b\\ b/r & a\end{pmatrix}$$
+      (row $i$, column $j$). The **covector** field $dx^1$ has components $(1,0)$ in $\mathscr{X}$. What is its second polar component $\mathtt{y}_2$ at the point with $(a,b) = (3,4)$?
+    answer: -4
+    wrong:
+      - { value: -0.16, feedback: 'That is $-b/r^2$, the component of the **vector** field $\partial x_1$, which also has components $(1,0)$. Same list, different object: a covector field changes by $\mathtt{y}_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)\,\mathtt{x}_j$, here $\partial\mathscr{X}^1/\partial\mathscr{Y}^2 = -b$.' }
+      - { value: 0.8, feedback: 'That is $b/r$, row $2$, column $1$ of the inverse Jacobian. The covector law reads **column** $i = 2$: $\mathtt{y}_2 = (\partial\mathscr{X}^j/\partial\mathscr{Y}^2)\,\mathtt{x}_j = \partial\mathscr{X}^1/\partial\mathscr{Y}^2$.' }
+    hint: 'With $(\mathtt{x}_1,\mathtt{x}_2) = (1,0)$, $\mathtt{y}_2 = \partial\mathscr{X}^1/\partial\mathscr{Y}^2$. Directly: $a = r\cos\theta$.'
+    explanation: |
+      $\mathtt{y}_2 = -b = -4$ and $\mathtt{y}_1 = a/r = 3/5$: indeed $a = r\cos\theta$ gives $dx^1 = \cos\theta\,dy^1 - r\sin\theta\,dy^2$. The pairing does not care about the chart: with the vector components $(3/5, -4/25)$ of $\partial x_1$,
+      $$\tfrac35\cdot\tfrac35 + (-4)\big(-\tfrac4{25}\big) = 1 = dx^1\lceil\partial x_1\rfloor.$$
+
+  - type: numeric
+    id: act-twice
+    title: Acting on the output
+    prompt: |
+      On the egg-carton surface, with chart $\mathscr{X}(a,b,c) = (a,b)$, the vertical field $\mathcal{X} = \partial x_2$ acts on the height $f = \cos a\cos b + 1$ as the $b$-derivative:
+      $$\mathcal{X}\lfloor f\rceil = -\cos a\sin b.$$
+      Now let $\mathcal{X}$ act again, on $\mathcal{X}\lfloor f\rceil$. What is $\mathcal{X}\lfloor\mathcal{X}\lfloor f\rceil\rceil$ at the point with $(a,b) = (0,0)$?
+    answer: -1
+    wrong:
+      - { value: 0, feedback: 'At $(0,0)$, $\mathcal{X}\lfloor f\rceil$ has the value $-\cos0\sin0 = 0$, and differentiating that **number** gives $0$. But $\mathcal{X}\lfloor f\rceil$ is a **function**, so differentiate first: $\partial_b(-\cos a\sin b) = -\cos a\cos b$, then evaluate: $-1$.' }
+      - { value: 1, feedback: 'Watch the sign: $\partial_b(-\cos a\sin b) = -\cos a\cos b$, which is $-1$ at $(0,0)$. The surface is at the top of a bump there, so its slope along $b$ is decreasing.' }
+    hint: 'Differentiate $-\cos a\sin b$ in $b$ as a function, then set $a = b = 0$.'
+    explanation: |
+      $\mathcal{X}\lfloor\mathcal{X}\lfloor f\rceil\rceil = -\cos a\cos b$, so $-1$ at $(0,0)$. A field eats a scalar field and returns a scalar field, so it can be applied again; the value $\mathcal{X}\lfloor f\rceil(p) = \mathcal{X}(p)(f)$ is only one number of that function.
+
+  - type: numeric
+    id: mixed-charts
+    title: Pair in one chart
+    prompt: |
+      On the egg-carton surface, take the point $p$ with $(a,b) = (\pi/2,\pi)$, in both charts' domains. In the chart $\mathscr{X}(a,b,c) = (a,b)$:
+      - $df$ (with $f = \cos a\cos b + 1$) has components $(-\sin a\cos b,\ -\cos a\sin b) = (1, 0)$ at $p$;
+      - the swirl $\mathcal{Y}$ has components $(-b, a)$.
+
+      In the polar chart the swirl has components $(0,1)$. Compute $df\lceil\mathcal{Y}\rfloor(p)$.
+    answer: -3.14159
+    tolerance: 0.001
+    answerText: '-\pi'
+    wrong:
+      - { value: 0, feedback: 'That pairs the $\mathscr{X}$-components of $df$, $(1,0)$, with the **polar** components of $\mathcal{Y}$, $(0,1)$. The sum $\mathtt{x}_ix^i$ is the pairing only when both lists come from the same chart (or the basis and its dual). In $\mathscr{X}$: $1\cdot(-\pi) + 0\cdot\tfrac\pi2$.' }
+      - { value: 3.14159, feedback: 'The swirl''s first component is $-b = -\pi$, so the pairing is $1\cdot(-\pi) + 0 = -\pi$.' }
+    hint: 'Use the $\mathscr{X}$-components of both: $df\lceil\mathcal{Y}\rfloor = \mathtt{x}_i\,\tilde X^i$ with $\tilde X = (-\pi, \pi/2)$.'
+    explanation: |
+      $df\lceil\mathcal{Y}\rfloor(p) = 1\cdot(-\pi) + 0\cdot\tfrac\pi2 = -\pi$. In polar, $df$ has components $\mathtt{y}_1 = \tfrac ar\mathtt{x}_1 + \tfrac br\mathtt{x}_2$ and $\mathtt{y}_2 = -b\,\mathtt{x}_1 + a\,\mathtt{x}_2 = -\pi$, and $\mathtt{y}_2\cdot1 = -\pi$ again. It is also $\mathcal{Y}\lfloor f\rceil(p)$, since
+      $$df\lceil\mathcal{Y}\rfloor = \mathcal{Y}\lfloor f\rceil.$$
+
+  - type: mcq
+    id: cancel-field
+    title: Dividing out a function
+    prompt: |
+      On $\mathbb{R}$ with chart $\mathscr{X}(t) = t$, let $\psi(t) := e^{-1/t}$ for $t>0$ and $\psi(t) := 0$ for $t\leq0$ (a smooth function). Consider the vector field $\mathcal{Z} := \psi(-t)\,\partial x_1$ and the function $g := \psi$. Which statement is true?
+    options:
+      - text: '$g\,\mathcal{Z} = 0$, yet neither $g$ nor $\mathcal{Z}$ is zero'
+        correct: true
+      - text: '$g\,\mathcal{Z} = 0$ with $g\neq0$ forces $\mathcal{Z} = 0$'
+        feedback: |
+          That would be true with a nonzero **number** $g$, which can be divided away. A function can be zero on part of the line: $g$ vanishes for $t\leq0$, $\mathcal{Z}$ for $t\geq0$, so at every point one factor is zero although neither is the zero object.
+      - text: '$g\,\mathcal{Z}$ is not defined: one can only multiply a field by a real number'
+        feedback: |
+          Fields form a module over the ring $C^\infty(\mathcal{M})$: $(g\,\mathcal{Z})(p) = g(p)\,\mathcal{Z}(p)$, a different number at each point. That freedom is exactly what makes cancellation fail.
+    explanation: |
+      $(g\,\mathcal{Z})(t) = \psi(t)\psi(-t)(\partial x_1)_t = 0$ for every $t$. The ring $C^\infty(\mathbb{R})$ has zero divisors, so in the module $\Gamma T\mathbb{R}$ one cannot cancel a function that vanishes somewhere: $g\,\mathcal{Z} = g\,\mathcal{W}$ does not imply $\mathcal{Z} = \mathcal{W}$.
+
+  - type: mcq
+    id: independent-pair
+    title: Two fields, two dimensions
+    prompt: |
+      On the egg-carton surface (dimension $2$), with chart $\mathscr{X}(a,b,c) = (a,b)$, take the two fields $\partial x_1$ and $a\,\partial x_2$. Are they a basis of the $C^\infty(\mathcal{M})$-module $\Gamma T\mathcal{M}$?
+    options:
+      - text: 'No: they are independent over $C^\infty(\mathcal{M})$ but do not span; $\partial x_2$ would need the coefficient $1/a$'
+        correct: true
+      - text: 'Yes: two independent elements in dimension $2$ always form a basis'
+        feedback: |
+          That rule is for vector spaces over a field of numbers. Over a ring it fails: writing $\partial x_2 = f\,\partial x_1 + g\,a\,\partial x_2$ forces $f = 0$ and $g\,a = 1$, so $g = 1/a$, which blows up on the line $a = 0$. Independent does not mean spanning.
+      - text: 'No: they are dependent, because on the line $a = 0$ the second field vanishes'
+        feedback: |
+          Independence over the ring asks for **functions** $f, g$ with $f\,\partial x_1 + g\,a\,\partial x_2 = 0$ everywhere. This forces $f = 0$, and $g = 0$ off the line $a = 0$, hence everywhere by continuity. A zero at some points does not make the pair dependent, but it does stop them from spanning.
+    explanation: |
+      Pointwise determinant $\det\begin{pmatrix}1&0\\0&a\end{pmatrix} = a$: the two vectors are a basis of $T_p\mathcal{M}$ exactly where $a\neq0$. A module basis must be a basis at **every** point, so this pair is independent, not spanning. ($\partial x_1, \partial x_2$ is a basis.)
+
+  - type: mcq
+    id: global-frame
+    title: Who has a global frame?
+    multiple: true
+    prompt: |
+      A **frame** on $\mathcal{M}$ is a set of $d$ smooth vector fields that give a basis of $T_p\mathcal{M}$ at every point $p$. Select every manifold that has a frame defined on **all** of it.
+    options:
+      - text: 'The circle $S^1$'
+        correct: true
+      - text: 'The plane minus the origin, $\mathbb{R}^2\setminus\{0\}$'
+        correct: true
+      - text: 'The egg-carton surface'
+        correct: true
+      - text: 'The sphere $S^2$'
+        feedback: |
+          Each chart domain of $S^2$ has a frame, which makes it tempting. But by the hairy ball theorem (stated here without proof) every smooth vector field on $S^2$ vanishes somewhere, and a frame field can vanish nowhere. So no global frame exists.
+    explanation: |
+      $S^1$: the angle field $\partial\theta$, which agrees with $\partial\varphi$ where both charts overlap. $\mathbb{R}^2\setminus\{0\}$: the polar frame $(\partial r)_q = (q_1/r,q_2/r)$, $(\partial\theta)_q = (-q_2,q_1)$, determinant $r\neq0$, although no single polar chart covers it. The egg carton: one chart $\mathscr{X}$ covers it, so $\partial x_1, \partial x_2$. The sphere: none. A frame exists locally always, globally only sometimes.
+
+  - type: numeric
+    id: leibniz-value
+    title: Pulling a function out of the slot
+    prompt: |
+      On the plane with points $q = (q_1,q_2)$ and the chart $\mathscr{X}(q) = (q_1,q_2)$, take $\mathcal{X} = \partial x_1$ and $g = h = \mathscr{X}^1$ (the function $q\mapsto q_1$). Compute $\mathcal{X}\lfloor g\,h\rceil$ at $q = (3,0)$.
+    answer: 6
+    wrong:
+      - { value: 3, feedback: 'That is $g\,\mathcal{X}\lfloor h\rceil = q_1\cdot1 = 3$: pulling $g$ out as if it were a constant. A field acts by differentiating, so the Leibniz rule adds $h\,\mathcal{X}\lfloor g\rceil$: $\mathcal{X}\lfloor q_1^2\rceil = 2q_1 = 6$.' }
+      - { value: 9, feedback: 'That is the value of $g\,h = q_1^2$ itself. $\mathcal{X} = \partial x_1$ differentiates it in $q_1$: $2q_1 = 6$.' }
+    hint: '$g\,h = q_1^2$, and $\partial x_1$ is the $q_1$-derivative.'
+    explanation: |
+      $\mathcal{X}\lfloor gh\rceil = g\,\mathcal{X}\lfloor h\rceil + h\,\mathcal{X}\lfloor g\rceil = 3 + 3 = 6$. So the slot $h\mapsto\mathcal{X}\lfloor h\rceil$ is linear over $\mathbb{R}$ but **not** over $C^\infty(\mathcal{M})$: functions do not come out of it.
+
+  - type: mcq
+    id: which-slot
+    title: Which slot is linear over functions?
+    prompt: |
+      Let $\mathcal{X}$ be a vector field and $h$ a scalar field on $\mathcal{M}$. Consider the two maps
+      $$A\colon h\mapsto\mathcal{X}\lfloor h\rceil\quad(\mathcal{X}\text{ fixed}),$$
+      $$B\colon\mathcal{Z}\mapsto\mathcal{Z}\lfloor h\rceil\quad(h\text{ fixed}).$$
+      Which is $C^\infty(\mathcal{M})$-linear, $L(g\,\cdot) = g\,L(\cdot)$ for every function $g$?
+    options:
+      - text: 'Only $B$: it is the covector field $dh$, $B(\mathcal{Z}) = dh\lceil\mathcal{Z}\rfloor$'
+        correct: true
+      - text: 'Only $A$: it is $\mathbb{R}$-linear in $h$, so linear over functions too'
+        feedback: |
+          $\mathbb{R}$-linear is the weaker condition (constants only). For a varying $g$ the Leibniz rule gives $A(gh) = g\,A(h) + h\,\mathcal{X}\lfloor g\rceil$, and the extra term is usually nonzero: on the plane, $\partial x_1\lfloor q_1\cdot q_1\rceil = 2q_1\neq q_1\cdot1$.
+      - text: 'Both: everything built from a field acting is $C^\infty(\mathcal{M})$-linear'
+        feedback: |
+          It depends on which input you scale. Scaling the **field** gives $(g\,\mathcal{Z})\lfloor h\rceil = g\,\mathcal{Z}\lfloor h\rceil$, pointwise. Scaling the **function** being differentiated triggers the Leibniz rule, so $A$ fails.
+      - text: 'Neither: a differentiation is never $C^\infty(\mathcal{M})$-linear'
+        feedback: |
+          $B$ does not differentiate its input $\mathcal{Z}$; it only uses its value at each point: $(g\,\mathcal{Z})\lfloor h\rceil(p) = g(p)\,\mathcal{Z}(p)(h)$. That is why $B = dh$ is a covector field, a $(0,1)$-tensor field.
+    explanation: |
+      $B(g\mathcal{Z}) = g\,B(\mathcal{Z})$, so $B = dh$, a tensor field. $A(gh) = g\,A(h) + h\,\mathcal{X}\lfloor g\rceil$: not $C^\infty$-linear. This is why a vector field enters the tensor world as $\mathsf{Z}\mapsto\mathsf{Z}\lceil\mathcal{X}\rfloor$ (eating covector fields), not as $h\mapsto\mathcal{X}\lfloor h\rceil$.
+
+  - type: mcq
+    id: pointwise
+    title: How much does a tensor field look at?
+    prompt: |
+      $T$ is a $(0,1)$-tensor field on $\mathcal{M}$, a $C^\infty(\mathcal{M})$-linear map from vector fields to scalar fields. Two vector fields $\mathcal{Z}$ and $\mathcal{W}$ have the same value at one point $p$, $\mathcal{Z}(p) = \mathcal{W}(p)$, but differ at every point near $p$. What can you say about $T(\mathcal{Z})(p)$ and $T(\mathcal{W})(p)$?
+    options:
+      - text: 'They are equal: a tensor field''s value at $p$ depends only on the inputs'' values at $p$'
+        correct: true
+      - text: 'They can differ, since the fields differ near $p$'
+        feedback: |
+          That is what a derivative-type map does, such as $\mathcal{Z}\mapsto\partial x_1\lfloor z^1\rceil$, and it is exactly why such a map is not a tensor field. $C^\infty$-linearity lets one pull a function out of the slot, and that forces $T(\mathcal{Z})(p)$ to see only $\mathcal{Z}(p)$.
+      - text: 'They are equal only if the fields agree on a whole neighbourhood of $p$'
+        feedback: |
+          Agreement near $p$ is the first step of the proof (a bump function $\psi$ cuts the fields off away from $p$), but the conclusion is stronger. Writing $\psi^2\mathcal{Z} = (\psi z^i)(\psi\,\partial x_i)$ and pulling out the functions, $T(\mathcal{Z})(p) = z^i(p)\,T(\partial x_i)(p)$ needs only the numbers $z^i(p)$.
+    explanation: |
+      Pointwise principle: $T(\mathcal{Z})(p) = z^i(p)\,T(\partial x_i)(p)$ in any chart around $p$, so only $\mathcal{Z}(p)$ matters. A tensor field is a tensor at each point, $T(p)\in T_p^{(0,1)}\mathcal{M}$, glued smoothly.
+
+  - type: mcq
+    id: pointwise-not-enough
+    title: Pointwise, but a tensor?
+    prompt: |
+      On the plane with chart $\mathscr{X}(q) = (q_1,q_2)$, define for a vector field $\mathcal{Z}$ with components $z^i$
+      $$E(\mathcal{Z}) := (z^1)^2.$$
+      $E(\mathcal{Z})(p)$ depends only on $\mathcal{Z}(p)$. Is $E$ a $(0,1)$-tensor field?
+    options:
+      - text: 'No: it is not linear, since $E(2\mathcal{Z}) = 4E(\mathcal{Z})$'
+        correct: true
+      - text: 'Yes: depending only on the value at each point is what makes a tensor field'
+        feedback: |
+          The pointwise principle runs one way: $C^\infty$-linear implies pointwise. The converse fails. $E$ is pointwise but squares its input, so even $\mathbb{R}$-linearity breaks: $E(2\mathcal{Z}) = (2z^1)^2 = 4E(\mathcal{Z})$.
+      - text: 'No: it uses a chart, and a tensor field must be defined without one'
+        feedback: |
+          Using a chart is fine (here it covers the whole plane): $\mathcal{Z}\mapsto z^1 = dx^1\lceil\mathcal{Z}\rfloor$ also uses the chart, and it **is** a tensor field. The problem with $E$ is the square.
+    explanation: |
+      A tensor field must be $C^\infty(\mathcal{M})$-linear, which gives pointwise. Pointwise alone gives a function of $\mathcal{Z}(p)$ at each $p$, linear or not. $E(g\,\mathcal{Z}) = g^2E(\mathcal{Z})$: not a tensor field.
+
+  - type: numeric
+    id: closed-coefficient
+    title: Which multiple is closed?
+    prompt: |
+      On the plane with chart $\mathscr{X}$ and coordinates $(a,b)$, consider
+      $$\mathsf{X} = 3a^2b\,dx^1 + c\,a^3\,dx^2,$$
+      with a real constant $c$. Recall that $\mathsf{X}$ is **closed** when $\partial x_2\lfloor\mathtt{x}_1\rceil = \partial x_1\lfloor\mathtt{x}_2\rceil$. For which $c$ is $\mathsf{X}$ closed?
+    answer: 1
+    wrong:
+      - { value: 3, feedback: 'Matching the leading coefficients of the two components, $3$ and $c$, is not the test. Differentiate across: $\partial_b(3a^2b) = 3a^2$ and $\partial_a(c\,a^3) = 3c\,a^2$, equal for $c = 1$.' }
+      - { value: 0, feedback: 'With $c = 0$, $\mathsf{X} = 3a^2b\,dx^1$ has $\partial_b(3a^2b) = 3a^2$ but $\partial_a 0 = 0$: not closed. A differential of a function of both variables needs both components.' }
+    hint: 'Compute $\partial_b$ of the first component and $\partial_a$ of the second.'
+    explanation: |
+      $3a^2 = 3c\,a^2$ for all $a$ forces $c = 1$. Then $\mathsf{X} = d(a^3b)$ is exact: indeed $\partial_a(a^3b) = 3a^2b$, $\partial_b(a^3b) = a^3$. On the plane (a disc-like domain) closed and exact coincide.
+
+  - type: mcq
+    id: g-df
+    title: A function times a differential
+    prompt: |
+      On the plane with chart $\mathscr{X}$ and coordinates $(a,b)$, take $f = \mathscr{X}^1$ and $g = \mathscr{X}^2$, so
+      $$g\,df = b\,dx^1.$$
+      At every point, the covector $(g\,df)_p = b_p\,(dx^1)_p$ is a differential of some function. Is the field $g\,df$ exact?
+    options:
+      - text: 'No: $\partial x_2\lfloor b\rceil = 1$ but $\partial x_1\lfloor 0\rceil = 0$, so it is not even closed'
+        correct: true
+      - text: 'Yes: it is $d(b\,a)$, the differential of the product'
+        feedback: |
+          $d(ab) = b\,dx^1 + a\,dx^2$ has an extra term: $g\,df = d(gf) - f\,dg$. Multiplying a differential by a non-constant function breaks exactness; differentials are not closed under multiplication by functions.
+      - text: 'Yes: every covector at every point is a differential, so the field is one too'
+        feedback: |
+          Pointwise, every covector is some $(d\phi)_p$, but the function $\phi$ changes from point to point. Exact means **one** function $F$ with $dF = \mathsf{X}$ everywhere, and the mixed-partials test rules it out: $1\neq0$.
+    explanation: |
+      Exact $\Rightarrow$ closed, and $b\,dx^1$ fails the test ($1$ vs $0$), so it is not exact. A pointwise differential is not a global one.
+
+  - type: mcq
+    id: half-plane
+    title: Exact on a smaller domain?
+    prompt: |
+      On the plane minus the origin, with coordinates $(a,b)$ and $r = \sqrt{a^2+b^2}$, the angle field
+      $$\mathsf{A} = -\frac{b}{r^2}\,dx^1 + \frac{a}{r^2}\,dx^2$$
+      is closed but not exact: its integral once around the unit circle is $2\pi$. Restrict $\mathsf{A}$ to the right half-plane $a > 0$. Is the restriction exact there?
+    options:
+      - text: 'Yes: there $\mathsf{A} = d\big(\arctan(b/a)\big)$'
+        correct: true
+      - text: 'No: a field that is not exact stays non-exact on every subset'
+        feedback: |
+          Exactness depends on the domain. On the half-plane no loop goes around the origin, and the angle $\arctan(b/a)\in(-\pi/2,\pi/2)$ is a smooth function there. Check: $\partial_a\arctan(b/a) = -b/r^2$ and $\partial_b\arctan(b/a) = a/r^2$.
+      - text: 'No: closed fields are exact only on the whole plane'
+        feedback: |
+          Closed implies exact on any disc-like (contractible) domain, and the open half-plane is one: it can be shrunk to a point without leaving it. The punctured plane cannot, because of the hole at the origin.
+    explanation: |
+      $\partial_a\arctan(b/a) = \frac{-b/a^2}{1+b^2/a^2} = -\frac{b}{r^2}$ and $\partial_b\arctan(b/a) = \frac{1/a}{1+b^2/a^2} = \frac{a}{r^2}$. Closed is a local test; exact is a global property that depends on the shape of the domain.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      The traps, turned into rules:
+
+      - Field $\mathcal{X}$, chart $\mathscr{X}$; component functions are functions, values are numbers:
+      $$x^i(p) := \mathcal{X}(p)(\mathscr{X}^i) = x^i_p.$$
+      - $T\mathcal{M} = \dot\bigcup_pT_p\mathcal{M}$ keeps one zero per point; $\dim T\mathcal{M} = 2d$. A vector field is a section with $C^\infty$ components:
+      $$\pi\circ\mathcal{X} = \mathrm{id}_\mathcal{M}.$$
+      - Basis fields $\partial x_i$ live on their chart domain only.
+      - Opposite laws on overlaps:
+      $$y^i = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,x^j,$$
+      $$\mathtt{y}_i = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,\mathtt{x}_j.$$
+      - Actions return functions; pair components from one chart:
+      $$df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil = \mathtt{x}_i\,x^i.$$
+      - Over the ring $C^\infty(\mathcal{M})$: zero divisors, independent $\neq$ spanning, global frames only sometimes ($S^1$ yes, $S^2$ no).
+      - Tensor field = $C^\infty$-linear, hence pointwise (not conversely); a field acting on functions obeys Leibniz instead:
+      $$\mathcal{X}\lfloor gh\rceil = g\,\mathcal{X}\lfloor h\rceil + h\,\mathcal{X}\lfloor g\rceil.$$
+      - Exact $\Rightarrow$ closed, where closed means
+      $$\partial x_j\lfloor\mathtt{x}_i\rceil = \partial x_i\lfloor\mathtt{x}_j\rceil;$$
+      the converse holds on disc-like domains, and $g\,df$ is usually not exact.
+
+      **Next:** the content map of this level. You will rebuild the chain from the tangent bundle to tensor fields and differentials, box by box, among decoys.

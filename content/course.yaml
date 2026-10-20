@@ -231,7 +231,11 @@ levels:
         kind: guided
         file: ch05/differentials.yaml
         summary: Every function gives a covector field df, but which covector fields come from a function? A local symmetry test, a construction on a disc, and an angle field that passes the test yet fails around the origin.
-      - { id: ch05-traps, title: Field Traps, kind: traps }
+      - id: ch05-traps
+        title: Field Traps
+        kind: traps
+        file: ch05/traps.yaml
+        summary: A fast round of tempting mistakes about fields, from zero vectors and kinked sections to module bases, tensor tests and closed versus exact.
       - { id: ch05-map, title: "Content Map: Fields", kind: map }
       - { id: ch05-review, title: Level Review, kind: review }
       - { id: ch05-challenge, title: Level Challenge, kind: challenge }
