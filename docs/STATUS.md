@@ -158,6 +158,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   one to check readouts). `#/lesson/<id>/<n>` is 1-based. Map lessons are
   expanded with the app's `expandLesson` (checks option bodies and feedback);
   map views (intro, complete) are always screenshotted.
+- **Map arrow labels:** edges take `label:` (1–3 words, read "from *label* to",
+  only on arrows between different rows); used in `ch04-map`.
 
 ## Log
 
