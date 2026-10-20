@@ -23,11 +23,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   `ch04-challenge` (36 cards, five problems: polar chart at $(1,1)$, reparametrization rune and Leibniz,
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
-- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards).
+- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 5 (Fields) in `course.yaml` order, next
-  `ch05-map`; then `ch05-challenge`; then Chapters 6–10 (each with map and challenge).
+  `ch05-challenge` (two sessions: problems 1–3, then 4–5); then Chapters 6–10 (each with map and challenge).
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -215,6 +215,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\mathcal{X}\lfloor\mathcal{X}\lfloor f\rceil\rceil = -\cos a\cos b$; $df\lceil\mathcal{Y}\rfloor = -\pi$ at $(\pi/2,\pi)$ (mixed-chart pairing gives $0$); $\psi(t)\cdot\psi(-t)\partial x_1 = 0$;
   $\partial x_1, a\,\partial x_2$ independent not spanning; $A\colon h\mapsto\mathcal{X}\lfloor h\rceil$ vs $B = dh$; $E(\mathcal{Z}) = (z^1)^2$ pointwise but not a tensor;
   $3a^2b\,dx^1 + c\,a^3dx^2$ closed iff $c = 1$ ($= d(a^3b)$); $b\,dx^1$ not closed; angle field $= d\arctan(b/a)$ on $a>0$.
+  Map ch05 (`ch05-map`, 14 boxes, 7 rows): rows tp/bundle/tpstar; tm, tsm; vf, cf; ring, action; module, closed-exact; frames, angle;
+  tensor (bottom centre). Edge labels "fibre of", "instance", "sections", "act on $f$", "eat fields", "scalars of", "bases",
+  "components", "more slots", "which are $df$?", dashed "model example" (angle field up to closed/exact); action→module unlabelled
+  (labels too close to "scalars of"). Outro states the laws as displayed formulas, then teases the Minkowski boost.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -618,3 +622,11 @@ long box titles.
   pointwise principle, pointwise-not-tensor $(z^1)^2$, closed coefficient, $g\,df$, angle field exact on a half-plane.
 - Choices: fresh examples rather than repeats of the in-lesson traps; no widget; contractible named "disc-like" (Poincaré lemma recalled, not reproved).
 - Conventions fixed here: see Current, "Traps (`ch05-traps`)".
+- 2026-10-20 `ch05-map` (map, 14 boxes, 16 cards): recall boxes $T_p\mathcal{M}$, $T_p^*\mathcal{M}$; general bundle and sections;
+  $T\mathcal{M}$, $T^*\mathcal{M}$ ($2d$); vector and covector fields with laws; actions ($df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil$, Leibniz);
+  ring (zero divisors); modules (independent ≠ spanning); frames (hairy ball); tensor fields ($C^\infty$-linear ⇒ pointwise); closed/exact; angle field.
+  Decoys from the traps: $T\mathcal{M}$ as a vector space, $\dim d$, $\sigma\circ\pi$, $\mathbb{R}$-linear suffices, pointwise suffices, closed ⇒ exact,
+  pointwise-$df$ exactness, global frames, ring as a field.
+- Choices: no separate manifold box (recalled inside the $T_p\mathcal{M}$ box); ring placed beside actions as a source box so "scalars of"
+  reaches modules without crossing; "test for" reading replaced by "which are $df$?"; title "Closed and exact" (no soft hyphen needed).
+- Conventions fixed here: see Current, "Map ch05 (`ch05-map`)".

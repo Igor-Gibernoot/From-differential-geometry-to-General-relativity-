@@ -236,7 +236,11 @@ levels:
         kind: traps
         file: ch05/traps.yaml
         summary: A fast round of tempting mistakes about fields, from zero vectors and kinked sections to module bases, tensor tests and closed versus exact.
-      - { id: ch05-map, title: "Content Map: Fields", kind: map }
+      - id: ch05-map
+        title: "Content Map: Fields"
+        kind: map
+        file: ch05/map.yaml
+        summary: Rebuild the chapter box by box, from tangent spaces and bundles to vector and covector fields, their actions, the ring and modules, frames, tensor fields, and closed versus exact.
       - { id: ch05-review, title: Level Review, kind: review }
       - { id: ch05-challenge, title: Level Challenge, kind: challenge }
 

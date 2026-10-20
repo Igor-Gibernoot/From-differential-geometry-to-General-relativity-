@@ -1,0 +1,410 @@
+id: ch05-map
+title: "Content Map: Fields"
+kind: map
+name: Chapter 5, Fields
+
+intro: |
+  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition. An arrow goes from a concept to a concept built on it, and its label says how; read it as a sentence, for example "tangent space *fibre of* tangent bundle", "tangent bundle *sections* vector fields" or "ring *scalars of* modules of fields".
+
+  A dashed arrow marks the **model example**: one concrete field on the plane minus the origin, where the difference between two kinds of covector fields shows up.
+
+  You will rebuild the Chapter 5 map one box at a time, from the vector spaces at a single point $p$ of a manifold $\mathcal{M}$ to fields spread over all of $\mathcal{M}$. For each glowing box, pick the card that belongs there. The other cards look alike but each hides a classic mistake of this level, so read the details.
+
+  Tap a finished box at any time to reread its card.
+
+cols: 3
+nodes:
+  - id: tp
+    title: 'Tangent space $T_p\mathcal{M}$'
+    row: 1
+    col: 1
+    body: |
+      Recall: the velocities at one point $p$,
+      $$v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0),$$
+      form a real vector space of dimension $d = \dim\mathcal{M}$. A chart $(\mathcal{U},\mathscr{X})$ around $p$ gives the basis $(\partial x_i)_p := (\partial/\partial\mathscr{X}^i)_p$, and the components of a vector change with the Jacobian:
+      $$y^i_p = \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p x^j_p.$$
+    decoys:
+      - body: |
+          Recall: the velocities at one point $p$,
+          $$v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0),$$
+          form a real vector space of dimension $d = \dim\mathcal{M}$. A chart $(\mathcal{U},\mathscr{X})$ around $p$ gives the basis $(\partial x_i)_p := (\partial/\partial\mathscr{X}^i)_p$, and the components of a vector change with the inverse Jacobian:
+          $$y^i_p = \Big(\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\Big)_p x^j_p.$$
+        feedback: |
+          Vector components are **contravariant**: they change with $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$, row $i$. Check with a change of units on a line, $\mathscr{Y} = 100\,\mathscr{X}$ (meters to centimeters): a velocity of $1$ m/s is $100$ cm/s, so components grow by $\partial\mathscr{Y}/\partial\mathscr{X} = 100$. The inverse Jacobian is the law of covector components. The decoy also breaks the up-down rule: $j$ appears twice as an upper index.
+      - body: |
+          Recall: the velocities at one point $p$,
+          $$v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0),$$
+          form a real vector space of dimension $2d$, twice $\dim\mathcal{M}$. A chart $(\mathcal{U},\mathscr{X})$ around $p$ gives the basis $(\partial x_i)_p := (\partial/\partial\mathscr{X}^i)_p$, and the components of a vector change with the Jacobian:
+          $$y^i_p = \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p x^j_p.$$
+        feedback: |
+          A chart with $d$ coordinates gives exactly $d$ basis vectors $(\partial x_1)_p,\dots,(\partial x_d)_p$, so $\dim T_p\mathcal{M} = d$. The number $2d$ belongs to the tangent **bundle**, which also needs $d$ numbers to say which point $p$ a vector sits at.
+    explanation: |
+      The pointwise object from the previous level. This chapter spreads it over all points; the arrow down reads "fibre of": $T_p\mathcal{M}$ is the piece of the tangent bundle sitting over $p$.
+
+  - id: tpstar
+    title: 'Cotangent space $T_p^*\mathcal{M}$'
+    row: 1
+    col: 3
+    body: |
+      Recall: the dual space $T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(T_p\mathcal{M},\mathbb{R})$ of linear maps from vectors to numbers (Hom = homomorphism). Each scalar field gives one, the differential
+      $$(df)_p(v) := v(f),$$
+      and the differentials of the coordinates form the dual basis:
+      $$(dx^i)_p\big((\partial x_j)_p\big) = \delta^i_j.$$
+    decoys:
+      - body: |
+          Recall: the dual space $T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(T_p\mathcal{M},\mathbb{R})$ of linear maps from vectors to numbers (Hom = homomorphism). Each scalar field gives one, the differential
+          $$(df)_p(v) := f(p)\,v,$$
+          and the differentials of the coordinates form the dual basis:
+          $$(dx^i)_p\big((\partial x_j)_p\big) = \delta^i_j.$$
+        feedback: |
+          Check the types: $f(p)\,v$ is a vector, not a number, so it cannot be the value of a covector. The differential returns the rate of change of $f$ along $v$, which is $v(f)$: a vector at $p$ **is** a directional derivative, so feeding it $f$ gives a number.
+      - body: |
+          Recall: the dual space $T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(T_p\mathcal{M},\mathbb{R})$ of linear maps from vectors to numbers (Hom = homomorphism). Each scalar field gives one, the differential
+          $$(df)_p(v) := v(f),$$
+          and the differentials of the coordinates form the dual basis:
+          $$(dx^i)_p\big((\partial x_j)_p\big) = 1.$$
+        feedback: |
+          Dual means $(dx^i)_p$ reads off the $i$-th component and ignores the others: $(dx^i)_p((\partial x_j)_p) = \partial_j[\mathscr{X}^i\circ\mathscr{X}^{-1}]$, the derivative of the $i$-th projection, which is $1$ if $i = j$ and $0$ otherwise. That is $\delta^i_j$, not $1$ for every pair.
+    explanation: |
+      The second pointwise object. The arrow down reads "fibre of": $T_p^*\mathcal{M}$ is the piece of the cotangent bundle over $p$.
+
+  - id: bundle
+    title: 'Bundle $\pi\colon\mathcal{E}\to\mathcal{B}$'
+    row: 1
+    col: 2
+    body: |
+      A smooth surjective map $\pi$ from a **total space** $\mathcal{E}$ to a **base** $\mathcal{B}$. The **fibre** over $p$ is $\mathrm{preim}_\pi(\{p\})$. A **section** picks one point in each fibre, smoothly:
+      $$\sigma\colon\mathcal{B}\to\mathcal{E},\quad\pi\circ\sigma = \mathrm{id}_\mathcal{B}.$$
+      Example: $\pi(a,b) = a$ on $\mathbb{R}^2$; its sections are $\sigma(a) = (a, s(a))$ with $s$ smooth.
+    decoys:
+      - body: |
+          A smooth surjective map $\pi$ from a **total space** $\mathcal{E}$ to a **base** $\mathcal{B}$. The **fibre** over $p$ is $\mathrm{preim}_\pi(\{p\})$. A **section** picks one point in each fibre, smoothly:
+          $$\sigma\colon\mathcal{B}\to\mathcal{E},\quad\sigma\circ\pi = \mathrm{id}_\mathcal{E}.$$
+          Example: $\pi(a,b) = a$ on $\mathbb{R}^2$; its sections are $\sigma(a) = (a, s(a))$ with $s$ smooth.
+        feedback: |
+          The order is reversed. $\sigma\circ\pi = \mathrm{id}_\mathcal{E}$ would make $\pi$ injective, so every fibre a single point. In the example $\sigma(\pi(a,b)) = (a, s(a))$, which differs from $(a,b)$ whenever $b\neq s(a)$. The correct condition $\pi(\sigma(p)) = p$ says exactly "$\sigma(p)$ lies in the fibre over $p$".
+      - body: |
+          A smooth surjective map $\pi$ from a **total space** $\mathcal{E}$ to a **base** $\mathcal{B}$. The **fibre** over $p$ is $\mathrm{preim}_\pi(\{p\})$. A **section** is any smooth map
+          $$\sigma\colon\mathcal{B}\to\mathcal{E}.$$
+          Example: $\pi(a,b) = a$ on $\mathbb{R}^2$; its sections are $\sigma(a) = (s_1(a), s_2(a))$ with $s_1, s_2$ smooth.
+        feedback: |
+          Without $\pi\circ\sigma = \mathrm{id}_\mathcal{B}$ the point $\sigma(p)$ can land in the wrong fibre: $\sigma(a) = (a+1, 0)$ sits over $a+1$, not over $a$. For the tangent bundle that would attach to $p$ a vector living at another point.
+    explanation: |
+      The general frame. Both arrows down read "instance": the tangent and cotangent bundles are bundles over $\mathcal{M}$, and fields are their sections.
+
+  - id: tm
+    title: 'Tangent bundle $T\mathcal{M}$'
+    row: 2
+    col: 1
+    body: |
+      The disjoint union of all tangent spaces,
+      $$T\mathcal{M} := \dot{\bigcup_{p}}\,T_p\mathcal{M},$$
+      with $\pi(v_{\gamma,p}) = p$. Bundle charts
+      $$\xi_\mathscr{X}(\mathcal{X}_p) = (\mathscr{X}(p)\,;\,x^1_p,\dots,x^d_p)$$
+      make it a smooth manifold of dimension $2d$. Vectors at different points live in different fibres and are never added.
+    decoys:
+      - body: |
+          The union of all tangent spaces,
+          $$T\mathcal{M} := \bigcup_{p}\,T_p\mathcal{M},$$
+          made into one real vector space of dimension $d$: vectors at different points are added component by component in a chart. Bundle charts
+          $$\xi_\mathscr{X}(\mathcal{X}_p) = (x^1_p,\dots,x^d_p)$$
+          record the components.
+        feedback: |
+          Vectors at different points cannot be added: $v\in T_p\mathcal{M}$ and $w\in T_q\mathcal{M}$ with $p\neq q$ give no velocity at any single point, and adding their components gives a result that changes with the chart, because the Jacobian at $p$ differs from the one at $q$. A bundle chart also needs $\mathscr{X}(p)$, the $d$ numbers saying where the vector sits; with the $d$ components that makes $2d$.
+      - body: |
+          The disjoint union of all tangent spaces,
+          $$T\mathcal{M} := \dot{\bigcup_{p}}\,T_p\mathcal{M},$$
+          with $\pi(v_{\gamma,p}) = p$. Bundle charts
+          $$\xi_\mathscr{X}(\mathcal{X}_p) = (x^1_p,\dots,x^d_p)$$
+          make it a smooth manifold of dimension $d$. Vectors at different points live in different fibres and are never added.
+        feedback: |
+          The components alone forget the point: the zero vector at $p$ and the zero vector at $q$ would get the same coordinates, so the map is not injective. A bundle chart is $(\mathscr{X}(p)\,;\,x^1_p,\dots,x^d_p)$, $d$ numbers for the point and $d$ for the vector, so $\dim T\mathcal{M} = 2d$ (for the sphere $S^2$: $4$).
+    explanation: |
+      All tangent spaces glued into one manifold. The arrow down reads "sections": a vector field is a section of this bundle.
+
+  - id: vf
+    title: 'Vector fields $\Gamma T\mathcal{M}$'
+    row: 3
+    col: 1
+    body: |
+      A vector field is a **smooth section** $\mathcal{X}$ of $T\mathcal{M}$: one vector $\mathcal{X}(p)\in T_p\mathcal{M}$ at every point. In a chart,
+      $$\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i,$$
+      with component functions $x^i := \mathcal{X}|_\mathcal{U}\lfloor\mathscr{X}^i\rceil$, smooth in every chart. On an overlap,
+      $$y^i = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,x^j.$$
+    decoys:
+      - body: |
+          A vector field is a **smooth section** $\mathcal{X}$ of $T\mathcal{M}$: one vector $\mathcal{X}(p)\in T_p\mathcal{M}$ at every point. In a chart,
+          $$\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i,$$
+          with component functions $x^i := \mathcal{X}|_\mathcal{U}\lfloor\mathscr{X}^i\rceil$, smooth in every chart. On an overlap,
+          $$y^i = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,x^j.$$
+        feedback: |
+          The field law is the pointwise law applied at every point, and vector components are contravariant: $y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,x^j$, row $i$ of the Jacobian. Test with $\mathscr{Y} = 100\,\mathscr{X}$ on a line: components must grow by $100$, not shrink. The decoy also has $j$ twice as an upper index, which the up-down rule forbids.
+      - body: |
+          A vector field is **any section** $\mathcal{X}$ of $T\mathcal{M}$: one vector $\mathcal{X}(p)\in T_p\mathcal{M}$ at every point; smoothness is automatic. In a chart,
+          $$\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i,$$
+          with component functions $x^i := \mathcal{X}|_\mathcal{U}\lfloor\mathscr{X}^i\rceil$. On an overlap,
+          $$y^i = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,x^j.$$
+        feedback: |
+          A section can jump or kink: on the plane, $|b|\,\partial x_1$ is a section (one vector at each point) whose component $|b|$ is not differentiable at $b = 0$. Smoothness is an extra requirement, tested on the component functions in every chart.
+    explanation: |
+      The first kind of field. The arrow down reads "act on $f$": a vector field differentiates scalar fields everywhere at once.
+
+  - id: tsm
+    title: 'Cotangent bundle $T^*\mathcal{M}$'
+    row: 2
+    col: 3
+    body: |
+      The disjoint union of all cotangent spaces,
+      $$T^*\mathcal{M} := \dot{\bigcup_{p}}\,T^*_p\mathcal{M},$$
+      with $\pi^*(\mathsf{X}_p) = p$ and bundle charts $\xi^*_\mathscr{X}(\mathsf{X}_p) = (\mathscr{X}(p)\,;\,\mathtt{x}^p_i)$: a smooth manifold of dimension $2d$. The fibre coordinates change with the inverse Jacobian
+      $$\Big(\frac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^j}\Big)_p.$$
+    decoys:
+      - body: |
+          The disjoint union of all cotangent spaces,
+          $$T^*\mathcal{M} := \dot{\bigcup_{p}}\,T^*_p\mathcal{M},$$
+          with $\pi^*(\mathsf{X}_p) = p$ and bundle charts $\xi^*_\mathscr{X}(\mathsf{X}_p) = (\mathscr{X}(p)\,;\,\mathtt{x}^p_i)$: a smooth manifold of dimension $2d$. The fibre coordinates change with the Jacobian
+          $$\Big(\frac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^k}\Big)_p,$$
+          exactly as in the tangent bundle.
+        feedback: |
+          Same base, same dimension, but a different transition. Covector components are **covariant**: $\mathtt{y}^p_j = (\partial\mathscr{X}^k/\partial\mathscr{Y}^j)_p\,\mathtt{x}^p_k$. With $\mathscr{Y} = 100\,\mathscr{X}$ on a line, a rate of $1$ per meter is $1/100$ per centimeter: the components shrink while vector components grow.
+      - body: |
+          The disjoint union of all cotangent spaces,
+          $$T^*\mathcal{M} := \dot{\bigcup_{p}}\,T^*_p\mathcal{M},$$
+          with $\pi^*(\mathsf{X}_p) = p$ and bundle charts $\xi^*_\mathscr{X}(\mathsf{X}_p) = (\mathscr{X}(p)\,;\,\mathtt{x}^p_i)$: a smooth manifold of dimension $d^2$, since every covector is a $d\times d$ table. The fibre coordinates change with the inverse Jacobian
+          $$\Big(\frac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^j}\Big)_p.$$
+        feedback: |
+          A covector at $p$ has $d$ components $\mathtt{x}^p_1,\dots,\mathtt{x}^p_d$, one per basis vector, not a $d\times d$ table (that is a $(0,2)$-tensor). The bundle chart lists $d$ numbers for $p$ and $d$ for the covector: $\dim T^*\mathcal{M} = 2d$, like $T\mathcal{M}$.
+    explanation: |
+      The covector twin of the tangent bundle. The arrow down reads "sections": covector fields are its sections.
+
+  - id: cf
+    title: 'Covector fields $\Gamma T^*\mathcal{M}$'
+    row: 3
+    col: 3
+    body: |
+      A covector field is a **smooth section** $\mathsf{X}$ of $T^*\mathcal{M}$, such as the differential $df$ of a scalar field. In a chart,
+      $$\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i,$$
+      with $\mathtt{x}_i(p) := \mathsf{X}(p)((\partial x_i)_p)$. On an overlap the law is covariant:
+      $$\mathtt{y}_i = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,\mathtt{x}_j.$$
+      Not every covector field is a $df$.
+    decoys:
+      - body: |
+          A covector field is a **smooth section** $\mathsf{X}$ of $T^*\mathcal{M}$, such as the differential $df$ of a scalar field. In a chart,
+          $$\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i,$$
+          with $\mathtt{x}_i(p) := \mathsf{X}(p)((\partial x_i)_p)$. On an overlap the law is the one of vectors:
+          $$\mathtt{y}_i = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,\mathtt{x}_j.$$
+          Not every covector field is a $df$.
+        feedback: |
+          Feed the vector basis law to $\mathsf{X}$: $\partial y_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)\,\partial x_j$, so $\mathtt{y}_i = \mathsf{X}\lceil\partial y_i\rfloor = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)\,\mathtt{x}_j$: the inverse Jacobian. In the decoy the free index $i$ is up on the right and down on the left, which the up-down rule flags at once.
+      - body: |
+          A covector field is a **smooth section** $\mathsf{X}$ of $T^*\mathcal{M}$, and every one is the differential $df$ of a scalar field. In a chart,
+          $$\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i,$$
+          with $\mathtt{x}_i(p) := \mathsf{X}(p)((\partial x_i)_p)$. On an overlap the law is covariant:
+          $$\mathtt{y}_i = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,\mathtt{x}_j.$$
+        feedback: |
+          At a single point every covector is a differential, but not a whole field. The whirlpool $\mathsf{Z} = -b\,dx^1 + a\,dx^2$ on the plane would need $\partial_a f = -b$ and $\partial_b f = a$, and then the mixed partials of $f$ would be $-1$ and $1$, which is impossible.
+    explanation: |
+      The second kind of field. The arrow down reads "eat fields", and the long arrow down reads "which are $df$?": the question of the differentials box.
+
+  - id: action
+    title: 'Actions $\mathcal{X}\lfloor f\rceil$ and $\mathsf{X}\lceil\mathcal{X}\rfloor$'
+    row: 4
+    col: 2
+    body: |
+      A vector field turns a scalar field into a new **function**, $\mathcal{X}\lfloor f\rceil(p) := \mathcal{X}(p)(f)$, with the Leibniz rule
+      $$\mathcal{X}\lfloor fg\rceil = f\,\mathcal{X}\lfloor g\rceil + g\,\mathcal{X}\lfloor f\rceil.$$
+      A covector field eats a vector field, $\mathsf{X}\lceil\mathcal{X}\rfloor(p) := \mathsf{X}(p)(\mathcal{X}(p)) = \mathtt{x}_i x^i$, and functions pull out. The two meet in
+      $$df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil.$$
+    decoys:
+      - body: |
+          A vector field turns a scalar field into a new **function**, $\mathcal{X}\lfloor f\rceil(p) := \mathcal{X}(p)(f)$, and functions pull out:
+          $$\mathcal{X}\lfloor gf\rceil = g\,\mathcal{X}\lfloor f\rceil.$$
+          A covector field eats a vector field, $\mathsf{X}\lceil\mathcal{X}\rfloor(p) := \mathsf{X}(p)(\mathcal{X}(p)) = \mathtt{x}_i x^i$, and functions pull out. The two meet in
+          $$df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil.$$
+        feedback: |
+          A vector field differentiates, so $g$ is differentiated too: $\mathcal{X}\lfloor gf\rceil = g\,\mathcal{X}\lfloor f\rceil + f\,\mathcal{X}\lfloor g\rceil$. On the line with $\mathcal{X} = \partial x_1$, $g = f = \mathscr{X}^1$: $\partial x_1\lfloor(\mathscr{X}^1)^2\rceil = 2\mathscr{X}^1$, not $\mathscr{X}^1$. Pulling functions out is what a **covector** field does with its slot.
+      - body: |
+          A vector field turns a scalar field into a **number**, the rate of change of $f$ along $\mathcal{X}$, with the Leibniz rule
+          $$\mathcal{X}\lfloor fg\rceil = f\,\mathcal{X}\lfloor g\rceil + g\,\mathcal{X}\lfloor f\rceil.$$
+          A covector field eats a vector field and returns a number, $\mathsf{X}\lceil\mathcal{X}\rfloor = \mathtt{x}_i x^i$, and functions pull out. The two meet in
+          $$df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil.$$
+        feedback: |
+          Both results are **functions**, one value at every point: on the egg carton $f = \cos a\cos b + 1$ with $\mathcal{X} = \partial x_2$, $\mathcal{X}\lfloor f\rceil = -\cos a\sin b$, which is $-1$ at $(0,\pi/2)$ and $0$ at $(0,0)$. A single number would be the pointwise statement, at one $p$.
+    explanation: |
+      Fields act on fields and give functions. The arrow to the modules is there because sum and rescaling of fields are defined through these actions. The long arrow to tensor fields reads "more slots".
+
+  - id: ring
+    title: 'Ring $C^\infty(\mathcal{M})$'
+    row: 4
+    col: 1
+    body: |
+      Scalar fields with point-by-point sum $\oplus_{C^\infty}$ and product $\odot_{C^\infty}$: a commutative ring with unit $1$, but **not a field**. $f$ has an inverse only if it never vanishes, and there are zero divisors: with $\psi(t) = e^{-1/t}$ for $t>0$, $0$ otherwise,
+      $$\psi(t)\cdot\psi(-t) = 0,$$
+      although neither factor is the zero function.
+    decoys:
+      - body: |
+          Scalar fields with point-by-point sum $\oplus_{C^\infty}$ and product $\odot_{C^\infty}$: a **field** in the algebraic sense, like $\mathbb{R}$. Every $f$ that is not the zero function has the inverse $1/f$, and there are no zero divisors: if $fg = 0$, then $f = 0$ or $g = 0$.
+        feedback: |
+          $1/f$ is defined only where $f\neq 0$: the coordinate function $t$ on $\mathbb{R}$ is not the zero function, yet $1/t$ blows up at $0$. And $\psi(t) = e^{-1/t}$ ($t>0$, else $0$) times $\psi(-t)$ is $0$ everywhere, since at every $t$ one factor vanishes, although neither is the zero function.
+      - body: |
+          Scalar fields with point-by-point sum $\oplus_{C^\infty}$ and product $\odot_{C^\infty}$: a commutative ring with unit $1$, but **not a field**. $f$ has an inverse when it is not the zero function, but there are zero divisors: with $\psi(t) = e^{-1/t}$ for $t>0$, $0$ otherwise,
+          $$\psi(t)\cdot\psi(-t) = 0,$$
+          although neither factor is the zero function.
+        feedback: |
+          An inverse $g$ with $fg = 1$ needs $f(p)g(p) = 1$ at **every** point, so $f$ may never vanish. The zero divisor $\psi(t)$ is itself a counterexample: it is not the zero function, and it has no inverse because it vanishes for $t\le 0$.
+    explanation: |
+      The scalars of this level. The arrow down reads "scalars of": fields are rescaled by functions, a different factor at every point.
+
+  - id: module
+    title: Modules of fields
+    row: 5
+    col: 1
+    body: |
+      $\Gamma T\mathcal{M}$ and $\Gamma T^*\mathcal{M}$ are **modules** over $C^\infty(\mathcal{M})$: the vector-space rules with ring elements as scalars, and
+      $$(f\,\mathcal{X})(p) = f(p)\,\mathcal{X}(p).$$
+      Over a ring, **independent does not imply spanning**: on $\mathbb{R}$, $t\,\partial x_1$ is independent, yet $\partial x_1$ is not a multiple of it, since that would need $1/t$.
+    decoys:
+      - body: |
+          $\Gamma T\mathcal{M}$ and $\Gamma T^*\mathcal{M}$ are real **vector spaces** of dimension $d$: the basis fields $\partial x_i$ of one chart span all fields with real coefficients,
+          $$\mathcal{X} = c^i\,\partial x_i,\quad c^i\in\mathbb{R}.$$
+          As in linear algebra, $d$ independent fields always span.
+        feedback: |
+          With real coefficients only constant-component fields are reached: the swirl $-b\,\partial x_1 + a\,\partial x_2$ is not $c^i\partial x_i$ for any numbers $c^i$. Over $\mathbb{R}$, $\Gamma T\mathbb{R}^2$ is infinite-dimensional; the coefficients must be **functions**, and over a ring independent fields need not span.
+      - body: |
+          $\Gamma T\mathcal{M}$ and $\Gamma T^*\mathcal{M}$ are **modules** over $C^\infty(\mathcal{M})$: the vector-space rules with ring elements as scalars, and
+          $$(f\,\mathcal{X})(p) = f(p)\,\mathcal{X}(p).$$
+          As in linear algebra, **independent implies spanning** for $d$ fields: on $\mathbb{R}$, $t\,\partial x_1$ is independent, so it spans every field.
+        feedback: |
+          $t\,\partial x_1$ is independent ($f\,t\,\partial x_1 = 0$ forces $f = 0$ off $t = 0$, hence everywhere by continuity), but it vanishes at $t = 0$, so no multiple of it equals $\partial x_1$ there: the coefficient $1/t$ is not smooth. Over a ring without inverses, independence and spanning separate.
+    explanation: |
+      Where the ring of functions meets the fields. The arrow down reads "bases": a basis of this module is a frame.
+
+  - id: frames
+    title: Frames
+    row: 6
+    col: 1
+    body: |
+      A **frame** on an open set $\mathcal{W}$: fields $e_1,\dots,e_d$ that form a basis of $T_q\mathcal{M}$ at **every** $q\in\mathcal{W}$; then every field there is $f^a e_a$, uniquely. Chart domains always have one, $\partial x_i$ (dual frame $dx^i$). A global frame exists only on **parallelizable** manifolds: $\mathbb{R}^2$, $S^1$, the torus $T^2$, but not $S^2$, where every smooth vector field vanishes somewhere (hairy ball).
+    decoys:
+      - body: |
+          A **frame** on an open set $\mathcal{W}$: fields $e_1,\dots,e_d$ that form a basis of $T_q\mathcal{M}$ at **every** $q\in\mathcal{W}$; then every field there is $f^a e_a$, uniquely. Chart domains always have one, $\partial x_i$ (dual frame $dx^i$), and it always extends to all of $\mathcal{M}$, so every manifold has a global frame, $S^2$ included.
+        feedback: |
+          A chart frame lives on its chart domain and can blow up at the edge: the polar $\partial y_1$ has no limit at the origin. On $S^2$ no global frame exists at all: by the hairy ball theorem every smooth vector field on the sphere vanishes somewhere, so no field can be part of a basis at every point.
+      - body: |
+          A **frame** on an open set $\mathcal{W}$: any $d$ fields $e_1,\dots,e_d$ that are independent over $C^\infty(\mathcal{W})$; then every field there is $f^a e_a$, uniquely. Chart domains always have one, $\partial x_i$ (dual frame $dx^i$). A global frame exists only on **parallelizable** manifolds: $\mathbb{R}^2$, $S^1$, the torus $T^2$, but not $S^2$ (hairy ball).
+        feedback: |
+          Independence over the ring is too weak. On $\mathbb{R}$, $t\,\partial x_1$ is independent but cannot produce $\partial x_1$. A frame must be a basis of $T_q\mathcal{M}$ **at every point**; then the coefficients $f^a$ are smooth and unique.
+    explanation: |
+      Local bases of the module. The arrow down reads "components": a tensor field is described by its components in a frame.
+
+  - id: tensor
+    title: 'Tensor fields $\Gamma T^{(r,s)}\mathcal{M}$'
+    row: 7
+    col: 2
+    body: |
+      Maps $T$ from $r$ covector fields and $s$ vector fields to $C^\infty(\mathcal{M})$, **$C^\infty(\mathcal{M})$-linear** in each slot:
+      $$T(f\,\mathcal{Z},\dots) = f\,T(\mathcal{Z},\dots).$$
+      Hence pointwise: $T(\dots)(p)$ depends only on the input values at $p$. Components $T_{ij} := T(\partial x_i,\partial x_j)$ change with one Jacobian per index:
+      $$\begin{aligned}(T_\mathcal{V})_{kl} = {}&\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}\\&\cdot(T_\mathcal{U})_{ij}.\end{aligned}$$
+    decoys:
+      - body: |
+          Maps $T$ from $r$ covector fields and $s$ vector fields to $C^\infty(\mathcal{M})$, **$\mathbb{R}$-linear** in each slot:
+          $$T(c\,\mathcal{Z},\dots) = c\,T(\mathcal{Z},\dots),\quad c\in\mathbb{R}.$$
+          Hence pointwise: $T(\dots)(p)$ depends only on the input values at $p$. Components $T_{ij} := T(\partial x_i,\partial x_j)$ change with one Jacobian per index:
+          $$\begin{aligned}(T_\mathcal{V})_{kl} = {}&\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}\\&\cdot(T_\mathcal{U})_{ij}.\end{aligned}$$
+        feedback: |
+          Real linearity does not make a map pointwise. $D(\mathcal{Z}) := \partial x_1\lfloor z^1\rceil$ on the plane is $\mathbb{R}$-linear, yet $\partial x_1$ and $(1+\mathscr{X}^1)\,\partial x_1$, equal at the origin, give $D = 0$ and $D = 1$ there: $D$ sees derivatives. Only pulling out **functions** forces the value at $p$ to depend on $p$ alone.
+      - body: |
+          Maps $T$ from $r$ covector fields and $s$ vector fields to $C^\infty(\mathcal{M})$ that are **pointwise**: $T(\dots)(p)$ depends only on the input values at $p$. Every such map is a tensor field. Components $T_{ij} := T(\partial x_i,\partial x_j)$ change with one Jacobian per index:
+          $$\begin{aligned}(T_\mathcal{V})_{kl} = {}&\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}\\&\cdot(T_\mathcal{U})_{ij}.\end{aligned}$$
+        feedback: |
+          Pointwise is necessary but not enough: $E(\mathcal{Z}) := (z^1)^2$ depends only on $\mathcal{Z}(p)$, yet $E(2\mathcal{Z}) = 4E(\mathcal{Z})$, so it is not linear in its slot. A tensor field must be $C^\infty(\mathcal{M})$-linear in each slot; being pointwise is a consequence.
+    explanation: |
+      The end point of the level: machines on the modules of fields, linear over functions, which reduce to the tensors of the previous level at each point.
+
+  - id: diff
+    title: Closed and exact
+    row: 5
+    col: 3
+    body: |
+      $\mathsf{X}$ is **exact** if $\mathsf{X} = df$ for one $f\in C^\infty(\mathcal{M})$, and **closed** if, in every chart,
+      $$\partial x_j\lfloor\mathtt{x}_i\rceil = \partial x_i\lfloor\mathtt{x}_j\rceil.$$
+      Exact $\Rightarrow$ closed (mixed partials commute). Closed $\Rightarrow$ exact on a disc or ball (Poincaré lemma), not always around a hole.
+    decoys:
+      - body: |
+          $\mathsf{X}$ is **exact** if $\mathsf{X} = df$ for one $f\in C^\infty(\mathcal{M})$, and **closed** if, in every chart,
+          $$\partial x_j\lfloor\mathtt{x}_i\rceil = \partial x_i\lfloor\mathtt{x}_j\rceil.$$
+          Exact $\Rightarrow$ closed (mixed partials commute), and closed $\Rightarrow$ exact on every manifold, because a closed field is $df$ near every point.
+        feedback: |
+          Local potentials need not glue. The angle field $\mathsf{A} = -\tfrac{b}{r^2}dx^1 + \tfrac{a}{r^2}dx^2$ on the plane minus the origin is closed, but its integral around the unit circle is $2\pi$; an exact field would give $f(\text{end}) - f(\text{start}) = 0$ around a closed curve.
+      - body: |
+          $\mathsf{X}$ is **exact** if at every point $p$ there is some $f_p$ with $\mathsf{X}_p = (df_p)_p$, and **closed** if, in every chart,
+          $$\partial x_j\lfloor\mathtt{x}_i\rceil = \partial x_i\lfloor\mathtt{x}_j\rceil.$$
+          Exact $\Rightarrow$ closed (mixed partials commute). Closed $\Rightarrow$ exact on a disc or ball (Poincaré lemma), not always around a hole.
+        feedback: |
+          With $f_p$ allowed to change from point to point, **every** covector field qualifies: $f_p := \mathtt{x}_i(p)\,\mathscr{X}^i$ has $(df_p)_p = \mathsf{X}_p$. The whirlpool $-b\,dx^1 + a\,dx^2$ passes this test and is not even closed. Exact means **one** $f$ for the whole manifold.
+    explanation: |
+      Which covector fields are differentials. The dashed arrow from below reads "model example": the angle field is closed and not exact.
+
+  - id: angle
+    title: 'Angle field $\mathsf{A}$'
+    row: 6
+    col: 3
+    body: |
+      On the plane minus the origin, with $r^2 = a^2 + b^2$:
+      $$\mathsf{A} = -\frac{b}{r^2}dx^1 + \frac{a}{r^2}dx^2.$$
+      Both mixed partials are $(b^2-a^2)/r^4$: **closed**. Off the ray $\{b = 0, a\ge0\}$ it equals $d\theta$, yet once around the origin $\int\mathsf{A} = 2\pi$: **not exact**. The hole is what stops a global potential.
+    decoys:
+      - body: |
+          On the plane minus the origin, with $r^2 = a^2 + b^2$:
+          $$\mathsf{A} = -\frac{b}{r^2}dx^1 + \frac{a}{r^2}dx^2.$$
+          Both mixed partials are $(b^2-a^2)/r^4$: **closed**. It equals $d\theta$, and the angle $\theta$ is defined at every point of the punctured plane, so $\mathsf{A}$ is **exact**, with $\int\mathsf{A} = 0$ once around the origin.
+        feedback: |
+          Every point has an angle, but no **smooth** choice of angle on the whole punctured plane: going once around, $\theta$ grows by $2\pi$ and must jump somewhere. $d\theta$ is defined only off the cut, and the integral around the unit circle is $2\pi\neq0$, so $\mathsf{A}$ is not $df$ for any smooth $f$.
+      - body: |
+          On the plane minus the origin, with $r^2 = a^2 + b^2$:
+          $$\mathsf{A} = -\frac{b}{r^2}dx^1 + \frac{a}{r^2}dx^2.$$
+          The mixed partials are $(b^2-a^2)/r^4$ and $(a^2-b^2)/r^4$: **not closed**, which is why once around the origin $\int\mathsf{A} = 2\pi$ and $\mathsf{A}$ is **not exact**.
+        feedback: |
+          Compute again: $\partial_b(-b/r^2) = -(r^2 - 2b^2)/r^4 = (b^2-a^2)/r^4$ and $\partial_a(a/r^2) = (r^2-2a^2)/r^4 = (b^2-a^2)/r^4$. They agree, so $\mathsf{A}$ is closed. That is the whole point: it passes the local test and still fails globally, because of the hole.
+    explanation: |
+      The model example of the level, and a first glimpse of topology inside calculus.
+
+edges:
+  - { from: tp, to: tm, label: fibre of }
+  - { from: bundle, to: tm, label: instance }
+  - { from: bundle, to: tsm, label: instance }
+  - { from: tpstar, to: tsm, label: fibre of }
+  - { from: tm, to: vf, label: sections }
+  - { from: tsm, to: cf, label: sections }
+  - { from: vf, to: action, label: 'act on $f$' }
+  - { from: cf, to: action, label: eat fields }
+  - { from: ring, to: module, label: scalars of }
+  - [action, module]
+  - { from: module, to: frames, label: bases }
+  - { from: frames, to: tensor, label: components }
+  - { from: action, to: tensor, label: more slots }
+  - { from: cf, to: diff, label: 'which are $df$?' }
+  - { from: angle, to: diff, dashed: true, label: model example }
+
+outroTitle: Chapter 5 in one picture
+outro: |
+  Read it top to bottom. The **tangent** and **cotangent spaces** at each point are the fibres of two **bundles**, $T\mathcal{M}$ and $T^*\mathcal{M}$, each a manifold of dimension $2d$. Their **sections** are the **vector** and **covector fields**, one vector or covector at every point, with sections defined by
+  $$\pi\circ\sigma = \mathrm{id}_\mathcal{B}.$$
+  In a chart the fields have component functions, changing contravariantly and covariantly:
+  $$\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i,$$
+  $$y^i = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,x^j,$$
+  $$\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i,$$
+  $$\mathtt{y}_i = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,\mathtt{x}_j.$$
+  Fields **act** and return functions:
+  $$\mathsf{X}\lceil\mathcal{X}\rfloor = \mathtt{x}_i\,x^i,$$
+  $$df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil.$$
+  The **ring** $C^\infty(\mathcal{M})$, which is not a field, rescales them point by point, making **modules**:
+  $$(f\,\mathcal{X})(p) = f(p)\,\mathcal{X}(p).$$
+  Independent fields need not span; **frames** exist on chart domains, globally only on parallelizable manifolds (not $S^2$). **Tensor fields** are $C^\infty(\mathcal{M})$-linear in each slot, hence pointwise, with one Jacobian per index:
+  $$T(f\,\mathcal{Z},\dots) = f\,T(\mathcal{Z},\dots).$$
+  On the right, a covector field is **closed** if
+  $$\partial x_j\lfloor\mathtt{x}_i\rceil = \partial x_i\lfloor\mathtt{x}_j\rceil,$$
+  and **exact** if it is $df$; exact implies closed, the converse holds on a disc, and the **angle field** shows how a hole breaks it.
+
+  **Next: the Level Challenge.** Harder problems that combine the whole map, ending in physics: the Minkowski metric $\eta = \mathrm{diag}(-1,1,1,1)$ of special relativity as a $(0,2)$ tensor field, pushed through a Lorentz boost with the tensor law. Which of its components survive the change of chart?
