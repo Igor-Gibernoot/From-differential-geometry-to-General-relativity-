@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel, ch06-parallel-transport done)
+## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel, ch06-parallel-transport, ch06-torsion-curvature done)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -24,7 +24,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
-- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). Next: `ch06-torsion-curvature` (concept).
+- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). Next: `ch06-torsion-tensor` (guided, B.10).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 6 (Covariant Derivative) in `course.yaml` order, next
@@ -267,6 +267,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   Widget extension for `ch06-torsion-curvature`: connection labels $\nabla^{\mathrm{W}}$ (frame $e_1$ radial, $e_2$ angular unit fields declared parallel, plane minus origin; book's label, "teleparallel"/Weitzenböck)
   and $\nabla^{\kappa}$ ($(\Gamma^\kappa_\mathscr{X})^1_{22} = \kappa a$); torsion components $\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}$ (book order), Riemann $\mathrm{Riem}^i_{jkm}$ (book), holonomy
   $\Delta z^1 = -\mathrm{Riem}^1_{212}\,z^2\times\text{area}$ for counterclockwise loops; rectangle loop one side per unit of $\lambda\in[0,4]$; check $\kappa=1$, $[1,2]\times[0,1]$, $z_0=(0,1)$: $\Delta z = (-1,0)$.
+  `ch06-torsion-curvature`: commutator $[\mathcal{X},\mathcal{Y}]\lfloor f\rceil := \mathcal{X}\lfloor\mathcal{Y}\lfloor f\rceil\rceil - \mathcal{Y}\lfloor\mathcal{X}\lfloor f\rceil\rceil$, components $[\mathcal{X},\mathcal{Y}]^k = \mathcal{X}\lfloor\tilde x^k\rceil - \mathcal{Y}\lfloor x^k\rceil$
+  ($\mathcal{X} = x^i\partial x_i$, $\mathcal{Y} = \tilde x^j\partial x_j$), rule $[\mathcal{X},g\mathcal{Y}] = \mathcal{X}\lfloor g\rceil\mathcal{Y} + g[\mathcal{X},\mathcal{Y}]$; example $\mathcal{X} = \partial x_2$, swirl $\mathcal{Y} = -b\,\partial x_1 + a\,\partial x_2$, $[\mathcal{X},\mathcal{Y}] = -\partial x_1$
+  ($-6$ on $a^2b$ at $(3,1)$); $[e_1,e_2] = -\tfrac1r e_2$, $e_2 = \tfrac1r\partial y_2$. Torsion $\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y})$ (book form), $\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}$; tilting example $\mathtt{T}^1_{12} = -2$;
+  $\nabla^{\mathrm{W}}$ cartesian $\Gamma^2_{11} = b/r^2$, $\Gamma^2_{12} = -a/r^2$, $\Gamma^1_{21} = -b/r^2$, $\Gamma^1_{22} = a/r^2$, $\mathtt{T}^1_{12} = -b/r^2$, $\mathtt{T}^2_{12} = a/r^2$ ($3/25$ at $(3,4)$), $\mathtt{T}(\cdot,e_1,e_2) = \tfrac1r e_2$;
+  $\mathrm{Riem}(\mathsf{X},\mathcal{Z},\mathcal{X},\mathcal{Y})$ (book form), summation index $n$ (never $r$) in $\mathrm{Riem}^i_{jkm} = \partial x_k\lfloor\Gamma^i_{jm}\rceil - \partial x_m\lfloor\Gamma^i_{jk}\rceil + \Gamma^i_{nk}\Gamma^n_{jm} - \Gamma^i_{nm}\Gamma^n_{jk}$;
+  2D: 4 components $\mathrm{Riem}^i_{j12}$; ∇ᴱ polar $\mathrm{Riem}^1_{212} = -1+1 = 0$; ∇^κ $\mathrm{Riem}^1_{212} = \kappa$, $\mathrm{Ric}_{ab} = \mathrm{Riem}^m_{amb}$, $\mathrm{Ric} = \kappa\,dx^2\otimes dx^2$; holonomy numeric κ=2, $[1,2]\times[0,3]$,
+  $z=(5,2)$: $-12$; square $[-1,1]^2$ under κ=1: $-4$; flat+torsion-free ⇔ local chart with Γ=0 stated (both directions named, easy one shown); Bianchi named (component form).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -279,6 +286,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch06-torsion-curvature (concept, 35 cards)
+- Hook "once around a loop" (∇ᴱ, ∇ᵂ, ∇^κ introduced), early widget (rectangle $[1,2]\times[0,1]$, κ vs E, holonomy hidden) + numeric $\Delta z^1 = -1$, who-returns MCQ;
+  commutator (second-order trap $D(a^2)$, chart computation, Schwarz MCQ, component build, numeric $-6$, which-commute incl. $[e_1,e_2]$); torsion (definition, build
+  $\Gamma^i_{kj}-\Gamma^i_{jk}$, one tensoriality card, MCQ on dropping the commutator), torsion free = symmetric, tilting example $-2$; ∇ᵂ coefficients + numeric $3/25$, widget
+  (vertical $x_0=1$, compareE, torsion, radial preset) + MCQ; Riemann (definition, product-rule build, formula + antisymmetry, count 4, ∇ᴱ polar flat 0, ∇^κ = 3), Ricci + MCQ;
+  holonomy widget (5 presets) + numeric $-12$ + around-origin MCQ; flat-chart theorem + Bianchi; which-have-Γ=0 MCQ; summary with formulas.
+- Checks: ∇ᵂ torsion verified by hand from the book's coefficients ($\mathtt{T}^1_{12} = -b/r^2$, $\mathtt{T}^2_{12} = a/r^2$ ✓); validate 0/0; shots 0 problems; three widget shots viewed.
+- Choices: general holonomy law stated as approximate for small loops (exact for ∇^κ), without proof; GR remarks (Ricci in Einstein's equations, free fall removes Γ only at a point) as one-liners.
+- Conventions fixed here: see Current, `ch06-torsion-curvature` lines (commutator components with $x^i$, $\tilde x^j$; summation index $n$ in Riem; book index orders).
 
 ### 2026-10-20 — widget `parallel-transport` extended for `ch06-torsion-curvature` (widget session)
 - `js/widgets.js`: connections `W` (𝒵 keeps its $e_1,e_2$ components, i.e. rotates by the change of polar angle; stops at the origin) and `kappa` ($\dot z^1 = -\kappa a z^2\dot\gamma^2$,

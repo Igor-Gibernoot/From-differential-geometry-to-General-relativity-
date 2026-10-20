@@ -268,7 +268,11 @@ levels:
         kind: concept
         file: ch06/parallel-transport.yaml
         summary: A connection carries a vector along a curve by a linear ODE, and the curves that carry their own velocity are the autoparallels. Whether a circle is straight depends on the connection.
-      - { id: ch06-torsion-curvature, title: Torsion and Curvature, kind: concept }
+      - id: ch06-torsion-curvature
+        title: Torsion and Curvature
+        kind: concept
+        file: ch06/torsion-curvature.yaml
+        summary: Two tensors hidden in a connection. Torsion measures whether swapping two derivatives matches the commutator; curvature measures whether a vector carried around a loop comes back to itself.
       - { id: ch06-torsion-tensor, title: "Guided Problem: Torsion Is a Tensor", kind: guided }
       - { id: ch06-three-connections, title: "Guided Problem: Three Connections on the Plane", kind: guided }
       - { id: ch06-traps, title: Connection Traps, kind: traps }
