@@ -211,7 +211,11 @@ levels:
         kind: concept
         file: ch05/vector-fields.yaml
         summary: One arrow at every point, each in its own tangent space. The tangent bundle $T\mathcal{M}$ as a $2d$-dimensional manifold, vector fields as smooth sections, component functions, and a field acting on scalar fields.
-      - { id: ch05-covector-fields, title: Covector Fields and the Cotangent Bundle, kind: concept }
+      - id: ch05-covector-fields
+        title: Covector Fields and the Cotangent Bundle
+        kind: concept
+        file: ch05/covector-fields.yaml
+        summary: A covector at every point, such as the differential $df$ of a height map. The cotangent bundle $T^*\mathcal{M}$, covector fields as smooth sections, the covariant law for component functions, the action on vector fields, and a field that is no $df$.
       - { id: ch05-module, title: "The $C^\\infty(\\mathcal{M})$-Module Structure", kind: concept }
       - { id: ch05-tensor-fields, title: Tensor Fields, kind: concept }
       - { id: ch05-differentials, title: "Guided Problem: Which Covector Fields Are Differentials?", kind: guided }

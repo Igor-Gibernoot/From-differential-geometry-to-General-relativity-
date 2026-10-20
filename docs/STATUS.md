@@ -23,9 +23,9 @@ append a short entry at the end of **Log** (a few lines, ending with
   `ch04-challenge` (36 cards, five problems: polar chart at $(1,1)$, reparametrization rune and Leibniz,
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
-- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards).
+- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards).
 - **Queue (one unit each):** Chapter 5 (Fields) in `course.yaml` order, next
-  `ch05-covector-fields` (concept); then Chapters 6–10 (each with map and challenge).
+  `ch05-module` (concept); then Chapters 6–10 (each with map and challenge).
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -166,6 +166,17 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\mathcal{X}\lfloor f\rceil = -\cos a\sin b$ ($-1$ at $(0,\pi/2)$), $\mathcal{Y}\lfloor f\rceil = b\sin a\cos b - a\cos a\sin b$ ($\pi$ at $(\pi,\pi/2)$);
   $\partial y_1$ does not extend to the origin; $\mathcal{X},\mathcal{Y}$ fail to span on $b = 0$. Widget `chart-basis` with named charts
   `{chart: cartesian, name: '\mathscr{X}'}`, `{chart: polar, name: '\mathscr{Y}', cut: left}` and presets placing the swirl arrow $(-q_2,q_1)$.
+  Covector fields (`ch05-covector-fields`): $T^*\mathcal{M} := \dot\bigcup_p T_p^*\mathcal{M}$, $\pi^*(\mathsf{X}_p) = p$, $T^*\mathcal{U} := \mathrm{preim}_{\pi^*}(\mathcal{U})$,
+  $\xi^*_{\mathscr{X}}(\mathsf{X}_p) = (\mathscr{X}(p)\,;\,\mathtt{x}^p_i)$, inverse $(\alpha;\beta)\mapsto\beta_k(dx^k)_p$ (fibre coords $\beta_k$ lower), transition
+  $(\text{ᛖ}_{\mathcal{U}\mathcal{V}}(\alpha)\,;\,(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^k_j\beta_k)$ with $(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^k_j(\mathscr{Y}(p)) := (\partial\mathscr{X}^k/\partial\mathscr{Y}^j)_p$ (Jacobian of $\text{ᛖ}_{\mathcal{V}\mathcal{U}} = \mathscr{X}\circ\mathscr{Y}^{-1}$);
+  $\Gamma T^*\mathcal{M}$, exact $= df$; component functions $\mathtt{x}_i(p) := \mathsf{X}(p)((\partial x_i)_p)$, basis covector fields $dx^i := d\mathscr{X}^i$,
+  $\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i$; law $\mathtt{y}_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)\,\mathtt{x}_j$ (old-from-new $\mathtt{x}_i = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)\mathtt{y}_j$);
+  action written with the book's brackets $\mathsf{X}\lceil\mathcal{X}\rfloor(p) := \mathsf{X}_p(\mathcal{X}(p)) = \mathtt{x}_i x^i$ (mirror of $\lfloor\ \rceil$), $\mathtt{x}_i = \mathsf{X}|_\mathcal{U}\lceil\partial x_i\rfloor$,
+  $df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil$; $g\,\mathcal{X}$ pointwise used informally ($C^\infty$-linearity vs Leibniz). Egg carton: $df$ components $\mathtt{X}_i = (-\sin a\cos b, -\cos a\sin b)$,
+  polar $\mathtt{Y}_1 = \tfrac ar\mathtt{X}_1+\tfrac br\mathtt{X}_2$, $\mathtt{Y}_2 = -b\mathtt{X}_1 + a\mathtt{X}_2$; at $(\pi,\pi/2)$: $\mathtt{X} = (0,1)$, $\mathtt{Y} = (1/\sqrt5, \pi)$, $r = \tfrac{\sqrt5}2\pi$,
+  $\mathcal{X}$ polar comps $(1/\sqrt5, 4/(5\pi))$, $df\lceil\mathcal{X}\rfloor = 1$. Non-exact example $\mathsf{Z} = -b\,dx^1 + a\,dx^2$ (mixed partials $-1$ vs $1$; $= r^2dy^2$ in polar);
+  $d\theta$-like field $(-b/r^2, a/r^2)$ on the punctured plane left as teaser for `ch05-differentials`. Widget: `curve-velocity` with fields `[x2y, x, theta]`,
+  level lines as the picture of the whole field $df$.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -525,3 +536,13 @@ long box titles.
   frames, parallelizability, hairy ball and $\oplus_\Gamma$ left for `ch05-module`; component functions written $X^i$,
   $Y^i$, $\tilde X^i$, $\tilde Y^i$ in the running example, $x^i$, $y^i$ in general.
 - Conventions fixed here: see Current, "Chapter 5 conventions so far".
+
+### 2026-10-19 — ch05-covector-fields (concept)
+- 25 cards: contour-map hook, predict (is every field a $df$?), recall, `curve-velocity` widget ($x^2+y$ level
+  lines as the whole field $df$, $\theta$ rays), kernel MCQ, $T^*\mathcal{M}$ and bundle charts, fibre transition MCQ
+  (introduces $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$), $\dim = 8$ for spacetime, sections and exactness, component functions, five-fonts MCQ,
+  $df$ components and egg carton, field law (build), polar $\mathtt{Y}_2 = \pi$, action $\mathsf{X}\lceil\mathcal{X}\rfloor$, order proof of
+  $df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil$, pairing $=1$ in polar, $C^\infty$-linearity vs Leibniz, arrow trap, non-exact $-b\,dx^1+a\,dx^2$, resolve, summary.
+- Choices: the book's brackets $\mathsf{X}\lceil\mathcal{X}\rfloor$ (the unit prompt wrote $\lfloor\ \rceil$); non-exact example given fully by mixed
+  partials (elementary), leaving closed-not-exact ($d\theta$ on the punctured plane) for the guided problem; $\oplus_\Gamma$, frames left for `ch05-module`.
+- Conventions fixed here: see Current, "Covector fields (`ch05-covector-fields`)".

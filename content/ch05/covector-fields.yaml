@@ -1,0 +1,393 @@
+id: ch05-covector-fields
+title: Covector Fields and the Cotangent Bundle
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: A contour map
+    body: |
+      A hiking map shows the height $f$ of the terrain by its **contour lines**, the curves where $f$ is constant. Read at one point $p$, the contours tell you how fast you climb in each direction you might walk: along the contour through $p$ you do not climb at all, across densely packed contours you climb fast.
+
+      Recall that this information at $p$ is a covector, the differential $(df)_p\in T_p^*\mathcal{M}$: it eats a velocity $v$ at $p$ and returns the rate of climb $v(f)$. The contour map shows it at **every** point at once, so it pictures a rule
+      $$p\mapsto(df)_p\in T_p^*\mathcal{M}.$$
+
+      Two questions for this lesson. Does "$df$" make sense as one smooth object, the way a wind map became one vector field? And is **every** smooth rule $p\mapsto$ (covector at $p$) the $df$ of some height function?
+
+  - type: mcq
+    id: predict-exact
+    title: Predict first
+    prompt: |
+      At a single point, every covector is a differential: for every $\mathsf{X}_p\in T_p^*\mathcal{M}$ there is a scalar field $g$ with $(dg)_p = \mathsf{X}_p$. Now suppose someone chooses, smoothly, a covector $\mathsf{X}(p)\in T_p^*\mathcal{M}$ at every point $p$ of the plane. Before any theory, guess: is there always **one** scalar field $f$ on the plane with $(df)_p = \mathsf{X}(p)$ at every $p$?
+    options:
+      - text: 'Not necessarily: the function that works at one point may differ from the one that works at another, and they need not fit together'
+        correct: true
+      - text: 'Yes: take at each point the function $g$ that works there; together they form $f$'
+        feedback: |
+          Tempting, since each point has its own $g$. But "together they form $f$" hides the problem: a single $f$ must have **one** value and **one** set of partial derivatives at each point, and the functions $g$ chosen at different points generally disagree with each other. Whether they can be made to agree is a real question, and we will see a field where they cannot.
+      - text: 'Yes, because the plane has no holes'
+        feedback: |
+          Holes do matter for a subtler version of this question, but they are not the first obstacle. Even on the whole plane there are smooth rules $p\mapsto\mathsf{X}(p)$ that are no $df$: the partial derivatives of a single $f$ must satisfy a compatibility condition that a general rule ignores. Example: $-b\,dx^1 + a\,dx^2$ in cartesian coordinates $(a,b)$ is no $df$, since $f$ would need $\partial_b\partial_a f = -1$ but $\partial_a\partial_b f = 1$.
+    explanation: |
+      Pointwise "every covector is a differential" does not promote to fields: the functions chosen point by point need not glue into one $f$. Fields of the form $df$ are special and are called **exact**. Smooth covector fields on the plane that are no $df$ exist, for example one whose components violate the equality of mixed partial derivatives that every $df$ obeys.
+
+  - type: text
+    id: recall
+    title: 'Recall: one point at a time'
+    body: |
+      Recall the pointwise theory, on a $d$-dimensional smooth manifold $\mathcal{M}$ with a chart $(\mathcal{U},\mathscr{X})$ around $p$:
+
+      - The **cotangent space** $T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(T_p\mathcal{M},\mathbb{R})$ (Hom = homomorphism) is the $d$-dimensional vector space of linear maps $\mathsf{X}_p\colon T_p\mathcal{M}\to\mathbb{R}$, the **covectors** at $p$ (sans-serif letters).
+      - The **differential** of $f\in C^\infty(\mathcal{M})$ at $p$ is the covector
+      $$(df)_p(v_{\gamma,p}) := v_{\gamma,p}(f).$$
+      - The differentials $(dx^i)_p := (d\mathscr{X}^i)_p$ of the coordinate functions form the **dual chart-induced basis**: $(dx^i)_p\big((\partial x_j)_p\big) = \delta^i_j$, where $(\partial x_j)_p := (\partial/\partial\mathscr{X}^j)_p$.
+      - Components (typewriter, index down): $\mathtt{x}^p_i := \mathsf{X}_p\big((\partial x_i)_p\big)$, so that $\mathsf{X}_p = \mathtt{x}^p_i\,(dx^i)_p$ (Einstein summation) and
+      $$\mathsf{X}_p(v) = \mathtt{x}^p_i\,v^i.$$
+      - A covector is pictured as the line of directions it sends to $0$ (for $(df)_p$: the level line of $f$ through $p$), never as an arrow.
+      - A vector field $\mathcal{X}$ acts on scalar fields: $\mathcal{X}\lfloor f\rceil(p) := \mathcal{X}(p)(f)$, a new scalar field.
+
+  - type: widget
+    id: contours
+    title: One picture, every covector
+    widget: curve-velocity
+    config:
+      p: [1, 1]
+      f: x2y
+      fields: [x2y, x, theta]
+      chain: true
+      graph: false
+      bend: false
+      curves:
+        - { v: [1, 0] }
+        - { v: [0, 1] }
+    body: |
+      The plane $\mathbb{R}^2$, points $q = (q_1, q_2)$, cartesian coordinates $x(q) = q_1$, $y(q) = q_2$, scalar field $f = x^2 + y$. The dashed orange curves are its level lines $f = f(p) + n/2$ ($n$ an integer). Two straight curves $\gamma_1$, $\gamma_2$ pass through $p = (1,1)$ with the blue velocities; each readout is $(f\circ\gamma)'(0) = (df)_p(v)$, written out as $\mathtt{x}^p_1 v^1 + \mathtt{x}^p_2 v^2$.
+
+      1. Drag the tip of $\gamma_1$'s arrow until its readout is $0$. Where does the arrow point?
+      2. Drag it so it crosses exactly one level line per unit of $\lambda$: the readout is $\tfrac12$.
+      3. Look away from $p$: at every point $q$ the same family of lines pictures the covector $(df)_q$, tilted and spaced differently. One drawing shows the whole rule $q\mapsto(df)_q$.
+      4. Press $\theta$ (the polar angle): its level lines are rays. Keep this picture in mind for the end of the lesson.
+
+  - type: mcq
+    id: kernel
+    title: The direction that does not climb
+    prompt: |
+      In the plane with cartesian coordinates $(x, y)$, let $f = x^2 + y$ and $p = (1,1)$, so that $(df)_p = 2\,(dx)_p + (dy)_p$. Which velocity $v$ at $p$ (standard components) gives $(df)_p(v) = 0$?
+    options:
+      - text: '$v = (1, -2)$, tangent to the level line $y = 2 - x^2$ at $p$'
+        correct: true
+      - text: '$v = (2, 1)$, the arrow with the same components as $(df)_p$'
+        feedback: |
+          This gives $(df)_p(v) = 2\cdot 2 + 1\cdot 1 = 5$, the opposite of zero: it is the familiar "gradient arrow", which crosses the level lines. Turning the components of a covector into an arrow is not a chart-free operation (it needs a metric, Level 7); the covector itself is pictured by the line it kills.
+      - text: '$v = (-2, 1)$, perpendicular to $(2,1)$'
+        feedback: |
+          $(df)_p(v) = 2\cdot(-2) + 1 = -3$. "Perpendicular to the gradient arrow" would be right if the arrow were the right picture, but $(2,1)$ is not a picture of $(df)_p$ at all. Solve the equation directly: $2v^1 + v^2 = 0$, so $v^2 = -2v^1$.
+    explanation: |
+      $(df)_p(v) = 2v^1 + v^2 = 0$ exactly for multiples of $(1,-2)$, the direction of the level line through $p$: along $y = 2 - x^2$ the slope at $x = 1$ is $-2$. At every point $q$, the level line through $q$ pictures $(df)_q$ the same way.
+
+  - type: text
+    id: bundle
+    title: One set for all the covectors
+    body: |
+      Exactly as for vectors, a rule $p\mapsto\mathsf{X}(p)\in T_p^*\mathcal{M}$ is a map only once there is one target set containing every cotangent space. The **cotangent bundle** is their disjoint union,
+      $$T^*\mathcal{M} := \mathop{\dot{\bigcup}}_{p\in\mathcal{M}} T_p^*\mathcal{M},$$
+      each element remembering its base point. So there is a **projection**
+      $$\pi^*\colon T^*\mathcal{M}\to\mathcal{M},\quad \pi^*(\mathsf{X}_p) := p,$$
+      and its fibre over $p$ (the elements sent to $p$) is $T_p^*\mathcal{M}$.
+
+      A chart $(\mathcal{U},\mathscr{X})$ gives a **bundle chart** on $T^*\mathcal{U} := \mathrm{preim}_{\pi^*}(\mathcal{U})$, the covectors based in $\mathcal{U}$: record the point's coordinates, then the covector's components,
+      $$\xi^*_{\mathscr{X}}(\mathsf{X}_p) := \big(\mathscr{X}(p)\,;\,\mathtt{x}^p_1,\dots,\mathtt{x}^p_d\big).$$
+      Its image is the open set $\mathscr{X}(\mathcal{U})\times\mathbb{R}^d\subseteq\mathbb{R}^{2d}$, and its inverse rebuilds the covector:
+      $$(\alpha\,;\,\beta)\mapsto\beta_k\,(dx^k)_p,$$
+      where $p = \mathscr{X}^{-1}(\alpha)$. The fibre coordinates $\beta_k$ carry a **lower** index, since they are covector components.
+
+  - type: mcq
+    id: fibre-transition
+    title: How the fibre coordinates change
+    prompt: |
+      On a smooth manifold, two charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ give cotangent-bundle charts $\xi^*_{\mathscr{X}}(\mathsf{X}_p) = (\mathscr{X}(p)\,;\,\mathtt{x}^p_k)$ and $\xi^*_{\mathscr{Y}}(\mathsf{X}_p) = (\mathscr{Y}(p)\,;\,\mathtt{y}^p_j)$. Take $(\alpha\,;\,\beta)$ in the image of $\xi^*_{\mathscr{X}}$, so the covector is $\mathsf{X}_p = \beta_k\,(dx^k)_p$ at $p = \mathscr{X}^{-1}(\alpha)\in\mathcal{U}\cap\mathcal{V}$. What is its $j$-th fibre coordinate in the chart $\xi^*_{\mathscr{Y}}$?
+    options:
+      - text: '$\Big(\dfrac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^j}\Big)_p\beta_k$'
+        correct: true
+      - text: '$\Big(\dfrac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^k}\Big)_p\beta_k$'
+        feedback: |
+          That is the habit from the tangent bundle, where fibre coordinates are vector components and change with the Jacobian $(\partial\mathscr{Y}/\partial\mathscr{X})_p$. Compute instead: the $j$-th fibre coordinate is $\mathsf{X}_p\big((\partial y_j)_p\big) = \beta_k\,(dx^k)_p\big((\partial y_j)_p\big)$, and the mixed pairing $(dx^k)_p\big((\partial y_j)_p\big)$ is $(\partial\mathscr{X}^k/\partial\mathscr{Y}^j)_p$, an entry of the **inverse** Jacobian. (Also, the free index $j$ would sit up on the right and down on the left.)
+      - text: '$\beta_j$: only the base point coordinates change'
+        feedback: |
+          The base coordinates do change, from $\alpha$ to $\mathscr{Y}(p)$, but so do the fibre coordinates: they are components in a basis, and the basis $(dy^j)_p$ differs from $(dx^j)_p$. Only the covector $\mathsf{X}_p$ itself stays the same.
+    explanation: |
+      The new fibre coordinate is the covector fed with the new basis vector:
+      $$\begin{aligned}\mathtt{y}^p_j &= \beta_k\,(dx^k)_p\big((\partial y_j)_p\big)\\ &= \Big(\frac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^j}\Big)_p\beta_k.\end{aligned}$$
+      These numbers are the entries of the Jacobian of $\text{ᛖ}_{\mathcal{V}\mathcal{U}} := \mathscr{X}\circ\mathscr{Y}^{-1}$ (the transition map in the other direction), written with the rune
+      $$(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^k_j(\mathscr{Y}(p)) := \Big(\frac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^j}\Big)_p,$$
+      first subscript $\mathcal{U}$ = chart of the row index $k$. So the bundle transition is
+      $$(\alpha\,;\,\beta)\mapsto\big(\text{ᛖ}_{\mathcal{U}\mathcal{V}}(\alpha)\,;\,(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^k_j\,\beta_k\big),$$
+      smooth and linear in $\beta$. As for $T\mathcal{M}$, one gives $T^*\mathcal{M}$ the topology that makes every bundle chart a homeomorphism (stated here without proof), and $T^*\mathcal{M}$ becomes a smooth manifold.
+
+  - type: numeric
+    id: dim-spacetime
+    title: Counting coordinates
+    prompt: |
+      Spacetime is a smooth manifold $\mathcal{M}$ of dimension $d = 4$. A cotangent-bundle chart $\xi^*_{\mathscr{X}}(\mathsf{X}_p) = (\mathscr{X}(p)\,;\,\mathtt{x}^p_1,\dots,\mathtt{x}^p_d)$ records a point and a covector there. What is the dimension of the cotangent bundle $T^*\mathcal{M}$?
+    answer: 8
+    wrong:
+      - { value: 4, feedback: 'Four numbers locate the covector inside its fibre $T_p^*\mathcal{M}$, but the point $p$ itself needs four more: an element of $T^*\mathcal{M}$ is a covector **together with** its base point.' }
+      - { value: 16, feedback: 'Coordinates add, they do not multiply: $4$ for the point and $4$ for the covector components, as in $\mathscr{X}(\mathcal{U})\times\mathbb{R}^4\subseteq\mathbb{R}^{8}$.' }
+    hint: 'Count the entries of $\xi^*_{\mathscr{X}}(\mathsf{X}_p)$: the coordinates of the point, then the components of the covector.'
+    explanation: |
+      $\dim T^*\mathcal{M} = 2d = 8$: $d$ coordinates for the base point and $d$ for the covector, the same count as for the tangent bundle $T\mathcal{M}$.
+
+  - type: text
+    id: covector-field
+    title: Covector fields
+    body: |
+      A **smooth covector field** is a smooth section of the cotangent bundle: a smooth map
+      $$\mathsf{X}\colon\mathcal{M}\to T^*\mathcal{M}$$
+      with $\pi^*\circ\mathsf{X} = \mathrm{id}_\mathcal{M}$ (id = identity), that is, $\mathsf{X}(p) =: \mathsf{X}_p\in T_p^*\mathcal{M}$ at every point. Covector fields keep the sans-serif capitals $\mathsf{X},\mathsf{Y},\dots$ of single covectors. They form the set
+      $$\Gamma T^*\mathcal{M} := \{\text{smooth covector fields}\}.$$
+
+      The main example is the hook's: for $f\in C^\infty(\mathcal{M})$, the **differential** of $f$ is the field
+      $$df\colon p\mapsto(df)_p.$$
+      It is a section, since $(df)_p\in T_p^*\mathcal{M}$; its smoothness is checked in two cards. A covector field of the form $\mathsf{X} = df$ is called **exact**. The question of the hook is: is every covector field exact?
+
+  - type: text
+    id: components
+    title: Component functions
+    body: |
+      On a chart $(\mathcal{U},\mathscr{X})$, let the components of $\mathsf{X}(p)$ move with $p$. They become $d$ **component functions** $\mathtt{x}_i\colon\mathcal{U}\to\mathbb{R}$:
+      $$\mathtt{x}_i(p) := \mathsf{X}(p)\big((\partial x_i)_p\big) = \mathtt{x}^p_i.$$
+      The coordinate function $\mathscr{X}^i$ is a scalar field on $\mathcal{U}$, so its differential is a covector field on $\mathcal{U}$, the $i$-th **basis covector field**
+      $$dx^i := d\mathscr{X}^i\colon p\mapsto(dx^i)_p.$$
+      At every point $\mathsf{X}(p) = \mathtt{x}_i(p)\,(dx^i)_p$, which we write as an identity of fields on $\mathcal{U}$:
+      $$\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i.$$
+
+      **Smoothness.** In the bundle chart, $\mathsf{X}$ is represented by $\alpha\mapsto\big(\alpha\,;\,(\mathtt{x}_i\circ\mathscr{X}^{-1})(\alpha)\big)$. The first block is always smooth, so: a covector field is smooth exactly when its component functions are smooth, in every chart.
+
+  - type: mcq
+    id: lookalikes
+    title: Five fonts of x
+    multiple: true
+    prompt: |
+      On a chart $(\mathcal{U},\mathscr{X})$, take a covector field $\mathsf{X}$ with component functions $\mathtt{x}_i$, a vector field $\mathcal{X}$ with component functions $x^i$, and a point $p\in\mathcal{U}$. Which of these are **real-valued functions on $\mathcal{U}$**? Select all that apply.
+    options:
+      - text: '$\mathtt{x}_1$'
+        correct: true
+      - text: '$x^1$'
+        correct: true
+      - text: '$\mathscr{X}^1$'
+        correct: true
+      - text: '$\mathtt{x}^p_1$'
+        feedback: |
+          $\mathtt{x}^p_1$ is one real number, the value of the function $\mathtt{x}_1$ at the point $p$. The label $p$ up means "frozen at $p$".
+      - text: '$dx^1$'
+        feedback: |
+          $dx^1$ returns at each point a **covector** $(dx^1)_p$, not a number: it is a covector field, the differential of the function $\mathscr{X}^1$. It becomes a number only after it is fed a point and then a vector.
+    explanation: |
+      Three functions on $\mathcal{U}$: the covector components $\mathtt{x}_1$, the vector components $x^1$, the coordinate $\mathscr{X}^1$ itself. $\mathtt{x}^p_1$ is a number, and $dx^1$ a covector field. The same letter in five fonts; the font and the index position tell you which object you hold.
+
+  - type: text
+    id: df-components
+    title: The components of a differential
+    body: |
+      For $\mathsf{X} = df$ the component functions come straight from the definitions:
+      $$\begin{aligned}\mathtt{x}_i(p) &= (df)_p\big((\partial x_i)_p\big)\\ &= (\partial x_i)_p(f)\\ &= \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p)).\end{aligned}$$
+      These are the partial derivatives of the chart representative $f\circ\mathscr{X}^{-1}$, read at $\mathscr{X}(p)$, so they are smooth when $f$ is: $df\in\Gamma T^*\mathcal{M}$.
+
+      **Running example (egg carton).** $\mathcal{M}$ is the graph of $h(a,b) = \cos a\cos b + 1$ in $\mathbb{R}^3$, with points $p = (a,b,c)$, the chart $\mathscr{X}(a,b,c) = (a,b)$ on $\mathcal{U} = \mathcal{M}$, and the height $f(a,b,c) = c$. Its chart representative is
+      $$(f\circ\mathscr{X}^{-1})(a,b) = \cos a\cos b + 1.$$
+      Name its component functions $\mathtt{X}_i$ in this example.
+
+  - type: numeric
+    id: egg-X2
+    title: Climbing the egg carton
+    prompt: |
+      On the egg-carton surface (graph of $h(a,b) = \cos a\cos b + 1$, chart $\mathscr{X}(a,b,c) = (a,b)$ on $\mathcal{U} = \mathcal{M}$), the height $f(a,b,c) = c$ has chart representative $\cos a\cos b + 1$. Its differential is $df|_\mathcal{U} = \mathtt{X}_1\,dx^1 + \mathtt{X}_2\,dx^2$. Compute $\mathtt{X}_2(p)$ at the point $p$ with $a = \pi$, $b = \pi/2$.
+    answer: 1
+    wrong:
+      - { value: -1, feedback: 'Check the sign of $\cos\pi$: $\mathtt{X}_2 = \partial_b(\cos a\cos b + 1) = -\cos a\sin b$, and at $a = \pi$, $b = \pi/2$ this is $-(-1)(1) = +1$.' }
+      - { value: 0, feedback: 'That is $\mathtt{X}_1 = -\sin a\cos b$ at this point ($\sin\pi = 0$). The second component is the derivative with respect to the second coordinate $b$.' }
+    hint: '$\mathtt{X}_2(p) = \partial_b[\cos a\cos b + 1]$ at $(a,b) = (\pi, \pi/2)$.'
+    explanation: |
+      $\mathtt{X}_i = (-\sin a\cos b,\ -\cos a\sin b)$, so at $(\pi, \pi/2)$:
+      $$(\mathtt{X}_1, \mathtt{X}_2) = (0,\ 1).$$
+      Walking in the direction of increasing $b$, at unit rate, the height grows at rate $1$ there.
+
+  - type: text
+    id: field-law
+    title: Changing chart, point by point
+    body: |
+      Let $(\mathcal{V},\mathscr{Y})$ be a second chart, with component functions $\mathtt{y}_i$ for the same field $\mathsf{X}$. At each $p\in\mathcal{U}\cap\mathcal{V}$, $\mathsf{X}(p)$ is one covector, so the covariant law of a single point holds:
+      $$\mathtt{y}^p_i = \Big(\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\Big)_p\,\mathtt{x}^p_j.$$
+      The matrix is the inverse Jacobian, read along a **column** ($i$ is its column index). Now let $p$ move: each entry $(\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p$ becomes a smooth function of $p$ on the overlap, written without the $p$. The law becomes an identity of functions on $\mathcal{U}\cap\mathcal{V}$.
+
+      This settles "smooth in every chart": if the $\mathtt{x}_j$ are smooth, the $\mathtt{y}_i$ are sums of products of smooth functions, hence smooth. An atlas is enough; no chart has to be checked twice.
+
+  - type: build
+    id: build-law
+    title: The covector field law
+    prompt: |
+      On the overlap $\mathcal{U}\cap\mathcal{V}$ of two charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$, a covector field has component functions $\mathtt{x}_j$ and $\mathtt{y}_i$. Build the law giving the new components from the old (Einstein summation).
+    prefix: '\mathtt{y}_i ='
+    tiles: ['\dfrac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}', '\dfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}', '\dfrac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}', '\mathtt{x}_j', 'x^j']
+    answers:
+      - ['\dfrac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}', '\mathtt{x}_j']
+      - ['\mathtt{x}_j', '\dfrac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}']
+    wrong:
+      - { answer: ['\dfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}', '\mathtt{x}_j'], feedback: 'That is the Jacobian of the vector law, $y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,x^j$. Here the free index $i$ would sit up on the right and down on the left. Covector components follow the basis vectors: they change with the inverse Jacobian $\partial\mathscr{X}/\partial\mathscr{Y}$.' }
+      - { answer: ['\dfrac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}', '\mathtt{x}_j'], feedback: 'Right matrix, wrong index: here $j$ appears twice **down** (in $\partial\mathscr{Y}^j$ and in $\mathtt{x}_j$), which is not an allowed sum, and $i$ sits up instead of down. The inverse Jacobian is read along its column $i$: $\partial\mathscr{X}^j/\partial\mathscr{Y}^i$.' }
+      - { answer: ['\dfrac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}', 'x^j'], feedback: '$x^j$ are the component functions of a **vector** field. The law transforms the covector components $\mathtt{x}_j$ (typewriter, index down).' }
+    hint: 'Feed the field the new basis vector field: $\mathtt{y}_i(p) = \mathsf{X}(p)\big((\partial y_i)_p\big)$, and expand $(\partial y_i)_p$ in the old basis. Index check: $i$ down on both sides, $j$ once up and once down.'
+    explanation: |
+      $$\mathtt{y}_i = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,\mathtt{x}_j$$
+      on $\mathcal{U}\cap\mathcal{V}$. Equivalently, old from new: $\mathtt{x}_i = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)\,\mathtt{y}_j$. Compare the vector field law $y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,x^j$: opposite matrices, opposite index heights.
+
+  - type: text
+    id: egg-polar
+    title: The egg carton in polar coordinates
+    body: |
+      On the egg carton, the second chart is polar: $\mathscr{Y}(a,b,c) = (r,\theta)$ with $r = \sqrt{a^2+b^2}$ and $\theta = \operatorname{atan2}(b,a)\in(-\pi,\pi)$, on $\mathcal{V}$ = the surface minus the points with $a\le 0$, $b = 0$. Going back, $\mathscr{X}\circ\mathscr{Y}^{-1}(r,\theta) = (r\cos\theta,\ r\sin\theta)$, so the inverse Jacobian has the entries
+      $$\begin{gathered}\frac{\partial\mathscr{X}^1}{\partial\mathscr{Y}^1} = \frac{a}{r},\quad \frac{\partial\mathscr{X}^2}{\partial\mathscr{Y}^1} = \frac{b}{r},\\ \frac{\partial\mathscr{X}^1}{\partial\mathscr{Y}^2} = -b,\quad \frac{\partial\mathscr{X}^2}{\partial\mathscr{Y}^2} = a,\end{gathered}$$
+      all functions of the point. The covariant law then gives the polar component functions $\mathtt{Y}_i$ of $df$:
+      $$\begin{aligned}\mathtt{Y}_1 &= \tfrac{a}{r}\,\mathtt{X}_1 + \tfrac{b}{r}\,\mathtt{X}_2,\\ \mathtt{Y}_2 &= -b\,\mathtt{X}_1 + a\,\mathtt{X}_2.\end{aligned}$$
+
+  - type: numeric
+    id: egg-Y2
+    title: The polar components
+    prompt: |
+      On the egg-carton surface, the height $f$ has cartesian-chart components $(\mathtt{X}_1, \mathtt{X}_2) = (-\sin a\cos b,\ -\cos a\sin b)$. The polar chart $\mathscr{Y} = (r,\theta)$, $r = \sqrt{a^2+b^2}$, has inverse Jacobian entries $\partial\mathscr{X}^1/\partial\mathscr{Y}^2 = -b$ and $\partial\mathscr{X}^2/\partial\mathscr{Y}^2 = a$, and the Jacobian has $\partial\mathscr{Y}^2/\partial\mathscr{X}^1 = -b/r^2$, $\partial\mathscr{Y}^2/\partial\mathscr{X}^2 = a/r^2$. Compute the polar component $\mathtt{Y}_2(p)$ of $df$ at $a = \pi$, $b = \pi/2$.
+    answer: 3.14159265
+    tolerance: 0.001
+    answerText: '\pi \approx 3.1416'
+    wrong:
+      - { value: 0.25465, feedback: 'That is $(-b/r^2)\,\mathtt{X}_1 + (a/r^2)\,\mathtt{X}_2 = 4/(5\pi)$: the vector law, using row $2$ of the Jacobian $\partial\mathscr{Y}/\partial\mathscr{X}$. Covector components change with the inverse Jacobian, $\mathtt{Y}_2 = (\partial\mathscr{X}^j/\partial\mathscr{Y}^2)\,\mathtt{X}_j$.' }
+      - { value: 1, feedback: 'That is the cartesian component $\mathtt{X}_2$ at this point. The polar component mixes both cartesian ones with the functions $-b$ and $a$: $\mathtt{Y}_2 = -b\,\mathtt{X}_1 + a\,\mathtt{X}_2$.' }
+    hint: 'At $(\pi, \pi/2)$ first find $(\mathtt{X}_1, \mathtt{X}_2)$, then use $\mathtt{Y}_2 = -b\,\mathtt{X}_1 + a\,\mathtt{X}_2$.'
+    explanation: |
+      $(\mathtt{X}_1,\mathtt{X}_2) = (0, 1)$ at this point, so
+      $$\mathtt{Y}_2 = -\tfrac{\pi}{2}\cdot 0 + \pi\cdot 1 = \pi.$$
+      As a function, $\mathtt{Y}_2 = b\sin a\cos b - a\cos a\sin b$. (The other one: $\mathtt{Y}_1 = \tfrac{b}{r} = 1/\sqrt5$ here, since $r = \tfrac{\sqrt5}{2}\pi$.) Here the wrong recipe gives $4/(5\pi)\approx 0.25$, far from $\pi$.
+
+  - type: text
+    id: action
+    title: A covector field eats a vector field
+    body: |
+      A covector eats a vector and returns a number. A covector field does it at every point at once. For a vector field $\mathcal{X}\in\Gamma T\mathcal{M}$ with $\mathcal{X}(p) = v_{\gamma,p}$, define the scalar field $\mathsf{X}\lceil\mathcal{X}\rfloor\colon\mathcal{M}\to\mathbb{R}$ by
+      $$\mathsf{X}\lceil\mathcal{X}\rfloor(p) := \mathsf{X}_p(v_{\gamma,p}).$$
+      The brackets $\lceil\ \rfloor$ (the mirror image of $\lfloor\ \rceil$ for a vector field acting on a function) mark a covector field eating a vector field. Three readings of one object:
+      1. **Point first:** $p\mapsto\mathsf{X}(p)$, a covector at each point.
+      2. **Vector field first:** $\mathcal{X}\mapsto\mathsf{X}\lceil\mathcal{X}\rfloor$, from vector fields to scalar fields.
+      3. **Both:** $\mathsf{X}\lceil\mathcal{X}\rfloor(p)\in\mathbb{R}$, a number.
+
+      In a chart, pair the components point by point:
+      $$\mathsf{X}\lceil\mathcal{X}\rfloor = \mathtt{x}_i\,x^i$$
+      on $\mathcal{U}$, smooth because both factors are. In particular the component functions are the field eating the basis vector fields: $\mathtt{x}_i = \mathsf{X}|_\mathcal{U}\lceil\partial x_i\rfloor$.
+
+  - type: order
+    id: df-eats
+    title: The differential eats a field
+    prompt: |
+      Let $f\in C^\infty(\mathcal{M})$ and $\mathcal{X}\in\Gamma T\mathcal{M}$. Recall $(df)_p(v_{\gamma,p}) := v_{\gamma,p}(f)$, $\mathsf{X}\lceil\mathcal{X}\rfloor(p) := \mathsf{X}_p(\mathcal{X}(p))$ and $\mathcal{X}\lfloor f\rceil(p) := \mathcal{X}(p)(f)$. Put the proof of $df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil$ in order.
+    steps:
+      - 'Fix a point $p\in\mathcal{M}$ and write $\mathcal{X}(p) = v_{\gamma,p}$.'
+      - 'By the action of a covector field: $df\lceil\mathcal{X}\rfloor(p) = (df)_p(v_{\gamma,p})$.'
+      - 'By the definition of the differential: $(df)_p(v_{\gamma,p}) = v_{\gamma,p}(f)$.'
+      - 'By the action of a vector field: $v_{\gamma,p}(f) = \mathcal{X}(p)(f) = \mathcal{X}\lfloor f\rceil(p)$.'
+      - 'The point $p$ was arbitrary, so the two scalar fields are equal: $df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil$.'
+    hint: 'Two scalar fields are equal when they agree at every point: start by fixing one, and unfold one definition per step.'
+    explanation: |
+      $df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil$ is the definition of the differential, promoted from one point to the whole manifold. Two readings of one number: "the field differentiates the function", or "the differential of the function eats the field".
+
+  - type: numeric
+    id: egg-pairing
+    title: Same number, other chart
+    prompt: |
+      On the egg-carton surface, the vertical field $\mathcal{X}$ has components $(0,1)$ in the chart $\mathscr{X}(a,b,c) = (a,b)$ and components $\big(\tfrac{b}{r},\ \tfrac{a}{r^2}\big)$ in the polar chart $\mathscr{Y} = (r,\theta)$, $r = \sqrt{a^2+b^2}$. The differential of the height $f$ has, at $a = \pi$, $b = \pi/2$, the polar components $(\mathtt{Y}_1, \mathtt{Y}_2) = (1/\sqrt5,\ \pi)$. Compute $df\lceil\mathcal{X}\rfloor(p)$ at this point **in the polar chart**.
+    answer: 1
+    tolerance: 0.001
+    wrong:
+      - { value: 3.14159, tolerance: 0.01, feedback: 'That pairs the polar covector components with the **cartesian** vector components $(0,1)$: $\mathtt{Y}_2\cdot 1$. Both factors must come from the same chart, $\mathtt{Y}_i\,Y^i$ with $Y^i = (b/r,\ a/r^2)$.' }
+      - { value: 0.2, feedback: 'That is only the first term, $\tfrac{1}{\sqrt5}\cdot\tfrac{1}{\sqrt5} = \tfrac15$. Add the second, $\pi\cdot\tfrac{a}{r^2}$ with $r^2 = \tfrac54\pi^2$.' }
+    hint: 'At $(\pi, \pi/2)$: $r^2 = \pi^2 + \pi^2/4 = \tfrac54\pi^2$, so $b/r = 1/\sqrt5$ and $a/r^2 = 4/(5\pi)$. Then $df\lceil\mathcal{X}\rfloor = \mathtt{Y}_1 Y^1 + \mathtt{Y}_2 Y^2$.'
+    explanation: |
+      $$\begin{aligned}df\lceil\mathcal{X}\rfloor(p) &= \tfrac{1}{\sqrt5}\cdot\tfrac{1}{\sqrt5} + \pi\cdot\tfrac{4}{5\pi}\\ &= \tfrac15 + \tfrac45 = 1.\end{aligned}$$
+      The cartesian chart gives the same number at once: $\mathtt{X}_i X^i = \mathtt{X}_2 = -\cos a\sin b = 1$. As a function, $df\lceil\mathcal{X}\rfloor = -\cos a\sin b = \mathcal{X}\lfloor f\rceil$. Both factors changed with the chart; their pairing did not.
+
+  - type: mcq
+    id: function-linear
+    title: What comes out of the slot
+    prompt: |
+      Let $\mathsf{X}$ be a covector field, $\mathcal{X}$ a vector field and $f, g$ scalar fields on $\mathcal{M}$. Write $g\,\mathcal{X}$ for the vector field $p\mapsto g(p)\,\mathcal{X}(p)$, and $g f$ for the product function. Which statement is true?
+    options:
+      - text: '$\mathsf{X}\lceil g\,\mathcal{X}\rfloor = g\,\mathsf{X}\lceil\mathcal{X}\rfloor$, but $\mathcal{X}\lfloor g f\rceil = g\,\mathcal{X}\lfloor f\rceil + f\,\mathcal{X}\lfloor g\rceil$'
+        correct: true
+      - text: '$\mathsf{X}\lceil g\,\mathcal{X}\rfloor = g\,\mathsf{X}\lceil\mathcal{X}\rfloor$ and $\mathcal{X}\lfloor g f\rceil = g\,\mathcal{X}\lfloor f\rceil$: functions always pull out'
+        feedback: |
+          Functions pull out of the covector field's slot, because at each point $g(p)$ is just a number and $\mathsf{X}_p$ is linear. They do not pull out of $\mathcal{X}\lfloor\cdot\rceil$: there $g$ multiplies the function being differentiated, and the derivative of a product follows the Leibniz rule $v(gf) = g(p)\,v(f) + f(p)\,v(g)$.
+      - text: '$\mathsf{X}\lceil g\,\mathcal{X}\rfloor = g\,\mathsf{X}\lceil\mathcal{X}\rfloor + \mathcal{X}\lfloor g\rceil$: a product rule, as for vector fields'
+        feedback: |
+          No derivative of $g$ can appear: at a point $p$, $\mathsf{X}\lceil g\,\mathcal{X}\rfloor(p) = \mathsf{X}_p\big(g(p)\,\mathcal{X}(p)\big)$ only uses the **value** $g(p)$, and a linear map sends $g(p)\,v$ to $g(p)\,\mathsf{X}_p(v)$. Also, $\mathcal{X}\lfloor g\rceil$ alone is not even built from $\mathsf{X}$.
+    explanation: |
+      At each point, $\mathsf{X}_p\big(g(p)\,\mathcal{X}(p)\big) = g(p)\,\mathsf{X}_p(\mathcal{X}(p))$ by linearity of $\mathsf{X}_p$: a covector field is linear with **functions** as coefficients. A vector field acting on functions is only linear with **real numbers** as coefficients, plus the Leibniz rule. On the egg carton, with $g = f$: $\mathcal{X}\lfloor f f\rceil = 2f\,\mathcal{X}\lfloor f\rceil = -2(\cos a\cos b + 1)\cos a\sin b$. This difference will matter for tensor fields.
+
+  - type: mcq
+    id: trap-arrow
+    title: 'Drawing a covector field'
+    prompt: |
+      In the plane with points $q = (q_1,q_2)$, the field $f = q_1^2 + q_2$ has $df = 2q_1\,dx + dy$ in the cartesian chart. A classmate draws $df$ as the arrows with standard components $(2q_1, 1)$ at each point $q$. Is that a faithful picture of the covector field $df$?
+    options:
+      - text: 'No: the recipe "components become an arrow" depends on the chart; a faithful picture of each $(df)_q$ is its level line, the directions it sends to $0$'
+        correct: true
+      - text: 'Yes: those arrows point where $f$ grows fastest, which is exactly what $df$ measures'
+        feedback: |
+          "Fastest" compares rates per unit **length**, and length needs a metric (Level 7). Without one the recipe is chart dependent. Example at $p = (1,1)$ with the chart $\mathscr{X}(q) = (2q_1, -q_2)$: there $(df)_p$ has components $(1,-1)$, and the arrow with those components, $(\partial/\partial\mathscr{X}^1)_p - (\partial/\partial\mathscr{X}^2)_p$, is $(\tfrac12, 1)$ in standard components, not $(2,1)$. Same covector, two different arrows.
+      - text: 'Yes, as long as one sticks to the cartesian chart'
+        feedback: |
+          Sticking to one chart hides the problem; it does not remove it. On a general manifold there is no preferred chart, and the cartesian chart is preferred in the plane only because of the Euclidean metric we silently use. The level-line picture needs no chart and no metric.
+    explanation: |
+      A covector field is not a vector field, even when its components look like a vector's: the two kinds of components change with different matrices. Draw $df$ as its family of level lines (as in the widget); turning covectors into arrows is exactly what a metric does, Level 7.
+
+  - type: mcq
+    id: trap-exact
+    title: 'Is it a differential?'
+    prompt: |
+      On the plane with the cartesian chart $\mathscr{X}(q) = (a,b)$, consider the smooth covector field
+      $$\mathsf{Z} := -b\,dx^1 + a\,dx^2.$$
+      Is $\mathsf{Z}$ exact, that is, $\mathsf{Z} = df$ for some $f\in C^\infty(\mathbb{R}^2)$?
+    options:
+      - text: 'No: $df$ would need $\partial_a f = -b$ and $\partial_b f = a$, so $\partial_b\partial_a f = -1$ but $\partial_a\partial_b f = 1$, while mixed partials of a smooth $f$ are equal'
+        correct: true
+      - text: 'Yes: every covector is a differential, so at each point some $g$ works'
+        feedback: |
+          True at each point, and the trap of the lesson. At $(a_0,b_0)$ the function $g(a,b) = -b_0 a + a_0 b$ has $(dg)_{(a_0,b_0)} = \mathsf{Z}(a_0,b_0)$. But at another point you need another $g$: the functions do not glue into one. Exactness asks for a **single** $f$ working everywhere.
+      - text: 'Yes: $f = ab$'
+        feedback: |
+          Check it: $d(ab) = b\,dx^1 + a\,dx^2$, with $+b$ in the first slot, not $-b$. And no other choice fixes the sign, by the mixed-partials argument.
+      - text: 'Yes: its components $(-b, a)$ are those of the swirl, and the swirl is the velocity field of the circles'
+        feedback: |
+          The swirl is a **vector** field, with components $x^i = (-b,a)$ up; $\mathsf{Z}$ is a covector field with the same functions as components $\mathtt{x}_i$ down. Same functions, different objects: in polar coordinates the swirl is $\partial y_2$ while $\mathsf{Z}$ is not $dy^2$. Being a family of velocities says nothing about being a differential.
+    explanation: |
+      If $\mathsf{Z} = df$, its components would be $\partial_a f = -b$ and $\partial_b f = a$. Differentiating again, $\partial_b\partial_a f = -1$ and $\partial_a\partial_b f = 1$, contradicting the equality of mixed partial derivatives of a smooth function. So $\mathsf{Z}$ is a smooth covector field that is **not exact**: the answer to the hook's question is no.
+
+  - type: text
+    id: resolve
+    title: Back to the contour map
+    body: |
+      The hook asked two questions.
+
+      **Does $df$ make sense as one object?** Yes: $df\colon p\mapsto(df)_p$ is a smooth section of the cotangent bundle $T^*\mathcal{M}$, with component functions $\partial_i[f\circ\mathscr{X}^{-1}]\circ\mathscr{X}$.
+
+      **Is every covector field a $df$?** No. Picture $\mathsf{Z} = -b\,dx^1 + a\,dx^2$ as a little piece of level line at each point: the pieces exist everywhere, but they cannot be joined into the contour lines of one height function. Contour maps are the special, **exact**, covector fields.
+
+      One more picture to keep: the rays of the polar angle $\theta$ in the widget. Away from the origin they look like a perfectly good contour map, and its covector field has the smooth components $\big(-b/r^2,\ a/r^2\big)$, which **pass** the mixed-partials test. Yet $\theta$ itself jumps by $2\pi$ around the origin. Is that field exact on the plane minus the origin? That is a later guided problem.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      - The **cotangent bundle** $T^*\mathcal{M} = \dot\bigcup_p T_p^*\mathcal{M}$, projection $\pi^*(\mathsf{X}_p) = p$, bundle charts $\xi^*_{\mathscr{X}}(\mathsf{X}_p) = (\mathscr{X}(p)\,;\,\mathtt{x}^p_i)$; fibre coordinates change with the inverse Jacobian $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$; a smooth manifold of dimension $2d$.
+      - A **smooth covector field** is a smooth section $\mathsf{X}\colon\mathcal{M}\to T^*\mathcal{M}$, $\pi^*\circ\mathsf{X} = \mathrm{id}_\mathcal{M}$; they form $\Gamma T^*\mathcal{M}$.
+      - On a chart, $\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i$; smooth means smooth component functions, and the law $\mathtt{y}_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)\,\mathtt{x}_j$ makes that chart independent.
+      - A covector field eats vector fields: $\mathsf{X}\lceil\mathcal{X}\rfloor(p) = \mathsf{X}_p(\mathcal{X}(p)) = \mathtt{x}_i(p)\,x^i(p)$, and functions pull out of the slot. For the differential, $df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil$.
+      - **Exact** fields $df$ are special: $-b\,dx^1 + a\,dx^2$ is not one. Draw covector fields as level lines, never as arrows.
+
+      **Next:** fields can be added and multiplied by **functions**, point by point. The scalars are now the ring $C^\infty(\mathcal{M})$, where not everything can be divided, and $\Gamma T\mathcal{M}$, $\Gamma T^*\mathcal{M}$ become **modules** rather than vector spaces. Do they still have bases?
