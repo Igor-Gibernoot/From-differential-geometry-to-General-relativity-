@@ -1,0 +1,497 @@
+id: ch04-challenge
+title: Level Challenge
+kind: challenge
+
+# Organization: intro, then one block per problem (cards tagged
+# "Problem N · …", ids prefixed pN-), then wrap-up. Session 1 wrote
+# problems 1-3; problems 4-5 and wrap-up go after the Problem 3 block.
+
+cards:
+  - type: text
+    id: intro
+    title: Tangent spaces under pressure
+    body: |
+      This challenge pushes each idea of the level to its edge. Keep pencil and paper at hand: every answer can be checked by hand.
+
+      Recall the toolkit. The **velocity** of a curve $\gamma$ through $p = \gamma(\lambda_0)$ is the map $v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0)$ on smooth fields $f\in C^\infty(\mathcal{M})$; the velocities form the **tangent space** $T_p\mathcal{M}$, of dimension $d$. A chart $(\mathcal{U}, \mathscr{X})$ gives it the **chart-induced basis** $(\partial/\partial\mathscr{X}^i)_p$, and components change with the **Jacobian** $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$. The **cotangent space** $T_p^*\mathcal{M}$ holds the linear maps $T_p\mathcal{M}\to\mathbb{R}$, with the **differential** $(df)_p(v) := v(f)$ and the dual basis $(d\mathscr{X}^i)_p$. Tensors $T_p^{(r,s)}\mathcal{M}$ are multilinear maps on $r$ covectors and $s$ velocities. Einstein summation is on.
+
+      1. The polar chart at $p = (1,1)$: the running example's check, in curved coordinates.
+      2. Reparametrizing a curve: what happens to its velocity, and why velocities ignore constants.
+      3. The circle in two charts, angle and stereographic.
+      4. The trace: an honest invariant, and a sum that only looks like one.
+      5. A full tensor computation: $v\otimes(df)_p$ in two charts.
+
+  # ---------------------------------------------------------------- Problem 1
+  - type: text
+    id: p1-setup
+    tag: Problem 1 · Polar chart at p = (1,1)
+    title: The running example in polar coordinates
+    body: |
+      On the plane $\mathcal{M} = \mathbb{R}^2$ (points $q = (q_1, q_2)$) take two charts:
+
+      - the **cartesian** chart $\mathscr{C}(q) = (x, y) := (q_1, q_2)$ on $\mathcal{U} = \mathbb{R}^2$; its basis vectors $(\partial/\partial x)_p$, $(\partial/\partial y)_p$ are the standard ones, so its components are the usual components of an arrow;
+      - the **polar** chart $\mathscr{P}(q) = (r, \theta)$ on $\mathcal{V}$, the plane minus the half-line $\{(q_1, 0) : q_1\geq 0\}$, with $\theta\in(0, 2\pi)$ and inverse
+      $$\mathscr{P}^{-1}(r,\theta) = (r\cos\theta,\ r\sin\theta).$$
+
+      At $p = (1,1)$: $r_p = \sqrt2$ and $\theta_p = \pi/4$. Short names: $(\partial r)_p := (\partial/\partial\mathscr{P}^1)_p$, $(\partial\theta)_p := (\partial/\partial\mathscr{P}^2)_p$, and $(dr)_p$, $(d\theta)_p$ for the dual basis.
+
+      The running example: $f(q) = q_1^2 + q_2$ and the velocity $v$ with cartesian components $(1, 2)$ give $(df)_p(v) = 2v^1 + v^2 = 4$. Goal: redo everything in the polar chart and watch the $4$ survive.
+
+  - type: mcq
+    id: p1-basis
+    tag: Problem 1 · Polar chart at p = (1,1)
+    prompt: |
+      The polar chart $\mathscr{P}(q) = (r,\theta)$, $\theta\in(0,2\pi)$, has inverse $\mathscr{P}^{-1}(r,\theta) = (r\cos\theta, r\sin\theta)$. Its basis vector $(\partial\theta)_p := (\partial/\partial\mathscr{P}^2)_p$ is the velocity of the coordinate curve
+      $$c_\theta(\lambda) = \mathscr{P}^{-1}(r_p,\ \theta_p + \lambda).$$
+      At $p = (1,1)$ ($r_p = \sqrt2$, $\theta_p = \pi/4$), what are the standard (cartesian) components of $(\partial\theta)_p$?
+    options:
+      - text: '$(-1,\ 1)$'
+        correct: true
+      - text: '$(-1/\sqrt2,\ 1/\sqrt2)$'
+        feedback: |
+          That is the **unit** vector pointing along the circle. But $c_\theta$ runs along the circle of radius $r_p = \sqrt2$, and a unit change of $\theta$ moves you an arc of length $r_p$: the basis vector has length $r_p$, not $1$. A chart-induced basis vector is never normalized by hand.
+      - text: '$(0,\ 1)$'
+        feedback: |
+          $(0,1)$ is the second basis vector **of the chart's image** $\mathbb{R}^2$, the $\theta$ axis. $(\partial\theta)_p$ lives on the manifold: it is the velocity of the curve that increases $\theta$, which at $p$ moves along the circle through $p$, perpendicular to the ray from the origin, not straight up.
+      - text: '$(1/\sqrt2,\ 1/\sqrt2)$'
+        feedback: |
+          That is the other basis vector, $(\partial r)_p$: the velocity of $\mathscr{P}^{-1}(r_p + \lambda, \theta_p) = ((\sqrt2 + \lambda)\cos\tfrac\pi4, (\sqrt2+\lambda)\sin\tfrac\pi4)$, pointing away from the origin. Increasing $\theta$ moves you around the origin instead.
+    explanation: |
+      $$c_\theta(\lambda) = \big(\sqrt2\cos(\tfrac\pi4 + \lambda),\ \sqrt2\sin(\tfrac\pi4 + \lambda)\big),$$
+      so $c_\theta'(0) = (-\sqrt2\sin\tfrac\pi4,\ \sqrt2\cos\tfrac\pi4) = (-1, 1)$, of length $\sqrt2 = r_p$. Likewise $(\partial r)_p = (\cos\tfrac\pi4, \sin\tfrac\pi4) = (1/\sqrt2, 1/\sqrt2)$. These two columns form the matrix $(\partial\mathscr{C}^i/\partial\mathscr{P}^j)_p$.
+
+  - type: numeric
+    id: p1-jacobian
+    tag: Problem 1 · Polar chart at p = (1,1)
+    prompt: |
+      Cartesian chart $\mathscr{C}(q) = (x, y) = (q_1, q_2)$ on $\mathcal{U} = \mathbb{R}^2$, polar chart $\mathscr{P}(q) = (r,\theta)$ on $\mathcal{V}$, $\theta\in(0,2\pi)$. The Jacobian of the change from cartesian to polar is
+      $$(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j(\mathscr{C}(p)) := \Big(\frac{\partial\mathscr{P}^i}{\partial\mathscr{C}^j}\Big)_p,$$
+      row $i$ for the polar coordinate, column $j$ for the cartesian one. Compute the entry in row $2$, column $1$, $(\partial\theta/\partial x)_p$, at $p = (1,1)$.
+    answer: -0.5
+    answerText: '-1/2'
+    wrong:
+      - value: -1
+        feedback: |
+          $-1$ is the reciprocal of $(\partial x/\partial\theta)_p = -r_p\sin\theta_p = -1$, an entry of the **inverse** matrix. Partial derivatives do not invert entry by entry: $\partial\theta/\partial x$ holds $y$ fixed, while $\partial x/\partial\theta$ holds $r$ fixed. Only whole matrices invert.
+      - value: -0.7071
+        feedback: |
+          That is $-y/r$. The derivative of the angle has $r^2$ in the denominator: $\partial\theta/\partial x = -y/(x^2+y^2)$. Dimensions confirm it: an angle has no units, so its derivative by a length must carry $1/\text{length}$.
+      - value: 0.5
+        feedback: |
+          Wrong sign. Moving right from $(1,1)$ (increasing $x$ at fixed $y$) brings the point closer to the positive horizontal axis, so the angle **decreases**.
+    hint: 'Near $p$ (first quadrant) $\theta = \arctan(y/x)$. Differentiate in $x$ with $y$ fixed.'
+    explanation: |
+      $$\frac{\partial}{\partial x}\arctan\frac{y}{x} = \frac{-y/x^2}{1 + y^2/x^2} = \frac{-y}{x^2+y^2},$$
+      which is $-1/2$ at $(1,1)$. The full Jacobian at $p$, rows $r$, $\theta$ and columns $x$, $y$:
+      $$\Big(\frac{\partial\mathscr{P}^i}{\partial\mathscr{C}^j}\Big)_p = \begin{pmatrix}1/\sqrt2 & 1/\sqrt2\\ -1/2 & 1/2\end{pmatrix}.$$
+      Multiply it by the matrix whose columns are $(\partial r)_p = (1/\sqrt2, 1/\sqrt2)$ and $(\partial\theta)_p = (-1, 1)$: you get the identity, the inverse identity
+      $$\Big(\frac{\partial\mathscr{P}^i}{\partial\mathscr{C}^k}\Big)_p\Big(\frac{\partial\mathscr{C}^k}{\partial\mathscr{P}^j}\Big)_p = \delta^i_j.$$
+
+  - type: numeric
+    id: p1-vr
+    tag: Problem 1 · Polar chart at p = (1,1)
+    prompt: |
+      At $p = (1,1)$ the Jacobian from cartesian $(x, y)$ to polar $(r, \theta)$ is
+      $$\Big(\frac{\partial\mathscr{P}^i}{\partial\mathscr{C}^j}\Big)_p = \begin{pmatrix}1/\sqrt2 & 1/\sqrt2\\ -1/2 & 1/2\end{pmatrix}$$
+      (rows $r$, $\theta$; columns $x$, $y$). The velocity $v$ has cartesian components $(1, 2)$. Compute its polar component $v^r$ (a decimal is fine).
+    answer: 2.1213203
+    tolerance: 0.001
+    answerText: '3/\sqrt2 \approx 2.121'
+    wrong:
+      - value: 2.2360680
+        feedback: |
+          $\sqrt5$ is the **length** of the arrow $v$. A component is the coefficient of a basis vector, not a length: $v^r$ multiplies $(\partial r)_p$, and $v$ is not pointing along the ray from the origin, so part of it goes into $v^\theta$.
+      - value: 3
+        feedback: |
+          $3 = 1 + 2$ forgets the entries $1/\sqrt2$ of row $r$. Vector components follow the row of the Jacobian: $v^r = (\partial r/\partial x)_p\,v^x + (\partial r/\partial y)_p\,v^y$.
+    hint: 'Contravariant law: $v^r = (\partial r/\partial x)_p\cdot 1 + (\partial r/\partial y)_p\cdot 2$, row $r$ of the matrix.'
+    explanation: |
+      $$v^r = \tfrac{1}{\sqrt2}\cdot 1 + \tfrac{1}{\sqrt2}\cdot 2 = \tfrac{3}{\sqrt2}\approx 2.121.$$
+
+  - type: numeric
+    id: p1-vtheta
+    tag: Problem 1 · Polar chart at p = (1,1)
+    prompt: |
+      At $p = (1,1)$ the Jacobian from cartesian $(x, y)$ to polar $(r, \theta)$ is
+      $$\Big(\frac{\partial\mathscr{P}^i}{\partial\mathscr{C}^j}\Big)_p = \begin{pmatrix}1/\sqrt2 & 1/\sqrt2\\ -1/2 & 1/2\end{pmatrix}$$
+      (rows $r$, $\theta$; columns $x$, $y$). The velocity $v$ has cartesian components $(1, 2)$. Compute its polar component $v^\theta$.
+    answer: 0.5
+    answerText: '1/2'
+    wrong:
+      - value: 1.1071487
+        feedback: |
+          $\arctan 2\approx 1.107$ is the **angle of the arrow** $v$ itself. $v^\theta$ is something else: the rate at which the coordinate $\theta$ of the moving point changes, i.e. the coefficient of $(\partial\theta)_p$.
+      - value: 1
+        feedback: |
+          $-1 + 2 = 1$ uses $(-y, x)$ instead of $(-y, x)/r^2$. Row $\theta$ of the Jacobian is $(-1/2, 1/2)$ at $p$, because $\partial\theta/\partial x = -y/r^2$.
+    hint: 'Row $\theta$: $v^\theta = (-\tfrac12)\cdot 1 + \tfrac12\cdot 2$.'
+    explanation: |
+      $v^\theta = -\tfrac12 + 1 = \tfrac12$. Check by rebuilding the arrow from the polar basis:
+      $$\tfrac{3}{\sqrt2}\big(\tfrac{1}{\sqrt2}, \tfrac{1}{\sqrt2}\big) + \tfrac12(-1, 1) = (1, 2).$$
+      So $v = \tfrac{3}{\sqrt2}(\partial r)_p + \tfrac12(\partial\theta)_p$. Since $(\partial\theta)_p$ has length $r_p = \sqrt2$, the small number $\tfrac12$ still carries a sizeable sideways motion.
+
+  - type: build
+    id: p1-covector
+    tag: Problem 1 · Polar chart at p = (1,1)
+    prompt: |
+      $f(q) = q_1^2 + q_2$ has, at $p = (1,1)$, the cartesian expansion $(df)_p = 2(dx)_p + (dy)_p$. Its polar components are found by feeding the polar basis,
+      $$\mathtt{y}^p_r := (df)_p((\partial r)_p),\quad \mathtt{y}^p_\theta := (df)_p((\partial\theta)_p),$$
+      with standard components $(\partial r)_p = (1/\sqrt2, 1/\sqrt2)$ and $(\partial\theta)_p = (-1, 1)$. Build the polar expansion of $(df)_p$.
+    prefix: '(df)_p ='
+    tiles: ['\tfrac{3}{\sqrt2}\,(dr)_p', '-(d\theta)_p', '-\tfrac12(d\theta)_p', '2\,(dr)_p', '+(d\theta)_p']
+    answers:
+      - ['\tfrac{3}{\sqrt2}\,(dr)_p', '-(d\theta)_p']
+    wrong:
+      - answer: ['\tfrac{3}{\sqrt2}\,(dr)_p', '-\tfrac12(d\theta)_p']
+        feedback: |
+          These numbers come from the **rows** of the Jacobian $\partial\mathscr{P}/\partial\mathscr{C}$, the law for vector components. Covector components follow the other law: feed the basis vectors, $\mathtt{y}^p_\theta = 2\cdot(-1) + 1\cdot 1 = -1$. (For $r$ the two routes agree by coincidence.)
+      - answer: ['2\,(dr)_p', '+(d\theta)_p']
+        feedback: |
+          These are the **cartesian** components $(2, 1)$ copied onto the polar basis. Components belong to a basis: changing the basis changes them, while the covector stays the same.
+    hint: '$(df)_p(w) = 2w^x + w^y$ for any $w$ with standard components $(w^x, w^y)$. Feed $(1/\sqrt2, 1/\sqrt2)$ and $(-1, 1)$.'
+    explanation: |
+      $$\begin{aligned}\mathtt{y}^p_r &= 2\cdot\tfrac{1}{\sqrt2} + \tfrac{1}{\sqrt2} = \tfrac{3}{\sqrt2},\\ \mathtt{y}^p_\theta &= 2\cdot(-1) + 1 = -1.\end{aligned}$$
+      This is the covariant law: $\mathtt{y}^p_i = (\partial\mathscr{C}^j/\partial\mathscr{P}^i)_p\,\mathtt{x}^p_j$, column $i$ of the inverse matrix.
+
+  - type: numeric
+    id: p1-direct
+    tag: Problem 1 · Polar chart at p = (1,1)
+    prompt: |
+      Second route to the polar components of $(df)_p$, for $f(q) = q_1^2 + q_2$ at $p = (1,1)$. The chart representative in polar coordinates is
+      $$F(r,\theta) := f(\mathscr{P}^{-1}(r,\theta)) = r^2\cos^2\theta + r\sin\theta,$$
+      and $\mathtt{y}^p_\theta = (\partial\theta)_p(f) = \partial_\theta F(\sqrt2, \pi/4)$. Compute it.
+    answer: -1
+    wrong:
+      - value: 3
+        feedback: |
+          Check the sign of the first term: $\partial_\theta\cos^2\theta = -2\cos\theta\sin\theta$, negative. At $(\sqrt2, \pi/4)$ it contributes $-2\cdot 2\cdot\tfrac12 = -2$, and the second term $r\cos\theta$ contributes $+1$.
+      - value: 0
+        feedback: |
+          $0$ would mean $f$ does not change along the circle through $p$. But $f = q_1^2 + q_2$ changes there: moving counterclockwise lowers $q_1^2$ faster than it raises $q_2$.
+    hint: '$\partial_\theta F = -2r^2\cos\theta\sin\theta + r\cos\theta$.'
+    explanation: |
+      $$\partial_\theta F = -2\cdot 2\cdot\tfrac12 + \sqrt2\cdot\tfrac{1}{\sqrt2} = -1,$$
+      matching the feeding route. Likewise $\partial_r F = 2r\cos^2\theta + \sin\theta = \sqrt2 + \tfrac{1}{\sqrt2} = \tfrac{3}{\sqrt2}$. Two derivations, one covector: $(df)_p = \tfrac{3}{\sqrt2}(dr)_p - (d\theta)_p$.
+
+  - type: numeric
+    id: p1-pairing
+    tag: Problem 1 · Polar chart at p = (1,1)
+    prompt: |
+      At $p = (1,1)$, in the polar chart, $f(q) = q_1^2 + q_2$ has $(df)_p = \tfrac{3}{\sqrt2}(dr)_p - (d\theta)_p$, and the velocity with cartesian components $(1,2)$ is
+      $$v = \tfrac{3}{\sqrt2}(\partial r)_p + \tfrac12(\partial\theta)_p.$$
+      Compute $(df)_p(v)$ from these polar components alone.
+    answer: 4
+    wrong:
+      - value: 5
+        feedback: |
+          Sign slip: the $\theta$ term is $\mathtt{y}^p_\theta v^\theta = (-1)\cdot\tfrac12 = -\tfrac12$, so the total is $\tfrac92 - \tfrac12$.
+      - value: 4.5
+        feedback: |
+          That is only the $r$ term, $\tfrac{3}{\sqrt2}\cdot\tfrac{3}{\sqrt2} = \tfrac92$. The pairing sums over **both** indices: add $\mathtt{y}^p_\theta v^\theta = -\tfrac12$.
+    hint: '$(df)_p(v) = \mathtt{y}^p_r\,v^r + \mathtt{y}^p_\theta\,v^\theta$, because $(dr)_p((\partial r)_p) = 1$, $(dr)_p((\partial\theta)_p) = 0$, and so on.'
+    explanation: |
+      $$\tfrac{3}{\sqrt2}\cdot\tfrac{3}{\sqrt2} + (-1)\cdot\tfrac12 = \tfrac92 - \tfrac12 = 4,$$
+      the same $4 = 2\cdot 1 + 2$ as in cartesian components. Every polar number differed from its cartesian partner (factors $\sqrt2$, $\tfrac12$), but vector components moved with the Jacobian and covector components with its inverse, so the pairing cannot change.
+
+  # ---------------------------------------------------------------- Problem 2
+  - type: text
+    id: p2-setup
+    tag: Problem 2 · Reparametrization
+    title: Running the same path at another pace
+    body: |
+      Let $\gamma\colon\mathbb{R}\to\mathcal{M}$ be a smooth curve with $\gamma(\lambda_0) = p$. A **reparametrization** is a smooth function of one real variable, written with the rune $\text{ᚱ}$ (read "R", for reparametrization):
+      $$\text{ᚱ}\colon\mathbb{R}\to\mathbb{R},\quad \mu\mapsto\text{ᚱ}(\mu).$$
+      The new curve $\gamma\circ\text{ᚱ}$ visits the points of $\gamma$, but with the new parameter $\mu$. If $\text{ᚱ}(\mu_0) = \lambda_0$, it passes through $p$ at $\mu = \mu_0$.
+
+      Example: $\text{ᚱ}(\mu) = \lambda_0 + \alpha\mu$, with $\mu_0 = 0$, gives the scaling curve $\gamma(\lambda_0 + \alpha\mu)$ that realizes $\alpha\odot_T v_{\gamma,p}$.
+
+      Claim, for every smooth $\text{ᚱ}$:
+      $$v_{\gamma\circ\text{ᚱ},p} = \text{ᚱ}'(\mu_0)\odot_T v_{\gamma,p}.$$
+      Recall: $(\alpha\odot_T v)(f) := \alpha\cdot v(f)$ for every $f\in C^\infty(\mathcal{M})$.
+
+  - type: order
+    id: p2-proof
+    tag: Problem 2 · Reparametrization
+    prompt: |
+      Prove that $v_{\gamma\circ\text{ᚱ},p} = \text{ᚱ}'(\mu_0)\odot_T v_{\gamma,p}$, where $\gamma(\lambda_0) = p$, $\text{ᚱ}\colon\mathbb{R}\to\mathbb{R}$ is smooth and $\text{ᚱ}(\mu_0) = \lambda_0$. Put the steps in order.
+    steps:
+      - 'Fix any $f\in C^\infty(\mathcal{M})$. By definition, $v_{\gamma\circ\text{ᚱ},p}(f) = (f\circ\gamma\circ\text{ᚱ})''(\mu_0)$.'
+      - 'Group it as $(f\circ\gamma)\circ\text{ᚱ}$: two real functions of one real variable.'
+      - 'One-variable chain rule: the derivative at $\mu_0$ is $\text{ᚱ}''(\mu_0)\cdot(f\circ\gamma)''(\text{ᚱ}(\mu_0))$.'
+      - 'Since $\text{ᚱ}(\mu_0) = \lambda_0$, this is $\text{ᚱ}''(\mu_0)\cdot(f\circ\gamma)''(\lambda_0) = \text{ᚱ}''(\mu_0)\cdot v_{\gamma,p}(f)$.'
+      - 'By the definition of $\odot_T$, that is $(\text{ᚱ}''(\mu_0)\odot_T v_{\gamma,p})(f)$.'
+      - 'Both maps agree on every $f$, so they are the same element of $T_p\mathcal{M}$.'
+    hint: Start from the definition of a velocity acting on a test field, and end with "for every $f$".
+    explanation: |
+      The proof never uses a chart: only the chain rule for real functions of one variable. The last step matters: two velocities are equal exactly when they give the same number on **every** smooth field.
+
+  - type: numeric
+    id: p2-number
+    tag: Problem 2 · Reparametrization
+    prompt: |
+      On the plane, $\gamma_1(\lambda) = (\lambda, 1)$ passes through $p = (1,1)$ at $\lambda_0 = 1$, and $f(q) = q_1^2 + q_2$ has $v_{\gamma_1,p}(f) = 2$. Reparametrize with
+      $$\text{ᚱ}(\mu) = \mu^2,\quad \mu_0 = -1,$$
+      so that $\text{ᚱ}(\mu_0) = 1 = \lambda_0$. Compute $v_{\gamma_1\circ\text{ᚱ},p}(f)$.
+    answer: -4
+    wrong:
+      - value: 4
+        feedback: |
+          The sign is lost. $\text{ᚱ}'(\mu) = 2\mu$ is evaluated at $\mu_0 = -1$, giving $-2$: as $\mu$ grows through $-1$, $\mu^2$ **decreases**, so the curve runs through $p$ leftwards.
+      - value: 2
+        feedback: |
+          Same points, same velocity? No: $\gamma_1\circ\text{ᚱ}$ traces the same line, but at a different pace and direction. A velocity records how fast and which way, not only where.
+      - value: -2
+        feedback: |
+          $-2$ is $\text{ᚱ}'(\mu_0)$ alone. The claim multiplies it by $v_{\gamma_1,p}(f) = 2$.
+    hint: 'Either use the claim, $\text{ᚱ}''(\mu_0)\cdot v_{\gamma_1,p}(f)$, or compute directly: $f(\gamma_1(\text{ᚱ}(\mu))) = \mu^4 + 1$.'
+    explanation: |
+      By the claim: $\text{ᚱ}'(-1)\cdot 2 = (-2)\cdot 2 = -4$. Directly: $f(\gamma_1(\mu^2)) = (\mu^2)^2 + 1 = \mu^4 + 1$, whose derivative $4\mu^3$ is $-4$ at $\mu = -1$. Both routes agree.
+
+  - type: mcq
+    id: p2-pause
+    tag: Problem 2 · Reparametrization
+    prompt: |
+      $\gamma_1(\lambda) = (\lambda, 1)$ passes through $p = (1,1)$ at $\lambda_0 = 1$. Reparametrize with
+      $$\text{ᚱ}(\mu) = 1 + \mu^3,\quad \mu_0 = 0.$$
+      The new curve $\gamma_1\circ\text{ᚱ}$ traces the same horizontal line, left to right, through $p$. What is its velocity $v_{\gamma_1\circ\text{ᚱ},p}$?
+    options:
+      - text: The zero vector of $T_p\mathcal{M}$
+        correct: true
+      - text: '$v_{\gamma_1,p}$, since the curve traces the same line in the same direction'
+        feedback: |
+          Same image, same direction, yet not the same velocity. $\text{ᚱ}'(0) = 3\cdot 0^2 = 0$: the new curve slows to a momentary halt exactly at $p$. A velocity measures the rate at the instant of passing, not the shape of the path.
+      - text: 'It is not defined: $\text{ᚱ}$ has no smooth inverse, so $\gamma_1\circ\text{ᚱ}$ is not a valid curve through $p$'
+        feedback: |
+          A curve only has to be smooth; nothing asks for an invertible parameter. $\mu\mapsto(1+\mu^3, 1)$ is smooth and passes through $p$ at $\mu = 0$, so it has a velocity there.
+    explanation: |
+      $\text{ᚱ}'(0) = 0$, so $v_{\gamma_1\circ\text{ᚱ},p} = 0\odot_T v_{\gamma_1,p}$, the zero vector. Check with $f(q) = q_1^2 + q_2$: $f(\gamma_1(1+\mu^3)) = (1+\mu^3)^2 + 1$, with derivative $6\mu^2(1+\mu^3) = 0$ at $\mu = 0$.
+
+  - type: mcq
+    id: p2-zero
+    tag: Problem 2 · Reparametrization
+    multiple: true
+    prompt: |
+      The zero vector $0\in T_p\mathcal{M}$ is the map $f\mapsto 0$ on $C^\infty(\mathcal{M})$, the neutral element of $\oplus_T$. Since $T_p\mathcal{M}$ is made of velocities, it must be the velocity of some curve through $p$. Which curves have velocity $0$ at $p$? Select all that apply.
+    options:
+      - text: 'The constant curve $c(\lambda) = p$ for every $\lambda$'
+        correct: true
+      - text: '$\gamma\circ\text{ᚱ}$ with the constant reparametrization $\text{ᚱ}(\mu) = \lambda_0$, where $\gamma(\lambda_0) = p$'
+        correct: true
+      - text: '$\lambda\mapsto(1 + \lambda^2,\ 1)$ at $\lambda_0 = 0$, which reaches $p = (1,1)$ and turns back'
+        correct: true
+      - text: 'None: the zero vector is added to $T_p\mathcal{M}$ by hand, since no curve can have zero velocity'
+        feedback: |
+          No addition by hand is needed. For the constant curve, $f\circ c$ is the constant function $\lambda\mapsto f(p)$, whose derivative is $0$ for every $f$: exactly the map $f\mapsto 0$.
+    explanation: |
+      **Constant curve:** $(f\circ c)(\lambda) = f(p)$, derivative $0$. **Constant** $\text{ᚱ}$: $\gamma\circ\text{ᚱ}$ is that constant curve, and the claim gives $\text{ᚱ}'\odot_T v_{\gamma,p} = 0\odot_T v_{\gamma,p} = 0$. **Turning back:** the derivative of $(1+\lambda^2, 1)$ vanishes at $\lambda = 0$; for $f(q) = q_1^2 + q_2$, $f = (1+\lambda^2)^2 + 1$ has derivative $4\lambda(1+\lambda^2) = 0$ there. Many curves share the zero velocity.
+
+  - type: build
+    id: p2-leibniz
+    tag: Problem 2 · Reparametrization
+    prompt: |
+      A velocity $v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0)$, with $\gamma(\lambda_0) = p$, acts on a product of fields $f\,g$ (the field $q\mapsto f(q)g(q)$). Since $(f\,g)\circ\gamma = (f\circ\gamma)\cdot(g\circ\gamma)$, the product rule of calculus applies. Build $v_{\gamma,p}(f\,g)$.
+    prefix: 'v_{\gamma,p}(f\,g) ='
+    tiles: ['f(p)\,v_{\gamma,p}(g)', '+', 'g(p)\,v_{\gamma,p}(f)', 'v_{\gamma,p}(f)\,v_{\gamma,p}(g)', 'f(p)\,g(p)']
+    answers:
+      - ['f(p)\,v_{\gamma,p}(g)', '+', 'g(p)\,v_{\gamma,p}(f)']
+      - ['g(p)\,v_{\gamma,p}(f)', '+', 'f(p)\,v_{\gamma,p}(g)']
+    wrong:
+      - answer: ['v_{\gamma,p}(f)\,v_{\gamma,p}(g)']
+        feedback: |
+          The derivative of a product is not the product of derivatives. With $f = g = q_1$ and $\gamma_1(\lambda) = (\lambda, 1)$ at $p = (1,1)$: $v(q_1^2) = 2$, but $v(q_1)\,v(q_1) = 1$.
+    hint: '$(uw)''(\lambda_0) = u(\lambda_0)\,w''(\lambda_0) + w(\lambda_0)\,u''(\lambda_0)$, with $u = f\circ\gamma$, $w = g\circ\gamma$ and $\gamma(\lambda_0) = p$.'
+    explanation: |
+      $$v_{\gamma,p}(f\,g) = f(p)\,v_{\gamma,p}(g) + g(p)\,v_{\gamma,p}(f).$$
+      This is the **Leibniz rule**. The values $f(p)$, $g(p)$ appear because $(f\circ\gamma)(\lambda_0) = f(p)$.
+
+  - type: order
+    id: p2-constants
+    tag: Problem 2 · Reparametrization
+    prompt: |
+      Show that every velocity $v\in T_p\mathcal{M}$ gives $0$ on a constant field $k$ (the field with value $k\in\mathbb{R}$ everywhere), using only linearity, $v(\alpha f + g) = \alpha\,v(f) + v(g)$, and the Leibniz rule, $v(f\,g) = f(p)\,v(g) + g(p)\,v(f)$. Put the steps in order.
+    steps:
+      - 'Let $1$ be the constant field with value $1$; as fields, $1\cdot 1 = 1$.'
+      - 'Leibniz on $f = g = 1$: $v(1) = v(1\cdot 1) = 1\cdot v(1) + 1\cdot v(1)$.'
+      - 'So $v(1) = 2\,v(1)$.'
+      - 'Subtract $v(1)$ from both sides: $v(1) = 0$.'
+      - 'A constant field is $k = k\cdot 1$, so linearity gives $v(k) = k\,v(1) = 0$.'
+    hint: Start with the field $1$, which equals its own square.
+    explanation: |
+      The direct route agrees: $k\circ\gamma$ is the constant function $\lambda\mapsto k$, with derivative $0$. The Leibniz route is worth knowing because it uses only the two algebraic rules, never the curve: any map with those two properties kills constants.
+
+  - type: mcq
+    id: p2-consequences
+    tag: Problem 2 · Reparametrization
+    multiple: true
+    prompt: |
+      A velocity $v\in T_p\mathcal{M}$ is linear, obeys the Leibniz rule $v(f\,g) = f(p)\,v(g) + g(p)\,v(f)$, and gives $0$ on every constant field. Which statements hold for every smooth field $f$? Select all that apply.
+    options:
+      - text: '$v(f + 5) = v(f)$'
+        correct: true
+      - text: '$v(5f) = 5\,v(f)$'
+        correct: true
+      - text: '$v(f^2) = 2f(p)\,v(f)$'
+        correct: true
+      - text: '$v(f + 5) = v(f) + 5$'
+        feedback: |
+          Linearity gives $v(f + 5) = v(f) + v(5)$, and $v(5) = 0$ because $5$ is a constant field. A velocity measures how $f$ **changes**, so shifting all values of $f$ by $5$ changes nothing.
+      - text: '$v(f^2) = v(f)^2$'
+        feedback: |
+          That treats $v$ as multiplicative. Leibniz with $g = f$ gives $v(f^2) = f(p)\,v(f) + f(p)\,v(f) = 2f(p)\,v(f)$, the chain rule for squaring.
+    explanation: |
+      $v(f+5) = v(f) + v(5) = v(f)$; $v(5f) = 5v(f)$ by linearity; $v(f^2) = 2f(p)v(f)$ by Leibniz with $g = f$. Check the last with $\gamma_1(\lambda) = (\lambda, 1)$ at $p = (1,1)$ and $f = q_1$: $v(q_1^2) = 2$ and $2\cdot 1\cdot 1 = 2$.
+
+  # ---------------------------------------------------------------- Problem 3
+  - type: text
+    id: p3-setup
+    tag: Problem 3 · Circle in two charts
+    title: Angle and stereographic charts
+    body: |
+      On the circle $S^1 = \{(q_1, q_2) : q_1^2 + q_2^2 = 1\}$ take two charts:
+
+      - the **angle** chart $\theta$ on $\mathcal{U} = S^1\setminus\{(1,0)\}$, $\theta\in(0, 2\pi)$, with inverse $\theta^{-1}(t) = (\cos t, \sin t)$;
+      - the **stereographic** chart from the north pole $(0,1)$, on $\mathcal{V} = S^1\setminus\{(0,1)\}$:
+      $$\sigma(q) = \frac{q_1}{1 - q_2}.$$
+
+      Each chart has one coordinate, so each basis has one vector, $(\partial/\partial\theta)_p$ or $(\partial/\partial\sigma)_p$, and the Jacobian is a single number. We name components by the chart: $v^\theta$, $v^\sigma$ for a velocity, $\mathtt{x}^p_\theta$, $\mathtt{y}^p_\sigma$ for a covector.
+
+      Work at $p = (\tfrac{\sqrt3}{2}, \tfrac12)$, where $\theta_p = \pi/6$ and $\sigma_p = \sqrt3$.
+
+  - type: numeric
+    id: p3-jacobian
+    tag: Problem 3 · Circle in two charts
+    prompt: |
+      On $S^1$, the angle chart $\theta\in(0,2\pi)$ (inverse $t\mapsto(\cos t, \sin t)$) and the stereographic chart $\sigma(q) = q_1/(1-q_2)$ have the transition map
+      $$\sigma(\theta^{-1}(t)) = \frac{\cos t}{1 - \sin t}.$$
+      Compute the Jacobian $(d\sigma/d\theta)_p$ at $p = (\tfrac{\sqrt3}{2}, \tfrac12)$, where $\theta_p = \pi/6$.
+    answer: 2
+    wrong:
+      - value: 0.5
+        feedback: |
+          $\tfrac12$ is the reverse rate $(d\theta/d\sigma)_p$. The question asks how fast $\sigma$ changes per unit of $\theta$.
+      - value: 1.7320508
+        feedback: |
+          $\sqrt3$ is the **value** $\sigma_p$ of the coordinate at $p$, not its rate of change.
+    hint: 'Quotient rule, then $\sin^2 t + \cos^2 t = 1$ simplifies the numerator to $1 - \sin t$.'
+    explanation: |
+      $$\begin{aligned}\frac{d}{dt}\frac{\cos t}{1-\sin t} &= \frac{-\sin t(1-\sin t) + \cos^2 t}{(1-\sin t)^2}\\ &= \frac{1-\sin t}{(1-\sin t)^2} = \frac{1}{1 - \sin t}.\end{aligned}$$
+      At $t = \pi/6$: $1/(1-\tfrac12) = 2$. Another route: the transition equals $\tan(\tfrac t2 + \tfrac\pi4)$, whose derivative is $\tfrac12(1 + \sigma^2)$, again $\tfrac12(1 + 3) = 2$.
+
+  - type: mcq
+    id: p3-stretch
+    tag: Problem 3 · Circle in two charts
+    prompt: |
+      On $S^1$, the Jacobian from the angle chart $\theta$ to the stereographic chart $\sigma(q) = q_1/(1-q_2)$ (projection from the north pole $(0,1)$) is
+      $$\frac{d\sigma}{d\theta} = \frac{1}{1 - \sin\theta}.$$
+      What does it do across the overlap of the two charts?
+    options:
+      - text: 'It is smallest, $\tfrac12$, at the south pole $(0,-1)$, and grows without bound near the north pole $(0,1)$'
+        correct: true
+      - text: 'It is constant, since both charts measure the same circle uniformly'
+        feedback: |
+          $\theta$ measures arc length uniformly, but $\sigma$ does not: it projects the circle from $(0,1)$ onto a line, and arcs near the projection point are flung far away. $1/(1-\sin\theta)$ visibly changes with $\theta$.
+      - text: 'It is zero at the north pole, where $\sigma$ is undefined'
+        feedback: |
+          The north pole is not in the domain of $\sigma$, so nothing is evaluated there. Approaching it, $\sin\theta\to 1$ and $1/(1-\sin\theta)\to\infty$: the opposite of zero.
+    explanation: |
+      $1 - \sin\theta$ is largest ($2$) at $\theta = 3\pi/2$, the south pole, and tends to $0$ near $\theta = \pi/2$. Near the north pole a small step in $\theta$ is a huge step in $\sigma$. The Jacobian is never $0$, as a change of chart requires.
+
+  - type: numeric
+    id: p3-velocity
+    tag: Problem 3 · Circle in two charts
+    prompt: |
+      On $S^1$, the curve $\gamma(\lambda) = (\cos(\tfrac\pi6 + 3\lambda),\ \sin(\tfrac\pi6 + 3\lambda))$ passes through $p = (\tfrac{\sqrt3}{2}, \tfrac12)$ at $\lambda = 0$. In the angle chart its velocity has component $v^\theta = (\theta\circ\gamma)'(0) = 3$. The Jacobian to the stereographic chart $\sigma(q) = q_1/(1-q_2)$ at $p$ is $(d\sigma/d\theta)_p = 2$. Compute the stereographic component $v^\sigma$.
+    answer: 6
+    wrong:
+      - value: 1.5
+        feedback: |
+          Dividing by the Jacobian is the covector law. A velocity component is a rate, $v^\sigma = (\sigma\circ\gamma)'(0)$, and the chain rule multiplies: $v^\sigma = (d\sigma/d\theta)_p\,v^\theta$.
+      - value: 3
+        feedback: |
+          $3$ is the component in the angle chart. The velocity is the same, but $\sigma$ changes twice as fast as $\theta$ at $p$, so its component doubles.
+    hint: 'Chain rule: $(\sigma\circ\gamma)''(0) = (d\sigma/d\theta)_p\cdot(\theta\circ\gamma)''(0)$.'
+    explanation: |
+      $$v^\sigma = 2\cdot 3 = 6.$$
+      So $v = 3(\partial/\partial\theta)_p = 6(\partial/\partial\sigma)_p$, and in particular $(\partial/\partial\theta)_p = 2(\partial/\partial\sigma)_p$.
+
+  - type: build
+    id: p3-dtheta
+    tag: Problem 3 · Circle in two charts
+    prompt: |
+      On $S^1$, at $p = (\tfrac{\sqrt3}{2}, \tfrac12)$, the angle chart $\theta$ and the stereographic chart $\sigma$ have Jacobian $(d\sigma/d\theta)_p = 2$, so the basis vectors satisfy $(\partial/\partial\theta)_p = 2(\partial/\partial\sigma)_p$. Express the dual basis covector $(d\theta)_p$ in terms of $(d\sigma)_p$.
+    prefix: '(d\theta)_p ='
+    tiles: ['\tfrac12', '2', '\sqrt3', '(d\sigma)_p', '(d\theta)_p']
+    answers:
+      - ['\tfrac12', '(d\sigma)_p']
+    wrong:
+      - answer: ['2', '(d\sigma)_p']
+        feedback: |
+          That copies the factor of the basis vectors. Test it: feed $(\partial/\partial\theta)_p = 2(\partial/\partial\sigma)_p$. The left side gives $(d\theta)_p((\partial/\partial\theta)_p) = 1$; the right side would give $2\cdot 2 = 4$. The dual covector must scale the **opposite** way.
+      - answer: ['\sqrt3', '(d\sigma)_p']
+        feedback: |
+          $\sqrt3$ is the coordinate value $\sigma_p$, not a rate. The coefficient is $(d\theta/d\sigma)_p$.
+    hint: 'Law: $(d\theta)_p = (d\theta/d\sigma)_p\,(d\sigma)_p$. Or demand $(d\theta)_p((\partial/\partial\theta)_p) = 1$.'
+    explanation: |
+      $$(d\theta)_p = \Big(\frac{d\theta}{d\sigma}\Big)_p(d\sigma)_p = \tfrac12(d\sigma)_p.$$
+      Check: $\tfrac12(d\sigma)_p(2(\partial/\partial\sigma)_p) = \tfrac12\cdot 2 = 1$. Basis vectors scale by $2$, dual covectors by $\tfrac12$.
+
+  - type: numeric
+    id: p3-covector
+    tag: Problem 3 · Circle in two charts
+    prompt: |
+      On $S^1$, let $f$ be the height, $f(q) = q_2$. In the angle chart $f = \sin\theta$, so at $p = (\tfrac{\sqrt3}{2}, \tfrac12)$ ($\theta_p = \pi/6$)
+      $$(df)_p = \mathtt{x}^p_\theta\,(d\theta)_p,\quad \mathtt{x}^p_\theta = \cos\tfrac\pi6 = \tfrac{\sqrt3}{2}.$$
+      With $(d\theta)_p = \tfrac12(d\sigma)_p$ for the stereographic chart $\sigma$, find the stereographic component $\mathtt{y}^p_\sigma$ in $(df)_p = \mathtt{y}^p_\sigma(d\sigma)_p$ (a decimal is fine).
+    answer: 0.4330127
+    tolerance: 0.001
+    answerText: '\sqrt3/4 \approx 0.433'
+    wrong:
+      - value: 1.7320508
+        feedback: |
+          $\sqrt3 = 2\cdot\tfrac{\sqrt3}{2}$ multiplies by the Jacobian, the law of vector components. Covector components follow the inverse: $\mathtt{y}^p_\sigma = (d\theta/d\sigma)_p\,\mathtt{x}^p_\theta$.
+      - value: 0.8660254
+        feedback: |
+          $\tfrac{\sqrt3}{2}$ is the angle-chart component, copied. Changing the chart changes the component: substitute $(d\theta)_p = \tfrac12(d\sigma)_p$.
+    hint: '$(df)_p = \tfrac{\sqrt3}{2}(d\theta)_p = \tfrac{\sqrt3}{2}\cdot\tfrac12(d\sigma)_p$.'
+    explanation: |
+      $\mathtt{y}^p_\sigma = \tfrac{\sqrt3}{2}\cdot\tfrac12 = \tfrac{\sqrt3}{4}$. Second route, straight from the stereographic chart: its inverse is
+      $$\sigma^{-1}(s) = \Big(\frac{2s}{s^2+1},\ \frac{s^2-1}{s^2+1}\Big),$$
+      so $f = (s^2-1)/(s^2+1)$ in this chart, with derivative $4s/(s^2+1)^2$. At $s = \sqrt3$: $4\sqrt3/16 = \sqrt3/4$.
+
+  - type: numeric
+    id: p3-pairing
+    tag: Problem 3 · Circle in two charts
+    prompt: |
+      On $S^1$ at $p = (\tfrac{\sqrt3}{2}, \tfrac12)$, in the stereographic chart $\sigma$, the height $f(q) = q_2$ has $(df)_p = \tfrac{\sqrt3}{4}(d\sigma)_p$, and the velocity of $\gamma(\lambda) = (\cos(\tfrac\pi6 + 3\lambda), \sin(\tfrac\pi6 + 3\lambda))$ at $\lambda = 0$ is $v = 6(\partial/\partial\sigma)_p$. Compute $(df)_p(v)$ (a decimal is fine).
+    answer: 2.5980762
+    tolerance: 0.001
+    answerText: '3\sqrt3/2 \approx 2.598'
+    wrong:
+      - value: 5.1961524
+        feedback: |
+          $3\sqrt3 = \tfrac{\sqrt3}{2}\cdot 6$ pairs the **angle-chart** covector component with the **stereographic** vector component. Components can only be paired within one chart: $\mathtt{y}^p_\sigma v^\sigma$ or $\mathtt{x}^p_\theta v^\theta$.
+      - value: 1.2990381
+        feedback: |
+          $\tfrac{\sqrt3}{4}\cdot 3$ mixes the charts the other way: stereographic covector component with the angle-chart vector component $v^\theta = 3$. In the stereographic chart, $v^\sigma = 6$.
+    hint: '$(df)_p(v) = \mathtt{y}^p_\sigma\,v^\sigma$, since $(d\sigma)_p((\partial/\partial\sigma)_p) = 1$.'
+    explanation: |
+      $$\tfrac{\sqrt3}{4}\cdot 6 = \tfrac{3\sqrt3}{2}\approx 2.598.$$
+      In the angle chart: $\mathtt{x}^p_\theta v^\theta = \tfrac{\sqrt3}{2}\cdot 3$, the same. And directly: $f(\gamma(\lambda)) = \sin(\tfrac\pi6 + 3\lambda)$ has derivative $3\cos\tfrac\pi6 = \tfrac{3\sqrt3}{2}$ at $0$. Three routes, one number.
+
+  - type: mcq
+    id: p3-why
+    tag: Problem 3 · Circle in two charts
+    prompt: |
+      On $S^1$ at $p$, from the angle chart $\theta$ to the stereographic chart $\sigma$ (Jacobian $(d\sigma/d\theta)_p = 2$), the velocity component went from $v^\theta = 3$ to $v^\sigma = 6$, and the covector component of $(df)_p$ from $\tfrac{\sqrt3}{2}$ to $\tfrac{\sqrt3}{4}$. Why is the pairing $(df)_p(v)$ the same in both charts?
+    options:
+      - text: 'The vector component is multiplied by the Jacobian and the covector component by its inverse, so their product cannot change'
+        correct: true
+      - text: 'On a one-dimensional manifold every component is chart-independent'
+        feedback: |
+          The components did change, $3\to 6$ and $\tfrac{\sqrt3}{2}\to\tfrac{\sqrt3}{4}$. Dimension one only makes the Jacobian a single number; it still rescales components.
+      - text: 'Because both charts increase in the same direction around the circle'
+        feedback: |
+          The orientation only fixes the **sign** of the Jacobian. With a decreasing chart, e.g. $-\theta$, the Jacobian is $-1$, both components flip sign, and the pairing is still unchanged. Invariance comes from the opposite laws, whatever the sign.
+    explanation: |
+      $$\begin{aligned}\mathtt{y}^p_\sigma v^\sigma &= \Big(\frac{d\theta}{d\sigma}\Big)_p\mathtt{x}^p_\theta\,\Big(\frac{d\sigma}{d\theta}\Big)_p v^\theta\\ &= \mathtt{x}^p_\theta\, v^\theta,\end{aligned}$$
+      because the two rates multiply to $1$, the one-dimensional inverse identity. In $d$ dimensions the same cancellation is $(\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p(\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p = \delta^i_j$.

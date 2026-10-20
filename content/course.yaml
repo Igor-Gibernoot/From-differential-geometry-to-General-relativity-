@@ -195,7 +195,11 @@ levels:
         file: ch04/map.yaml
         summary: Rebuild the level box by box, from curves and scalar fields to velocities, the tangent and cotangent spaces, chart bases, Jacobians and tensors, among decoys that hide the level's classic mistakes.
       - { id: ch04-review, title: Level Review, kind: review }
-      - { id: ch04-challenge, title: Level Challenge, kind: challenge }
+      - id: ch04-challenge
+        title: Level Challenge
+        kind: challenge
+        file: ch04/challenge.yaml
+        summary: Harder problems mixing the level's ideas, from the polar chart and reparametrized curves to the circle in two charts, tensor traces and a full tensor computation.
 
   - id: ch05
     number: 5

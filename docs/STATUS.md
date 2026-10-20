@@ -19,10 +19,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   `wrap-up` ending with a teaser for the next level.
 - **Chapter 4 in progress:** `ch04-tangent-space` (26 cards),
   `ch04-velocity-operations` (23 cards), `ch04-coordinate-basis` (33 cards),
-  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards), `ch04-cotangent` (23 cards), `ch04-cotangent-basis` (35 cards), `ch04-tensor-space` (31 cards), `ch04-traps` (22 cards), `ch04-map` (13 boxes) built; widget `chart-basis` built (coordinate lines of two charts, basis at
+  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards), `ch04-cotangent` (23 cards), `ch04-cotangent-basis` (35 cards), `ch04-tensor-space` (31 cards), `ch04-traps` (22 cards), `ch04-map` (13 boxes) built, `ch04-challenge` problems 1–3 built (25 cards; 4–5 and `wrap-up` pending); widget `chart-basis` built (coordinate lines of two charts, basis at
   $p$, components, Jacobian).
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, next `ch04-challenge` (two sessions: problems 1–3, then 4–5); then Chapters 5–10 (each with
+  order, next `ch04-challenge` session 2 (problems 4–5 + `wrap-up`, append after the Problem 3 block); then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -136,6 +136,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   diagonals or skip a row); edge readings ("defined from", "basis of", "dual of", "built from") given in the intro legend
   (the engine has no edge labels); Einstein box placed after both laws (compact form of vector and covector laws), so map
   cards before it write explicit sums.
+  Challenge ch04 (`ch04-challenge`): cartesian chart $\mathscr{C}(q) = (x,y)$ on $\mathcal{U}$, polar $\mathscr{P}$ on $\mathcal{V}$
+  ($\theta\in(0,2\pi)$), short names $(\partial r)_p$, $(\partial\theta)_p$, $(dr)_p$, $(d\theta)_p$; components named by coordinate
+  ($v^r$, $v^\theta$, $\mathtt{y}^p_r$, $\mathtt{y}^p_\theta$; on $S^1$ $v^\theta$, $v^\sigma$, $\mathtt{x}^p_\theta$, $\mathtt{y}^p_\sigma$); polar at $p=(1,1)$:
+  $(\partial r)_p = (1/\sqrt2,1/\sqrt2)$, $(\partial\theta)_p = (-1,1)$, Jacobian $\begin{pmatrix}1/\sqrt2&1/\sqrt2\\-1/2&1/2\end{pmatrix}$, $v = \tfrac3{\sqrt2}(\partial r)_p + \tfrac12(\partial\theta)_p$,
+  $(df)_p = \tfrac3{\sqrt2}(dr)_p - (d\theta)_p$; reparametrization rune $\text{ᚱ}\colon\mathbb{R}\to\mathbb{R}$, $\text{ᚱ}(\mu_0) = \lambda_0$,
+  $v_{\gamma\circ\text{ᚱ},p} = \text{ᚱ}'(\mu_0)\odot_T v_{\gamma,p}$ (examples $\mu^2$ at $\mu_0=-1$ gives $-4$; $1+\mu^3$ gives $0$); Leibniz rule
+  $v(fg) = f(p)v(g) + g(p)v(f)$ derived here; $S^1$ at $p = (\sqrt3/2, 1/2)$: $\theta_p = \pi/6$, $\sigma_p = \sqrt3$, $d\sigma/d\theta = 1/(1-\sin\theta) = 2$,
+  $\sigma^{-1}(s) = (2s/(s^2+1), (s^2-1)/(s^2+1))$, curve $(\cos(\pi/6+3\lambda), \sin(\pi/6+3\lambda))$ ($v^\theta=3$, $v^\sigma=6$), height $f = q_2$
+  ($\sqrt3/2 \to \sqrt3/4$, pairing $3\sqrt3/2$).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -145,6 +154,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Level challenge `ch04-challenge`, session 1 (25 cards): intro listing all five problems; P1 polar chart at
+$(1,1)$ (basis, Jacobian entry $-1/2$, $v^r = 3/\sqrt2$, $v^\theta = 1/2$, $(df)_p$ by feeding and by $F = f\circ\mathscr{P}^{-1}$,
+pairing $4$); P2 reparametrization $\text{ᚱ}$ (order proof, $-4$, pause curve, zero vector, Leibniz build, constants
+order card, consequences); P3 $S^1$ $\theta$ vs $\sigma$ (Jacobian $2$ two ways, stretch, $v^\sigma = 6$, $(d\theta)_p = \tfrac12(d\sigma)_p$,
+height covector two ways, pairing, why). Choices: point $\theta_p = \pi/6$ for clean numbers; Leibniz rule derived in P2
+since no lesson had stated it; file ends after P3 (no wrap-up yet).
+Conventions fixed here: see Current, "Challenge ch04".
 
 Content map `ch04-map` (13 boxes, 15 cards): curves, scalar fields → velocity → $T_p\mathcal{M}$; chart +
 $T_p\mathcal{M}$ → chart-induced basis → components and Jacobian (ᛞ); running example dashed to basis and Jacobian;
