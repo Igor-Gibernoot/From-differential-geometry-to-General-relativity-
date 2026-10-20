@@ -303,9 +303,12 @@ cards:
     body: |
       - The **powerset** $\mathcal{P}(\mathcal{M})$ is the set of all subsets; a set with $n$ elements has $2^n$ of them.
       - A **topology** $\mathcal{O}_\mathcal{M}\subseteq\mathcal{P}(\mathcal{M})$ obeys three rules:
-        1. $\emptyset\in\mathcal{O}_\mathcal{M}$ and $\mathcal{M}\in\mathcal{O}_\mathcal{M}$;
-        2. $\mathcal{U}, \mathcal{V}\in\mathcal{O}_\mathcal{M}\Rightarrow\mathcal{U}\cap\mathcal{V}\in\mathcal{O}_\mathcal{M}$ (hence finitely many);
-        3. $\mathcal{U}_\alpha\in\mathcal{O}_\mathcal{M}\ \forall\alpha\Rightarrow\bigcup_\alpha\mathcal{U}_\alpha\in\mathcal{O}_\mathcal{M}$ (any family).
+        1. contains the empty set and the whole space:
+           $$\emptyset\in\mathcal{O}_\mathcal{M},\qquad \mathcal{M}\in\mathcal{O}_\mathcal{M};$$
+        2. closed under intersections (hence finitely many):
+           $$\mathcal{U}, \mathcal{V}\in\mathcal{O}_\mathcal{M}\ \Rightarrow\ \mathcal{U}\cap\mathcal{V}\in\mathcal{O}_\mathcal{M};$$
+        3. closed under unions of any family:
+           $$\mathcal{U}_\alpha\in\mathcal{O}_\mathcal{M}\ \ \forall\alpha\ \Rightarrow\ \bigcup_\alpha\mathcal{U}_\alpha\in\mathcal{O}_\mathcal{M}.$$
 
         Its members are the **open sets**; $(\mathcal{M}, \mathcal{O}_\mathcal{M})$ is a **topological space**.
       - A topology is a **choice**: two points already carry 4. The discrete ($\mathcal{P}(\mathcal{M})$) and indiscrete ($\{\emptyset, \mathcal{M}\}$) ones exist on every set.
