@@ -288,7 +288,7 @@ cards:
         - { v: [1, 0.5] }
         - { v: [-1, 1] }
     body: |
-      Curves through $p = (1, 1)$ at $\lambda = 0$. The field $\theta$ is the polar angle. It is smooth near $p$ (its jump lies on the positive $x$-axis, far away), and a derivative at $p$ only uses $f$ near $p$. The readout now expands $(f\circ\gamma)'(0) = \partial_1 f(p)\,v^1 + \partial_2 f(p)\,v^2$ in numbers.
+      Curves through $p = (1, 1)$ at $\lambda = 0$, and the polar angle $\theta$. Careful: $\theta$ is **not** in $C^\infty(\mathbb{R}^2)$, the fields a velocity accepts, since it has no value at the origin and jumps from $2\pi$ to $0$ across the positive $x$-axis. So take an $f \in C^\infty(\mathbb{R}^2)$ equal to $\theta$ on a disc around $p$ and smoothly switched off before the jump. For $\lambda$ near $0$ every curve through $p$ stays in that disc, so $(f\circ\gamma)'(0) = (\theta\circ\gamma)'(0)$: the readout, computed with $\theta$, gives $v_{\gamma,p}(f)$. It now expands $(f\circ\gamma)'(0) = \partial_1 f(p)\,v^1 + \partial_2 f(p)\,v^2$ in numbers.
 
       1. Drag a blue handle along the dashed orange ray through $p$ (a level line of $\theta$). What is $(\theta\circ\gamma)'(0)$ there?
       2. Switch to $f = x$, then $f = y$. Compare $(f\circ\gamma)'(0)$ with the components $(v^1, v^2)$.

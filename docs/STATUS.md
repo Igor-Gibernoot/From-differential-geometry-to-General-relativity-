@@ -60,7 +60,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\oplus_T$, $\odot_T$ defined field by field; C.3 running example
   $\gamma_1(\lambda) = (\lambda, 1)$ at $\lambda_0 = 1$, $\gamma_2(\lambda) = (1, 2\lambda)$
   at $\lambda_0 = \tfrac12$, $p = (1,1)$, $f = q_1^2 + q_2$ (both give 2).
-  Polar angle $\theta$ used in the plane only as "smooth near $p$".
+  Polar angle $\theta$ in the plane is not in $C^\infty(\mathbb{R}^2)$: use an $f$ equal to
+  $\theta$ on a disc around $p$, switched off before the jump (same $(f\circ\gamma)'(0)$).
   C.3 charts: $\mathscr{X}(q) = (2q_1, -q_2)$, $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, chart
   components $\mathscr{X}^i$, chart representative $F := f\circ\mathscr{X}^{-1}$ with
   partials $\partial_i F(\mathscr{X}(p))$; sum curves $\sigma_\mathcal{U}$ (straight,
@@ -69,7 +70,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   `chart-basis` widget: first chart solid lines, second dashed; basis purple
   (second chart dashed); Jacobian $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$
   with row $i$ ($\mathscr{Y}$), column $j$ ($\mathscr{X}$); chart letters
-  $\mathscr{C}$ ($x, y$), $\mathscr{P}$ ($r, \theta$, $\theta\in(0,2\pi)$, $|p|\ge 0.5$);
+  $\mathscr{C}$ ($x, y$), $\mathscr{P}$ ($r, \theta$, $\theta\in(0,2\pi)$; `cut: left` gives $(-\pi,\pi)$;
+  outside a chart's domain no basis, components or Jacobian);
   C.3 at $p=(1,1)$, $v=(1,2)$: $\mathscr{X}$-components $(2,-2)$,
   $\mathscr{Y}$-components $(1,3e)$, Jacobian $\begin{pmatrix}1/2&0\\e/2&-e\end{pmatrix}$,
   inverse $\begin{pmatrix}2&0\\1&-1/e\end{pmatrix}$, $(\partial/\partial\mathscr{X}^1)_p = (1/2, 0)$,
@@ -84,6 +86,18 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Fixes (ch04-tangent-space, chart-basis). Lesson card `chain-explore`: $\theta$
+is no longer called a field "smooth near $p$"; the card says $\theta\notin
+C^\infty(\mathbb{R}^2)$ and uses an $f$ equal to $\theta$ on a disc around $p$,
+switched off before the jump. Widget: $p$ may go anywhere; a polar chart
+(`cut: right|left`) draws its cut dotted, and off its domain shows no basis,
+no components, no Jacobian, with the reason; lines of one coordinate thin out
+(every 2nd, 4th, … line) where closer than 0.14 view units; labels placed by
+candidate spots avoiding arrows, the tip of $v$, $p$ and other labels. Tested
+with a throwaway lesson (C.3, crowding, on the cut, left cut, near origin, long
+$v$), screenshots viewed, then removed. Conventions fixed here: polar `cut`
+option; $\theta$ in the plane via a field equal to it near $p$.
 
 Built the `chart-basis` widget (no lesson): coordinate lines of one or two
 charts (presets `cartesian`, `polar`, C.3 `X`, `Y`), draggable $p$, purple basis
