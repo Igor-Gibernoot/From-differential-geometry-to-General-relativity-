@@ -169,7 +169,11 @@ levels:
         kind: concept
         file: ch04/einstein.yaml
         summary: Drop the summation signs. An index once up and once down in a term is summed; free indices must match. Rewrite the basis and component laws, the Kronecker delta and the inverse Jacobian in Einstein form.
-      - { id: ch04-cotangent, title: The Cotangent Space, kind: concept }
+      - id: ch04-cotangent
+        title: The Cotangent Space
+        kind: concept
+        file: ch04/cotangent.yaml
+        summary: A scalar field turns each velocity into a rate of change, linearly. The cotangent space $T_p^*\mathcal{M}$ as the dual of $T_p\mathcal{M}$, the differential $(df)_p$, why it is linear, $\dim T_p^*\mathcal{M} = d$, and why a covector is not an arrow.
       - { id: ch04-cotangent-basis, title: Differentials as a Basis, kind: concept }
       - { id: ch04-tensor-space, title: Tensor Spaces at a Point, kind: concept }
       - { id: ch04-traps, title: Tangent Space Traps, kind: traps }

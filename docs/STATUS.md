@@ -19,10 +19,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   `wrap-up` ending with a teaser for the next level.
 - **Chapter 4 in progress:** `ch04-tangent-space` (26 cards),
   `ch04-velocity-operations` (23 cards), `ch04-coordinate-basis` (33 cards),
-  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards) built; widget `chart-basis` built (coordinate lines of two charts, basis at
+  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards), `ch04-cotangent` (23 cards) built; widget `chart-basis` built (coordinate lines of two charts, basis at
   $p$, components, Jacobian).
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, next `ch04-cotangent` (concept: the cotangent space); then Chapters 5–10 (each with
+  order, next `ch04-cotangent-basis` (concept: differentials as a basis); then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -97,6 +97,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   $x^i_p := \dot\gamma^i_\mathcal{U}(\lambda_0)$, $y^i_p$, $(\partial y_i)_p$, second vector $\mathcal{Y}_p = v_{\delta,p}$
   with $\tilde x^i_p$, $\tilde y^i_p$; inverse identity
   $(\partial\mathscr{X}^i/\partial\mathscr{Y}^k)_p(\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p = \delta^i_j$; $\delta^i_i = d$.
+  Cotangent (`ch04-cotangent`): $T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(T_p\mathcal{M},\mathbb{R})$, operations
+  $\oplus_T^*$, $\odot_T^*$ (book's typesetting) value by value; covectors $\mathsf{X}_p$; differential
+  $(df)_p(v_{\gamma,p}) := v_{\gamma,p}(f)$ ("differential (or gradient)", read as one symbol); covector
+  numbers typewriter lower index $\mathtt{x}^p_i$ (book; $p$ is a label up); $\mathsf{X}_p(v) = \mathtt{x}^p_iv^i$;
+  C.3 $(df)_p(v) = 2v^1 + v^2$, kernel direction $(1,-2)$ (level line $q_2 = 2-q_1^2$); a covector is
+  pictured as the line it sends to $0$, never an arrow (arrow needs the metric, Level 7). Not yet
+  introduced: $(d\mathscr{X}^i)_p$ as a basis, component transformation, "every covector is some $(df)_p$".
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -106,6 +113,20 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Concept lesson `ch04-cotangent` (23 cards): hook ($v\mapsto v(f)$, temperature observer),
+predict linearity for $f = q_1^2+q_2$, `curve-velocity` widget (`chain`, `graph: false`,
+`bend: false`, fields $x, y, x^2+y$; presets Sum, Doubled, Level line), numerics sum rate $4$ and
+level-line rate $0$, recall dual space (Hom = homomorphism), definition of $T_p^*\mathcal{M}$,
+closure MCQ, definition of $(df)_p$, ordered linearity proof (book footnote 6), justification
+MCQ, C.3 numerics ($2$, $2$), same-value trap, sum/scalar/Leibniz rules, dimension (dual cobasis
+recall, finite-dimensional caveat), dimension MCQ, lower-index card via chain rule
+$\partial_if(p)v^i$, index-placement trap, not-an-arrow trap, locality trap, chart-free trap,
+summary. Choices: components introduced only as "numbers describing a covector" (no basis);
+"every covector is a differential" (book footnote 7) left for the next lesson. Validate and shots
+clean (one phone overflow fixed by naming $s := \alpha\odot_Tu\oplus_Tw$); widget image checked.
+Conventions fixed here: $\oplus_T^*$, $\odot_T^*$ value by value; $(df)_p$ one symbol; covector
+numbers $\mathtt{x}^p_i$; covector drawn as its zero line, not an arrow.
 
 Concept lesson `ch04-einstein` (23 cards): hook (sums written out), predict the summed
 index in the basis law, rule card (range $1..d$, denominator = lower, labels not indices,

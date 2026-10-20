@@ -1,0 +1,365 @@
+id: ch04-cotangent
+title: The Cotangent Space
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: A field turns velocities into numbers
+    body: |
+      Recall: a velocity $v_{\gamma,p}$ at a point $p$ of a smooth manifold $\mathcal{M}$ is a map $C^\infty(\mathcal{M})\to\mathbb{R}$, the rate of change of a field along the curve $\gamma$:
+      $$v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0),$$
+      where $\gamma(\lambda_0) = p$. The velocities at $p$ form the tangent space $T_p\mathcal{M}$, a vector space of dimension $d$.
+
+      Now turn this around. **Fix** one scalar field $f\in C^\infty(\mathcal{M})$ and let the velocity vary. Each $v\in T_p\mathcal{M}$ gives a number $v(f)$, so $f$ produces a map
+      $$T_p\mathcal{M}\to\mathbb{R},\quad v\mapsto v(f).$$
+      In physics this is a familiar question: given a temperature field, how fast does the temperature change for an observer moving with velocity $v$? What kind of map is that?
+
+  - type: mcq
+    id: predict
+    title: Predict first
+    prompt: |
+      On $\mathbb{R}^2$, with points $q = (q_1, q_2)$, take the field $f(q) = q_1^2 + q_2$ and the point $p = (1, 1)$. Each velocity $v\in T_p\mathbb{R}^2$ gives the number $v(f)$, the rate of change of $f$ along $v$. Before computing anything, guess: is the map $v\mapsto v(f)$ linear in $v$ (sums go to sums, multiples to multiples)?
+    options:
+      - text: 'Yes, for every smooth $f$, even though $q_1^2 + q_2$ is not linear in $q$'
+        correct: true
+      - text: 'No: $f$ contains $q_1^2$, so doubling the velocity more than doubles the rate'
+        feedback: |
+          Tempting, because $f$ is quadratic in the **point** $q$. But the map takes a **velocity** at the fixed point $p$, and a rate of change is a first derivative at $p$: doubling the speed through $p$ exactly doubles the rate, whatever the shape of $f$. The curvature of $f$ would only show up in second derivatives.
+      - text: 'Only if $f$ itself is linear'
+        feedback: |
+          Linearity of $f$ in $q$ is not needed. The rate $v(f)$ only sees the first-order behaviour of $f$ at $p$ (its partial derivatives there), and that enters linearly. Try it in the next card: the rates for $v$, for $2v$ and for a sum.
+    explanation: |
+      Linear for every $f$. In $\mathbb{R}^2$ the chain rule already says why: $v(f) = \partial_1 f(p)\,v^1 + \partial_2 f(p)\,v^2$ is linear in the components $(v^1, v^2)$. The general proof, without coordinates, comes in a few cards.
+
+  - type: widget
+    id: explore
+    title: Watch the rate as the velocity changes
+    widget: curve-velocity
+    config:
+      p: [1, 1]
+      f: x2y
+      fields: [x, y, x2y]
+      chain: true
+      graph: false
+      bend: false
+      curves:
+        - { v: [1, 0] }
+        - { v: [0, 2] }
+      presets:
+        - label: Sum
+          curves:
+            - { v: [1, 0] }
+            - { v: [1, 2] }
+        - label: Doubled
+          curves:
+            - { v: [1, 0] }
+            - { v: [2, 0] }
+        - label: Level line
+          curves:
+            - { v: [1, -2] }
+            - { v: [-0.5, 1] }
+    body: |
+      The point $p = (1, 1)$ in $\mathbb{R}^2$ and the field $f = q_1^2 + q_2$ (button $x^2 + y$). Two curves pass through $p$ at $\lambda = 0$, each with velocity components $(v^1, v^2)$ set by its blue handle. The readout gives $(f\circ\gamma)'(0) = v(f)$ for each, expanded as $\partial_1 f(p)\,v^1 + \partial_2 f(p)\,v^2$. The dashed orange lines are level lines of $f$.
+
+      1. At the start: $v = (1, 0)$ and $w = (0, 2)$. Read both rates.
+      2. Press **Sum**: the dashed curve now has $v + w = (1, 2)$. Compare its rate with the two rates of step 1.
+      3. Press **Doubled**, then **Level line**. What happens to the rate when the velocity is tangent to the level line through $p$?
+
+  - type: numeric
+    id: sum-rate
+    title: Rate of a sum
+    prompt: |
+      On $\mathbb{R}^2$ take $f(q) = q_1^2 + q_2$ at $p = (1, 1)$. The velocities with components $(1, 0)$ and $(0, 2)$ both give $v(f) = 2$. What is $v(f)$ for the velocity with components $(1, 2)$, their sum?
+    answer: 4
+    wrong:
+      - { value: 2, feedback: 'That would make the rate of the sum equal to each rate separately. Compute with the chain rule: $\partial_1 f(p) = 2q_1 = 2$ and $\partial_2 f(p) = 1$, so the rate is $2\cdot 1 + 1\cdot 2$.' }
+    hint: 'In $\mathbb{R}^2$, $v(f) = \partial_1 f(p)\,v^1 + \partial_2 f(p)\,v^2$, with $\partial_1 f = 2q_1$ and $\partial_2 f = 1$.'
+    explanation: |
+      $v(f) = 2\cdot 1 + 1\cdot 2 = 4 = 2 + 2$: the rate of the sum is the sum of the rates.
+
+  - type: numeric
+    id: level-rate
+    title: Along the level line
+    prompt: |
+      On $\mathbb{R}^2$ take $f(q) = q_1^2 + q_2$ at $p = (1, 1)$. The level line of $f$ through $p$ is $q_2 = 2 - q_1^2$, whose tangent at $p$ has direction $(1, -2)$. What is $v(f)$ for the velocity with components $(1, -2)$?
+    answer: 0
+    wrong:
+      - { value: 4, feedback: 'Watch the sign of $v^2 = -2$: the rate is $2\cdot 1 + 1\cdot(-2)$.' }
+    hint: 'Use $v(f) = \partial_1 f(p)\,v^1 + \partial_2 f(p)\,v^2$ with $\partial_1 f(p) = 2$, $\partial_2 f(p) = 1$.'
+    explanation: |
+      $2\cdot 1 + 1\cdot(-2) = 0$. Moving along a level line, $f$ does not change to first order. So $v\mapsto v(f)$ sends a whole line of velocities (all multiples of $(1,-2)$) to $0$: it is a linear map with a kernel, not an injective one.
+
+  - type: text
+    id: recall-dual
+    title: 'Recall: the dual space'
+    body: |
+      Recall from Chapter 2: for a real vector space $V$, the **dual space** is
+      $$V^* := \mathrm{Hom}_\mathbb{R}(V, \mathbb{R}),$$
+      the set of all **linear** maps $V\to\mathbb{R}$. Here $\mathrm{Hom}$ stands for *homomorphism*, a structure-preserving map; for vector spaces that means a linear map, and the subscript $\mathbb{R}$ says that the scalars are real. Its elements are **covectors**, written in sans-serif, $\mathsf{X}$. A covector eats a vector and returns a number, linearly:
+      $$\mathsf{X}(\alpha\,u + w) = \alpha\,\mathsf{X}(u) + \mathsf{X}(w).$$
+      $V^*$ is itself a vector space: covectors are added and scaled **value by value**.
+
+      The map $v\mapsto v(f)$ is linear on $T_p\mathcal{M}$, so it should be a covector of $T_p\mathcal{M}$. Let's give that dual space its name.
+
+  - type: text
+    id: definition
+    title: The cotangent space
+    body: |
+      **Definition.** The **cotangent space** of $\mathcal{M}$ at $p$ is the dual of the tangent space:
+      $$T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(T_p\mathcal{M}, \mathbb{R}).$$
+      Its elements $\mathsf{X}_p$ are **covectors** (or cotangent vectors) at $p$; the subscript $p$ records the point. Its operations, written $\oplus_T^*$ and $\odot_T^*$, are defined value by value: for $\mathsf{X}_p, \mathsf{Y}_p\in T_p^*\mathcal{M}$, $\alpha\in\mathbb{R}$ and every $v\in T_p\mathcal{M}$,
+      $$(\mathsf{X}_p\oplus_T^*\mathsf{Y}_p)(v) := \mathsf{X}_p(v) + \mathsf{Y}_p(v),$$
+      $$(\alpha\odot_T^*\mathsf{X}_p)(v) := \alpha\cdot\mathsf{X}_p(v).$$
+      The $+$ and $\cdot$ on the right are those of $\mathbb{R}$. Requirements: only the vector space $T_p\mathcal{M}$ is used, no metric, no chart. Each point has its own cotangent space, just as it has its own tangent space.
+
+  - type: mcq
+    id: why-linear-sum
+    title: Is the sum still a covector?
+    prompt: |
+      $T_p^*\mathcal{M}$ is the set of linear maps $T_p\mathcal{M}\to\mathbb{R}$, with the sum of two covectors defined value by value, $(\mathsf{X}_p\oplus_T^*\mathsf{Y}_p)(v) := \mathsf{X}_p(v) + \mathsf{Y}_p(v)$. Why is $\mathsf{X}_p\oplus_T^*\mathsf{Y}_p$ again an element of $T_p^*\mathcal{M}$?
+    options:
+      - text: 'Because a sum of two linear maps is linear: each value splits into the values of $\mathsf{X}_p$ and $\mathsf{Y}_p$, and each of those is linear in $v$'
+        correct: true
+      - text: 'Because $\mathsf{X}_p\oplus_T^*\mathsf{Y}_p$ is computed by adding the velocities on which $\mathsf{X}_p$ and $\mathsf{Y}_p$ act'
+        feedback: |
+          The sum $\oplus_T^*$ adds **values** (numbers), not velocities. Both covectors act on the same $v$; it is their outputs $\mathsf{X}_p(v)$ and $\mathsf{Y}_p(v)$ that are added in $\mathbb{R}$. Adding velocities is $\oplus_T$, the operation of $T_p\mathcal{M}$.
+      - text: 'It needs a check in a chart, since linearity is a statement about components'
+        feedback: |
+          Linearity is a statement about the maps themselves: $\mathsf{X}_p(\alpha\odot_T u\oplus_T w) = \alpha\,\mathsf{X}_p(u) + \mathsf{X}_p(w)$. No chart enters. Adding this equation for $\mathsf{X}_p$ and for $\mathsf{Y}_p$ gives it for the sum directly.
+    explanation: |
+      For $u, w\in T_p\mathcal{M}$ and $\alpha\in\mathbb{R}$, write $s := \alpha\odot_T u\oplus_T w$. Then
+      $$\begin{aligned}(\mathsf{X}_p\oplus_T^*\mathsf{Y}_p)(s) &= \mathsf{X}_p(s) + \mathsf{Y}_p(s)\\ &= \alpha\,\mathsf{X}_p(u) + \mathsf{X}_p(w)\\ &\quad+ \alpha\,\mathsf{Y}_p(u) + \mathsf{Y}_p(w),\end{aligned}$$
+      which regroups as $\alpha$ times the value on $u$ plus the value on $w$. The same argument works for $\odot_T^*$.
+
+  - type: text
+    id: differential
+    title: The differential of a field
+    body: |
+      Now the map from the hook gets its name. Given $f\in C^\infty(\mathcal{M})$, its **differential** (or **gradient**) at $p$ is
+      $$(df)_p\colon T_p\mathcal{M}\to\mathbb{R},$$
+      $$(df)_p(v_{\gamma,p}) := v_{\gamma,p}(f).$$
+      In words: feed it a velocity, it returns the rate of change of $f$ along that velocity. Read $(df)_p$ as **one symbol**: the $d$ is not a number multiplying $f$, and the subscript $p$ says at which point. (The letter $d$ for the dimension is unrelated; context always tells them apart.)
+
+      The definition only produces a map. To call $(df)_p$ a covector, an element of $T_p^*\mathcal{M}$, we must **prove** it is linear. Recall the operations of $T_p\mathcal{M}$, also defined field by field: for $u, w\in T_p\mathcal{M}$, $\alpha\in\mathbb{R}$ and every field $f$,
+      $$(\alpha\odot_T u\oplus_T w)(f) = \alpha\cdot u(f) + w(f).$$
+
+  - type: order
+    id: linearity-proof
+    title: Prove that $(df)_p$ is linear
+    prompt: |
+      Let $f\in C^\infty(\mathcal{M})$, $u, w\in T_p\mathcal{M}$ and $\alpha\in\mathbb{R}$. The differential is $(df)_p(v) := v(f)$, and the operations of $T_p\mathcal{M}$ satisfy $(\alpha\odot_T u\oplus_T w)(f) = \alpha\cdot u(f) + w(f)$. Put the chain of equalities in order, starting from the left side.
+    steps:
+      - '$(df)_p(\alpha\odot_T u\oplus_T w)$'
+      - '$= (\alpha\odot_T u\oplus_T w)(f)$ (definition of $(df)_p$)'
+      - '$= \alpha\cdot u(f) + w(f)$ (operations of $T_p\mathcal{M}$)'
+      - '$= \alpha\cdot(df)_p(u) + (df)_p(w)$ (definition of $(df)_p$, read backwards)'
+    hint: 'Unpack the definition of $(df)_p$ first, then use how $\oplus_T$ and $\odot_T$ act on a field, then pack the definition again.'
+    explanation: |
+      Checking $\alpha\odot_T u\oplus_T w$ handles sums ($\alpha = 1$) and multiples ($w$ the zero velocity) at once. Hence $(df)_p\in T_p^*\mathcal{M}$: every smooth field gives a covector at every point.
+
+  - type: mcq
+    id: which-step
+    title: What makes it linear?
+    prompt: |
+      The proof that the differential $(df)_p(v) := v(f)$ is linear on $T_p\mathcal{M}$ contains the step
+      $$(\alpha\odot_T u\oplus_T w)(f) = \alpha\cdot u(f) + w(f).$$
+      What justifies this step?
+    options:
+      - text: 'The definition of $\oplus_T$ and $\odot_T$ on velocities, which acts field by field'
+        correct: true
+      - text: 'The linearity of $f$'
+        feedback: |
+          $f$ need not be linear (think of $q_1^2 + q_2$ on $\mathbb{R}^2$), and it is not being split here. What is split is the **velocity** $\alpha\odot_T u\oplus_T w$, and the vector space structure of $T_p\mathcal{M}$ was built precisely so that its sum acts on each field as the sum of values.
+      - text: 'The chain rule in a chart'
+        feedback: |
+          The chain rule gives a formula in coordinates, but this step needs none: it is the definition of the operations of $T_p\mathcal{M}$. That is why the proof works on any manifold, with or without a global chart.
+    explanation: |
+      All the linearity of $(df)_p$ is inherited from the operations of $T_p\mathcal{M}$. The definition of $\oplus_T$, $\odot_T$ (field by field) and the definition of $(df)_p$ are made for each other.
+
+  - type: numeric
+    id: c3-gamma1
+    title: 'A worked example: the first curve'
+    prompt: |
+      On $\mathbb{R}^2$, with points $q = (q_1, q_2)$, take $f(q) = q_1^2 + q_2$, $p = (1, 1)$ and the curve $\gamma_1(\lambda) = (\lambda, 1)$, which passes through $p$ at $\lambda_0 = 1$. Compute
+      $$(df)_p(v_{\gamma_1,p}) = (f\circ\gamma_1)'(1).$$
+    answer: 2
+    wrong:
+      - { value: 1, feedback: 'You may have evaluated the derivative at $\lambda = \tfrac12$ or forgotten the factor $2$: $(f\circ\gamma_1)(\lambda) = \lambda^2 + 1$, so the derivative is $2\lambda$, taken at $\lambda_0 = 1$.' }
+    hint: 'Compose first: $(f\circ\gamma_1)(\lambda) = \lambda^2 + 1$. Then differentiate and set $\lambda = 1$.'
+    explanation: |
+      $(f\circ\gamma_1)'(\lambda) = 2\lambda$, so $(df)_p(v_{\gamma_1,p}) = 2$.
+
+  - type: numeric
+    id: c3-gamma2
+    title: 'A worked example: the second curve'
+    prompt: |
+      On $\mathbb{R}^2$ take $f(q) = q_1^2 + q_2$, $p = (1, 1)$ and the curve $\gamma_2(\lambda) = (1, 2\lambda)$, which passes through $p$ at $\lambda_0 = \tfrac12$. Compute
+      $$(df)_p(v_{\gamma_2,p}) = (f\circ\gamma_2)'(\tfrac12).$$
+    answer: 2
+    wrong:
+      - { value: 3, feedback: 'That is $f(p) + 1$ or similar. The question asks for a rate: $(f\circ\gamma_2)(\lambda) = 1 + 2\lambda$, whose derivative is the constant $2$.' }
+    hint: 'Compose first: $(f\circ\gamma_2)(\lambda) = 1 + 2\lambda$.'
+    explanation: |
+      $(f\circ\gamma_2)'(\lambda) = 2$ for every $\lambda$, so $(df)_p(v_{\gamma_2,p}) = 2$.
+
+  - type: mcq
+    id: same-value
+    title: Same number, same velocity?
+    prompt: |
+      On $\mathbb{R}^2$, with $f(q) = q_1^2 + q_2$ at $p = (1, 1)$, the curves $\gamma_1(\lambda) = (\lambda, 1)$ (through $p$ at $\lambda_0 = 1$) and $\gamma_2(\lambda) = (1, 2\lambda)$ (through $p$ at $\lambda_0 = \tfrac12$) give
+      $$(df)_p(v_{\gamma_1,p}) = (df)_p(v_{\gamma_2,p}) = 2.$$
+      What follows?
+    options:
+      - text: 'Nothing about the velocities: they differ, and $(df)_p$ just sends both to $2$'
+        correct: true
+      - text: '$v_{\gamma_1,p} = v_{\gamma_2,p}$, since one covector cannot tell them apart'
+        feedback: |
+          Equal velocities must agree on **every** field. Here $\gamma_1$ moves right with components $(1, 0)$ and $\gamma_2$ moves up with $(0, 2)$; the field $q_1$ separates them ($1$ versus $0$). A single covector is a linear map $T_p\mathbb{R}^2\to\mathbb{R}$ from a 2-dimensional space to a 1-dimensional one, so it always sends many velocities to the same number.
+      - text: '$(df)_p$ is not well defined, because two different inputs gave the same output'
+        feedback: |
+          A map may send different inputs to the same output; it only must not send one input to two outputs. Here $(df)_p$ is linear, and its difference of inputs $v_{\gamma_1,p} - v_{\gamma_2,p}$, with components $(1, -2)$, is tangent to the level line through $p$, where $(df)_p$ vanishes.
+    explanation: |
+      Linearity explains the coincidence: $(df)_p$ vanishes on the difference $(1,0) - (0,2) = (1,-2)$, the direction of the level line $q_2 = 2 - q_1^2$ at $p$. The book draws a covector as exactly this line of velocities it sends to $0$, not as an arrow.
+
+  - type: mcq
+    id: sum-product-rules
+    title: Differentials of sums and products
+    prompt: |
+      Let $f, g\in C^\infty(\mathcal{M})$, $p\in\mathcal{M}$ and $\alpha\in\mathbb{R}$. The differential is $(df)_p(v) := v(f)$, and covectors are added and scaled value by value ($\oplus_T^*$, $\odot_T^*$). Which identities hold in $T_p^*\mathcal{M}$? Select all that apply.
+    multiple: true
+    options:
+      - text: '$(d(f+g))_p = (df)_p\oplus_T^*(dg)_p$'
+        correct: true
+      - text: '$(d(\alpha f))_p = \alpha\odot_T^*(df)_p$'
+        correct: true
+      - text: '$(d(fg))_p = f(p)\odot_T^*(dg)_p\oplus_T^* g(p)\odot_T^*(df)_p$'
+        correct: true
+      - text: '$(d(fg))_p$ is the map $v\mapsto (df)_p(v)\cdot(dg)_p(v)$'
+        feedback: |
+          That map is not even linear: doubling $v$ multiplies it by $4$, so it is not a covector. The product rule for derivatives, applied to $(fg)\circ\gamma$, gives instead $v(fg) = f(p)\,v(g) + g(p)\,v(f)$, a sum of two covectors scaled by numbers.
+    explanation: |
+      Evaluate each side on a velocity $v_{\gamma,p}$, with $\gamma(\lambda_0) = p$. Sums and multiples: the derivative of $(f+g)\circ\gamma$ is the sum of derivatives, and that of $(\alpha f)\circ\gamma$ is $\alpha$ times. Products: the ordinary product rule gives
+      $$\begin{aligned}((fg)\circ\gamma)'(\lambda_0) &= f(p)\,(g\circ\gamma)'(\lambda_0)\\ &\quad+ g(p)\,(f\circ\gamma)'(\lambda_0).\end{aligned}$$
+
+  - type: text
+    id: dimension
+    title: How big is $T_p^*\mathcal{M}$?
+    body: |
+      Recall from Chapter 2: if $V$ is **finite-dimensional** with basis $(\hat{x}_1,\dots,\hat{x}_n)$, the induced dual cobasis $\hat{\mathfrak{x}}^i\in V^*$, defined by
+      $$\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j,$$
+      is a basis of $V^*$. Here $\delta^i_j$ (Kronecker delta) is $1$ when $i = j$ and $0$ otherwise. One basis covector per basis vector, so
+      $$\dim V^* = \dim V.$$
+      The tangent space $T_p\mathcal{M}$ of a $d$-dimensional manifold has dimension $d$ (its chart-induced basis has $d$ vectors). Therefore
+      $$\dim T_p^*\mathcal{M} = d.$$
+      The hypothesis matters: for infinite-dimensional spaces the dual is strictly bigger, and the counting argument fails. Here we are safe, since $T_p\mathcal{M}$ is finite-dimensional.
+
+  - type: mcq
+    id: dimension-check
+    title: Count the covectors
+    prompt: |
+      $\mathcal{M}$ is a smooth manifold of dimension $d$ and $p\in\mathcal{M}$. Every smooth field $f\in C^\infty(\mathcal{M})$ gives a covector $(df)_p\in T_p^*\mathcal{M}$, and $C^\infty(\mathcal{M})$ is infinite-dimensional. What is $\dim T_p^*\mathcal{M}$?
+    options:
+      - text: '$d$'
+        correct: true
+      - text: 'Infinite, since there are infinitely many independent fields $f$'
+        feedback: |
+          Infinitely many fields, yes, but most give the **same** covector: $(df)_p$ only sees the first derivatives of $f$ at $p$ (for instance $q_1^2$ and $2q_1$ have the same differential at $q_1 = 1$). $T_p^*\mathcal{M}$ is the dual of the $d$-dimensional space $T_p\mathcal{M}$, so it has dimension $d$.
+      - text: '$d - 1$, because each $(df)_p$ vanishes on a line of velocities'
+        feedback: |
+          That counts the velocities **one** covector sends to $0$ (for $d = 2$, a line), not the size of the space of all covectors. Different covectors vanish on different directions, and there are $d$ independent ones.
+      - text: '$d^2$'
+        feedback: |
+          $d^2$ is the dimension of the space of linear maps $T_p\mathcal{M}\to T_p\mathcal{M}$ ($d\times d$ matrices). A covector has values in $\mathbb{R}$, which is $1$-dimensional, so the count is $d\cdot 1 = d$.
+    explanation: |
+      Finite-dimensional duals have the same dimension as the original space: $\dim T_p^*\mathcal{M} = \dim T_p\mathcal{M} = d$.
+
+  - type: text
+    id: lower-index
+    title: Which numbers describe $(df)_p$?
+    body: |
+      In $\mathbb{R}^d$ with the standard coordinates, a velocity at $p$ has components $v^i$ (index up), and the chain rule reads, with Einstein summation (a sum over an index once up and once down in a term),
+      $$(df)_p(v) = \partial_i f(p)\,v^i.$$
+      So $(df)_p$ is completely described by the $d$ numbers $\partial_i f(p)$, and these carry their index **down**: only then does the pairing with $v^i$ follow the summation rule. In the example $f = q_1^2 + q_2$ at $p = (1,1)$ they are $(2, 1)$.
+
+      This is the general pattern. The numbers describing a covector $\mathsf{X}_p$ will be its **components**, written in typewriter with a lower index, $\mathtt{x}^p_i$ (the $p$ moves up to make room; it is a label, not an index). How to get them from a basis is the next lesson.
+
+  - type: mcq
+    id: index-trap
+    title: Where does the index go?
+    prompt: |
+      With Einstein summation (sum over an index appearing once up and once down in a term), a velocity at $p$ has components $v^i$, and a covector $\mathsf{X}_p$ is described by $d$ numbers (typewriter $\mathtt{x}$). Which expression correctly writes the number $\mathsf{X}_p(v)$?
+    options:
+      - text: '$\mathtt{x}^p_i\,v^i$'
+        correct: true
+      - text: '$\mathtt{x}^i\,v^i$'
+        feedback: |
+          Both indices up: in the strict form of the convention a same-height repeat is **not** summed, so this is not a sum at all. Covector numbers carry a lower index precisely so that they pair with the upper components of vectors.
+      - text: '$\mathtt{x}^p_i\,v_i$'
+        feedback: |
+          Velocity components carry an **upper** index ($v^i$, from the coordinate curves $\mathscr{X}^i\circ\gamma$). Two lower indices are a same-height repeat, which the strict convention never sums.
+    explanation: |
+      Vector components up, covector components down: one up and one down make the sum $\sum_{i=1}^d\mathtt{x}^p_i v^i$. The label $p$ is not an index.
+
+  - type: mcq
+    id: not-a-vector
+    title: Is the gradient an arrow?
+    prompt: |
+      On $\mathbb{R}^2$ with $f(q) = q_1^2 + q_2$ at $p = (1, 1)$, the partial derivatives are $\partial_1 f(p) = 2$, $\partial_2 f(p) = 1$, and $(df)_p(v) = 2v^1 + v^2$ for a velocity with components $(v^1, v^2)$. A friend says: "$(df)_p$ is the arrow $(2, 1)$, a vector in $T_p\mathbb{R}^2$." What is right?
+    options:
+      - text: '$(df)_p$ is an element of $T_p^*\mathbb{R}^2$, a linear map that eats velocities; it is not an element of $T_p\mathbb{R}^2$'
+        correct: true
+      - text: 'The friend is right: $(2, 1)$ is a velocity at $p$, so $(df)_p\in T_p\mathbb{R}^2$'
+        feedback: |
+          Tempting from calculus, where "the gradient" is drawn as an arrow. But $(df)_p$ takes a velocity and returns a number; it lives in the dual space. Turning it into an arrow needs a way to pair two vectors (a dot product, the metric of Level 7). The definition of $(df)_p$ uses no such thing.
+      - text: 'It is both: $T_p^*\mathbb{R}^2$ and $T_p\mathbb{R}^2$ are the same set, since both have dimension $2$'
+        feedback: |
+          Equal dimensions make the spaces isomorphic, but there is no preferred way to match them: every choice of matching depends on extra structure, like a basis or a metric. A velocity is a map on fields, a covector is a map on velocities. Different objects.
+    explanation: |
+      A covector acts **on** $T_p\mathcal{M}$. A faithful picture is the line of velocities it sends to $0$ (here the direction $(1,-2)$, tangent to the level line of $f$ through $p$), with the value on other velocities growing linearly away from it.
+
+  - type: mcq
+    id: local
+    title: How much of $f$ matters?
+    prompt: |
+      Let $f, g\in C^\infty(\mathcal{M})$ agree on some open set containing $p$, but differ far from $p$. The differential is $(df)_p(v_{\gamma,p}) := (f\circ\gamma)'(\lambda_0)$, where $\gamma(\lambda_0) = p$. What is true?
+    options:
+      - text: '$(df)_p = (dg)_p$'
+        correct: true
+      - text: '$(df)_p \ne (dg)_p$, since $f$ and $g$ are different fields'
+        feedback: |
+          A derivative at $\lambda_0$ only uses values near $\lambda_0$. By continuity, $\gamma(\lambda)$ stays in the open set where $f = g$ for $\lambda$ close to $\lambda_0$, so $f\circ\gamma$ and $g\circ\gamma$ agree there and have the same derivative. What happens far from $p$ is invisible.
+      - text: 'It depends on the curve: some curves leave the open set'
+        feedback: |
+          Curves may leave the open set later, but every curve through $p$ is inside it for $\lambda$ near $\lambda_0$, and only that piece enters $(f\circ\gamma)'(\lambda_0)$.
+    explanation: |
+      $(df)_p$ depends only on $f$ near $p$, indeed only on its first derivatives at $p$. This is why the polar angle $\theta$ can be used near $p$ even though it is not smooth on all of $\mathbb{R}^2$.
+
+  - type: mcq
+    id: chart-free
+    title: Does the differential need a chart?
+    prompt: |
+      $\mathcal{M}$ is a smooth manifold, $f\in C^\infty(\mathcal{M})$ and $p\in\mathcal{M}$. The differential is defined by $(df)_p(v_{\gamma,p}) := v_{\gamma,p}(f)$. Which statement is right?
+    options:
+      - text: '$(df)_p$ is defined without any chart; a chart is needed only to describe it by numbers'
+        correct: true
+      - text: '$(df)_p$ depends on the chart, because the partial derivatives $\partial_i f$ change between charts'
+        feedback: |
+          The **numbers** describing $(df)_p$ change between charts, just as the components of a velocity do. The map itself is defined as "rate of $f$ along $v$", with no chart in sight, and its value on each velocity is the same whichever chart you compute in.
+      - text: '$(df)_p$ is only defined on $\mathbb{R}^d$, where partial derivatives exist'
+        feedback: |
+          The definition uses only velocities and $(f\circ\gamma)'(\lambda_0)$, a derivative of a real function of one real variable. That makes sense on every smooth manifold.
+    explanation: |
+      Like velocities, covectors are geometric objects; charts provide descriptions. The value $(df)_p(v)$, a rate of change, is a single number that every chart agrees on.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      - The **cotangent space** $T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(T_p\mathcal{M}, \mathbb{R})$, the linear maps on velocities at $p$, with $\oplus_T^*$, $\odot_T^*$ defined value by value. Its elements $\mathsf{X}_p$ are **covectors**.
+      - $\dim T_p^*\mathcal{M} = d$, because finite-dimensional duals have the dimension of the original space.
+      - The **differential** $(df)_p(v) := v(f)$, the rate of $f$ along $v$. It is linear by the field-by-field operations of $T_p\mathcal{M}$, so $(df)_p\in T_p^*\mathcal{M}$. It depends only on $f$ near $p$, and needs no chart and no metric.
+      - A covector is not an arrow in $T_p\mathcal{M}$: it eats arrows. Its numbers carry lower indices, typewriter $\mathtt{x}^p_i$.
+      - Example: $f = q_1^2 + q_2$ at $p = (1,1)$ gives $(df)_p(v) = 2v^1 + v^2$, which is $2$ on both C.3 velocities and $0$ along the level line.
+
+      **Next: Differentials as a Basis.** A chart gives $d$ special fields, its coordinate functions $\mathscr{X}^i$. Their differentials $(d\mathscr{X}^i)_p$ turn out to be exactly the dual basis of $(\partial/\partial\mathscr{X}^i)_p$, and every covector is a combination of them. How do its components change when the chart changes?
