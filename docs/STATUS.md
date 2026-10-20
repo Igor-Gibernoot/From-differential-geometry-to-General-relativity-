@@ -19,10 +19,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   `wrap-up` ending with a teaser for the next level.
 - **Chapter 4 in progress:** `ch04-tangent-space` (26 cards),
   `ch04-velocity-operations` (23 cards), `ch04-coordinate-basis` (33 cards),
-  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards), `ch04-cotangent` (23 cards) built; widget `chart-basis` built (coordinate lines of two charts, basis at
+  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards), `ch04-cotangent` (23 cards), `ch04-cotangent-basis` (35 cards) built; widget `chart-basis` built (coordinate lines of two charts, basis at
   $p$, components, Jacobian).
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, next `ch04-cotangent-basis` (concept: differentials as a basis); then Chapters 5–10 (each with
+  order, next `ch04-tensor-space` (concept: tensor spaces at a point); then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -102,8 +102,20 @@ append a short entry at the end of **Log** (a few lines, ending with
   $(df)_p(v_{\gamma,p}) := v_{\gamma,p}(f)$ ("differential (or gradient)", read as one symbol); covector
   numbers typewriter lower index $\mathtt{x}^p_i$ (book; $p$ is a label up); $\mathsf{X}_p(v) = \mathtt{x}^p_iv^i$;
   C.3 $(df)_p(v) = 2v^1 + v^2$, kernel direction $(1,-2)$ (level line $q_2 = 2-q_1^2$); a covector is
-  pictured as the line it sends to $0$, never an arrow (arrow needs the metric, Level 7). Not yet
-  introduced: $(d\mathscr{X}^i)_p$ as a basis, component transformation, "every covector is some $(df)_p$".
+  pictured as the line it sends to $0$, never an arrow (arrow needs the metric, Level 7).
+  Cotangent basis (`ch04-cotangent-basis`): $(d\mathscr{X}^i)_p((\partial/\partial\mathscr{X}^j)_p) = \delta^i_j$ via
+  $\mathscr{X}^i\circ\mathscr{X}^{-1}$ = $i$-th projection; "dual chart-induced basis"; $(d\mathscr{X}^i)_p$ pictured as the line
+  where $\mathscr{X}^i$ is constant (along the other basis vector); independence coefficients $a_i$ (lower);
+  $\mathtt{x}^p_i := \mathsf{X}_p((\partial/\partial\mathscr{X}^i)_p)$, $\mathsf{X}_p = \mathtt{x}^p_i(d\mathscr{X}^i)_p$; chart representatives
+  $F(a^1,a^2) = \tfrac14(a^1)^2 - a^2$ ($\mathscr{X}^{-1}(a^1,a^2) = (a^1/2,-a^2)$), $G(b^1,b^2) = (b^1)^2 + b^2e^{-b^1}$
+  ($\mathscr{Y}^{-1}(b^1,b^2) = (b^1, b^2e^{-b^1})$); C.3 $(df)_p$: $(1,-1)$ in $\mathscr{X}$, $(1,1/e)$ in $\mathscr{Y}$, pairing with
+  $v = (1,2)$ gives $4$ in both; $(d\mathscr{Y}^1)_p = \tfrac12(d\mathscr{X}^1)_p$, $(d\mathscr{Y}^2)_p = \tfrac e2(d\mathscr{X}^1)_p - e(d\mathscr{X}^2)_p$,
+  $(d\mathscr{X}^1)_p = 2(d\mathscr{Y}^1)_p$, $(d\mathscr{X}^2)_p = (d\mathscr{Y}^1)_p - \tfrac1e(d\mathscr{Y}^2)_p$; laws written as
+  $(d\mathscr{Y}^i)_p = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p(d\mathscr{X}^j)_p$ (row $i$, "contravariant") and
+  $\mathtt{y}^p_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p\mathtt{x}^p_j$ (column $i$ of inverse, "covariant"), components law derived by
+  feeding the vector basis law to $\mathsf{X}_p$; vector components in pairings $\dot\gamma^i_\mathcal{U}$, $\dot\gamma^i_\mathcal{V}$;
+  every covector is $(d(\psi f))_p$ with bump $\psi$ (existence stated without proof); shorthand $(dx^i)_p$, $(dy^i)_p$,
+  $\tilde{\mathtt{x}}^p_i$, $\tilde{\mathtt{y}}^p_i$ introduced and usable; look-alikes $x^i_p$ / $\mathtt{x}^p_i$ / $(dx^i)_p$ flagged.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -113,6 +125,22 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Concept lesson `ch04-cotangent-basis` (35 cards): hook (a chart gives $d$ fields $\mathscr{X}^i$),
+predict $(d\mathscr{X}^i)_p((\partial/\partial\mathscr{X}^j)_p)$, compute via projection MCQ, dual cobasis recall,
+read-a-component numeric, `chart-basis` with `charts: [X]` (presets on the two basis vectors and
+the vertical; image checked) + kernel MCQ and which-line trap, B.6 independence ($a_i\delta^i_j$ MCQ),
+components + ordered spanning proof, expansion build, $(df)_p$ components with C.3 numerics in
+$\mathscr{X}$ and $\mathscr{Y}$, pairing $4$ in both charts, `chart-basis [X, Y]` revisited (readouts =
+dual bases on $v$), basis law (from the velocity component law) build + numeric $-e$, component
+law + which-Jacobian MCQ + numeric, invariance via inverse identity + MCQ, footnote 7 bump argument
++ MCQ, shorthand, look-alike trap, reverse law numeric, summary, teaser Tensor Spaces. Choices:
+no new widget (chart-basis readouts reinterpreted as $(d\mathscr{X}^i)_p(v)$); component law derived by
+evaluating on $(\partial/\partial\mathscr{Y}^i)_p$ rather than the book's substitution (book's route mentioned).
+Validate and shots clean (0 problems).
+Conventions fixed here: $(d\mathscr{X}^i)_p$ pictured as the line where $\mathscr{X}^i$ is constant; coefficients
+$a_i$ for covector combinations; $F(a^1,a^2)$, $G(b^1,b^2)$ C.3 representatives; laws in the forms above;
+shorthand $(dx^i)_p$, $(dy^i)_p$ usable.
 
 Concept lesson `ch04-cotangent` (23 cards): hook ($v\mapsto v(f)$, temperature observer),
 predict linearity for $f = q_1^2+q_2$, `curve-velocity` widget (`chain`, `graph: false`,

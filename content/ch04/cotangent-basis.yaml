@@ -1,0 +1,528 @@
+id: ch04-cotangent-basis
+title: Differentials as a Basis
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: A chart hands us d fields
+    body: |
+      Recall: the **cotangent space** $T_p^*\mathcal{M} := \mathrm{Hom}_\mathbb{R}(T_p\mathcal{M}, \mathbb{R})$ is the set of linear maps from velocities at $p$ to numbers. Every scalar field $f$ gives one, its **differential**
+      $$(df)_p(v) := v(f),$$
+      the rate of change of $f$ along the velocity $v$.
+
+      A chart $(\mathcal{U}, \mathscr{X})$ around $p$ comes with $d$ special fields: its **coordinate functions** $\mathscr{X}^i\colon\mathcal{U}\to\mathbb{R}$, where $\mathscr{X}^i(q)$ is the $i$-th coordinate of the point $q$. Each has a differential $(d\mathscr{X}^i)_p$. (Strictly, $\mathscr{X}^i$ lives only on $\mathcal{U}$; recall that a velocity only looks near $p$, so $v(\mathscr{X}^i)$ makes sense, exactly as when we fed $\mathscr{X}^i$ to the basis vectors.)
+
+      The same chart also gave us the **chart-induced basis** of $T_p\mathcal{M}$:
+      $$\Big(\frac{\partial}{\partial\mathscr{X}^j}\Big)_p(f) := \partial_j\big[f\circ\mathscr{X}^{-1}\big](\mathscr{X}(p)).$$
+      So one chart produces $d$ vectors and $d$ covectors at $p$. How are they related?
+
+  - type: mcq
+    id: predict
+    title: Predict first
+    prompt: |
+      A chart $(\mathcal{U}, \mathscr{X})$ around $p$ gives the basis vectors $(\partial/\partial\mathscr{X}^j)_p$ of $T_p\mathcal{M}$ and the differentials $(d\mathscr{X}^i)_p$ of its coordinate functions, where $(d\mathscr{X}^i)_p(v) := v(\mathscr{X}^i)$. Before computing, guess the number
+      $$(d\mathscr{X}^i)_p\Big(\Big(\frac{\partial}{\partial\mathscr{X}^j}\Big)_p\Big).$$
+    options:
+      - text: '$1$ if $i = j$ and $0$ otherwise, for every chart and every point'
+        correct: true
+      - text: 'It depends on the chart and on $p$, like a Jacobian entry'
+        feedback: |
+          Jacobian entries appear when **two** charts are compared. Here both objects come from the **same** chart, and each is defined by that chart's own coordinates, so their pairing is pinned down by the definitions alone. Compute it in the next card.
+      - text: 'It cannot be computed without a metric'
+        feedback: |
+          A metric is needed to turn vectors into covectors or to measure lengths, but not to feed a vector into a covector: that pairing is just evaluation of a linear map. Both objects here are defined from the chart alone.
+      - text: '$1$ for every $i$ and $j$'
+        feedback: |
+          That would make all the $(d\mathscr{X}^i)_p$ give the same value on each basis vector. But $(\partial/\partial\mathscr{X}^j)_p$ is the velocity of the curve along which **only** the $j$-th coordinate changes, so the other coordinate functions do not change along it.
+    explanation: |
+      $\delta^i_j$, the Kronecker delta ($1$ if $i = j$, $0$ otherwise). Moving along the $j$-th coordinate curve changes only the $j$-th coordinate, at unit rate.
+
+  - type: text
+    id: compute
+    title: Compute it
+    body: |
+      Unpack the two definitions. First the differential, then the basis vector:
+      $$\begin{aligned}(d\mathscr{X}^i)_p\Big(\Big(\tfrac{\partial}{\partial\mathscr{X}^j}\Big)_p\Big) &= \Big(\tfrac{\partial}{\partial\mathscr{X}^j}\Big)_p(\mathscr{X}^i)\\ &= \partial_j\big[\mathscr{X}^i\circ\mathscr{X}^{-1}\big](\mathscr{X}(p)).\end{aligned}$$
+      The map $\mathscr{X}^i\circ\mathscr{X}^{-1}$ goes from $\mathbb{R}^d$ to $\mathbb{R}$. Which function is it, and what is its $j$-th partial derivative?
+
+  - type: mcq
+    id: projection
+    title: The composite
+    prompt: |
+      For a chart $(\mathcal{U}, \mathscr{X})$ with coordinate functions $\mathscr{X}^i$, what is the map $\mathscr{X}^i\circ\mathscr{X}^{-1}\colon\mathscr{X}(\mathcal{U})\to\mathbb{R}$, and its partial derivative $\partial_j$ at $\mathscr{X}(p)$?
+    options:
+      - text: 'The $i$-th projection $(a^1,\dots,a^d)\mapsto a^i$; $\partial_j$ of it is $\delta^i_j$'
+        correct: true
+      - text: 'The identity of $\mathbb{R}^d$; $\partial_j$ of it is $1$'
+        feedback: |
+          $\mathscr{X}\circ\mathscr{X}^{-1}$ is the identity, but $\mathscr{X}^i$ is only the $i$-th component of $\mathscr{X}$. So $\mathscr{X}^i\circ\mathscr{X}^{-1}$ takes a point $(a^1,\dots,a^d)$ of $\mathbb{R}^d$ back to $\mathcal{M}$ and reads its $i$-th coordinate: the result is the number $a^i$, not a point of $\mathbb{R}^d$.
+      - text: 'It depends on the chart, so $\partial_j$ of it is the Jacobian entry $(\partial\mathscr{X}^i/\partial\mathscr{X}^j)_p$, unknown in general'
+        feedback: |
+          Whatever the chart, going to $\mathcal{M}$ with $\mathscr{X}^{-1}$ and coming back with $\mathscr{X}^i$ just reads off the $i$-th number you started with. The "Jacobian of a chart with itself" is always the identity matrix.
+    explanation: |
+      $\mathscr{X}^i\circ\mathscr{X}^{-1}(a^1,\dots,a^d) = a^i$. Its derivative in the $j$-th slot is $1$ if $j = i$ and $0$ otherwise, at every point. Hence
+      $$(d\mathscr{X}^i)_p\Big(\Big(\tfrac{\partial}{\partial\mathscr{X}^j}\Big)_p\Big) = \delta^i_j.$$
+
+  - type: text
+    id: dual-basis
+    title: The dual basis, again
+    body: |
+      Recall from Chapter 2: given a basis $\hat{x}_1,\dots,\hat{x}_d$ of a vector space $V$, the **dual cobasis** $\hat{\mathfrak{x}}^1,\dots,\hat{\mathfrak{x}}^d$ of $V^*$ is defined by
+      $$\hat{\mathfrak{x}}^i(\hat{x}_j) = \delta^i_j,$$
+      and it is a basis of $V^*$. The covector $\hat{\mathfrak{x}}^i$ reads off the $i$-th component of a vector.
+
+      We just found that the differentials $(d\mathscr{X}^i)_p$ satisfy exactly this condition against the chart-induced basis. So the set
+      $$\big\{(d\mathscr{X}^1)_p,\dots,(d\mathscr{X}^d)_p\big\}$$
+      is the dual basis of $\big\{(\partial/\partial\mathscr{X}^j)_p\big\}$, the **dual chart-induced basis** of $T_p^*\mathcal{M}$. Nothing new had to be built: the chart's own coordinate functions, differentiated, are the dual basis.
+
+      In particular, for a velocity $v = v^j\,(\partial/\partial\mathscr{X}^j)_p$ (Einstein summation over $j$):
+      $$(d\mathscr{X}^i)_p(v) = v^j\,\delta^i_j = v^i.$$
+
+  - type: numeric
+    id: read-component
+    title: Reading a component
+    prompt: |
+      A chart $(\mathcal{U}, \mathscr{X})$ on a 2-dimensional manifold gives the basis $(\partial/\partial\mathscr{X}^1)_p$, $(\partial/\partial\mathscr{X}^2)_p$ of $T_p\mathcal{M}$, and $(d\mathscr{X}^i)_p((\partial/\partial\mathscr{X}^j)_p) = \delta^i_j$. Take
+      $$v = 3\Big(\tfrac{\partial}{\partial\mathscr{X}^1}\Big)_p - 5\Big(\tfrac{\partial}{\partial\mathscr{X}^2}\Big)_p.$$
+      What is $(d\mathscr{X}^2)_p(v)$?
+    answer: -5
+    wrong:
+      - { value: 3, feedback: '$(d\mathscr{X}^2)_p$ returns $1$ on the **second** basis vector and $0$ on the first, so it picks the coefficient of $(\partial/\partial\mathscr{X}^2)_p$.' }
+      - { value: -2, feedback: 'The covector does not add up the coefficients: by linearity it gives $3\cdot 0 + (-5)\cdot 1$.' }
+    hint: 'Use linearity: $(d\mathscr{X}^2)_p(v) = 3\,\delta^2_1 - 5\,\delta^2_2$.'
+    explanation: |
+      $3\cdot 0 + (-5)\cdot 1 = -5$. The differential of the $i$-th coordinate function reads the $i$-th component of a velocity.
+
+  - type: widget
+    id: explore-x
+    title: Watch the differentials read components
+    widget: chart-basis
+    config:
+      charts: [X]
+      p: [1, 1]
+      v: [1, 2]
+      dragP: false
+      presets:
+        - { label: 'First basis vector', charts: [X], p: [1, 1], v: [0.5, 0] }
+        - { label: 'Second basis vector', charts: [X], p: [1, 1], v: [0, -1] }
+        - { label: 'Along the vertical', charts: [X], p: [1, 1], v: [0, 1.5] }
+    body: |
+      The plane $\mathbb{R}^2$ (points $q = (q_1, q_2)$) with the chart $\mathscr{X}(q) = (2q_1, -q_2)$ and its coordinate lines, at $p = (1, 1)$. The purple arrows are $(\partial/\partial\mathscr{X}^1)_p$ and $(\partial/\partial\mathscr{X}^2)_p$; the blue arrow is a velocity $v$, and the readout gives its components $(\mathscr{X}^i\circ\gamma)'(0) = v(\mathscr{X}^i)$. By definition that number **is** $(d\mathscr{X}^i)_p(v)$: the readout is the two differentials at work.
+
+      1. Press **First basis vector** and **Second basis vector**: read $(d\mathscr{X}^1)_p$ and $(d\mathscr{X}^2)_p$ on each.
+      2. Press **Along the vertical**, then drag $v$ up and down along the vertical line $q_1 = 1$ through $p$. Which component stays $0$?
+
+  - type: mcq
+    id: kernel-picture
+    title: The picture of a differential
+    review: false
+    prompt: |
+      In the plane with the chart $\mathscr{X}(q) = (2q_1, -q_2)$ at $p = (1, 1)$: dragging the velocity $v$ along the vertical line $q_1 = 1$ through $p$, which number stays $0$?
+    options:
+      - text: '$(d\mathscr{X}^1)_p(v)$: on that line $\mathscr{X}^1 = 2q_1$ does not change'
+        correct: true
+      - text: '$(d\mathscr{X}^2)_p(v)$'
+        feedback: |
+          Moving vertically changes $q_2$, hence $\mathscr{X}^2 = -q_2$, at a nonzero rate. What stays constant along the vertical line is $\mathscr{X}^1 = 2q_1$, so its differential vanishes there.
+      - text: 'Both, since the vertical line is a coordinate line'
+        feedback: |
+          A coordinate line is a line along which **one** coordinate is constant and the other changes. The vertical line through $p$ is where $\mathscr{X}^1$ is constant; $\mathscr{X}^2$ still changes along it.
+    explanation: |
+      $(d\mathscr{X}^1)_p$ sends to $0$ exactly the velocities along the line where $\mathscr{X}^1$ is constant, the line of $(\partial/\partial\mathscr{X}^2)_p$. Recall that a covector is pictured as the line of velocities it sends to $0$, not as an arrow. So $(d\mathscr{X}^1)_p$ is pictured by the coordinate line on which $\mathscr{X}^1$ is constant, which points along the **other** basis vector.
+
+  - type: mcq
+    id: kernel-trap
+    title: Which line is it?
+    prompt: |
+      A chart $(\mathcal{U}, \mathscr{X})$ on a 2-dimensional manifold gives at $p$ the basis vectors $(\partial/\partial\mathscr{X}^1)_p$, $(\partial/\partial\mathscr{X}^2)_p$ and the covectors $(d\mathscr{X}^1)_p$, $(d\mathscr{X}^2)_p$, with $(d\mathscr{X}^i)_p((\partial/\partial\mathscr{X}^j)_p) = \delta^i_j$. A covector is pictured as the line of velocities it sends to $0$. Which line pictures $(d\mathscr{X}^1)_p$?
+    options:
+      - text: 'The line of multiples of $(\partial/\partial\mathscr{X}^2)_p$'
+        correct: true
+      - text: 'The line of multiples of $(\partial/\partial\mathscr{X}^1)_p$'
+        feedback: |
+          Tempting, since both carry the label $1$. But $(d\mathscr{X}^1)_p$ gives $1$ on $(\partial/\partial\mathscr{X}^1)_p$, not $0$. The velocities it kills are those along which $\mathscr{X}^1$ does not change: the multiples of $(\partial/\partial\mathscr{X}^2)_p$.
+      - text: 'It is the arrow $(\partial/\partial\mathscr{X}^1)_p$ itself'
+        feedback: |
+          A covector is not an element of $T_p\mathcal{M}$; it eats elements of $T_p\mathcal{M}$. Matching it with one arrow would need extra structure (the metric, Level 7). Without it, the honest picture is the line it sends to $0$.
+    explanation: |
+      $(d\mathscr{X}^1)_p((\partial/\partial\mathscr{X}^2)_p) = \delta^1_2 = 0$, so the line through $(\partial/\partial\mathscr{X}^2)_p$ is killed, while $(\partial/\partial\mathscr{X}^1)_p$ gives $1$.
+
+  - type: text
+    id: independence
+    title: Why it is a basis
+    body: |
+      Chapter 2 tells us that a dual basis is a basis, but let's see it directly here; the argument also shows how to find components.
+
+      **Linear independence.** Suppose a combination vanishes, $a_i\,(d\mathscr{X}^i)_p = 0$ with $a_i\in\mathbb{R}$ (the zero covector, which gives $0$ on every velocity). Feed it the basis vector $(\partial/\partial\mathscr{X}^j)_p$, for a fixed $j$:
+      $$0 = a_i\,(d\mathscr{X}^i)_p\Big(\Big(\tfrac{\partial}{\partial\mathscr{X}^j}\Big)_p\Big) = a_i\,\delta^i_j.$$
+      The coefficients carry a **lower** index because they multiply covectors with an upper one.
+
+  - type: mcq
+    id: delta-sum
+    title: Contract the delta
+    prompt: |
+      With Einstein summation over $i = 1,\dots,d$, and $\delta^i_j$ the Kronecker delta ($1$ if $i = j$, $0$ otherwise), what is $a_i\,\delta^i_j$ for a fixed $j$?
+    options:
+      - text: '$a_j$'
+        correct: true
+      - text: '$a_1 + \dots + a_d$'
+        feedback: |
+          That would need $\delta^i_j = 1$ for every $i$. In the sum over $i$, only the term with $i = j$ survives; all others are multiplied by $0$.
+      - text: '$d\cdot a_j$'
+        feedback: |
+          This mixes it up with $\delta^i_i = d$, where the sum runs over the diagonal. Here $j$ is fixed and only one term of the sum is nonzero.
+    explanation: |
+      $a_i\,\delta^i_j = a_j$: the delta replaces the summed index by the free one. So $a_i\,(d\mathscr{X}^i)_p = 0$ forces $a_j = 0$ for every $j$: the differentials are linearly independent.
+
+  - type: text
+    id: components
+    title: Components of a covector
+    body: |
+      **Spanning.** Take any covector $\mathsf{X}_p\in T_p^*\mathcal{M}$ and define its **components** in the chart $\mathscr{X}$ as its values on the basis vectors:
+      $$\mathtt{x}^p_i := \mathsf{X}_p\Big(\Big(\tfrac{\partial}{\partial\mathscr{X}^i}\Big)_p\Big)\in\mathbb{R}.$$
+      (Typewriter $\mathtt{x}$ with a lower index; the $p$ is a label, not an index.) The claim is
+      $$\mathsf{X}_p = \mathtt{x}^p_i\,(d\mathscr{X}^i)_p.$$
+      Two covectors are equal when they give the same number on every velocity $v = v^j\,(\partial/\partial\mathscr{X}^j)_p$. Recall that covectors are added and scaled value by value.
+
+  - type: order
+    id: spanning-proof
+    title: Prove the expansion
+    prompt: |
+      Let $\mathsf{X}_p\in T_p^*\mathcal{M}$ have components $\mathtt{x}^p_i := \mathsf{X}_p((\partial/\partial\mathscr{X}^i)_p)$ in a chart $(\mathcal{U},\mathscr{X})$, and let $v = v^i\,(\partial/\partial\mathscr{X}^i)_p$ (Einstein summation). Put the chain in order, starting from the left side.
+    steps:
+      - '$\big(\mathtt{x}^p_i\,(d\mathscr{X}^i)_p\big)(v)$'
+      - '$= \mathtt{x}^p_i\,(d\mathscr{X}^i)_p(v)$ (covectors act value by value)'
+      - '$= \mathtt{x}^p_i\,v^i$ ($(d\mathscr{X}^i)_p$ reads the $i$-th component)'
+      - '$= v^i\,\mathsf{X}_p\big((\partial/\partial\mathscr{X}^i)_p\big)$ (definition of $\mathtt{x}^p_i$)'
+      - '$= \mathsf{X}_p(v)$ (linearity of $\mathsf{X}_p$)'
+    hint: 'Start by letting the combination act value by value, then use $(d\mathscr{X}^i)_p(v) = v^i$, then pack the components back into $\mathsf{X}_p$.'
+    explanation: |
+      The two covectors agree on every $v$, so $\mathsf{X}_p = \mathtt{x}^p_i\,(d\mathscr{X}^i)_p$. With independence, the $(d\mathscr{X}^i)_p$ form a basis of $T_p^*\mathcal{M}$, and again $\dim T_p^*\mathcal{M} = d$. On the way we got the pairing in components:
+      $$\mathsf{X}_p(v) = \mathtt{x}^p_i\,v^i.$$
+
+  - type: build
+    id: build-expansion
+    title: Write the expansion
+    prompt: |
+      In a chart $(\mathcal{U}, \mathscr{X})$ around $p$, a covector $\mathsf{X}_p\in T_p^*\mathcal{M}$ has components $\mathtt{x}^p_i := \mathsf{X}_p((\partial/\partial\mathscr{X}^i)_p)$. Using Einstein summation, expand $\mathsf{X}_p$ in the dual chart-induced basis.
+    prefix: '\mathsf{X}_p ='
+    tiles: ['\mathtt{x}^p_i', '(d\mathscr{X}^i)_p', '\big(\tfrac{\partial}{\partial\mathscr{X}^i}\big)_p', '(d\mathscr{X}_i)_p', '\mathtt{x}_p^i']
+    answers:
+      - ['\mathtt{x}^p_i', '(d\mathscr{X}^i)_p']
+      - ['(d\mathscr{X}^i)_p', '\mathtt{x}^p_i']
+    wrong:
+      - answer: ['\mathtt{x}^p_i', '\big(\tfrac{\partial}{\partial\mathscr{X}^i}\big)_p']
+        feedback: 'That is a combination of basis **vectors**, an element of $T_p\mathcal{M}$, not of $T_p^*\mathcal{M}$. The index heights warn you too: an index in a denominator counts as lower, so both $i$ are down and no sum is allowed.'
+      - answer: ['\mathtt{x}_p^i', '(d\mathscr{X}^i)_p']
+        feedback: 'Both $i$ are upper, so Einstein summation does not apply. Covector components carry a **lower** index, matching the upper index of the basis covectors $(d\mathscr{X}^i)_p$.'
+    hint: 'Components with a lower index times basis covectors with an upper index.'
+    explanation: |
+      $\mathsf{X}_p = \mathtt{x}^p_i\,(d\mathscr{X}^i)_p$: one $i$ down, one up, summed. The coordinate functions $\mathscr{X}^i$ carry upper indices, so their differentials do too.
+
+  - type: text
+    id: df-components
+    title: The components of a differential
+    body: |
+      Apply this to $\mathsf{X}_p = (df)_p$. Its components are its values on the basis vectors, and $(df)_p(v) := v(f)$:
+      $$\mathtt{x}^p_i = (df)_p\Big(\Big(\tfrac{\partial}{\partial\mathscr{X}^i}\Big)_p\Big) = \partial_i\big[f\circ\mathscr{X}^{-1}\big](\mathscr{X}(p)).$$
+      So, with $F := f\circ\mathscr{X}^{-1}$ the chart representative of $f$,
+      $$(df)_p = \partial_iF(\mathscr{X}(p))\,(d\mathscr{X}^i)_p.$$
+      This is the $df = \tfrac{\partial f}{\partial x}dx + \tfrac{\partial f}{\partial y}dy$ of calculus, now with a precise meaning: each $(d\mathscr{X}^i)_p$ is a linear map on velocities, not an "infinitesimal".
+
+      **Running example (C.3).** On $\mathbb{R}^2$, $f(q) = q_1^2 + q_2$ at $p = (1, 1)$, and the chart $\mathscr{X}(q) = (2q_1, -q_2)$, so $\mathscr{X}(p) = (2, -1)$ and
+      $$\mathscr{X}^{-1}(a^1, a^2) = \big(\tfrac{a^1}{2}, -a^2\big).$$
+
+  - type: numeric
+    id: c3-x1
+    title: First component in the chart X
+    prompt: |
+      On $\mathbb{R}^2$ take $f(q) = q_1^2 + q_2$, $p = (1, 1)$ and the chart $\mathscr{X}(q) = (2q_1, -q_2)$, with inverse $\mathscr{X}^{-1}(a^1, a^2) = (a^1/2, -a^2)$ and $\mathscr{X}(p) = (2, -1)$. The chart representative is
+      $$F(a^1, a^2) = \tfrac14(a^1)^2 - a^2.$$
+      Compute $\mathtt{x}^p_1 = \partial_1F(\mathscr{X}(p))$, the first component of $(df)_p$ in the chart $\mathscr{X}$.
+    answer: 1
+    wrong:
+      - { value: 2, feedback: 'That is $\partial f/\partial q_1 = 2q_1$ at $p$, the component in the standard coordinates. In the chart $\mathscr{X}$ we differentiate $F$ with respect to $a^1 = 2q_1$: $\partial_1F = a^1/2$.' }
+      - { value: 4, feedback: 'Differentiate $\tfrac14(a^1)^2$: the result is $\tfrac12 a^1$, then set $a^1 = 2$.' }
+    hint: '$\partial_1F = \tfrac12 a^1$; evaluate at $a^1 = 2$.'
+    explanation: |
+      $\partial_1F = a^1/2 = 1$ at $\mathscr{X}(p) = (2, -1)$. The chart $\mathscr{X}$ stretches $q_1$ by $2$, so the rate per unit of $\mathscr{X}^1$ is half the rate per unit of $q_1$.
+
+  - type: numeric
+    id: c3-x2
+    title: Second component in the chart X
+    prompt: |
+      On $\mathbb{R}^2$ take $f(q) = q_1^2 + q_2$, $p = (1, 1)$ and the chart $\mathscr{X}(q) = (2q_1, -q_2)$. The chart representative is $F(a^1, a^2) = \tfrac14(a^1)^2 - a^2$ and $\mathscr{X}(p) = (2, -1)$. Compute $\mathtt{x}^p_2 = \partial_2F(\mathscr{X}(p))$.
+    answer: -1
+    wrong:
+      - { value: 1, feedback: 'That is $\partial f/\partial q_2$, the standard component. The chart reverses the second axis, $a^2 = -q_2$, so $F$ contains $-a^2$.' }
+    hint: '$F$ depends on $a^2$ only through $-a^2$.'
+    explanation: |
+      $\partial_2F = -1$. So in the chart $\mathscr{X}$
+      $$(df)_p = (d\mathscr{X}^1)_p - (d\mathscr{X}^2)_p.$$
+
+  - type: numeric
+    id: c3-y1
+    title: First component in the chart Y
+    prompt: |
+      On $\mathbb{R}^2$ take $f(q) = q_1^2 + q_2$, $p = (1, 1)$ and the chart $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, with inverse $\mathscr{Y}^{-1}(b^1, b^2) = (b^1, b^2e^{-b^1})$ and $\mathscr{Y}(p) = (1, e)$. The chart representative is
+      $$G(b^1, b^2) = (b^1)^2 + b^2e^{-b^1}.$$
+      Compute $\mathtt{y}^p_1 = \partial_1G(\mathscr{Y}(p))$, the first component of $(df)_p$ in the chart $\mathscr{Y}$.
+    answer: 1
+    wrong:
+      - { value: 2, feedback: 'That keeps only the derivative of $(b^1)^2$. The term $b^2e^{-b^1}$ also depends on $b^1$: its derivative is $-b^2e^{-b^1}$, which is $-e\cdot e^{-1} = -1$ at $\mathscr{Y}(p)$.' }
+      - { value: 3, feedback: 'Watch the sign: the derivative of $e^{-b^1}$ is $-e^{-b^1}$.' }
+    hint: '$\partial_1G = 2b^1 - b^2e^{-b^1}$; set $b^1 = 1$, $b^2 = e$.'
+    explanation: |
+      $\partial_1G = 2 - e\cdot e^{-1} = 1$. Even though $\mathscr{Y}^1 = q_1$ is the same function as the standard $q_1$, the component is not $2$: a partial derivative depends on which coordinates are held fixed, and here it is $\mathscr{Y}^2$, not $q_2$.
+
+  - type: numeric
+    id: c3-y2
+    title: Second component in the chart Y
+    prompt: |
+      On $\mathbb{R}^2$ take $f(q) = q_1^2 + q_2$, $p = (1, 1)$ and the chart $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, with $\mathscr{Y}(p) = (1, e)$ and chart representative $G(b^1, b^2) = (b^1)^2 + b^2e^{-b^1}$. Compute $\mathtt{y}^p_2 = \partial_2G(\mathscr{Y}(p))$.
+    answer: 0.36788
+    tolerance: 0.001
+    answerText: '1/e ≈ 0.368'
+    wrong:
+      - { value: 1, feedback: 'The factor $e^{-b^1}$ multiplies $b^2$: $\partial_2G = e^{-b^1}$, at $b^1 = 1$.' }
+      - { value: 2.71828, feedback: 'The exponent is negative: $\partial_2G = e^{-b^1} = e^{-1}$.' }
+    hint: '$G$ depends on $b^2$ through $b^2e^{-b^1}$.'
+    explanation: |
+      $\partial_2G = e^{-1}$. So in the chart $\mathscr{Y}$
+      $$(df)_p = (d\mathscr{Y}^1)_p + \tfrac1e(d\mathscr{Y}^2)_p.$$
+      Different numbers from the chart $\mathscr{X}$, same covector. How can we be sure it is the same?
+
+  - type: numeric
+    id: c3-pairing
+    title: Same number in both charts
+    prompt: |
+      On $\mathbb{R}^2$ at $p = (1, 1)$, the differential of $f = q_1^2 + q_2$ has components $\mathtt{x}^p_i = (1, -1)$ in the chart $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathtt{y}^p_i = (1, 1/e)$ in the chart $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$. The velocity with standard components $(1, 2)$ has components $(2, -2)$ in $\mathscr{X}$ and $(1, 3e)$ in $\mathscr{Y}$. Compute $\mathtt{y}^p_i\,v^i$ with the $\mathscr{Y}$ numbers.
+    answer: 4
+    wrong:
+      - { value: 2, feedback: 'You may have multiplied $\tfrac1e$ by $e$ instead of $3e$: the second term is $\tfrac1e\cdot 3e = 3$.' }
+    hint: '$\mathtt{y}^p_1v^1 + \mathtt{y}^p_2v^2 = 1\cdot 1 + \tfrac1e\cdot 3e$.'
+    explanation: |
+      $1 + 3 = 4$. In $\mathscr{X}$: $1\cdot 2 + (-1)(-2) = 4$. Directly: $(df)_p(v) = 2v^1 + v^2 = 2 + 2 = 4$ in standard components. The number $\mathsf{X}_p(v)$ needs no chart; the charts only split it into different products. The next cards show why this always works.
+
+  - type: widget
+    id: explore-xy
+    title: Two charts, two dual bases
+    widget: chart-basis
+    config:
+      charts: [X, Y]
+      p: [1, 1]
+      v: [1, 2]
+      chain: true
+      dragP: false
+    body: |
+      Now both C.3 charts at $p = (1, 1)$: $\mathscr{X}(q) = (2q_1, -q_2)$ (solid lines) and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$ (dashed). The blue readouts of each chart are the values of its dual basis on $v$:
+      $$(d\mathscr{X}^i)_p(v) = (2, -2),$$
+      $$(d\mathscr{Y}^i)_p(v) = (1, 3e).$$
+      The readout also shows the Jacobian $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ (row $i$, column $j$) and the law "components in $\mathscr{Y}$ = Jacobian $\cdot$ components in $\mathscr{X}$". Drag $v$: that law holds for **every** $v$. Read it as a statement about covectors.
+
+  - type: text
+    id: basis-law
+    title: How the dual basis changes
+    body: |
+      Recall the component law for velocities, for two charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ with $p\in\mathcal{U}\cap\mathcal{V}$:
+      $$\dot\gamma^i_\mathcal{V}(\lambda_0) = \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\dot\gamma^j_\mathcal{U}(\lambda_0).$$
+      Here $\dot\gamma^i_\mathcal{U}(\lambda_0)$ and $\dot\gamma^i_\mathcal{V}(\lambda_0)$ are the components of $v = v_{\gamma,p}$ in each chart. But a component is a dual basis covector at work: $\dot\gamma^i_\mathcal{V}(\lambda_0) = (d\mathscr{Y}^i)_p(v)$ and $\dot\gamma^j_\mathcal{U}(\lambda_0) = (d\mathscr{X}^j)_p(v)$. So for every $v$,
+      $$(d\mathscr{Y}^i)_p(v) = \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p(d\mathscr{X}^j)_p(v).$$
+      Two covectors that agree on every velocity are equal.
+
+  - type: build
+    id: build-basis-law
+    title: The basis law
+    prompt: |
+      For two charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ around $p$, the components of every velocity obey $\dot\gamma^i_\mathcal{V}(\lambda_0) = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\dot\gamma^j_\mathcal{U}(\lambda_0)$, and $(d\mathscr{Y}^i)_p$, $(d\mathscr{X}^j)_p$ read those components. Write $(d\mathscr{Y}^i)_p$ in the basis $(d\mathscr{X}^j)_p$ (Einstein summation).
+    prefix: '(d\mathscr{Y}^i)_p ='
+    tiles: ['\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p', '\Big(\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\Big)_p', '(d\mathscr{X}^j)_p', '\big(\tfrac{\partial}{\partial\mathscr{X}^j}\big)_p']
+    answers:
+      - ['\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p', '(d\mathscr{X}^j)_p']
+      - ['(d\mathscr{X}^j)_p', '\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p']
+    wrong:
+      - answer: ['\Big(\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\Big)_p', '(d\mathscr{X}^j)_p']
+        feedback: 'That is the inverse Jacobian, which converts the basis **vectors** $(\partial/\partial\mathscr{Y}^i)_p$. Its free $i$ sits in a denominator, so it counts as lower, while the left side has $i$ up: the heights do not match.'
+      - answer: ['\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p', '\big(\tfrac{\partial}{\partial\mathscr{X}^j}\big)_p']
+        feedback: 'That is a combination of basis vectors, an element of $T_p\mathcal{M}$; the left side is a covector. Also both $j$ are lower (denominators), so no sum is allowed.'
+    hint: 'Read the component law of velocities with $(d\mathscr{Y}^i)_p(v)$ on the left and $(d\mathscr{X}^j)_p(v)$ on the right, then drop the $v$.'
+    explanation: |
+      $(d\mathscr{Y}^i)_p = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,(d\mathscr{X}^j)_p$: row $i$ of the Jacobian, exactly like vector components. In the book's language the dual basis covectors are **contravariant**, while the basis vectors $(\partial/\partial\mathscr{X}^i)_p$ (column $i$) are covariant. Swapping the roles of the charts gives $(d\mathscr{X}^i)_p = (\partial\mathscr{X}^i/\partial\mathscr{Y}^j)_p\,(d\mathscr{Y}^j)_p$.
+
+  - type: numeric
+    id: c3-basis-law
+    title: The basis law in numbers
+    prompt: |
+      On $\mathbb{R}^2$ at $p = (1, 1)$ take the charts $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, with Jacobian (row $i$, column $j$)
+      $$\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p = \begin{pmatrix} 1/2 & 0\\ e/2 & -e\end{pmatrix}.$$
+      In $(d\mathscr{Y}^2)_p = c_1\,(d\mathscr{X}^1)_p + c_2\,(d\mathscr{X}^2)_p$, what is $c_2$?
+    answer: -2.71828
+    tolerance: 0.001
+    answerText: '-e ≈ -2.718'
+    wrong:
+      - { value: 0, feedback: 'That is the entry in row 1, column 2. The covector $(d\mathscr{Y}^2)_p$ uses row $2$: $(\partial\mathscr{Y}^2/\partial\mathscr{X}^j)_p$, and $c_2$ is its column-2 entry.' }
+      - { value: 1.35914, feedback: 'That is $e/2$, the coefficient $c_1$ of $(d\mathscr{X}^1)_p$ (row 2, column 1). $c_2$ is the row-2, column-2 entry.' }
+    hint: '$(d\mathscr{Y}^2)_p = (\partial\mathscr{Y}^2/\partial\mathscr{X}^j)_p\,(d\mathscr{X}^j)_p$: read row $2$.'
+    explanation: |
+      $c_2 = -e$, so $(d\mathscr{Y}^2)_p = \tfrac e2(d\mathscr{X}^1)_p - e\,(d\mathscr{X}^2)_p$. Check directly: on the overlap $\mathscr{Y}^2 = q_2e^{q_1} = -\mathscr{X}^2e^{\mathscr{X}^1/2}$, whose derivative in $\mathscr{X}^2$ at $\mathscr{X}(p) = (2,-1)$ is $-e$. Also check: $(df)_p = (d\mathscr{Y}^1)_p + \tfrac1e(d\mathscr{Y}^2)_p = \tfrac12(d\mathscr{X}^1)_p + \tfrac12(d\mathscr{X}^1)_p - (d\mathscr{X}^2)_p$, as found in the chart $\mathscr{X}$.
+
+  - type: text
+    id: component-law
+    title: How the components change
+    body: |
+      Now the components of a covector $\mathsf{X}_p$. In each chart they are its values on that chart's basis vectors: $\mathtt{x}^p_j = \mathsf{X}_p((\partial/\partial\mathscr{X}^j)_p)$ and $\mathtt{y}^p_i = \mathsf{X}_p((\partial/\partial\mathscr{Y}^i)_p)$. Recall the basis law for vectors, with the charts in this order:
+      $$\Big(\frac{\partial}{\partial\mathscr{Y}^i}\Big)_p = \Big(\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\Big)_p\Big(\frac{\partial}{\partial\mathscr{X}^j}\Big)_p.$$
+      Feed it to $\mathsf{X}_p$ and use linearity:
+      $$\mathtt{y}^p_i = \Big(\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\Big)_p\,\mathtt{x}^p_j.$$
+      Column $i$ of the **inverse** Jacobian, exactly like the basis vectors: covector components are **covariant**. (The book reaches the same law by substituting the basis law into $\mathtt{x}^p_j(d\mathscr{X}^j)_p = \mathtt{y}^p_i(d\mathscr{Y}^i)_p$ and using independence.)
+
+  - type: mcq
+    id: which-jacobian
+    title: Which matrix?
+    prompt: |
+      For two charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ around $p$, a covector $\mathsf{X}_p$ has components $\mathtt{x}^p_j$ in $\mathscr{X}$ and $\mathtt{y}^p_i$ in $\mathscr{Y}$ (values on each chart's basis vectors). Velocity components obey $\dot\gamma^i_\mathcal{V} = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\dot\gamma^j_\mathcal{U}$. Which is the law for the covector components?
+    options:
+      - text: '$\mathtt{y}^p_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p\,\mathtt{x}^p_j$'
+        correct: true
+      - text: '$\mathtt{y}^p_i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p\,\mathtt{x}^p_j$'
+        feedback: |
+          That is the velocity law copied over. Its free $i$ is upper on the right and lower on the left, a sign it cannot be right. In numbers (C.3 at $p = (1,1)$, $(df)_p$ for $f = q_1^2 + q_2$): it would give $\mathtt{y}^p_1 = \tfrac12\cdot 1 = \tfrac12$, but the direct computation gives $1$.
+      - text: '$\mathtt{y}^p_i = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p\,\mathtt{x}^p_j$'
+        feedback: |
+          The indices balance, but this matrix converts the basis vectors the other way, $(\partial/\partial\mathscr{X}^i)_p = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p(\partial/\partial\mathscr{Y}^j)_p$. It would give $\mathscr{X}$-components from $\mathscr{Y}$-components: $\mathtt{x}^p_i = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p\,\mathtt{y}^p_j$. To get the $\mathtt{y}$'s you need the inverse.
+      - text: '$\mathtt{y}^p_i = (\partial\mathscr{X}^i/\partial\mathscr{Y}^j)_p\,\mathtt{x}^p_j$'
+        feedback: |
+          Check the heights: $\mathscr{X}^i$ in a numerator carries an upper $i$, while $\mathtt{y}^p_i$ has it lower, and $j$ appears twice as lower ($\mathscr{Y}^j$ in a denominator and $\mathtt{x}^p_j$). This is the row of the inverse Jacobian, not its column.
+    explanation: |
+      Covector components follow the basis vectors: $\mathtt{y}^p_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p\,\mathtt{x}^p_j$. The index heights alone pick it: free $i$ low on both sides, summed $j$ once up and once down.
+
+  - type: numeric
+    id: c3-component-law
+    title: The component law in numbers
+    prompt: |
+      On $\mathbb{R}^2$ at $p = (1, 1)$, with the charts $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, the inverse Jacobian is (row $i$, column $j$)
+      $$\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)_p = \begin{pmatrix} 2 & 0\\ 1 & -1/e\end{pmatrix}.$$
+      The differential of $f = q_1^2 + q_2$ has $\mathscr{X}$-components $\mathtt{x}^p_j = (1, -1)$. Use $\mathtt{y}^p_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p\,\mathtt{x}^p_j$ to compute $\mathtt{y}^p_1$.
+    answer: 1
+    wrong:
+      - { value: 2, feedback: 'That uses row 1 of the matrix, $(2, 0)$. The law sums over the **upper** index $j$ of $\mathscr{X}^j$ with $i = 1$ fixed below: column 1, $(2, 1)$.' }
+      - { value: 3, feedback: 'Column 1 is right, $(2, 1)$, but $\mathtt{x}^p_2 = -1$: $2\cdot 1 + 1\cdot(-1)$.' }
+    hint: '$\mathtt{y}^p_1 = (\partial\mathscr{X}^1/\partial\mathscr{Y}^1)_p\,\mathtt{x}^p_1 + (\partial\mathscr{X}^2/\partial\mathscr{Y}^1)_p\,\mathtt{x}^p_2$: column 1.'
+    explanation: |
+      $2\cdot 1 + 1\cdot(-1) = 1$, the value found directly from $G = f\circ\mathscr{Y}^{-1}$. Column 2 gives $\mathtt{y}^p_2 = 0\cdot 1 + (-\tfrac1e)(-1) = \tfrac1e$, also as found directly.
+
+  - type: text
+    id: invariance
+    title: Why the pairing never changes
+    body: |
+      Now the general reason for the $4$ in both charts. Write $v$ with components $\dot\gamma^k_\mathcal{U}$ in $\mathscr{X}$ and $\dot\gamma^i_\mathcal{V}$ in $\mathscr{Y}$, and use both laws:
+      $$\begin{aligned}\mathtt{y}^p_i\,\dot\gamma^i_\mathcal{V} &= \Big(\tfrac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\Big)_p\mathtt{x}^p_j\\ &\quad\cdot\Big(\tfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^k}\Big)_p\dot\gamma^k_\mathcal{U}\\ &= \delta^j_k\,\mathtt{x}^p_j\,\dot\gamma^k_\mathcal{U}\\ &= \mathtt{x}^p_j\,\dot\gamma^j_\mathcal{U}.\end{aligned}$$
+      The second step is the inverse identity $(\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p(\partial\mathscr{Y}^i/\partial\mathscr{X}^k)_p = \delta^j_k$. The components of the covector change with the inverse of the matrix that changes the components of the vector, so the two changes cancel. That is the whole point of "covariant" versus "contravariant".
+
+  - type: mcq
+    id: invariance-why
+    title: What makes it cancel?
+    prompt: |
+      For two charts $\mathscr{X}$, $\mathscr{Y}$ around $p$, a covector's components obey $\mathtt{y}^p_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p\,\mathtt{x}^p_j$ and a velocity's components obey $\dot\gamma^i_\mathcal{V} = (\partial\mathscr{Y}^i/\partial\mathscr{X}^k)_p\,\dot\gamma^k_\mathcal{U}$. Why is $\mathtt{y}^p_i\,\dot\gamma^i_\mathcal{V} = \mathtt{x}^p_j\,\dot\gamma^j_\mathcal{U}$?
+    options:
+      - text: 'The two Jacobians are inverse matrices, so their product summed over $i$ is $\delta^j_k$'
+        correct: true
+      - text: 'Each Jacobian is the identity matrix'
+        feedback: |
+          They are not, in general: for the C.3 charts at $p = (1, 1)$ the Jacobian is $\begin{pmatrix}1/2&0\\e/2&-e\end{pmatrix}$. The individual components do change (from $(2,-2)$ to $(1,3e)$ for $v$); only the sum of products survives.
+      - text: 'The components of a covector never depend on the chart'
+        feedback: |
+          They do: $(df)_p$ for $f = q_1^2 + q_2$ at $p = (1,1)$ has components $(1, -1)$ in $\mathscr{X}$ and $(1, 1/e)$ in $\mathscr{Y}$. What is chart-independent is the covector itself and its value on a velocity.
+    explanation: |
+      $(\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p(\partial\mathscr{Y}^i/\partial\mathscr{X}^k)_p = \delta^j_k$, the chain rule for $\mathscr{X}\circ\mathscr{Y}^{-1}\circ\mathscr{Y}\circ\mathscr{X}^{-1} = \mathrm{id}$. Of course: $\mathsf{X}_p(v)$ was defined without any chart, so every chart must give the same number.
+
+  - type: text
+    id: every-covector
+    title: Every covector is a differential
+    body: |
+      One more consequence of the expansion. Is every covector the differential $(df)_p$ of some field? Take $\mathsf{X}_p = \mathtt{x}^p_i\,(d\mathscr{X}^i)_p$. The obvious candidate is
+      $$f = \mathtt{x}^p_i\,\big(\mathscr{X}^i - \mathscr{X}^i(p)\big),$$
+      since $(df)_p = \mathtt{x}^p_i\,(d\mathscr{X}^i)_p$ (constants have zero differential). The catch: this $f$ lives only on the chart domain $\mathcal{U}$, not on all of $\mathcal{M}$.
+
+      The fix is a **bump function**: a smooth $\psi$ on $\mathcal{M}$ equal to $1$ near $p$ and $0$ outside a compact set inside $\mathcal{U}$ (its existence is stated here without proof). Then $\psi\cdot f$, extended by $0$, is a smooth field on all of $\mathcal{M}$, equal to $f$ near $p$. A velocity only looks near $p$, so $(d(\psi f))_p = (df)_p = \mathsf{X}_p$. Hence **every** covector at $p$ is a differential.
+
+  - type: mcq
+    id: bump-why
+    title: Why the bump?
+    prompt: |
+      To show that a covector $\mathsf{X}_p = \mathtt{x}^p_i\,(d\mathscr{X}^i)_p$ is the differential of a field, one takes $f = \mathtt{x}^p_i\,(\mathscr{X}^i - \mathscr{X}^i(p))$ on the chart domain $\mathcal{U}$ and multiplies it by a bump function $\psi$ (smooth, $1$ near $p$, $0$ outside a compact set inside $\mathcal{U}$). Why is $\psi$ needed?
+    options:
+      - text: 'A differential is defined for fields on all of $\mathcal{M}$, and $f$ is only defined on $\mathcal{U}$'
+        correct: true
+      - text: 'To change the value of $(df)_p$ so that it matches $\mathsf{X}_p$'
+        feedback: |
+          $\psi = 1$ near $p$, so $\psi f = f$ near $p$ and the differential at $p$ is unchanged. The bump does not adjust the covector; it only makes the field exist everywhere.
+      - text: 'To make the field vanish at $p$'
+        feedback: |
+          $f$ already vanishes at $p$ because of the $-\mathscr{X}^i(p)$, and that is irrelevant anyway: adding a constant does not change a differential. The bump is about the domain.
+    explanation: |
+      Fields in $C^\infty(\mathcal{M})$ must be defined on all of $\mathcal{M}$; coordinate functions usually are not. The bump extends $f$ by $0$ away from $p$ without touching it near $p$. On $\mathbb{R}^2$ with the global C.3 chart $\mathscr{X}$ no bump is needed: $(df)_p$ for $f = q_1^2 + q_2$ is also $(dg)_p$ for $g = (\mathscr{X}^1 - 2) - (\mathscr{X}^2 + 1)$. Many fields give the same covector.
+
+  - type: text
+    id: shorthand
+    title: The book's shorthand
+    body: |
+      As for vectors (recall $(\partial x_i)_p := (\partial/\partial\mathscr{X}^i)_p$), the book shortens the basis covectors:
+      $$(dx^i)_p := (d\mathscr{X}^i)_p,$$
+      $$(dy^i)_p := (d\mathscr{Y}^i)_p.$$
+      A covector $\mathsf{X}_p$ and a second one $\mathsf{Y}_p$ then read
+      $$\mathsf{X}_p = \mathtt{x}^p_i(dx^i)_p = \mathtt{y}^p_i(dy^i)_p,$$
+      $$\mathsf{Y}_p = \tilde{\mathtt{x}}^p_i(dx^i)_p = \tilde{\mathtt{y}}^p_i(dy^i)_p,$$
+      and the two laws become
+      $$(dy^i)_p = \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p(dx^j)_p,$$
+      $$\mathtt{y}^p_i = \Big(\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\Big)_p\mathtt{x}^p_j.$$
+      The height of the index tells the rule: upper index (basis covectors, vector components) transforms with row $i$ of $(\partial\mathscr{Y}/\partial\mathscr{X})_p$; lower index (basis vectors, covector components) with column $i$ of the inverse. **Beware look-alikes:** $x^i_p$ (upper $i$, a vector's component), $\mathtt{x}^p_i$ (typewriter, lower $i$, a covector's component) and $(dx^i)_p$ (a covector) are three different things.
+
+  - type: mcq
+    id: lookalikes
+    title: Spot the covector
+    prompt: |
+      In the book's shorthand for a chart $\mathscr{X}$ at $p$: $(\partial x_i)_p := (\partial/\partial\mathscr{X}^i)_p$, $(dx^i)_p := (d\mathscr{X}^i)_p$, a vector $\mathcal{X}_p = x^i_p(\partial x_i)_p$ and a covector $\mathsf{X}_p = \mathtt{x}^p_i(dx^i)_p$. Which of these is an element of $T_p^*\mathcal{M}$?
+    options:
+      - text: '$(dx^2)_p$'
+        correct: true
+      - text: '$\mathtt{x}^p_2$'
+        feedback: |
+          It belongs to a covector, but it is a **number**: the value $\mathsf{X}_p((\partial x_2)_p)$. Components are real numbers; the covector is the whole combination $\mathtt{x}^p_i(dx^i)_p$.
+      - text: '$(\partial x_2)_p$'
+        feedback: |
+          A lower index does not make something a covector. $(\partial x_2)_p$ is a basis **vector**, an element of $T_p\mathcal{M}$; its index is low because the $\mathscr{X}^2$ sits in a denominator.
+      - text: '$x^2_p$'
+        feedback: |
+          An upper index does not make something a vector or a covector: $x^2_p$ is a number, the second component of the vector $\mathcal{X}_p$ in the chart $\mathscr{X}$.
+    explanation: |
+      Only $(dx^2)_p = (d\mathscr{X}^2)_p$ is a covector. Index height tells how a thing transforms, not what kind of object it is.
+
+  - type: numeric
+    id: reverse-law
+    title: Going back
+    prompt: |
+      On $\mathbb{R}^2$ at $p = (1, 1)$, with the C.3 charts $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$:
+      $$\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p = \begin{pmatrix} 1/2 & 0\\ e/2 & -e\end{pmatrix},$$
+      $$\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)_p = \begin{pmatrix} 2 & 0\\ 1 & -1/e\end{pmatrix}$$
+      (row $i$, column $j$). In shorthand, $(dx^2)_p = c_1(dy^1)_p + c_2(dy^2)_p$. What is $c_1$?
+    answer: 1
+    wrong:
+      - { value: 1.35914, feedback: 'That is $e/2$, from the Jacobian $(\partial\mathscr{Y}/\partial\mathscr{X})_p$, which expresses the $(dy^i)_p$ in terms of the $(dx^j)_p$. Going back needs $(dx^i)_p = (\partial\mathscr{X}^i/\partial\mathscr{Y}^j)_p(dy^j)_p$, the inverse.' }
+      - { value: 0, feedback: 'That is row 1, column 2 of the inverse. For $(dx^2)_p$ the upper index $2$ picks **row 2**: $(1, -1/e)$.' }
+    hint: '$(dx^i)_p = (\partial\mathscr{X}^i/\partial\mathscr{Y}^j)_p\,(dy^j)_p$, the same row rule with the charts swapped.'
+    explanation: |
+      Row 2 of the inverse: $(dx^2)_p = (dy^1)_p - \tfrac1e(dy^2)_p$. Check: $\mathscr{X}^2 = -q_2 = -\mathscr{Y}^2e^{-\mathscr{Y}^1}$, whose derivative in $\mathscr{Y}^1$ at $\mathscr{Y}(p) = (1, e)$ is $e\cdot e^{-1} = 1$.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      - A chart's coordinate functions give covectors $(d\mathscr{X}^i)_p$ with $(d\mathscr{X}^i)_p((\partial/\partial\mathscr{X}^j)_p) = \delta^i_j$: the **dual chart-induced basis** of $T_p^*\mathcal{M}$. $(d\mathscr{X}^i)_p$ reads the $i$-th component of a velocity and is pictured as the line where $\mathscr{X}^i$ is constant.
+      - **Components** $\mathtt{x}^p_i := \mathsf{X}_p((\partial/\partial\mathscr{X}^i)_p)$, expansion $\mathsf{X}_p = \mathtt{x}^p_i(d\mathscr{X}^i)_p$, pairing $\mathsf{X}_p(v) = \mathtt{x}^p_iv^i$.
+      - $(df)_p = \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))\,(d\mathscr{X}^i)_p$. C.3: $(1, -1)$ in $\mathscr{X}$, $(1, 1/e)$ in $\mathscr{Y}$.
+      - Laws: $(d\mathscr{Y}^i)_p = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p(d\mathscr{X}^j)_p$ (contravariant), $\mathtt{y}^p_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)_p\mathtt{x}^p_j$ (covariant); the pairing is the same in every chart.
+      - Every covector is some $(df)_p$ (bump function). Shorthand $(dx^i)_p$, $(dy^i)_p$.
+
+      **Next: Tensor Spaces at a Point.** At each $p$ we now have two vector spaces of dimension $d$, $T_p\mathcal{M}$ and $T_p^*\mathcal{M}$, each with a basis from the chart. Chapter 2 built tensors over any vector space. What are tensors at $p$, which basis do they get from a chart, and how many Jacobians does each component pick up when the chart changes?
