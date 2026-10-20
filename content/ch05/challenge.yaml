@@ -1,0 +1,455 @@
+id: ch05-challenge
+title: Level Challenge
+kind: challenge
+
+# Organization: intro, then one block per problem (cards tagged
+# "Problem N · …", ids prefixed pN-), then wrap-up. Session 1 wrote
+# problems 1-3; problems 4-5 and wrap-up go after the Problem 3 block.
+
+cards:
+  - type: text
+    id: intro
+    title: Fields under pressure
+    body: |
+      This challenge pushes each idea of the level to its edge. Keep pencil and paper at hand: every answer can be checked by hand.
+
+      Recall the toolkit. A **vector field** $\mathcal{X}$ is a smooth section of the tangent bundle, $p\mapsto\mathcal{X}(p)\in T_p\mathcal{M}$; in a chart $(\mathcal{U},\mathscr{X})$ it is $\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i$ with smooth **component functions** $x^i$, and it acts on scalar fields, $\mathcal{X}\lfloor f\rceil(p) := \mathcal{X}(p)(f)$. A **covector field** $\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i$ eats vector fields, $\mathsf{X}\lceil\mathcal{X}\rfloor = \mathtt{x}_i\,x^i$. Components change with the Jacobian functions:
+      $$y^i = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,x^j,$$
+      $$\mathtt{y}_i = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,\mathtt{x}_j.$$
+      The scalar fields $C^\infty(\mathcal{M})$ form a **ring**, the fields form **modules** over it, and a covector field is **exact** if it is $df$, **closed** if its components pass the symmetry test of mixed derivatives. Einstein summation is on.
+
+      1. The rotation field: one field, three charts' worth of descriptions, and what it does to functions.
+      2. The unit radial field: dividing by a length, and where division is impossible.
+      3. The ring of functions: inverses, zero divisors, and fields that can be killed by a nonzero function.
+      4. Closed versus exact, off the beaten loop.
+      5. Minkowski spacetime: a constant tensor field and a boost.
+
+  # ---------------------------------------------------------------- Problem 1
+  - type: text
+    id: p1-setup
+    tag: Problem 1 · The rotation field
+    title: The field that turns the plane
+    body: |
+      On the plane $\mathcal{M} = \mathbb{R}^2$ with points $(a, b)$ take two charts:
+
+      - the **cartesian** chart $\mathscr{X}(a,b) = (a,b)$ on $\mathcal{U} = \mathbb{R}^2$, basis fields $\partial x_1$, $\partial x_2$;
+      - the **polar** chart $\mathscr{Y} = (r,\theta)$, $r = \sqrt{a^2+b^2}$, $\theta\in(0,2\pi)$, on $\mathcal{V}$, the plane minus the half-line $\{b = 0,\ a\geq 0\}$, basis fields $\partial y_1 = \partial/\partial r$, $\partial y_2 = \partial/\partial\theta$.
+
+      On the overlap the Jacobian functions are (row $i$, column $j$)
+      $$\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j} = \begin{pmatrix}a/r & b/r\\ -b/r^2 & a/r^2\end{pmatrix},$$
+      with inverse
+      $$\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j} = \begin{pmatrix}a/r & -b\\ b/r & a\end{pmatrix}.$$
+
+      The **rotation field** is
+      $$\mathcal{R} := -b\,\partial x_1 + a\,\partial x_2,$$
+      the velocity, at each point, of the circle around the origin run counterclockwise at one radian per unit of parameter. Physicists know it as the generator of rotations: up to a factor $-i\hbar$ it is the angular-momentum operator $L_z$ of quantum mechanics, which acts on wave functions exactly as $\mathcal{R}$ acts on scalar fields.
+
+      Two covector fields will meet it: the **whirlpool** $\mathsf{Z} := -b\,dx^1 + a\,dx^2$ on the plane, and the **angle field** on the punctured plane $\mathbb{R}^2\setminus\{0\}$,
+      $$\mathsf{A} := -\frac{b}{r^2}\,dx^1 + \frac{a}{r^2}\,dx^2.$$
+
+  - type: mcq
+    id: p1-smooth
+    tag: Problem 1 · The rotation field
+    title: Why is it smooth?
+    prompt: |
+      On the plane with cartesian chart $\mathscr{X}(a,b) = (a,b)$, defined on all of $\mathbb{R}^2$, the rotation field is $\mathcal{R} = -b\,\partial x_1 + a\,\partial x_2$. Which argument shows that $\mathcal{R}$ is a smooth vector field on the whole plane?
+    options:
+      - text: 'Its component functions $-b$ and $a$ are polynomials, hence smooth, in a chart that covers the whole plane'
+        correct: true
+      - text: 'It must also be checked in the polar chart, since a field is smooth only if its components are smooth in every chart of the atlas'
+        feedback: |
+          Smoothness in **every** chart follows from smoothness in charts that **cover** the manifold: on an overlap, the components in another chart are the old ones times smooth Jacobian functions, $y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,x^j$. The cartesian chart alone covers $\mathbb{R}^2$, so it suffices. (The polar chart does not even contain the origin.)
+      - text: 'It is smooth only off the origin, because there it is the zero vector'
+        feedback: |
+          Vanishing is harmless: the zero vector is an element of $T_0\mathbb{R}^2$ like any other, and the components $(-b, a)$ are perfectly smooth at $(0,0)$. What fails at the origin is the **polar chart**, not the field.
+      - text: 'Its arrows change continuously from point to point, and that makes it smooth'
+        feedback: |
+          Continuity is weaker than smoothness: the field $b\,|b|\,\partial x_1$ has continuous, even once-differentiable, components but is not smooth. Smoothness is a statement about **all** derivatives of the component functions.
+    explanation: |
+      A section is smooth exactly when its component functions are smooth in every chart of an atlas; it is enough to check charts covering $\mathcal{M}$, because the transformation law multiplies components by smooth Jacobian functions. Here one chart covers the plane, and $-b$, $a$ are polynomials.
+
+  - type: build
+    id: p1-build-theta
+    tag: Problem 1 · The rotation field
+    title: The angular component
+    prompt: |
+      On the plane minus the half-line $\{b=0,\ a\ge0\}$, the polar chart $\mathscr{Y} = (r,\theta)$ has Jacobian functions
+      $$\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j} = \begin{pmatrix}a/r & b/r\\ -b/r^2 & a/r^2\end{pmatrix}$$
+      (row $i$, column $j$), with inverse $\begin{pmatrix}a/r & -b\\ b/r & a\end{pmatrix}$. The rotation field $\mathcal{R} = -b\,\partial x_1 + a\,\partial x_2$ has cartesian components $x^1 = -b$, $x^2 = a$. Build its polar component $y^2$ (the $\theta$ component).
+    prefix: 'y^2 ='
+    tiles: ['\tfrac{-b}{r^2}\,(-b)', '\tfrac{a}{r^2}\,a', '+', '(-b)(-b)', 'a\cdot a', '\tfrac{b}{r}\,a']
+    answers:
+      - ['\tfrac{-b}{r^2}\,(-b)', '+', '\tfrac{a}{r^2}\,a']
+      - ['\tfrac{a}{r^2}\,a', '+', '\tfrac{-b}{r^2}\,(-b)']
+    wrong:
+      - { answer: ['(-b)(-b)', '+', 'a\cdot a'], feedback: 'Those factors $-b$ and $a$ are column $2$ of the **inverse** Jacobian $\partial\mathscr{X}^j/\partial\mathscr{Y}^2$: that is the **covector** law, and it gives $b^2 + a^2 = r^2$, the polar component of the whirlpool $\mathsf{Z} = -b\,dx^1 + a\,dx^2$. A vector field uses row $2$ of $\partial\mathscr{Y}^i/\partial\mathscr{X}^j$.' }
+      - { answer: ['(-b)(-b)', '+', '\tfrac{a}{r^2}\,a'], feedback: 'The first term must also carry its Jacobian entry: $y^2 = (\partial\mathscr{Y}^2/\partial\mathscr{X}^1)\,x^1 + (\partial\mathscr{Y}^2/\partial\mathscr{X}^2)\,x^2$, and $\partial\mathscr{Y}^2/\partial\mathscr{X}^1 = -b/r^2$.' }
+    hint: 'Contravariant law $y^2 = (\partial\mathscr{Y}^2/\partial\mathscr{X}^j)\,x^j$: row $2$ of the Jacobian, $(-b/r^2,\ a/r^2)$, against $(x^1,x^2) = (-b, a)$.'
+    explanation: |
+      $$y^2 = \frac{-b}{r^2}(-b) + \frac{a}{r^2}\,a = \frac{a^2+b^2}{r^2} = 1.$$
+      Row $1$ gives $y^1 = \tfrac{a}{r}(-b) + \tfrac{b}{r}\,a = 0$. So on $\mathcal{V}$ the rotation field has the **constant** polar components $(0,1)$.
+
+  - type: mcq
+    id: p1-polar-form
+    tag: Problem 1 · The rotation field
+    title: Two fields with the same entries
+    prompt: |
+      On the plane, the vector field $\mathcal{R} = -b\,\partial x_1 + a\,\partial x_2$ and the covector field $\mathsf{Z} = -b\,dx^1 + a\,dx^2$ have the same cartesian entries $(-b, a)$. In the polar chart $\mathscr{Y} = (r,\theta)$ (basis fields $\partial y_i$, $dy^i$; $r = \sqrt{a^2+b^2}$), what are they?
+    options:
+      - text: '$\mathcal{R} = \partial y_2$ and $\mathsf{Z} = r^2\,dy^2$'
+        correct: true
+      - text: '$\mathcal{R} = \partial y_2$ and $\mathsf{Z} = dy^2$, since equal entries transform alike'
+        feedback: |
+          Equal entries do **not** transform alike: vector components change with $\partial\mathscr{Y}^i/\partial\mathscr{X}^j$, covector components with the inverse matrix $\partial\mathscr{X}^j/\partial\mathscr{Y}^i$. For $\mathsf{Z}$: $\mathtt{y}_2 = (\partial\mathscr{X}^1/\partial\mathscr{Y}^2)(-b) + (\partial\mathscr{X}^2/\partial\mathscr{Y}^2)\,a = (-b)(-b) + a\cdot a = r^2$.
+      - text: '$\mathcal{R} = r^2\,\partial y_2$ and $\mathsf{Z} = r^2\,dy^2$'
+        feedback: |
+          For the vector field the factor cancels: $y^2 = (-b/r^2)(-b) + (a/r^2)\,a = 1$. The arrows of $\mathcal{R}$ grow like $r$, and so does the basis vector $\partial y_2$ (a unit step in $\theta$ moves a distance $r$), so the component stays $1$.
+      - text: '$\mathcal{R} = -b\,\partial y_1 + a\,\partial y_2$ and $\mathsf{Z} = -b\,dy^1 + a\,dy^2$'
+        feedback: |
+          Components belong to a chart. Changing chart changes the basis fields, so the coefficients must change to describe the same field: they follow the transformation laws, with Jacobian functions that differ from point to point.
+    explanation: |
+      Vector law, row by row: $y^1 = \tfrac ar(-b) + \tfrac br a = 0$, $y^2 = 1$. Covector law, column by column of the inverse Jacobian: $\mathtt{y}_1 = \tfrac ar(-b) + \tfrac br a = 0$, $\mathtt{y}_2 = r^2$. So on $\mathcal{V}$
+      $$\mathcal{R} = \partial y_2,$$
+      $$\mathsf{Z} = r^2\,dy^2.$$
+      Whether entries belong to a vector or a covector is not visible in one chart; it shows the moment you change chart.
+
+  - type: mcq
+    id: p1-invariants
+    tag: Problem 1 · The rotation field
+    title: What does not change along the rotation?
+    multiple: true
+    prompt: |
+      On the plane with points $(a,b)$, the rotation field is $\mathcal{R} = -b\,\partial x_1 + a\,\partial x_2$, acting on scalar fields by
+      $$\mathcal{R}\lfloor f\rceil = -b\,\partial x_1\lfloor f\rceil + a\,\partial x_2\lfloor f\rceil,$$
+      where $\partial x_1\lfloor f\rceil$, $\partial x_2\lfloor f\rceil$ are the partial derivatives of $f$ in $a$ and $b$. Select every $f$ with $\mathcal{R}\lfloor f\rceil = 0$ at every point.
+    options:
+      - text: '$f = a^2 + b^2$'
+        correct: true
+      - text: '$f = e^{a^2+b^2}$'
+        correct: true
+      - text: '$f = 7$ (a constant)'
+        correct: true
+      - text: '$f = a$'
+        feedback: |
+          $\mathcal{R}\lfloor a\rceil = -b\cdot 1 + a\cdot 0 = -b$, not zero off the horizontal axis: rotating a point changes its first coordinate. In fact $\mathcal{R}\lfloor a\rceil = -b$ and $\mathcal{R}\lfloor b\rceil = a$ just return the components of $\mathcal{R}$, as acting on the chart's coordinate functions always does.
+      - text: '$f = ab$'
+        feedback: |
+          $\mathcal{R}\lfloor ab\rceil = -b\cdot b + a\cdot a = a^2 - b^2$, zero only on the diagonals. The level sets of $ab$ are hyperbolas, and rotation does not map a hyperbola $ab = c$ to itself.
+    explanation: |
+      $\mathcal{R}\lfloor a^2+b^2\rceil = -b\cdot 2a + a\cdot 2b = 0$. Any function of $r^2$ alone, such as $e^{a^2+b^2}$, is killed too (chain rule), and so are constants. The functions with $\mathcal{R}\lfloor f\rceil = 0$ are those constant on every circle around the origin: the field differentiates **along** the circles. In physics: $L_z$ annihilates exactly the rotation-invariant wave functions.
+
+  - type: numeric
+    id: p1-act-two-ways
+    tag: Problem 1 · The rotation field
+    title: Acting in two charts
+    prompt: |
+      On the plane, the rotation field $\mathcal{R} = -b\,\partial x_1 + a\,\partial x_2$ satisfies $\mathcal{R}\lfloor a\rceil = -b$ and $\mathcal{R}\lfloor b\rceil = a$, and it obeys the Leibniz rule $\mathcal{R}\lfloor fg\rceil = f\,\mathcal{R}\lfloor g\rceil + g\,\mathcal{R}\lfloor f\rceil$. Let $f = a^2 - b^2$. Compute $\mathcal{R}\lfloor f\rceil$ at the point $(a,b) = (1,2)$.
+    answer: -8
+    wrong:
+      - { value: 8, feedback: 'Watch the signs: $\mathcal{R}\lfloor a^2\rceil = 2a\,\mathcal{R}\lfloor a\rceil = -2ab$ and $\mathcal{R}\lfloor b^2\rceil = 2b\,\mathcal{R}\lfloor b\rceil = 2ab$, so $\mathcal{R}\lfloor a^2 - b^2\rceil = -2ab - 2ab = -4ab$.' }
+      - { value: 0, feedback: '$a^2 - b^2$ is not constant on circles: at $(1,0)$ it is $1$, at $(0,1)$ it is $-1$. Only functions of $a^2 + b^2$ are killed by $\mathcal{R}$; here the two terms add instead of cancelling.' }
+      - { value: -4, feedback: 'That is $\mathcal{R}\lfloor a^2\rceil$ alone, $-2ab$ at $(1,2)$. The term $-b^2$ contributes $-2b\,\mathcal{R}\lfloor b\rceil = -2ab = -4$ as well.' }
+    hint: 'Leibniz: $\mathcal{R}\lfloor a^2\rceil = 2a\,\mathcal{R}\lfloor a\rceil$ and $\mathcal{R}\lfloor b^2\rceil = 2b\,\mathcal{R}\lfloor b\rceil$.'
+    explanation: |
+      $$\begin{aligned}\mathcal{R}\lfloor a^2 - b^2\rceil &= 2a(-b) - 2b\,a\\ &= -4ab,\end{aligned}$$
+      which is $-8$ at $(1,2)$. **Second way**, in the polar chart, where $\mathcal{R} = \partial y_2 = \partial/\partial\theta$: there $f = r^2\cos^2\theta - r^2\sin^2\theta = r^2\cos 2\theta$, so
+      $$\begin{aligned}\mathcal{R}\lfloor f\rceil &= \partial_\theta\big(r^2\cos2\theta\big)\\ &= -2r^2\sin 2\theta\\ &= -4\,(r\cos\theta)(r\sin\theta),\end{aligned}$$
+      again $-4ab$. In polar coordinates $\mathcal{R}$ is simply "differentiate by the angle".
+
+  - type: numeric
+    id: p1-pairing
+    tag: Problem 1 · The rotation field
+    title: Two covector fields eat the rotation
+    prompt: |
+      On the punctured plane, with $r^2 = a^2 + b^2$, take the rotation field $\mathcal{R} = -b\,\partial x_1 + a\,\partial x_2$, the whirlpool $\mathsf{Z} = -b\,dx^1 + a\,dx^2$ and the angle field
+      $$\mathsf{A} = -\frac{b}{r^2}\,dx^1 + \frac{a}{r^2}\,dx^2.$$
+      A covector field eats a vector field component by component, $\mathsf{X}\lceil\mathcal{X}\rfloor = \mathtt{x}_i\,x^i$. Compute $(\mathsf{A} + \mathsf{Z})\lceil\mathcal{R}\rfloor$ at the point $(a,b) = (1,2)$.
+    answer: 6
+    wrong:
+      - { value: 5, feedback: 'That is $\mathsf{Z}\lceil\mathcal{R}\rfloor = b^2 + a^2 = 5$ alone. The sum of covector fields eats a field term by term: add $\mathsf{A}\lceil\mathcal{R}\rfloor = (b^2 + a^2)/r^2 = 1$.' }
+      - { value: 1, feedback: 'That is $\mathsf{A}\lceil\mathcal{R}\rfloor$ alone. Add $\mathsf{Z}\lceil\mathcal{R}\rfloor = (-b)(-b) + a\cdot a = 5$.' }
+      - { value: 2, feedback: 'Pairing is not "entries equal, so the answer is $1$ each". $\mathsf{Z}\lceil\mathcal{R}\rfloor = (-b)(-b) + a\cdot a = r^2 = 5$ at $(1,2)$; only the angle field gives $1$.' }
+    hint: '$\mathsf{A}\lceil\mathcal{R}\rfloor = \tfrac{-b}{r^2}(-b) + \tfrac{a}{r^2}\,a$ and $\mathsf{Z}\lceil\mathcal{R}\rfloor = (-b)(-b) + a\cdot a$; then add.'
+    explanation: |
+      $\mathsf{A}\lceil\mathcal{R}\rfloor = 1$ at **every** point of the punctured plane, and $\mathsf{Z}\lceil\mathcal{R}\rfloor = r^2 = 5$ here, so the sum is $6$. The polar chart explains both at once: there $\mathsf{A} = dy^2 = d\theta$, $\mathsf{Z} = r^2\,d\theta$ and $\mathcal{R} = \partial y_2$, and the dual bases give
+      $$dy^2\lceil\partial y_2\rfloor = 1.$$
+      The angle field measures exactly "how much angle per unit of parameter", and the rotation field turns at one radian per unit.
+
+  # ---------------------------------------------------------------- Problem 2
+  - type: text
+    id: p2-setup
+    tag: Problem 2 · The unit radial field
+    title: Arrows of length one
+    body: |
+      On the plane with cartesian chart $\mathscr{X}(a,b) = (a,b)$, the **radial field**
+      $$\mathcal{P} := a\,\partial x_1 + b\,\partial x_2$$
+      puts at each point the arrow from the origin to that point. It is smooth (polynomial components) and vanishes only at the origin.
+
+      In this problem the **length** of a tangent vector with cartesian components $(u^1, u^2)$ is $\sqrt{(u^1)^2 + (u^2)^2}$: the length of the arrow drawn in the plane. (A length defined on any manifold, in any chart, needs extra structure, the metric of Level 7.) The arrow of $\mathcal{P}$ at $(a,b)$ has length $r = \sqrt{a^2+b^2}$.
+
+      Goal: rescale $\mathcal{P}$ by a smooth **function** $f$, so that $f\,\mathcal{P}$ (the field $q\mapsto f(q)\,\mathcal{P}(q)$) has length $1$ everywhere, and find out where that is possible. Recall the rotation field $\mathcal{R} = -b\,\partial x_1 + a\,\partial x_2$ and the angle field $\mathsf{A} = -\tfrac{b}{r^2}dx^1 + \tfrac{a}{r^2}dx^2$; they come back.
+
+  - type: mcq
+    id: p2-which-f
+    tag: Problem 2 · The unit radial field
+    title: All the right factors
+    multiple: true
+    prompt: |
+      On the punctured plane $\mathbb{R}^2\setminus\{0\}$, the radial field $\mathcal{P} = a\,\partial x_1 + b\,\partial x_2$ has arrows of length $r = \sqrt{a^2+b^2}$ (length = square root of the sum of the squares of the cartesian components). Select every **smooth** function $f$ on the punctured plane such that $f\,\mathcal{P}$ has length $1$ at every point.
+    options:
+      - text: '$f = 1/r$'
+        correct: true
+      - text: '$f = -1/r$'
+        correct: true
+      - text: '$f = 1/r^2$'
+        feedback: |
+          $\tfrac1{r^2}\mathcal{P}$ has components $(a/r^2, b/r^2)$, of length $r/r^2 = 1/r$: length $1$ only on the unit circle. Dividing by the length once is enough.
+      - text: '$f = 1/r$ where $a > 0$, and $f = -1/r$ elsewhere'
+        feedback: |
+          The length is $1$ everywhere, but this $f$ jumps on the vertical axis (from $-1/r$ to $1/r$ across $a = 0$), so it is not even continuous. Since $|f| = 1/r$ is forced at every point and the punctured plane is connected, a continuous $f$ must keep one sign throughout.
+      - text: '$f = r$'
+        feedback: |
+          Multiplying by the length makes the arrows longer, length $r^2$. To normalise you divide by the length: $f(q)\cdot r(q) = 1$ at every point.
+    explanation: |
+      Length $1$ means $|f(q)|\,r(q) = 1$, so $|f| = 1/r$ at every point; $1/r$ is smooth on the punctured plane because $r^2 = a^2 + b^2$ is smooth and nonzero there. A smooth $f$ is continuous and never zero, so it cannot change sign on the connected punctured plane: exactly two answers, $\pm1/r$. Call the outward one
+      $$\mathcal{E} := \tfrac1r\,\mathcal{P},$$
+      the **unit radial field**, with cartesian components $(a/r,\ b/r)$.
+
+  - type: mcq
+    id: p2-polar
+    tag: Problem 2 · The unit radial field
+    title: The unit radial field in polar components
+    prompt: |
+      On the punctured plane, the unit radial field $\mathcal{E}$ has cartesian components $(x^1, x^2) = (a/r,\ b/r)$, $r = \sqrt{a^2+b^2}$. The polar chart $\mathscr{Y} = (r,\theta)$ has Jacobian functions
+      $$\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j} = \begin{pmatrix}a/r & b/r\\ -b/r^2 & a/r^2\end{pmatrix}$$
+      (row $i$, column $j$). What are the polar components $(y^1, y^2)$ of $\mathcal{E}$ on the chart domain?
+    options:
+      - text: '$(1,\ 0)$, so $\mathcal{E} = \partial y_1$ there'
+        correct: true
+      - text: '$(r,\ 0)$'
+        feedback: |
+          $(r, 0)$ are the polar components of the **un**normalised radial field $\mathcal{P}$: $y^1 = \tfrac ar a + \tfrac br b = r$. Dividing $\mathcal{P}$ by $r$ divides every component by $r$, in every chart.
+      - text: '$(a/r,\ b/r)$, the same as in the cartesian chart, because a unit field has unit components everywhere'
+        feedback: |
+          Components belong to a chart; the cartesian and polar basis fields differ, so the same field has different components. They follow the law $y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,x^j$.
+      - text: '$(0,\ 1)$'
+        feedback: |
+          $(0,1)$ is the rotation field $\mathcal{R} = \partial y_2$, tangent to the circles. $\mathcal{E}$ points away from the origin, along the ray where only $r$ changes.
+    explanation: |
+      $$\begin{aligned}y^1 &= \tfrac ar\cdot\tfrac ar + \tfrac br\cdot\tfrac br = 1,\\ y^2 &= -\tfrac{b}{r^2}\cdot\tfrac ar + \tfrac{a}{r^2}\cdot\tfrac br = 0.\end{aligned}$$
+      So on the polar chart's domain $\mathcal{E} = \partial y_1 = \partial/\partial r$: the polar basis field $\partial r$ already has length $1$, while its partner $\partial\theta = \mathcal{R}$ has length $r$. Unlike $\partial y_1$, though, $\mathcal{E}$ is defined on the **whole** punctured plane, across the half-line where $\theta$ jumps.
+
+  - type: text
+    id: p2-coframe
+    tag: Problem 2 · The unit radial field
+    title: A frame and its dual
+    body: |
+      On the punctured plane we now have two fields,
+      $$\mathcal{E} = \tfrac ar\,\partial x_1 + \tfrac br\,\partial x_2,$$
+      $$\mathcal{R} = -b\,\partial x_1 + a\,\partial x_2,$$
+      with determinant $\tfrac ar\,a - (-b)\tfrac br = r\neq 0$: a basis of $T_p\mathcal{M}$ at every point, so $\{\mathcal{E},\mathcal{R}\}$ is a **frame** of the punctured plane. Every vector field there is uniquely $f\,\mathcal{E} + g\,\mathcal{R}$ with smooth functions $f, g$.
+
+      Two covector fields read off $f$ and $g$. One is the angle field $\mathsf{A}$. The other is the differential of the distance function $r$; by the covector law with polar components $(1, 0)$,
+      $$dr = \frac ar\,dx^1 + \frac br\,dx^2.$$
+      Pair them with the frame:
+      $$\begin{gathered}dr\lceil\mathcal{E}\rfloor = \tfrac{a^2+b^2}{r^2} = 1,\\ dr\lceil\mathcal{R}\rfloor = \tfrac{-ab + ab}{r} = 0,\\ \mathsf{A}\lceil\mathcal{E}\rfloor = \tfrac{-ab+ab}{r^3} = 0,\\ \mathsf{A}\lceil\mathcal{R}\rfloor = \tfrac{b^2+a^2}{r^2} = 1.\end{gathered}$$
+      The same pattern as a basis and its dual basis, now at every point at once: $\{dr, \mathsf{A}\}$ is the **dual coframe** of $\{\mathcal{E},\mathcal{R}\}$. Feeding $f\,\mathcal{E} + g\,\mathcal{R}$ to $dr$ returns $f$; feeding it to $\mathsf{A}$ returns $g$.
+
+  - type: numeric
+    id: p2-coefficient
+    tag: Problem 2 · The unit radial field
+    title: A constant field in a rotating frame
+    prompt: |
+      On the punctured plane, $\{\mathcal{E},\mathcal{R}\}$ is a frame, with $\mathcal{E} = \tfrac ar\partial x_1 + \tfrac br\partial x_2$ (unit radial) and $\mathcal{R} = -b\,\partial x_1 + a\,\partial x_2$ (rotation), $r = \sqrt{a^2+b^2}$. Its dual coframe is $dr = \tfrac ar dx^1 + \tfrac br dx^2$ and $\mathsf{A} = -\tfrac{b}{r^2}dx^1 + \tfrac{a}{r^2}dx^2$, so that
+      $$dr\lceil\mathcal{E}\rfloor = \mathsf{A}\lceil\mathcal{R}\rfloor = 1,$$
+      $$dr\lceil\mathcal{R}\rfloor = \mathsf{A}\lceil\mathcal{E}\rfloor = 0.$$
+      Write the constant field $\partial x_2$ as $\partial x_2 = f\,\mathcal{E} + g\,\mathcal{R}$. Compute $g$ at the point $(a,b) = (3,4)$.
+    answer: 0.12
+    answerText: '3/25'
+    wrong:
+      - { value: 0.8, feedback: 'That is $f = dr\lceil\partial x_2\rfloor = b/r$, the coefficient of $\mathcal{E}$. The coefficient of $\mathcal{R}$ is read by the other covector field: $g = \mathsf{A}\lceil\partial x_2\rfloor$.' }
+      - { value: 3, feedback: 'That is $a$, the component of $\mathcal{R}$ itself. The angle field divides by $r^2$: $\mathsf{A}\lceil\partial x_2\rfloor = a/r^2$.' }
+      - { value: 0.6, feedback: 'That is $a/r$. The second component of $\mathsf{A}$ is $a/r^2$, because $\mathcal{R}$ has length $r$: one unit of $\mathcal{R}$ already moves you $r$ along the circle.' }
+    hint: 'Apply $\mathsf{A}$ to both sides: $\mathsf{A}\lceil\partial x_2\rfloor = f\cdot0 + g\cdot1$. And $\mathsf{A}\lceil\partial x_2\rfloor$ is the second cartesian component of $\mathsf{A}$.'
+    explanation: |
+      $g = \mathsf{A}\lceil\partial x_2\rfloor = a/r^2 = 3/25$ and $f = dr\lceil\partial x_2\rfloor = b/r = 4/5$. Check at $(3,4)$, where $\mathcal{E} = (\tfrac35,\tfrac45)$ and $\mathcal{R} = (-4, 3)$:
+      $$\tfrac45\big(\tfrac35,\tfrac45\big) + \tfrac{3}{25}(-4, 3) = (0, 1).$$
+      The coefficients are functions, different at every point: a field constant in one frame turns in another.
+
+  - type: mcq
+    id: p2-whole-plane
+    tag: Problem 2 · The unit radial field
+    title: Through the origin
+    prompt: |
+      On the plane, the radial field $\mathcal{P} = a\,\partial x_1 + b\,\partial x_2$ has arrows of length $r = \sqrt{a^2+b^2}$. Suppose $f$ is a smooth function on **all** of $\mathbb{R}^2$ and we only ask that $f\,\mathcal{P}$ have length $1$ at every point **other than** the origin. Is this possible?
+    options:
+      - text: 'No: $|f| = 1/r$ off the origin, which is unbounded near the origin, while a smooth (hence continuous) $f$ stays bounded near it'
+        correct: true
+      - text: 'Yes: take $f = 1/r$ and give it any value at the origin'
+        feedback: |
+          Whatever value $f(0)$ gets, $f = 1/r$ grows without bound as $q\to 0$, so it is not continuous at the origin, let alone smooth. The function $r$ is not invertible in $C^\infty(\mathbb{R}^2)$ (it vanishes at the origin, and is not even smooth there).
+      - text: 'No, but only because $f(0)\,\mathcal{P}(0) = 0$ has length $0$'
+        feedback: |
+          That argument forbids length $1$ **at** the origin, which this question no longer asks for. The obstruction here is stronger: even ignoring the origin, $f$ is forced to blow up next to it.
+      - text: 'Yes, as long as $f$ is allowed to be negative somewhere'
+        feedback: |
+          Signs do not help: $|f| = 1/r$ is forced at every point off the origin, and $1/r\to\infty$ as $q\to0$ from any direction.
+    explanation: |
+      Two obstructions, both at the origin. First, $f(0)\cdot\mathcal{P}(0) = f(0)\cdot 0 = 0$: multiplying by a function cannot divide out a zero. Second, even off the origin, normalising needs $|f| = 1/r$, unbounded near $0$. And there is a third, independent of $f$: the unit arrows $\mathcal{E}$ point away from the origin in **every** direction, $(1,0)$ along the positive $a$-axis, $(0,1)$ along the positive $b$-axis, so no vector at the origin is their limit, and $\mathcal{E}$ has no continuous extension to $\mathbb{R}^2$.
+
+  - type: mcq
+    id: p2-frames
+    tag: Problem 2 · The unit radial field
+    title: Which frames exist?
+    multiple: true
+    prompt: |
+      A **frame** over an open set is a set of $d$ smooth vector fields that form a basis of $T_p\mathcal{M}$ at every point $p$ of it. In the plane, $\mathcal{E} = \tfrac ar\partial x_1 + \tfrac br\partial x_2$ (unit radial, $r = \sqrt{a^2+b^2}$) and $\mathcal{R} = -b\,\partial x_1 + a\,\partial x_2$ (rotation) have determinant $r$. Select every true statement.
+    options:
+      - text: '$\{\mathcal{E},\mathcal{R}\}$ is a frame of the punctured plane $\mathbb{R}^2\setminus\{0\}$'
+        correct: true
+      - text: 'The whole plane $\mathbb{R}^2$ has a frame of two fields of length $1$'
+        correct: true
+      - text: '$\{\mathcal{E},\mathcal{R}\}$ extends to a frame of $\mathbb{R}^2$, if one picks suitable vectors at the origin'
+        feedback: |
+          $\mathcal{R}$ is zero at the origin, and $\mathcal{E}$ has no continuous extension there (its limit depends on the direction of approach). A frame of $\mathbb{R}^2$ exists, but it is a different one.
+      - text: 'The sphere $S^2$ has a frame, built the same way from a radial-type and a rotation-type field'
+        feedback: |
+          The **hairy ball theorem** (stated here without proof) says every smooth vector field on $S^2$ vanishes somewhere. A rotation field on $S^2$, for instance, vanishes at the two poles of its axis. Since a frame's fields must be nonzero at every point, $S^2$ has no frame.
+    explanation: |
+      The cartesian frame $\{\partial x_1,\partial x_2\}$ has constant components $(1,0)$ and $(0,1)$, length $1$ everywhere: the plane is parallelizable, just not with the polar frame. The polar-type frame $\{\mathcal{E},\mathcal{R}\}$ lives on the punctured plane, larger than the polar chart's domain but not containing the origin. On the sphere no frame exists at all: a basis of the module $\Gamma TS^2$ would have to be a basis at every point.
+
+  # ---------------------------------------------------------------- Problem 3
+  - type: text
+    id: p3-setup
+    tag: Problem 3 · The ring of functions
+    title: How strange is the ring?
+    body: |
+      Recall the ring operations on scalar fields, point by point:
+      $$(f\oplus_{C^\infty} g)(p) := f(p) + g(p),$$
+      $$(f\odot_{C^\infty} g)(p) := f(p)\cdot g(p).$$
+      $f$ is **invertible** if some smooth $g$ has $f\odot_{C^\infty} g = 1$ (the constant function); a nonzero $f$ is a **zero divisor** if some nonzero smooth $g$ has $f\odot_{C^\infty} g = 0$ (the zero function).
+
+      On $\mathbb{R}$ (chart $\mathscr{X}(t) = t$, basis field $\partial x_1 = d/dt$) we use the smooth function
+      $$\psi(t) := \begin{cases} e^{-1/t} & t>0\\ 0 & t\leq0,\end{cases}$$
+      smooth at $t = 0$ too (stated without proof: every derivative of $e^{-1/t}$ tends to $0$ as $t\to0^+$). It is zero exactly on $t\leq 0$.
+
+      This problem asks how far the ring $C^\infty(\mathcal{M})$ is from the real numbers, and what that does to fields.
+
+  - type: mcq
+    id: p3-closure
+    tag: Problem 3 · The ring of functions
+    title: Is the product smooth?
+    prompt: |
+      Let $f, g\in C^\infty(\mathcal{M})$ be smooth scalar fields on a manifold $\mathcal{M}$, and $(f\odot_{C^\infty} g)(p) := f(p)\,g(p)$. Which argument shows that $f\odot_{C^\infty} g$ is again smooth?
+    options:
+      - text: 'In every chart $(\mathcal{U},\mathscr{X})$, $(f\odot_{C^\infty} g)\circ\mathscr{X}^{-1}$ is the product of the smooth functions $f\circ\mathscr{X}^{-1}$ and $g\circ\mathscr{X}^{-1}$ of $d$ real variables'
+        correct: true
+      - text: 'At each point $p$, $f(p)\,g(p)$ is a real number, so the product is a function $\mathcal{M}\to\mathbb{R}$'
+        feedback: |
+          That shows the product is a **function**, not that it is **smooth**. Smoothness of a scalar field means smoothness of its chart representatives $f\circ\mathscr{X}^{-1}$, a statement about derivatives, which pointwise values alone cannot give.
+      - text: 'It follows from the Leibniz rule $v(fg) = f(p)\,v(g) + g(p)\,v(f)$'
+        feedback: |
+          The Leibniz rule computes the **first** derivative of a product that is already known to be smooth. Smoothness asks for all derivatives of all orders; it comes from the multivariable fact that products of smooth functions on open sets of $\mathbb{R}^d$ are smooth.
+      - text: 'Only when $f$ and $g$ never vanish'
+        feedback: |
+          Vanishing matters for **division**, not multiplication. $f(t) = t$ and $g(t) = t$ vanish at $0$ and their product $t^2$ is smooth.
+    explanation: |
+      $$(f\odot_{C^\infty} g)\circ\mathscr{X}^{-1} = (f\circ\mathscr{X}^{-1})\cdot(g\circ\mathscr{X}^{-1}),$$
+      a product of smooth functions on the open set $\mathscr{X}(\mathcal{U})\subseteq\mathbb{R}^d$, smooth by multivariable calculus. The same works for the sum. Smoothness is always checked in charts.
+
+  - type: mcq
+    id: p3-invertible
+    tag: Problem 3 · The ring of functions
+    title: Invertible in which ring?
+    multiple: true
+    prompt: |
+      A smooth function $f$ is invertible in $C^\infty(\mathcal{M})$ if some smooth $g$ on $\mathcal{M}$ satisfies $f(p)\,g(p) = 1$ at every $p\in\mathcal{M}$. Here $\psi(t) = e^{-1/t}$ for $t>0$, $\psi(t) = 0$ for $t\le0$. Select every case where $f$ is invertible in the given ring.
+    options:
+      - text: '$f = a^2 + b^2$ in $C^\infty(\mathbb{R}^2\setminus\{0\})$'
+        correct: true
+      - text: '$f = 1 + a^2$ in $C^\infty(\mathbb{R}^2)$'
+        correct: true
+      - text: '$f = a^2 + b^2$ in $C^\infty(\mathbb{R}^2)$'
+        feedback: |
+          It vanishes at the origin, and $0\cdot g(0) = 0\neq 1$ for every value $g(0)$. The same function is invertible on the punctured plane: whether $f$ has an inverse depends on the manifold, not only on the formula.
+      - text: '$f(t) = \psi(t) + \psi(-t)$ in $C^\infty(\mathbb{R})$'
+        feedback: |
+          For $t\neq0$ one of the two terms is positive, so $f(t) > 0$; but at $t = 0$ both vanish, $f(0) = 0$. A single zero is enough to block an inverse.
+    explanation: |
+      $f$ is invertible in $C^\infty(\mathcal{M})$ exactly when it has **no zero on** $\mathcal{M}$: then $1/f$ is smooth (in a chart, a quotient of smooth functions with nonzero denominator), and a zero blocks every inverse. So removing a point can make a function invertible: this is why $1/r$ exists on the punctured plane and the unit radial field lives there.
+
+  - type: order
+    id: p3-zero-proof
+    tag: Problem 3 · The ring of functions
+    title: The proof in order
+    prompt: |
+      On $\mathbb{R}$, with $\psi(t) = e^{-1/t}$ for $t>0$ and $\psi(t) = 0$ for $t\le0$, let $f(t) := \psi(t)$ and $g(t) := \psi(-t)$. Put the proof that $f$ and $g$ are zero divisors in order.
+    steps:
+      - 'Fix any $t\in\mathbb{R}$; it suffices to show $f(t)\,g(t) = 0$ at this $t$.'
+      - 'If $t > 0$, then $-t < 0$, so $g(t) = \psi(-t) = 0$.'
+      - 'Otherwise $t\leq0$, and then $f(t) = \psi(t) = 0$.'
+      - 'In both cases one factor vanishes, so $f\odot_{C^\infty} g$ is the zero function.'
+      - 'Yet $f(1) = e^{-1}\neq0$ and $g(-1) = e^{-1}\neq0$: neither factor is the zero function, so both are zero divisors.'
+    hint: 'Pointwise first, one case per half-line, then the conclusion about the whole function, and finally the check that neither factor is zero.'
+    explanation: |
+      Equality of functions is checked point by point, so the proof fixes $t$ and splits into $t>0$ and $t\le0$. The last step matters: a zero divisor must itself be nonzero, and "nonzero" for a function means "not zero **everywhere**", so one point with $f(1)\neq0$ suffices.
+
+  - type: mcq
+    id: p3-which-divisors
+    tag: Problem 3 · The ring of functions
+    title: Which functions are zero divisors?
+    multiple: true
+    prompt: |
+      On $\mathbb{R}$, a nonzero smooth function $f$ is a **zero divisor** if some smooth $g$, not the zero function, has $f(t)\,g(t) = 0$ for every $t$. Here $\psi(t) = e^{-1/t}$ for $t>0$, $\psi(t) = 0$ for $t\le0$. Select every zero divisor.
+    options:
+      - text: '$f(t) = \psi(t)$'
+        correct: true
+      - text: '$f(t) = \psi(1 - t^2)$, positive on $(-1,1)$ and zero elsewhere'
+        correct: true
+      - text: '$f(t) = t$'
+        feedback: |
+          $t$ is not invertible (it vanishes at $0$), but it is not a zero divisor either: $t\,g(t) = 0$ forces $g(t) = 0$ for every $t\neq0$, and by continuity $g(0) = 0$ too, so $g$ is the zero function. Non-invertible and zero divisor are different things.
+      - text: '$f(t) = \sin t$'
+        feedback: |
+          $\sin t$ vanishes only at isolated points $t = k\pi$. From $\sin t\,g(t) = 0$, $g$ vanishes everywhere else, hence everywhere by continuity. To be a zero divisor, $f$ must leave room for $g$: a whole open interval where $f = 0$.
+    explanation: |
+      **Criterion:** $f$ is a zero divisor exactly when it vanishes on some open interval. If $f\,g = 0$ with $g(t_0)\neq0$, then $g\neq0$ on an interval around $t_0$ (continuity), so $f = 0$ there. Conversely, if $f = 0$ on $(\alpha,\beta)$, the bump $g(t) = \psi(t-\alpha)\,\psi(\beta - t)$ is nonzero only inside $(\alpha,\beta)$, and $f\,g = 0$. So $\psi(t)$ (zero on $t<0$) and $\psi(1-t^2)$ (zero on $t>1$) qualify; $t$ and $\sin t$, with isolated zeros, do not.
+
+  - type: numeric
+    id: p3-axiom
+    tag: Problem 3 · The ring of functions
+    title: One module axiom, checked by acting
+    prompt: |
+      On the plane, take the rotation field $\mathcal{R} = -b\,\partial x_1 + a\,\partial x_2$ and the smooth functions $f = a$, $g = b^2$. Fields are scaled point by point, $(h\,\mathcal{X})\lfloor u\rceil(p) = h(p)\,\mathcal{X}\lfloor u\rceil(p)$. The module axiom
+      $$(f\oplus_{C^\infty} g)\,\mathcal{R} = f\,\mathcal{R} + g\,\mathcal{R}$$
+      can be tested by letting both sides act on the coordinate function $a$. Compute $\big((f\oplus_{C^\infty}g)\,\mathcal{R}\big)\lfloor a\rceil$ at the point $(a,b) = (1,2)$.
+    answer: -10
+    wrong:
+      - { value: -2, feedback: 'That is $(f\,\mathcal{R})\lfloor a\rceil = a\cdot(-b) = -2$ alone. The scaling function is the sum $f + g = a + b^2 = 5$ at $(1,2)$.' }
+      - { value: -8, feedback: 'That is $(g\,\mathcal{R})\lfloor a\rceil = b^2\cdot(-b) = -8$ alone. Add the part from $f = a$: $-2$.' }
+      - { value: 5, feedback: 'That is $(f\oplus_{C^\infty}g)(1,2) = 5$, the scaling factor. It multiplies $\mathcal{R}\lfloor a\rceil = -b = -2$.' }
+    hint: '$\mathcal{R}\lfloor a\rceil = -b$, and the field is scaled by the value of $a + b^2$ at the point.'
+    explanation: |
+      Left side: $(a + b^2)(-b) = 5\cdot(-2) = -10$. Right side: $a(-b) + b^2(-b) = -2 - 8 = -10$. In general, at every $p$ and for every $u$,
+      $$\begin{aligned}&\big((f + g)\mathcal{R}\big)\lfloor u\rceil(p)\\ &= \big(f(p) + g(p)\big)\,\mathcal{R}\lfloor u\rceil(p)\\ &= (f\mathcal{R})\lfloor u\rceil(p) + (g\mathcal{R})\lfloor u\rceil(p),\end{aligned}$$
+      by distributivity of real numbers. Every module axiom is inherited this way, one point at a time.
+
+  - type: mcq
+    id: p3-killed
+    tag: Problem 3 · The ring of functions
+    title: A field killed by a nonzero function
+    multiple: true
+    prompt: |
+      On $\mathbb{R}$ with basis field $\partial x_1 = d/dt$, a single field $\mathcal{W}$ is **linearly independent** over $C^\infty(\mathbb{R})$ if $h\,\mathcal{W} = 0$ (the zero field) forces $h = 0$ (the zero function). Here $\psi(t) = e^{-1/t}$ for $t>0$, $\psi(t) = 0$ for $t\le0$. Select every $\mathcal{W}$ such that $\{\mathcal{W}\}$ is linearly independent.
+    options:
+      - text: '$\mathcal{W} = t\,\partial x_1$'
+        correct: true
+      - text: '$\mathcal{W} = \sin t\,\partial x_1$'
+        correct: true
+      - text: '$\mathcal{W} = (1+t^2)\,\partial x_1$'
+        correct: true
+      - text: '$\mathcal{W} = \psi(t)\,\partial x_1$'
+        feedback: |
+          $h(t) = \psi(-t)$ is not the zero function, yet $h\,\mathcal{W} = \psi(-t)\psi(t)\,\partial x_1 = 0$, since one factor vanishes at every $t$. A nonzero field that a nonzero function kills: over a field of numbers this never happens (if $\alpha v = 0$ with $\alpha\neq0$, divide by $\alpha$).
+    explanation: |
+      $h\,(f\,\partial x_1) = (hf)\,\partial x_1$ is zero exactly when $hf = 0$. So $\{f\,\partial x_1\}$ is independent exactly when $f$ is **not a zero divisor**: when $f$ vanishes on no open interval. $t$ and $\sin t$ have isolated zeros, so they pass, though neither field spans (they vanish somewhere, so $\partial x_1$ is not $h$ times them); $(1+t^2)\,\partial x_1$ is even a basis, since $1+t^2$ is invertible. $\psi(t)\,\partial x_1$ fails: the ring's zero divisors become fields that can be "killed".

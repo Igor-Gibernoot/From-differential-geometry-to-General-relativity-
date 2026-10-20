@@ -242,7 +242,11 @@ levels:
         file: ch05/map.yaml
         summary: Rebuild the chapter box by box, from tangent spaces and bundles to vector and covector fields, their actions, the ring and modules, frames, tensor fields, and closed versus exact.
       - { id: ch05-review, title: Level Review, kind: review }
-      - { id: ch05-challenge, title: Level Challenge, kind: challenge }
+      - id: ch05-challenge
+        title: Level Challenge
+        kind: challenge
+        file: ch05/challenge.yaml
+        summary: Harder problems combining the level. The rotation field in two charts and against two covector fields, the unit radial field and its dual coframe, zero divisors and fields killed by a function, closed versus exact, and a Minkowski boost.
 
   - id: ch06
     number: 6

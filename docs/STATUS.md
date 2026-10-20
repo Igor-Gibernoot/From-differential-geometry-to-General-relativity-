@@ -23,11 +23,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   `ch04-challenge` (36 cards, five problems: polar chart at $(1,1)$, reparametrization rune and Leibniz,
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
-- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows).
+- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` part 1 (22 cards, problems 1–3; problems 4–5 and wrap-up pending).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 5 (Fields) in `course.yaml` order, next
-  `ch05-challenge` (two sessions: problems 1–3, then 4–5); then Chapters 6–10 (each with map and challenge).
+  `ch05-challenge` part 2 (problems 4–5 and wrap-up, appended after the Problem 3 block); then Chapters 6–10 (each with map and challenge).
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -219,6 +219,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   tensor (bottom centre). Edge labels "fibre of", "instance", "sections", "act on $f$", "eat fields", "scalars of", "bases",
   "components", "more slots", "which are $df$?", dashed "model example" (angle field up to closed/exact); action→module unlabelled
   (labels too close to "scalars of"). Outro states the laws as displayed formulas, then teases the Minkowski boost.
+  Challenge ch05 (`ch05-challenge`, part 1): plane $(a,b)$, cartesian $\mathscr{X}$, polar $\mathscr{Y} = (r,\theta)$, $\theta\in(0,2\pi)$ (cut $\{b=0,a\ge0\}$);
+  rotation field $\mathcal{R} := -b\,\partial x_1 + a\,\partial x_2 = \partial y_2$ ($L_z$ up to $-i\hbar$), $\mathsf{Z} = r^2dy^2$; $\mathcal{R}\lfloor a^2-b^2\rceil = -4ab$ ($-8$ at $(1,2)$, also via
+  $r^2\cos2\theta$); $(\mathsf{A}+\mathsf{Z})\lceil\mathcal{R}\rfloor = 1 + r^2$ ($6$ at $(1,2)$); radial $\mathcal{P} := a\,\partial x_1 + b\,\partial x_2$, length = sum of squares of cartesian components;
+  unit radial $\mathcal{E} := \tfrac1r\mathcal{P} = \partial y_1$ ($f = \pm1/r$ only); frame $\{\mathcal{E},\mathcal{R}\}$ (det $r$) with dual coframe $\{dr,\mathsf{A}\}$,
+  $dr = \tfrac ar dx^1 + \tfrac br dx^2$; $\partial x_2 = \tfrac br\mathcal{E} + \tfrac a{r^2}\mathcal{R}$ ($3/25$ at $(3,4)$); zero divisor iff vanishing on an open interval
+  (bump $\psi(t-\alpha)\psi(\beta-t)$), $\psi(1-t^2)$; $\{f\,\partial x_1\}$ independent iff $f$ not a zero divisor; axiom check $((a+b^2)\mathcal{R})\lfloor a\rceil = -10$ at $(1,2)$.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -630,3 +636,10 @@ long box titles.
 - Choices: no separate manifold box (recalled inside the $T_p\mathcal{M}$ box); ring placed beside actions as a source box so "scalars of"
   reaches modules without crossing; "test for" reading replaced by "which are $df$?"; title "Closed and exact" (no soft hyphen needed).
 - Conventions fixed here: see Current, "Map ch05 (`ch05-map`)".
+- 2026-10-20 `ch05-challenge` part 1 (22 cards): intro listing five problems; P1 rotation field (smoothness, build $y^2$, $\mathcal{R}$ vs $\mathsf{Z}$
+  in polar, invariant functions, $\mathcal{R}\lfloor a^2-b^2\rceil$ two ways, $(\mathsf{A}+\mathsf{Z})\lceil\mathcal{R}\rfloor$); P2 unit radial field ($\pm1/r$, polar $(1,0)$,
+  dual coframe $\{dr,\mathsf{A}\}$, coefficient of $\mathcal{R}$ in $\partial x_2$, impossibility through the origin, frames/hairy ball); P3 ring (closure via charts,
+  invertibility depends on the manifold, order proof $\psi(t)\psi(-t) = 0$, zero-divisor criterion, distributivity axiom by acting, fields killed by $\psi(-t)$).
+- Choices: registered in `course.yaml` now with a summary covering all five problems; no wrap-up yet (validate accepts); repeats of
+  ch05-module (unit swirl, $t\,\partial x_1$ alone, $(fg)\mathcal{X}$ axiom) avoided by switching to sign freedom, coframe and $\psi$-killed fields; no widget.
+- Conventions fixed here: see Current, "Challenge ch05 (`ch05-challenge`, part 1)".
