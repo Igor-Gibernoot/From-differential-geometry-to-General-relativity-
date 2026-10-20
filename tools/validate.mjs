@@ -11,7 +11,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { expandLesson } from '../js/content.js';
+import { expandLesson, ownParts } from '../js/content.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const require = createRequire(import.meta.url);
@@ -72,6 +72,7 @@ for (const level of course.levels ?? []) {
     catch (e) { err(meta.file, `YAML: ${e.message.split('\n')[0]}`); continue; }
     if (lesson.id !== meta.id) err(meta.file, `id "${lesson.id}" does not match course.yaml id "${meta.id}"`);
     if (lesson.kind === 'map') checkMap(meta.file, lesson);
+    if (lesson.own != null) checkOwn(meta.file, lesson);
     checkLesson(meta.file, expandLesson(lesson));
   }
 }
@@ -102,6 +103,26 @@ function checkMap(file, m) {
       else if (e.label.length > 18) warn(file, `edge ${a} -> ${b}: label "${e.label}" is long for a phone (keep it to 1–3 words)`);
     }
   }
+}
+
+// `own:` (the "what you now own" summary): {{ }} balanced and not nested,
+// 3–6 distinct blanks (2 at the least), and a closing text card to show it on.
+function checkOwn(file, lesson) {
+  const w = `${file} own`;
+  if (typeof lesson.own !== 'string') return err(w, 'own must be a Markdown string (use a | block)');
+  if (lesson.kind !== 'concept') warn(w, 'own: is meant for concept lessons');
+  checkText(w, lesson.own);
+  const { parts, errors } = ownParts(lesson.own);
+  for (const e of errors) err(w, e);
+  const blanks = parts.filter(p => p.key);
+  for (const b of blanks) {
+    if (!b.blank) err(w, 'empty {{ }}');
+    checkText(`${w} blank`, b.blank);
+  }
+  const n = new Set(blanks.map(b => b.key)).size;
+  if (n < 2) err(w, `needs at least 2 distinct {{ }} blanks (has ${n})`);
+  else if (n < 3 || n > 6) warn(w, `${n} blanks; aim for 3–6`);
+  if (lesson.cards?.at(-1)?.type !== 'text') err(w, 'the last card must be a text card: it shows the summary (its body, if any, follows as the teaser)');
 }
 
 function checkLesson(file, lesson) {

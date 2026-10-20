@@ -525,6 +525,64 @@ config:
 The view is fixed by the initial curve: give `view` when presets switch to a
 curve that does not fit it.
 
+## Recap summaries (`own:`)
+
+A concept lesson may carry `own:`, the text of its closing "what you now
+own" summary (Markdown with math), with its key expressions marked
+`{{ … }}`. It is the single source of truth for two things:
+
+1. **The lesson's last card**, which must be a `text` card. It shows `own`
+   with the markers stripped (content kept), titled "What you now own"
+   unless the card sets `title:`. The card's own `body`, if any, is
+   appended after it: put only the teaser ("**Next:** …") there.
+2. **The Recap** (`#/recap`, `#/recap/<levelId>`; button on the trail and in
+   each level-review sheet). A recap card shows the lesson title and the
+   summary with some blanks replaced by tappable placeholders; the learner
+   recalls each, taps to reveal it, and rates "Knew it" / "Missed".
+
+```yaml
+id: ch06-christoffel
+kind: concept
+own: |
+  - **Coefficients**: in a chart a connection is fixed by
+    {{ $\nabla_{\partial x_k}\partial x_j = \Gamma^i_{jk}\,\partial x_i$ }}.
+  - **Not a tensor**: they transform with {{ an inhomogeneous second-derivative term }}.
+  - **Law**:
+  {{ $$(\nabla_\mathcal{X}\mathcal{Y})^i = \mathcal{X}(\mathcal{Y}^i) + \Gamma^i_{jk}\mathcal{Y}^j\mathcal{X}^k$$ }}
+cards:
+  - ...
+  - type: text
+    id: summary
+    body: |
+      **Next:** …
+```
+
+Mechanics:
+- Only marked spans can be hidden; chance only picks *which* marked spans
+  are hidden on a pass. Markers are recognized outside math only (inside
+  `$…$` a `{{` is TeX); a blank may hold inline math, prose, or a whole
+  `$$…$$` display (shown as a full-width placeholder).
+- Each blank is a spaced-repetition item with key
+  `<lessonId>#<hash>`, the hash of its text after trimming and collapsing
+  whitespace. Editing text outside a blank keeps its progress; editing the
+  blank itself starts a new item. The same expression twice in one summary
+  is one item (both copies hide and reveal together).
+- Only lessons the learner has finished are recapped.
+
+**Marking rules** (the author chooses the marks):
+- Mark main results: definitions, the central law, a defining property. Not
+  notation introductions, not intermediate algebra.
+- 3–6 blanks per summary (the validator requires at least 2 and warns
+  outside 3–6; markers balanced, no nesting, no empty blank).
+- Each blank must be recallable from its own sentence: the words around it
+  say what to state.
+- No two blanks that give each other away (e.g. a law and its special case
+  in the next clause: mark one).
+- Prefer whole formulas over bare symbols: `{{ $\nabla_{\mathcal{X}_p}f = \mathcal{X}_p(f)$ }}`,
+  not `{{ $\nabla$ }}`.
+- Phone-safe layout applies as everywhere: a long blank goes on its own
+  `$$…$$` line.
+
 ## Content-map lessons (`kind: map`)
 
 The file describes a graph; the engine turns it into cards: an intro, one

@@ -5,6 +5,8 @@
 //   #/read/<id>             read a lesson with answers shown, nothing recorded
 //   #/review                spaced-repetition session (due cards, all levels)
 //   #/review/<levelId>      level review (that level's cards, most urgent first)
+//   #/recap                 recap of the summaries with blanks due (all levels)
+//   #/recap/<levelId>       level recap (that level's summaries, due first)
 //   #/settings              progress export/import/reset
 
 import { h, shuffle, escapeHtml } from './dom.js';
@@ -13,6 +15,7 @@ import { getCourse, getLesson, nextLessonAfter, isQuestion } from './content.js'
 import { progress } from './progress.js';
 import { renderTrail } from './trail.js';
 import { runSession, lessonItems } from './player.js';
+import { recapCards, runRecap } from './recap.js';
 import { sounds, soundOn, setSound } from './sound.js';
 import { initTheme, themeButton } from './theme.js';
 import { initTooltips } from './tooltip.js';
@@ -24,6 +27,7 @@ initCloud();
 
 const root = document.getElementById('app');
 const REVIEW_SIZE = 12;
+const RECAP_SIZE = 5;
 
 async function route() {
   document.querySelectorAll('.scrim').forEach(s => s.remove());
@@ -32,6 +36,7 @@ async function route() {
     if (parts[0] === 'lesson' && parts[1]) return await playLesson(decodeURIComponent(parts[1]), +(parts[2] ?? 1) - 1);
     if (parts[0] === 'read' && parts[1]) return await playLesson(decodeURIComponent(parts[1]), +(parts[2] ?? 1) - 1, true);
     if (parts[0] === 'review') return await playReview(parts[1]);
+    if (parts[0] === 'recap') return await playRecap(parts[1]);
     if (parts[0] === 'settings') return settings();
     await renderTrail(root);
   } catch (err) {
@@ -77,14 +82,7 @@ async function playReview(levelId) {
   } else {
     keys = shuffle(progress.dueKeys()).slice(0, REVIEW_SIZE);
   }
-  if (!keys.length) {
-    root.replaceChildren(h('div', { class: 'page done-screen' },
-      h('div', { class: 'burst', html: icons.check }),
-      h('h1', {}, 'Nothing due'),
-      h('p', { class: 'hint-line' }, 'Questions you answer in lessons come back here on a spaced schedule — missed ones the same day, the rest after 1, 3, 7, 16 and 35 days.'),
-      h('div', { class: 'actions' }, h('a', { class: 'btn primary', href: '#/', style: 'text-decoration:none' }, 'Back to the trail'))));
-    return;
-  }
+  if (!keys.length) return nothingDue('Questions you answer in lessons come back here on a spaced schedule — missed ones the same day, the rest after 1, 3, 7, 16 and 35 days.');
   const items = [];
   for (const key of keys) {
     const [lessonId, cardId] = key.split('/');
@@ -108,7 +106,40 @@ async function playReview(levelId) {
   });
 }
 
-function doneScreen({ title, subtitle, stats, actions, mode = 'lesson' }) {
+async function playRecap(levelId) {
+  let level;
+  if (levelId) {
+    level = (await getCourse()).levels.find(l => l.id === levelId);
+    if (!level) { location.hash = '#/'; return; }
+  }
+  const all = await recapCards(levelId);
+  const due = shuffle(all.filter(c => c.due.length));
+  // A level recap tops up with that level's other summaries, for practice.
+  const cards = (level ? [...due, ...shuffle(all.filter(c => !c.due.length))] : due).slice(0, RECAP_SIZE);
+  if (!cards.length) return nothingDue('The “what you now own” summary of each concept lesson you finish comes back here with its key results hidden, on a spaced schedule — missed ones the same day, the rest after 1, 3, 7, 16 and 35 days.');
+  runRecap(root, {
+    cards,
+    onExit: () => { location.hash = '#/'; },
+    onFinish: stats => {
+      progress.finishReview();
+      doneScreen({
+        title: level ? `${level.title}: recap done` : 'Recap done',
+        subtitle: 'Stating the key results from memory is what makes them yours.',
+        stats, statLabel: 'of the hidden results recalled', actions: [['primary', 'Back to the trail', '#/']],
+      });
+    },
+  });
+}
+
+function nothingDue(text) {
+  root.replaceChildren(h('div', { class: 'page done-screen' },
+    h('div', { class: 'burst', html: icons.check }),
+    h('h1', {}, 'Nothing due'),
+    h('p', { class: 'hint-line' }, text),
+    h('div', { class: 'actions' }, h('a', { class: 'btn primary', href: '#/', style: 'text-decoration:none' }, 'Back to the trail'))));
+}
+
+function doneScreen({ title, subtitle, stats, actions, mode = 'lesson', statLabel }) {
   const pct = stats.questions ? Math.round((stats.firstTry / stats.questions) * 100) : 100;
   sounds.finish();
   root.replaceChildren(h('div', { class: 'page done-screen' },
@@ -116,7 +147,7 @@ function doneScreen({ title, subtitle, stats, actions, mode = 'lesson' }) {
     h('h1', {}, title),
     h('p', { class: 'hint-line', html: escapeHtml(subtitle) }),
     h('div', { class: 'stats' },
-      h('div', { class: 'stat' }, h('b', {}, `${pct}%`), h('span', {}, mode === 'lesson' ? 'first-try accuracy in this lesson' : 'first-try accuracy in this session')),
+      h('div', { class: 'stat' }, h('b', {}, `${pct}%`), h('span', {}, statLabel ?? (mode === 'lesson' ? 'first-try accuracy in this lesson' : 'first-try accuracy in this session'))),
       h('div', { class: 'stat' }, h('b', {}, `${progress.streak()}`), h('span', {}, 'day streak'))),
     h('div', { class: 'actions' }, actions.filter(Boolean).map(([cls, label, href]) =>
       h('a', { class: `btn ${cls}`, href, style: 'text-decoration:none' }, label)))));
@@ -152,7 +183,7 @@ function accountPanel() {
   return panel;
 }
 
-const BUILD = '2026-10-18.3 (reset epoch)';
+const BUILD = '2026-10-20.1 (recap)';
 
 function settings() {
   const code = h('textarea', { readonly: true, 'aria-label': 'Your progress code' });

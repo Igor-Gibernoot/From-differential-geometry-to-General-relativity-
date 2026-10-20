@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 6 complete; next: Chapter 7, `ch07-metric`)
+## Current (2026-10-20, Chapter 6 complete, Recap engine built; next: `own:` backfill, then Chapter 7, `ch07-metric`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -26,8 +26,12 @@ append a short entry at the end of **Log** (a few lines, ending with
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
 - **Chapter 6 complete** (lessons, traps, map, challenge): `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards), `ch06-torsion-tensor` (guided, 19 cards), `ch06-three-connections` (guided C.5, 32 cards), `ch06-traps` (21 cards), `ch06-map` (14 boxes, 8 rows); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). `ch06-challenge` (49 cards, five problems: ∇ᵂ straightest curves, fourth box ∇ᶠ, sheared chart, difference of connections $\mathcal{Q}$, normal coordinates for ∇^κ).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
+- **Recap (`own:`) rule:** every concept lesson carries `own:` (its "what you now own" summary with 3–6 `{{ }}` blanks on the main
+  results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
+  write it from the start. **Backfill pending:** no existing lesson has `own:` yet (sessions: Chapters 2–3, then 4–5, then 6; pilot one
+  lesson first and wait for Igor's approval of the marking style). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: next `ch07-metric`, then `ch07-signature`, `ch07-length`,
+- **Queue (one unit each):** first the `own:` backfill (above), then Chapter 7 (Metric) in `course.yaml` order: next `ch07-metric`, then `ch07-signature`, `ch07-length`,
   `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, traps, map, challenge (two sessions);
   then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
   B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
@@ -307,7 +311,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\mathrm{Riem}^1_{212} = \kappa$ in both charts; numerics at $\kappa = 2$ ($\Gamma = 2$ at $(2,0)$). Equivalence principle (cabin, crumbs, tides = curvature) with Levels 7, 9, 10 named;
   Level 7 teaser: "which connection does a ruler pick?" → Levi-Civita (named only).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
-  cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
+  cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
+  `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
   1280 px, saves widget screenshots (`*-widget.png` = widget alone; view that
   one to check readouts). `#/lesson/<id>/<n>` is 1-based. Map lessons are
@@ -835,3 +840,14 @@ long box titles.
 - Choices: added normal coordinates (in the book's 6.2) as one text card; used the "Christoffel symbols" name only as an aside; renamed the book's
   summation index $p$ to $m$; widget charts listed polar first so `chain` expands the polar basis in the cartesian one.
 - Conventions fixed here: see Current, "Chapter 6 conventions so far" (`ch06-christoffel` lines).
+- 2026-10-20 **Recap engine** (engine session): optional `own:` on concept lessons, Markdown with `{{ }}` blanks; the last text card renders
+  it (markers stripped) followed by its body (teaser). `js/recap.js`: `#/recap` (due summaries, all levels) and `#/recap/<levelId>` (due first,
+  then practice), at most 5 summaries per session; tap or "Reveal next", then "Knew it" / "Missed"; missed blanks requeued once at the end.
+  Items `progress.recap["<lessonId>#<hash>"] = { box, due, at, lapses, last }` on the quiz deck's Leitner boxes (knew +1 box, missed → box 0,
+  due today), merged/synced like `cards`. Trail chip "Recap N" (due blanks; loads finished concept lessons' files asynchronously), Recap button
+  in level-review sheets. Validator: balanced/unnested markers, ≥ 2 distinct blanks (warn outside 3–6), last card text. `shots.mjs` runs on
+  Windows (Chrome/Edge, file-URL import). Tested with a throwaway lesson (removed): first view, rating, rescheduling, requeue, hash stability
+  after editing outside the blanks, phone and desktop, light and dark.
+- Choices: reused the Leitner boxes (no ease factor); only finished lessons are recapped; first view hides a random half, later passes hide
+  exactly the due blanks (cap: one left showing when ≥ 3); a repeated expression is one item; markers are ignored inside math.
+- Conventions fixed here: `own:` + `{{ }}` marking rules (`docs/QUICKREF.md`); the closing card's `body` is only the teaser once `own:` exists.

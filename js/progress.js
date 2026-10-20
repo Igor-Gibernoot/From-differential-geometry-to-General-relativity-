@@ -4,17 +4,21 @@
 // Spaced repetition: every question card gets a Leitner box. Box b is due
 // INTERVALS[b] days after it was last answered; a miss sends it back to box 0
 // (due today), a correct review promotes it one box.
+//
+// Recap items (the {{ }} blanks of "what you now own" summaries, keyed
+// "<lessonId>#<hash>") share the same boxes: "knew it" promotes one box,
+// "missed" sends the item back to box 0 and counts a lapse.
 
 const KEY = 'dg2gr.progress.v1';
 const INTERVALS = [0, 1, 3, 7, 16, 35];
 
 const today = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 60000) / 86400000);
-const blank = () => ({ version: 1, epoch: 0, lessons: {}, cards: {}, streak: { count: 0, last: null } });
+const blank = () => ({ version: 1, epoch: 0, lessons: {}, cards: {}, recap: {}, streak: { count: 0, last: null } });
 
 function load() {
   try {
     const s = JSON.parse(localStorage.getItem(KEY));
-    return s && s.lessons && s.cards ? s : blank();
+    return s && s.lessons && s.cards ? { recap: {}, ...s } : blank();
   } catch { return blank(); }
 }
 
@@ -46,6 +50,10 @@ function merge(a, b) {
   for (const k of new Set([...Object.keys(a.cards), ...Object.keys(b.cards)])) {
     const x = a.cards[k], y = b.cards[k];
     out.cards[k] = !x ? y : !y ? x : (y.at ?? 0) > (x.at ?? 0) ? y : x;
+  }
+  for (const k of new Set([...Object.keys(a.recap ?? {}), ...Object.keys(b.recap ?? {})])) {
+    const x = a.recap?.[k], y = b.recap?.[k];
+    out.recap[k] = !x ? y : !y ? x : (y.at ?? 0) > (x.at ?? 0) ? y : x;
   }
   const sa = a.streak, sb = b.streak;
   out.streak = (sb.last ?? -1) > (sa.last ?? -1) || ((sb.last ?? -1) === (sa.last ?? -1) && sb.count > sa.count) ? { ...sb } : { ...sa };
@@ -96,6 +104,17 @@ export const progress = {
 
   finishReview() { bumpStreak(); save(); },
 
+  // Recap items: undefined until first rated.
+  recapItem: key => state.recap[key],
+  recapDue: key => !state.recap[key] || state.recap[key].due <= today(),
+
+  recordRecap(key, knew) {
+    const prev = state.recap[key];
+    const box = knew ? Math.min((prev?.box ?? 0) + 1, INTERVALS.length - 1) : 0;
+    state.recap[key] = { box, due: today() + INTERVALS[box], at: Date.now(), lapses: (prev?.lapses ?? 0) + (knew ? 0 : 1), last: knew ? 'knew' : 'missed' };
+    save();
+  },
+
   // Average first-try accuracy (first run; replays don't change it) over the finished lessons among ids.
   accuracy(ids) {
     const scores = ids.map(id => state.lessons[id]).filter(r => r?.done).map(r => r.first ?? r.score ?? r.best);
@@ -138,7 +157,7 @@ export const progress = {
   importCode(code) {
     const s = JSON.parse(decodeURIComponent(escape(atob(code.trim()))));
     if (!s || !s.lessons || !s.cards) throw new Error('Not a progress code.');
-    state = { ...s, epoch: Date.now() };
+    state = { recap: {}, ...s, epoch: Date.now() };
     save();
   },
 

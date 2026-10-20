@@ -25,6 +25,33 @@ cards:
     id: hook          # unique; never rename a played card's id
 ```
 
+### `own:` (concept lessons: the "what you now own" summary)
+
+```yaml
+own: |
+  - **Not a tensor**: the coefficients {{ $\Gamma^k_{ij}$ }} transform with
+    {{ an inhomogeneous second-derivative term }}.
+cards:
+  ...
+  - type: text          # LAST card: shows `own` (markers stripped), titled
+    id: summary         # "What you now own" unless `title:` is given;
+    body: |             # its body (optional) follows: the teaser
+      **Next:** …
+```
+
+The Recap button hides some `{{ … }}` spans and asks the learner to recall
+them; only marked spans are ever hidden. Each blank is a spaced-repetition
+item keyed by a hash of its text: **editing a blank resets its progress**,
+editing around it does not; the same text twice is one item.
+Markers go outside math (`{{ $x$ }}`, never `$ {{x}} $`); a blank may be a
+whole `$$…$$` line. Marking rules:
+- mark main results (definitions, the central law, a defining property);
+  not notation introductions or intermediate algebra;
+- **3–6 blanks** per summary (validator: at least 2, no nesting, balanced);
+- each blank recallable from its own sentence; no two blanks that give each
+  other away;
+- prefer whole formulas (`{{ $\nabla_\mathcal{X}f = \mathcal{X}(f)$ }}`) over bare symbols.
+
 Shared optional fields: `title`, `tag`. Question cards also take
 `explanation` and `review: false` (only for cards that make no sense alone,
 e.g. a question about a widget just shown). Prompts, hints and feedback must be

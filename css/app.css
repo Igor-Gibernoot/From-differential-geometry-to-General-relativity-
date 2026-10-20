@@ -107,7 +107,7 @@ a { color: var(--accent); }
 }
 .chip svg { width: 16px; height: 16px; }
 .chip.streak { color: var(--gold); cursor: default; }
-.chip.review.due { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+.chip.review.due, .chip.recap.due { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
 
 .level { margin-top: 28px; }
 .level-head {
@@ -496,7 +496,7 @@ a { color: var(--accent); }
   transition: --title-a .6s ease, --title-b .6s ease, --title-c .6s ease;
 }
 /* The due review chip wears the same gradient, so it follows the level on screen too */
-.chip.review.due[data-hue] {
+.chip.review.due[data-hue], .chip.recap.due[data-hue] {
   --title-a: var(--hue-deep); --title-b: var(--accent); --title-c: var(--hue-light);
   background: linear-gradient(125deg, var(--title-a) 0%, var(--title-b) 50%, var(--title-c) 100%);
   border-color: transparent;
@@ -530,3 +530,19 @@ polyline.w-level { fill: none; }
 .pt-cmp line { stroke-dasharray: 3 4; }
 .pt-basis { stroke-width: 2px; opacity: .8; }
 .pt-lam { min-width: 5.5em; }
+
+/* Recap: hidden blanks of a "what you now own" summary */
+.recap-text .blank { border-radius: 7px; padding: 0 3px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.recap-text .blank.hidden .blank-body { display: none; }
+.recap-text .blank-face {
+  appearance: none; font: inherit; font-weight: 750; color: var(--accent); cursor: pointer;
+  min-width: 3.2em; padding: 0 .7em; border: 1.5px dashed var(--accent); border-radius: 7px;
+  background: var(--accent-soft); line-height: 1.5;
+}
+.recap-text .blank.display { display: block; margin: 6px 0; padding: 2px 6px; max-width: 100%; }
+.recap-text .blank.display .blank-face { display: block; width: 100%; min-height: 3em; font-size: 14px; }
+.recap-text.busy .blank-face { opacity: .45; pointer-events: none; }
+.recap-text .blank.active { outline: 2px solid var(--accent); background: var(--accent-soft); }
+.recap-text .blank.knew { box-shadow: inset 0 -2px 0 var(--good); background: var(--good-soft); }
+.recap-text .blank.missed { box-shadow: inset 0 -2px 0 var(--bad); background: var(--bad-soft); }
+.recap-count { font-weight: 650; }

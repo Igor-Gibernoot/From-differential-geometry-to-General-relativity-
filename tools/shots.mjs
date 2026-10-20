@@ -9,7 +9,7 @@ import { readFileSync, mkdirSync, existsSync } from 'node:fs';
 import { createServer } from 'node:http';
 import { createRequire } from 'node:module';
 import { join, extname, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
@@ -17,7 +17,7 @@ const all = args.includes('--all');
 const [file, id, out] = args.filter(a => a !== '--all');
 const yaml = createRequire(import.meta.url)(`${repo}/vendor/js-yaml.min.js`);
 // Map lessons (kind: map) have no cards: expand them as the app does.
-const { expandLesson } = await import(`${repo}/js/content.js`);
+const { expandLesson } = await import(pathToFileURL(`${repo}/js/content.js`));
 const lesson = expandLesson(yaml.load(readFileSync(`${repo}/content/${file}`, 'utf8')));
 mkdirSync(out, { recursive: true });
 
@@ -33,7 +33,11 @@ const server = createServer((req, res) => {
 }).listen(0);
 const port = server.address().port;
 
-const exe = `${process.env.HOME}/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`;
+// The cached Chromium on the Mac; on Windows the installed Chrome or Edge; CHROME=<path> overrides.
+const exe = [process.env.CHROME,
+  `${process.env.HOME}/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing`,
+  'C:/Program Files/Google/Chrome/Application/chrome.exe',
+  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe'].find(p => p && existsSync(p));
 const b = await chromium.launch({ executablePath: exe });
 const shotTypes = new Set(all ? ['widget', 'build', 'order', 'mapview'] : ['widget', 'mapview']);
 let problems = 0, shots = 0;

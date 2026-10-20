@@ -14,6 +14,18 @@ Static site, no build step, served by GitHub Pages from the repo root.
 - Trail: average first-try accuracy (overall chip and per level), level
   reviews (`#/review/<levelId>`), a hue per level (`data-hue` on `.level`,
   light/dark variants in `css/app.css`).
+- Recap (`js/recap.js`, `#/recap`, `#/recap/<levelId>`): cloze review of the
+  `own:` summaries of finished concept lessons (`docs/LESSON_FORMAT.md`,
+  "Recap summaries"). `content.js` parses `{{ }}` blanks (`ownParts`,
+  `blankHash`) and renders the last card from `own` (`expandLesson`).
+  Blanks are items in `progress.recap` (`<lessonId>#<hash>` →
+  `{ box, due, at, lapses, last }`), on the same Leitner boxes as the quiz
+  deck; synced and merged like `cards`. Hidden per pass: first view a random
+  half (≥ 1, one left showing if ≥ 3 blanks); later the due ones (missed,
+  then new, then low boxes). A summary is offered while any blank is due or
+  new; missed blanks come back once at the end of the session. The trail's
+  Recap chip counts due blanks (it loads the finished concept lessons'
+  files after the trail draws); level-review sheets get a Recap button.
 - Light/dark toggle (`js/theme.js`), instant tooltips via `data-tip`
   (`js/tooltip.js`), optional Google sign-in with Firestore sync
   (`js/cloud.js`, `docs/ACCOUNTS.md`; inactive until `js/firebase-config.js`

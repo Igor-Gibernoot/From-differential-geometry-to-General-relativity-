@@ -5,6 +5,7 @@ import { mdInline } from './render.js';
 import { icons, KIND_LABEL } from './icons.js';
 import { getCourse } from './content.js';
 import { progress } from './progress.js';
+import { recapCards } from './recap.js';
 import { themeButton } from './theme.js';
 import { cloudConfigured, preloadCloud, onCloudChange, signIn } from './cloud.js';
 
@@ -30,6 +31,7 @@ export async function renderTrail(root) {
         class: `chip review${due ? ' due' : ''}`, type: 'button', 'data-hue': 0, 'data-tip': 'Spaced-repetition review',
         html: `${icons.review}<span>${due ? `Review ${due}` : 'Review'}</span>`, onclick: () => { location.hash = '#/review'; },
       }),
+      recapChip(),
       accountChip(),
       themeButton(h),
       h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Progress & settings', 'data-tip': 'Settings & account', html: icons.settings, onclick: () => { location.hash = '#/settings'; } })));
@@ -80,7 +82,7 @@ export async function renderTrail(root) {
     const el = root.querySelector('.node.next');
     el?.scrollIntoView({ block: 'center' });
   }
-  followLevelHue([...root.querySelectorAll('.course-title, .chip.review')], [...root.querySelectorAll('section.level')]);
+  followLevelHue([...root.querySelectorAll('.course-title, .chip.review, .chip.recap')], [...root.querySelectorAll('section.level')]);
 }
 
 // The course title and the review chip take the hue of the level on screen:
@@ -135,6 +137,33 @@ function openSheet(meta, state, { level, deck, due }) {
       h('div', { class: 'actions' }, actions)));
   document.body.append(scrim);
   scrim.querySelector('.btn.primary')?.focus();
+  if (meta.kind === 'review') recapCards(level.id).then(list => {
+    if (!list.length || !scrim.isConnected) return;
+    const n = list.reduce((s, c) => s + c.due.length, 0);
+    const recap = h('button', {
+      class: `btn ${deck ? 'ghost' : 'primary'}`, type: 'button', 'data-tip': 'Recall the key results of this level’s lesson summaries',
+      onclick: () => { close(); location.hash = `#/recap/${level.id}`; },
+    }, n ? `Recap ${n}` : 'Recap');
+    const start = scrim.querySelector('.actions .btn.primary');
+    if (start) start.before(recap); else scrim.querySelector('.actions').append(recap);
+  }).catch(() => {});
+}
+
+// Recap button: its count (blanks new or due in finished lessons' summaries)
+// needs the lesson files, so it fills in once they have loaded.
+function recapChip() {
+  const label = h('span', {}, 'Recap');
+  const chip = h('button', {
+    class: 'chip recap', type: 'button', 'data-hue': 0, 'data-tip': 'Recall the key results of the lessons you finished',
+    onclick: () => { location.hash = '#/recap'; },
+  });
+  chip.innerHTML = icons.recap;
+  chip.append(label);
+  recapCards().then(list => {
+    const n = list.reduce((s, c) => s + c.due.length, 0);
+    if (n) { chip.classList.add('due'); label.textContent = `Recap ${n}`; }
+  }).catch(() => {});
+  return chip;
 }
 
 // "From A to B": break before the last " to " so the title sits on two lines.
