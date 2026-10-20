@@ -19,10 +19,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   `wrap-up` ending with a teaser for the next level.
 - **Chapter 4 in progress:** `ch04-tangent-space` (26 cards),
   `ch04-velocity-operations` (23 cards), `ch04-coordinate-basis` (33 cards),
-  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards), `ch04-cotangent` (23 cards), `ch04-cotangent-basis` (35 cards), `ch04-tensor-space` (31 cards) built; widget `chart-basis` built (coordinate lines of two charts, basis at
+  `ch04-chart-basis` (24 cards, guided B.5), `ch04-einstein` (23 cards), `ch04-cotangent` (23 cards), `ch04-cotangent-basis` (35 cards), `ch04-tensor-space` (31 cards), `ch04-traps` (22 cards) built; widget `chart-basis` built (coordinate lines of two charts, basis at
   $p$, components, Jacobian).
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, next `ch04-traps` (traps round), then `ch04-map`, `ch04-challenge`; then Chapters 5–10 (each with
+  order, next `ch04-map` (content map), then `ch04-challenge`; then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -127,6 +127,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\mathscr{X}$ $\begin{pmatrix}1&-1\\-1&1\end{pmatrix}$, $\mathscr{Y}$ $\begin{pmatrix}1&1/e\\1/e&1/e^2\end{pmatrix}$; $S_{ij}=\delta_{ij}$ in $\mathscr{X}$ gives
   $\begin{pmatrix}5&-1/e\\-1/e&1/e^2\end{pmatrix}$ in $\mathscr{Y}$ (same matrix, different tensor from $\delta^i_j$); `machine-playground` readout shows
   $\hat{\mathfrak{x}}^i$ (said to stand for $(dx^i)_p$).
+  Traps (`ch04-traps`): chart $\mathscr{Z}(q) = (q_1, q_2 - q_1)$ vs cartesian $\mathscr{C}$: $(\partial/\partial\mathscr{Z}^1)_p = (1,1)\ne(\partial/\partial x)_p$
+  but $(d\mathscr{Z}^1)_p = (dx)_p$ (a differential depends only on its function; the basis vector on the whole chart);
+  mixed pairing $(d\mathscr{Y}^k)_p((\partial/\partial\mathscr{X}^j)_p) = (\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p$, C.3 $(d\mathscr{X}^1)_p((\partial/\partial\mathscr{Y}^1)_p) = 2$;
+  meters/centimeters chart $y = 100x$ for contra- vs covariant; $A = (\partial x_1)_p\otimes(dx^1)_p$ has $\mathscr{Y}$-matrix
+  $\begin{pmatrix}1&0\\e&0\end{pmatrix}$; $g = q_1$ with $(dg)_p(v) = v_1$; curvature as a $(1,3)$-tensor, $4^4 = 256$ components (named only).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -136,6 +141,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Traps round `ch04-traps` (22 cards, 20 questions): velocity as a map, bent curve same velocity,
+reparametrization scales ($6$), curve sum on $S^1$ leaves the circle, $\partial/\partial\mathscr{Z}^1$ depends on the
+whole chart while $d\mathscr{Z}^1$ does not, mixed pairing (build + C.3 number $2$), meters/cm, Jacobian entry
+$e/2$ with the rune, well-formed Einstein equations, $\delta\delta\delta = 3$, covector not an arrow ($(4,-1)$ vs
+$(1,-1)$), $(df)_p$ linear, numbers vs objects, type $(1,2)$, $256$ components, $(1,1)$ law ($e$), swapped
+product ($0$), zero in all charts. Choice: the brief's "$(dX^1)_p$ depends on the whole chart" is false
+($d$ of a function depends only on the function), so the card teaches the asymmetry instead.
+Conventions fixed here: see Current, "Traps (`ch04-traps`)".
 
 Concept lesson `ch04-tensor-space` (31 cards): hook = metric counts $d^2 = 16$, definition of
 $T_p^{(r,s)}\mathcal{M}$, special cases, `machine-playground` with $(df)_p\otimes(df)_p$ in $\mathscr{X}$-components,

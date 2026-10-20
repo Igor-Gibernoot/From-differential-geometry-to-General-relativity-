@@ -1,0 +1,404 @@
+id: ch04-traps
+title: Tangent Space Traps
+kind: traps
+
+cards:
+  - type: text
+    id: intro
+    title: Trap round
+    body: |
+      Fast round: each question hides a tempting mistake from this level, from velocities as rates of change to tensors at a point. Answer quickly, then read the feedback, especially when you got it right for a shaky reason.
+
+      Notation used below: $\mathcal{M}$ is a smooth manifold of dimension $d$ and $p$ a point of it; a **velocity** at $p$ of a curve $\gamma$ with $\gamma(\lambda_0) = p$ is the map
+      $$v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0),$$
+      defined for every smooth scalar field $f\in C^\infty(\mathcal{M})$. Velocities form the tangent space $T_p\mathcal{M}$; linear maps $T_p\mathcal{M}\to\mathbb{R}$ (covectors) form the cotangent space $T_p^*\mathcal{M}$.
+
+      Several questions use the **running example**: $\mathcal{M} = \mathbb{R}^2$ with points $q = (q_1, q_2)$, the point $p = (1, 1)$, and the two charts
+      $$\mathscr{X}(q) = (2q_1, -q_2),$$
+      $$\mathscr{Y}(q) = (q_1,\, q_2e^{q_1}).$$
+
+  - type: mcq
+    id: velocity-what
+    title: What is a velocity?
+    prompt: |
+      A curve $\gamma$ on a smooth manifold $\mathcal{M}$ (for instance spacetime) passes through $p = \gamma(\lambda_0)$. Which object **is** its velocity $v_{\gamma,p}$, the element of the tangent space $T_p\mathcal{M}$?
+    options:
+      - text: 'The map $f\mapsto(f\circ\gamma)''(\lambda_0)$, from smooth scalar fields to real numbers'
+        correct: true
+      - text: 'An arrow at $p$ in the surrounding space, tangent to $\mathcal{M}$'
+        feedback: |
+          That picture works for a circle drawn in the plane, which is why it is tempting. But a manifold such as spacetime has no surrounding space to hold the arrow. The velocity is built from $\mathcal{M}$ alone, as the rate of change it gives to every scalar field.
+      - text: 'The curve $\gamma$ itself'
+        feedback: |
+          Many different curves give the same velocity: only the first-order behaviour at $\lambda_0$ matters. A velocity is what all those curves have in common, the rate of change they give to each field.
+      - text: 'The single number $(f\circ\gamma)''(\lambda_0)$ for one chosen field $f$'
+        feedback: |
+          One field gives one number, and two different velocities can agree on it (for example both can give $0$ on a constant field). The velocity is the whole assignment, one number for **every** field $f$.
+    explanation: |
+      $v_{\gamma,p}\colon C^\infty(\mathcal{M})\to\mathbb{R}$, $f\mapsto(f\circ\gamma)'(\lambda_0)$: a directional-derivative machine. It needs no ambient space and no chart, which is why it works for spacetime.
+
+  - type: mcq
+    id: bent-curve
+    title: Bending the curve
+    prompt: |
+      In $\mathbb{R}^2$, two curves pass through $p = (1, 1)$ at $\lambda = 0$:
+      $$\gamma_1(\lambda) = (1 + \lambda,\, 1 + 2\lambda),$$
+      $$\gamma_2(\lambda) = (1 + \lambda + \lambda^2,\, 1 + 2\lambda - 3\lambda^2).$$
+      The first is a straight line, the second bends away from it. Is $v_{\gamma_1,p} = v_{\gamma_2,p}$ as elements of $T_p\mathcal{M}$?
+    options:
+      - text: 'Yes: for every field $f$, $(f\circ\gamma_1)''(0) = (f\circ\gamma_2)''(0)$'
+        correct: true
+      - text: 'No: they are different curves, so they have different velocities'
+        feedback: |
+          Different curves can share a velocity. By the chain rule, $(f\circ\gamma)'(0) = \sum_i(\gamma^i)'(0)\,\partial_if(p)$ only sees the first derivatives $(\gamma^i)'(0)$, and both curves have $(1, 2)$.
+      - text: 'No: the second curve accelerates, and the velocity must record that'
+        feedback: |
+          The $\lambda^2$ terms are acceleration, a second-order effect. Their derivative at $\lambda = 0$ is $2\lambda\cdot(\dots) = 0$, so they never reach $(f\circ\gamma)'(0)$. Velocity is first-order information only.
+      - text: 'Only on linear fields such as $f = q_1$; on curved fields they differ'
+        feedback: |
+          Try $f = q_1q_2$: $(f\circ\gamma_1)'(0) = 1\cdot 1 + 1\cdot 2 = 3$ and $(f\circ\gamma_2)'(0) = 1\cdot 1 + 1\cdot 2 = 3$ too, since the $\lambda^2$ terms only enter at second order. The chain rule shows this for every smooth $f$.
+    explanation: |
+      $(f\circ\gamma)'(0) = (\gamma^1)'(0)\,\partial_1f(p) + (\gamma^2)'(0)\,\partial_2f(p)$, and both curves have $(\gamma^1)'(0) = 1$, $(\gamma^2)'(0) = 2$. Same velocity, different curves: a velocity is the class of all curves through $p$ with the same first-order behaviour.
+
+  - type: numeric
+    id: reparam
+    title: Same path, faster
+    prompt: |
+      In $\mathbb{R}^2$ the curve $\gamma(\lambda) = (\lambda, 1)$ passes through $p = (1, 1)$ at $\lambda_0 = 1$. The curve
+      $$\sigma(\lambda) = \gamma(1 + 3\lambda) = (1 + 3\lambda,\, 1)$$
+      traces the same line, passing through $p$ at $\lambda = 0$. For the field $f(q) = q_1^2 + q_2$, compute $v_{\sigma,p}(f) = (f\circ\sigma)'(0)$.
+    answer: 6
+    wrong:
+      - { value: 2, feedback: 'That is $v_{\gamma,p}(f)$. Same image does not mean same velocity: $\sigma$ runs through $p$ three times as fast, and the chain rule gives $(f\circ\sigma)''(0) = 3\,(f\circ\gamma)''(1) = 3\cdot 2$.' }
+      - { value: 18, feedback: 'The factor $3$ enters once, through the chain rule on $\lambda\mapsto 1 + 3\lambda$, not squared: $f\circ\sigma = (1 + 3\lambda)^2 + 1$ has derivative $6(1 + 3\lambda)$, which is $6$ at $\lambda = 0$.' }
+    hint: '$f(\sigma(\lambda)) = (1 + 3\lambda)^2 + 1$. Differentiate and set $\lambda = 0$.'
+    explanation: |
+      $(f\circ\sigma)'(0) = 6 = 3\cdot 2$. In general $\sigma(\lambda) = \gamma(\lambda_0 + \alpha\lambda)$ has $v_{\sigma,p} = \alpha\odot_T v_{\gamma,p}$: a velocity knows how fast the path is run, not only where it goes. This is also how scaling of velocities is realized by curves, with no chart.
+
+  - type: mcq
+    id: sum-on-circle
+    title: Adding curves on a circle
+    prompt: |
+      On the unit circle $S^1\subset\mathbb{R}^2$, two curves pass through $p = (1, 0)$ at $\lambda = 0$. To get a curve whose velocity is $v_{\gamma_1,p}\oplus_Tv_{\gamma_2,p}$, someone takes the plane's vector sum
+      $$\sigma(\lambda) = \gamma_1(\lambda) + \gamma_2(\lambda) - p.$$
+      What goes wrong?
+    options:
+      - text: '$\sigma$ leaves the circle, so it is not a curve in $S^1$; one must add the angle coordinates in a chart instead'
+        correct: true
+      - text: 'Nothing: subtracting $p$ makes $\sigma$ pass through $p$, which is all that is needed'
+        feedback: |
+          $\sigma(0) = p$ indeed, but $\sigma$ must also stay in the manifold. With $\gamma_1 = \gamma_2 = (\cos\lambda, \sin\lambda)$, $\sigma(\pi/2) = (-1, 2)$, far off the circle. Points of $S^1$ cannot be added inside $S^1$.
+      - text: 'The vector $v_{\gamma_1,p}\oplus_Tv_{\gamma_2,p}$ does not exist on $S^1$, because points of a circle cannot be added'
+        feedback: |
+          The vector exists: $\oplus_T$ is defined field by field, $(v_{\gamma_1,p}\oplus_Tv_{\gamma_2,p})(f) := v_{\gamma_1,p}(f) + v_{\gamma_2,p}(f)$, which adds real numbers. Only the construction of a **curve** with that velocity needs something to add, a chart.
+      - text: 'The sum of two velocities needs a chart to be defined at all'
+        feedback: |
+          The definition $(v_{\gamma_1,p}\oplus_Tv_{\gamma_2,p})(f) := v_{\gamma_1,p}(f) + v_{\gamma_2,p}(f)$ uses no chart. A chart only helps to exhibit a curve with that velocity, by adding coordinates, and every chart gives a curve with the same velocity.
+    explanation: |
+      Adding in the angle chart $\theta$ works: the curve with $\theta(\sigma(\lambda)) = \theta(\gamma_1(\lambda)) + \theta(\gamma_2(\lambda)) - \theta(p)$ stays on $S^1$. On a manifold there is no ambient sum, only coordinates and the field-by-field definition.
+
+  - type: mcq
+    id: whole-chart
+    title: Same coordinate, different basis vector
+    prompt: |
+      On $\mathbb{R}^2$ take the cartesian chart $\mathscr{C}(q) = (x, y) = (q_1, q_2)$ and the chart $\mathscr{Z}(q) = (q_1,\, q_2 - q_1)$, whose inverse is $\mathscr{Z}^{-1}(a, b) = (a,\, b + a)$. Both charts have the same first coordinate function $q_1$. At $p = (1, 1)$, what are the standard components of the chart-induced basis vector $(\partial/\partial\mathscr{Z}^1)_p$?
+    options:
+      - text: '$(1, 1)$'
+        correct: true
+      - text: '$(1, 0)$, the same as $(\partial/\partial x)_p$'
+        feedback: |
+          This is the classic trap: "same coordinate function, same basis vector". But $(\partial/\partial\mathscr{Z}^1)_p$ moves $\mathscr{Z}^1$ while holding $\mathscr{Z}^2 = q_2 - q_1$ fixed, so $q_2$ must grow with $q_1$. The coordinate curve is $\mathscr{Z}^{-1}(1 + \lambda, 0) = (1 + \lambda, 1 + \lambda)$.
+      - text: '$(1, -1)$'
+        feedback: |
+          That is the first column of the matrix of partial derivatives of $\mathscr{Z}$ itself, $(\partial\mathscr{Z}^i/\partial q_1) = (1, -1)$. The basis vector is the velocity of a curve built from $\mathscr{Z}^{-1}$: differentiate $\mathscr{Z}^{-1}(1 + \lambda, 0) = (1 + \lambda, 1 + \lambda)$, giving $(1, 1)$.
+      - text: '$(0, 1)$'
+        feedback: |
+          $(0, 1)$ is $(\partial/\partial\mathscr{Z}^2)_p$: moving $\mathscr{Z}^2 = q_2 - q_1$ with $q_1$ fixed changes only $q_2$. The first basis vector moves $\mathscr{Z}^1 = q_1$, which here drags $q_2$ along.
+    explanation: |
+      $(\partial/\partial\mathscr{Z}^1)_p$ is the velocity of the coordinate curve $\lambda\mapsto\mathscr{Z}^{-1}(\mathscr{Z}(p) + \lambda e_1) = (1 + \lambda, 1 + \lambda)$, so $(1, 1)$, while $(\partial/\partial x)_p = (1, 0)$. A chart-induced basis vector depends on the **whole chart**: changing the second coordinate changed the first basis vector.
+
+  - type: mcq
+    id: dual-one-function
+    title: And the dual basis?
+    prompt: |
+      On $\mathbb{R}^2$ take the cartesian chart $\mathscr{C}(q) = (x, y) = (q_1, q_2)$ and the chart $\mathscr{Z}(q) = (q_1,\, q_2 - q_1)$. They share the first coordinate function, yet $(\partial/\partial\mathscr{Z}^1)_p = (1, 1)$ differs from $(\partial/\partial x)_p = (1, 0)$ (standard components, at $p = (1, 1)$). Recall that the differential of a field is $(df)_p(v) := v(f)$. Is the dual basis covector $(d\mathscr{Z}^1)_p$ equal to $(dx)_p$?
+    shuffle: false
+    options:
+      - text: 'Yes: $\mathscr{Z}^1$ and $x$ are the same function, and a differential depends only on the function'
+        correct: true
+      - text: 'No: the dual basis changes whenever the basis changes, and $(\partial/\partial\mathscr{Z}^1)_p \ne (\partial/\partial x)_p$'
+        feedback: |
+          Tempting by symmetry, but $(df)_p(v) = v(f)$ involves only $f$, never the other coordinates. The pairing still works out: $(dx)_p$ gives $1$ on $(\partial/\partial\mathscr{Z}^1)_p = (1, 1)$ and $0$ on $(\partial/\partial\mathscr{Z}^2)_p = (0, 1)$, as a dual basis must. What changed is the **second** covector: $(d\mathscr{Z}^2)_p = (dy)_p - (dx)_p$.
+    explanation: |
+      The asymmetry is real. A basis vector $(\partial/\partial\mathscr{Z}^i)_p$ holds the **other** coordinates fixed, so it depends on the whole chart. A covector $(d\mathscr{Z}^i)_p$ is the differential of the single function $\mathscr{Z}^i$. Here $(d\mathscr{Z}^1)_p = (dx)_p$ while $(\partial/\partial\mathscr{Z}^1)_p\ne(\partial/\partial x)_p$, and the duality $(d\mathscr{Z}^i)_p((\partial/\partial\mathscr{Z}^j)_p) = \delta^i_j$ holds throughout.
+
+  - type: build
+    id: mixed-pairing-law
+    title: Pairing across two charts
+    prompt: |
+      Charts $\mathscr{X}$ and $\mathscr{Y}$ around $p$. Within one chart, $(d\mathscr{X}^i)_p((\partial/\partial\mathscr{X}^j)_p) = \delta^i_j$. What does a covector of the $\mathscr{Y}$ dual basis give on a basis vector of $\mathscr{X}$? (Recall $(df)_p(v) := v(f)$ and $(\partial/\partial\mathscr{X}^j)_p(f) := \partial_j[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$.)
+    prefix: '(d\mathscr{Y}^k)_p\big(\big(\tfrac{\partial}{\partial\mathscr{X}^j}\big)_p\big) ='
+    tiles: ['\big(\tfrac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^j}\big)_p', '\big(\tfrac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^j}\big)_p', '\delta^k_j', '\big(\tfrac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^k}\big)_p']
+    answers:
+      - ['\big(\tfrac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^j}\big)_p']
+    wrong:
+      - answer: ['\delta^k_j']
+        feedback: |
+          $\delta$ holds only when both come from the **same** chart: then $\mathscr{X}^i\circ\mathscr{X}^{-1}$ is the $i$-th projection. Across charts, the composite is $\mathscr{Y}^k\circ\mathscr{X}^{-1}$, a genuine function whose partial derivatives are Jacobian entries.
+      - answer: ['\big(\tfrac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^j}\big)_p']
+        feedback: |
+          That is the inverse Jacobian. Feeding $(\partial/\partial\mathscr{X}^j)_p$ to $(d\mathscr{Y}^k)_p$ differentiates the function $\mathscr{Y}^k$ along the $j$-th coordinate of $\mathscr{X}$: $\mathscr{Y}$ on top, $\mathscr{X}$ below.
+      - answer: ['\big(\tfrac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^k}\big)_p']
+        feedback: |
+          The indices are swapped: the free $k$ is up on the left but down here, and $j$ is down on the left but up here. The function being differentiated is $\mathscr{Y}^k$, the direction is $\mathscr{X}^j$.
+    hint: '$(d\mathscr{Y}^k)_p(v) = v(\mathscr{Y}^k)$. Apply the basis vector $(\partial/\partial\mathscr{X}^j)_p$ to the field $\mathscr{Y}^k$.'
+    explanation: |
+      $$(d\mathscr{Y}^k)_p\big((\partial/\partial\mathscr{X}^j)_p\big) = \partial_j[\mathscr{Y}^k\circ\mathscr{X}^{-1}](\mathscr{X}(p)),$$
+      which is the Jacobian entry $(\partial\mathscr{Y}^k/\partial\mathscr{X}^j)_p$. It reduces to $\delta^k_j$ only when $\mathscr{Y} = \mathscr{X}$.
+
+  - type: numeric
+    id: mixed-pairing-number
+    title: A mixed pairing in numbers
+    prompt: |
+      Running example: on $\mathbb{R}^2$, $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, at $p = (1, 1)$. The basis vector $(\partial/\partial\mathscr{Y}^1)_p$ has standard components $(1, -1)$. Compute
+      $$(d\mathscr{X}^1)_p\big((\partial/\partial\mathscr{Y}^1)_p\big).$$
+    answer: 2
+    wrong:
+      - { value: 1, feedback: 'That would be $\delta^1_1$, which holds only for a covector and a vector of the **same** chart. Here the covector comes from $\mathscr{X}$ and the vector from $\mathscr{Y}$: $(d\mathscr{X}^1)_p(v) = v(\mathscr{X}^1)$, and $\mathscr{X}^1 = 2q_1$ changes at rate $2\cdot 1$ along $(1, -1)$.' }
+      - { value: 0, feedback: 'Zero would mean $\mathscr{X}^1 = 2q_1$ does not change along $(1, -1)$, but the first standard component is $1$, so $2q_1$ changes at rate $2$.' }
+      - { value: 0.5, feedback: 'That is $(\partial\mathscr{Y}^1/\partial\mathscr{X}^1)_p$, the Jacobian in the other direction. The function being differentiated is $\mathscr{X}^1 = 2q_1$, along $(\partial/\partial\mathscr{Y}^1)_p$: the entry $(\partial\mathscr{X}^1/\partial\mathscr{Y}^1)_p = 2$.' }
+    hint: '$(d\mathscr{X}^1)_p(v) = v(\mathscr{X}^1)$, and $\mathscr{X}^1(q) = 2q_1$. Along a vector with standard components $(v_1, v_2)$ this is $2v_1$.'
+    explanation: |
+      $(d\mathscr{X}^1)_p((\partial/\partial\mathscr{Y}^1)_p) = 2\cdot 1 = 2$, the entry $(\partial\mathscr{X}^1/\partial\mathscr{Y}^1)_p$ of the inverse Jacobian $\begin{pmatrix}2 & 0\\ 1 & -1/e\end{pmatrix}$. Mixed pairings give Jacobian entries, not $\delta$.
+
+  - type: mcq
+    id: meters-cm
+    title: Meters to centimeters
+    prompt: |
+      On the line $\mathbb{R}$, the chart $x(q) = q$ measures position in meters; the chart $y(q) = 100\,q$ measures it in centimeters. A velocity $v$ at $p$ has $x$-component $3$, so $v = 3\,(\partial/\partial x)_p$. What are its $y$-component and the basis vector $(\partial/\partial y)_p$?
+    options:
+      - text: '$y$-component $300$, and $(\partial/\partial y)_p = \tfrac{1}{100}(\partial/\partial x)_p$'
+        correct: true
+      - text: '$y$-component $300$, and $(\partial/\partial y)_p = 100\,(\partial/\partial x)_p$'
+        feedback: |
+          If both grew by $100$, then $v = 300\cdot 100\,(\partial/\partial x)_p$, a different vector. Components and basis vectors change in **opposite** ways so that the product stays the same vector: components use the Jacobian $dy/dx = 100$ (contravariant), basis vectors its inverse $dx/dy = \tfrac{1}{100}$ (covariant).
+      - text: '$y$-component $\tfrac{3}{100}$, and $(\partial/\partial y)_p = 100\,(\partial/\partial x)_p$'
+        feedback: |
+          Opposite changes, yes, but in the wrong directions. A smaller unit gives a **larger** number: $3$ m per unit of $\lambda$ is $300$ cm per unit of $\lambda$. The basis vector "one centimeter's worth of motion" is the smaller one, $\tfrac{1}{100}(\partial/\partial x)_p$.
+      - text: '$y$-component $3$: a velocity is chart-independent, so its components are too'
+        feedback: |
+          The **vector** is chart-independent; its components are not. They are coefficients in a basis, and the basis changed: $3\,(\partial/\partial x)_p = 300\,(\partial/\partial y)_p$.
+    explanation: |
+      Component law: $\dot\gamma_\mathcal{V} = (dy/dx)\,\dot\gamma_\mathcal{U} = 100\cdot 3$. Basis law: $(\partial/\partial y)_p = (dx/dy)(\partial/\partial x)_p = \tfrac{1}{100}(\partial/\partial x)_p$. The factors cancel in $300\cdot\tfrac{1}{100}(\partial/\partial x)_p = 3\,(\partial/\partial x)_p$: the same vector in both charts.
+
+  - type: numeric
+    id: jacobian-entry
+    title: One Jacobian entry
+    prompt: |
+      Running example: $\mathscr{X}(q) = (2q_1, -q_2)$ and $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$ on $\mathbb{R}^2$, at $p = (1, 1)$. The Jacobian of the transition map $\text{ᛖ}_{\mathcal{U}\mathcal{V}} = \mathscr{Y}\circ\mathscr{X}^{-1}$ is written
+      $$(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j := (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p,$$
+      with the first subscript ($\mathcal{V}$, chart $\mathscr{Y}$) naming the chart of the row index $i$. Compute the entry $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^2_1$.
+    answer: 1.35914
+    tolerance: 0.005
+    answerText: 'e/2 \approx 1.359'
+    wrong:
+      - { value: 0, feedback: 'That is $(\partial\mathscr{Y}^1/\partial\mathscr{X}^2)_p$, the transposed entry. The upper index is the row and belongs to $\mathscr{Y}$: the entry wanted is $\partial\mathscr{Y}^2/\partial\mathscr{X}^1$.' }
+      - { value: 2.71828, feedback: 'That is $\partial(q_2e^{q_1})/\partial q_1$ at $p$, the derivative with respect to $q_1$. The derivative must be taken with respect to $\mathscr{X}^1 = 2q_1$: write $\mathscr{Y}^2 = -\mathscr{X}^2e^{\mathscr{X}^1/2}$, which brings a factor $\tfrac12$.' }
+      - { value: -2.71828, feedback: 'That is $(\partial\mathscr{Y}^2/\partial\mathscr{X}^2)_p = -e$, the entry in row $2$, column $2$. The lower index $1$ is the column: differentiate with respect to $\mathscr{X}^1$.' }
+      - { value: 1, feedback: 'That is $(\partial\mathscr{X}^2/\partial\mathscr{Y}^1)_p$, an entry of the inverse Jacobian. In $\text{ᛞ}_{\mathcal{V}\mathcal{U}}$ the functions on top are those of $\mathscr{Y}$ and the derivatives are with respect to $\mathscr{X}$.' }
+    hint: 'Express $\mathscr{Y}$ through $\mathscr{X} = (a^1, a^2)$: $q_1 = a^1/2$, $q_2 = -a^2$, so $\mathscr{Y}^2 = -a^2e^{a^1/2}$. Differentiate in $a^1$ at $\mathscr{X}(p) = (2, -1)$.'
+    explanation: |
+      $\partial(-a^2e^{a^1/2})/\partial a^1 = -\tfrac12a^2e^{a^1/2}$, which at $(2, -1)$ is $\tfrac{e}{2}\approx 1.359$. The full Jacobian is $\begin{pmatrix}1/2 & 0\\ e/2 & -e\end{pmatrix}$: row index from $\mathscr{Y}$, column index from $\mathscr{X}$.
+
+  - type: mcq
+    id: einstein-wellformed
+    title: Well-formed or not?
+    multiple: true
+    prompt: |
+      Einstein summation in its strict form: an index appearing once up and once down in a term is summed over $1,\dots,d$ (a dummy index); every other index is free and must appear, at the same height, in every term on both sides; no index appears more than twice in a term. Which equations are well-formed? Select all that apply.
+    options:
+      - text: '$A^i = M^i_{\ j}B^j$'
+        correct: true
+      - text: '$T^i_{\ i} = T^j_{\ j}$'
+        correct: true
+      - text: '$A_i = M^i_{\ j}B^j$'
+        feedback: |
+          The free index $i$ is down on the left and up on the right. Index height records how an object transforms (lower: inverse Jacobian, upper: Jacobian), so the two sides would transform differently: the equation could hold in one chart and fail in another.
+      - text: '$A^i = M^i_{\ j}B^jC^j$'
+        feedback: |
+          $j$ appears three times in one term, so the convention cannot say which pair is summed. With explicit sums, $\sum_jM^i_{\ j}B^jC^j$ would be a same-height sum over $B^jC^j$, which depends on the chart.
+      - text: '$A^k = M^i_{\ j}B^j$'
+        feedback: |
+          The free index on the right is $i$, on the left $k$. Free indices must be the same letter on both sides: the equation is meant to hold for each value of the free index, and here the two sides are labelled by different ones.
+    explanation: |
+      $A^i = M^i_{\ j}B^j$: free $i$ up on both sides, dummy $j$ once up, once down. $T^i_{\ i} = T^j_{\ j}$: no free index, and renaming a dummy changes nothing (both sides are $T^1_{\ 1} + \dots + T^d_{\ d}$).
+
+  - type: numeric
+    id: delta-chain
+    title: A chain of deltas
+    prompt: |
+      In dimension $d = 3$, with Einstein summation over each index appearing once up and once down, and the Kronecker delta $\delta^i_j$ ($1$ if $i = j$, else $0$), compute
+      $$\delta^i_j\,\delta^j_k\,\delta^k_i.$$
+    answer: 3
+    wrong:
+      - { value: 1, feedback: 'A delta with both indices summed is not "a delta equal to 1". Contract step by step: $\delta^i_j\delta^j_k = \delta^i_k$, then $\delta^i_k\delta^k_i = \delta^i_i = 1 + 1 + 1$.' }
+      - { value: 27, feedback: '$27 = 3^3$ counts the terms of the triple sum over $i, j, k$. Most terms vanish: only $i = j = k$ survives, giving $3$ terms equal to $1$.' }
+      - { value: 9, feedback: 'Each delta kills one summation: the triple sum collapses to $\delta^i_i$, a single sum over $i$ of $1$. That is $3$, not $3^2$.' }
+    hint: 'Contract one delta at a time: $\delta^i_j\delta^j_k = \delta^i_k$.'
+    explanation: |
+      $\delta^i_j\delta^j_k\delta^k_i = \delta^i_k\delta^k_i = \delta^i_i = d = 3$. The delta just renames an index; a delta with its two indices summed against each other counts the dimension.
+
+  - type: mcq
+    id: covector-arrow
+    title: The gradient arrow?
+    prompt: |
+      Running example: $f(q) = q_1^2 + q_2$ on $\mathbb{R}^2$ at $p = (1, 1)$, with standard (cartesian) partials $(\partial_1f, \partial_2f)(p) = (2, 1)$. If $(df)_p$ were the arrow with standard components $(2, 1)$, the velocity law would give its components in $\mathscr{X}(q) = (2q_1, -q_2)$ as $(4, -1)$. But the covector components of $(df)_p$ in $\mathscr{X}$, $\mathtt{x}^p_i = (df)_p((\partial/\partial\mathscr{X}^i)_p)$, are $(1, -1)$. What does the mismatch show?
+    options:
+      - text: '$(df)_p$ is not an arrow: covector components change with the inverse Jacobian; turning $(df)_p$ into an arrow needs extra structure, the metric (Level 7)'
+        correct: true
+      - text: 'An arithmetic slip: both lists must agree, since they describe the same gradient'
+        feedback: |
+          Both numbers are right. $(\partial/\partial\mathscr{X}^1)_p = (\tfrac12, 0)$ gives $\mathtt{x}^p_1 = 2\cdot\tfrac12 = 1$, and $(\partial/\partial\mathscr{X}^2)_p = (0, -1)$ gives $\mathtt{x}^p_2 = -1$. A velocity's components grow when coordinates are stretched ($q_1\to 2q_1$), a covector's shrink.
+      - text: 'The chart $\mathscr{X}$ is not allowed: it rescales and reflects the axes'
+        feedback: |
+          $\mathscr{X}$ is a perfectly good chart, smooth with smooth inverse. Any chart must give the same geometric objects; here the two transformation laws simply differ.
+      - text: '$(df)_p$ is an arrow, but only in cartesian coordinates'
+        feedback: |
+          A geometric object cannot be an arrow in one chart and not in another. In cartesian coordinates the two lists happen to coincide because the standard dot product is hiding in the background: that is a metric, which a bare manifold does not have.
+    explanation: |
+      Velocity components use the Jacobian (rows), covector components its inverse (columns): $(2, 1)\to(4, -1)$ versus $(2, 1)\to(1, -1)$. Picture $(df)_p$ as the line it sends to $0$ (here along $(1, -2)$), not as an arrow; the arrow version needs the metric, Level 7.
+
+  - type: numeric
+    id: df-linear
+    title: Linear, though f is not
+    prompt: |
+      Running example: $f(q) = q_1^2 + q_2$ on $\mathbb{R}^2$, $p = (1, 1)$, so $(df)_p(v) = v(f) = 2v_1 + v_2$ for a velocity with standard components $(v_1, v_2)$. Let $u$ have standard components $(1, 0)$. Compute $(df)_p(3\odot_Tu)$.
+    answer: 6
+    wrong:
+      - { value: 18, feedback: 'The square in $f$ does not survive: $(df)_p$ is linear even though $f$ is not, because $(df)_p(v) = v(f)$ and velocities scale field by field: $(3\odot_Tu)(f) = 3\,u(f) = 3\cdot 2$.' }
+      - { value: 15, feedback: 'That is $f(p + 3u) - f(p) = (4^2 + 1) - 2$, a finite step. The differential is a rate at $p$, the first-order part only: $(df)_p(3\odot_Tu) = 3\,(df)_p(u) = 6$.' }
+    hint: '$(df)_p$ is linear: $(df)_p(3\odot_Tu) = 3\,(df)_p(u)$.'
+    explanation: |
+      $(df)_p(3\odot_Tu) = 3\,(2\cdot 1 + 0) = 6$. Linearity of $(df)_p$ comes from the field-by-field operations of $T_p\mathcal{M}$, not from $f$: every smooth $f$, linear or not, has a linear differential.
+
+  - type: mcq
+    id: which-numbers
+    title: Numbers or objects?
+    multiple: true
+    prompt: |
+      A chart $\mathscr{X}$ around $p$ gives the shorthand $(\partial x_i)_p := (\partial/\partial\mathscr{X}^i)_p$ and $(dx^i)_p := (d\mathscr{X}^i)_p$. A velocity $\mathcal{X}_p$ has components $x^i_p$, and a covector $\mathsf{X}_p$ has components $\mathtt{x}^p_i$. For a fixed index $i$, which of these are **real numbers**? Select all that apply.
+    options:
+      - text: '$x^i_p$'
+        correct: true
+      - text: '$\mathtt{x}^p_i$'
+        correct: true
+      - text: '$(dx^i)_p$'
+        feedback: |
+          $(dx^i)_p$ is a covector, a linear map $T_p\mathcal{M}\to\mathbb{R}$: the $i$-th element of the dual basis. It **produces** a number when fed a velocity: $(dx^i)_p(\mathcal{X}_p) = x^i_p$.
+      - text: '$(\partial x_i)_p$'
+        feedback: |
+          $(\partial x_i)_p$ is a velocity, a map from fields to numbers: the $i$-th chart-induced basis vector. The numbers are the coefficients in front of it, $\mathcal{X}_p = x^i_p(\partial x_i)_p$.
+    explanation: |
+      Components are numbers ($x^i_p$ upper index for a velocity, typewriter $\mathtt{x}^p_i$ lower index for a covector); basis elements are objects. The expansions $\mathcal{X}_p = x^i_p(\partial x_i)_p$ and $\mathsf{X}_p = \mathtt{x}^p_i(dx^i)_p$ combine numbers with objects, each with an up-down pair.
+
+  - type: mcq
+    id: tensor-type
+    title: Reading the type
+    prompt: |
+      At $p$, take a fixed field $f$ and define $T(\mathsf{X}, u, w) := \mathsf{X}(u)\,(df)_p(w)$, where $\mathsf{X}\in T_p^*\mathcal{M}$ and $u, w\in T_p\mathcal{M}$. It is linear in each slot. Recall that $T_p^{(r,s)}\mathcal{M}$ collects the multilinear maps with $r$ covector slots and $s$ velocity slots. Which space is $T$ in?
+    options:
+      - text: '$T_p^{(1,2)}\mathcal{M}$'
+        correct: true
+      - text: '$T_p^{(2,1)}\mathcal{M}$'
+        feedback: |
+          The first number counts **covector** slots, the second velocity slots. $T$ eats one covector $\mathsf{X}$ and two velocities $u, w$: type $(1, 2)$, and its components $T^i_{\ jk}$ have one upper and two lower indices.
+      - text: '$T_p^{(0,3)}\mathcal{M}$'
+        feedback: |
+          $(df)_p$ appears inside $T$, but as a fixed ingredient, not as an input. The inputs are $\mathsf{X}$ (a covector), $u$ and $w$ (velocities): one covector slot.
+      - text: '$T_p^{(1,1)}\mathcal{M}$, because $(df)_p$ already fills one slot'
+        feedback: |
+          Count inputs, not ingredients. $T$ has three free inputs, $\mathsf{X}$, $u$, $w$; the fixed $(df)_p$ only decides what $T$ does with $w$.
+    explanation: |
+      Three inputs: one covector, two velocities, so type $(1, 2)$. In a chart its components are
+      $$T^i_{\ jk} = \delta^i_j\,(df)_p((\partial x_k)_p),$$
+      one upper index for the covector slot, two lower ones for the velocity slots.
+
+  - type: numeric
+    id: count-components
+    title: How many numbers?
+    prompt: |
+      In spacetime, $d = 4$. The curvature of spacetime will be described by a tensor of type $(1, 3)$ at each point. How many components does a tensor in $T_p^{(1,3)}\mathcal{M}$ have in one chart?
+    answer: 256
+    wrong:
+      - { value: 16, feedback: 'That is $d\cdot(r + s) = 4\cdot 4$, as if the indices added up. Each of the $4$ indices runs over $4$ values independently, so the counts **multiply**: $4\cdot 4\cdot 4\cdot 4$.' }
+      - { value: 64, feedback: 'That is $4^3$, counting only the three lower indices. The upper index runs over $4$ values too: $\dim T_p^{(r,s)}\mathcal{M} = d^{\,r+s} = 4^4$.' }
+      - { value: 12, feedback: 'That is $d\cdot s = 4\cdot 3$. Components are labelled by **all** index choices at once, one number per combination: $d^{\,r+s} = 4^4$.' }
+    hint: '$\dim T_p^{(r,s)}\mathcal{M} = d^{\,r+s}$: one component per choice of all $r + s$ indices.'
+    explanation: |
+      $4^{1+3} = 256$ components $T^i_{\ jkl}$. (Symmetries of the curvature tensor will cut down the independent ones, but as an element of $T_p^{(1,3)}\mathcal{M}$ it needs $256$ numbers.)
+
+  - type: numeric
+    id: law-11
+    title: A (1,1)-tensor changes chart
+    prompt: |
+      Running example: $\mathscr{X}(q) = (2q_1, -q_2)$, $\mathscr{Y}(q) = (q_1, q_2e^{q_1})$, $p = (1, 1)$. For $k = 1, 2$ and $l = 1, 2$,
+      $$\big(\tfrac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^1}\big)_p = (\tfrac12, \tfrac e2),$$
+      $$\big(\tfrac{\partial\mathscr{X}^1}{\partial\mathscr{Y}^l}\big)_p = (2, 0).$$
+      The $(1,1)$-tensor $A = (\partial x_1)_p\otimes(dx^1)_p$ has $\mathscr{X}$-components $(A_\mathcal{U})^1_{\ 1} = 1$ and all others $0$. Using
+      $$(A_\mathcal{V})^k_{\ l} = \big(\tfrac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^i}\big)_p\big(\tfrac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}\big)_p(A_\mathcal{U})^i_{\ j},$$
+      compute $(A_\mathcal{V})^2_{\ 1}$.
+    answer: 2.71828
+    tolerance: 0.005
+    answerText: 'e \approx 2.718'
+    wrong:
+      - { value: 1.35914, feedback: 'That is $(\partial\mathscr{Y}^2/\partial\mathscr{X}^1)_p$ alone, as if only the upper index transformed. The lower index brings its own factor, $(\partial\mathscr{X}^1/\partial\mathscr{Y}^1)_p = 2$: one Jacobian per index.' }
+      - { value: 0, feedback: 'Zero components in one chart can become nonzero in another when other components are nonzero: here $(A_\mathcal{U})^1_{\ 1} = 1$ feeds every $\mathscr{Y}$-component through $(\partial\mathscr{Y}^k/\partial\mathscr{X}^1)_p(\partial\mathscr{X}^1/\partial\mathscr{Y}^l)_p$.' }
+      - { value: 1, feedback: 'Only the identity $\delta$ keeps the same components in every chart, because its two factors multiply to the inverse identity. A general $(1,1)$-tensor changes: here $(A_\mathcal{V})^2_{\ 1} = \tfrac e2\cdot 2$.' }
+    hint: 'Only $i = j = 1$ contributes: $(A_\mathcal{V})^2_{\ 1} = (\partial\mathscr{Y}^2/\partial\mathscr{X}^1)_p\,(\partial\mathscr{X}^1/\partial\mathscr{Y}^1)_p$.'
+    explanation: |
+      $(A_\mathcal{V})^2_{\ 1} = \tfrac e2\cdot 2 = e$. In full, the $\mathscr{Y}$-matrix is $\begin{pmatrix}1 & 0\\ e & 0\end{pmatrix}$. Check by re-expanding: $(\partial x_1)_p = \tfrac12(\partial y_1)_p + \tfrac e2(\partial y_2)_p$ and $(dx^1)_p = 2(dy^1)_p$, so $A = (\partial y_1)_p\otimes(dy^1)_p + e\,(\partial y_2)_p\otimes(dy^1)_p$. The trace $A^i_{\ i}$ is $1$ in both charts, as an up-down contraction should be.
+
+  - type: numeric
+    id: swapped-product
+    title: Which factor eats which slot?
+    prompt: |
+      Running example on $\mathbb{R}^2$ at $p = (1, 1)$: $f(q) = q_1^2 + q_2$ and $g(q) = q_1$, so for a velocity with standard components $(v_1, v_2)$, $(df)_p(v) = 2v_1 + v_2$ and $(dg)_p(v) = v_1$. The tensor product is $(\mathsf{X}\otimes\mathsf{Y})(u, w) := \mathsf{X}(u)\,\mathsf{Y}(w)$. With $u = (0, 1)$ and $w = (1, 0)$ (standard components), compute
+      $$\big((dg)_p\otimes(df)_p\big)(u, w).$$
+    answer: 0
+    wrong:
+      - { value: 1, feedback: 'That is $\big((df)_p\otimes(dg)_p\big)(u, w) = (df)_p(u)\,(dg)_p(w) = 1\cdot 1$, the product in the other order. Here the first factor $(dg)_p$ eats the first slot $u$: $(dg)_p(u) = 0$.' }
+      - { value: 2, feedback: 'That is $(df)_p(w) = 2$ alone. The product multiplies both values: $(dg)_p(u)\cdot(df)_p(w) = 0\cdot 2$.' }
+    hint: 'First factor on first slot: $(dg)_p(u)\cdot(df)_p(w)$.'
+    explanation: |
+      $(dg)_p(u)\,(df)_p(w) = 0\cdot 2 = 0$, while the other order gives $(df)_p(u)\,(dg)_p(w) = 1\cdot 1 = 1$. Same two covectors, different tensors: $\otimes$ is not commutative.
+
+  - type: mcq
+    id: zero-tensor
+    title: Zero in one chart
+    prompt: |
+      A tensor $T\in T_p^{(r,s)}\mathcal{M}$ has all components equal to $0$ in one chart $\mathscr{X}$. Recall the law: each component in a second chart $\mathscr{Y}$ is a sum of $\mathscr{X}$-components, each multiplied by one Jacobian factor per index. What about its components in $\mathscr{Y}$?
+    options:
+      - text: 'All $0$ as well, in every chart'
+        correct: true
+      - text: 'Possibly nonzero: the Jacobian factors can create components where there were none'
+        feedback: |
+          Each term of the law has an $\mathscr{X}$-component as a factor, so if all of them vanish, every term vanishes. Jacobians mix nonzero components into new places (as for $(\partial x_1)_p\otimes(dx^1)_p$), but they cannot make something out of nothing.
+      - text: 'All $0$ only if the Jacobian is the identity matrix'
+        feedback: |
+          The law is linear and homogeneous in the old components: $0$ in, $0$ out, whatever the Jacobian. No special chart is needed.
+    explanation: |
+      Components are values of $T$ on basis elements; if $T$ gives $0$ on one basis it is the zero map, and then it gives $0$ on every basis. So an equation "tensor $= 0$" true in one chart is true in all, which is why physical laws are written as tensor equations. Contrast the same-height sum $\sum_i(\dot\gamma^i)^2$, which is not a tensor and changes from chart to chart.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      - A **velocity** is the rate-of-change machine $f\mapsto(f\circ\gamma)'(\lambda_0)$: many curves share it, bending does not change it, running faster scales it.
+      - $\oplus_T$ is defined field by field; a chart is needed only to build a **curve** for the sum (adding points of a circle in the plane leaves the circle).
+      - $(\partial/\partial\mathscr{X}^i)_p$ depends on the **whole chart**; $(d\mathscr{X}^i)_p$ only on the function $\mathscr{X}^i$. Mixed pairings give Jacobian entries, $\delta$ only within one chart.
+      - Components and basis vectors change oppositely (meters to centimeters); the rune $\text{ᛞ}_{\mathcal{V}\mathcal{U}}$ has rows from $\mathscr{Y}$, columns from $\mathscr{X}$.
+      - Strict Einstein summation: up-down pairs only, free indices matched, $\delta^i_i = d$.
+      - A covector is not an arrow; $(df)_p$ is linear even when $f$ is not; components are numbers, basis elements are objects.
+      - Tensors: type $(r, s)$ counts covector slots first, $d^{\,r+s}$ components, one Jacobian per index, $\otimes$ order matters, and zero in one chart means zero in all.
+
+      **Next:** the content map of Tangent Spaces: rebuild how curves, velocities, the chart-induced basis, covectors and tensors fit together, box by box.

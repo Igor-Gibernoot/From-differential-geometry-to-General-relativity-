@@ -184,7 +184,11 @@ levels:
         kind: concept
         file: ch04/tensor-space.yaml
         summary: A machine that eats two velocities at $p$ needs $d^2$ numbers. The tensor space $T_p^{(r,s)}\mathcal{M}$, products of the chart bases, components, $\dim = d^{\,r+s}$, and the transformation law with one Jacobian per index.
-      - { id: ch04-traps, title: Tangent Space Traps, kind: traps }
+      - id: ch04-traps
+        title: Tangent Space Traps
+        kind: traps
+        file: ch04/traps.yaml
+        summary: Fast questions on the level's classic mistakes, from velocities and curve sums to the chart-induced basis, Einstein summation, covectors and tensor components.
       - { id: ch04-map, title: "Content Map: Tangent Spaces", kind: map }
       - { id: ch04-review, title: Level Review, kind: review }
       - { id: ch04-challenge, title: Level Challenge, kind: challenge }
