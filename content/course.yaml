@@ -278,7 +278,11 @@ levels:
         kind: guided
         file: ch06/torsion-tensor.yaml
         summary: Neither the covariant derivative nor the commutator is a tensor, yet the torsion is. Prove it slot by slot and watch the two defects cancel.
-      - { id: ch06-three-connections, title: "Guided Problem: Three Connections on the Plane", kind: guided }
+      - id: ch06-three-connections
+        title: "Guided Problem: Three Connections on the Plane"
+        kind: guided
+        file: ch06/three-connections.yaml
+        summary: Compute torsion and curvature of three connections on the plane by hand (Euclidean, frame, curved), sort them into flat/curved and torsion/no torsion, solve the sinusoidal straightest curves and predict a loop's mismatch.
       - { id: ch06-traps, title: Connection Traps, kind: traps }
       - { id: ch06-map, title: "Content Map: Covariant Derivative", kind: map }
       - { id: ch06-review, title: Level Review, kind: review }
