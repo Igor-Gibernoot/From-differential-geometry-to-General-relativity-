@@ -1,6 +1,14 @@
 id: ch03-atlases
 title: Atlases and Smooth Manifolds
 kind: concept
+own: |
+  - An **atlas**: a set of charts whose domains cover $\mathcal{M}$.
+  - Calculus on $\mathcal{M}$ is done on chart representatives $f\circ\mathscr{X}^{-1}$, and
+  {{ $$f\circ\mathscr{Y}^{-1} = (f\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\mathscr{Y}^{-1})$$ }}
+  shows why charts must agree through their **transition maps**.
+  - **$C^\infty$-compatible** charts: {{ both transitions smooth }} (continuity is free). $x$ and $x^3$ on $\mathbb{R}$ fail; the angle and stereographic charts on $S^1$ pass.
+  - A **smooth atlas** has all pairs compatible; its **maximal atlas** is the smooth structure, and it is independent of the atlas we started from.
+  - A **smooth manifold** {{ $(\mathcal{M}, \mathcal{O}_\mathcal{M}, \mathcal{A}_{C^\infty})_d$ }}. The same space can carry different smooth structures, as $\mathbb{R}$ with $\{x\}$ and with $\{x^3\}$.
 
 cards:
   - type: text
@@ -399,12 +407,4 @@ cards:
     id: wrap-up
     title: What you now own
     body: |
-      - An **atlas**: a set of charts whose domains cover $\mathcal{M}$.
-      - Calculus on $\mathcal{M}$ is done on chart representatives $f\circ\mathscr{X}^{-1}$, and
-      $$f\circ\mathscr{Y}^{-1} = (f\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\mathscr{Y}^{-1})$$
-      shows why charts must agree through their **transition maps**.
-      - **$C^\infty$-compatible** charts: both transitions smooth (continuity is free). $x$ and $x^3$ on $\mathbb{R}$ fail; the angle and stereographic charts on $S^1$ pass.
-      - A **smooth atlas** has all pairs compatible; its **maximal atlas** is the smooth structure, and it is independent of the atlas we started from.
-      - A **smooth manifold** $(\mathcal{M}, \mathcal{O}_\mathcal{M}, \mathcal{A}_{C^\infty})_d$. The same space can carry different smooth structures, as $\mathbb{R}$ with $\{x\}$ and with $\{x^3\}$.
-
       **Next:** with smooth structures in hand we can say when a map **between** two manifolds is smooth, and when two manifolds are the same smooth manifold: **diffeomorphisms**. We will find one between the two smooth lines of this lesson.

@@ -1,6 +1,13 @@
 id: ch03-smooth-maps
 title: Smooth Maps and Diffeomorphisms
 kind: concept
+own: |
+  - The **chart representative** of a map $\phi\colon\mathcal{M}\to\mathcal{N}$:
+  {{ $$\Phi = \mathscr{Y}\circ\phi\circ\mathscr{X}^{-1},$$ }}
+  from $d$ coordinates to $e$ coordinates, defined on an open set because $\phi$ is continuous.
+  - A **smooth map**: {{ all representatives $C^\infty$ }}. Transition maps on both sides make the verdict chart-independent. Smooth functions ($\mathcal{N} = \mathbb{R}$) and smooth curves ($\mathcal{M} = \mathbb{R}$) are special cases. The doubling map of $S^1$ is smooth, with slope $2$ in the angle chart.
+  - A **diffeomorphism**: a bijection, {{ smooth with smooth inverse }}. $p\mapsto p^3$ is one from $\mathbb{R}_y$ to $\mathbb{R}_x$, but not on standard $\mathbb{R}$.
+  - The hierarchy: continuous maps and homeomorphisms for topology, smooth maps and diffeomorphisms for smooth manifolds. Exotic $\mathbb{R}^4$ and exotic $S^7$ are homeomorphic but not diffeomorphic to the standard ones.
 
 cards:
   - type: text
@@ -414,11 +421,4 @@ cards:
     id: wrap-up
     title: What you now own
     body: |
-      - The **chart representative** of a map $\phi\colon\mathcal{M}\to\mathcal{N}$:
-      $$\Phi = \mathscr{Y}\circ\phi\circ\mathscr{X}^{-1},$$
-      from $d$ coordinates to $e$ coordinates, defined on an open set because $\phi$ is continuous.
-      - A **smooth map**: all representatives $C^\infty$. Transition maps on both sides make the verdict chart-independent. Smooth functions ($\mathcal{N} = \mathbb{R}$) and smooth curves ($\mathcal{M} = \mathbb{R}$) are special cases. The doubling map of $S^1$ is smooth, with slope $2$ in the angle chart.
-      - A **diffeomorphism**: a bijection, smooth with smooth inverse. $p\mapsto p^3$ is one from $\mathbb{R}_y$ to $\mathbb{R}_x$, but not on standard $\mathbb{R}$.
-      - The hierarchy: continuous maps and homeomorphisms for topology, smooth maps and diffeomorphisms for smooth manifolds. Exotic $\mathbb{R}^4$ and exotic $S^7$ are homeomorphic but not diffeomorphic to the standard ones.
-
       **Next:** a guided problem that puts the whole chapter together: prove, step by step, that the circle $S^1$ is a smooth manifold.

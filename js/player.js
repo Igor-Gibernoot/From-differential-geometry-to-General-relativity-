@@ -15,7 +15,7 @@ import { themeButton } from './theme.js';
 export function runSession(root, { items, mode, startAt = 0, readOnly = false, onFinish, onExit }) {
   const stats = { questions: 0, firstTry: 0 };
   const requeued = new Set();
-  const answered = new Map(); // item index -> { firstTry }; revisits (Back) show the answer
+  const answered = new Map(); // item index -> { firstTry }; set once solved or revealed; revisits (Back) show the answer
   let i = startAt;
   let combo = 0; // first-try correct answers in a row
   let footButtons = [];
@@ -86,7 +86,6 @@ export function runSession(root, { items, mode, startAt = 0, readOnly = false, o
   function record(item, firstTry) {
     stats.questions++;
     if (firstTry) stats.firstTry++;
-    answered.set(i, { firstTry });
     if (!item.key) return;
     if (mode === 'review') {
       progress.recordReview(item.key, firstTry);
@@ -151,6 +150,7 @@ export function runSession(root, { items, mode, startAt = 0, readOnly = false, o
       if (r.correct) {
         sounds.correct();
         if (attempts === 1) { record(item, true); combo++; }
+        answered.set(i, { firstTry: attempts === 1 });
         const body = [r.feedback, explanation].filter(Boolean).join('\n\n');
         showFeedback(feedbackBox('good', praise(attempts, combo), body));
         setFoot([continueBtn()]);
@@ -161,6 +161,7 @@ export function runSession(root, { items, mode, startAt = 0, readOnly = false, o
         setFoot([
           btn('Show answer', 'ghost', () => {
             ctl.reveal();
+            answered.set(i, { firstTry: false });
             showFeedback(feedbackBox('neutral', 'Answer', explanation ?? ''));
             setFoot([continueBtn()]);
           }),

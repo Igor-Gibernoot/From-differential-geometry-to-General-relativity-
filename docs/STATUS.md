@@ -28,7 +28,7 @@ append a short entry at the end of **Log** (a few lines, ending with
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Recap (`own:`) rule:** every concept lesson carries `own:` (its "what you now own" summary with 3–6 `{{ }}` blanks on the main
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
-  write it from the start. **Backfill:** Chapter 2 done (7 concept lessons, style approved by Igor); pending: Chapter 3, then 4–5, then 6 (no pilot needed now;
+  write it from the start. **Backfill:** Chapter 2-3 done, pending 4-5 then 6 (no pilot needed now;
   list each chapter's blanks for Igor's veto at the end). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** first the `own:` backfill (above), then Chapter 7 (Metric) in `course.yaml` order: next `ch07-metric`, then `ch07-signature`, `ch07-length`,
@@ -323,6 +323,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — own: backfill, Chapter 3 (open-sets, standard-topology, homeomorphisms, hausdorff, charts, atlases, smooth-maps) + Back/retry fix
+- Summary moved into `own:` (wording unchanged, blanks added); card keeps id, title and the "**Next:**" teaser. `circle` is `guided`, skipped.
+  Blanks: open-sets 5 (three topology rules, discrete, indiscrete), standard-topology 3, homeomorphisms 3, hausdorff 3, charts 3, atlases 3, smooth-maps 3.
+  Igor approved with no vetoes. Player fix: a question counts as answered (shown on Back) only once solved or revealed, not after a wrong attempt.
+- Conventions fixed here: prose blanks hide only the definition and keep the term visible ("A map is **continuous** when {{ … }}"); a chain
+  of independent rules is marked rule by rule; skip a definition whose key verb would be hidden (atlas = charts that "cover").
 ### 2026-10-20 — own: backfill, Chapter 2 (maps, axioms, dual, basis, change-of-basis, tensors, tensor-product)
 - Summary moved from the wrap card into `own:` (wording unchanged, blanks added); the card keeps id, title and only the "**Next:**" teaser.
   Blanks: maps 3, axioms 5 (commutativity, inverses, scaling associativity, distributive 1, unit), dual 3, basis 4, change-of-basis 3, tensors 4,

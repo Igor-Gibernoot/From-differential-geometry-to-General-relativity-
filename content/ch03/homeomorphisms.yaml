@@ -1,6 +1,10 @@
 id: ch03-homeomorphisms
 title: Continuity and Homeomorphisms
 kind: concept
+own: |
+  - The **preimage** {{ $\text{preim}_\phi(\mathcal{V}) = \{p \mid \phi(p)\in\mathcal{V}\}$ }}, defined for every map. A map is **continuous** when {{ preimages of open sets are open }}. Tears show up as preimage points with no room (the jump $H$). Continuity says nothing about images, and depends on both topologies.
+  - For the standard topologies it agrees with the calculus $\varepsilon$-$\delta$ definition, and composites of continuous maps are continuous.
+  - A **homeomorphism** is a bijection, {{ continuous in both directions }}: it matches the open sets of two spaces. $x\mapsto 2x + 1$ is one; the wrap $[0, 2\pi)\to S^1$ is a continuous bijection whose inverse tears the circle at $(1, 0)$.
 
 cards:
   - type: text
@@ -338,8 +342,4 @@ cards:
     id: wrap
     title: What you now own
     body: |
-      - The **preimage** $\text{preim}_\phi(\mathcal{V}) = \{p \mid \phi(p)\in\mathcal{V}\}$, defined for every map. A map is **continuous** when preimages of open sets are open. Tears show up as preimage points with no room (the jump $H$). Continuity says nothing about images, and depends on both topologies.
-      - For the standard topologies it agrees with the calculus $\varepsilon$-$\delta$ definition, and composites of continuous maps are continuous.
-      - A **homeomorphism** is a bijection, continuous in both directions: it matches the open sets of two spaces. $x\mapsto 2x + 1$ is one; the wrap $[0, 2\pi)\to S^1$ is a continuous bijection whose inverse tears the circle at $(1, 0)$.
-
       **Next:** some spaces look harmless point by point and are still monsters. In a space with too few open sets, a sequence can converge to two different points at once, and a particle's path would have two endpoints. The next lesson adds the two conditions that rule such spaces out: **Hausdorff** and **second countable**.

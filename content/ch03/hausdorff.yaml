@@ -1,6 +1,13 @@
 id: ch03-hausdorff
 title: Hausdorff and Second Countable
 kind: concept
+own: |
+  - **Convergence** with open sets: $p_n\to p$ when {{ every open neighbourhood of $p$ traps the whole tail }}. In the indiscrete topology, every sequence converges to every point.
+  - **Hausdorff**: for all $p\neq q$ there are open sets with
+    {{ $$p\in\mathcal{U},\qquad q\in\mathcal{V},\qquad \mathcal{U}\cap\mathcal{V} = \emptyset .$$ }}
+    Then limits are unique. $\mathbb{R}^d$ is Hausdorff (balls of radius half the distance), and so is every subset. The line with two origins looks like $\mathbb{R}$ everywhere and is not Hausdorff.
+  - **Basis**: open sets whose unions give every open set. **Second countable**: {{ a countable basis exists }}. $\mathbb{R}^d$ has the rational balls; the discrete $\mathbb{R}$ and uncountably many lines have none.
+  - Physics: unique motion needs Hausdorff; integrals over spacetime need second countability.
 
 cards:
   - type: text
@@ -359,11 +366,4 @@ cards:
     id: wrap
     title: What you now own
     body: |
-      - **Convergence** with open sets: $p_n\to p$ when every open neighbourhood of $p$ traps the whole tail. In the indiscrete topology, every sequence converges to every point.
-      - **Hausdorff**: for all $p\neq q$ there are open sets with
-        $$p\in\mathcal{U},\qquad q\in\mathcal{V},\qquad \mathcal{U}\cap\mathcal{V} = \emptyset .$$
-        Then limits are unique. $\mathbb{R}^d$ is Hausdorff (balls of radius half the distance), and so is every subset. The line with two origins looks like $\mathbb{R}$ everywhere and is not Hausdorff.
-      - **Basis**: open sets whose unions give every open set. **Second countable**: a countable basis exists. $\mathbb{R}^d$ has the rational balls; the discrete $\mathbb{R}$ and uncountably many lines have none.
-      - Physics: unique motion needs Hausdorff; integrals over spacetime need second countability.
-
       **Next:** "looks like $\mathbb{R}^d$ near each point" is still a slogan. The next lesson makes it precise with **charts**: homeomorphisms from open pieces of the space onto open sets of $\mathbb{R}^d$, the coordinate systems of physics, and the **transition maps** that translate between two of them.
