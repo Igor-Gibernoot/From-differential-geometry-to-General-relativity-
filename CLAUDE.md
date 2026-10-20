@@ -90,6 +90,14 @@ and put the weight on understanding and on the physics.
    $T_p^*\mathcal{M}$. Chapter 2 writes sums explicitly; Einstein summation
    only from Chapter 4, where the book introduces it. Later conventions are
    listed in `docs/STATUS.md` (Current).
+   **Runes:** keep the book's runic symbols (never swap them for another
+   notation): write them as `\text{ᛖ}`, `\text{ᛞ}`, `\text{ᚱ}`, … inside
+   math. They render on every device through the runic font that extends
+   KaTeX (`vendor/fonts/`, any rune U+16A0–16F8). Introduce each with its
+   meaning and subscript order, e.g. $\text{ᛖ}_{\mathcal{U}\mathcal{V}} :=
+   \mathscr{Y}\circ\mathscr{X}^{-1}$, Jacobian $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j
+   := (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ (first subscript = chart of
+   the row index); the fraction form may be used alongside it in laws.
 10. **Self-contained.** Never mention "the book" or its section labels
     (C.3, B.5: say "the running example"); where the book derives a result
     another way, give both derivations in the lesson. End each lesson

@@ -118,6 +118,14 @@ Applies to every string with math (body, prompt, options, hint, feedback, explan
 - Inline `$...$` short (a symbol or short equation); longer goes on a `$$` line.
 - Build cards: short prefix, at most about 6 answer tiles.
 
+## Book symbols
+
+- Runes as in the book, inside math: `$\text{ᛖ}_{\mathcal{U}\mathcal{V}}$` (transition map
+  $\mathscr{Y}\circ\mathscr{X}^{-1}$), `$\text{ᛞ}_{\mathcal{V}\mathcal{U}}$` (its Jacobian
+  $(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$), `$\text{ᚱ}$` (reparametrization), …
+  A bundled runic font makes them render everywhere; no need to avoid them.
+- Never write "the book" or section labels (C.3, B.5) in lessons.
+
 ## YAML gotchas
 
 - TeX in **single quotes** or block scalars (`|`); never double quotes (`"\sum"` breaks).
