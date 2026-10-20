@@ -310,16 +310,26 @@ cards:
     title: What you now own
     body: |
       - A real vector space $(V, \oplus, \odot)$ is a set with an addition and a scaling that obey eight rules, for all $\mathcal{X},\mathcal{Y},\mathcal{Z}\in V$ and $\alpha,\beta\in\mathbb{R}$. $(V,\oplus)$ is an **abelian group**:
-        1. commutative: $\mathcal{X}\oplus\mathcal{Y} = \mathcal{Y}\oplus\mathcal{X}$;
-        2. associative: $(\mathcal{X}\oplus\mathcal{Y})\oplus\mathcal{Z} = \mathcal{X}\oplus(\mathcal{Y}\oplus\mathcal{Z})$;
-        3. neutral element: $\mathcal{X}\oplus 0_V = \mathcal{X}$;
-        4. inverses: $\mathcal{X}\oplus(-\mathcal{X}) = 0_V$.
+        1. commutative:
+           $$\mathcal{X}\oplus\mathcal{Y} = \mathcal{Y}\oplus\mathcal{X};$$
+        2. associative:
+           $$(\mathcal{X}\oplus\mathcal{Y})\oplus\mathcal{Z} = \mathcal{X}\oplus(\mathcal{Y}\oplus\mathcal{Z});$$
+        3. neutral element:
+           $$\mathcal{X}\oplus 0_V = \mathcal{X};$$
+        4. inverses:
+           $$\mathcal{X}\oplus(-\mathcal{X}) = 0_V.$$
 
         And scaling fits with numbers and with addition:
-        5. $(\alpha\cdot\beta)\odot\mathcal{X} = \alpha\odot(\beta\odot\mathcal{X})$;
-        6. $(\alpha+\beta)\odot\mathcal{X} = (\alpha\odot\mathcal{X})\oplus(\beta\odot\mathcal{X})$;
-        7. $\alpha\odot(\mathcal{X}\oplus\mathcal{Y}) = (\alpha\odot\mathcal{X})\oplus(\alpha\odot\mathcal{Y})$;
-        8. $1\odot\mathcal{X} = \mathcal{X}$.
+
+        5. associative:
+           $$(\alpha\cdot\beta)\odot\mathcal{X} = \alpha\odot(\beta\odot\mathcal{X});$$
+        6. distributive 1:
+           $$(\alpha+\beta)\odot\mathcal{X} = (\alpha\odot\mathcal{X})\oplus(\beta\odot\mathcal{X});$$
+        7. distributive 2:
+           $$\alpha\odot(\mathcal{X}\oplus\mathcal{Y}) = (\alpha\odot\mathcal{X})\oplus(\alpha\odot\mathcal{Y});$$
+        8. unit:
+           $$1\odot\mathcal{X} = \mathcal{X}.$$
+
       - A vector is any element of such a set: an arrow, a polynomial, a solution of a linear equation, even a positive number with $X\oplus Y := X\cdot Y$.
       - Both operations must be checked together, closure included.
       - There are no lengths or angles. Those need a metric.
