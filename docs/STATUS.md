@@ -18,11 +18,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   list), one block per problem with `tag: Problem N · …` and ids `pN-…`, then
   `wrap-up` ending with a teaser for the next level.
 - **Chapter 4 in progress:** `ch04-tangent-space` (26 cards),
-  `ch04-velocity-operations` (23 cards), `ch04-coordinate-basis` (33 cards)
-  built; widget `chart-basis` built (coordinate lines of two charts, basis at
+  `ch04-velocity-operations` (23 cards), `ch04-coordinate-basis` (33 cards),
+  `ch04-chart-basis` (24 cards, guided B.5) built; widget `chart-basis` built (coordinate lines of two charts, basis at
   $p$, components, Jacobian).
 - **Queue (one unit each):** Chapter 4 (Tangent Spaces) in `course.yaml`
-  order, next `ch04-chart-basis` (guided: B.5 proof that the chart-induced basis is a basis); then Chapters 5–10 (each with
+  order, next `ch04-einstein` (concept: Einstein summation); then Chapters 5–10 (each with
   map and challenge). Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -85,6 +85,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   basis law uses column $i$ (covariant), component law row $i$ (contravariant);
   Chapter 2 link $J_i^j = (\partial\mathscr{Y}^j/\partial\mathscr{X}^i)_p$ ($\mathscr{X}$ old, $\mathscr{Y}$ new);
   polar chart $\mathscr{P}(q) = (r,\theta)$, $|(\partial/\partial\theta)_p| = r_p$; metric = Level 7.
+  B.5 proof: coefficients of a vanishing combination $a^i$ (not the book's $\alpha^i$, which name
+  $\mathscr{X}$-coordinates); coordinate functions as test fields justified by a bump function
+  ("a velocity only looks near $p$", bump existence stated without proof); C.3 example
+  $w = (\partial/\partial\mathscr{X}^1)_p + (\partial/\partial\mathscr{X}^2)_p$ kills $f = q_1^2+q_2$ but $w(\mathscr{X}^1) = 1$;
+  polar $c_\theta$ at $p=(1,1)$ defined for $\lambda\in(-\pi/4, 7\pi/4)$.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -94,6 +99,17 @@ append a short entry at the end of **Log** (a few lines, ending with
   map views (intro, complete) are always screenshotted.
 
 ## Log
+
+Guided lesson `ch04-chart-basis` (24 cards, B.5): hook (three claims), predict,
+step 1 coordinate curve ($\lambda$ near 0 by openness of $\mathscr{X}(\mathcal{U})$,
+smooth via chart representative, build $v_{c_i,p}(f)$), single-chart polar
+`basisOnly` widget, $c_\theta$ range ($a = \pi/4$), cut at $(2,0)$; step 2
+($\gamma$ stays in $\mathcal{U}$ near $\lambda_0$, build expansion); step 3 (test
+fields via bump, order proof), numerics in C.3 ($w(f)=0$, $w(\mathscr{X}^1)=1$,
+$w(f)=5$ from $w(\mathscr{X}^j)$), dimension + book footnote (global, atlas),
+charts into $\mathbb{R}^2$ and $\mathbb{R}^3$ impossible; traps (circular count, one
+field vs all, $\delta$ is not orthonormality). Conventions fixed here: coefficients
+$a^i$; bump-function justification for $\mathscr{X}^j$ as test field; C.3 $w$ example.
 
 Concept lesson `ch04-coordinate-basis` (33 cards): hook (C.3 velocity $(2,-2)$
 vs $(1,3e)$), `chart-basis` explore (C.3 + cartesian/polar presets), chain rule

@@ -1,0 +1,384 @@
+id: ch04-chart-basis
+title: 'Guided Problem: The Chart-Induced Basis'
+kind: guided
+
+cards:
+  - type: text
+    id: hook
+    title: A basis we never checked
+    body: |
+      Recall: on a smooth manifold $\mathcal{M}$ of dimension $d$, the tangent space $T_p\mathcal{M}$ is the set of velocities $v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0)$ of smooth curves $\gamma$ with $\gamma(\lambda_0) = p$, acting on scalar fields $f\in C^\infty(\mathcal{M})$. For a chart $(\mathcal{U}, \mathscr{X})$ with $p\in\mathcal{U}$ we defined
+      $$\left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p\!(f) := \partial_i\big[f\circ\mathscr{X}^{-1}\big](\mathscr{X}(p)),$$
+      where $\partial_i$ is the partial derivative in the $i$-th slot of $\mathbb{R}^d$, and called the set of these $d$ maps the **chart-induced basis** of $T_p\mathcal{M}$. We never proved it is a basis. That takes three claims:
+      1. each $(\partial/\partial\mathscr{X}^i)_p$ is an element of $T_p\mathcal{M}$ (a velocity of some curve);
+      2. they **span** $T_p\mathcal{M}$: every velocity is a combination of them;
+      3. they are **linearly independent**: only the trivial combination is zero.
+
+      This lesson proves all three, and then reads off $\dim T_p\mathcal{M} = d$.
+
+  - type: mcq
+    id: predict
+    prompt: |
+      On a smooth manifold of dimension $d$, take a chart $(\mathcal{U}, \mathscr{X})$ around $p$ and the $d$ maps $(\partial/\partial\mathscr{X}^i)_p(f) := \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$. Before any proof, guess: which of these must be shown to conclude that they form a basis of the tangent space $T_p\mathcal{M}$? Select all that apply.
+    multiple: true
+    options:
+      - text: 'Each one is an element of $T_p\mathcal{M}$'
+        correct: true
+      - text: 'They span $T_p\mathcal{M}$'
+        correct: true
+      - text: 'They are linearly independent'
+        correct: true
+      - text: 'They are orthonormal'
+        feedback: |
+          Orthonormality needs an inner product, extra structure that $T_p\mathcal{M}$ does not have yet (on a manifold it is the metric, Level 7). A basis only needs spanning and independence. Polar basis vectors are not even of unit length: in the plane $(\partial/\partial\theta)_p$ has length $r_p$.
+      - text: 'Nothing beyond counting: there are $d$ of them and the manifold has dimension $d$'
+        feedback: |
+          That $\dim T_p\mathcal{M} = d$ is the **conclusion** of this proof, not an input. A priori $T_p\mathcal{M}$ is a set of maps $C^\infty(\mathcal{M})\to\mathbb{R}$; the number $d$ describes the charts, and why it should also count tangent directions is exactly what we must show.
+    explanation: |
+      Membership, spanning and independence. The first makes sure we are talking about vectors of the right space; the other two are the definition of a basis.
+
+  - type: text
+    id: step1
+    title: 'Step 1: each one is a velocity'
+    tag: Step 1 · Membership
+    body: |
+      To show $(\partial/\partial\mathscr{X}^i)_p\in T_p\mathcal{M}$ we must find a curve whose velocity it is. Move along the $i$-th coordinate only: with $e_i$ the $i$-th standard basis vector of $\mathbb{R}^d$, define the **coordinate curve**
+      $$c_i(\lambda) := \mathscr{X}^{-1}\big(\mathscr{X}(p) + \lambda\,e_i\big).$$
+      In the chart it is a straight line: all coordinates stay fixed except the $i$-th, which grows at rate 1. At $\lambda = 0$ it sits at $\mathscr{X}^{-1}(\mathscr{X}(p)) = p$.
+
+      Two things need checking before $c_i$ is a curve at all: for which $\lambda$ it is defined, and why it is smooth.
+
+  - type: mcq
+    id: lambda-near-zero
+    prompt: |
+      On a smooth manifold of dimension $d$ with a chart $(\mathcal{U}, \mathscr{X})$ around $p$, the coordinate curve is $c_i(\lambda) = \mathscr{X}^{-1}(\mathscr{X}(p) + \lambda e_i)$, with $e_i$ the $i$-th standard basis vector of $\mathbb{R}^d$. Why is $c_i$ in general defined only for $\lambda$ in some interval $(-\varepsilon, \varepsilon)$, and why does such an interval exist?
+    options:
+      - text: '$\mathscr{X}^{-1}$ is defined only on $\mathscr{X}(\mathcal{U})$; this set is open, so it contains a ball around $\mathscr{X}(p)$, and the line stays in it for small $|\lambda|$'
+        correct: true
+      - text: 'Because $\mathscr{X}^{-1}$ stops being smooth for large $\lambda$'
+        feedback: |
+          Where $\mathscr{X}^{-1}$ is defined (on all of $\mathscr{X}(\mathcal{U})$) it is smooth. The problem is that for large $|\lambda|$ the point $\mathscr{X}(p) + \lambda e_i$ may leave $\mathscr{X}(\mathcal{U})$, where $\mathscr{X}^{-1}$ is not defined at all.
+      - text: 'It is defined for every $\lambda\in\mathbb{R}$, since $\mathscr{X}(p) + \lambda e_i$ is a point of $\mathbb{R}^d$ for every $\lambda$'
+        feedback: |
+          It is a point of $\mathbb{R}^d$, but $\mathscr{X}^{-1}$ only accepts points of the image $\mathscr{X}(\mathcal{U})$, usually a proper subset. In polar coordinates with $\theta\in(0, 2\pi)$, the line $\theta = \theta_p + \lambda$ leaves the allowed range once $\theta_p + \lambda\notin(0,2\pi)$.
+    explanation: |
+      A chart maps $\mathcal{U}$ homeomorphically onto an **open** subset $\mathscr{X}(\mathcal{U})$ of $\mathbb{R}^d$. Open means: around $\mathscr{X}(p)$ there is a ball of some radius $\varepsilon > 0$ inside $\mathscr{X}(\mathcal{U})$. For $|\lambda| < \varepsilon$ the point $\mathscr{X}(p)+\lambda e_i$ is in that ball. A velocity only needs the curve near $\lambda = 0$, so this short piece is enough.
+
+  - type: mcq
+    id: why-smooth
+    prompt: |
+      On a smooth manifold with a chart $(\mathcal{U}, \mathscr{X})$ around $p$, why is the coordinate curve $c_i(\lambda) = \mathscr{X}^{-1}(\mathscr{X}(p) + \lambda e_i)$ (for small $|\lambda|$) a smooth curve?
+    options:
+      - text: 'Its chart representative $\mathscr{X}\circ c_i(\lambda) = \mathscr{X}(p) + \lambda e_i$ is affine in $\lambda$, hence smooth'
+        correct: true
+      - text: 'Because $\mathscr{X}^{-1}$ is continuous'
+        feedback: |
+          Continuity of $\mathscr{X}^{-1}$ only makes $c_i$ continuous. Smoothness of a curve on a manifold is defined through charts: the curve is smooth when $\mathscr{X}\circ c_i$ is smooth as a map $\mathbb{R}\to\mathbb{R}^d$.
+      - text: 'Because it is a straight line in $\mathcal{M}$'
+        feedback: |
+          A manifold has no straight lines (points of $\mathcal{M}$ cannot be added). The curve is straight only **in the chart**; on $\mathcal{M}$ it can be a circle, as the polar $\theta$-curve shows.
+    explanation: |
+      Recall: a curve $\gamma$ on $\mathcal{M}$ is smooth when its chart representatives $\mathscr{X}\circ\gamma$ are smooth. Here $\mathscr{X}\circ c_i = \mathscr{X}\circ\mathscr{X}^{-1}\circ(\mathscr{X}(p)+\lambda e_i) = \mathscr{X}(p)+\lambda e_i$, a straight line in $\mathbb{R}^d$. In any other chart $\mathscr{Y}$ of the smooth atlas, $\mathscr{Y}\circ c_i = (\mathscr{Y}\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ c_i)$, smooth because transition maps are smooth.
+
+  - type: build
+    id: build-velocity
+    prompt: |
+      On a smooth manifold with a chart $(\mathcal{U}, \mathscr{X})$ around $p$, take the coordinate curve $c_i(\lambda) = \mathscr{X}^{-1}(\mathscr{X}(p) + \lambda e_i)$ and a scalar field $f$. Write $F := f\circ\mathscr{X}^{-1}$, so that
+      $$(f\circ c_i)(\lambda) = F(\mathscr{X}(p) + \lambda e_i).$$
+      Differentiate at $\lambda = 0$: changing only the $i$-th slot of $F$ at rate 1 is the $i$-th partial derivative. Build the velocity of $c_i$.
+    prefix: 'v_{c_i,p}(f) ='
+    tiles: ['\partial_i\big[f\circ\mathscr{X}^{-1}\big]', '\partial_i f', '(\mathscr{X}(p))', '(p)']
+    answers:
+      - ['\partial_i\big[f\circ\mathscr{X}^{-1}\big]', '(\mathscr{X}(p))']
+    wrong:
+      - answer: ['\partial_i f', '(p)']
+        feedback: |
+          $f$ lives on $\mathcal{M}$, where "the $i$-th slot" means nothing: partial derivatives exist only in $\mathbb{R}^d$. First carry $f$ into the chart, $F = f\circ\mathscr{X}^{-1}$, then differentiate there.
+      - answer: ['\partial_i\big[f\circ\mathscr{X}^{-1}\big]', '(p)']
+        feedback: |
+          $F = f\circ\mathscr{X}^{-1}$ eats points of $\mathbb{R}^d$, not points of $\mathcal{M}$. The curve is at $\mathscr{X}(p)$ in the chart when $\lambda = 0$.
+    hint: The derivative at $\lambda = 0$ of $F(a + \lambda e_i)$ is $\partial_i F(a)$; here $a = \mathscr{X}(p)$.
+    explanation: |
+      $$\begin{aligned}v_{c_i,p}(f) &= (f\circ c_i)'(0)\\ &= \partial_i\big[f\circ\mathscr{X}^{-1}\big](\mathscr{X}(p))\\ &= \left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p\!(f).\end{aligned}$$
+      This holds for every $f$, so $(\partial/\partial\mathscr{X}^i)_p = v_{c_i,p}$, the velocity of a smooth curve through $p$: claim 1 is proved.
+
+  - type: widget
+    id: polar-curves
+    widget: chart-basis
+    config:
+      charts: [polar]
+      p: [1, 1]
+      basisOnly: true
+      presets:
+        - { label: 'p = (1, 1)', charts: [polar], p: [1, 1] }
+        - { label: 'Near the origin', charts: [polar], p: [0.25, 0.25] }
+    body: |
+      The polar chart $\mathscr{P}(q) = (r, \theta)$ on the plane, with $\theta\in(0, 2\pi)$, so the origin and the half-line $q_2 = 0$, $q_1\ge 0$ (dotted) are outside its domain. Its coordinate curves through $p$: along a **ray** only $r$ changes, along a **circle** only $\theta$ changes. The purple arrows are their velocities $(\partial/\partial r)_p$ and $(\partial/\partial\theta)_p$.
+
+      Drag $p$ around and toward the origin; watch the $\theta$-arrow. Then drag $p$ onto the dotted half-line.
+
+  - type: numeric
+    id: polar-range
+    prompt: |
+      In the plane, the polar chart $\mathscr{P}(q) = (r, \theta)$ has $\theta\in(0, 2\pi)$ and inverse $\mathscr{P}^{-1}(r, \theta) = (r\cos\theta, r\sin\theta)$. At $p = (1, 1)$ (so $r_p = \sqrt2$, $\theta_p = \pi/4$), the $\theta$ coordinate curve is
+      $$c_\theta(\lambda) = \mathscr{P}^{-1}(\sqrt2,\ \tfrac\pi4 + \lambda).$$
+      It is defined exactly for $\lambda$ in an interval $(-a, b)$. What is $a$? (Four decimals.)
+    answer: 0.785398
+    tolerance: 0.001
+    answerText: '$\pi/4\approx 0.7854$'
+    wrong:
+      - value: 3.14159
+        feedback: |
+          The chart allows only $\theta\in(0, 2\pi)$, not $(-\pi, \pi)$. Going backwards from $\theta_p = \pi/4$, the curve hits $\theta = 0$ (the positive $q_1$-axis, the cut) after $\lambda = \pi/4$.
+    hint: Solve $0 < \tfrac\pi4 + \lambda < 2\pi$ for $\lambda$.
+    explanation: |
+      $0 < \pi/4 + \lambda < 2\pi$ gives $\lambda\in(-\pi/4,\ 7\pi/4)$. The coordinate curve is the circle of radius $\sqrt2$ minus the point on the cut: it exists only while it stays in the chart's domain. Near $\lambda = 0$ it is always defined, which is all a velocity needs.
+
+  - type: mcq
+    id: polar-cut
+    prompt: |
+      In the plane, take the polar chart $\mathscr{P}(q) = (r, \theta)$ with $\theta\in(0, 2\pi)$, defined off the half-line $q_2 = 0$, $q_1\ge 0$. At the point $p = (2, 0)$, what can we say about a polar basis $(\partial/\partial r)_p$, $(\partial/\partial\theta)_p$?
+    options:
+      - text: 'This chart gives none, since $p$ is not in its domain; a polar chart with $\theta\in(-\pi,\pi)$ does'
+        correct: true
+      - text: 'It does not exist: $T_p\mathcal{M}$ has no basis at $p = (2, 0)$'
+        feedback: |
+          $T_p\mathcal{M}$ is fine at $p = (2, 0)$; the cartesian chart, or a polar chart with $\theta\in(-\pi, \pi)$ (whose cut is the negative $q_1$-axis), gives a basis there. Only this particular chart fails, because $p$ is outside its domain.
+      - text: 'It exists and $(\partial/\partial\theta)_p$ has length zero'
+        feedback: |
+          Length zero would happen at the origin ($r = 0$), which no polar chart contains. At $p = (2, 0)$ the problem is the cut: $\theta$ jumps from near $2\pi$ to near $0$ there, so $p$ is excluded from this chart's domain.
+    explanation: |
+      The chart-induced basis needs $p\in\mathcal{U}$: the definition evaluates $f\circ\mathscr{X}^{-1}$ at $\mathscr{X}(p)$. A point outside one chart is covered by another chart of the atlas.
+
+  - type: text
+    id: step2
+    title: 'Step 2: they span'
+    tag: Step 2 · Spanning
+    body: |
+      Every element of $T_p\mathcal{M}$ is a velocity $v_{\gamma,p}$ of some smooth curve $\gamma$ with $\gamma(\lambda_0) = p$. We must write it as a combination of the $(\partial/\partial\mathscr{X}^i)_p$.
+
+      As in the definition of the basis, we cannot differentiate on $\mathcal{M}$, so we pass through the chart. For $\lambda$ near $\lambda_0$, insert the identity $\mathscr{X}^{-1}\circ\mathscr{X}$ on $\mathcal{U}$:
+      $$f\circ\gamma = (f\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\gamma).$$
+      The curve's coordinates $\mathscr{X}^i\circ\gamma$ are ordinary functions $\mathbb{R}\to\mathbb{R}$. Their rates at $\lambda_0$ are the numbers
+      $$\dot\gamma^i_\mathcal{U}(\lambda_0) := (\mathscr{X}^i\circ\gamma)'(\lambda_0).$$
+
+  - type: mcq
+    id: stays-in-U
+    prompt: |
+      On a smooth manifold, a smooth curve $\gamma$ has $\gamma(\lambda_0) = p$, and $(\mathcal{U}, \mathscr{X})$ is a chart with $p\in\mathcal{U}$. The curve may leave $\mathcal{U}$ (a long curve in the plane can cross the cut of a polar chart). Why may we still use $\mathscr{X}\circ\gamma$ to compute $(f\circ\gamma)'(\lambda_0)$?
+    options:
+      - text: '$\gamma$ is continuous and $\mathcal{U}$ is open, so $\gamma(\lambda)\in\mathcal{U}$ for all $\lambda$ in an interval around $\lambda_0$, and a derivative at $\lambda_0$ only needs such an interval'
+        correct: true
+      - text: 'We may not: the proof assumes the whole curve lies in $\mathcal{U}$'
+        feedback: |
+          No such assumption is needed. A derivative at $\lambda_0$ is a limit, which only uses values at $\lambda$ arbitrarily close to $\lambda_0$. The curve can wander anywhere afterwards.
+      - text: 'Because $\mathscr{X}$ is defined on all of $\mathcal{M}$'
+        feedback: |
+          A chart is defined only on its domain $\mathcal{U}$, generally a proper subset (the polar chart misses a half-line). Outside $\mathcal{U}$, $\mathscr{X}\circ\gamma$ makes no sense; we only use it near $\lambda_0$.
+    explanation: |
+      The preimage $\gamma^{-1}(\mathcal{U})$ is open (continuity) and contains $\lambda_0$, so it contains an interval $(\lambda_0-\varepsilon, \lambda_0+\varepsilon)$. On that interval the factorization $f\circ\gamma = (f\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\gamma)$ holds, and that is enough for the derivative at $\lambda_0$.
+
+  - type: build
+    id: build-span
+    prompt: |
+      On a smooth manifold of dimension $d$, a smooth curve $\gamma$ has $\gamma(\lambda_0) = p$, and $(\mathcal{U}, \mathscr{X})$ is a chart around $p$. The chain rule applied to $f\circ\gamma = (f\circ\mathscr{X}^{-1})\circ(\mathscr{X}\circ\gamma)$ gives, for every scalar field $f$,
+      $$\begin{aligned}&(f\circ\gamma)'(\lambda_0)\\ &= \sum_{i=1}^d (\mathscr{X}^i\circ\gamma)'(\lambda_0)\\ &\qquad\cdot\partial_i\big[f\circ\mathscr{X}^{-1}\big](\mathscr{X}(p)).\end{aligned}$$
+      Name each factor (with $\dot\gamma^i_\mathcal{U}(\lambda_0) := (\mathscr{X}^i\circ\gamma)'(\lambda_0)$) and build the velocity as a map, without $f$.
+    prefix: 'v_{\gamma,p} ='
+    tiles: ['\sum_{i=1}^d', '\dot\gamma^i_\mathcal{U}(\lambda_0)', '\left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p', '\mathscr{X}^i(p)', '\partial_i f(p)']
+    answers:
+      - ['\sum_{i=1}^d', '\dot\gamma^i_\mathcal{U}(\lambda_0)', '\left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p']
+      - ['\sum_{i=1}^d', '\left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p', '\dot\gamma^i_\mathcal{U}(\lambda_0)']
+    wrong:
+      - answer: ['\sum_{i=1}^d', '\mathscr{X}^i(p)', '\left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p']
+        feedback: |
+          $\mathscr{X}^i(p)$ is the $i$-th coordinate of the **point** $p$, the same for every curve through $p$. The coefficient must carry the curve: it is the **rate** $(\mathscr{X}^i\circ\gamma)'(\lambda_0)$.
+      - answer: ['\sum_{i=1}^d', '\dot\gamma^i_\mathcal{U}(\lambda_0)', '\partial_i f(p)']
+        feedback: |
+          Two problems: $f$ has no partial derivatives on $\mathcal{M}$ (only $f\circ\mathscr{X}^{-1}$ does), and the left side is the map $v_{\gamma,p}$ itself, so $f$ must not appear. The map $f\mapsto\partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$ is by definition $(\partial/\partial\mathscr{X}^i)_p$.
+    hint: The map $f\mapsto\partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$ is exactly the definition of $(\partial/\partial\mathscr{X}^i)_p$.
+    explanation: |
+      $$v_{\gamma,p} = \sum_{i=1}^d \dot\gamma^i_\mathcal{U}(\lambda_0)\left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p,$$
+      an equality of maps because it holds for every $f$. Every element of $T_p\mathcal{M}$ is some $v_{\gamma,p}$, so every element is a combination of the $d$ chart-induced vectors: claim 2 is proved. (Conversely every combination is in $T_p\mathcal{M}$, since sums and multiples of velocities are velocities.)
+
+  - type: text
+    id: step3
+    title: 'Step 3: they are independent'
+    tag: Step 3 · Independence
+    body: |
+      Suppose some combination with real coefficients $a^1, \dots, a^d$ is the zero vector:
+      $$\sum_{i=1}^d a^i\left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p = 0.$$
+      The zero vector of $T_p\mathcal{M}$ is the map sending **every** scalar field to $0$ (the velocity of the constant curve at $p$). So applying both sides to any $f$ gives $0$. We must conclude that every $a^j$ is $0$.
+
+      The trick is a good choice of $f$. The natural test fields are the coordinate functions $\mathscr{X}^j$, which read off the $j$-th coordinate. In the chart they are as simple as possible:
+      $$(\mathscr{X}^j\circ\mathscr{X}^{-1})(\alpha_1,\dots,\alpha_d) = \alpha_j.$$
+      But there is a catch: $\mathscr{X}^j$ is defined only on $\mathcal{U}$, while velocities act on fields in $C^\infty(\mathcal{M})$, defined on all of $\mathcal{M}$.
+
+  - type: mcq
+    id: test-fields
+    prompt: |
+      On a smooth manifold $\mathcal{M}$ with a chart $(\mathcal{U}, \mathscr{X})$ around $p$, a velocity $v_{\gamma,p}(f) = (f\circ\gamma)'(\lambda_0)$ acts on scalar fields $f\in C^\infty(\mathcal{M})$, defined on all of $\mathcal{M}$. The coordinate function $\mathscr{X}^j$ is defined only on $\mathcal{U}$. Why may we still "apply a tangent vector at $p$ to $\mathscr{X}^j$"?
+    options:
+      - text: 'A velocity only looks at $f$ near $p$: take any $g\in C^\infty(\mathcal{M})$ equal to $\mathscr{X}^j$ on a neighbourhood of $p$; the value does not depend on which $g$'
+        correct: true
+      - text: 'Because $\mathcal{U} = \mathcal{M}$ for every chart'
+        feedback: |
+          Most charts cover only part of the manifold: no single chart covers the circle $S^1$, and the polar chart misses a half-line of the plane. The argument must work when $\mathcal{U}\ne\mathcal{M}$.
+      - text: 'We may not; the proof only works on manifolds covered by one chart'
+        feedback: |
+          The fix is local. $(f\circ\gamma)'(\lambda_0)$ only uses $f$ along $\gamma(\lambda)$ for $\lambda$ near $\lambda_0$, and those points are near $p$. Any two fields that agree near $p$ give the same number, so we can replace $\mathscr{X}^j$ by a global field that agrees with it near $p$.
+    explanation: |
+      Multiply $\mathscr{X}^j$ by a smooth bump function that is $1$ on a small neighbourhood of $p$ and $0$ outside a slightly larger one inside $\mathcal{U}$; the result $g$ is smooth on all of $\mathcal{M}$ (such bump functions exist on every smooth manifold, stated here without proof). For every curve through $p$, $g\circ\gamma = \mathscr{X}^j\circ\gamma$ near $\lambda_0$, so the derivatives agree. This is the same switch-off trick used for the polar angle $\theta$, which is not smooth on the whole plane.
+
+  - type: order
+    id: order-independence
+    prompt: |
+      On a smooth manifold of dimension $d$ with a chart $(\mathcal{U}, \mathscr{X})$ around $p$, assume $\sum_{i=1}^d a^i(\partial/\partial\mathscr{X}^i)_p = 0$ (the zero map on scalar fields). Put the proof that every $a^j = 0$ in order.
+    steps:
+      - 'Fix $j\in\{1,\dots,d\}$ and apply both sides to the coordinate function $\mathscr{X}^j$ (extended off $\mathcal{U}$ as a smooth field agreeing with it near $p$): $\sum_{i=1}^d a^i\,(\partial/\partial\mathscr{X}^i)_p(\mathscr{X}^j) = 0$.'
+      - 'By definition, $(\partial/\partial\mathscr{X}^i)_p(\mathscr{X}^j) = \partial_i[\mathscr{X}^j\circ\mathscr{X}^{-1}](\mathscr{X}(p))$.'
+      - 'In the chart, $\mathscr{X}^j\circ\mathscr{X}^{-1}$ is $(\alpha_1,\dots,\alpha_d)\mapsto\alpha_j$, whose $i$-th partial is $\delta^j_i$ ($1$ if $i = j$, else $0$).'
+      - 'So the sum collapses: $0 = \sum_{i=1}^d a^i\,\delta^j_i = a^j$.'
+      - '$j$ was arbitrary, so $a^1 = \dots = a^d = 0$: the vectors are linearly independent.'
+    hint: Start by choosing the test field, then evaluate one term, then collapse the sum.
+    explanation: |
+      The coordinate functions are perfect test fields because each basis vector detects exactly one of them:
+      $$\left(\frac{\partial}{\partial\mathscr{X}^i}\right)_p\!(\mathscr{X}^j) = \delta^j_i.$$
+      With claims 1, 2 and 3 the chart-induced vectors form a basis of $T_p\mathcal{M}$.
+
+  - type: numeric
+    id: one-field-zero
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$ (points $q = (q_1, q_2)$) take the chart $\mathscr{X}(q) = (2q_1, -q_2)$, defined everywhere, with inverse $\mathscr{X}^{-1}(\alpha_1, \alpha_2) = (\alpha_1/2, -\alpha_2)$, and $p = (1, 1)$, so $\mathscr{X}(p) = (2, -1)$. Let
+      $$w := \left(\frac{\partial}{\partial\mathscr{X}^1}\right)_p + \left(\frac{\partial}{\partial\mathscr{X}^2}\right)_p$$
+      and $f(q) = q_1^2 + q_2$. Compute $w(f)$.
+    answer: 0
+    tolerance: 0.001
+    wrong:
+      - value: 2
+        feedback: |
+          Differentiate the chart representative, not $f$ itself: $F = f\circ\mathscr{X}^{-1}$ is $(\alpha_1, \alpha_2)\mapsto\alpha_1^2/4 - \alpha_2$, so $\partial_2 F = -1$, not $+1$.
+    hint: $F(\alpha_1, \alpha_2) = \alpha_1^2/4 - \alpha_2$. Evaluate $\partial_1 F + \partial_2 F$ at $(2, -1)$.
+    explanation: |
+      $\partial_1 F = \alpha_1/2 = 1$ and $\partial_2 F = -1$ at $(2, -1)$, so $w(f) = 1 - 1 = 0$. Does that make $w$ the zero vector? Test it on a coordinate function next.
+
+  - type: numeric
+    id: coordinate-test
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$ with the chart $\mathscr{X}(q) = (2q_1, -q_2)$ at $p = (1, 1)$, let $w := (\partial/\partial\mathscr{X}^1)_p + (\partial/\partial\mathscr{X}^2)_p$. For the field $f(q) = q_1^2 + q_2$ one finds $w(f) = 0$. Now compute $w(\mathscr{X}^1)$, where $\mathscr{X}^1(q) = 2q_1$.
+    answer: 1
+    tolerance: 0.001
+    wrong:
+      - value: 2
+        feedback: |
+          In the chart, $\mathscr{X}^1\circ\mathscr{X}^{-1}$ is $(\alpha_1, \alpha_2)\mapsto\alpha_1$, with partials $(1, 0)$. The factor $2$ in $\mathscr{X}^1(q) = 2q_1$ is absorbed by the chart: $(\partial/\partial\mathscr{X}^i)_p(\mathscr{X}^j) = \delta^j_i$ in every chart.
+      - value: 0
+        feedback: |
+          $w(f) = 0$ for one field $f$ does not make $w$ zero. In the chart $\mathscr{X}^1\circ\mathscr{X}^{-1}(\alpha) = \alpha_1$, so $(\partial/\partial\mathscr{X}^1)_p(\mathscr{X}^1) = 1$ and $(\partial/\partial\mathscr{X}^2)_p(\mathscr{X}^1) = 0$.
+    hint: Use $(\partial/\partial\mathscr{X}^i)_p(\mathscr{X}^j) = \delta^j_i$.
+    explanation: |
+      $w(\mathscr{X}^1) = 1 + 0 = 1\ne 0$, so $w\ne 0$ although it kills $f$. In standard components, $w = (\tfrac12, 0) + (0, -1) = (\tfrac12, -1)$, a direction along which $f = q_1^2 + q_2$ happens to be stationary at $p$. The zero vector must kill **every** field, and the coordinate functions are the fields that detect each coefficient.
+
+  - type: numeric
+    id: coordinates-decide
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^2$ with the chart $\mathscr{X}(q) = (2q_1, -q_2)$ (inverse $\mathscr{X}^{-1}(\alpha) = (\alpha_1/2, -\alpha_2)$) at $p = (1, 1)$, a tangent vector $w = \sum_{i=1}^2 a^i(\partial/\partial\mathscr{X}^i)_p$ satisfies $w(\mathscr{X}^1) = 3$ and $w(\mathscr{X}^2) = -2$. Compute $w(f)$ for $f(q) = q_1^2 + q_2$.
+    answer: 5
+    tolerance: 0.001
+    wrong:
+      - value: 1
+        feedback: |
+          The coefficients are $a^1 = 3$, $a^2 = -2$, and $w(f) = a^1\partial_1F + a^2\partial_2F$ with $F = f\circ\mathscr{X}^{-1}$. At $\mathscr{X}(p) = (2, -1)$: $\partial_1F = 1$, $\partial_2F = -1$, so $3\cdot 1 + (-2)(-1) = 5$; watch the sign of $\partial_2 F$.
+    hint: First $a^j = w(\mathscr{X}^j)$. Then $F(\alpha) = \alpha_1^2/4 - \alpha_2$ has partials $(1, -1)$ at $(2, -1)$.
+    explanation: |
+      Applying $w$ to $\mathscr{X}^j$ extracts $a^j$ (the $\delta$ again): $a^1 = 3$, $a^2 = -2$. Then $w(f) = 3\cdot 1 + (-2)(-1) = 5$. Check in standard components: $w = 3(\tfrac12, 0) - 2(0, -1) = (\tfrac32, 2)$, and the gradient of $f$ at $(1, 1)$ is $(2, 1)$, giving $3 + 2 = 5$. The $d$ numbers $w(\mathscr{X}^j)$ fix $w$ on every field; in particular, if they all vanish, $w = 0$.
+
+  - type: text
+    id: dimension
+    title: 'Consequence: $\dim T_p\mathcal{M} = d$'
+    body: |
+      A basis of $T_p\mathcal{M}$ with $d$ elements means
+      $$\dim T_p\mathcal{M} = d,$$
+      the dimension of the manifold. A remarkable outcome: $T_p\mathcal{M}$ was defined as a set of maps on $C^\infty(\mathcal{M})$, a huge space, yet only $d$ directions survive.
+
+      The book adds a caution. One chart around $p$ gives the result at the points of $\mathcal{U}$. That $T_p\mathcal{M}$ has the same dimension at **every** point is a global fact: the atlas covers $\mathcal{M}$ with charts that all land in open subsets of the same $\mathbb{R}^d$. The dimension is a property of the whole manifold, not of one coordinate patch.
+
+  - type: mcq
+    id: two-dimensions
+    prompt: |
+      Suppose a point $p$ of some space had two smoothly compatible charts around it, one onto an open subset of $\mathbb{R}^2$ and one onto an open subset of $\mathbb{R}^3$. What would the chart-induced basis argument say about the tangent space $T_p\mathcal{M}$?
+    options:
+      - text: 'It would have a basis of $2$ vectors and a basis of $3$ vectors: impossible, so this cannot happen'
+        correct: true
+      - text: 'Nothing: each chart has its own tangent space at $p$'
+        feedback: |
+          $T_p\mathcal{M}$ is defined without any chart, as the velocities of curves through $p$. Both charts describe the **same** space, so both chart-induced bases are bases of it, and a vector space cannot have bases of different sizes.
+      - text: '$T_p\mathcal{M}$ would have dimension $2 + 3 = 5$'
+        feedback: |
+          Each chart gives a full basis of $T_p\mathcal{M}$ by itself (membership, spanning, independence). Bases of one space all have the same number of elements, so the count would have to be both 2 and 3.
+    explanation: |
+      The argument works in any chart, so all charts around $p$ must land in $\mathbb{R}^d$ with the same $d$. The tangent space turns the chart's $d$ into a chart-free property of the point.
+
+  - type: mcq
+    id: trap-count
+    title: The count is the conclusion
+    prompt: |
+      A student says: "On a manifold of dimension $d$ there are $d$ vectors $(\partial/\partial\mathscr{X}^i)_p$, and they span $T_p\mathcal{M}$. Since $\dim T_p\mathcal{M} = d$, independence is automatic, so step 3 is unnecessary." What is wrong?
+    options:
+      - text: 'It is circular: $\dim T_p\mathcal{M} = d$ is what the proof establishes. Spanning by $d$ vectors alone only gives $\dim T_p\mathcal{M}\le d$'
+        correct: true
+      - text: 'Nothing: $d$ spanning vectors in a $d$-dimensional space always form a basis'
+        feedback: |
+          The linear algebra fact is true, but it needs $\dim T_p\mathcal{M} = d$ as an input. Nobody told us that: the manifold's $d$ counts chart coordinates. Without independence, the $d$ vectors could be redundant and $T_p\mathcal{M}$ smaller.
+      - text: 'Spanning fails, so independence cannot be used'
+        feedback: |
+          Spanning holds: the chain rule writes every velocity as $\sum_{i=1}^d \dot\gamma^i_\mathcal{U}(\lambda_0)(\partial/\partial\mathscr{X}^i)_p$. The gap is elsewhere: the student assumed the dimension.
+    explanation: |
+      Spanning shows the $d$ vectors are enough; independence shows none is superfluous. Only together do they give $\dim T_p\mathcal{M} = d$.
+
+  - type: mcq
+    id: trap-test-all
+    prompt: |
+      On a smooth manifold of dimension $d$ with a chart $(\mathcal{U}, \mathscr{X})$ around $p$, let $w = \sum_{i=1}^d a^i(\partial/\partial\mathscr{X}^i)_p$. Which conditions guarantee $w = 0$? Select all that apply.
+    multiple: true
+    options:
+      - text: '$w(\mathscr{X}^j) = 0$ for every $j = 1,\dots,d$'
+        correct: true
+      - text: '$w(f) = 0$ for every scalar field $f$'
+        correct: true
+      - text: '$w(f) = 0$ for one non-constant field $f$'
+        feedback: |
+          A vector can be tangent to a level set of $f$. On $\mathbb{R}^2$ with $\mathscr{X}(q) = (2q_1, -q_2)$ at $p = (1, 1)$, $w = (\partial/\partial\mathscr{X}^1)_p + (\partial/\partial\mathscr{X}^2)_p$ gives $w(q_1^2 + q_2) = 0$ but $w(\mathscr{X}^1) = 1$.
+      - text: '$w(\mathscr{X}^1) = 0$ only'
+        feedback: |
+          $w(\mathscr{X}^1) = a^1$, so this only kills the first coefficient. Each coordinate function detects one coefficient: all $d$ must be tested.
+    explanation: |
+      $w = 0$ means $w(f) = 0$ for all $f$ (the definition), and $w(\mathscr{X}^j) = a^j$ shows that the $d$ coordinate functions already suffice: if they all give 0, every coefficient is 0.
+
+  - type: mcq
+    id: trap-delta
+    prompt: |
+      On a smooth manifold with a chart $(\mathcal{U}, \mathscr{X})$ around $p$, one has $(\partial/\partial\mathscr{X}^i)_p(\mathscr{X}^j) = \delta^j_i$. Does this say that the chart-induced basis is orthonormal?
+    options:
+      - text: 'No: it pairs vectors with coordinate functions, not vectors with vectors; no inner product is involved'
+        correct: true
+      - text: 'Yes: $\delta^j_i$ is exactly the condition for an orthonormal basis'
+        feedback: |
+          Orthonormality is $\langle e_i, e_j\rangle = \delta_{ij}$ for an inner product of two **vectors**. Here a vector acts on a **function**. In the plane the polar basis satisfies $(\partial/\partial\theta)_p(\theta) = 1$, yet $(\partial/\partial\theta)_p$ has length $r_p$, not 1.
+      - text: 'Only in the cartesian chart'
+        feedback: |
+          $(\partial/\partial\mathscr{X}^i)_p(\mathscr{X}^j) = \delta^j_i$ holds in **every** chart, because $\mathscr{X}^j\circ\mathscr{X}^{-1}$ is always $\alpha\mapsto\alpha_j$. So it cannot be what singles out the cartesian chart.
+    explanation: |
+      The $\delta$ resembles the dual-basis condition of Chapter 2 ($\hat{\mathfrak{x}}^j(\hat x_i) = \delta^j_i$), not orthonormality. That resemblance is no accident: it returns when covectors at a point are built (*Differentials as a Basis*).
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      - **Membership:** $(\partial/\partial\mathscr{X}^i)_p = v_{c_i,p}$, the velocity of the coordinate curve $c_i(\lambda) = \mathscr{X}^{-1}(\mathscr{X}(p)+\lambda e_i)$, defined for small $|\lambda|$ because $\mathscr{X}(\mathcal{U})$ is open, smooth because it is straight in the chart.
+      - **Spanning:** the chain rule, used near $\lambda_0$ only, gives $v_{\gamma,p} = \sum_{i=1}^d \dot\gamma^i_\mathcal{U}(\lambda_0)(\partial/\partial\mathscr{X}^i)_p$ for every curve.
+      - **Independence:** apply $\sum_i a^i(\partial/\partial\mathscr{X}^i)_p = 0$ to $\mathscr{X}^j$ and use $(\partial/\partial\mathscr{X}^i)_p(\mathscr{X}^j) = \delta^j_i$ to get $a^j = 0$. Coordinate functions are valid test fields because a velocity only looks near $p$.
+      - **Dimension:** $\dim T_p\mathcal{M} = d$ at every point; the atlas makes it global, and all charts around one point share the same $d$.
+      - Killing one field is not being zero; the $d$ coordinate functions decide.
+
+      **Next:** sums like $\sum_{i=1}^d \dot\gamma^i_\mathcal{U}(\partial/\partial\mathscr{X}^i)_p$ are everywhere now, and the summed index always appears exactly twice. *Einstein Summation* lets the notation do the summing for you.

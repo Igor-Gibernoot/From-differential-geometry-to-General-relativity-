@@ -159,7 +159,11 @@ levels:
         kind: concept
         file: ch04/coordinate-basis.yaml
         summary: One velocity, two lists of numbers. The chart-induced basis $(\partial/\partial\mathscr{X}^i)_p$, components, the Jacobian, and how bases (covariant) and components (contravariant) change between charts.
-      - { id: ch04-chart-basis, title: "Guided Problem: The Chart-Induced Basis", kind: guided }
+      - id: ch04-chart-basis
+        title: "Guided Problem: The Chart-Induced Basis"
+        kind: guided
+        file: ch04/chart-basis.yaml
+        summary: We called $(\partial/\partial\mathscr{X}^i)_p$ a basis without proof. Show that each one is a velocity, that they span $T_p\mathcal{M}$ and are linearly independent, and conclude $\dim T_p\mathcal{M} = d$.
       - { id: ch04-einstein, title: Einstein Summation, kind: concept }
       - { id: ch04-cotangent, title: The Cotangent Space, kind: concept }
       - { id: ch04-cotangent-basis, title: Differentials as a Basis, kind: concept }
