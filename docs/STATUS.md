@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 6 in progress: ch06-connections, ch06-christoffel, ch06-parallel-transport, ch06-torsion-curvature, ch06-torsion-tensor, ch06-three-connections, ch06-traps, ch06-map, ch06-challenge part 1 done)
+## Current (2026-10-20, Chapter 6 complete; next: Chapter 7, `ch07-metric`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -24,12 +24,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
-- **Chapter 6 in progress**: `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards), `ch06-torsion-tensor` (guided, 19 cards), `ch06-three-connections` (guided C.5, 32 cards), `ch06-traps` (21 cards), `ch06-map` (14 boxes, 8 rows); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). `ch06-challenge` part 1 (30 cards: intro + problems 1–3). Next: `ch06-challenge` part 2 (problems 4–5 + wrap-up).
+- **Chapter 6 complete** (lessons, traps, map, challenge): `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards), `ch06-torsion-tensor` (guided, 19 cards), `ch06-three-connections` (guided C.5, 32 cards), `ch06-traps` (21 cards), `ch06-map` (14 boxes, 8 rows); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). `ch06-challenge` (49 cards, five problems: ∇ᵂ straightest curves, fourth box ∇ᶠ, sheared chart, difference of connections $\mathcal{Q}$, normal coordinates for ∇^κ).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** next `ch06-challenge` part 2 (problems 4–5 + wrap-up); then Chapter 7 (Metric) in `course.yaml` order, and Chapters 8–10 (each with map and challenge). No TeX exercise file exists for Chapter 6:
-  use the book (6.1–6.4, B.9, B.10, C.5) as the only source.
-  Each planned node in `course.yaml` is one lesson.
+- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: next `ch07-metric`, then `ch07-signature`, `ch07-length`,
+  `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, traps, map, challenge (two sessions);
+  then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
+  B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
   on $S^1$: $\theta \in (0,2\pi)$ on $S^1\setminus\{(1,0)\}$, $\varphi \in (-\pi,\pi)$
@@ -298,6 +299,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   (4 at $\kappa = 3$), flat at $\kappa = -1$; transport along $(1,\lambda)$ from $(0,1)$: $z^1 = \kappa(e^{-\lambda}-1)$ ($-0.632$) vs ∇^κ $-\kappa\lambda$. Sheared chart
   for ∇ᴱ: only $\Gamma^2_{11} = 2$, equations $\ddot u = 0$, $\ddot v + 2\dot u^2 = 0$; tangent line $(1+\lambda, 1+2\lambda)$ at $(1,1)$ has $v = -\lambda^2$ (vs parabola $v = 0$).
   Widget preset new: `parallel-transport` circle $r_0 = 2$ under W (badge: autoparallelly transported), presets circle E, ray W, vertical W.
+  `ch06-challenge` (part 2): difference of connections named **$\mathcal{Q}(\mathcal{X},\mathcal{Y}) := \nabla^{\mathrm{W}}_\mathcal{X}\mathcal{Y} - \nabla^{\mathrm{E}}_\mathcal{X}\mathcal{Y}$** (not $D$, which was ch05's non-tensor),
+  components $Q^i_{jk} := dx^i\lceil\mathcal{Q}(\partial x_k,\partial x_j)\rfloor$ (plain italic, last index = direction); cartesian = ∇ᵂ's ($\tfrac4{25},-\tfrac3{25},-\tfrac4{25},\tfrac3{25}$ at $(3,4)$),
+  polar $Q^1_{22} = r$, $Q^2_{12} = -\tfrac1r$, $Q^2_{21} = 0$; law check $\mathcal{Q}(\partial y_2,\partial y_2) = 3\partial x_1 + 4\partial x_2 = 5\,\partial y_1$; $\mathtt{T}^{\mathrm{W}\,i}_{jk} = Q^i_{kj} - Q^i_{jk}$;
+  connection + tensor = connection, averages allowed. Normal coordinates (book's quadratic recipe, $\bar x^i$ = shifted cartesian) for ∇^κ at $p = (1,0)$:
+  $u = (a-1) + \tfrac\kappa2 b^2$, $v = b$, inverse $a = 1 + u - \tfrac\kappa2 v^2$, $\partial y_2 = -\kappa b\,\partial x_1 + \partial x_2$, only $(\Gamma_\mathscr{Y})^1_{22} = \kappa(a-1) = \kappa(u - \tfrac\kappa2 v^2)$,
+  $\mathrm{Riem}^1_{212} = \kappa$ in both charts; numerics at $\kappa = 2$ ($\Gamma = 2$ at $(2,0)$). Equivalence principle (cabin, crumbs, tides = curvature) with Levels 7, 9, 10 named;
+  Level 7 teaser: "which connection does a ruler pick?" → Levi-Civita (named only).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -310,6 +318,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch06-challenge part 2 (problems 4–5 + wrap-up, 19 cards); Chapter 6 complete
+- P4 difference tensor: setup (two non-tensors, name $\mathcal{Q}$), Leibniz build, properties multi-select, cartesian $Q^2_{11} = 4/25$ by hand,
+  polar components MCQ, plain tensor law numeric ($5 = r$ at $(3,4)$), torsion build, connection-plus-tensor multi-select, summary. P5 normal
+  coordinates for ∇^κ at $(1,0)$: equivalence-principle hook, recipe text, inverse build, law cancellation numeric ($\kappa = 2$), away-from-$p$ numeric,
+  Riem numeric, what-can-be-removed multi-select, physics card, summary. Wrap-up: formulas of all five problems, Level 7 teaser.
+- Choices: letter $\mathcal{Q}$ (vector-valued, like the torsion field $\mathcal{V}$) with components $Q^i_{jk}$ (not typewriter); added the
+  "connections form an affine space" card beyond christoffel's tensor-or-not card; Γ in normal coords derived both by the law at $p$ and directly
+  via basis fields away from $p$; Riem computed in the new chart (derivative survives) rather than only asserted.
+- Conventions fixed here: see Current, "Chapter 6 conventions so far" (`ch06-challenge` part 2 lines).
 ### 2026-10-20 — ch06-challenge part 1 (problems 1–3, 30 cards)
 - Intro lists all five problems (recalls Γ convention, acceleration, transport, T, Riem, the three connections). P1 ∇ᵂ straightest curves: guess,
   widget (circle W/E, ray, vertical), why-circle MCQ, polar Γ re-derived, radial MCQ, angular build, conserved $r\dot\theta$ build, frame-route text,
