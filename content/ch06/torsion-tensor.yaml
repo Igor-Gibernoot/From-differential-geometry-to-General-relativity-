@@ -127,18 +127,17 @@ cards:
     id: commutator-rule
     title: The commutator is not tensorial
     prompt: |
-      For smooth $g$ and vector fields $\mathcal{X},\mathcal{Y},\mathcal{Z}$, expanding $[g\,\mathcal{X}+\mathcal{Z},\mathcal{Y}]\lfloor f\rceil$ with the module rule and the Leibniz rule $\mathcal{Y}\lfloor g\,h\rceil = \mathcal{Y}\lfloor g\rceil\,h + g\,\mathcal{Y}\lfloor h\rceil$ gives, for every $f$, two commutators plus one leftover term. Build the vector field.
-    prefix: '[g\mathcal{X}+\mathcal{Z},\mathcal{Y}] ='
-    tiles: ['g[\mathcal{X},\mathcal{Y}]', '[\mathcal{Z},\mathcal{Y}]', '\mathcal{Y}\lfloor g\rceil\mathcal{X}', '\mathcal{X}\lfloor g\rceil\mathcal{Y}', '+', '+', '-']
+      For smooth $g$ and vector fields $\mathcal{X},\mathcal{Y},\mathcal{Z}$, expanding $[g\,\mathcal{X}+\mathcal{Z},\mathcal{Y}]\lfloor f\rceil$ with the module rule and the Leibniz rule $\mathcal{Y}\lfloor g\,h\rceil = \mathcal{Y}\lfloor g\rceil\,h + g\,\mathcal{Y}\lfloor h\rceil$ gives, for every $f$, two commutators plus one leftover term. Build the right-hand side of
+      $$[g\mathcal{X}+\mathcal{Z},\mathcal{Y}] = \;?$$
+    prefix: '='
+    tiles: ['g[\mathcal{X},\mathcal{Y}]', '+\,[\mathcal{Z},\mathcal{Y}]', '-\,\mathcal{Y}\lfloor g\rceil\mathcal{X}', '+\,\mathcal{Y}\lfloor g\rceil\mathcal{X}', '-\,\mathcal{X}\lfloor g\rceil\mathcal{Y}']
     answers:
-      - ['g[\mathcal{X},\mathcal{Y}]', '+', '[\mathcal{Z},\mathcal{Y}]', '-', '\mathcal{Y}\lfloor g\rceil\mathcal{X}']
-      - ['[\mathcal{Z},\mathcal{Y}]', '+', 'g[\mathcal{X},\mathcal{Y}]', '-', '\mathcal{Y}\lfloor g\rceil\mathcal{X}']
-      - ['g[\mathcal{X},\mathcal{Y}]', '-', '\mathcal{Y}\lfloor g\rceil\mathcal{X}', '+', '[\mathcal{Z},\mathcal{Y}]']
-      - ['[\mathcal{Z},\mathcal{Y}]', '-', '\mathcal{Y}\lfloor g\rceil\mathcal{X}', '+', 'g[\mathcal{X},\mathcal{Y}]']
+      - ['g[\mathcal{X},\mathcal{Y}]', '+\,[\mathcal{Z},\mathcal{Y}]', '-\,\mathcal{Y}\lfloor g\rceil\mathcal{X}']
+      - ['g[\mathcal{X},\mathcal{Y}]', '-\,\mathcal{Y}\lfloor g\rceil\mathcal{X}', '+\,[\mathcal{Z},\mathcal{Y}]']
     wrong:
-      - { answer: ['g[\mathcal{X},\mathcal{Y}]', '+', '[\mathcal{Z},\mathcal{Y}]', '+', '\mathcal{Y}\lfloor g\rceil\mathcal{X}'], feedback: 'Sign: the leftover comes from the **subtracted** half of the commutator, $-\mathcal{Y}\lfloor g\,\mathcal{X}\lfloor f\rceil\rceil$, whose Leibniz expansion contains $-\mathcal{Y}\lfloor g\rceil\,\mathcal{X}\lfloor f\rceil$.' }
-      - { answer: ['g[\mathcal{X},\mathcal{Y}]', '+', '[\mathcal{Z},\mathcal{Y}]', '-', '\mathcal{X}\lfloor g\rceil\mathcal{Y}'], feedback: 'Which field differentiates $g$? In $\mathcal{Y}\lfloor g\,\mathcal{X}\lfloor f\rceil\rceil$ it is $\mathcal{Y}$, and what multiplies the result is $\mathcal{X}\lfloor f\rceil$, the action of $\mathcal{X}$. So the leftover is $\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$. (The swapped term $\mathcal{X}\lfloor g\rceil\,\mathcal{Y}$ belongs to $[\mathcal{X},g\,\mathcal{Y}]$, with $g$ in the other slot.)' }
-      - { answer: ['g[\mathcal{X},\mathcal{Y}]', '+', '[\mathcal{Z},\mathcal{Y}]'], feedback: 'That would make the commutator $C^\infty(\mathcal{M})$-linear, but the Leibniz rule leaves one term where $\mathcal{Y}$ differentiates $g$ itself: $-\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$.' }
+      - { answer: ['g[\mathcal{X},\mathcal{Y}]', '+\,[\mathcal{Z},\mathcal{Y}]', '+\,\mathcal{Y}\lfloor g\rceil\mathcal{X}'], feedback: 'Sign: the leftover comes from the **subtracted** half of the commutator, $-\mathcal{Y}\lfloor g\,\mathcal{X}\lfloor f\rceil\rceil$, whose Leibniz expansion contains $-\mathcal{Y}\lfloor g\rceil\,\mathcal{X}\lfloor f\rceil$.' }
+      - { answer: ['g[\mathcal{X},\mathcal{Y}]', '+\,[\mathcal{Z},\mathcal{Y}]', '-\,\mathcal{X}\lfloor g\rceil\mathcal{Y}'], feedback: 'Which field differentiates $g$? In $\mathcal{Y}\lfloor g\,\mathcal{X}\lfloor f\rceil\rceil$ it is $\mathcal{Y}$, and what multiplies the result is $\mathcal{X}\lfloor f\rceil$, the action of $\mathcal{X}$. So the leftover is $\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$. (The swapped term $\mathcal{X}\lfloor g\rceil\,\mathcal{Y}$ belongs to $[\mathcal{X},g\,\mathcal{Y}]$, with $g$ in the other slot.)' }
+      - { answer: ['g[\mathcal{X},\mathcal{Y}]', '+\,[\mathcal{Z},\mathcal{Y}]'], feedback: 'That would make the commutator $C^\infty(\mathcal{M})$-linear, but the Leibniz rule leaves one term where $\mathcal{Y}$ differentiates $g$ itself: $-\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$.' }
     hint: |
       The only term where something differentiates $g$ is $-\mathcal{Y}\lfloor g\,\mathcal{X}\lfloor f\rceil\rceil$. Expand it with the Leibniz rule.
     explanation: |
@@ -204,8 +203,10 @@ cards:
     id: collect
     title: Collect the terms
     prompt: |
-      With $\mathcal{V}(\mathcal{X},\mathcal{Y}) := \nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]$ and the expansions $\nabla_{g\mathcal{X}+\mathcal{Z}}\mathcal{Y} = g\,\nabla_\mathcal{X}\mathcal{Y} + \nabla_\mathcal{Z}\mathcal{Y}$, $\nabla_\mathcal{Y}(g\mathcal{X}+\mathcal{Z}) = \mathcal{Y}\lfloor g\rceil\,\mathcal{X} + g\,\nabla_\mathcal{Y}\mathcal{X} + \nabla_\mathcal{Y}\mathcal{Z}$ and $[g\mathcal{X}+\mathcal{Z},\mathcal{Y}] = g[\mathcal{X},\mathcal{Y}] + [\mathcal{Z},\mathcal{Y}] - \mathcal{Y}\lfloor g\rceil\,\mathcal{X}$, collect the terms. Use only the tiles you need.
-    prefix: '\mathcal{V}(g\mathcal{X}+\mathcal{Z},\mathcal{Y}) ='
+      With $\mathcal{V}(\mathcal{X},\mathcal{Y}) := \nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]$ and the expansions $\nabla_{g\mathcal{X}+\mathcal{Z}}\mathcal{Y} = g\,\nabla_\mathcal{X}\mathcal{Y} + \nabla_\mathcal{Z}\mathcal{Y}$, $\nabla_\mathcal{Y}(g\mathcal{X}+\mathcal{Z}) = \mathcal{Y}\lfloor g\rceil\,\mathcal{X} + g\,\nabla_\mathcal{Y}\mathcal{X} + \nabla_\mathcal{Y}\mathcal{Z}$ and $[g\mathcal{X}+\mathcal{Z},\mathcal{Y}] = g[\mathcal{X},\mathcal{Y}] + [\mathcal{Z},\mathcal{Y}] - \mathcal{Y}\lfloor g\rceil\,\mathcal{X}$, collect the terms into the right-hand side of
+      $$\mathcal{V}(g\mathcal{X}+\mathcal{Z},\mathcal{Y}) = \;?$$
+      Use only the tiles you need.
+    prefix: '='
     tiles: ['g\,\mathcal{V}(\mathcal{X},\mathcal{Y})', '\mathcal{V}(\mathcal{Z},\mathcal{Y})', '2\,\mathcal{Y}\lfloor g\rceil\mathcal{X}', '+', '+', '-']
     answers:
       - ['g\,\mathcal{V}(\mathcal{X},\mathcal{Y})', '+', '\mathcal{V}(\mathcal{Z},\mathcal{Y})']
