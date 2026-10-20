@@ -29,6 +29,7 @@ async function route() {
   const parts = location.hash.replace(/^#\/?/, '').split('/').filter(Boolean);
   try {
     if (parts[0] === 'lesson' && parts[1]) return await playLesson(decodeURIComponent(parts[1]), +(parts[2] ?? 1) - 1);
+    if (parts[0] === 'read' && parts[1]) return await playLesson(decodeURIComponent(parts[1]), +(parts[2] ?? 1) - 1, true);
     if (parts[0] === 'review') return await playReview(parts[1]);
     if (parts[0] === 'settings') return settings();
     await renderTrail(root);
@@ -40,15 +41,17 @@ async function route() {
   }
 }
 
-async function playLesson(id, startAt) {
+async function playLesson(id, startAt, readOnly = false) {
   const { meta, data } = await getLesson(id);
   if (!data) { location.hash = '#/'; return; }
   runSession(root, {
     items: lessonItems(id, data),
     mode: 'lesson',
+    readOnly,
     startAt: Math.max(0, Math.min(startAt || 0, data.cards.length - 1)),
     onExit: () => { location.hash = '#/'; },
     onFinish: async stats => {
+      if (readOnly) { location.hash = '#/'; return; }
       progress.completeLesson(id, stats);
       const next = await nextLessonAfter(id);
       doneScreen({

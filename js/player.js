@@ -12,7 +12,7 @@ import { progress } from './progress.js';
 import { sounds, soundOn, setSound } from './sound.js';
 import { themeButton } from './theme.js';
 
-export function runSession(root, { items, mode, startAt = 0, onFinish, onExit }) {
+export function runSession(root, { items, mode, startAt = 0, readOnly = false, onFinish, onExit }) {
   const stats = { questions: 0, firstTry: 0 };
   const requeued = new Set();
   const answered = new Map(); // item index -> { firstTry }; revisits (Back) show the answer
@@ -56,7 +56,7 @@ export function runSession(root, { items, mode, startAt = 0, onFinish, onExit })
   const cleanup = () => document.removeEventListener('keydown', onKey);
 
   function exit() {
-    if (i > 0 && i < items.length && !confirm('Leave now? Progress inside this session is not saved.')) return;
+    if (!readOnly && i > 0 && i < items.length && !confirm('Leave now? Progress inside this session is not saved.')) return;
     cleanup();
     onExit();
   }
@@ -129,10 +129,10 @@ export function runSession(root, { items, mode, startAt = 0, onFinish, onExit })
     const explanation = item.card.explanation;
 
     // Revisiting a question already answered in this session: show the answer.
-    const before = answered.get(i);
+    const before = readOnly ? { firstTry: false } : answered.get(i);
     if (before) {
       ctl.reveal();
-      showFeedback(feedbackBox('neutral', before.firstTry ? 'You got this one first try' : 'Answer', explanation ?? ''));
+      showFeedback(feedbackBox('neutral', !readOnly && before.firstTry ? 'You got this one first try' : 'Answer', explanation ?? ''));
       setFoot([continueBtn()]);
       return;
     }

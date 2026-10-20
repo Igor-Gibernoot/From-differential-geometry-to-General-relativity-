@@ -123,8 +123,9 @@ function openSheet(meta, state, { level, deck, due }) {
     body = h('p', { html: mdInline(meta.summary ?? '') + (rec ? `<br><b>Best first-try score: ${Math.round(rec.best * 100)}%</b>` : '') });
     actions = [
       h('button', { class: 'btn ghost', type: 'button', onclick: close }, 'Close'),
+      rec ? h('button', { class: 'btn ghost', type: 'button', onclick: () => { close(); location.hash = `#/read/${meta.id}`; } }, 'Read through') : null,
       h('button', { class: 'btn primary', type: 'button', onclick: () => { close(); location.hash = `#/lesson/${meta.id}`; } }, rec ? 'Replay' : 'Start'),
-    ];
+    ].filter(Boolean);
   }
   const scrim = h('div', { class: 'scrim', onclick: e => { if (e.target === scrim) close(); } },
     h('div', { class: 'sheet', role: 'dialog', 'aria-modal': 'true' },
