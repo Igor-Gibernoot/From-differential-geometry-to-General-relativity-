@@ -1,6 +1,13 @@
 id: ch02-dual
 title: Linear Maps and the Dual Space
 kind: concept
+own: |
+  - A **linear map** $\phi\colon V\to W$ {{ respects adding and scaling }}: map-then-add equals add-then-map,
+    $$\phi(\mathcal{X}\oplus_V\mathcal{Y}) = \phi(\mathcal{X})\oplus_W\phi(\mathcal{Y}),$$
+    $$\phi(\alpha\odot_V\mathcal{X}) = \alpha\odot_W\phi(\mathcal{X}).$$
+    It always sends $0$ to $0$.
+  - $\mathrm{Hom}(V,W)$, the linear maps $V\to W$, is {{ a vector space under pointwise operations }}. A bijective linear map is an **isomorphism**, $V\cong W$.
+  - The **dual space** $V^*$ = {{ $\mathrm{Hom}(V,\mathbb{R})$ }} holds the **covectors**: linear machines that eat a vector and return a number. Picture them as stacks of level lines.
 
 cards:
   - type: text
@@ -272,11 +279,4 @@ cards:
     id: wrap
     title: What you now own
     body: |
-      - A **linear map** $\phi\colon V\to W$ respects adding and scaling: map-then-add equals add-then-map,
-        $$\phi(\mathcal{X}\oplus_V\mathcal{Y}) = \phi(\mathcal{X})\oplus_W\phi(\mathcal{Y}),$$
-        $$\phi(\alpha\odot_V\mathcal{X}) = \alpha\odot_W\phi(\mathcal{X}).$$
-        It always sends $0$ to $0$.
-      - $\mathrm{Hom}(V,W)$, the linear maps $V\to W$, is a vector space under pointwise operations. A bijective linear map is an **isomorphism**, $V\cong W$.
-      - The **dual space** $V^* = \mathrm{Hom}(V,\mathbb{R})$ holds the **covectors**: linear machines that eat a vector and return a number. Picture them as stacks of level lines.
-
       **Next:** to compute, we need numbers. A **basis** turns vectors into lists of components. Does a basis of $V$ also hand us a basis of $V^*$ for free?
