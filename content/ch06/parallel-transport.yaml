@@ -171,7 +171,7 @@ cards:
       One term differentiates the components, which are functions of $\lambda$ only; the other comes from the turning basis.
     explanation: |
       $$\begin{aligned}&(\nabla_{v_\gamma}\mathcal{X}_\gamma)(\lambda)\\ &= \big(\dot x^k_\gamma + \Gamma^k_{ji}\,x^j_\gamma\,\dot\gamma^i\big)(\partial x_k)_{\gamma(\lambda)}\end{aligned}$$
-      with $\Gamma^k_{ji}$ taken at $\gamma(\lambda)$. Call it $(**)$. For a restriction $x^k_\gamma = \tilde x^k\circ\gamma$ the chain rule gives $\dot x^k_\gamma = v_\gamma(\lambda)(\tilde x^k)$, and $(**)$ is the familiar component formula of $\nabla_{v_\gamma(\lambda)}\mathcal{Y}$: property 3 holds.
+      with $\Gamma^k_{ji}$ taken at $\gamma(\lambda)$. Call it the **chart formula** (C). For a restriction $x^k_\gamma = \tilde x^k\circ\gamma$ the chain rule gives $\dot x^k_\gamma = v_\gamma(\lambda)(\tilde x^k)$, and (C) is the familiar component formula of $\nabla_{v_\gamma(\lambda)}\mathcal{Y}$: property 3 holds.
 
   - type: text
     id: transport-def
@@ -179,7 +179,7 @@ cards:
     body: |
       A field $\mathcal{Z}$ along $\gamma$ is **parallelly transported** along $\gamma$ if
       $$\nabla_{v_\gamma}\mathcal{Z} = 0.$$
-      With components $z^k(\lambda)$, formula $(**)$ turns this into the **transport equation**
+      With components $z^k(\lambda)$, the chart formula (C) turns this into the **transport equation**
       $$\dot z^k + \Gamma^k_{ji}\,z^j\,\dot\gamma^i = 0,$$
       ($k = 1,\dots,d$, $\Gamma$ at $\gamma(\lambda)$). It is a system of $d$ **linear** first-order ordinary differential equations (ODEs) for $z^1,\dots,z^d$. A standard ODE theorem (stated here without proof) gives exactly one solution for each starting vector $z^k(\lambda_0)$. So a vector at $\gamma(\lambda_0)$ is carried along the curve in exactly one way, and the result depends linearly on the start: parallel transport is a linear map
       $$T_{\gamma(\lambda_0)}\mathcal{M}\to T_{\gamma(\lambda_1)}\mathcal{M}.$$
@@ -293,15 +293,15 @@ cards:
     id: autoparallel-eq
     title: The autoparallel equation
     body: |
-      Apply $(**)$ to the velocity itself: its components are $x^k_\gamma = \dot\gamma^k$, whose derivative is the second derivative
+      Apply the chart formula (C) to the velocity itself: its components are $x^k_\gamma = \dot\gamma^k$, whose derivative is the second derivative
       $$\ddot\gamma^k(\lambda) := (\mathscr{X}^k\circ\gamma)''(\lambda).$$
       So the acceleration has components
       $$a^k_\gamma = \ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\,\dot\gamma^j.$$
       Since the $(\partial x_k)_{\gamma(\lambda)}$ form a basis, "autoparallel" becomes, component by component,
       $$\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = \text{ᚱ}\,\dot\gamma^k$$
       and "autoparallelly transported" ($\text{ᚱ}\equiv0$) is the **autoparallel equation**
-      $$\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = 0,\qquad(6.1)$$
-      with $\Gamma^k_{ji}$ at $\gamma(\lambda)$: $d$ second-order ODEs for the chart representative $(\mathscr{X}\circ\gamma)(\lambda)$. In general relativity, freely falling bodies follow such curves (for the connection built from the metric, Level 7): (6.1) is the law of motion that replaces Newton's $\ddot x = F/m$, with gravity hidden in the $\Gamma$'s.
+      $$\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = 0\tag{A}$$
+      with $\Gamma^k_{ji}$ at $\gamma(\lambda)$: $d$ second-order ODEs for the chart representative $(\mathscr{X}\circ\gamma)(\lambda)$. In general relativity, freely falling bodies follow such curves (for the connection built from the metric, Level 7): (A) is the law of motion that replaces Newton's $\ddot x = F/m$, with gravity hidden in the $\Gamma$'s.
 
   - type: mcq
     id: euclid-autoparallels
@@ -337,7 +337,7 @@ cards:
         feedback: |
           Any choice of coefficients defines a connection, and the autoparallel equation always has solutions (one for each starting point and velocity, by the ODE theorem). Here the $\Gamma$ term cancels and the equation is $\ddot\gamma^k = 0$.
     explanation: |
-      Because $\dot\gamma^i\dot\gamma^j = \dot\gamma^j\dot\gamma^i$, only the **symmetric part** $\tfrac12(\Gamma^k_{ji} + \Gamma^k_{ij})$ enters (6.1). Two connections with the same symmetric part have the same autoparallels. The antisymmetric part is invisible to them, but not to parallel transport: see the next question.
+      Because $\dot\gamma^i\dot\gamma^j = \dot\gamma^j\dot\gamma^i$, only the **symmetric part** $\tfrac12(\Gamma^k_{ji} + \Gamma^k_{ij})$ enters the autoparallel equation (A). Two connections with the same symmetric part have the same autoparallels. The antisymmetric part is invisible to them, but not to parallel transport: see the next question.
 
   - type: numeric
     id: antisym-transport
@@ -358,10 +358,10 @@ cards:
     id: vertical-polar
     title: A straight line in polar coordinates
     body: |
-      The vertical line $\gamma_{x_0}(\lambda) = (x_0,\lambda)$, $x_0>0$, solves (6.1) for $\nabla^{\mathrm{E}}$ in the cartesian chart: $\ddot\gamma^k = 0$. A solution of a chart-independent condition ($a_\gamma = 0$) must solve the polar version too, where the representative is curved and the $\Gamma$'s are $-r$ and $1/r$. With $r = \sqrt{x_0^2+\lambda^2}$ and $\theta = \arctan(\lambda/x_0)$:
+      The vertical line $\gamma_{x_0}(\lambda) = (x_0,\lambda)$, $x_0>0$, solves the autoparallel equation (A) for $\nabla^{\mathrm{E}}$ in the cartesian chart: $\ddot\gamma^k = 0$. A solution of a chart-independent condition ($a_\gamma = 0$) must solve the polar version too, where the representative is curved and the $\Gamma$'s are $-r$ and $1/r$. With $r = \sqrt{x_0^2+\lambda^2}$ and $\theta = \arctan(\lambda/x_0)$:
       $$\begin{gathered}\dot\gamma^1 = \frac{\lambda}{\sqrt{x_0^2+\lambda^2}}\\ \dot\gamma^2 = \frac{x_0}{x_0^2+\lambda^2}\end{gathered}$$
       $$\begin{gathered}\ddot\gamma^1 = \frac{x_0^2}{(x_0^2+\lambda^2)^{3/2}}\\ \ddot\gamma^2 = -\frac{2x_0\lambda}{(x_0^2+\lambda^2)^2}\end{gathered}$$
-      In polar form (6.1) reads
+      In polar form the autoparallel equation (A) reads
       $$\begin{gathered}\ddot\gamma^1 - r\,(\dot\gamma^2)^2 = 0\\ \ddot\gamma^2 + \tfrac2r\,\dot\gamma^1\dot\gamma^2 = 0\end{gathered}$$
       (in the second line, $\Gamma^2_{12}$ and $\Gamma^2_{21}$ both contribute). Check it at $x_0 = 1$, $\lambda = 1$, where $r = \sqrt2$, $\dot\gamma = (1/\sqrt2,\ 1/2)$ and $\ddot\gamma = (1/(2\sqrt2),\ -1/2)$.
 
@@ -408,19 +408,19 @@ cards:
     id: reparametrize
     title: Can a new parameter help?
     prompt: |
-      Under $\nabla^{\mathrm{E}}$, the circle $\delta_{r_0}$ has velocity $v = \partial y_2$ and acceleration $a = -r_0\,\partial y_1$ (towards the centre). Run it with a new parameter $\mu$, $\lambda = \lambda(\mu)$, with $\lambda'(\mu)\neq0$. The chain rule and $(**)$ give the new velocity $\lambda'\,v$ and the new acceleration
-      $$\lambda''\,v + (\lambda')^2\,a.$$
-      Can some choice of $\lambda(\mu)$ make the circle autoparallel (acceleration a multiple of velocity)?
+      Under $\nabla^{\mathrm{E}}$, the circle $\delta_{r_0}$ has velocity $v = \partial y_2$ and acceleration $a = -r_0\,\partial y_1$ (towards the centre). Reparametrize it: $\delta_{r_0}\circ\text{ᚱ}$ with a smooth $\text{ᚱ}\colon\mathbb{R}\to\mathbb{R}$, $\mu\mapsto\lambda = \text{ᚱ}(\mu)$, $\text{ᚱ}'\neq0$. The chain rule ($v_{\delta\circ\text{ᚱ}} = \text{ᚱ}'\,v$) and the chart formula (C) give the new acceleration
+      $$\text{ᚱ}''\,v + (\text{ᚱ}')^2\,a.$$
+      Can some choice of $\text{ᚱ}$ make the circle autoparallel (acceleration a multiple of velocity)?
     options:
       - text: |
-          No: the new parameter only adds multiples of $v$, while the part $(\lambda')^2 a$, along $\partial y_1$, never vanishes
+          No: the new parameter only adds multiples of $v$, while the part $(\text{ᚱ}')^2 a$, along $\partial y_1$, never vanishes
         correct: true
       - text: |
-          Yes: choose $\lambda(\mu)$ so that the speed changes in a way that cancels the acceleration
+          Yes: choose $\text{ᚱ}$ so that the speed changes in a way that cancels the acceleration
         feedback: |
-          Changing the speed only produces the term $\lambda''\,v$, along $\partial y_2$. The part $(\lambda')^2\,a = -(\lambda')^2r_0\,\partial y_1$ points to the centre and is nonzero since $\lambda'\neq0$. No multiple of $\partial y_2$ cancels a $\partial y_1$ component.
+          Changing the speed only produces the term $\text{ᚱ}''\,v$, along $\partial y_2$. The part $(\text{ᚱ}')^2\,a = -(\text{ᚱ}')^2r_0\,\partial y_1$ points to the centre and is nonzero since $\text{ᚱ}'\neq0$. No multiple of $\partial y_2$ cancels a $\partial y_1$ component.
       - text: |
-          Yes: run the circle at constant speed, $\lambda = \mu$
+          Yes: run the circle at constant speed, $\text{ᚱ}(\mu) = \mu$
         feedback: |
           That is the original parametrization, with $a = -r_0\,\partial y_1$ not a multiple of $v = \partial y_2$. Constant speed does not make a curve straight; it must also not turn.
     explanation: |
@@ -523,13 +523,13 @@ cards:
     body: |
       - **Field along $\gamma$**: $\mathcal{X}_\gamma(\lambda)\in T_{\gamma(\lambda)}\mathcal{M}$, components $x^k_\gamma(\lambda)$. Velocities are such fields, not always restrictions of fields (figure-eight).
       - **Covariant derivative along $\gamma$**, the unique $\mathbb{R}$-linear operator with $\nabla_{v_\gamma}(\text{ᚱ}\,\mathcal{X}_\gamma) = \text{ᚱ}'\,\mathcal{X}_\gamma + \text{ᚱ}\,\nabla_{v_\gamma}\mathcal{X}_\gamma$ that agrees with $\nabla$ on restrictions:
-      $$(\nabla_{v_\gamma}\mathcal{X}_\gamma)^k = \dot x^k_\gamma + \Gamma^k_{ji}\,x^j_\gamma\,\dot\gamma^i\quad(**)$$
+      $$(\nabla_{v_\gamma}\mathcal{X}_\gamma)^k = \dot x^k_\gamma + \Gamma^k_{ji}\,x^j_\gamma\,\dot\gamma^i\tag{C}$$
       - **Parallelly transported** $\nabla_{v_\gamma}\mathcal{Z} = 0$, **parallel** $\nabla_{v_\gamma}\mathcal{X}_\gamma = \text{ᚱ}\,\mathcal{X}_\gamma$. Transport equation:
       $$\dot z^k + \Gamma^k_{ji}\,z^j\,\dot\gamma^i = 0$$
       a linear ODE: one transported vector per start, a linear map between tangent spaces.
       - **Acceleration** $a_\gamma := \nabla_{v_\gamma}v_\gamma$, $a^k_\gamma = \ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j$. **Autoparallel** $a_\gamma = \text{ᚱ}\,v_\gamma$, **autoparallelly transported** $a_\gamma = 0$:
-      $$\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = 0\quad(6.1)$$
-      Only the symmetric part of $\Gamma$ enters (6.1).
+      $$\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = 0\tag{A}$$
+      Only the symmetric part of $\Gamma$ enters (A).
       - **The plane**: under $\nabla^{\mathrm{E}}$ transport keeps cartesian components, autoparallels are constant-speed lines; along $\delta_{r_0}$ in polar, $\dot z^1 = r_0z^2$, $\dot z^2 = -z^1/r_0$, and $a_\delta = -r_0\,\partial y_1$. Under $\nabla^{\mathrm{P}}$ the circle is the straight one.
 
       **Next: torsion and curvature.** Two things this lesson left open become tensors: the antisymmetric part of the $\Gamma$'s, which autoparallels ignore but which tilted a transported vector along a straight line (**torsion**), and the failure of transport around a loop to return a vector to itself (**curvature**).

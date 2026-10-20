@@ -260,8 +260,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   transported" ($a_\gamma = 0$), the book's terms. $\nabla^{\mathrm{P}}$ transport stops where the curve leaves $\mathcal{V}$ (circle at $\lambda = \pi$). Check: $r_0 = 2$, $z_0 = (1,0)$, $\lambda = 1.2$ under $\nabla^{\mathrm{E}}$: polar $(0.36, -0.47)$.
   `ch06-parallel-transport`: field along $\gamma$ $\mathcal{X}_\gamma(\lambda)\in T_{\gamma(\lambda)}\mathcal{M}$, components $x^k_\gamma(\lambda) := (dx^k)_{\gamma(\lambda)}(\mathcal{X}_\gamma(\lambda))$, dot $= d/d\lambda$,
   velocity components $\dot\gamma^i$ (chart label dropped), $v_\gamma(\lambda)$; figure-eight $\gamma(\lambda) = (\sin\lambda, \tfrac12\sin2\lambda)$ (velocities $(1,1)$, $(-1,1)$ at the origin);
-  $\nabla_{v_\gamma}$ with properties ($\mathbb{R}$-linear, Leibniz with ᚱ a function of $\lambda$, compatibility); chart formula labelled $(**)$ $(\nabla_{v_\gamma}\mathcal{X}_\gamma)^k = \dot x^k_\gamma + \Gamma^k_{ji}x^j_\gamma\dot\gamma^i$;
-  autoparallel equation labelled (6.1); $a^k_\gamma = \ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j$; reparametrization written $\lambda = \lambda(\mu)$ (new acceleration $\lambda''v + (\lambda')^2a$), not with ᚱ;
+  $\nabla_{v_\gamma}$ with properties ($\mathbb{R}$-linear, Leibniz with ᚱ a function of $\lambda$, compatibility); chart formula labelled (C) (`\tag{C}`; the book's $(**)$ not used) $(\nabla_{v_\gamma}\mathcal{X}_\gamma)^k = \dot x^k_\gamma + \Gamma^k_{ji}x^j_\gamma\dot\gamma^i$;
+  "autoparallel equation" labelled (A) (`\tag{A}`; book equation numbers never used); $a^k_\gamma = \ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j$; reparametrization rune as in ch04, $\delta\circ\text{ᚱ}$ (new acceleration $\text{ᚱ}''v + (\text{ᚱ}')^2a$); ᚱ also the factor in "parallel"/"autoparallel" as in the book;
   antisymmetric example $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$ (cartesian): straight-line autoparallels, transport of $(0,1)$ along $(\lambda,0)$ gives $(\lambda,1)$ (torsion teaser);
   vertical line check at $x_0 = \lambda = 1$: $r = \sqrt2$, $\dot\gamma = (1/\sqrt2, 1/2)$, $\ddot\gamma = (\sqrt2/4, -1/2)$; radial $\lambda^2$: $\text{ᚱ} = 1/\lambda$; sphere holonomy ($90°$) stated without proof.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
@@ -279,8 +279,8 @@ append a short entry at the end of **Log** (a few lines, ending with
 
 ### 2026-10-20 — ch06-parallel-transport (concept, 31 cards)
 - Hook "is the circle straight?" (guess for ∇ᴱ/∇ᴾ), early widget (circle, badge and acceleration hidden), fields along curves with figure-eight, $\nabla_{v_\gamma}$ (theorem, Leibniz MCQ, order card for the uniqueness derivation, build of $(**)$), transport ODE and linear map, circle in polar (solution MCQ, numeric $\dot z^1(1.2) = -0.93$), parallel vs parallelly transported, autoparallel equation, symmetric-part trap plus antisymmetric transport numeric, vertical line in polar (two numerics), circle acceleration and reparametrization, second widget (badge presets), hook resolved, radial λ² (ᚱ = 2/3 at 1.5), holonomy text + MCQ, summary.
-- Choices: used the book's equation label (6.1) and $(**)$ as in-lesson names; GR "free fall = autoparallel" mentioned once (metric connection Level 7); sphere holonomy stated without proof.
-- Conventions fixed here: field along $\gamma$ $x^k_\gamma$, dot $= d/d\lambda$, $(**)$, (6.1), reparametrization $\lambda(\mu)$ (not ᚱ), antisymmetric example $\Gamma^1_{12} = -\Gamma^1_{21} = 1$.
+- Choices: in-lesson labels (C) chart formula and (A) autoparallel equation (no book numbers); reparametrization with the rune ᚱ (as ch04); GR "free fall = autoparallel" mentioned once (metric connection Level 7); sphere holonomy stated without proof.
+- Conventions fixed here: field along $\gamma$ $x^k_\gamma$, dot $= d/d\lambda$, (C), (A), reparametrization $\delta\circ\text{ᚱ}$, antisymmetric example $\Gamma^1_{12} = -\Gamma^1_{21} = 1$.
 
 ### 2026-10-20 — widget `parallel-transport` (widget session)
 - `js/widgets.js`: new `parallelTransport` (curve presets, λ slider + Play, ∇ᴱ/∇ᴾ toggle, draggable start vector, faded trail, $v_\gamma$, $a_\gamma$ dashed, optional polar basis,
