@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 6 complete, Recap engine built; next: `own:` backfill, then Chapter 7, `ch07-metric`)
+## Current (2026-10-20, Chapter 6 complete, Recap engine built, `own:` backfill complete; next: Chapter 7, `ch07-metric`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -28,10 +28,9 @@ append a short entry at the end of **Log** (a few lines, ending with
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Recap (`own:`) rule:** every concept lesson carries `own:` (its "what you now own" summary with 3–6 `{{ }}` blanks on the main
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
-  write it from the start. **Backfill:** Chapter 2-5 done, pending 6 (no pilot needed now;
-  list each chapter's blanks for Igor's veto at the end). Never edit a blank's text without need: its progress is keyed by its hash.
+  write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** first the `own:` backfill (above), then Chapter 7 (Metric) in `course.yaml` order: next `ch07-metric`, then `ch07-signature`, `ch07-length`,
+- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: next `ch07-metric`, then `ch07-signature`, `ch07-length`,
   `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, traps, map, challenge (two sessions);
   then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
   B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
@@ -871,3 +870,9 @@ long box titles.
 - Choices: reused the Leitner boxes (no ease factor); only finished lessons are recapped; first view hides a random half, later passes hide
   exactly the due blanks (cap: one left showing when ≥ 3); a repeated expression is one item; markers are ignored inside math.
 - Conventions fixed here: `own:` + `{{ }}` marking rules (`docs/QUICKREF.md`); the closing card's `body` is only the teaser once `own:` exists.
+### 2026-10-20 — own: backfill, Chapter 6 (connections, christoffel, parallel-transport, torsion-curvature)
+- Summary moved into `own:` (wording unchanged, blanks added); card keeps id, title and the "**Next:**" teaser. Guided lessons (`three-connections`,
+  `torsion-tensor`) skipped. Blanks: connections 6, christoffel 5, parallel-transport 6, torsion-curvature 6. Backfill now complete (Chapters 2-6).
+- Conventions fixed here: whole displayed laws (rule blocks, Leibniz, transformation law, Riemann components) are blanked as one `{{ $$…$$ }}` line;
+  of two equivalent forms (transport equation vs covariant derivative along a curve) only one is marked; definitions with a symbol (`a_\gamma := …`,
+  parallel/autoparallel conditions) blank the formula and keep the term.

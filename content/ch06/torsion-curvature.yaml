@@ -1,6 +1,25 @@
 id: ch06-torsion-curvature
 title: Torsion and Curvature
 kind: concept
+own: |
+  **The hook, resolved.** Around a loop, $\nabla^{\mathrm{E}}$ and $\nabla^{\mathrm{W}}$ return every vector (both flat); $\nabla^{\kappa}$ does not (curved), and the mismatch is curvature times area. Torsion played no part.
+
+  - **Commutator** (a vector field: the second derivatives cancel):
+  {{ $$[\mathcal{X},\mathcal{Y}]\lfloor f\rceil := \mathcal{X}\lfloor\mathcal{Y}\lfloor f\rceil\rceil - \mathcal{Y}\lfloor\mathcal{X}\lfloor f\rceil\rceil$$ }}
+  $$[\mathcal{X},\mathcal{Y}]^k = \mathcal{X}\lfloor\tilde x^k\rceil - \mathcal{Y}\lfloor x^k\rceil$$
+  $$[\partial x_j,\partial x_k] = 0$$
+  - **Torsion**, a $(1,2)$-tensor field, antisymmetric in its vector slots; torsion free $\iff$ $\Gamma^i_{jk} = \Gamma^i_{kj}$:
+  {{ $$\begin{aligned}&\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y})\\ &:= \mathsf{X}\lceil\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]\rfloor\end{aligned}$$ }}
+  {{ $$\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}$$ }}
+  - **Riemann curvature**, a $(1,3)$-tensor field, $\mathrm{Riem}^i_{jkm} = -\mathrm{Riem}^i_{jmk}$:
+  {{ $$\begin{aligned}&\mathrm{Riem}(\mathsf{X},\mathcal{Z},\mathcal{X},\mathcal{Y})\\ &:= \mathsf{X}\lceil\nabla_\mathcal{X}\nabla_\mathcal{Y}\mathcal{Z} - \nabla_\mathcal{Y}\nabla_\mathcal{X}\mathcal{Z}\\ &\qquad - \nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}\rfloor\end{aligned}$$ }}
+  {{ $$\begin{aligned}\mathrm{Riem}^i_{jkm} &= \partial x_k\lfloor\Gamma^i_{jm}\rceil - \partial x_m\lfloor\Gamma^i_{jk}\rceil\\ &\quad + \Gamma^i_{nk}\Gamma^n_{jm} - \Gamma^i_{nm}\Gamma^n_{jk}\end{aligned}$$ }}
+  - **Ricci curvature**:
+  {{ $$\mathrm{Ric}_{ab} = \mathrm{Riem}^m_{amb}$$ }}
+  - **Holonomy** (counterclockwise loop; exact for $\nabla^{\kappa}$, approximate for small loops in general):
+  $$\Delta z^1 = -\mathrm{Riem}^1_{212}\,z^2\times\text{area}$$
+  - **Examples**: $\nabla^{\mathrm{E}}$ neither; $\nabla^{\mathrm{W}}$ flat, $\mathtt{T}^1_{12} = -\tfrac b{r^2}$, $\mathtt{T}^2_{12} = \tfrac a{r^2}$; $\nabla^{\kappa}$ torsion free, $\mathrm{Riem}^1_{212} = \kappa$, $\mathrm{Ric} = \kappa\,dx^2\otimes dx^2$. Charts with all $\Gamma = 0$ exist locally iff $\mathtt{T} = 0$ and $\mathrm{Riem} = 0$.
+
 
 cards:
   - type: text
@@ -585,22 +604,4 @@ cards:
     id: summary
     title: What you now own
     body: |
-      **The hook, resolved.** Around a loop, $\nabla^{\mathrm{E}}$ and $\nabla^{\mathrm{W}}$ return every vector (both flat); $\nabla^{\kappa}$ does not (curved), and the mismatch is curvature times area. Torsion played no part.
-
-      - **Commutator** (a vector field: the second derivatives cancel):
-      $$[\mathcal{X},\mathcal{Y}]\lfloor f\rceil := \mathcal{X}\lfloor\mathcal{Y}\lfloor f\rceil\rceil - \mathcal{Y}\lfloor\mathcal{X}\lfloor f\rceil\rceil$$
-      $$[\mathcal{X},\mathcal{Y}]^k = \mathcal{X}\lfloor\tilde x^k\rceil - \mathcal{Y}\lfloor x^k\rceil$$
-      $$[\partial x_j,\partial x_k] = 0$$
-      - **Torsion**, a $(1,2)$-tensor field, antisymmetric in its vector slots; torsion free $\iff$ $\Gamma^i_{jk} = \Gamma^i_{kj}$:
-      $$\begin{aligned}&\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y})\\ &:= \mathsf{X}\lceil\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]\rfloor\end{aligned}$$
-      $$\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}$$
-      - **Riemann curvature**, a $(1,3)$-tensor field, $\mathrm{Riem}^i_{jkm} = -\mathrm{Riem}^i_{jmk}$:
-      $$\begin{aligned}&\mathrm{Riem}(\mathsf{X},\mathcal{Z},\mathcal{X},\mathcal{Y})\\ &:= \mathsf{X}\lceil\nabla_\mathcal{X}\nabla_\mathcal{Y}\mathcal{Z} - \nabla_\mathcal{Y}\nabla_\mathcal{X}\mathcal{Z}\\ &\qquad - \nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}\rfloor\end{aligned}$$
-      $$\begin{aligned}\mathrm{Riem}^i_{jkm} &= \partial x_k\lfloor\Gamma^i_{jm}\rceil - \partial x_m\lfloor\Gamma^i_{jk}\rceil\\ &\quad + \Gamma^i_{nk}\Gamma^n_{jm} - \Gamma^i_{nm}\Gamma^n_{jk}\end{aligned}$$
-      - **Ricci curvature**:
-      $$\mathrm{Ric}_{ab} = \mathrm{Riem}^m_{amb}$$
-      - **Holonomy** (counterclockwise loop; exact for $\nabla^{\kappa}$, approximate for small loops in general):
-      $$\Delta z^1 = -\mathrm{Riem}^1_{212}\,z^2\times\text{area}$$
-      - **Examples**: $\nabla^{\mathrm{E}}$ neither; $\nabla^{\mathrm{W}}$ flat, $\mathtt{T}^1_{12} = -\tfrac b{r^2}$, $\mathtt{T}^2_{12} = \tfrac a{r^2}$; $\nabla^{\kappa}$ torsion free, $\mathrm{Riem}^1_{212} = \kappa$, $\mathrm{Ric} = \kappa\,dx^2\otimes dx^2$. Charts with all $\Gamma = 0$ exist locally iff $\mathtt{T} = 0$ and $\mathrm{Riem} = 0$.
-
       **Next: "Torsion Is a Tensor".** You checked one slot of the torsion; the guided problem proves $C^\infty(\mathcal{M})$-linearity in every slot, step by step. Later, the metric (Level 7) will single out one torsion-free connection, and its curvature will be gravity.

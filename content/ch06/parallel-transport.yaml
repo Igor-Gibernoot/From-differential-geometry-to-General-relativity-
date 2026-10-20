@@ -1,6 +1,18 @@
 id: ch06-parallel-transport
 title: Parallel Transport and Autoparallels
 kind: concept
+own: |
+  - **Field along $\gamma$**: $\mathcal{X}_\gamma(\lambda)\in T_{\gamma(\lambda)}\mathcal{M}$, components $x^k_\gamma(\lambda)$. Velocities are such fields, not always restrictions of fields (figure-eight).
+  - **Covariant derivative along $\gamma$**, the unique $\mathbb{R}$-linear operator with {{ $\nabla_{v_\gamma}(\text{ᚱ}\,\mathcal{X}_\gamma) = \text{ᚱ}'\,\mathcal{X}_\gamma + \text{ᚱ}\,\nabla_{v_\gamma}\mathcal{X}_\gamma$ }} that agrees with $\nabla$ on restrictions:
+  {{ $$(\nabla_{v_\gamma}\mathcal{X}_\gamma)^k = \dot x^k_\gamma + \Gamma^k_{ji}\,x^j_\gamma\,\dot\gamma^i\tag{C}$$ }}
+  - **Parallelly transported** {{ $\nabla_{v_\gamma}\mathcal{Z} = 0$ }}, **parallel** $\nabla_{v_\gamma}\mathcal{X}_\gamma = \text{ᚱ}\,\mathcal{X}_\gamma$. Transport equation:
+  $$\dot z^k + \Gamma^k_{ji}\,z^j\,\dot\gamma^i = 0$$
+  a linear ODE: one transported vector per start, a linear map between tangent spaces.
+  - **Acceleration** {{ $a_\gamma := \nabla_{v_\gamma}v_\gamma$ }}, $a^k_\gamma = \ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j$. **Autoparallel** {{ $a_\gamma = \text{ᚱ}\,v_\gamma$ }}, **autoparallelly transported** $a_\gamma = 0$:
+  {{ $$\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = 0\tag{A}$$ }}
+  Only the symmetric part of $\Gamma$ enters (A).
+  - **The plane**: under $\nabla^{\mathrm{E}}$ transport keeps cartesian components, autoparallels are constant-speed lines; along $\delta_{r_0}$ in polar, $\dot z^1 = r_0z^2$, $\dot z^2 = -z^1/r_0$, and $a_\delta = -r_0\,\partial y_1$. Under $\nabla^{\mathrm{P}}$ the circle is the straight one.
+
 
 cards:
   - type: text
@@ -521,15 +533,4 @@ cards:
     id: summary
     title: What you now own
     body: |
-      - **Field along $\gamma$**: $\mathcal{X}_\gamma(\lambda)\in T_{\gamma(\lambda)}\mathcal{M}$, components $x^k_\gamma(\lambda)$. Velocities are such fields, not always restrictions of fields (figure-eight).
-      - **Covariant derivative along $\gamma$**, the unique $\mathbb{R}$-linear operator with $\nabla_{v_\gamma}(\text{ᚱ}\,\mathcal{X}_\gamma) = \text{ᚱ}'\,\mathcal{X}_\gamma + \text{ᚱ}\,\nabla_{v_\gamma}\mathcal{X}_\gamma$ that agrees with $\nabla$ on restrictions:
-      $$(\nabla_{v_\gamma}\mathcal{X}_\gamma)^k = \dot x^k_\gamma + \Gamma^k_{ji}\,x^j_\gamma\,\dot\gamma^i\tag{C}$$
-      - **Parallelly transported** $\nabla_{v_\gamma}\mathcal{Z} = 0$, **parallel** $\nabla_{v_\gamma}\mathcal{X}_\gamma = \text{ᚱ}\,\mathcal{X}_\gamma$. Transport equation:
-      $$\dot z^k + \Gamma^k_{ji}\,z^j\,\dot\gamma^i = 0$$
-      a linear ODE: one transported vector per start, a linear map between tangent spaces.
-      - **Acceleration** $a_\gamma := \nabla_{v_\gamma}v_\gamma$, $a^k_\gamma = \ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j$. **Autoparallel** $a_\gamma = \text{ᚱ}\,v_\gamma$, **autoparallelly transported** $a_\gamma = 0$:
-      $$\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = 0\tag{A}$$
-      Only the symmetric part of $\Gamma$ enters (A).
-      - **The plane**: under $\nabla^{\mathrm{E}}$ transport keeps cartesian components, autoparallels are constant-speed lines; along $\delta_{r_0}$ in polar, $\dot z^1 = r_0z^2$, $\dot z^2 = -z^1/r_0$, and $a_\delta = -r_0\,\partial y_1$. Under $\nabla^{\mathrm{P}}$ the circle is the straight one.
-
       **Next: torsion and curvature.** Two things this lesson left open become tensors: the antisymmetric part of the $\Gamma$'s, which autoparallels ignore but which tilted a transported vector along a straight line (**torsion**), and the failure of transport around a loop to return a vector to itself (**curvature**).

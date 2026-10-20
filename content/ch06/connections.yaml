@@ -1,6 +1,19 @@
 id: ch06-connections
 title: Connections and Affine Manifolds
 kind: concept
+own: |
+  - **Why**: "differentiate the components" depends on the chart, through the second derivatives {{ $\partial_i\partial_j(\text{ᛖ}_{\mathcal{U}\mathcal{V}})^k$ }} of the transition map; vectors at different points cannot be subtracted.
+  - **Connection** $\nabla\colon T_p\mathcal{M}\times\Gamma T^{(r,s)}\mathcal{M}\to T_p^{(r,s)}\mathcal{M}$, $(\mathcal{X}_p,T)\mapsto\nabla_{\mathcal{X}_p}T$, with the rules
+  {{ $$\begin{gathered}\nabla_{\mathcal{X}_p}f = \mathcal{X}_p(f)\\ \nabla_{\mathcal{X}_p}(T_1+T_2) = \nabla_{\mathcal{X}_p}T_1 + \nabla_{\mathcal{X}_p}T_2\\ \nabla_{\alpha\mathcal{X}_p+\mathcal{Y}_p}T = \alpha\nabla_{\mathcal{X}_p}T + \nabla_{\mathcal{Y}_p}T\end{gathered}$$ }}
+  plus the Leibniz rule, one term per ingredient,
+  {{ $$\begin{aligned}&\mathcal{X}_p\big(T(\mathsf{X},\mathcal{Y})\big)\\ &= (\nabla_{\mathcal{X}_p}T)(\mathsf{X}_p,\mathcal{Y}_p)\\ &\quad + T_p(\nabla_{\mathcal{X}_p}\mathsf{X},\mathcal{Y}_p)\\ &\quad + T_p(\mathsf{X}_p,\nabla_{\mathcal{X}_p}\mathcal{Y}),\end{aligned}$$ }}
+  and smoothness: $\nabla_\mathcal{X}T\in\Gamma T^{(r,s)}\mathcal{M}$.
+  - **Consequences**:
+  {{ $$\begin{gathered}\nabla_{f\mathcal{X}+\mathcal{Y}}T = f\nabla_\mathcal{X}T + \nabla_\mathcal{Y}T\\ \nabla_\mathcal{X}(g\mathcal{Y}) = \mathcal{X}\lfloor g\rceil\mathcal{Y} + g\nabla_\mathcal{X}\mathcal{Y}\end{gathered}$$ }}
+  {{ $$\begin{aligned}&(\nabla_{\mathcal{X}_p}\mathsf{X})(\mathcal{Y}_p)\\ &= \mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor) - \mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y})\end{aligned}$$ }}
+  A tensor in the direction, not in the differentiated field; fixed on all tensor fields by its action on vector fields.
+  - **Affine manifold** $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla)$; the connection is a choice. On the plane: {{ $\nabla^{\mathrm{E}}_{\partial x_2}(-b\,\partial x_1 + a\,\partial x_2) = -\partial x_1$ }}, while $\nabla^{\mathrm{P}}$ (constant polar components) gives $0$.
+
 
 cards:
   - type: text
@@ -435,16 +448,4 @@ cards:
     id: summary
     title: What you now own
     body: |
-      - **Why**: "differentiate the components" depends on the chart, through the second derivatives $\partial_i\partial_j(\text{ᛖ}_{\mathcal{U}\mathcal{V}})^k$ of the transition map; vectors at different points cannot be subtracted.
-      - **Connection** $\nabla\colon T_p\mathcal{M}\times\Gamma T^{(r,s)}\mathcal{M}\to T_p^{(r,s)}\mathcal{M}$, $(\mathcal{X}_p,T)\mapsto\nabla_{\mathcal{X}_p}T$, with the rules
-      $$\begin{gathered}\nabla_{\mathcal{X}_p}f = \mathcal{X}_p(f)\\ \nabla_{\mathcal{X}_p}(T_1+T_2) = \nabla_{\mathcal{X}_p}T_1 + \nabla_{\mathcal{X}_p}T_2\\ \nabla_{\alpha\mathcal{X}_p+\mathcal{Y}_p}T = \alpha\nabla_{\mathcal{X}_p}T + \nabla_{\mathcal{Y}_p}T\end{gathered}$$
-      plus the Leibniz rule, one term per ingredient,
-      $$\begin{aligned}&\mathcal{X}_p\big(T(\mathsf{X},\mathcal{Y})\big)\\ &= (\nabla_{\mathcal{X}_p}T)(\mathsf{X}_p,\mathcal{Y}_p)\\ &\quad + T_p(\nabla_{\mathcal{X}_p}\mathsf{X},\mathcal{Y}_p)\\ &\quad + T_p(\mathsf{X}_p,\nabla_{\mathcal{X}_p}\mathcal{Y}),\end{aligned}$$
-      and smoothness: $\nabla_\mathcal{X}T\in\Gamma T^{(r,s)}\mathcal{M}$.
-      - **Consequences**:
-      $$\begin{gathered}\nabla_{f\mathcal{X}+\mathcal{Y}}T = f\nabla_\mathcal{X}T + \nabla_\mathcal{Y}T\\ \nabla_\mathcal{X}(g\mathcal{Y}) = \mathcal{X}\lfloor g\rceil\mathcal{Y} + g\nabla_\mathcal{X}\mathcal{Y}\end{gathered}$$
-      $$\begin{aligned}&(\nabla_{\mathcal{X}_p}\mathsf{X})(\mathcal{Y}_p)\\ &= \mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor) - \mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y})\end{aligned}$$
-      A tensor in the direction, not in the differentiated field; fixed on all tensor fields by its action on vector fields.
-      - **Affine manifold** $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla)$; the connection is a choice. On the plane: $\nabla^{\mathrm{E}}_{\partial x_2}(-b\,\partial x_1 + a\,\partial x_2) = -\partial x_1$, while $\nabla^{\mathrm{P}}$ (constant polar components) gives $0$.
-
       **Next:** how much freedom do the rules leave? In a chart, everything reduces to the vectors $\nabla_{(\partial x_k)_p}\partial x_j$, whose components are the **connection coefficient functions** $(\Gamma_\mathscr{X})^i_{jk}$. (This $\Gamma$ is unrelated to the $\Gamma$ of $\Gamma T\mathcal{M}$, the set of fields; both symbols are standard.) For $\nabla^{\mathrm{E}}$ they all vanish in the cartesian chart, but not in the polar one.

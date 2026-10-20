@@ -1,6 +1,20 @@
 id: ch06-christoffel
 title: Connection Coefficient Functions
 kind: concept
+own: |
+  - **Coefficients** of $\nabla$ in a chart (last lower index = direction):
+  {{ $$\nabla_{\partial x_k}\partial x_j = (\Gamma_\mathscr{X})^i_{jk}\,\partial x_i$$ }}
+  $d^3$ smooth functions ($8$ on the plane, $64$ in spacetime), and any choice defines a connection on the chart domain.
+  - **Components**:
+  {{ $$\begin{gathered}(\nabla_\mathcal{X}\mathcal{Y})^k = \mathcal{X}\lfloor\tilde x^k\rceil + \Gamma^k_{ji}\,\tilde x^jx^i\\ (\nabla_\mathcal{X}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil - \Gamma^j_{ki}\,\mathtt{x}_jx^i\end{gathered}$$ }}
+  In any valence: $+\Gamma$ per upper index, $-\Gamma$ per lower index.
+  - **Transformation law** (not a tensor):
+  {{ $$\begin{aligned}(\Gamma_\mathscr{Y})^i_{jk} &= \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}\\ &\quad + \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^l}\frac{\partial\mathscr{X}^s}{\partial\mathscr{Y}^j}\\ &\qquad\cdot\frac{\partial\mathscr{X}^m}{\partial\mathscr{Y}^k}\,(\Gamma_\mathscr{X})^l_{sm}\end{aligned}$$ }}
+  Differences of connections and the antisymmetric part {{ $\Gamma^i_{jk} - \Gamma^i_{kj}$ }} are tensors; the symmetric part can be removed at one point.
+  - **The plane**: $\Gamma^{\mathrm{E}}_\mathscr{X} = 0$, while in polar coordinates
+  {{ $$\begin{gathered}(\Gamma^{\mathrm{E}}_\mathscr{Y})^1_{22} = -r\\ (\Gamma^{\mathrm{E}}_\mathscr{Y})^2_{12} = (\Gamma^{\mathrm{E}}_\mathscr{Y})^2_{21} = \tfrac1r\end{gathered}$$ }}
+  and $\nabla^{\mathrm{P}}$ is the reverse: $\Gamma^{\mathrm{P}}_\mathscr{Y} = 0$, $\Gamma^{\mathrm{P}}_\mathscr{X}\neq0$.
+
 
 cards:
   - type: text
@@ -499,17 +513,4 @@ cards:
     id: summary
     title: What you now own
     body: |
-      - **Coefficients** of $\nabla$ in a chart (last lower index = direction):
-      $$\nabla_{\partial x_k}\partial x_j = (\Gamma_\mathscr{X})^i_{jk}\,\partial x_i$$
-      $d^3$ smooth functions ($8$ on the plane, $64$ in spacetime), and any choice defines a connection on the chart domain.
-      - **Components**:
-      $$\begin{gathered}(\nabla_\mathcal{X}\mathcal{Y})^k = \mathcal{X}\lfloor\tilde x^k\rceil + \Gamma^k_{ji}\,\tilde x^jx^i\\ (\nabla_\mathcal{X}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil - \Gamma^j_{ki}\,\mathtt{x}_jx^i\end{gathered}$$
-      In any valence: $+\Gamma$ per upper index, $-\Gamma$ per lower index.
-      - **Transformation law** (not a tensor):
-      $$\begin{aligned}(\Gamma_\mathscr{Y})^i_{jk} &= \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}\\ &\quad + \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^l}\frac{\partial\mathscr{X}^s}{\partial\mathscr{Y}^j}\\ &\qquad\cdot\frac{\partial\mathscr{X}^m}{\partial\mathscr{Y}^k}\,(\Gamma_\mathscr{X})^l_{sm}\end{aligned}$$
-      Differences of connections and the antisymmetric part $\Gamma^i_{jk} - \Gamma^i_{kj}$ are tensors; the symmetric part can be removed at one point.
-      - **The plane**: $\Gamma^{\mathrm{E}}_\mathscr{X} = 0$, while in polar coordinates
-      $$\begin{gathered}(\Gamma^{\mathrm{E}}_\mathscr{Y})^1_{22} = -r\\ (\Gamma^{\mathrm{E}}_\mathscr{Y})^2_{12} = (\Gamma^{\mathrm{E}}_\mathscr{Y})^2_{21} = \tfrac1r\end{gathered}$$
-      and $\nabla^{\mathrm{P}}$ is the reverse: $\Gamma^{\mathrm{P}}_\mathscr{Y} = 0$, $\Gamma^{\mathrm{P}}_\mathscr{X}\neq0$.
-
       **Next:** a connection lets you carry a vector along a curve without "changing" it: **parallel transport**. And the curves that carry their own velocity along are the **autoparallels**, the straightest curves of an affine manifold; with the $\Gamma$'s above, the straight lines of the plane will reappear in polar coordinates.
