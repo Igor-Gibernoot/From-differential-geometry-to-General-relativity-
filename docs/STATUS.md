@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-19, Chapter 4 done)
+## Current (2026-10-19, Chapter 5 in progress)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -23,8 +23,9 @@ append a short entry at the end of **Log** (a few lines, ending with
   `ch04-challenge` (36 cards, five problems: polar chart at $(1,1)$, reparametrization rune and Leibniz,
   $S^1$ angle vs stereographic, trace invariant vs same-height diagonal sum, $v\otimes(df)_p$ in two charts);
   widget `chart-basis` built.
+- **Chapter 5 so far:** `ch05-vector-fields` (concept, 29 cards).
 - **Queue (one unit each):** Chapter 5 (Fields) in `course.yaml` order, next
-  `ch05-vector-fields` (concept); then Chapters 6–10 (each with map and challenge).
+  `ch05-covector-fields` (concept); then Chapters 6–10 (each with map and challenge).
   Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -151,6 +152,20 @@ append a short entry at the end of **Log** (a few lines, ending with
   with $\Sigma$); matrix forms $T_\mathcal{V} = JT_\mathcal{U}J^{-1}$ ($J = (\partial\mathscr{Y}/\partial\mathscr{X})_p$), $S_\mathcal{V} = M^{\mathsf T}S_\mathcal{U}M$
   ($M = (\partial\mathscr{X}/\partial\mathscr{Y})_p$); $T = v\otimes(df)_p$ with $T(\mathsf{X}_p,u) = \mathsf{X}_p(v)(df)_p(u)$, $(T_\mathcal{U})^i_j = x^i_p\mathtt{x}^p_j$:
   $\mathscr{X}$ $\begin{pmatrix}2&-2\\-2&2\end{pmatrix}$, $\mathscr{Y}$ $\begin{pmatrix}1&1/e\\3e&3\end{pmatrix}$, trace $4 = (df)_p(v)$; $(\partial y_2)_p$ standard $(0,1/e)$.
+- **Chapter 5 conventions so far** (`ch05-vector-fields`): $T\mathcal{M} := \dot\bigcup_p T_p\mathcal{M}$ (disjoint because all zero
+  velocities are the same map $f\mapsto0$), projection $\pi(v_{\gamma,p}) = p$, fibre; bundle chart $\xi_{\mathscr{X}}(\mathcal{X}_p) = (\mathscr{X}(p)\,;\,x^1_p,\dots,x^d_p)$,
+  transition $(\text{ᛖ}_{\mathcal{U}\mathcal{V}}(\alpha)\,;\,(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j(\alpha)\beta^j)$, $\dim T\mathcal{M} = 2d$, topology stated without proof; general bundle
+  $\pi\colon\mathcal{E}\to\mathcal{B}$, section $\pi\circ\sigma = \mathrm{id}_\mathcal{B}$ (example $\pi(a,b) = a$); field $\mathcal{X}$ (calligraphic) vs chart $\mathscr{X}$;
+  $\Gamma T\mathcal{M}$; restriction $\mathcal{X}|_\mathcal{U}$; component functions $x^i(p) := \mathcal{X}(p)(\mathscr{X}^i) = \mathcal{X}|_\mathcal{U}\lfloor\mathscr{X}^i\rceil$, basis fields
+  $\partial x_i := \partial/\partial\mathscr{X}^i$, $\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i$; field law $y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,x^j$ as functions on the overlap;
+  action $\mathcal{X}\lfloor f\rceil(p) := \mathcal{X}(p)(f) = x^i(p)\,\mathtt{x}^p_i$ (three readings: point first, function first, both);
+  non-smooth section $|b|\,\partial x_1$. Running example (egg carton): $h(a,b) = \cos a\cos b + 1$, $\mathcal{M}$ its graph, $\mathscr{X}(a,b,c) = (a,b)$ on
+  $\mathcal{U} = \mathcal{M}$, polar $\mathscr{Y} = (r,\operatorname{atan2}(b,a))$ on $\mathcal{V}$ (minus $a\le0$, $b=0$), Jacobian $\begin{pmatrix}a/r&b/r\\-b/r^2&a/r^2\end{pmatrix}$;
+  vertical curves $\gamma_{x_0}$, field $\mathcal{X}$ with $X^i = (0,1)$, $Y^i = (b/r, a/r^2)$ ($Y^2 = 3/25$ at $(3,4)$); circles $\delta_{r_0}$, swirl $\mathcal{Y}$
+  with $\tilde X^i = (-b,a)$, $\tilde Y^i = (0,1)$, zero at the origin; height $f = \cos a\cos b+1$, $\mathtt{x}^p = (-\sin a\cos b, -\cos a\sin b)$,
+  $\mathcal{X}\lfloor f\rceil = -\cos a\sin b$ ($-1$ at $(0,\pi/2)$), $\mathcal{Y}\lfloor f\rceil = b\sin a\cos b - a\cos a\sin b$ ($\pi$ at $(\pi,\pi/2)$);
+  $\partial y_1$ does not extend to the origin; $\mathcal{X},\mathcal{Y}$ fail to span on $b = 0$. Widget `chart-basis` with named charts
+  `{chart: cartesian, name: '\mathscr{X}'}`, `{chart: polar, name: '\mathscr{Y}', cut: left}` and presets placing the swirl arrow $(-q_2,q_1)$.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248`) renders
   every card with hints/feedback, flags `.katex-display` overflow at 390 px and
@@ -500,3 +515,13 @@ screenshots `mapview` cards (2 lines changed); phone map viewed: fine after
 soft-hyphenating Homeomorphism/Diffeomorphism.
 Conventions fixed here: map dashed edge = "model example for"; soft hyphen in
 long box titles.
+
+### 2026-10-19 — ch05-vector-fields (concept)
+- 29 cards: wind-map hook, predict ($v-w$ undefined), recall, `chart-basis` swirl widget (cartesian +
+  polar cut left, presets at 4 points + origin), $T\mathcal{M}$ and why disjoint (zero maps collide), bundle
+  charts and $\dim = 2d$, sections, smooth iff smooth components, $|b|\,\partial x_1$, chart independence,
+  egg-carton fields $\mathcal{X}$, $\mathcal{Y}$ with law checks, action $\mathcal{X}\lfloor f\rceil$, two traps, summary.
+- Choices: bundle charts and the topology included (stated without proof) so "smooth section" has a meaning;
+  frames, parallelizability, hairy ball and $\oplus_\Gamma$ left for `ch05-module`; component functions written $X^i$,
+  $Y^i$, $\tilde X^i$, $\tilde Y^i$ in the running example, $x^i$, $y^i$ in general.
+- Conventions fixed here: see Current, "Chapter 5 conventions so far".

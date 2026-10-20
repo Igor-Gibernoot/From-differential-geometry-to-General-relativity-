@@ -1,0 +1,464 @@
+id: ch05-vector-fields
+title: Vector Fields and the Tangent Bundle
+kind: concept
+
+cards:
+  - type: text
+    id: hook
+    title: A wind map
+    body: |
+      Open a weather app and look at the wind map: one arrow at **every** point of the Earth's surface, the sphere $S^2$. Physics is full of such objects: the velocity of a fluid at each point, the four-velocity of each grain of a dust cloud in spacetime.
+
+      Recall that an arrow at a point $p$ of a manifold $\mathcal{M}$ is a velocity, an element of the tangent space $T_p\mathcal{M}$. So the wind map is a rule
+      $$p\mapsto\mathcal{X}(p)\in T_p\mathcal{M},$$
+      and each arrow lives in a **different** vector space.
+
+      Meteorologists say the wind "varies smoothly": nearby points carry nearly the same arrow. Before any theory: can that sentence even be made precise?
+
+  - type: mcq
+    id: predict-subtract
+    title: Predict first
+    prompt: |
+      On a manifold $\mathcal{M}$, a wind field puts a velocity $v\in T_p\mathcal{M}$ at a point $p$ and a velocity $w\in T_q\mathcal{M}$ at a nearby point $q\neq p$. To say "the wind barely changes from $p$ to $q$", we would like to compute $v - w$. Is $v - w$ defined?
+    options:
+      - text: 'No: $v$ and $w$ belong to two different vector spaces, and subtraction is only defined inside one vector space'
+        correct: true
+      - text: 'Yes: on the Earth both arrows are vectors of $\mathbb{R}^3$, so subtract them there'
+        feedback: |
+          Tempting, because the sphere sits inside $\mathbb{R}^3$ and we picture its arrows as arrows of $\mathbb{R}^3$. But that uses the surrounding space, which a general manifold (spacetime!) does not have. Even on the sphere, $v - w$ computed in $\mathbb{R}^3$ is not tangent to the sphere at $p$ or at $q$, so it is not an element of any $T_p\mathcal{M}$.
+      - text: 'Yes: take a chart around both points and subtract the components'
+        feedback: |
+          That produces a list of numbers, but not a chart-independent object: the chart-induced bases at $p$ and at $q$ change differently when you change chart (the Jacobian depends on the point), so "components at $p$ minus components at $q$" can vanish in one chart and not in another. The idea of using charts is right, though, and it is how we will define smoothness.
+    explanation: |
+      $T_p\mathcal{M}$ and $T_q\mathcal{M}$ are different vector spaces: vectors of one cannot be added to, or subtracted from, vectors of the other. Still, "the arrows vary smoothly" will get a precise meaning: we will collect **all** tangent spaces into one smooth manifold, the tangent bundle, and ask the rule $p\mapsto\mathcal{X}(p)$ to be a smooth map into it. (Comparing vectors at different points, as in $v - w$, needs extra structure: the connection, Level 6.)
+
+  - type: text
+    id: recall
+    title: 'Recall: one point at a time'
+    body: |
+      Recall the pointwise theory of Level 4, for a $d$-dimensional smooth manifold $\mathcal{M}$:
+
+      - $T_p\mathcal{M}$ is the $d$-dimensional real vector space of velocities $\mathcal{X}_p := v_{\gamma,p}$ of curves $\gamma$ through $p$; a velocity acts on scalar fields $f\in C^\infty(\mathcal{M})$ by $v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0)$.
+      - A chart $(\mathcal{U},\mathscr{X})$ around $p$ gives the **chart-induced basis** $(\partial x_i)_p := (\partial/\partial\mathscr{X}^i)_p$, which acts by
+      $$(\partial x_i)_p(f) = \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p)).$$
+      - Every velocity expands as $\mathcal{X}_p = x^i_p\,(\partial x_i)_p$ (Einstein summation over $i = 1,\dots,d$), with components $x^i_p = \mathcal{X}_p(\mathscr{X}^i) = (dx^i)_p(\mathcal{X}_p)$.
+      - A second chart $(\mathcal{V},\mathscr{Y})$ gives components $y^i_p$, related by the contravariant law
+      $$y^i_p = \Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p\,x^j_p.$$
+
+      Everything so far sits at **one** point. Now let $p$ move.
+
+  - type: widget
+    id: swirl
+    title: Building a field by hand
+    widget: chart-basis
+    config:
+      charts:
+        - { chart: cartesian, name: '\mathscr{X}' }
+        - { chart: polar, name: '\mathscr{Y}', cut: left }
+      p: [1, 1]
+      v: [-1, 1]
+      view: { x: -2, y: -2, w: 5, h: 5 }
+      presets:
+        - { label: 'p = (2, 0)', p: [2, 0], v: [0, 2] }
+        - { label: 'p = (0, −1)', p: [0, -1], v: [1, 0] }
+        - { label: 'p = (−1, 1)', p: [-1, 1], v: [-1, -1] }
+        - { label: 'Origin', p: [0, 0], v: [0, 0] }
+    body: |
+      In the plane with points $q = (q_1, q_2)$, the **swirl** puts at each point $q$ the velocity with standard components $(-q_2, q_1)$: the velocity of the circle around the origin through $q$, run counterclockwise at one radian per unit of parameter. Solid lines: the cartesian chart $\mathscr{X}$; dashed: the polar chart $\mathscr{Y} = (r,\theta)$ with $\theta\in(-\pi,\pi)$, undefined on the dotted half-line $q_1\le 0$, $q_2 = 0$.
+
+      The widget shows one point at a time: you build the field arrow by arrow.
+      1. At $p = (1,1)$ the arrow is already the swirl's, $(-1, 1)$. Read its components in both charts.
+      2. Press the presets: each moves $p$ and sets the arrow to the swirl's arrow there. Watch both lists of components.
+      3. Try one yourself: drag $p$ to $(1, -1)$ and drag the arrow to $(1, 1)$.
+
+  - type: mcq
+    id: swirl-components
+    title: What the polar chart sees
+    review: false
+    prompt: |
+      In the plane, the swirl field puts at each point $q = (q_1,q_2)$ the velocity with cartesian components $(-q_2, q_1)$. In the widget, at the points $(1,1)$, $(2,0)$, $(0,-1)$, $(-1,1)$, what are the components of the swirl's arrow in the polar chart $\mathscr{Y} = (r,\theta)$?
+    options:
+      - text: '$(0, 1)$ at every one of these points'
+        correct: true
+      - text: '$(-q_2, q_1)$, the same as in the cartesian chart'
+        feedback: |
+          Components belong to a chart: the polar basis $(\partial/\partial r)_p$, $(\partial/\partial\theta)_p$ differs from the cartesian one, so the same arrow has different components. Here the arrow is exactly the polar basis vector $(\partial/\partial\theta)_p$, which gives $(0,1)$.
+      - text: '$(0, r)$: the arrows get longer away from the origin, so their polar components must grow'
+        feedback: |
+          The arrows do grow (length $r$), but so does the polar basis vector $(\partial/\partial\theta)_p$: its length is $r$ too, since a step $d\theta$ moves you $r\,d\theta$ along the circle. Arrow and basis vector grow together, so the component stays $1$.
+    explanation: |
+      At every point where the polar chart is defined, the swirl's arrow is exactly $(\partial/\partial\theta)_p$: no radial part, one unit of $\theta$ per unit of parameter. One rule, two descriptions: varying components $(-q_2, q_1)$ in the cartesian chart, constant components $(0,1)$ in the polar one. At the origin the arrow is zero, and the polar chart is not even defined there.
+
+  - type: text
+    id: bundle
+    title: One set for all the arrows
+    body: |
+      A rule $p\mapsto\mathcal{X}(p)\in T_p\mathcal{M}$ is a **map**, so it needs one target set that contains every tangent space. The **tangent bundle** of $\mathcal{M}$ is the disjoint union of all of them,
+      $$T\mathcal{M} := \mathop{\dot{\bigcup}}_{p\in\mathcal{M}} T_p\mathcal{M}.$$
+      The dot on $\bigcup$ means **disjoint**: each element remembers the point it came from, so you may think of an element of $T\mathcal{M}$ as a pair $(p, v)$ with $v\in T_p\mathcal{M}$.
+
+      Because of that memory, there is a well-defined **projection**
+      $$\pi\colon T\mathcal{M}\to\mathcal{M},\quad \pi(v_{\gamma,p}) := p,$$
+      sending each vector to its base point. The set of vectors that $\pi$ sends to one $p$, its **fibre** over $p$, is exactly $T_p\mathcal{M}$.
+
+  - type: mcq
+    id: why-disjoint
+    title: Why disjoint?
+    prompt: |
+      The tangent bundle is defined as the **disjoint** union $T\mathcal{M} = \dot{\bigcup}_{p} T_p\mathcal{M}$, where each element remembers its base point. Recall that a velocity $v_{\gamma,p}$ is a map $C^\infty(\mathcal{M})\to\mathbb{R}$, $f\mapsto(f\circ\gamma)'(\lambda_0)$. What would go wrong with the ordinary union $\bigcup_p T_p\mathcal{M}$ of these sets of maps?
+    options:
+      - text: 'The zero velocity at $p$ and the zero velocity at $q\neq p$ are the same map $f\mapsto 0$, so the plain union merges them and the projection $\pi$ could not say where that vector sits'
+        correct: true
+      - text: 'Nothing: tangent spaces at different points never share an element, so the dot is only decoration'
+        feedback: |
+          Almost true, and that is why the trap works. As maps $C^\infty(\mathcal{M})\to\mathbb{R}$, the zero velocity of a constant curve at $p$ and that at $q$ are both $f\mapsto 0$: the same map. Nonzero velocities at different points do differ (a bump function that is $1$ near $p$ and $0$ near $q$ tells them apart), but the zeros collide, and $\pi$ of that one map would have to be both $p$ and $q$.
+      - text: 'The ordinary union would not be a vector space'
+        feedback: |
+          Neither is the disjoint union: $T\mathcal{M}$ is not a vector space at all, since vectors at different points cannot be added. Only each fibre $T_p\mathcal{M}$ is a vector space. The issue is a different one: the plain union identifies the zero vectors of all the tangent spaces.
+    explanation: |
+      All zero velocities are the same map $f\mapsto 0$. The disjoint union keeps one zero vector per point, the pair $(p, 0)$, so every element of $T\mathcal{M}$ has a unique base point and $\pi$ is well defined.
+
+  - type: text
+    id: bundle-charts
+    title: The tangent bundle is a manifold
+    body: |
+      To speak of a **smooth** map into $T\mathcal{M}$, the set $T\mathcal{M}$ must be a smooth manifold. Charts come for free. A chart $(\mathcal{U},\mathscr{X})$ of $\mathcal{M}$ describes a vector over $\mathcal{U}$ by $2d$ numbers: the $d$ coordinates of its base point and its $d$ components. Writing $T\mathcal{U}$ for the set of vectors based in $\mathcal{U}$, the **bundle chart** is
+      $$\xi_{\mathscr{X}}\colon T\mathcal{U}\to\mathscr{X}(\mathcal{U})\times\mathbb{R}^d,$$
+      $$\xi_{\mathscr{X}}(\mathcal{X}_p) := \big(\mathscr{X}(p)\,;\,x^1_p,\dots,x^d_p\big).$$
+      It is a bijection: base point and components determine the vector, and every choice occurs.
+
+      On an overlap, write $\alpha = \mathscr{X}(p)$ and $\beta = (x^1_p,\dots,x^d_p)$. The base point changes by the transition map $\text{ᛖ}_{\mathcal{U}\mathcal{V}} := \mathscr{Y}\circ\mathscr{X}^{-1}$, the components by its Jacobian $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j(\alpha) := (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ (first subscript = chart of the row index):
+      $$\begin{aligned}(\xi_{\mathscr{Y}}\circ\xi_{\mathscr{X}}^{-1})&(\alpha;\beta)\\ &= \big(\text{ᛖ}_{\mathcal{U}\mathcal{V}}(\alpha)\,;\,(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j(\alpha)\,\beta^j\big).\end{aligned}$$
+      $\text{ᛖ}_{\mathcal{U}\mathcal{V}}$ is $C^\infty$, hence so are the entries of its Jacobian, and the second block is linear in $\beta$: the transition is $C^\infty$. Declaring a set of vectors **open** when it looks open in every bundle chart gives a topology on $T\mathcal{M}$ in which every $\xi_{\mathscr{X}}$ is a homeomorphism and $\pi$ is continuous (stated here without proof). So $T\mathcal{M}$ is a smooth manifold with the atlas of all bundle charts.
+
+  - type: numeric
+    id: dim-tm
+    title: How big is the bundle?
+    prompt: |
+      Spacetime is a manifold $\mathcal{M}$ of dimension $d = 4$. A bundle chart $\xi_{\mathscr{X}}(\mathcal{X}_p) = (\mathscr{X}(p)\,;\,x^1_p,\dots,x^d_p)$ describes each vector of the tangent bundle $T\mathcal{M}$ by the coordinates of its base point and its components. What is the dimension of the manifold $T\mathcal{M}$?
+    answer: 8
+    wrong:
+      - { value: 4, feedback: 'That is the dimension of one fibre $T_p\mathcal{M}$. A point of $T\mathcal{M}$ also has to say **where** the vector sits: $4$ coordinates for the base point plus $4$ components.' }
+      - { value: 16, feedback: 'Sixteen counts a $4\times4$ array, like the Jacobian or a $(0,2)$-tensor. A single vector of $T\mathcal{M}$ needs only its base point ($4$ numbers) and its components ($4$ numbers).' }
+    hint: 'Count the entries of $\xi_{\mathscr{X}}(\mathcal{X}_p)$ when $d = 4$.'
+    explanation: |
+      $\dim T\mathcal{M} = 2d = 8$: $d$ coordinates locate the base point, $d$ more the vector over it. For the sphere $S^2$ of the wind map, $T S^2$ is $4$-dimensional.
+
+  - type: text
+    id: sections
+    title: Sections
+    body: |
+      In general, a **bundle** is a smooth surjective map $\pi\colon\mathcal{E}\to\mathcal{B}$ between smooth manifolds, with **total space** $\mathcal{E}$ and **base space** $\mathcal{B}$. A **section** is a map $\sigma\colon\mathcal{B}\to\mathcal{E}$ that picks one element in each fibre:
+      $$\pi\circ\sigma = \mathrm{id}_{\mathcal{B}},$$
+      where $\mathrm{id}_{\mathcal{B}}$ is the identity map of $\mathcal{B}$, $p\mapsto p$.
+
+      A **smooth vector field** on $\mathcal{M}$ is a smooth section of the tangent bundle:
+      $$\mathcal{X}\colon\mathcal{M}\to T\mathcal{M},\quad \pi\circ\mathcal{X} = \mathrm{id}_\mathcal{M}.$$
+      The condition says $\mathcal{X}(p)\in T_p\mathcal{M}$: the arrow assigned to $p$ sits at $p$. We write $\mathcal{X}(p) = \mathcal{X}_p$, and
+      $$\Gamma T\mathcal{M} := \{\text{smooth vector fields on }\mathcal{M}\},$$
+      where $\Gamma$ stands for "sections of".
+
+  - type: mcq
+    id: which-sections
+    title: Which maps are sections?
+    multiple: true
+    prompt: |
+      Take the bundle $\pi\colon\mathbb{R}^2\to\mathbb{R}$, $\pi(a,b) := a$: the fibre over $a$ is the vertical line through $(a, 0)$. A section is a map $\sigma\colon\mathbb{R}\to\mathbb{R}^2$ with $\pi\circ\sigma = \mathrm{id}_\mathbb{R}$. Which maps are sections? Select all that apply.
+    options:
+      - text: '$\sigma(a) = (a, a^2)$'
+        correct: true
+      - text: '$\rho(a) = (a, \sin a)$'
+        correct: true
+      - text: '$\tau(a) = (a + 1, 0)$'
+        feedback: |
+          $\pi(\tau(a)) = a + 1\neq a$: $\tau$ picks a point in the fibre over $a + 1$, not over $a$. A smooth, innocent-looking map, but it puts the arrow at the wrong place.
+      - text: '$\kappa(a) = (a^2, a)$'
+        feedback: |
+          $\pi(\kappa(a)) = a^2$, which equals $a$ only for $a = 0, 1$. Having the right shape, a pair, is not enough: the **first** entry, the base point, must be $a$ itself.
+    explanation: |
+      A section of this bundle is exactly a map $a\mapsto(a, g(a))$, the graph of a function $g$. So $\sigma$ ($g = a^2$) and $\rho$ ($g = \sin a$) are sections; $\tau$ and $\kappa$ land in the wrong fibre. A vector field is the same idea with the fibre $\mathbb{R}$ replaced by $T_p\mathcal{M}$.
+
+  - type: text
+    id: components
+    title: Component functions
+    body: |
+      Let $\mathcal{X}$ be a section of $T\mathcal{M}$ and $(\mathcal{U},\mathscr{X})$ a chart. Write $\mathcal{X}|_\mathcal{U}$ for its restriction to $\mathcal{U}$ (the same rule, used only at points of $\mathcal{U}$). At each $p\in\mathcal{U}$ the vector $\mathcal{X}(p)$ has components in the chart-induced basis; letting $p$ move turns them into $d$ **component functions**
+      $$x^i\colon\mathcal{U}\to\mathbb{R},\quad x^i(p) := \mathcal{X}(p)(\mathscr{X}^i).$$
+      Dropping $p$ from the basis vectors gives the **chart-induced basis fields** $\partial x_i := \partial/\partial\mathscr{X}^i$, the maps $p\mapsto(\partial x_i)_p$ on $\mathcal{U}$, and the expansion at each point becomes one equation of fields:
+      $$\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i.$$
+
+      In the bundle chart, the field looks like this: for $\alpha\in\mathscr{X}(\mathcal{U})$,
+      $$\begin{aligned}(\xi_{\mathscr{X}}\circ\mathcal{X}\circ\mathscr{X}^{-1})&(\alpha)\\ &= \big(\alpha\,;\,(x^i\circ\mathscr{X}^{-1})(\alpha)\big).\end{aligned}$$
+      The first block is the identity, smooth no matter what; all the information is in the second.
+
+  - type: mcq
+    id: smooth-iff
+    title: When is a section smooth?
+    prompt: |
+      A section $\mathcal{X}$ of $T\mathcal{M}$ (a vector $\mathcal{X}(p)\in T_p\mathcal{M}$ at each $p$) has, in a chart $(\mathcal{U},\mathscr{X})$, component functions $x^i(p) := \mathcal{X}(p)(\mathscr{X}^i)$, and its representative in the bundle chart $\xi_{\mathscr{X}}$ is $\alpha\mapsto\big(\alpha\,;\,(x^i\circ\mathscr{X}^{-1})(\alpha)\big)$. On $\mathcal{U}$, when is $\mathcal{X}$ a smooth map into $T\mathcal{M}$?
+    options:
+      - text: 'Exactly when every component function $x^i$ is smooth on $\mathcal{U}$, i.e. every $x^i\circ\mathscr{X}^{-1}$ is $C^\infty$'
+        correct: true
+      - text: 'Always: a section is smooth by definition, because $\pi\circ\mathcal{X} = \mathrm{id}$ is smooth'
+        feedback: |
+          $\pi\circ\mathcal{X} = \mathrm{id}$ only fixes the **first** block of the representative, the base point $\alpha$. The second block, the components, can be any functions at all, even discontinuous ones: the arrow could flip at random from point to point. Smoothness is an extra condition.
+      - text: 'When the arrows have smoothly varying lengths'
+        feedback: |
+          "Length" needs a way to measure vectors, a metric (Level 7), which we do not have. And even with one, the direction could still jump while the length stays fixed. The test uses only the chart: smooth component functions.
+    explanation: |
+      A map between manifolds is smooth when its chart representatives are, and here the representative is $\alpha\mapsto(\alpha\,;\,x^i\circ\mathscr{X}^{-1}(\alpha))$. Its first block is always smooth, so $\mathcal{X}$ is smooth on $\mathcal{U}$ exactly when its component functions are. A smooth vector field is a section whose component functions are smooth in every chart.
+
+  - type: mcq
+    id: abs-section
+    title: A section with a kink
+    prompt: |
+      On the plane $\mathbb{R}^2$ with the cartesian chart $\mathscr{X}(q) = (a, b)$ and basis fields $\partial x_1$, $\partial x_2$, let $\mathcal{W} := |b|\,\partial x_1$: at each point, the vector with component functions $(|b|, 0)$. Which statement is true?
+    options:
+      - text: '$\mathcal{W}$ is a section of $T\mathbb{R}^2$, even a continuous one, but not a smooth vector field'
+        correct: true
+      - text: '$\mathcal{W}$ is not a section, because the vector vanishes on the line $b = 0$'
+        feedback: |
+          A section may take the value zero: the zero vector of $T_p\mathcal{M}$ is still an element of $T_p\mathcal{M}$, so $\pi(\mathcal{W}(p)) = p$ holds everywhere. Vanishing somewhere is allowed; the swirl vanishes at the origin and is perfectly smooth.
+      - text: '$\mathcal{W}$ is a smooth vector field, since it varies continuously and has no jumps'
+        feedback: |
+          Continuity is not smoothness. The component $|b|$ has a kink at $b = 0$: its derivative jumps from $-1$ to $1$, so $|b|$ is not $C^\infty$ and the criterion "smooth component functions" fails.
+    explanation: |
+      $\mathcal{W}(p)\in T_p\mathbb{R}^2$ for every $p$, so it is a section, and $|b|$ is continuous. But $|b|$ is not differentiable on $b = 0$, so $\mathcal{W}\notin\Gamma T\mathbb{R}^2$.
+
+  - type: text
+    id: chart-independence
+    title: Smooth in one chart, smooth in all
+    body: |
+      "Smooth in every chart" sounds like infinitely many checks. It is not. Let $(\mathcal{V},\mathscr{Y})$ be a second chart, with component functions $y^i$ of the same field. At each $p\in\mathcal{U}\cap\mathcal{V}$ the vector $\mathcal{X}(p)$ is one vector, so the contravariant law holds point by point. Letting $p$ move, it becomes an identity of **functions** on the overlap:
+      $$y^i = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,x^j,$$
+      where $\partial\mathscr{Y}^i/\partial\mathscr{X}^j$ now denotes the function $p\mapsto(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$. The Jacobian **depends on the point**, but its entries are smooth functions, because the transition map is $C^\infty$. Products and sums of smooth functions are smooth, so smooth $x^j$ give smooth $y^i$.
+
+      So it is enough to check smoothness in charts that cover $\mathcal{M}$: the answer is the same in every chart of the atlas.
+
+  - type: text
+    id: running-example
+    title: The running example
+    body: |
+      The running example is the egg-carton surface: the graph of the height function $h(a,b) := \cos a\cos b + 1$,
+      $$\mathcal{M} := \{(a,b,c)\in\mathbb{R}^3 \mid c = h(a,b)\},$$
+      with two charts:
+
+      - $(\mathcal{U},\mathscr{X})$, $\mathcal{U} = \mathcal{M}$, $\mathscr{X}(a,b,c) := (a,b)$: it reads the surface as the flat plane, so the plane pictures of the widget are pictures of $\mathcal{M}$ through $\mathscr{X}$.
+      - $(\mathcal{V},\mathscr{Y})$, polar: $\mathscr{Y}(a,b,c) := (r, \operatorname{atan2}(b,a))$ with $r := \sqrt{a^2+b^2}$ and angle in $(-\pi,\pi)$, on $\mathcal{V} = \mathcal{M}$ minus the points with $a\le 0$, $b = 0$ (the angle jumps there).
+
+      The Jacobian, row $i$ for $\mathscr{Y}$, column $j$ for $\mathscr{X}$:
+      $$\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p = \begin{pmatrix} a/r & b/r \\ -b/r^2 & a/r^2\end{pmatrix}.$$
+
+      **First field.** Through each point passes one vertical curve $\gamma_{x_0}(\lambda) := (x_0, \lambda, h(x_0,\lambda))$. Let $\mathcal{X}(p)$ be the velocity of the one through $p$. In the chart $\mathscr{X}$, $(\mathscr{X}\circ\gamma_{x_0})(\lambda) = (x_0,\lambda)$, so its component functions, written $X^i$ in this example, are $(X^1, X^2) = (0, 1)$ everywhere:
+      $$\mathcal{X}|_\mathcal{U} = \partial x_2.$$
+      Constant, hence smooth, components: $\mathcal{X}\in\Gamma T\mathcal{M}$.
+
+  - type: numeric
+    id: x-in-polar
+    title: The vertical field in polar components
+    prompt: |
+      On the egg-carton surface $\mathcal{M}$ (graph of $h(a,b) = \cos a\cos b + 1$), the field $\mathcal{X}$ has components $(X^1, X^2) = (0,1)$ in the chart $\mathscr{X}(a,b,c) = (a,b)$. The polar chart $\mathscr{Y} = (r, \operatorname{atan2}(b,a))$, $r = \sqrt{a^2+b^2}$, has Jacobian
+      $$\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)_p = \begin{pmatrix} a/r & b/r \\ -b/r^2 & a/r^2\end{pmatrix}$$
+      (row $i$ for $\mathscr{Y}$). Using $Y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,X^j$, compute the angular component $Y^2$ at the point with $a = 3$, $b = 4$.
+    answer: 0.12
+    answerText: '3/25'
+    wrong:
+      - { value: 0.6, feedback: 'That is $a/r = 3/5$, the entry of row $1$. The angular component uses row $2$, whose entries carry $r^2$: $Y^2 = -\tfrac{b}{r^2}\cdot 0 + \tfrac{a}{r^2}\cdot 1$.' }
+      - { value: 0.8, feedback: 'That is $Y^1 = b/r = 4/5$, the radial component. The angular one is row $2$ of the Jacobian times $(0,1)$: $a/r^2$.' }
+      - { value: -0.16, feedback: 'That is $-b/r^2$, the entry that multiplies $X^1$. But $X^1 = 0$; the surviving term is the one with $X^2 = 1$, namely $a/r^2$.' }
+    hint: 'Only $X^2 = 1$ is nonzero, so $Y^2$ is the entry in row $2$, column $2$ of the Jacobian. Here $r = 5$.'
+    explanation: |
+      $$Y^2 = -\frac{b}{r^2}\cdot 0 + \frac{a}{r^2}\cdot 1 = \frac{3}{25} = 0.12.$$
+      In general $(Y^1, Y^2) = (b/r,\ a/r^2)$:
+      $$\mathcal{X}|_\mathcal{V} = \frac{b}{r}\,\partial y_1 + \frac{a}{r^2}\,\partial y_2.$$
+      The same field: constant components in one chart, non-constant ones in the other.
+
+  - type: mcq
+    id: origin-blowup
+    title: Is the vertical field broken at the origin?
+    prompt: |
+      On the egg-carton surface, the vertical field $\mathcal{X}$ has components $(0,1)$ in the chart $\mathscr{X}(a,b,c) = (a,b)$ and components $(b/r,\ a/r^2)$, $r = \sqrt{a^2+b^2}$, in the polar chart $\mathscr{Y}$ (defined off the half-line $a\le 0$, $b = 0$). The polar components blow up as $r\to 0$. What does this say about $\mathcal{X}$ at the origin?
+    options:
+      - text: 'Nothing bad: the origin is not in the polar chart domain, so the polar formula never applies there; smoothness at the origin is checked in $\mathscr{X}$, where the components are $(0,1)$'
+        correct: true
+      - text: '$\mathcal{X}$ is not smooth at the origin, because one of its component formulas diverges there'
+        feedback: |
+          A component formula only speaks for the points of its chart. The polar chart excludes the origin, so $a/r^2$ is never evaluated there. Near the origin the growth of $a/r^2$ reflects the polar basis vector $\partial y_2$ shrinking (its length is $r$), not anything wrong with $\mathcal{X}$.
+      - text: '$\mathcal{X}$ is smooth on $\mathcal{V}$ only, so it is a vector field on $\mathcal{V}$ but not on $\mathcal{M}$'
+        feedback: |
+          $\mathcal{X}$ is defined at every point of $\mathcal{M}$ by the vertical curves, and the chart $\mathscr{X}$ covers all of $\mathcal{M}$ with constant components $(0,1)$. That is enough: $\mathcal{X}\in\Gamma T\mathcal{M}$. The polar description is just a second view on part of $\mathcal{M}$.
+    explanation: |
+      Smoothness is checked with charts that **contain** the point. The polar chart misses the origin and the cut; the chart $\mathscr{X}$ covers everything with components $(0,1)$. Large component values near the edge of a chart domain are a property of the chart's basis, not of the field.
+
+  - type: text
+    id: second-field
+    title: The swirl on the egg carton
+    body: |
+      **Second field.** Through each point other than the origin passes one horizontal circle $\delta_{r_0}(\lambda) := (r_0\cos\lambda,\ r_0\sin\lambda,\ h(r_0\cos\lambda, r_0\sin\lambda))$, with $r_0 > 0$; at the origin take the constant curve $\delta_0$. Let $\mathcal{Y}(p)$ be the velocity of the one through $p$.
+
+      - In the polar chart, $(\mathscr{Y}\circ\delta_{r_0})(\lambda) = (r_0, \lambda)$, so the components are $(0,1)$: $\mathcal{Y}|_\mathcal{V} = \partial y_2$.
+      - In the chart $\mathscr{X}$, $(\mathscr{X}\circ\delta_{r_0})(\lambda) = (r_0\cos\lambda, r_0\sin\lambda)$ has derivative $(-r_0\sin\lambda, r_0\cos\lambda) = (-b, a)$ at $p$:
+      $$\mathcal{Y}|_\mathcal{U} = -b\,\partial x_1 + a\,\partial x_2.$$
+
+      This is the swirl of the widget, seen through $\mathscr{X}$. Its components $(-b, a)$ are polynomials, smooth on all of $\mathcal{M}$, including across the cut and at the origin, where $\mathcal{Y}$ is the zero vector.
+
+  - type: build
+    id: swirl-law
+    title: Check the law
+    prompt: |
+      On the egg-carton surface, the swirl field $\mathcal{Y}$ has components $(\tilde X^1, \tilde X^2) = (-b, a)$ in the chart $\mathscr{X}(a,b,c) = (a,b)$. The polar Jacobian has second row $(-b/r^2,\ a/r^2)$, $r = \sqrt{a^2+b^2}$. Build the polar component $\tilde Y^2 = (\partial\mathscr{Y}^2/\partial\mathscr{X}^j)\,\tilde X^j$.
+    prefix: '\tilde Y^2 ='
+    tiles: ['-\tfrac{b}{r^2}(-b)', '+', '\tfrac{a}{r^2}\,a', '\tfrac{a}{r}(-b)', '\tfrac{b}{r}\,a']
+    answers:
+      - ['-\tfrac{b}{r^2}(-b)', '+', '\tfrac{a}{r^2}\,a']
+      - ['\tfrac{a}{r^2}\,a', '+', '-\tfrac{b}{r^2}(-b)']
+    wrong:
+      - answer: ['\tfrac{a}{r}(-b)', '+', '\tfrac{b}{r}\,a']
+        feedback: 'That is row $1$ of the Jacobian, which gives the **radial** component $\tilde Y^1 = 0$. The angular component $\tilde Y^2$ uses row $2$, $(-b/r^2, a/r^2)$.'
+    hint: 'Row $2$ of the Jacobian, entry by entry, times the components $(-b, a)$.'
+    explanation: |
+      $$\tilde Y^2 = \frac{b^2}{r^2} + \frac{a^2}{r^2} = 1,$$
+      and row $1$ gives $\tilde Y^1 = -\tfrac{ab}{r} + \tfrac{ab}{r} = 0$: the law turns $(-b, a)$ into $(0, 1)$, exactly the components read off the circles.
+
+  - type: text
+    id: action
+    title: A field eats a scalar field
+    body: |
+      A velocity eats a function and returns a number. A field does it at every point at once. For $f\in C^\infty(\mathcal{M})$ define the scalar field $\mathcal{X}\lfloor f\rceil\colon\mathcal{M}\to\mathbb{R}$ by
+      $$\mathcal{X}\lfloor f\rceil(p) := \mathcal{X}(p)(f),$$
+      the derivative of $f$ along the arrow that $\mathcal{X}$ places at $p$. The brackets $\lfloor\ \rceil$ mark this action on functions. Three readings of one object:
+
+      1. **Point first:** $p\mapsto\mathcal{X}(p)\in T_p\mathcal{M}$, a section.
+      2. **Function first:** $f\mapsto\mathcal{X}\lfloor f\rceil$, an $\mathbb{R}$-linear map $C^\infty(\mathcal{M})\to C^\infty(\mathcal{M})$.
+      3. **Both:** $\mathcal{X}\lfloor f\rceil(p)\in\mathbb{R}$, a number.
+
+      In a chart, expanding $\mathcal{X}(p) = x^i(p)\,(\partial x_i)_p$ gives
+      $$\mathcal{X}\lfloor f\rceil(p) = x^i(p)\,\mathtt{x}^p_i,$$
+      with $\mathtt{x}^p_i = \partial_i[f\circ\mathscr{X}^{-1}](\mathscr{X}(p))$ the components of $(df)_p$. In particular the component functions are the field acting on the coordinates: $x^i = \mathcal{X}|_\mathcal{U}\lfloor\mathscr{X}^i\rceil$.
+
+  - type: mcq
+    id: what-is-number
+    title: Function or number?
+    multiple: true
+    prompt: |
+      Let $\mathcal{X}\in\Gamma T\mathcal{M}$ be a smooth vector field, $f\in C^\infty(\mathcal{M})$ a scalar field and $p\in\mathcal{M}$ a point. The action is $\mathcal{X}\lfloor f\rceil(p) := \mathcal{X}(p)(f)$. Which of these are **real numbers**? Select all that apply.
+    options:
+      - text: '$\mathcal{X}\lfloor f\rceil(p)$'
+        correct: true
+      - text: '$\mathcal{X}(p)(f)$'
+        correct: true
+      - text: '$\mathcal{X}\lfloor f\rceil$'
+        feedback: |
+          No point has been fed yet: $\mathcal{X}\lfloor f\rceil$ is a scalar field, a function $\mathcal{M}\to\mathbb{R}$ that returns the directional derivative of $f$ at every point. Confusing the field with its value at one point is the same slip as confusing $\sin$ with $\sin(1)$.
+      - text: '$\mathcal{X}(p)$'
+        feedback: |
+          $\mathcal{X}(p)$ is a vector, an element of $T_p\mathcal{M}$: it still waits for a function. Only after it eats $f$ does it return a number.
+    explanation: |
+      $\mathcal{X}\lfloor f\rceil(p) = \mathcal{X}(p)(f)$ is the number where the three readings meet; $\mathcal{X}\lfloor f\rceil$ is a scalar field and $\mathcal{X}(p)$ a vector.
+
+  - type: text
+    id: example-action
+    title: The fields climb the egg carton
+    body: |
+      On the egg-carton surface take the scalar field $f(a,b,c) := \cos a\cos b + 1$ (the height). Its chart representative is $f\circ\mathscr{X}^{-1}(\alpha_1,\alpha_2) = \cos\alpha_1\cos\alpha_2 + 1$, so the components of $(df)_p$ at $p = (a, b, c)$ are
+      $$(\mathtt{x}^p_1, \mathtt{x}^p_2) = (-\sin a\cos b,\ -\cos a\sin b).$$
+      For the vertical field, with components $(0,1)$,
+      $$\mathcal{X}\lfloor f\rceil = -\cos a\sin b,$$
+      read as a function of $p = (a,b,c)$: a new scalar field, smooth again.
+
+  - type: numeric
+    id: xf-value
+    title: Climbing or descending?
+    prompt: |
+      On the egg-carton surface (graph of $h(a,b) = \cos a\cos b + 1$, chart $\mathscr{X}(a,b,c) = (a,b)$), the vertical field $\mathcal{X}$ has components $(0,1)$ and the height $f = \cos a\cos b + 1$ has $(df)_p$-components $(-\sin a\cos b,\ -\cos a\sin b)$. Compute $\mathcal{X}\lfloor f\rceil(p)$ at the point with $a = 0$, $b = \pi/2$.
+    answer: -1
+    wrong:
+      - { value: 1, feedback: 'Check the sign: $\mathcal{X}\lfloor f\rceil = -\cos a\sin b$, and at $a = 0$, $b = \pi/2$ both $\cos a$ and $\sin b$ equal $1$. Along the vertical curve $\lambda\mapsto(0,\lambda)$ the height is $\cos\lambda + 1$, which is going **down** at $\lambda = \pi/2$.' }
+      - { value: 0, feedback: 'That is the first component, $-\sin a\cos b$, which is multiplied by $X^1 = 0$. The field has $X^2 = 1$, so it picks the second component, $-\cos a\sin b$.' }
+    hint: '$\mathcal{X}\lfloor f\rceil(p) = X^i(p)\,\mathtt{x}^p_i$ with $(X^1, X^2) = (0,1)$.'
+    explanation: |
+      $$\begin{aligned}\mathcal{X}\lfloor f\rceil(p) &= 0\cdot\mathtt{x}^p_1 + 1\cdot\mathtt{x}^p_2\\ &= -\cos 0\,\sin\tfrac{\pi}{2} = -1.\end{aligned}$$
+      Directly: along $\gamma_0(\lambda) = (0, \lambda, h(0,\lambda))$ the height is $\cos\lambda + 1$, with derivative $-\sin\tfrac{\pi}{2} = -1$ at $\lambda = \pi/2$. The vertical field descends there.
+
+  - type: numeric
+    id: yf-value
+    title: The swirl on the height
+    prompt: |
+      On the egg-carton surface (chart $\mathscr{X}(a,b,c) = (a,b)$), the swirl field $\mathcal{Y}$ has components $(-b, a)$, and the height $f = \cos a\cos b + 1$ has $(df)_p$-components $(-\sin a\cos b,\ -\cos a\sin b)$. Compute $\mathcal{Y}\lfloor f\rceil(p)$ at the point with $a = \pi$, $b = \pi/2$.
+    answer: 3.14159265
+    tolerance: 0.01
+    answerText: 'π ≈ 3.1416'
+    wrong:
+      - { value: -3.14159265, feedback: 'Watch the signs: $\cos\pi = -1$, so $\mathtt{x}^p_2 = -\cos\pi\sin\tfrac{\pi}{2} = +1$, and the second component of $\mathcal{Y}$ is $a = \pi$. The product is $+\pi$.' }
+      - { value: -1.57079633, feedback: 'That is $-b = -\pi/2$, the first component of $\mathcal{Y}$, times $1$. But the first $(df)_p$-component is $-\sin\pi\cos\tfrac{\pi}{2} = 0$, so that term vanishes; the second, $a\cdot\mathtt{x}^p_2 = \pi\cdot 1$, survives.' }
+      - { value: 0, feedback: 'Only the first term vanishes ($\sin\pi = 0$). The second is $a\cdot(-\cos a\sin b) = \pi\cdot 1$.' }
+    hint: 'First compute $(\mathtt{x}^p_1, \mathtt{x}^p_2)$ at $a = \pi$, $b = \pi/2$, then pair with $(-b, a) = (-\pi/2, \pi)$.'
+    explanation: |
+      $(\mathtt{x}^p_1, \mathtt{x}^p_2) = (-\sin\pi\cos\tfrac{\pi}{2},\ -\cos\pi\sin\tfrac{\pi}{2}) = (0, 1)$, so
+      $$\mathcal{Y}\lfloor f\rceil(p) = -\tfrac{\pi}{2}\cdot 0 + \pi\cdot 1 = \pi.$$
+      As a function, $\mathcal{Y}\lfloor f\rceil = b\sin a\cos b - a\cos a\sin b$.
+
+  - type: mcq
+    id: yf-polar
+    title: The same action in the polar chart
+    prompt: |
+      On the egg-carton surface, the swirl $\mathcal{Y}$ has components $(-b, a)$ in the chart $\mathscr{X}(a,b,c) = (a,b)$ and $(0,1)$ in the polar chart $\mathscr{Y} = (r, \theta)$. In the chart $\mathscr{X}$ one finds $\mathcal{Y}\lfloor f\rceil = b\sin a\cos b - a\cos a\sin b$ for the height $f = \cos a\cos b + 1$. In the polar chart, $\mathcal{Y}\lfloor f\rceil(p) = 0\cdot\mathtt{y}^p_1 + 1\cdot\mathtt{y}^p_2$, where $\mathtt{y}^p_2 = \partial_\theta[f\circ\mathscr{Y}^{-1}]$ and $f\circ\mathscr{Y}^{-1}(r,\theta) = \cos(r\cos\theta)\cos(r\sin\theta) + 1$. What does the polar computation give on $\mathcal{V}$?
+    options:
+      - text: 'The same function $b\sin a\cos b - a\cos a\sin b$, now obtained as a $\theta$-derivative'
+        correct: true
+      - text: 'A different function: the components $(0,1)$ and $(-b, a)$ differ, so the results must differ'
+        feedback: |
+          Components differ, but so do the components of $(df)_p$, and in the opposite way (contravariant against covariant), so the pairing $\tilde Y^i\,\mathtt{y}^p_i = \tilde X^i\,\mathtt{x}^p_i$ is chart independent. Here: $\partial_\theta\cos(r\cos\theta) = r\sin\theta\,\sin(r\cos\theta) = b\sin a$ and $\partial_\theta\cos(r\sin\theta) = -r\cos\theta\,\sin(r\sin\theta) = -a\sin b$.
+      - text: '$0$: in the polar chart the swirl has no radial component, so it cannot change the height'
+        feedback: |
+          The swirl moves along circles, and the height of the egg carton changes along a circle (it is not rotationally symmetric). Zero radial component kills only the $\mathtt{y}^p_1$ term; the $\theta$-derivative of the height remains.
+    explanation: |
+      By the product rule, with $a = r\cos\theta$, $b = r\sin\theta$:
+      $$\begin{aligned}\partial_\theta[f\circ\mathscr{Y}^{-1}] &= b\sin a\cos b\\ &\quad - a\cos a\sin b,\end{aligned}$$
+      the same scalar field: $\mathcal{Y}\lfloor f\rceil(p) = \mathcal{Y}(p)(f)$ never mentioned a chart.
+
+  - type: mcq
+    id: trap-radial
+    title: 'Trap: a basis field beyond its chart'
+    prompt: |
+      On the egg-carton surface, the polar chart $\mathscr{Y} = (r,\theta)$ is defined on $\mathcal{V}$: everything except the points with $a\le 0$, $b = 0$ (so the origin is excluded). Its basis field $\partial y_2$ coincides on $\mathcal{V}$ with the swirl $\mathcal{Y}$, which extends smoothly to all of $\mathcal{M}$ with components $(-b,a)$. The other basis field $\partial y_1 = \partial/\partial r$ has components $(a/r,\ b/r)$ in the chart $\mathscr{X}(a,b,c) = (a,b)$. Does $\partial y_1$ extend to a smooth vector field on all of $\mathcal{M}$?
+    options:
+      - text: 'No: near the origin $(a/r, b/r)$ points straight away from it, in every direction at once, so no value at the origin makes it even continuous'
+        correct: true
+      - text: 'Yes, like $\partial y_2$: every chart-induced basis field extends once you rewrite it in another chart'
+        feedback: |
+          $\partial y_2$ was lucky: its components $(-b, a)$ happen to be polynomials. A basis field is defined only on its chart's domain, and whether it extends is a separate question. For $\partial y_1$, approaching the origin along $b = 0$, $a > 0$ gives $(1,0)$, along $a = 0$, $b > 0$ gives $(0,1)$: no single vector at the origin fits.
+      - text: 'Only the cut is a problem: it extends to $\mathcal{M}$ minus the origin, and setting it to $0$ at the origin finishes the job'
+        feedback: |
+          The first half is right: $(a/r, b/r)$ is smooth across the half-line $a < 0$, $b = 0$. But setting the value $0$ at the origin does not help: nearby arrows have components of size $1$ ($(a/r)^2 + (b/r)^2 = 1$), so the field would jump.
+    explanation: |
+      A field built from chart basis fields lives, a priori, only on that chart's domain. Some extend ($\partial y_2$, as the swirl), some do not ($\partial y_1$ at the origin). Even the extension of $\partial y_2$ is no longer a basis field there: at the origin it is the zero vector.
+
+  - type: mcq
+    id: trap-basis
+    title: 'Trap: where do two fields span?'
+    prompt: |
+      On the egg-carton surface, in the chart $\mathscr{X}(a,b,c) = (a,b)$, the vertical field $\mathcal{X}$ has components $(0,1)$ and the swirl $\mathcal{Y}$ has components $(-b, a)$. The swirl vanishes at the origin. At which points $p$ do $\mathcal{X}(p)$ and $\mathcal{Y}(p)$ **fail** to be a basis of $T_p\mathcal{M}$?
+    options:
+      - text: 'On the whole line $b = 0$, not just at the origin'
+        correct: true
+      - text: 'Only at the origin, where $\mathcal{Y}$ is zero'
+        feedback: |
+          The origin is the obvious failure, but not the only one. Two vectors in a $2$-dimensional space fail to be a basis when they are parallel: the determinant of the component columns, $0\cdot a - 1\cdot(-b) = b$, vanishes on all of $b = 0$. There $\mathcal{Y} = a\,\partial x_2$ is parallel to $\mathcal{X} = \partial x_2$.
+      - text: 'Nowhere: two smooth vector fields with different component functions are always independent'
+        feedback: |
+          Different **functions** can still give parallel **vectors** at particular points. Independence is a pointwise question: at $p$ compare the two vectors in $T_p\mathcal{M}$. At $(a, 0)$: $\mathcal{X} = (0,1)$ and $\mathcal{Y} = (0, a)$, parallel.
+    explanation: |
+      $\det\begin{pmatrix}0 & -b\\ 1 & a\end{pmatrix} = b$, so the two fields give a basis exactly off the line $b = 0$. Whether $d$ fields give a basis at **every** point is a global question, and the answer can be no for any choice: that is the theme of the next lessons.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      - The **tangent bundle** $T\mathcal{M} = \dot\bigcup_p T_p\mathcal{M}$, disjoint so that the projection $\pi(v_{\gamma,p}) = p$ is well defined; with the bundle charts $\xi_{\mathscr{X}}(\mathcal{X}_p) = (\mathscr{X}(p)\,;\,x^i_p)$ it is a smooth manifold of dimension $2d$.
+      - A **smooth vector field** is a smooth section, $\mathcal{X}\colon\mathcal{M}\to T\mathcal{M}$ with $\pi\circ\mathcal{X} = \mathrm{id}_\mathcal{M}$; they form $\Gamma T\mathcal{M}$.
+      - On a chart, $\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i$ with **component functions** $x^i = \mathcal{X}|_\mathcal{U}\lfloor\mathscr{X}^i\rceil$; smooth means smooth components, and the law $y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,x^j$ with point-dependent Jacobian makes this chart independent.
+      - A field eats scalar fields: $\mathcal{X}\lfloor f\rceil(p) = \mathcal{X}(p)(f) = x^i(p)\,\mathtt{x}^p_i$, a new scalar field.
+      - Running example: $\mathcal{X}|_\mathcal{U} = \partial x_2$, the swirl $\mathcal{Y}$ with components $(-b,a)$ and $\mathcal{Y}|_\mathcal{V} = \partial y_2$, vanishing at the origin.
+
+      **Next:** the same construction one floor up. Gluing all the cotangent spaces $T_p^*\mathcal{M}$ gives the **cotangent bundle**, and its sections are **covector fields**, such as the differential $df$ of a scalar field, at every point at once.
