@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita` built; next: `ch07-curvature`)
+## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature` built; next: `ch07-sphere`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -30,8 +30,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita` done; next
-  `ch07-curvature`, then `ch07-sphere`, traps, map, challenge (two sessions);
+- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature` done; next
+  `ch07-sphere`, then traps, map, challenge (two sessions);
   then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
   B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -352,6 +352,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   (polar); antisymmetric example torsion $-2$, $(\nabla_{\partial x_2}g)_{11} = -2$. Lowered polar $\Gamma_{221} = r$. Transport identity with the $(\nabla_{v_\gamma}g)$ term
   $\dot\gamma^kx^iy^j(\nabla_{\partial x_k}g)_{ij}$; ∇ᴾ autoparallel $r = 1+\lambda$, $\theta = \lambda$: $g(v,v) = 2\to5$; null geodesics named (Minkowski $(t_0+\lambda,a_0+\lambda)$).
   Widget preset new: `parallel-transport` `radial` θ₀ = 0 with E/P/W, $z_0 = (0,1)$ (∇ᴾ length $1\to6$), view `{x: -1.5, y: -3, w: 9.5, h: 9.5}`, plus vertical W preset.
+  Conventions fixed here (`ch07-curvature`): book names **Riemann–Christoffel curvature** $\mathrm{Riem}^\flat(\mathcal{W},\mathcal{Z},\mathcal{X},\mathcal{Y}) := \mathrm{Riem}(\flat(\mathcal{W}),\dots)$,
+  components $(\mathrm{Riem}^\flat)_{ajkm} = g_{al}\mathrm{Riem}^l_{jkm}$ (lowering index $l$, Riem summation index still $n$), **Ricci scalar** $R := (g^{-1})^{mk}\mathrm{Ric}_{km}$, **Einstein curvature**
+  $G := \mathrm{Ric} - \tfrac12Rg$; symmetries labelled (a) last pair, (b) first pair, (c) algebraic Bianchi (cyclic in $j,k,m$), (d) pair exchange (book order), proved from the
+  normal-chart formula $2(\mathrm{Riem}^\flat)_{ajkm}(p) = \partial_{kj}g_{am} - \partial_{ka}g_{jm} - \partial_{mj}g_{ak} + \partial_{ma}g_{jk}$ ($\partial_{kj} := \partial_k\partial_j$ at $p$);
+  counts $d^2(d^2-1)/12$ = 1, 6, 20 (stated); 2D $\rho := (\mathrm{Riem}^\flat)_{1212}$, $\mathrm{Ric}_{ab} = \tfrac{\rho}{\det g}g_{ab}$, $R = 2\rho/\det g$. Family "polar-type chart" $\mathrm{diag}(1,f(r)^2)$
+  on the slit plane: $\Gamma^1_{22} = -ff'$, $\Gamma^2_{12} = f'/f$, $\mathrm{Riem}^1_{212} = -ff''$; worked curved example $f = r^2$: $\Gamma^1_{22} = -2r^3$, $\Gamma^2_{12} = 2/r$, $\mathrm{Riem}^1_{212} = -2r^2$
+  ($-6+4 = -2$ at $r = 1$), $\mathrm{Riem}^2_{121} = -2/r^2$, $(\mathrm{Riem}^\flat)_{1212} = (\mathrm{Riem}^\flat)_{2121} = -8$ at $r = 2$, $\mathrm{Ric} = \mathrm{diag}(-2/r^2,-2r^2)$, $R = -4/r^2$ ($-1$ at $r = 2$);
+  $f = 2r$ flat (angle $\varphi = 2\theta$); $f = \sinh r$ hyperbolic plane $R = -2$ (sphere kept for `ch07-sphere`); contracted Bianchi $(g^{-1})^{kl}(\nabla_{\partial x_k}G)_{ln} = 0$ stated
+  (div Ric $= \tfrac12\partial_nR$); trace $G$ in 4D $= -R$ ($R = 6\to-6$); flat ⇔ locally constant components (derived from Level 6 + compatibility); Ric $= 0$ ⇒ flat in $d = 2,3$ only. No widget.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -365,6 +374,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch07-curvature (concept, 30 cards)
+- Built `content/ch07/curvature.yaml` (hook: polar Γ ≠ 0 yet flat, guess mcq; recall Riem/Ric + "from now on" chain; derivatives mcq; polar numeric 0 and
+  tensor argument; family $\mathrm{diag}(1,f^2)$: Γ mcq, $-ff''$ mcq, $f = r^2$ numeric $-2$, $f = 2r$ flat mcq; Riem♭ text + build, pair numeric $-8$; normal-chart
+  derivation + cancel mcq; symmetries (a)–(d), components mcq, count numeric; Ricci-symmetric order; Ricci scalar text + numeric $-1$; 2D statement; sinh mcq;
+  Einstein + contracted Bianchi, trace numeric; traps normal chart, flat ⇔ constant components, Ric = 0 by dimension; own (5 blanks) + sphere teaser).
+  Choices: curved example $f = r^2$ (simple integers) with $f = \sinh r$ as the constant-curvature aside; book's name Riem♭ used instead of the plan's
+  $\mathrm{Riem}_{ijkm}$; symmetries proved in a normal chart (the book's route); no widget (none fits). validate 0/0, shots 0 problems.
+- Conventions fixed here: see Current, "Chapter 7 conventions so far" (`ch07-curvature`).
 ### 2026-10-20 — ch07-levi-civita (concept, 31 cards)
 - Built `content/ch07/levi-civita.yaml` (hook (G) vs (A), "what must be checked" mcq (transformation law); recall ∇ᴱ/∇ᴾ/∇ᵂ polar coefficients;
   widget ray E/P/W with length mcq and ∇ᴾ numeric 6; Christoffel + LC definition; compatibility definition, chart build, ∇ᴱ/∇ᴾ numerics; LC compatible via

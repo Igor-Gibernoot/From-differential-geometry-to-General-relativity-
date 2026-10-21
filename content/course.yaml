@@ -335,7 +335,11 @@ levels:
         kind: concept
         file: ch07/levi-civita.yaml
         summary: The geodesic equation has the shape of an autoparallel equation. Its coefficients, the Christoffel symbols, define the Levi-Civita connection, the only connection that is torsion free and keeps the metric constant, so its parallel transport preserves lengths and angles.
-      - { id: ch07-curvature, title: Curvature of the Metric, kind: concept }
+      - id: ch07-curvature
+        title: Curvature of the Metric
+        kind: concept
+        file: ch07/curvature.yaml
+        summary: Nonzero Christoffel symbols do not mean curvature; the Riemann tensor of the Levi-Civita connection does. Build a curved metric by hand, lower the index to see the four symmetries, and contract down to the Ricci scalar and the divergence-free Einstein curvature.
       - { id: ch07-sphere, title: "Guided Problem: Meridians and Parallels of the Sphere", kind: guided }
       - { id: ch07-traps, title: Metric Traps, kind: traps }
       - { id: ch07-map, title: "Content Map: Metric", kind: map }
