@@ -131,7 +131,9 @@ export function runSession(root, { items, mode, startAt = 0, readOnly = false, o
     const before = readOnly ? { firstTry: false } : answered.get(i);
     if (before) {
       ctl.reveal();
-      showFeedback(feedbackBox('neutral', !readOnly && before.firstTry ? 'You got this one first try' : 'Answer', explanation ?? ''));
+      showFeedback(before.head
+        ? feedbackBox('good', before.head, explanation ?? '')
+        : feedbackBox('neutral', 'Answer', explanation ?? ''));
       setFoot([continueBtn()]);
       return;
     }
@@ -150,9 +152,10 @@ export function runSession(root, { items, mode, startAt = 0, readOnly = false, o
       if (r.correct) {
         sounds.correct();
         if (attempts === 1) { record(item, true); combo++; }
-        answered.set(i, { firstTry: attempts === 1 });
+        const head = praise(attempts, combo);
+        answered.set(i, { firstTry: attempts === 1, head });
         const body = [r.feedback, explanation].filter(Boolean).join('\n\n');
-        showFeedback(feedbackBox('good', praise(attempts, combo), body));
+        showFeedback(feedbackBox('good', head, body));
         setFoot([continueBtn()]);
       } else {
         sounds.wrong();
