@@ -571,3 +571,14 @@ polyline.w-level { fill: none; }
 .widget .readout .rg-cf { color: var(--good); }
 .w-handle.rg-h { fill-opacity: .1; }
 .w-handle.rg-h:not(.vec) { fill: var(--ink); stroke: var(--ink); stroke-opacity: .6; }
+
+/* ---------- falling-cloud ---------- */
+.fc-mass, .fc-center { fill: var(--ink); }
+.fc-dot { fill: var(--vec); }
+.fc-outline { fill: var(--vec); fill-opacity: .12; stroke: var(--vec); stroke-opacity: .6; stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
+.fc-path { fill: none; stroke: var(--ink); stroke-opacity: .35; stroke-width: 2px; stroke-dasharray: 4 4; vector-effect: non-scaling-stroke; }
+.fc-start { fill: none; stroke: var(--muted); stroke-opacity: .7; stroke-width: 1.2px; vector-effect: non-scaling-stroke; }
+.fc-lin { fill: none; stroke: var(--gold); stroke-width: 2px; stroke-dasharray: 6 5; vector-effect: non-scaling-stroke; }
+.fc-tide { stroke: var(--gold); fill: var(--gold); stroke-width: 2.5px; vector-effect: non-scaling-stroke; }
+.fc-tide.lin { stroke-dasharray: 4 3; fill-opacity: .5; stroke-width: 2px; }
+.widget .readout .fc-gold { color: var(--gold); }
