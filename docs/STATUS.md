@@ -5,7 +5,8 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-21, Chapter 10 started: widgets `light-cones`, `worldline-clock`, `observer-frame`, `ch10-spacetime`, `ch10-worldlines`, `ch10-observers`; widget `area-cell` built and used in `ch08-metric-volume`; next: `ch10-lorentz`)
+## Current (2026-10-21, Chapter 10 started: widgets `light-cones`, `worldline-clock`, `observer-frame`, `ch10-spacetime`, `ch10-worldlines`, `ch10-observers`, `ch10-lorentz`; widget `area-cell` built and used in `ch08-metric-volume`; next: `ch10-einstein-hilbert`)
+- **Concept `ch10-lorentz`**: `Λ^b_a := ε^b(ẽ_a)` (ẽ_a = Λ^b_a e_b, row b, column a), η_ab = Λ^m_a Λ^n_b η_mn (Λ^TηΛ = η), O(1,3), (detΛ)²=1, Λ^0_0 = g(v_γ,v_γ̃) ≥ 1 → O↑(1,3), 1+1 boost γ[[1,u],[u,1]], u = Λ^1_0/Λ^0_0, 0.6∘0.6 = 15/17; frames vs coordinates (g=η on whole charts ⇒ Γ=0 ⇒ affine transition, only Riem=0); positively oriented ⇒ det=+1, SO↑(1,3). Widget `observer-frame` reused.
 - **Intuition lesson `ch08-intuition-metric`** (before `ch08-traps`): lowering `♭(X)_i = x^j g_{ji}` (g has two lower slots, eats an upper index), raising `♭⁻¹(𝗑)^i = 𝗑_j (g⁻¹)^{ji}` (book names, never `x_i`), g⁻¹ is the matrix inverse (not entrywise reciprocals), scaling test g→λ²g (♭ ×λ², ♭⁻¹ and g⁻¹ ×λ⁻², √|det g| ×λ^d), density between charts √|det g_Y| = |det ᛞ_UV| √|det g_X| (ᛞ_UV = ∂X/∂Y, lower indices follow old-in-terms-of-new; polar check r), `area-cell` sheared widget at the start; Lorentzian null vector card.
 - **Intuition lesson `ch06-intuition-curvature`** (before `ch06-traps`): Riem^i_{jkm} slots (output i, carried j, loop directions k,m; anchor: first term ∂_kΓ^i_{jm}), antisymmetric pair = the two direction slots (T: j,k; Riem: k,m), commutator [X,Y]^i = X⌊x̃^i⌉ − Y⌊x^i⌉, T^i_{jk} = Γ^i_{kj} − Γ^i_{jk} (direction is the LAST lower index of Γ), Ric_ab = Riem^m_{amb} (output contracted with the first loop direction).
 - **Intuition lesson `ch05-intuition-lie`** (before `ch05-traps`): L_X on function, vector (= commutator), covector, (1,1), (0,2); rule: transport term x^m∂_m plus one term per index, **−** per upper and **+** per lower (opposite to Γ), derivative index on the top of x (upper) or on ∂ (lower). Components of X are x^i, of Y x̃^i, covector A with a_k; ∂_i := ∂/∂X^i on component functions. The book has no Lie derivative section (only the commutator, Ch. 6), so the lesson defines it itself.
@@ -1287,3 +1288,7 @@ Self-contained (book has no Lie derivative section; defines L_X f = X⌊f⌉, L_
 ### 2026-10-21 — intuition lesson `ch08-intuition-metric` (19 cards)
 
 Index placement of ♭ and ♭⁻¹ with the book's component names, matrix inverse of g, scaling test g → λ²g (incl. √|det g| ~ λ^d), density law between charts, area-cell sheared widget, null vector in diag(1,−1,−1,−1). Numeric cards give data, not the law. All numbers hand-checked (g = [[4,2],[2,2]], det 4, g⁻¹ = ¼[[2,−2],[−2,4]]). Conventions fixed here: lowering uses g (sum index adjacent), raising uses g⁻¹; ᛞ_UV = ∂X/∂Y with √|det g_Y| = |det ᛞ_UV|√|det g_X|; scaling factors λ², λ⁻², λ^d.
+
+### ch10-lorentz (2026-10-21)
+Concept lesson, 24 cards, reuses `observer-frame`. Hook: guess the 2×2 dictionary H→T at u=0.6; η-condition as an order card; boosts and composition; frames vs coordinates; orientation.
+Conventions fixed here: Λ^b_a := ε^b(ẽ_a) (old dual covector on new vector); column a = components of ẽ_a; O↑(1,3) := {Λ∈O(1,3) | Λ^0_0 ≥ 1}.
