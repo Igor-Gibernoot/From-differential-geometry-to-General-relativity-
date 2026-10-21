@@ -582,3 +582,16 @@ polyline.w-level { fill: none; }
 .fc-tide { stroke: var(--gold); fill: var(--gold); stroke-width: 2.5px; vector-effect: non-scaling-stroke; }
 .fc-tide.lin { stroke-dasharray: 4 3; fill-opacity: .5; stroke-width: 2px; }
 .widget .readout .fc-gold { color: var(--gold); }
+
+/* ---------- light-cones ---------- */
+.lc-null { stroke: var(--ink); stroke-width: 2.2px; vector-effect: non-scaling-stroke; }
+.lc-null.thin { stroke-width: 1.3px; stroke-opacity: .55; }
+.lc-future { fill: var(--good); fill-opacity: .16; stroke: none; }
+.lc-tau { stroke: var(--good); fill: var(--good); stroke-width: 3px; vector-effect: non-scaling-stroke; }
+.lc-x { stroke: var(--vec); fill: var(--vec); }
+.w-label.lc-tau { stroke: var(--surface); stroke-width: 0.08px; fill: var(--good); }
+.w-label.lc-rune { font-family: KaTeX_Main, Georgia, "Times New Roman", serif; font-style: normal; }
+.w-label.lc-word { fill: var(--muted); }
+.widget .readout .lc-green { color: var(--good); }
+.widget .readout .lc-gold { color: var(--gold); font-weight: 650; }
+.widget .readout .lc-space { font-weight: 650; }
