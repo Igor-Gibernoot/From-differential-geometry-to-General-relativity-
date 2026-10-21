@@ -434,7 +434,11 @@ levels:
         kind: concept
         file: ch09/gravity-connection.yaml
         summary: "Free fall the same for every mass puts gravity into the connection, Γ^α₀₀ = ∂_αφ; uniform gravity is a pseudo-force removed by a freely falling chart, non-uniform gravity is curvature, Riem^α₀β₀ = ∂_β∂_αφ, and Poisson's equation becomes Ric₀₀ = 4πG_N ρ."
-      - { id: ch09-tidal, title: Tidal Acceleration, kind: concept }
+      - id: ch09-tidal
+        title: Tidal Acceleration
+        kind: concept
+        file: ch09/tidal.yaml
+        summary: "A chart falling with one particle removes gravity along that worldline only; nearby free particles obey the tidal equation, γ̈^α = −Riem^α₀β₀ γ^β: stretched toward the mass, squeezed across it, volume kept in vacuum, two ocean bulges."
       - { id: ch09-point-mass, title: "Guided Problem: A Point Mass in Newton-Cartan Theory", kind: guided }
       - { id: ch09-traps, title: Newton-Cartan Traps, kind: traps }
       - { id: ch09-map, title: "Content Map: Newton-Cartan Theory", kind: map }

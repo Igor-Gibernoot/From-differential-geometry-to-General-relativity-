@@ -1,0 +1,393 @@
+id: ch09-tidal
+title: Tidal Acceleration
+kind: concept
+
+own: |
+  - **Gravity removed along one worldline**: a chart whose origin falls freely, $\ddot b^\alpha = -\partial_\alpha\phi(t,b(t))$, has at the point with offset $\eta$
+  {{ $$(\Gamma_\mathscr{Y})^\alpha_{00} \approx \partial_\beta\partial_\alpha\phi(t,b)\,\eta^\beta$$ }}
+  up to $\mathcal{O}(|\eta|^2)$: zero at the origin only. An observer falling there feels no gravity; uniform gravity is gone, non-uniform gravity is not.
+  - **Tidal equation**: a nearby free particle with coordinates $\gamma^\alpha_\mathcal{V}$ in the falling chart obeys
+  {{ $$\ddot\gamma^\alpha_\mathcal{V} = -\mathrm{Riem}^\alpha_{0\beta0}\,\gamma^\beta_\mathcal{V}$$ }}
+  up to $\mathcal{O}(|\gamma_\mathcal{V}|^2)$, with $\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi$ at the origin: the **tidal acceleration**, the part of gravity no chart removes.
+  - **Point mass**: at distance $r$ on the $x^1$ axis, {{ $\mathrm{Riem}^1_{010} = -2G_NM/r^3$ }} stretches a cloud along the line to the mass, and $\mathrm{Riem}^2_{020} = \mathrm{Riem}^3_{030} = G_NM/r^3$ squeeze it across. Tides fall off like $1/r^3$ (the pull like $1/r^2$); both sides of the cloud move away from its center, hence two ocean bulges.
+  - **Volume**: a small ball released at rest keeps, to order $t^2$,
+  {{ $$V(t) \approx V_0\,\big(1 - \tfrac12\mathrm{Ric}_{00}\,t^2\big)$$ }}
+  so in vacuum ($\mathrm{Ric}_{00} = 4\pi G_N\rho = 0$) it changes shape but not volume.
+
+cards:
+  - type: text
+    id: hook
+    title: Crumbs in a space station
+    body: |
+      A space station orbits a planet with its engines off: it falls freely, and so does everything inside. Recall the falling elevator: an apple released at rest relative to the astronaut simply floats.
+
+      Now an astronaut releases a ring of bread crumbs, all at rest relative to the station, around the station's center, with the ring's plane containing the line to the planet. No air, no walls in the way. She waits.
+
+  - type: mcq
+    id: hook-predict
+    title: Before any theory, predict
+    prompt: |
+      A space station falls freely around a planet (engines off, no air). An astronaut releases a small ring of crumbs around the station's center, all at rest relative to the station, the ring's plane containing the line to the planet. After a while, what shape does the ring have, seen from the station?
+    options:
+      - text: 'Stretched along the line to the planet and squeezed across it'
+        correct: true
+      - text: 'Still a circle: in free fall nothing accelerates relative to the station'
+        feedback: |
+          That is the elevator in uniform gravity. Here the pull is stronger on the crumbs nearer the planet and weaker on the farther ones, and its direction varies from crumb to crumb: only the crumbs exactly at the station's center fall exactly like the station.
+      - text: 'Stretched across the line to the planet, along the orbit'
+        feedback: |
+          Across the line to the planet, every crumb is pulled toward the planet's center, so the pulls on the two sides converge: they bring those crumbs together, not apart.
+      - text: 'Still a circle, but drifting as a whole toward the planet'
+        feedback: |
+          The station falls toward the planet exactly as fast as a crumb at its center. A drift of the whole ring would need every crumb to feel more pull than the center does, but the outer ones feel less.
+    explanation: |
+      Nearer crumbs fall faster than the center, farther ones slower: the ring stretches along the line to the planet. Crumbs on the sides are pulled along converging lines: it squeezes across. Gravity has vanished at the center, but not around it. This lesson measures what remains.
+
+  - type: widget
+    id: cloud-widget
+    title: A falling ring
+    widget: falling-cloud
+    config: { GM: 8, c0: [2, 0], r0: 0.2, view: both }
+    body: |
+      A point mass $M$ sits at the origin of the sources chart ($x^1$ toward the right, $x^2$ up), with $G_NM = 8$. Twelve free particles on a circle of radius $0.2$ around $(2, 0)$, plus the center, start at rest. Press **Play**. The left panel shows them in the sources chart; the right panel shows them in the chart that falls with the center, magnified five times. Watch the shape on the right, and the gold arrows (the accelerations relative to the center).
+
+  - type: mcq
+    id: egg-shape
+    title: Which egg?
+    prompt: |
+      A ring of free particles of radius $0.2$, released at rest around $(2, 0)$ near a point mass at the origin ($G_NM = 8$), falls toward the mass. In the chart that falls with the ring's center, the ring turns into an egg. Which end is longer?
+    options:
+      - text: 'The inner end, toward the mass'
+        correct: true
+      - text: 'The outer end, away from the mass'
+        feedback: |
+          The outer particle lags behind the center because it is pulled less, the inner one runs ahead because it is pulled more. The pull $G_NM/|x|^2$ grows faster when $|x|$ decreases than it falls when $|x|$ increases, so the inner particle gains more than the outer one loses.
+      - text: 'Neither: a symmetric ellipse'
+        feedback: |
+          A symmetric ellipse is what a pull changing linearly with distance would give. The pull $G_NM/|x|^2$ is curved: from $2$ to $1.8$ it grows by $0.469$, from $2$ to $2.2$ it drops by only $0.347$.
+    explanation: |
+      Relative to the center at $x^1 = 2$ (pull $2$), the inner particle at $1.8$ is pulled $8/1.8^2 = 2.469$ and the outer at $2.2$ only $8/2.2^2 = 1.653$: relative accelerations $-0.469$ and $+0.347$. The inner end runs ahead faster than the outer end falls behind.
+
+  - type: text
+    id: falling-recall
+    title: The freely falling chart
+    body: |
+      Recall the setting: a sources chart $(\mathcal{U},\mathscr{X})$ (stratified, cartesian, non-rotating, at rest relative to the masses) with coordinates $x^i$, where the only nonzero coefficients are $\Gamma^\alpha_{00} = \partial_\alpha\phi$, with $\phi$ the gravitational potential. Write $\partial_\alpha\phi(t,x)$ for the value at the event with coordinates $(t,x)$.
+
+      A moving chart $(\mathcal{V},\mathscr{Y})$ with coordinates $y^i$ is shifted by $b^\alpha(t)$:
+      $$x^\alpha = y^\alpha + b^\alpha(t).$$
+      Its only nonzero coefficients are
+      $$(\Gamma_\mathscr{Y})^\alpha_{00} = \partial_\alpha\phi(t, y + b) + \ddot b^\alpha.$$
+      Now let the origin $y = 0$ fall freely, like the center of the ring:
+      $$\ddot b^\alpha(t) = -\partial_\alpha\phi\big(t, b(t)\big).$$
+
+  - type: mcq
+    id: where-zero
+    title: Where is gravity gone?
+    prompt: |
+      In a chart with $x^\alpha = y^\alpha + b^\alpha(t)$, the only nonzero coefficients are $(\Gamma_\mathscr{Y})^\alpha_{00} = \partial_\alpha\phi(t, y + b) + \ddot b^\alpha$. The origin falls freely: $\ddot b^\alpha = -\partial_\alpha\phi(t, b(t))$. The field of a point mass is non-uniform. Where does $(\Gamma_\mathscr{Y})^\alpha_{00}$ vanish?
+    options:
+      - text: 'Only at the origin $y = 0$, where $\partial_\alpha\phi$ is evaluated at $b$ itself'
+        correct: true
+      - text: 'Everywhere: the falling chart removes gravity, as in the elevator'
+        feedback: |
+          That held for uniform gravity, where $\partial_\alpha\phi$ is the same at every point. Here $\partial_\alpha\phi(t, y + b)$ changes with $y$, while $\ddot b^\alpha$ is a single vector per instant: it can cancel the field at one point only.
+      - text: 'Nowhere: a non-uniform field can never be cancelled'
+        feedback: |
+          At $y = 0$ the two terms are $\partial_\alpha\phi(t,b)$ and $-\partial_\alpha\phi(t,b)$, which cancel exactly. Non-uniform gravity cannot be removed on an open set, but it can be removed along one worldline.
+      - text: 'On the whole line from the origin to the mass'
+        feedback: |
+          Along that line the pull still changes with distance ($G_NM/|x|^2$ is larger closer in), so $\partial_1\phi(t, y + b)\neq\partial_1\phi(t, b)$ for $y\neq0$.
+    explanation: |
+      At $y = 0$: $\partial_\alpha\phi(t,b) - \partial_\alpha\phi(t,b) = 0$. An observer at the origin falls freely and feels no gravity, the **equivalence principle** along one worldline. Elsewhere the coefficient is the difference between the field there and at $b$.
+
+  - type: text
+    id: taylor
+    title: Near the origin
+    body: |
+      What is left near the origin? Write $\eta^\beta$ for the coordinates $y^\beta$ of a point of the falling chart: its offset from the origin (the widget's offsets). Expand $\partial_\alpha\phi$ around $b$ with Taylor's theorem (summing over $\beta$ from now on, as Einstein's convention says):
+      $$\begin{aligned}&\partial_\alpha\phi(t, b + \eta)\\ &= \partial_\alpha\phi(t, b) + \partial_\beta\partial_\alpha\phi(t, b)\,\eta^\beta\\ &\quad + \mathcal{O}(|\eta|^2).\end{aligned}$$
+      Here $|\eta| := \sqrt{\sum_\beta(\eta^\beta)^2}$ and $\mathcal{O}(|\eta|^2)$ stands for terms at most a constant times $|\eta|^2$ for small $\eta$.
+
+  - type: build
+    id: build-gamma
+    title: What survives
+    prompt: |
+      A chart falls freely: $x^\alpha = y^\alpha + b^\alpha(t)$ with $\ddot b^\alpha = -\partial_\alpha\phi(t,b)$, and $(\Gamma_\mathscr{Y})^\alpha_{00} = \partial_\alpha\phi(t, b + \eta) + \ddot b^\alpha$ at the point with offset $\eta$. Using $\partial_\alpha\phi(t, b + \eta) = \partial_\alpha\phi(t,b) + \partial_\beta\partial_\alpha\phi(t,b)\,\eta^\beta + \mathcal{O}(|\eta|^2)$, build the first-order term.
+    prefix: '(\Gamma_\mathscr{Y})^\alpha_{00} \approx'
+    tiles: ['\partial_\beta\partial_\alpha\phi(t,b)', '\eta^\beta', '\partial_\alpha\phi(t,b)', '+', '2', '\eta^\alpha']
+    answers:
+      - ['\partial_\beta\partial_\alpha\phi(t,b)', '\eta^\beta']
+      - ['\eta^\beta', '\partial_\beta\partial_\alpha\phi(t,b)']
+    wrong:
+      - answer: ['\partial_\alpha\phi(t,b)', '+', '\partial_\beta\partial_\alpha\phi(t,b)', '\eta^\beta']
+        feedback: |
+          The zeroth-order term $\partial_\alpha\phi(t,b)$ is exactly cancelled by $\ddot b^\alpha = -\partial_\alpha\phi(t,b)$: that is what choosing a freely falling origin does.
+      - answer: ['2', '\partial_\beta\partial_\alpha\phi(t,b)', '\eta^\beta']
+        feedback: |
+          The $\ddot b^\alpha$ term cancels the zeroth-order term, not doubles the first-order one: the first-order term comes only from the expansion of $\partial_\alpha\phi(t, b + \eta)$.
+    hint: Add $\ddot b^\alpha = -\partial_\alpha\phi(t,b)$ to the expansion; which term cancels?
+    explanation: |
+      $$\begin{aligned}(\Gamma_\mathscr{Y})^\alpha_{00} &= \partial_\alpha\phi(t,b) + \partial_\beta\partial_\alpha\phi(t,b)\,\eta^\beta\\ &\quad - \partial_\alpha\phi(t,b) + \mathcal{O}(|\eta|^2)\\ &= \partial_\beta\partial_\alpha\phi(t,b)\,\eta^\beta + \mathcal{O}(|\eta|^2).\end{aligned}$$
+      Zero at $\eta = 0$, growing linearly with the offset.
+
+  - type: text
+    id: riem-falling
+    title: The curvature appears
+    body: |
+      The first-order coefficient is a curvature component. Recall: in a stratified chart whose only nonzero coefficients are $\Gamma^\alpha_{00}$,
+      $$\mathrm{Riem}^\alpha_{0\beta0} = \partial x_\beta\lfloor\Gamma^\alpha_{00}\rceil.$$
+      The falling chart is such a chart, so
+      $$\begin{aligned}\mathrm{Riem}^\alpha_{0\beta0} &= \partial y_\beta\lfloor\partial_\alpha\phi(t, y + b)\rceil\\ &= \partial_\beta\partial_\alpha\phi(t, y + b),\end{aligned}$$
+      the same components as in the sources chart (as a tensor must be: the shift by $b(t)$ only mixes in components that vanish). At the origin, $y = 0$:
+      $$(\Gamma_\mathscr{Y})^\alpha_{00} \approx \mathrm{Riem}^\alpha_{0\beta0}\,\eta^\beta,$$
+      with $\mathrm{Riem}^\alpha_{0\beta0}$ evaluated at $b$.
+
+  - type: mcq
+    id: tidal-sign
+    title: The equation of a neighbour
+    prompt: |
+      In a freely falling chart, the only nonzero coefficients are $(\Gamma_\mathscr{Y})^\alpha_{00} = \mathrm{Riem}^\alpha_{0\beta0}\,\eta^\beta + \mathcal{O}(|\eta|^2)$, with $\eta$ the offset from the origin and $\mathrm{Riem}^\alpha_{0\beta0}$ evaluated at the origin. A second free particle has coordinates $\gamma^\alpha_\mathcal{V}$ in this chart, and Newton I reads $\ddot\gamma^\alpha_\mathcal{V} + (\Gamma_\mathscr{Y})^\alpha_{jk}\dot\gamma^j\dot\gamma^k = 0$ with $\dot\gamma^0 = 1$. What is $\ddot\gamma^\alpha_\mathcal{V}$, to first order?
+    options:
+      - text: '$-\mathrm{Riem}^\alpha_{0\beta0}\,\gamma^\beta_\mathcal{V}$'
+        correct: true
+      - text: '$+\mathrm{Riem}^\alpha_{0\beta0}\,\gamma^\beta_\mathcal{V}$'
+        feedback: |
+          The coefficient sits on the left of Newton I: $\ddot\gamma^\alpha_\mathcal{V} + (\Gamma_\mathscr{Y})^\alpha_{00} = 0$. Moving it to the right flips its sign.
+      - text: '$-\mathrm{Riem}^\alpha_{00\beta}\,\gamma^\beta_\mathcal{V}$'
+        feedback: |
+          $\mathrm{Riem}$ is antisymmetric in its last two indices: $\mathrm{Riem}^\alpha_{00\beta} = -\mathrm{Riem}^\alpha_{0\beta0}$. This option has the opposite sign; the coefficient is $\partial y_\beta\lfloor\Gamma^\alpha_{00}\rceil = \mathrm{Riem}^\alpha_{0\beta0}$.
+      - text: '$0$: in a freely falling chart a free particle does not accelerate'
+        feedback: |
+          Only a particle at the origin has zero coefficient. At an offset $\gamma_\mathcal{V}\neq0$ the coefficient is $\mathrm{Riem}^\alpha_{0\beta0}\gamma^\beta_\mathcal{V}$, nonzero where the curvature is.
+    explanation: |
+      Only $(j,k) = (0,0)$ has a nonzero coefficient, so $\ddot\gamma^\alpha_\mathcal{V} = -(\Gamma_\mathscr{Y})^\alpha_{00}$ evaluated at the particle's offset $\eta = \gamma_\mathcal{V}$. This holds for any velocity of the particle.
+
+  - type: text
+    id: tidal-equation
+    title: The tidal equation
+    body: |
+      A free particle near the falling origin obeys the **tidal equation**
+      $$\ddot\gamma^\alpha_\mathcal{V} = -\mathrm{Riem}^\alpha_{0\beta0}\,\gamma^\beta_\mathcal{V} + \mathcal{O}(|\gamma_\mathcal{V}|^2),$$
+      with $\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi$ evaluated at the origin. Its acceleration relative to the falling origin, the **tidal acceleration**, is fixed by the curvature. This is what survives of gravity in the falling chart, the part no chart can remove.
+
+      Recall the point mass ($\phi = -G_NM/|x|$) on the $x^1$ axis, at $(r, 0, 0)$. Along the axis $\phi = -G_NM/x^1$, so $\partial_1\partial_1\phi = -2G_NM/r^3$. Across it, $\partial_2\phi = G_NM\,x^2/|x|^3$, whose $x^2$-derivative at $x^2 = x^3 = 0$ is $G_NM/r^3$; mixed derivatives vanish on the axis. So
+      $$\mathrm{Riem}^1_{010} = -\frac{2G_NM}{r^3},$$
+      $$\mathrm{Riem}^2_{020} = \mathrm{Riem}^3_{030} = \frac{G_NM}{r^3}.$$
+      With $G_NM = 8$ at $r = 2$: $-2$, $1$, $1$.
+
+  - type: numeric
+    id: outer-linear
+    title: The outer particle
+    prompt: |
+      A freely falling chart has its origin at $(2, 0, 0)$, at distance $2$ from a point mass with $G_NM = 8$, where $\mathrm{Riem}^1_{010} = -2$, $\mathrm{Riem}^2_{020} = \mathrm{Riem}^3_{030} = 1$ and the mixed components vanish. A free particle sits at offset $\gamma_\mathcal{V} = (0.2, 0, 0)$, on the far side of the origin. What tidal acceleration $\ddot\gamma^1_\mathcal{V}$ does the tidal equation $\ddot\gamma^\alpha_\mathcal{V} = -\mathrm{Riem}^\alpha_{0\beta0}\gamma^\beta_\mathcal{V}$ predict?
+    answer: 0.4
+    wrong:
+      - { value: -0.4, feedback: 'The tidal equation has a minus sign: $-(-2)(0.2) = +0.4$. The far particle is pulled less than the origin, so it drifts away from the mass, in the $+x^1$ direction.' }
+      - { value: 0.2, feedback: 'The radial component is $\mathrm{Riem}^1_{010} = -2$, not $-1$: along the line to the mass the stretching is twice the transverse squeezing.' }
+    hint: Only $\beta = 1$ contributes, since $\gamma^2_\mathcal{V} = \gamma^3_\mathcal{V} = 0$.
+    explanation: |
+      $\ddot\gamma^1_\mathcal{V} = -\mathrm{Riem}^1_{010}\cdot0.2 = -(-2)(0.2) = 0.4$: away from the origin, outward.
+
+  - type: numeric
+    id: side-linear
+    title: The side particle
+    prompt: |
+      A freely falling chart has its origin at $(2, 0, 0)$, at distance $2$ from a point mass with $G_NM = 8$, where $\mathrm{Riem}^1_{010} = -2$, $\mathrm{Riem}^2_{020} = \mathrm{Riem}^3_{030} = 1$ and the mixed components vanish. A free particle sits at offset $\gamma_\mathcal{V} = (0, 0.2, 0)$, beside the origin. What is $\ddot\gamma^2_\mathcal{V}$ according to the tidal equation?
+    answer: -0.2
+    wrong:
+      - { value: 0.2, feedback: 'With $\mathrm{Riem}^2_{020} = +1$ the tidal equation gives $-(1)(0.2) = -0.2$: back toward the origin. The pulls on the two sides converge toward the mass.' }
+      - { value: 0.4, feedback: 'That uses the radial component $-2$. For an offset along $x^2$ only $\mathrm{Riem}^2_{020} = 1$ enters.' }
+    explanation: |
+      $\ddot\gamma^2_\mathcal{V} = -\mathrm{Riem}^2_{020}\cdot0.2 = -0.2$: squeezed toward the axis. Along the line to the mass, stretching; across it, squeezing.
+
+  - type: numeric
+    id: outer-exact
+    title: The exact value
+    prompt: |
+      A point mass with $G_NM = 8$ sits at the origin; Newton's law gives a free particle on the positive $x^1$ axis the acceleration $\ddot x^1 = -8/(x^1)^2$. The origin of a falling chart is at $x^1 = 2$ and a particle at $x^1 = 2.2$, both momentarily at rest. What is the particle's exact acceleration relative to the origin, $\ddot x^1(2.2) - \ddot x^1(2)$? (Three decimals.)
+    answer: 0.347
+    tolerance: 0.002
+    wrong:
+      - { value: 0.4, feedback: 'That is the linear prediction of the tidal equation, $-\mathrm{Riem}^1_{010}\cdot0.2$. The exact value includes the higher-order terms the tidal equation drops.' }
+      - { value: -0.347, feedback: 'The particle at $2.2$ is pulled less ($-1.653$) than the origin ($-2$), so relative to the origin it accelerates outward, $+0.347$.' }
+    hint: $-8/2.2^2 = -1.653$ and $-8/2^2 = -2$.
+    explanation: |
+      $-1.653 - (-2) = 0.347$, a bit less than the linear $0.4$. The inner particle at $1.8$ gets $-8/1.8^2 + 2 = -0.469$, a bit more than the linear $-0.4$.
+
+  - type: text
+    id: compare
+    title: Linear versus exact
+    body: |
+      At distance $2$ ($G_NM = 8$), offsets $0.2$ from the falling origin, at rest:
+
+      | particle | tidal equation | exact |
+      |---|---|---|
+      | outer | $0.4$ | $0.347$ |
+      | inner | $-0.4$ | $-0.469$ |
+      | side | $-0.2$ | $-0.197$ |
+
+      The errors are the $\mathcal{O}(|\gamma_\mathcal{V}|^2)$ terms: small next to the linear ones, and they shrink like the square of the offset. The linear law is symmetric under $\gamma_\mathcal{V}\to-\gamma_\mathcal{V}$; the exact one is not, which is where the egg comes from.
+
+  - type: widget
+    id: linear-widget
+    title: Ellipse and egg
+    widget: falling-cloud
+    config: { GM: 8, c0: [2, 0], r0: 0.2, view: falling, t: 0.5, linear: true }
+    body: |
+      The falling chart at $t = 0.5$, magnified. The dashed gold curve is the solution of the tidal equation for the whole ring, the dashed arrows its accelerations; the dots are the exact particles. Read the outer and inner offsets in the readout and compare them with the linear prediction. Toggle **Linear**, and move $t$.
+
+  - type: mcq
+    id: egg-nonlinear
+    title: Why the egg?
+    prompt: |
+      A ring of radius $0.2$ falls from rest around $(2, 0)$ toward a point mass ($G_NM = 8$). At $t = 0.5$, in the chart falling with the center, the outer particle is at offset $0.248$ and the inner at $-0.267$, while the tidal equation $\ddot\gamma^\alpha_\mathcal{V} = -\mathrm{Riem}^\alpha_{0\beta0}\gamma^\beta_\mathcal{V}$ predicts $\pm0.256$. Why does the tidal equation give a symmetric ellipse but the exact ring an egg?
+    options:
+      - text: 'The tidal equation keeps only the linear term, which flips sign with the offset; the dropped $\mathcal{O}(|\gamma_\mathcal{V}|^2)$ terms do not, and they favour the inner side, where the pull grows fastest'
+        correct: true
+      - text: 'The tidal equation is wrong: the curvature does not describe tides'
+        feedback: |
+          It is right to first order: the errors ($0.008$ and $0.011$ here) are much smaller than the stretch itself ($0.048$ and $0.067$), and they shrink like the square of the ring's size.
+      - text: 'The widget evaluates $\mathrm{Riem}$ at the wrong point'
+        feedback: |
+          The tidal equation evaluates $\mathrm{Riem}^\alpha_{0\beta0}$ at the falling origin, as it must. A single matrix applied to $\pm\gamma_\mathcal{V}$ gives opposite accelerations, so any linear law gives a symmetric shape.
+      - text: 'The inner particle started closer to the center'
+        feedback: |
+          All particles start on a circle of radius $0.2$ around the center. The asymmetry comes from the field, not from the start.
+    explanation: |
+      $-\mathrm{Riem}\,\gamma_\mathcal{V}$ is odd in $\gamma_\mathcal{V}$, so inner and outer particles move symmetrically. The exact field $G_NM/|x|^2$ is curved, and the next term in the expansion is even in the offset: it adds to the inner stretch and subtracts from the outer one.
+
+  - type: numeric
+    id: frozen
+    title: A hand estimate
+    prompt: |
+      Freeze the curvature at its starting value: a particle at radial offset $\gamma^1_\mathcal{V}$ from a freely falling origin with $\mathrm{Riem}^1_{010} = -2$ obeys $\ddot\gamma^1_\mathcal{V} = 2\gamma^1_\mathcal{V}$, starting at $\gamma^1_\mathcal{V}(0) = 0.2$ at rest. The solution is $\gamma^1_\mathcal{V}(t) = 0.2\cosh(\sqrt2\,t)$. What is it at $t = 0.5$? (Four decimals.)
+    answer: 0.2521
+    tolerance: 0.0005
+    wrong:
+      - { value: 0.256, tolerance: 0.001, feedback: 'That is the tidal equation solved with $\mathrm{Riem}$ updated as the origin falls inward. Frozen at the start, $0.2\cosh(0.7071) = 0.2521$.' }
+      - { value: 0.1755, tolerance: 0.001, feedback: 'That is the transverse solution $0.2\cos(0.5)$, for $\mathrm{Riem}^2_{020} = 1$. Along the radial line the sign is reversed and $\cos$ becomes $\cosh$.' }
+    hint: $\cosh u = (e^u + e^{-u})/2$, with $u = \sqrt2\cdot0.5 = 0.7071$.
+    explanation: |
+      $\cosh(0.7071) = 1.2606$, so $0.2521$. The widget's dashed curve gives $0.256$: as the center falls from $r = 2$ to $1.738$, $|\mathrm{Riem}^1_{010}| = 16/r^3$ grows, and the stretching speeds up. The frozen estimate is good only for short times.
+
+  - type: text
+    id: volume
+    title: Shape, not volume
+    body: |
+      Release a small ball of particles at rest. To order $t^2$ each offset moves as
+      $$\gamma^\alpha_\mathcal{V}(t) \approx \gamma^\alpha_\mathcal{V}(0) - \tfrac12 t^2\,\mathrm{Riem}^\alpha_{0\beta0}\gamma^\beta_\mathcal{V}(0),$$
+      a linear map $\mathbb{1} - \tfrac12t^2 R$ with $R$ the matrix of $\mathrm{Riem}^\alpha_{0\beta0}$. Volumes scale by its determinant, which to this order is $1 - \tfrac12t^2(R^1_1 + R^2_2 + R^3_3)$. The sum is a trace, and recall that it is the Ricci component:
+      $$\sum_\alpha\mathrm{Riem}^\alpha_{0\alpha0} = \mathrm{Ric}_{00} = 4\pi G_N\rho.$$
+      So
+      $$V(t) \approx V_0\,\big(1 - \tfrac12\mathrm{Ric}_{00}\,t^2\big).$$
+
+  - type: mcq
+    id: vacuum-volume
+    title: Outside the planet
+    prompt: |
+      A small ball of free particles is released at rest at distance $2$ from a point mass ($G_NM = 8$), in vacuum, where $\mathrm{Riem}^1_{010} = -2$ and $\mathrm{Riem}^2_{020} = \mathrm{Riem}^3_{030} = 1$. To order $t^2$, the volume obeys $V(t)\approx V_0(1 - \tfrac12\mathrm{Ric}_{00}t^2)$ with $\mathrm{Ric}_{00} = \sum_\alpha\mathrm{Riem}^\alpha_{0\alpha0}$. What happens to the ball?
+    options:
+      - text: 'It stretches radially and squeezes in both transverse directions, keeping its volume to this order'
+        correct: true
+      - text: 'Its volume shrinks: gravity attracts everything toward everything'
+        feedback: |
+          $\mathrm{Ric}_{00} = -2 + 1 + 1 = 0$ here, so the $t^2$ term vanishes. Volume shrinks only where $\mathrm{Ric}_{00} = 4\pi G_N\rho > 0$, inside matter.
+      - text: 'It keeps its shape: in free fall nothing changes'
+        feedback: |
+          The shape changes: offsets along $x^1$ accelerate outward ($-(-2)\gamma^1$), offsets across inward ($-(1)\gamma^2$). Only the volume is kept.
+      - text: 'Its cross-section in the plane of $x^1, x^2$ keeps its area'
+        feedback: |
+          In that plane the trace is $-2 + 1 = -1$, so the area grows. The volume is kept only because the third direction, $\mathrm{Riem}^3_{030} = 1$, squeezes too.
+    explanation: |
+      Vacuum: $\mathrm{Ric}_{00} = 4\pi G_N\rho = 0$, the trace $-2 + 1 + 1 = 0$. Tidal forces outside matter change shape but not volume; inside matter they also shrink the volume.
+
+  - type: text
+    id: oceans
+    title: Ocean tides
+    body: |
+      The Earth falls freely toward the Moon (more exactly, both fall around their common center). In the Earth's freely falling chart, the oceans are the crumbs: the water facing the Moon is pulled more than the Earth's center, the water on the far side less.
+
+      Along the Earth–Moon line, $\mathrm{Riem}^1_{010} = -2G_NM/r^3 < 0$ ($M$ the Moon's mass, $r$ the Earth–Moon distance), so the tidal acceleration $-\mathrm{Riem}^1_{010}\gamma^1_\mathcal{V}$ has the same sign as the offset $\gamma^1_\mathcal{V}$. Across it, $\mathrm{Riem}^2_{020} > 0$ pulls the water in.
+
+  - type: mcq
+    id: two-bulges
+    title: The far side bulges too
+    prompt: |
+      The oceans bulge both on the side facing the Moon and on the opposite side, so most coasts see two high tides a day. In the Earth's freely falling chart, with $x^1$ along the Earth–Moon line, the tidal acceleration is $-\mathrm{Riem}^1_{010}\gamma^1_\mathcal{V}$ with $\mathrm{Riem}^1_{010} = -2G_NM/r^3$. Why is there a bulge on the far side?
+    options:
+      - text: 'The far water is pulled less than the Earth''s center and is left behind: away from the center, just as the near water runs ahead'
+        correct: true
+      - text: 'The Earth''s rotation flings the far water outward'
+        feedback: |
+          Spinning flattens the Earth at the poles, the same on every meridian; it does not single out the side opposite the Moon. The bulges follow the Moon around as the Earth turns.
+      - text: 'The Moon pushes the far side away from it'
+        feedback: |
+          Gravity only attracts: the Moon pulls the far water toward itself too. It pulls it less than it pulls the Earth's center, and in the falling chart only that difference counts.
+      - text: 'The near bulge pushes water through the Earth to the other side'
+        feedback: |
+          No flow is needed: each side has its own tidal acceleration. $-\mathrm{Riem}^1_{010}\gamma^1_\mathcal{V}$ points away from the center for $\gamma^1_\mathcal{V} > 0$ and for $\gamma^1_\mathcal{V} < 0$ alike.
+    explanation: |
+      $-\mathrm{Riem}^1_{010} > 0$, so the tidal acceleration has the sign of the offset: outward on both sides. Two bulges along the line to the Moon, and low water across it, where $\mathrm{Riem}^2_{020} > 0$ squeezes.
+
+  - type: mcq
+    id: trap-gone
+    title: 'Trap: weightless means no gravity?'
+    prompt: |
+      A station falls freely around a planet; its crew floats. Someone concludes: "inside a freely falling station gravity is gone, so the planet has no effect at all on what happens inside." Is that right?
+    options:
+      - text: 'No: gravity is removed only along the center''s worldline; nearby free objects still drift apart along the line to the planet and together across it'
+        correct: true
+      - text: 'Yes: in the freely falling chart all connection coefficients vanish'
+        feedback: |
+          Only at the origin. Elsewhere $(\Gamma_\mathscr{Y})^\alpha_{00}\approx\mathrm{Riem}^\alpha_{0\beta0}\eta^\beta$, nonzero wherever the curvature is, which is everywhere near a planet.
+      - text: 'Yes, up to air currents and the station''s own mass'
+        feedback: |
+          Even in perfect vacuum with a massless station, the planet's tidal acceleration $-\mathrm{Riem}^\alpha_{0\beta0}\gamma^\beta_\mathcal{V}$ remains: it comes from the non-uniform field, which no chart removes.
+    explanation: |
+      Floating is the equivalence principle along one worldline. Over the size of the station, the tidal acceleration (tiny, but real) survives: this is the curvature, and it is why non-uniform gravity is more than a pseudo-force.
+
+  - type: widget
+    id: far-widget
+    title: Twice as far
+    widget: falling-cloud
+    config: { GM: 8, c0: [2, 0], r0: 0.2, view: both, presets: [{ label: Near, c0: [2, 0] }, { label: Far, c0: [4, 0] }] }
+    body: |
+      Compare the ring at distance $2$ (**Near**) with the same ring at distance $4$ (**Far**). Read $\mathrm{Riem}^1_{010}$ in both, and press Play to see how slowly the far ring deforms.
+
+  - type: numeric
+    id: far-factor
+    title: Strength or gradient?
+    prompt: |
+      A point mass has $G_NM = 8$. The pull $\partial_1\phi = G_NM/r^2$ at distance $r$ on the $x^1$ axis is $2$ at $r = 2$ and $0.5$ at $r = 4$: four times weaker. The radial tidal component is $\mathrm{Riem}^1_{010} = -2G_NM/r^3$. By what factor is $|\mathrm{Riem}^1_{010}|$ smaller at $r = 4$ than at $r = 2$?
+    answer: 8
+    wrong:
+      - { value: 4, feedback: 'That is the ratio of the pulls, $G_NM/r^2$. Tides come from the derivative of the pull, which falls off one power faster: $1/r^3$.' }
+      - { value: 2, feedback: 'Doubling $r$ divides $1/r^3$ by $2^3 = 8$, not by $2$.' }
+    explanation: |
+      $|\mathrm{Riem}^1_{010}|$ is $16/8 = 2$ at $r = 2$ and $16/64 = 0.25$ at $r = 4$: eight times weaker, while the pull is only four times weaker.
+
+  - type: mcq
+    id: trap-strength
+    title: 'Trap: the stronger pull makes the bigger tide?'
+    prompt: |
+      The Sun pulls the Earth about $180$ times harder than the Moon does ($M_\text{Sun}/M_\text{Moon}\approx2.7\cdot10^7$, and the Sun is about $390$ times farther). Someone concludes that the Sun's tides must be about $180$ times the Moon's. In fact they are about half. Why?
+    options:
+      - text: 'Tides come from the curvature $\partial_\beta\partial_\alpha\phi\propto M/r^3$, not from the pull $\propto M/r^2$; the extra factor $1/390$ outweighs the Sun''s larger pull'
+        correct: true
+      - text: 'The Sun is too far for its gravity to reach the oceans'
+        feedback: |
+          The Sun's gravity reaches the Earth fully: it keeps the Earth in orbit. What is small is how much that pull changes across the Earth's diameter.
+      - text: 'The Earth orbits the Sun, and orbiting cancels the Sun''s gravity entirely'
+        feedback: |
+          Free fall around the Sun cancels the Sun's gravity at the Earth's center only. The difference across the Earth remains; it is just small, because the Sun is so far away.
+      - text: 'The Moon is denser than the Sun'
+        feedback: |
+          For the field outside a body only its mass and distance matter ($\phi = -G_NM/|x|$). Density plays no role.
+    explanation: |
+      Ratio of pulls: $2.7\cdot10^7/390^2\approx180$. Ratio of tides: $2.7\cdot10^7/390^3\approx0.46$. Tides measure how fast the pull changes from place to place, the second derivatives of $\phi$, which is why they fall off like $1/r^3$.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** a guided problem. Starting from $\phi = -G_NM/|x|$ alone, compute every $\Gamma^\alpha_{00}$, every $\mathrm{Riem}^\alpha_{0\beta0}$ at an arbitrary point (not only on an axis), and the Ricci curvature, and check that vacuum is indeed $\mathrm{Ric} = 0$ with $\mathrm{Riem}\neq0$.
