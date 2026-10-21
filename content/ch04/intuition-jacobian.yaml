@@ -1,0 +1,246 @@
+id: ch04-intuition-jacobian
+title: "Intuition: Which Jacobian, ∂Y/∂X or ∂X/∂Y?"
+kind: intuition
+own: |
+  - **One mnemonic: the chain rule.** Write every law as a sum over a repeated chart index and **cancel** it like a fraction. Notation: $(\text{ᛞ}_{\mathscr{Y}\mathscr{X}})^i_j = \partial\mathscr{Y}^i/\partial\mathscr{X}^j$ (row = target chart, column = source chart).
+  - **Lower-index objects follow the basis** (basis vectors, covector components), with $\partial\mathscr{X}/\partial\mathscr{Y}$ going to the new chart $\mathscr{Y}$:
+    {{ $$\frac{\partial}{\partial\mathscr{Y}^i} = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,\frac{\partial}{\partial\mathscr{X}^j}$$ }}
+    {{ $$\mathtt{y}_i = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,\mathtt{x}_j$$ }}
+  - **Upper-index objects go against it** (vector components, differentials), with $\partial\mathscr{Y}/\partial\mathscr{X}$:
+    {{ $$v^i_{\mathscr{Y}} = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,v^j_{\mathscr{X}}$$ }}
+    {{ $$d\mathscr{Y}^i = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,d\mathscr{X}^j$$ }}
+  - **Two checks**: the scaling test ($\mathscr{Y} = 2\mathscr{X}$ gives $\partial\mathscr{Y}/\partial\mathscr{X} = 2$: vector components double, covector components halve) and the cancellation test (a repeated index appears once above and once below with the **same** chart letter). The two Jacobians are inverse matrices: $\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\frac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^j} = \delta^i_j$.
+
+cards:
+  - type: text
+    id: hook
+    title: Two fractions, one chain rule
+    body: |
+      Take two charts $\mathscr{X}$ and $\mathscr{Y}$ around a point $p$ of a manifold. Each chart comes with four families of objects at $p$:
+
+      - basis vectors $\partial/\partial\mathscr{X}^i$ and $\partial/\partial\mathscr{Y}^i$,
+      - their dual covectors $d\mathscr{X}^i$ and $d\mathscr{Y}^i$,
+      - components of a vector (upper index),
+      - components of a covector (lower index).
+
+      Passing between the charts always uses a Jacobian, but **which one**: $\partial\mathscr{Y}/\partial\mathscr{X}$ or $\partial\mathscr{X}/\partial\mathscr{Y}$? Re-deriving each law from scratch is slow. This lesson derives nothing: it gives you two checks that **rebuild any of the four laws in seconds**.
+
+      From now on, the point $p$ is fixed and we drop the label $_p$. Repeated indices (once up, once down) are summed, as in Einstein summation. Recall $\partial\mathscr{Y}^i/\partial\mathscr{X}^j$ is the derivative of the $i$-th coordinate of $\mathscr{Y}$ with respect to the $j$-th coordinate of $\mathscr{X}$ at $p$: it is the Jacobian entry in row $i$, column $j$, written $(\text{ᛞ}_{\mathscr{Y}\mathscr{X}})^i_j$.
+
+  - type: widget
+    id: explore
+    title: Feel it first
+    widget: chart-basis
+    config:
+      charts: [polar, cartesian]
+      p: [0, 2]
+      basisOnly: true
+      chain: true
+      presets:
+        - { label: 'p = (0, 2)', charts: [polar, cartesian], p: [0, 2] }
+        - { label: 'Farther out', charts: [polar, cartesian], p: [0, 3] }
+    body: |
+      The purple arrows at $p$ are the polar basis vectors $\partial/\partial r$ and $\partial/\partial\theta$. The panel writes each of them in the cartesian basis, with numbers.
+
+      Drag $p$ farther from the origin, or press **Farther out**. Which polar arrow grows with the distance, and which does not?
+
+  - type: mcq
+    id: widget-read
+    prompt: |
+      In the plane, the polar chart $(r,\theta)$ is related to the cartesian chart by $x = r\cos\theta$, $y = r\sin\theta$. Moving $p$ twice as far from the origin along the same ray, what happens to the polar basis vectors $\partial/\partial r$ and $\partial/\partial\theta$ at $p$, drawn as arrows in the plane?
+    options:
+      - text: '$\partial/\partial r$ keeps its length; $\partial/\partial\theta$ becomes twice as long'
+        correct: true
+      - text: 'Both stay the same'
+        feedback: |
+          $\partial/\partial\theta$ is the velocity of the curve that turns by one radian per unit of $\lambda$. On a bigger circle, one radian is a longer trip, so its arrow is longer.
+      - text: 'Both become twice as long'
+        feedback: |
+          $\partial/\partial r$ is the velocity of a ray traversed at one unit of $r$ per unit of $\lambda$: unit speed wherever you are.
+    explanation: |
+      $\partial/\partial\theta$ has length $r$, because a point at distance $r$ moves $r\,d\theta$ along its circle. The cartesian expansion of a polar basis vector therefore depends on $p$: the Jacobian is not a fixed matrix.
+
+  - type: mcq
+    id: scaling-vector
+    prompt: |
+      Take a one-dimensional manifold with two charts related by $\mathscr{Y} = 2\mathscr{X}$ (one $\mathscr{Y}$-unit is half an $\mathscr{X}$-unit), so $\partial\mathscr{Y}/\partial\mathscr{X} = 2$. A velocity $v$ at $p$ has component $v_{\mathscr{X}} = 6$. What is $v_{\mathscr{Y}}$?
+    options:
+      - text: '$v_{\mathscr{Y}} = 12$'
+        correct: true
+      - text: '$v_{\mathscr{Y}} = 3$'
+        feedback: |
+          Tempting: "$\mathscr{Y}$ has the smaller units, so the number is smaller". The reverse holds. The velocity is the same physical rate, and a smaller unit needs **more** units to count it. A point moving 6 $\mathscr{X}$-units per second moves 12 $\mathscr{Y}$-units per second.
+      - text: '$v_{\mathscr{Y}} = 6$'
+        feedback: |
+          Then the same rate of change of the coordinate would have two different values, but $\mathscr{Y}^1 = 2\mathscr{X}^1$ along the curve, so $\dot{\mathscr{Y}} = 2\dot{\mathscr{X}}$.
+    explanation: |
+      Differentiating $\mathscr{Y} = 2\mathscr{X}$ along the curve gives $\dot{\mathscr{Y}} = 2\dot{\mathscr{X}}$.
+      **Scaling test, rule 1:** vector components are multiplied by $\partial\mathscr{Y}/\partial\mathscr{X}$ going to $\mathscr{Y}$.
+
+  - type: numeric
+    id: scaling-covector
+    prompt: |
+      Same one-dimensional manifold, $\mathscr{Y} = 2\mathscr{X}$. A covector $\xi$ at $p$ has component $\xi_{\mathscr{X}} = \xi(\partial/\partial\mathscr{X}) = 3$. The basis vector satisfies $\partial/\partial\mathscr{Y} = \tfrac12\,\partial/\partial\mathscr{X}$ (a step of one $\mathscr{Y}$-unit is half an $\mathscr{X}$-unit). What is $\xi_{\mathscr{Y}} = \xi(\partial/\partial\mathscr{Y})$?
+    answer: 1.5
+    answerText: '1.5'
+    wrong:
+      - { value: 6, feedback: 'That is the vector-component law. A covector component is the value on a basis vector, and the $\mathscr{Y}$ basis vector is **shorter**, so the value is smaller.' }
+      - { value: 3, feedback: 'The covector is fixed, but its component is its value on $\partial/\partial\mathscr{Y}$, a different vector from $\partial/\partial\mathscr{X}$.' }
+    hint: 'Linearity: $\xi(\tfrac12 w) = \tfrac12\xi(w)$.'
+    explanation: |
+      $$\xi_{\mathscr{Y}} = \xi\big(\tfrac12\,\partial/\partial\mathscr{X}\big) = \tfrac12\cdot 3 = 1.5 .$$
+      **Scaling test, rule 2:** covector components follow the **basis**: they are multiplied by $\partial\mathscr{X}/\partial\mathscr{Y} = \tfrac12$.
+
+  - type: text
+    id: chain-rule
+    title: The chain rule remembers for you
+    body: |
+      Two of these laws are just the chain rule, which you cannot misremember. For a scalar field $f$, with $f$ seen as a function of $\mathscr{X}$ or of $\mathscr{Y}$:
+      $$\frac{\partial f}{\partial\mathscr{Y}^i} = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,\frac{\partial f}{\partial\mathscr{X}^j}.$$
+      Strip off $f$: the basis vector $\partial/\partial\mathscr{Y}^i$ is a combination of the $\partial/\partial\mathscr{X}^j$ with the Jacobian $\partial\mathscr{X}^j/\partial\mathscr{Y}^i$. Likewise the differential of $\mathscr{Y}^i$, seen as a function of the $\mathscr{X}$'s, is
+      $$d\mathscr{Y}^i = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,d\mathscr{X}^j .$$
+      Vector components change exactly like the differentials $d\mathscr{Y}^i$ (they are the numbers $d\mathscr{Y}^i(v)$), and covector components exactly like the basis vectors (they are the numbers $\xi(\partial/\partial\mathscr{Y}^i)$).
+
+      **Cancellation test:** in every law the repeated index $j$ sits once in a numerator and once in a denominator **with the same chart letter**: $\partial\mathscr{X}^j$ over $\partial\mathscr{Y}^i$ meets $\partial/\partial\mathscr{X}^j$, and the $\mathscr{X}^j$ cancels like a fraction. The free index decides the other chart: the new object is labelled $\mathscr{Y}^i$, so $\mathscr{Y}^i$ stays in the result.
+
+  - type: mcq
+    id: cancel
+    prompt: |
+      We want the components of a vector in the new chart $\mathscr{Y}$ from its components in $\mathscr{X}$: $v^i_{\mathscr{Y}} = (\ ?\ )\,v^j_{\mathscr{X}}$. Use cancellation: the repeated index $j$ must cancel between the Jacobian and $v^j_{\mathscr{X}}$, and the result must carry $\mathscr{Y}^i$. Which Jacobian does it?
+    options:
+      - text: '$\dfrac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}$'
+        correct: true
+      - text: '$\dfrac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}$'
+        feedback: |
+          Its repeated index $j$ is a $\mathscr{Y}$-index, but it is contracted with $v^j_{\mathscr{X}}$, an $\mathscr{X}$-index. Nothing cancels, and the free index $i$ is an $\mathscr{X}$-index when the result should live in $\mathscr{Y}$.
+    explanation: |
+      $$v^i_{\mathscr{Y}} = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,v^j_{\mathscr{X}} .$$
+      The same answer as the scaling test: with $\mathscr{Y} = 2\mathscr{X}$, the factor is $2$.
+
+  - type: build
+    id: build-basis
+    prompt: 'Build the **basis vector** of the new chart $\mathscr{Y}$ in terms of the $\mathscr{X}$ basis. Let the chain rule decide.'
+    prefix: '\frac{\partial}{\partial\mathscr{Y}^i} ='
+    tiles: ['\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}', '\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}', '\frac{\partial}{\partial\mathscr{X}^j}', 'd\mathscr{X}^j']
+    answers:
+      - ['\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}', '\frac{\partial}{\partial\mathscr{X}^j}']
+      - ['\frac{\partial}{\partial\mathscr{X}^j}', '\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}']
+    wrong:
+      - answer: ['\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}', '\frac{\partial}{\partial\mathscr{X}^j}']
+        feedback: |
+          Scaling test: with $\mathscr{Y} = 2\mathscr{X}$ the new basis vector is **half** the old one, but this law doubles it. Cancellation also fails: the $\mathscr{X}^j$ sits in the denominator of both factors.
+    hint: 'Lower-index objects follow the basis; $\partial\mathscr{X}^j$ must cancel against the denominator of $\partial/\partial\mathscr{X}^j$.'
+    explanation: |
+      $$\frac{\partial}{\partial\mathscr{Y}^i} = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,\frac{\partial}{\partial\mathscr{X}^j} .$$
+
+  - type: build
+    id: build-vec
+    prompt: 'Build the **vector component** law, new chart from old.'
+    prefix: 'v^i_{\mathscr{Y}} ='
+    tiles: ['\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}', '\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}', 'v^j_{\mathscr{X}}', '\xi_{\mathscr{X}j}']
+    answers:
+      - ['\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}', 'v^j_{\mathscr{X}}']
+      - ['v^j_{\mathscr{X}}', '\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}']
+    wrong:
+      - answer: ['\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}', 'v^j_{\mathscr{X}}']
+        feedback: |
+          Scaling test: with $\mathscr{Y} = 2\mathscr{X}$ vector components must double, but this factor is $\tfrac12$. It is the covector law.
+    hint: 'Vector components change like the differentials $d\mathscr{Y}^i$.'
+    explanation: |
+      $$v^i_{\mathscr{Y}} = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\,v^j_{\mathscr{X}} .$$
+
+  - type: build
+    id: build-cov
+    prompt: 'Build the **covector component** law, new chart from old. Here $\xi_{\mathscr{Y}i} = \xi(\partial/\partial\mathscr{Y}^i)$.'
+    prefix: '\xi_{\mathscr{Y}i} ='
+    tiles: ['\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}', '\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}', '\xi_{\mathscr{X}j}', 'v^j_{\mathscr{X}}']
+    answers:
+      - ['\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}', '\xi_{\mathscr{X}j}']
+      - ['\xi_{\mathscr{X}j}', '\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}']
+    wrong:
+      - answer: ['\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}', '\xi_{\mathscr{X}j}']
+        feedback: |
+          Scaling test: with $\mathscr{Y} = 2\mathscr{X}$ a covector component must halve, but this law doubles it, as for vectors. Cancellation also fails: both $\mathscr{X}^j$ are in the denominator.
+    hint: 'Covector components are values on basis vectors, so they follow the basis law.'
+    explanation: |
+      $$\xi_{\mathscr{Y}i} = \xi\Big(\frac{\partial}{\partial\mathscr{Y}^i}\Big) = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,\xi_{\mathscr{X}j} .$$
+
+  - type: mcq
+    id: catch-error
+    prompt: |
+      A classmate writes $d\mathscr{Y}^i = \dfrac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,d\mathscr{X}^j$. Which check refutes it fastest?
+    options:
+      - text: 'Scaling with $\mathscr{Y} = 2\mathscr{X}$: then $d\mathscr{Y} = 2\,d\mathscr{X}$, but the law gives $\tfrac12\,d\mathscr{X}$'
+        correct: true
+      - text: 'Compute the determinant of the Jacobian'
+        feedback: |
+          The determinant is a single number for the whole matrix. It cannot say whether a particular law uses the Jacobian or its inverse.
+      - text: 'Check that both sides are covectors'
+        feedback: |
+          Both sides are indeed covectors, so that check passes. The error is which Jacobian multiplies them, and only the scaling or cancellation test sees it.
+    explanation: |
+      Cancellation agrees: $\mathscr{X}^j$ appears in the numerator of the Jacobian and again in $d\mathscr{X}^j$ (a numerator), so it does not cancel. The correct law is $d\mathscr{Y}^i = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}d\mathscr{X}^j$, the chain rule for $\mathscr{Y}^i$ as a function of the $\mathscr{X}$'s.
+
+  - type: numeric
+    id: polar-vector
+    prompt: |
+      In the plane take the cartesian chart $(x,y)$ and the polar chart $(r,\theta)$, related by $x = r\cos\theta$, $y = r\sin\theta$. At the point $p = (0, 2)$ we have $r = 2$ and $\theta = \pi/2$. A velocity $v$ at $p$ has polar components $(v^r, v^\theta) = (1, 1)$. Find its cartesian component $v^x$.
+    answer: -2
+    answerText: '-2'
+    wrong:
+      - { value: -0.5, feedback: 'You used $\partial\theta/\partial x = -y/r^2 = -\tfrac12$, the Jacobian from cartesian to polar. Here the starting components are polar and the target is cartesian, so the entries are derivatives of $x$ and $y$ with respect to $r$ and $\theta$.' }
+      - { value: 0, feedback: 'You dropped the $\theta$ contribution. With $v^\theta = 1$ the point also turns, and at the top of the circle turning moves it in the $x$ direction.' }
+    hint: 'Vector components go against the basis. Which chart is the new one? The sum must cancel the polar index.'
+    explanation: |
+      The new chart is cartesian, so use $\partial x/\partial r = \cos\theta = 0$ and $\partial x/\partial\theta = -r\sin\theta = -2$:
+      $$v^x = \frac{\partial x}{\partial r}v^r + \frac{\partial x}{\partial\theta}v^\theta = 0\cdot 1 + (-2)\cdot 1 = -2 .$$
+      Likewise $v^y = \sin\theta\cdot 1 + r\cos\theta\cdot 1 = 1$. Sanity check: at the top of the circle, turning counterclockwise moves left.
+
+  - type: numeric
+    id: polar-covector
+    prompt: |
+      Same plane and point: $p = (0, 2)$, so $r = 2$, $\theta = \pi/2$. A covector $\xi$ at $p$ has polar components $(\xi_r, \xi_\theta) = (3, 1)$, that is $\xi(\partial/\partial r) = 3$ and $\xi(\partial/\partial\theta) = 1$. Find its cartesian component $\xi_x = \xi(\partial/\partial x)$.
+    answer: -0.5
+    answerText: '-0.5'
+    wrong:
+      - { value: -2, feedback: 'You used $\partial x/\partial\theta = -r\sin\theta = -2$, the vector-component Jacobian. Covector components follow the basis, so going to the cartesian chart you need the derivatives of $r$ and $\theta$ with respect to $x$.' }
+      - { value: 3, feedback: 'That is $\xi_r$ alone. At $p$, $\partial/\partial x$ has no $\partial/\partial r$ part but a $\theta$ part.' }
+    hint: 'Lower-index objects follow the basis. At $p$: $\partial r/\partial x = x/r = 0$ and $\partial\theta/\partial x = -y/r^2$.'
+    explanation: |
+      The target chart is cartesian, so the Jacobian entries are derivatives of the polar coordinates with respect to $x$:
+      $$\xi_x = \frac{\partial r}{\partial x}\xi_r + \frac{\partial\theta}{\partial x}\xi_\theta = 0\cdot 3 + \Big(-\frac12\Big)\cdot 1 = -\frac12 .$$
+      Likewise $\xi_y = \frac{\partial r}{\partial y}\xi_r + \frac{\partial\theta}{\partial y}\xi_\theta = 1\cdot 3 + 0 = 3$.
+
+  - type: numeric
+    id: polar-pairing
+    prompt: |
+      Same point $p = (0,2)$. The velocity $v$ has cartesian components $(v^x, v^y) = (-2, 1)$ and the covector $\xi$ has cartesian components $(\xi_x, \xi_y) = (-\tfrac12, 3)$. Compute the number $\xi(v)$. It must agree with the polar components $v = (1,1)$ and $\xi = (3,1)$.
+    answer: 4
+    answerText: '4'
+    wrong:
+      - { value: 1, feedback: 'That is only the $x$-term, $\xi_x v^x = 1$. The pairing adds one product per index: $\xi_x v^x + \xi_y v^y$.' }
+    hint: 'The pairing is $\xi_x v^x + \xi_y v^y$.'
+    explanation: |
+      $$\xi_x v^x + \xi_y v^y = \tfrac12\cdot 2 + 3 = 4,$$
+      and in polar components $\xi_r v^r + \xi_\theta v^\theta = 3 + 1 = 4$. Same number in both charts: the factors $\partial\mathscr{Y}/\partial\mathscr{X}$ and $\partial\mathscr{X}/\partial\mathscr{Y}$ cancel inside the pairing, which is why the two families go in opposite directions.
+
+  - type: mcq
+    id: inverse
+    prompt: |
+      Consider two charts $\mathscr{X}$ and $\mathscr{Y}$ on a $d$-dimensional manifold. Going from $\mathscr{X}$ to $\mathscr{Y}$ and back must return the original components. In terms of the two Jacobians, this says
+    options:
+      - text: '$\dfrac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\,\dfrac{\partial\mathscr{Y}^k}{\partial\mathscr{X}^j} = \delta^i_j$: the two matrices are inverses'
+        correct: true
+      - text: 'The two matrices are transposes of each other'
+        feedback: |
+          Transposes would be equal for rotations only. In the polar–cartesian example above, $\partial x/\partial\theta = -2$ but $\partial\theta/\partial x = -\tfrac12$: they are reciprocal, not equal.
+      - text: 'The two matrices are equal'
+        feedback: |
+          With $\mathscr{Y} = 2\mathscr{X}$ one is $2$ and the other $\tfrac12$.
+    explanation: |
+      The repeated index $k$ cancels like a fraction ($\partial\mathscr{Y}^k$ over $\partial\mathscr{Y}^k$), leaving $\partial\mathscr{X}^i/\partial\mathscr{X}^j = \delta^i_j$. This is the cancellation test once more.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** tensor spaces. A tensor with several indices collects **one Jacobian per index**: $\partial\mathscr{Y}/\partial\mathscr{X}$ for each upper index and $\partial\mathscr{X}/\partial\mathscr{Y}$ for each lower one, and you now know which is which.

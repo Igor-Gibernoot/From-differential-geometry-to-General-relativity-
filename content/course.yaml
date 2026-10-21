@@ -184,6 +184,11 @@ levels:
         kind: concept
         file: ch04/cotangent-basis.yaml
         summary: A chart's coordinate functions, differentiated, are the dual basis of its basis vectors. Covector components, the expansion of $(df)_p$, the transformation laws (basis contravariant, components covariant), the chart-free pairing, and why every covector is a differential.
+      - id: ch04-intuition-jacobian
+        title: "Intuition: Which Jacobian, ∂Y/∂X or ∂X/∂Y?"
+        kind: intuition
+        file: ch04/intuition-jacobian.yaml
+        summary: Four chart-change laws, one chain rule. A scaling test and a cancellation test to rebuild any of them in seconds, with a polar–cartesian example.
       - id: ch04-tensor-space
         title: Tensor Spaces at a Point
         kind: concept
@@ -268,6 +273,11 @@ levels:
         kind: concept
         file: ch06/christoffel.yaml
         summary: In a chart a connection is d³ functions Γ, which give every covariant derivative in components; they change chart with an extra second-derivative term, so they are not a tensor.
+      - id: ch06-intuition-christoffel
+        title: "Intuition: Reading, Signing and Changing Γ"
+        kind: intuition
+        file: ch06/intuition-christoffel.yaml
+        summary: Which index is the direction, when Γ enters with a plus or a minus, and the two-part transformation law (tensor part plus extra term) with quick checks.
       - id: ch06-parallel-transport
         title: Parallel Transport and Autoparallels
         kind: concept

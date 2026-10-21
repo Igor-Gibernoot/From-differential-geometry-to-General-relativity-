@@ -7,6 +7,7 @@ append a short entry at the end of **Log** (a few lines, ending with
 
 ## Current (2026-10-21, Chapter 10 started: widgets `light-cones`, `worldline-clock`, `observer-frame`, `ch10-spacetime`, `ch10-worldlines`, `ch10-observers`; widget `area-cell` built and used in `ch08-metric-volume`; next: `ch10-lorentz`)
 
+- **More intuition lessons:** `ch04-intuition-jacobian` (after `ch04-cotangent-basis`; chain-rule mnemonic, scaling and cancellation tests, polar–cartesian numbers at p=(0,2)) and `ch06-intuition-christoffel` (after `ch06-christoffel`; reading Γ^i_{jk}, +Γ upper / −Γ lower, transformation law = tensor part + extra term, 1D numerics with x=y²). Use Einstein summation in both.
 - **Intuition lessons (`kind: intuition`)**: a new lesson class that derives nothing; it builds quick recall of the main expressions of the concept lessons (a mnemonic, scaling/limit checks, build cards, one small numeric example), with `own:` summary and Recap like a concept lesson. First one: `ch02-intuition-transformations` (J vs J⁻¹: anchor $hat{x}_i = sum_j J_i^jhat{y}_j$; lower index follows the basis, upper goes against; scaling test and index balance). Add more later for other chapters' formulas.
 - **Summary rule (`own:`):** the final "what you now own" card restates the lesson's main formulas as math (displayed `$$...$$`, phone-safe, long ones split), not prose. Fixed 2026-10-21 in ch02 tensors/change-of-basis, ch03 homeomorphisms/hausdorff/charts/standard-topology, ch04 tangent-space/tensor-space, ch05 tensor-fields.
 - **Chapter 2 complete** (lessons, traps, map, challenge).
@@ -475,6 +476,10 @@ append a short entry at the end of **Log** (a few lines, ending with
 ## Log
 
 - Intuition lesson revision: shear cards no longer state the law to apply (learner recalls it); house table style added in css/app.css (.prose table), applies to every Markdown table (incl. dual-basis-law). Conventions fixed here: intuition application cards give data, never the formula; tables are plain Markdown.
+### 2026-10-21 — intuition lessons `ch04-intuition-jacobian` (16 cards) and `ch06-intuition-christoffel` (18 cards)
+
+Both derive nothing: mnemonic, scaling/limit checks, build cards, numeric cards giving data not the law. Conventions fixed here: Jacobian laws via chain-rule cancellation (same chart letter on the repeated index); Γ_{jk}: j = differentiated field, k = direction; extra term of the Γ law has second derivatives of the old coordinates w.r.t. the new; barred symbols (arGamma) for a second connection (no apostrophes in single-quoted YAML).
+
 ### 2026-10-21 — new lesson kind `intuition`, first lesson `ch02-intuition-transformations` (18 cards)
 - Engine: kind registered in validate (own: allowed), icons/KIND_LABEL (lightning icon, "Intuition lesson"), recap includes it. Placed in ch02 before `ch02-tensors`.
 - Conventions fixed here: new-from-old, upper-index objects ($y^j$, $hat{mathfrak{y}}^j$) take $J$, lower-index ($hat{y}_j$, $mathtt{y}_j$) take $J^{-1}$; in $J_i^j$ lower = old, upper = new.

@@ -1,0 +1,296 @@
+id: ch06-intuition-christoffel
+title: "Intuition: Reading, Signing and Changing Γ"
+kind: intuition
+own: |
+  - **Reading Γ**: the lower indices are the field then the direction, the upper index is the output:
+    {{ $$\nabla_{\partial\mathscr{X}_k}\partial\mathscr{X}_j = \Gamma^i_{jk}\,\partial\mathscr{X}_i$$ }}
+    (last lower index = direction). Polar, Euclidean connection: {{ $\Gamma^1_{22} = -r$ }} and {{ $\Gamma^2_{12} = \Gamma^2_{21} = 1/r$ }}.
+  - **Signs**: each upper index of the differentiated tensor gets $+\Gamma$, each lower index gets $-\Gamma$:
+    {{ $$\begin{gathered}(\nabla_\mathcal{X}\mathcal{Y})^k = \mathcal{X}\lfloor\tilde x^k\rceil + \Gamma^k_{ji}\,\tilde x^jx^i\\ (\nabla_\mathcal{X}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil - \Gamma^j_{ki}\,\mathtt{x}_jx^i\end{gathered}$$ }}
+  - **Changing chart** = tensor part (one Jacobian per index) + an extra term with a second derivative of the old coordinates:
+    {{ $$\begin{aligned}(\Gamma_\mathscr{Y})^i_{jk} &= \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}\\ &\quad + \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^l}\frac{\partial\mathscr{X}^s}{\partial\mathscr{Y}^j}\frac{\partial\mathscr{X}^m}{\partial\mathscr{Y}^k}(\Gamma_\mathscr{X})^l_{sm}\end{aligned}$$ }}
+  - **Checks**: for a linear chart change the extra term is $0$ (in one dimension, $\mathscr{Y} = 2\mathscr{X}$ gives $\Gamma_\mathscr{Y} = \Gamma_\mathscr{X}/2$); if $\Gamma_\mathscr{X} = 0$ only the extra term survives. It is the same for every connection and symmetric in $j,k$, so {{ $\Gamma^i_{jk} - \Gamma^i_{kj}$ }} is a tensor and $\Gamma$ itself is not.
+
+cards:
+  - type: text
+    id: hook
+    title: Three things to rebuild from memory
+    body: |
+      Once a chart is fixed, a connection $\nabla$ is a list of functions $\Gamma^i_{jk}$, the **connection coefficients** (Christoffel symbols when $\nabla$ comes from a metric). Three questions come up every time you use them:
+
+      1. **Reading**: which index is the direction, which the field, which the output?
+      2. **Signs**: when does $\Gamma$ enter with a plus, when with a minus?
+      3. **Changing chart**: what is the transformation law, and where does the extra term come from?
+
+      This lesson derives nothing. It gives you a picture to anchor the indices, a rule for the signs, and a two-part structure for the transformation law with checks that catch mistakes in seconds.
+
+      Throughout, $\partial\mathscr{X}_k := \partial/\partial\mathscr{X}^k$ is the $k$-th chart basis vector, repeated indices are summed, and $\mathcal{X}\lfloor f\rceil$ is the derivative of a function $f$ along $\mathcal{X}$.
+
+  - type: widget
+    id: turning-polar
+    title: A basis that turns
+    widget: chart-basis
+    config:
+      charts:
+        - { chart: polar, name: '\mathscr{Y}', cut: left }
+        - { chart: cartesian, name: '\mathscr{X}' }
+      p: [1, 0]
+      basisOnly: true
+      chain: true
+      view: { x: -2.5, y: -1.5, w: 5, h: 5 }
+      presets:
+        - { label: 'p = (1, 0)', p: [1, 0] }
+        - { label: 'p = (2, 0)', p: [2, 0] }
+        - { label: 'p = (0, 1)', p: [0, 1] }
+    body: |
+      The polar basis vectors $\partial\mathscr{Y}_1 = \partial/\partial r$ and $\partial\mathscr{Y}_2 = \partial/\partial\theta$ at $p$, with their cartesian expansions. Move $p$ around a circle: the **directions** of both arrows turn, and $\partial/\partial\theta$ also grows with $r$.
+
+      A connection must say how such a basis changes when you move along it. That information is $\Gamma$. Two cases to feel: moving in the $\theta$ direction, how do $\partial/\partial r$ and $\partial/\partial\theta$ change?
+
+  - type: numeric
+    id: gamma-radial-turn
+    prompt: |
+      In the plane, with the Euclidean connection (differentiate cartesian components), use polar coordinates $(r,\theta)$. In cartesian components $\partial/\partial r = (\cos\theta, \sin\theta)$ and $\partial/\partial\theta = r(-\sin\theta, \cos\theta)$. Move along the $\theta$-curve (fixed $r$, $\theta$ growing at unit rate) at the point $r = 4$. Differentiating the components of $\partial/\partial r$ along it gives a vector $c\,\partial/\partial\theta$. Find $c$.
+    answer: 0.25
+    answerText: '$0.25 = 1/r$'
+    wrong:
+      - { value: 4, feedback: 'That is $r$, the length of $\partial/\partial\theta$. The derivative of $\partial/\partial r$ is the vector $(-\sin\theta, \cos\theta)$, of length $1$, whereas $\partial/\partial\theta$ has length $r = 4$: the coefficient is the ratio, $\tfrac14$.' }
+      - { value: 1, feedback: 'The derivative vector $(-\sin\theta,\cos\theta)$ has length $1$, but the basis vector $\partial/\partial\theta$ it is compared with has length $r = 4$.' }
+    hint: 'Differentiate $(\cos\theta,\sin\theta)$ with respect to $\theta$ and compare with $\partial/\partial\theta = r(-\sin\theta,\cos\theta)$.'
+    explanation: |
+      $$\frac{d}{d\theta}(\cos\theta,\sin\theta) = (-\sin\theta,\cos\theta) = \frac1r\,\frac{\partial}{\partial\theta}.$$
+      So $\nabla_{\partial\theta}\,\partial r = \frac1r\,\partial\theta$: the coefficient $\Gamma^2_{12} = 1/r$. **Limit check:** far away, $1/r\to 0$: the radial arrow turns slowly when measured in the long $\partial\theta$ unit.
+
+  - type: numeric
+    id: gamma-circle
+    prompt: |
+      Same plane and Euclidean connection, same point $r = 4$. Move along the $\theta$-curve and differentiate the cartesian components of $\partial/\partial\theta = r(-\sin\theta, \cos\theta)$ (with $r$ fixed). The result is $c\,\partial/\partial r$ with $\partial/\partial r = (\cos\theta,\sin\theta)$. Find $c$.
+    answer: -4
+    answerText: '$-4 = -r$'
+    wrong:
+      - { value: 4, feedback: 'The sign: $\frac{d}{d\theta}(-\sin\theta,\cos\theta) = (-\cos\theta,-\sin\theta)$, which points **opposite** to $\partial/\partial r$. A body on a circle is accelerated toward the centre.' }
+      - { value: -0.25, feedback: 'Do not divide by $r$ here: the vector being differentiated has length $r$, and the answer is compared with $\partial/\partial r$, which has length $1$. So the factor $r$ stays.' }
+    hint: 'The derivative of $r(-\sin\theta,\cos\theta)$ with respect to $\theta$, with $r$ fixed.'
+    explanation: |
+      $$\begin{aligned}\frac{d}{d\theta}\,r(-\sin\theta,\cos\theta) &= -r(\cos\theta,\sin\theta)\\ &= -r\,\frac{\partial}{\partial r}.\end{aligned}$$
+      So $\nabla_{\partial\theta}\,\partial\theta = -r\,\partial r$: the coefficient $\Gamma^1_{22} = -r$. **Limit check:** the bigger the circle, the longer $\partial\theta$ and the larger the inward correction.
+
+  - type: text
+    id: reading
+    title: Reading the indices
+    body: |
+      The two results are values of one pattern. The coefficients are defined by
+      $$\nabla_{\partial\mathscr{X}_k}\partial\mathscr{X}_j = \Gamma^i_{jk}\,\partial\mathscr{X}_i .$$
+      Read it as a sentence: *move in direction $k$, differentiate the field $j$, express the result along $i$.*
+
+      - **upper $i$**: the output direction (a vector comes out, so it is upper);
+      - **first lower $j$**: the basis vector being differentiated;
+      - **last lower $k$**: the direction of motion.
+
+      So $\Gamma^2_{12}$: move along $2$ ($\theta$), differentiate $\partial\mathscr{X}_1$ ($\partial r$), get a multiple of $\partial\mathscr{X}_2$ ($\partial\theta$): exactly $1/r$. And $\Gamma^1_{22}$: move along $\theta$, differentiate $\partial\theta$, get a multiple of $\partial r$: $-r$.
+
+  - type: mcq
+    id: read-index
+    prompt: |
+      In a chart $\mathscr{X}$ of a 2-dimensional manifold, a connection satisfies
+      $$\nabla_{\partial\mathscr{X}_1}\,\partial\mathscr{X}_2 = 5\,\partial\mathscr{X}_1 + 7\,\partial\mathscr{X}_2 .$$
+      Using $\nabla_{\partial\mathscr{X}_k}\partial\mathscr{X}_j = \Gamma^i_{jk}\partial\mathscr{X}_i$, which coefficient equals $5$?
+    options:
+      - text: '$\Gamma^1_{21}$'
+        correct: true
+      - text: '$\Gamma^1_{12}$'
+        feedback: |
+          That would be the derivative of $\partial\mathscr{X}_1$ moving along $2$. Here we move along $1$ (the subscript of $\nabla$) and differentiate $\partial\mathscr{X}_2$: field $j=2$, direction $k=1$. The two coefficients are equal only when the connection has no torsion.
+      - text: '$\Gamma^2_{11}$'
+        feedback: |
+          The upper index is the output component, and $5$ multiplies $\partial\mathscr{X}_1$, so $i = 1$.
+      - text: '$\Gamma^1_{11}$'
+        feedback: |
+          The differentiated field is $\partial\mathscr{X}_2$, so the first lower index is $2$, not $1$.
+    explanation: |
+      Output $i=1$ (the coefficient of $\partial\mathscr{X}_1$), field $j=2$, direction $k=1$: $\Gamma^1_{21} = 5$ and, in the same way, $\Gamma^2_{21} = 7$.
+
+  - type: text
+    id: signs
+    title: The sign rule
+    body: |
+      To differentiate a vector field $\mathcal{Y}$ with components $\tilde x^j$ along $\mathcal{X}$ with components $x^i$, differentiate the components **and** add the turning of the basis:
+      $$(\nabla_\mathcal{X}\mathcal{Y})^k = \mathcal{X}\lfloor\tilde x^k\rceil + \Gamma^k_{ji}\,\tilde x^jx^i .$$
+      For a covector field $\mathsf{X}$ with components $\mathtt{x}_j$ the correction has the **opposite sign** and the index structure of the covector:
+      $$(\nabla_\mathcal{X}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil - \Gamma^j_{ki}\,\mathtt{x}_jx^i .$$
+      **Rule:** $+\Gamma$ for each upper index of the differentiated tensor, $-\Gamma$ for each lower index. Why must they differ? The number $\mathsf{X}(\mathcal{Y})$ is a scalar, and $\nabla$ on a scalar is just $\mathcal{X}\lfloor\cdot\rceil$ with no $\Gamma$; the Leibniz rule then forces the two $\Gamma$-terms to cancel.
+
+  - type: build
+    id: build-vec
+    prompt: 'Build the covariant derivative of a **vector** field: components $\tilde x^j$ of $\mathcal{Y}$, components $x^i$ of the direction $\mathcal{X}$.'
+    prefix: '(\nabla_\mathcal{X}\mathcal{Y})^k ='
+    tiles: ['\mathcal{X}\lfloor\tilde x^k\rceil', '+\Gamma^k_{ji}\,\tilde x^jx^i', '-\Gamma^k_{ji}\,\tilde x^jx^i', '+\Gamma^k_{ij}\,\tilde x^jx^i']
+    answers:
+      - ['\mathcal{X}\lfloor\tilde x^k\rceil', '+\Gamma^k_{ji}\,\tilde x^jx^i']
+      - ['+\Gamma^k_{ji}\,\tilde x^jx^i', '\mathcal{X}\lfloor\tilde x^k\rceil']
+    wrong:
+      - answer: ['\mathcal{X}\lfloor\tilde x^k\rceil', '-\Gamma^k_{ji}\,\tilde x^jx^i']
+        feedback: |
+          Upper index, so $+\Gamma$. The minus sign belongs to lower-index objects (covectors).
+      - answer: ['\mathcal{X}\lfloor\tilde x^k\rceil', '+\Gamma^k_{ij}\,\tilde x^jx^i']
+        feedback: |
+          The last lower index is the **direction**, and the direction components are $x^i$. Here the field $\tilde x^j$ should carry the first lower index: $\Gamma^k_{ji}$.
+    hint: 'Output $k$ upper; field $j$ first lower; direction $i$ last lower.'
+    explanation: |
+      $$(\nabla_\mathcal{X}\mathcal{Y})^k = \mathcal{X}\lfloor\tilde x^k\rceil + \Gamma^k_{ji}\,\tilde x^jx^i .$$
+
+  - type: build
+    id: build-cov
+    prompt: 'Build the covariant derivative of a **covector** field with components $\mathtt{x}_j$ along $\mathcal{X}$ (components $x^i$).'
+    prefix: '(\nabla_\mathcal{X}\mathsf{X})_k ='
+    tiles: ['\mathcal{X}\lfloor\mathtt{x}_k\rceil', '-\Gamma^j_{ki}\,\mathtt{x}_jx^i', '+\Gamma^j_{ki}\,\mathtt{x}_jx^i', '-\Gamma^k_{ji}\,\mathtt{x}_jx^i']
+    answers:
+      - ['\mathcal{X}\lfloor\mathtt{x}_k\rceil', '-\Gamma^j_{ki}\,\mathtt{x}_jx^i']
+      - ['-\Gamma^j_{ki}\,\mathtt{x}_jx^i', '\mathcal{X}\lfloor\mathtt{x}_k\rceil']
+    wrong:
+      - answer: ['\mathcal{X}\lfloor\mathtt{x}_k\rceil', '+\Gamma^j_{ki}\,\mathtt{x}_jx^i']
+        feedback: |
+          Lower index, so $-\Gamma$. With a plus the correction would not cancel the vector one inside $\mathsf{X}(\mathcal{Y})$, and the derivative of a scalar would acquire a $\Gamma$.
+      - answer: ['\mathcal{X}\lfloor\mathtt{x}_k\rceil', '-\Gamma^k_{ji}\,\mathtt{x}_jx^i']
+        feedback: |
+          Summed index: $\mathtt{x}_j$ has a lower $j$, so $j$ must be **upper** on $\Gamma$, and the free index $k$ lower. The pattern is $\Gamma^j_{ki}$.
+    hint: 'Lower index: minus. The summed $j$ is lower on $\mathtt{x}_j$, so it must sit up on $\Gamma$.'
+    explanation: |
+      $$(\nabla_\mathcal{X}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil - \Gamma^j_{ki}\,\mathtt{x}_jx^i .$$
+
+  - type: numeric
+    id: sign-numbers
+    prompt: |
+      One-dimensional manifold, a chart, and a point $p$ where $\Gamma^1_{11} = 2$. Take a direction $\mathcal{X}$ with component $x^1 = 1$. A vector field $\mathcal{Y}$ has component $\tilde x^1 = 3$ at $p$ and its derivative along $\mathcal{X}$ is $\mathcal{X}\lfloor\tilde x^1\rceil = 5$. A covector field $\mathsf{X}$ has component $\mathtt{x}_1 = 3$ at $p$ and $\mathcal{X}\lfloor\mathtt{x}_1\rceil = 5$. Find the component of $\nabla_\mathcal{X}\mathsf{X}$.
+    answer: -1
+    answerText: '-1'
+    wrong:
+      - { value: 11, feedback: 'That is the answer for the vector field ($5 + 2\cdot 3$). For a covector the correction has the opposite sign.' }
+      - { value: 5, feedback: 'You forgot the correction. The covector component is $5 - \Gamma\,\mathtt{x}_1x^1$.' }
+    hint: 'Lower index: subtract $\Gamma\cdot\mathtt{x}_1\cdot x^1$.'
+    explanation: |
+      $$5 - 2\cdot 3\cdot 1 = -1,$$
+      while for the vector field $5 + 2\cdot 3\cdot 1 = 11$. Check: with the same data, $\nabla_\mathcal{X}(\mathsf{X}(\mathcal{Y})) = \mathcal{X}\lfloor 3\cdot 3\rceil = 5\cdot 3 + 3\cdot 5 = 30$, and $(\nabla_\mathcal{X}\mathsf{X})(\mathcal{Y}) + \mathsf{X}(\nabla_\mathcal{X}\mathcal{Y}) = (-1)(3) + 3\cdot 11 = 30$. The $\Gamma$-terms $-6\cdot 3$ and $+3\cdot 6$ cancel.
+
+  - type: text
+    id: law-structure
+    title: The transformation law has two parts
+    body: |
+      Changing from chart $\mathscr{X}$ to chart $\mathscr{Y}$, the new coefficients are the sum of two pieces:
+      $$(\Gamma_\mathscr{Y})^i_{jk} = \underbrace{\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}}_{\text{extra term}} + \text{tensor part}.$$
+      - **Tensor part**: one Jacobian per index, with the rules you know. The upper $i$ takes $\partial\mathscr{Y}/\partial\mathscr{X}$, each lower index takes $\partial\mathscr{X}/\partial\mathscr{Y}$, and $\Gamma_\mathscr{X}$ sits in the middle with the summed indices:
+      $$\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^l}\frac{\partial\mathscr{X}^s}{\partial\mathscr{Y}^j}\frac{\partial\mathscr{X}^m}{\partial\mathscr{Y}^k}\,(\Gamma_\mathscr{X})^l_{sm}.$$
+      - **Extra term**: it comes from differentiating the Jacobian when the basis $\partial\mathscr{Y}_j = \frac{\partial\mathscr{X}^s}{\partial\mathscr{Y}^j}\partial\mathscr{X}_s$ is differentiated. So it contains the **second derivative of the old coordinates with respect to the new ones**, in the lower slots $j,k$, then one factor $\partial\mathscr{Y}^i/\partial\mathscr{X}^s$ to turn the output into a $\mathscr{Y}$-component.
+
+      Two checks: for a **linear** chart change all second derivatives vanish and only the tensor part is left; when $\Gamma_\mathscr{X} = 0$ **only** the extra term is left.
+
+  - type: numeric
+    id: linear-scaling
+    prompt: |
+      One-dimensional manifold with two charts related by $\mathscr{Y} = 2\mathscr{X}$ (so $\partial\mathscr{Y}/\partial\mathscr{X} = 2$ and $\partial\mathscr{X}/\partial\mathscr{Y} = \tfrac12$). A connection has $\Gamma_\mathscr{X} = 6$ at $p$. What is $\Gamma_\mathscr{Y}$ at $p$?
+    answer: 3
+    answerText: '3'
+    wrong:
+      - { value: 6, feedback: 'You treated $\Gamma$ as a scalar. It has one upper and two lower indices, so it picks up three Jacobian factors.' }
+      - { value: 12, feedback: 'You used the Jacobians the wrong way round: the upper index takes $\partial\mathscr{Y}/\partial\mathscr{X} = 2$ once, and each of the two lower indices takes $\partial\mathscr{X}/\partial\mathscr{Y} = \tfrac12$. That gives $2\cdot\tfrac14\cdot 6$, not $\tfrac12\cdot 4\cdot 6$.' }
+    hint: 'A linear chart change has zero second derivatives. Count one Jacobian per index.'
+    explanation: |
+      The second derivative of $\mathscr{X} = \mathscr{Y}/2$ is $0$, so only the tensor part survives:
+      $$\Gamma_\mathscr{Y} = 2\cdot\tfrac12\cdot\tfrac12\cdot 6 = 3 .$$
+
+  - type: build
+    id: build-extra
+    prompt: 'Build the **extra term** of the transformation law $\Gamma_\mathscr{X}\to\Gamma_\mathscr{Y}$, the one present even if $\Gamma_\mathscr{X} = 0$.'
+    prefix: '\text{extra} ='
+    tiles: ['\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}', '\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}', '\frac{\partial^2\mathscr{Y}^i}{\partial\mathscr{X}^s\partial\mathscr{X}^m}', '\frac{\partial\mathscr{X}^s}{\partial\mathscr{Y}^j}']
+    answers:
+      - ['\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}', '\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}']
+      - ['\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}', '\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}']
+    wrong:
+      - answer: ['\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}', '\frac{\partial\mathscr{X}^s}{\partial\mathscr{Y}^j}']
+        feedback: |
+          That is a first-derivative product, which is just part of the Jacobian bookkeeping: it equals $\delta^i_j$ and has only one lower index. The extra term must carry **two** lower indices $j,k$, as a second derivative does.
+      - answer: ['\frac{\partial^2\mathscr{Y}^i}{\partial\mathscr{X}^s\partial\mathscr{X}^m}', '\frac{\partial\mathscr{X}^s}{\partial\mathscr{Y}^j}']
+        feedback: |
+          The free lower indices $j,k$ belong to $\mathscr{Y}$, so the second derivative must be taken **with respect to the $\mathscr{Y}$ coordinates**, and of the old coordinates $\mathscr{X}^s$.
+    hint: 'Free indices: $i$ up (a $\mathscr{Y}$-index), $j,k$ down (also $\mathscr{Y}$-indices). The second derivative must carry $j,k$ in its denominator.'
+    explanation: |
+      $$\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}.$$
+      The summed $s$ cancels between the numerator of the second derivative and the denominator of the Jacobian.
+
+  - type: numeric
+    id: extra-only
+    prompt: |
+      One-dimensional manifold with coordinates $x$ (chart $\mathscr{X}$) and $y$ (chart $\mathscr{Y}$) related by $x = y^2$ for $y>0$. A connection has $\Gamma_\mathscr{X} = 0$ at $p$, where $y = 2$ (so $x = 4$). Find $\Gamma_\mathscr{Y}$ at $p$.
+    answer: 0.5
+    answerText: '$0.5 = 1/y$'
+    wrong:
+      - { value: 0, feedback: 'That would be right for a tensor, which vanishing in one chart vanishes in all. $\Gamma$ is not a tensor: with $\Gamma_\mathscr{X} = 0$ the extra term still survives.' }
+      - { value: 2, feedback: 'That is $d^2x/dy^2$ alone. The extra term is multiplied by $\partial\mathscr{Y}/\partial\mathscr{X} = dy/dx = \tfrac1{2y} = \tfrac14$.' }
+    hint: 'Extra term in one dimension: $\dfrac{dy}{dx}\,\dfrac{d^2x}{dy^2}$.'
+    explanation: |
+      $$\Gamma_\mathscr{Y} = \frac{dy}{dx}\frac{d^2x}{dy^2} = \frac{1}{2y}\cdot 2 = \frac1y = 0.5 .$$
+      The same mechanism produces the polar value $\Gamma^2_{12} = 1/r$ from a vanishing cartesian $\Gamma$.
+
+  - type: numeric
+    id: both-parts
+    prompt: |
+      Same one-dimensional charts, $x = y^2$, at the point $y = 2$ ($x=4$), but now the connection has $\Gamma_\mathscr{X} = 3$ at $p$. Find $\Gamma_\mathscr{Y}$ at $p$.
+    answer: 12.5
+    answerText: '12.5'
+    wrong:
+      - { value: 12, feedback: 'That is the tensor part only: $\tfrac14\cdot 4\cdot 4\cdot 3$. The extra term $\tfrac14\cdot 2 = \tfrac12$ must be added.' }
+      - { value: 0.5, feedback: 'That is the extra term only. The tensor part $\tfrac14\cdot 16\cdot 3 = 12$ must be added: $\Gamma_\mathscr{X}\neq 0$ here.' }
+    hint: 'Tensor part: $\dfrac{dy}{dx}\Big(\dfrac{dx}{dy}\Big)^2\Gamma_\mathscr{X}$. Extra term: $dfrac{dy}{dx}dfrac{d^2x}{dy^2}$.'
+    explanation: |
+      With $dx/dy = 2y = 4$, $dy/dx = \tfrac14$ and $d^2x/dy^2 = 2$:
+      $$\begin{aligned}\Gamma_\mathscr{Y} &= \tfrac14\cdot 2 + \tfrac14\cdot 4^2\cdot 3\\ &= 0.5 + 12 = 12.5 .\end{aligned}$$
+
+  - type: mcq
+    id: which-tensors
+    prompt: |
+      Two connections $\nabla,\bar\nabla$ on the same manifold have coefficients $\Gamma,\bar\Gamma$ in a chart. The extra term of the transformation law depends only on the two **charts** and is symmetric in $j,k$. Select every quantity that transforms like the components of a $(1,2)$-tensor field.
+    multiple: true
+    options:
+      - text: '$\Gamma^i_{jk} - \bar\Gamma^i_{jk}$'
+        correct: true
+      - text: '$\Gamma^i_{jk} - \Gamma^i_{kj}$'
+        correct: true
+      - text: '$\Gamma^i_{jk}$ alone'
+        feedback: |
+          It carries the extra term, so it can vanish in one chart and not in another (cartesian versus polar for the same $\nabla^{\mathrm{E}}$).
+      - text: '$\Gamma^i_{jk} + \bar\Gamma^i_{jk}$'
+        feedback: |
+          The extra term is the same for both connections, so in the **sum** it appears twice and does not cancel. Only differences cancel it.
+      - text: '$\Gamma^i_{jk} + \Gamma^i_{kj}$'
+        feedback: |
+          The extra term is symmetric in $j,k$, so in the symmetrised sum it doubles. Only the antisymmetric combination loses it.
+    explanation: |
+      The extra term is identical for every connection, so a difference cancels it; and it is symmetric in $j,k$, so an antisymmetrisation cancels it. The second quantity is (up to sign) the torsion.
+
+  - type: mcq
+    id: polar-values
+    prompt: |
+      The Euclidean connection of the plane (differentiate cartesian components) has $\Gamma = 0$ in cartesian coordinates. In polar coordinates $(r,\theta)$, indices $1\leftrightarrow r$, $2\leftrightarrow\theta$, which coefficients are **nonzero**? Select all.
+    multiple: true
+    options:
+      - text: '$\Gamma^1_{22}$'
+        correct: true
+      - text: '$\Gamma^2_{12}$'
+        correct: true
+      - text: '$\Gamma^2_{21}$'
+        correct: true
+      - text: '$\Gamma^1_{11}$'
+        feedback: |
+          $\Gamma^1_{11}$ is the $\partial r$ part of $\nabla_{\partial r}\partial r$. Moving radially, $\partial r = (\cos\theta,\sin\theta)$ does not change at all, so the whole derivative is $0$.
+      - text: '$\Gamma^2_{22}$'
+        feedback: |
+          $\Gamma^2_{22}$ is the $\partial\theta$ part of $\nabla_{\partial\theta}\partial\theta = -r\,\partial r$, which points purely along $\partial r$. Its $\partial\theta$ part is $0$.
+    explanation: |
+      $$\Gamma^1_{22} = -r,\qquad \Gamma^2_{12} = \Gamma^2_{21} = \frac1r,$$
+      and all others vanish. Memory aid: the only nonzero ones involve a $\theta$-move (index $2$ in the direction or in the field) coupled with the other basis vector, $-r$ pointing inward and $1/r$ the radial arrow turning.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** parallel transport. A connection carries a vector along a curve by solving $\dot{\tilde x}^k + \Gamma^k_{ji}\tilde x^j\dot\gamma^i = 0$, and the signs and indices you just rebuilt are exactly the ones in that equation.
