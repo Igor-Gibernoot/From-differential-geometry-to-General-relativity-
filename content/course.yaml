@@ -542,4 +542,8 @@ levels:
         file: ch10/map.yaml
         summary: "Rebuild the Chapter 10 map box by box: spacetime and its light cone, the time orientation, worldlines and proper time, observers and Lorentz matrices on one side; the Einstein-Hilbert action, the energy-momentum tensor, the Einstein equations, conservation, Schwarzschild and its tides on the other."
       - { id: ch10-review, title: Level Review, kind: review }
-      - { id: ch10-challenge, title: Level Challenge, kind: challenge }
+      - id: ch10-challenge
+        title: Level Challenge
+        kind: challenge
+        file: ch10/challenge.yaml
+        summary: "Harder problems combining the level: twins with two different speeds, the Lorentz matrix at the turnaround and what the home clock reads in between; a chart of accelerated observers, flat but with nonzero Christoffel symbols, where rapidities add; and which sources gravitate, from dust and light to vacuum energy and a scalar field that repels."

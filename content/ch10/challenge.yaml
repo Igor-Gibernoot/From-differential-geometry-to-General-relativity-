@@ -1,0 +1,492 @@
+id: ch10-challenge
+title: Level Challenge
+kind: challenge
+
+# Organization: intro, then one block per problem (cards tagged
+# "Problem N · ...", ids prefixed pN-), then wrap-up. Session 1 wrote
+# problems 1-3; part 2 adds problems 4-5 and the wrap-up card.
+
+cards:
+  - type: text
+    id: intro
+    title: Five problems on spacetime and gravity
+    body: |
+      This challenge pushes each idea of the level to its edge. Keep pencil, paper and a calculator at hand: every answer can be checked by hand.
+
+      Recall the toolkit. Spacetime is a 4-dimensional manifold with a Lorentzian metric $g$ of signature $(+,-,-,-)$: a nonzero vector $\mathcal{X}$ is timelike if $g(\mathcal{X},\mathcal{X}) > 0$, lightlike if $=0$, spacelike if $<0$. A massive worldline $\gamma$ has timelike, future directed velocity $v_\gamma$ and its **proper time** is
+      $$\tau[\gamma] = \int\sqrt{g(v_\gamma,v_\gamma)}\,d\lambda.$$
+      An observer carries an orthonormal frame $(e_0,\dots,e_3)$ with $e_0 = v_\gamma$ unit; two observers meeting at an event have frames related by a Lorentz matrix $\Lambda$ with $\Lambda^T\eta\Lambda = \eta$, $\eta = \mathrm{diag}(1,-1,-1,-1)$. Gravity is the curvature of $g$, and the field equations read
+      $$G_{ab} = \mathrm{Ric}_{ab} - \tfrac12R\,g_{ab} = 8\pi G_N\,T_{ab}.$$
+      In 1+1 problems the chart coordinates are $(a,\tau)$ (space first, time second) and Minkowski space has $g = d\tau\otimes d\tau - da\otimes da$.
+
+      1. Twins with two different speeds: proper times, the frame change at the turnaround, and what the stay-at-home clock reads in between.
+      2. A chart of accelerated observers: a flat metric with nonzero Christoffel symbols, a clock that runs slow, and boosts that add up.
+      3. Who gravitates? Dust, light and vacuum energy as sources of $\mathrm{Ric}_{00}$, and a scalar field that repels.
+      4. Planned for the next session.
+      5. Planned for the next session.
+
+  # ---------------------------------------------------------------- Problem 1
+  - type: text
+    id: p1-setup
+    tag: Problem 1 · Twins with two speeds
+    title: Out at 0.6, back at 0.8
+    body: |
+      Minkowski space in 1+1 dimensions, chart $(a,\tau)$, $g = d\tau\otimes d\tau - da\otimes da$. The home twin H stays at $a = 0$. The travelling twin T leaves the event $A = (0,0)$ and moves in straight lines:
+
+      - outbound at chart speed $0.6$ ($da/d\tau = 0.6$) until the event $B = (6,10)$;
+      - then back at chart speed $0.8$ towards $a = 0$, meeting H again at the event $C$.
+
+      A "speed" here is always $da/d\tau$, and $|{\rm speed}| < 1$ along a massive worldline.
+
+  - type: numeric
+    id: p1-return-event
+    tag: Problem 1 · Twins with two speeds
+    title: Where the twins meet
+    prompt: |
+      In Minkowski space with chart $(a,\tau)$, a traveller goes from $A = (0,0)$ to $B = (6,10)$ at constant speed $0.6$, then returns towards $a = 0$ at constant speed $0.8$ ($da/d\tau = -0.8$), meeting the stay-at-home twin at the event $C = (0,\tau_C)$. Compute the chart time $\tau_C$.
+    answer: 17.5
+    wrong:
+      - { value: 20, feedback: 'That would be the return at speed $0.6$ again ($6/0.6 = 10$). The return is faster, $0.8$: it takes $6/0.8 = 7.5$ units of chart time, added to $10$.' }
+      - { value: 7.5, feedback: 'That is only the duration of the return leg, $6/0.8$. The meeting event has chart time $10 + 7.5$.' }
+    hint: The return covers $\Delta a = 6$ at speed $0.8$.
+    explanation: |
+      $$\tau_C = 10 + \frac{6}{0.8} = 10 + 7.5 = 17.5.$$
+      The home twin, at rest at $a = 0$, ages $17.5$ between $A$ and $C$: for H the chart time is its clock.
+
+  - type: numeric
+    id: p1-leg-times
+    tag: Problem 1 · Twins with two speeds
+    title: The two legs of T's clock
+    prompt: |
+      A traveller moves in Minkowski space ($g = d\tau\otimes d\tau - da\otimes da$) at constant chart speed $u$ over a stretch of chart time $\Delta\tau$. Its proper time is $\Delta\tau\sqrt{1-u^2}$. T goes out at $u = 0.6$ for $\Delta\tau = 10$ and back at $u = 0.8$ for $\Delta\tau = 7.5$. Compute the **total** proper time of T between $A$ and $C$.
+    answer: 12.5
+    wrong:
+      - { value: 14, feedback: 'That applies one factor $0.8$ to the whole trip, $17.5\times0.8$. Each leg has its own speed and its own factor: $\sqrt{1-0.36} = 0.8$ outbound but $\sqrt{1-0.64} = 0.6$ on the way back.' }
+      - { value: 12, feedback: 'That swaps the factors: $10\times0.6 + 7.5\times0.8 = 12$. Outbound, $u = 0.6$ gives $\sqrt{1-0.36} = 0.8$; the faster return gives the smaller factor $0.6$.' }
+    hint: 'Leg 1: $10\times\sqrt{1-0.36}$. Leg 2: $7.5\times\sqrt{1-0.64}$.'
+    explanation: |
+      $$\tau_T = 10\cdot0.8 + 7.5\cdot0.6 = 8 + 4.5 = 12.5,$$
+      while H's clock reads $17.5$. T is $5$ younger: the broken path is the shorter one, as the reverse triangle inequality demands.
+
+  - type: mcq
+    id: p1-asymmetry
+    tag: Problem 1 · Twins with two speeds
+    title: Why not the other way round?
+    prompt: |
+      In Minkowski space, T travels $A \to B \to C$ (two straight pieces, different speeds) and H stays at rest. Proper times: T $12.5$, H $17.5$. "While T moves relative to H, T sees H moving relative to T, so T should find H younger." Where does this symmetric argument fail?
+    options:
+      - text: 'T''s worldline is not straight: it has a corner at $B$, and only a straight worldline is guaranteed to be the longest between two events'
+        correct: true
+      - text: 'Moving clocks run faster, not slower, when they return'
+        feedback: |
+          Moving clocks run slow in every inertial frame, both legs included. The asymmetry is not about speeding up on the way back.
+      - text: 'H is not an observer, because it carries no frame'
+        feedback: |
+          H carries a frame like any observer ($e_0 = \partial_\tau$, $e_1 = -\partial_a$ up to orientation). What distinguishes it is its worldline: straight, with one inertial frame all along.
+      - text: 'The proper times are not invariants, so they depend on who computes them'
+        feedback: |
+          Proper time is the length of the path, computed from $g$ with no choice of observer: $12.5$ and $17.5$ are the same for everyone. The symmetry between H and T only holds while both are inertial, on one leg at a time.
+    explanation: |
+      Each observer on a single straight leg is inertial and sees the other's clock slow. But T changes inertial frame at $B$, while H keeps one frame all the way. The reverse triangle inequality settles the comparison: the straight path from $A$ to $C$ is the longest.
+
+  - type: numeric
+    id: p1-lambda00
+    tag: Problem 1 · Twins with two speeds
+    title: The frame change at the turnaround
+    prompt: |
+      In Minkowski space with chart $(a,\tau)$ and $g = d\tau\otimes d\tau - da\otimes da$, the outbound observer has unit velocity $e_0 = (0.75,\ 1.25)$ (components in the order $(a,\tau)$, chart speed $0.6$) and the returning observer has unit velocity $\tilde e_0 = (-\tfrac43,\ \tfrac53)$ (chart speed $-0.8$). Compute $\Lambda^0_0 = g(e_0,\tilde e_0)$.
+    answer: 3.0833
+    tolerance: 0.001
+    answerText: '37/12'
+    wrong:
+      - { value: 1.0833, feedback: 'That is $g(e_0,\tilde e_0)$ with the space product added instead of subtracted: $\tfrac{25}{12} - 1$. Signature $(+,-)$: $g(X,Y) = X^\tau Y^\tau - X^aY^a$, and here $X^aY^a = 0.75\cdot(-\tfrac43) = -1$, so the second term is $+1$.' }
+      - { value: 2.0833, feedback: 'That is only the time-time product, $1.25\cdot\tfrac53 = \tfrac{25}{12}$. Subtract $X^aY^a = -1$ as well: $\tfrac{25}{12} + 1$.' }
+    hint: '$g(X,Y) = X^\tau Y^\tau - X^aY^a$, with $X^a Y^a = 0.75\cdot(-\tfrac43)$.'
+    explanation: |
+      $$\begin{aligned}\Lambda^0_0 &= \tfrac54\cdot\tfrac53 - 0.75\Big(-\tfrac43\Big)\\
+      &= \tfrac{25}{12} + 1 = \tfrac{37}{12}\approx3.083.\end{aligned}$$
+      The two legs' frames are related by a Lorentz matrix whose $(0,0)$ entry is huge compared to the individual factors $\gamma = 1.25$ and $\tfrac53$: boosting one way and then the opposite way adds rapidities.
+
+  - type: numeric
+    id: p1-rel-speed
+    tag: Problem 1 · Twins with two speeds
+    title: Relative speed of the two legs
+    prompt: |
+      For two observers meeting at an event, the speed of the second as measured by the first follows from $\Lambda^0_0 = \gamma = 1/\sqrt{1-u^2}$. The outbound and returning observers of T have $\Lambda^0_0 = \tfrac{37}{12}$. Compute the speed $u$ (as a fraction of the light speed) with which the returning observer moves relative to the outbound one.
+    answer: 0.94595
+    tolerance: 0.0005
+    answerText: '35/37'
+    wrong:
+      - { value: 1.4, feedback: 'That is the Galilean sum $0.6 + 0.8$, larger than the speed of light, impossible. Speeds do not add: $u = \sqrt{1 - 1/\gamma^2}$ with $\gamma = \tfrac{37}{12}$.' }
+      - { value: 0.2, feedback: 'That is the difference of chart speeds, $0.8 - 0.6$. The returning observer moves in the **opposite** direction, so the relative speed should be close to $1$, not small.' }
+      - { value: 0.7, feedback: 'The relative speed is not an average. Invert $\gamma = \tfrac{37}{12}$: $u^2 = 1 - \tfrac{144}{1369}$.' }
+    hint: '$u = \sqrt{1 - 1/\gamma^2}$ with $\gamma = \tfrac{37}{12}$.'
+    explanation: |
+      $$u = \sqrt{1 - \tfrac{144}{1369}} = \tfrac{35}{37}\approx0.946.$$
+      The relativistic sum of $0.6$ and $0.8$ in opposite directions is
+      $$\frac{0.6 + 0.8}{1 + 0.6\cdot0.8} = \frac{1.4}{1.48} = \frac{35}{37},$$
+      the same number by the other route. It stays below $1$: no sum of subluminal speeds reaches the light cone.
+
+  - type: numeric
+    id: p1-h-before
+    tag: Problem 1 · Twins with two speeds
+    title: What T says H's clock reads, before the turn
+    prompt: |
+      In Minkowski space with chart $(a,\tau)$, the outbound observer T has unit velocity $e_0 = (0.75,\ 1.25)$ and sits at $B = (6,10)$. Events simultaneous with $B$ for T are those $E$ with $g(e_0, E - B) = 0$ (the displacement is orthogonal to T's time axis). H's worldline is $a = 0$. Find the chart time $\tau_H$ of the event $(0,\tau_H)$ simultaneous with $B$ for T, which is also what H's clock reads there.
+    answer: 6.4
+    wrong:
+      - { value: 10, feedback: 'That is simultaneity for H (same chart time). T''s simultaneity is tilted: the line of events orthogonal to $e_0$ is not horizontal in the chart.' }
+      - { value: 8, feedback: 'That is T''s own proper time at $B$. We want the **H-clock reading** at the event of $a = 0$ that T calls simultaneous with $B$. Solve $g(e_0,E-B) = 0$ with $E - B = (-6,\ \tau_H - 10)$.' }
+    hint: '$g(e_0,E-B) = 1.25(\tau_H - 10) - 0.75(-6) = 0$.'
+    explanation: |
+      $$\begin{aligned}1.25(\tau_H - 10) + 4.5 &= 0\\
+      \tau_H &= 10 - 3.6 = 6.4.\end{aligned}$$
+      Consistent with time dilation: T's clock reads $8$ at $B$, and T sees H's clock slow by $0.8$: $0.8\times8 = 6.4$.
+
+  - type: numeric
+    id: p1-h-after
+    tag: Problem 1 · Twins with two speeds
+    title: ...and right after the turn
+    prompt: |
+      In Minkowski space with chart $(a,\tau)$, after the turnaround T has unit velocity $\tilde e_0 = (-\tfrac43,\ \tfrac53)$ and is still at $B = (6,10)$. The events $E$ simultaneous with $B$ for T satisfy $g(\tilde e_0, E - B) = 0$. Find the chart time $\tau_H$ of the event $(0,\tau_H)$ on H's worldline $a = 0$ that T now calls simultaneous with $B$.
+    answer: 14.8
+    wrong:
+      - { value: 5.2, feedback: 'The sign of the space term is off: $E - B = (-6,\ \tau_H - 10)$ and $\tilde e_0^a = -\tfrac43$, so $g(\tilde e_0,E-B) = \tfrac53(\tau_H - 10) - (-\tfrac43)(-6) = \tfrac53(\tau_H-10) - 8$.' }
+      - { value: 6.4, feedback: 'That is the answer before the turn. The returning frame has a different time axis, so its simultaneity line through $B$ is tilted the other way and hits H later.' }
+    hint: '$\tfrac53(\tau_H-10) - 8 = 0$.'
+    explanation: |
+      $$\tfrac53(\tau_H - 10) = 8\ \Rightarrow\ \tau_H = 10 + 4.8 = 14.8.$$
+      In T's frame H's clock jumps from $6.4$ to $14.8$ at the instant of the turn: a jump of $8.4$, while T's own clock does not jump.
+
+  - type: numeric
+    id: p1-bookkeeping
+    tag: Problem 1 · Twins with two speeds
+    title: The jump that saves the books
+    prompt: |
+      T, using its own frame, assigns to H's clock the reading $6.4$ just before the turnaround and $14.8$ just after, while H's clock ends at $17.5$ when they meet. By how much does T's assignment of H's reading **jump** at the turn?
+    answer: 8.4
+    wrong:
+      - { value: 6.4, feedback: 'That is the reading before the turn, not the change. The jump is the difference $14.8 - 6.4$.' }
+      - { value: 2.7, feedback: 'That is what is left after the turn, $17.5 - 14.8$ (equal to $0.6\times4.5$). The jump is the difference between the two readings assigned at $B$.' }
+    hint: '$14.8 - 6.4$.'
+    explanation: |
+      $$14.8 - 6.4 = 8.4.$$
+      Bookkeeping in T's description: $6.4$ (slow clock, outbound) $+\ 8.4$ (jump) $+\ 2.7$ (slow clock, return, $0.6\times4.5$) $= 17.5$. Slow clocks on both legs, yet H ends up older: the missing time is exactly the jump of simultaneity at the turnaround, the change from $e_0$ to $\tilde e_0$ with $\Lambda^0_0 = \tfrac{37}{12}$. The paradox dissolves into the one thing H and T do not share: T changes frames.
+
+  # ---------------------------------------------------------------- Problem 2
+  - type: text
+    id: p2-setup
+    tag: Problem 2 · Accelerated observers
+    title: A chart of hyperbolas
+    body: |
+      Back to $g = d\tau\otimes d\tau - da\otimes da$ on the Minkowski plane, chart $(a,\tau)$. On the region $a > |\tau|$ define a new chart $(\eta,\rho)$, $\rho > 0$, by
+      $$a = \rho\cosh\eta,\qquad \tau = \rho\sinh\eta.$$
+      Recall $\cosh^2\eta - \sinh^2\eta = 1$. The curves $\rho = $ const are hyperbolas $a^2 - \tau^2 = \rho^2$: they stay at constant "distance" $\rho$ from the origin. The curve $\rho = 2$ is the worldline of an observer who keeps accelerating to stay on it.
+
+  - type: build
+    id: p2-metric
+    tag: Problem 2 · Accelerated observers
+    title: The metric in the new chart
+    prompt: |
+      Substituting $a = \rho\cosh\eta$ and $\tau = \rho\sinh\eta$ in $g = d\tau\otimes d\tau - da\otimes da$ (cross terms cancel because $\cosh\eta\sinh\eta - \sinh\eta\cosh\eta = 0$), the metric is a diagonal form in $d\eta, d\rho$. Build it.
+    prefix: 'g ='
+    tiles: ['\rho^2\,d\eta\otimes d\eta', '-\,d\rho\otimes d\rho', '+\,d\rho\otimes d\rho', '-\,\rho^2\,d\eta\otimes d\eta', '+\,d\eta\otimes d\eta']
+    answers:
+      - ['\rho^2\,d\eta\otimes d\eta', '-\,d\rho\otimes d\rho']
+    wrong:
+      - { answer: ['\rho^2\,d\eta\otimes d\eta', '+\,d\rho\otimes d\rho'], feedback: 'The $d\rho$ part comes from $\sinh^2\eta\,d\rho^2 - \cosh^2\eta\,d\rho^2 = -d\rho^2$, negative. A Lorentzian metric has exactly one plus sign.' }
+      - { answer: ['-\,\rho^2\,d\eta\otimes d\eta', '+\,d\rho\otimes d\rho'], feedback: 'That is $-g$, the opposite signature convention. With $(+,-)$ the time-like direction $\partial_\eta$ has positive $g$.' }
+      - { answer: ['+\,d\eta\otimes d\eta', '-\,d\rho\otimes d\rho'], feedback: 'Check the $d\eta^2$ coefficient: $(\rho\cosh\eta)^2 - (\rho\sinh\eta)^2 = \rho^2$. The factor $\rho^2$ appears because $\partial_\eta$ is a vector of length $\rho$.' }
+    hint: 'The $d\eta^2$ coefficient is $(\rho\cosh\eta)^2 - (\rho\sinh\eta)^2$.'
+    explanation: |
+      $$g = \rho^2\,d\eta\otimes d\eta - d\rho\otimes d\rho.$$
+      Here $d\tau = \rho\cosh\eta\,d\eta + \sinh\eta\,d\rho$ and $da = \rho\sinh\eta\,d\eta + \cosh\eta\,d\rho$; squaring and subtracting gives the result.
+
+  - type: numeric
+    id: p2-proper
+    tag: Problem 2 · Accelerated observers
+    title: The clock on the hyperbola
+    prompt: |
+      In the chart $(\eta,\rho)$ the metric is $g = \rho^2\,d\eta\otimes d\eta - d\rho\otimes d\rho$. The worldline $\gamma(\eta) = (\eta, \rho = 2)$ has velocity $v_\gamma = \partial_\eta$. Compute its proper time for $\eta$ from $0$ to $2$.
+    answer: 4
+    wrong:
+      - { value: 2, feedback: 'That is the chart coordinate $\Delta\eta$, which is not a clock reading. The speed is $\sqrt{g(\partial_\eta,\partial_\eta)} = \rho = 2$ per unit of $\eta$.' }
+      - { value: 8, feedback: 'The integrand is $\sqrt{g(v_\gamma,v_\gamma)} = \sqrt{\rho^2} = \rho$, not $\rho^2 = 4$. The square root is part of the definition of proper time.' }
+    hint: '$g(\partial_\eta,\partial_\eta) = \rho^2 = 4$, then take the square root and integrate.'
+    explanation: |
+      $$\tau[\gamma] = \int_0^2\sqrt{g(\partial_\eta,\partial_\eta)}\,d\eta = \int_0^2 2\,d\eta = 4.$$
+
+  - type: numeric
+    id: p2-chord
+    tag: Problem 2 · Accelerated observers
+    title: The inertial twin
+    prompt: |
+      In Minkowski space with chart $(a,\tau)$, the accelerated observer at $\rho = 2$ goes from $\eta = 0$, event $(a,\tau) = (2, 0)$, to $\eta = 2$, event $(2\cosh2,\ 2\sinh2)$ (use $\cosh2\approx3.7622$, $\sinh2\approx3.6269$). An inertial twin takes the straight segment between the same two events. Compute the inertial twin's proper time $\sqrt{(\Delta\tau)^2 - (\Delta a)^2}$.
+    answer: 4.7008
+    tolerance: 0.01
+    wrong:
+      - { value: 4, feedback: 'That is the accelerated twin''s proper time. The inertial twin is on the **straight** line between the same endpoints and must be the longest.' }
+      - { value: 7.25, feedback: 'That is only $\Delta\tau = 2\sinh2$. Subtract $(\Delta a)^2$ inside the square root: $\Delta a = 2(\cosh2 - 1) \approx 5.524$.' }
+    hint: '$\Delta\tau = 2\sinh2\approx7.2538$, $\Delta a = 2(\cosh2-1)\approx5.5244$.'
+    explanation: |
+      $$\begin{aligned}\sqrt{7.2538^2 - 5.5244^2} &= \sqrt{52.618 - 30.519}\\
+      &\approx4.70.\end{aligned}$$
+      Exactly it equals $4\sinh1$. The inertial twin ages $4.70$, the accelerated one $4$: the straight worldline is the longest between the two events. Acceleration costs time.
+
+  - type: numeric
+    id: p2-gamma
+    tag: Problem 2 · Accelerated observers
+    title: A Christoffel symbol of a flat metric
+    prompt: |
+      In the chart $(\eta,\rho)$ the metric is $g = \rho^2\,d\eta\otimes d\eta - d\rho\otimes d\rho$, with inverse $g^{-1} = \mathrm{diag}(\rho^{-2}, -1)$ and the only $\rho$-dependent entry $g_{\eta\eta} = \rho^2$. Using the Levi-Civita formula
+      $$\Gamma^\rho_{\eta\eta} = \tfrac12 (g^{-1})^{\rho\rho}\big(2\partial_\eta g_{\eta\rho} - \partial_\rho g_{\eta\eta}\big),$$
+      compute $\Gamma^\rho_{\eta\eta}$ at $\rho = 2$.
+    answer: 2
+    wrong:
+      - { value: -2, feedback: 'Watch the sign of $(g^{-1})^{\rho\rho} = -1$: $\tfrac12(-1)(0 - 2\rho) = +\rho$. Two minus signs make a plus.' }
+      - { value: 4, feedback: 'That is $\rho^2$ (the metric entry) or $\partial_\rho g_{\eta\eta} = 4$ at $\rho = 2$. The factor $\tfrac12$ from the formula and the sign from $(g^{-1})^{\rho\rho}$ are still to apply: the result is $\rho$.' }
+      - { value: 0, feedback: 'The metric is flat but the chart is not inertial: $g_{\eta\eta} = \rho^2$ depends on $\rho$, so $\partial_\rho g_{\eta\eta} = 2\rho\neq0$ and the symbol does not vanish.' }
+    hint: '$\partial_\eta g_{\eta\rho} = 0$ and $\partial_\rho g_{\eta\eta} = 2\rho$.'
+    explanation: |
+      $$\Gamma^\rho_{\eta\eta} = \tfrac12(-1)(0 - 2\rho) = \rho,$$
+      which is $2$ at $\rho = 2$. Similarly $\Gamma^\eta_{\eta\rho} = \tfrac12\rho^{-2}\,2\rho = 1/\rho$; the other symbols vanish.
+
+  - type: numeric
+    id: p2-accel
+    tag: Problem 2 · Accelerated observers
+    title: Proper acceleration of the hyperbola observer
+    prompt: |
+      For the worldline $\gamma(\eta) = (\eta, \rho = 2)$ in a chart with $\Gamma^\rho_{\eta\eta} = \rho$, the covariant acceleration with respect to the parameter $\eta$ is $a^\rho_\eta = \ddot\gamma^\rho + \Gamma^\rho_{\eta\eta}(\dot\gamma^\eta)^2 = 2$ (dots are $d/d\eta$). Reparametrize by the proper time $s = 2\eta$. Acceleration is quadratic in the velocity, so $a_s = a_\eta/(ds/d\eta)^2$. Compute the proper acceleration $a^\rho_s$.
+    answer: 0.5
+    wrong:
+      - { value: 1, feedback: 'The conversion divides by $(ds/d\eta)^2 = 4$, not by $ds/d\eta = 2$: acceleration is quadratic in the velocity.' }
+      - { value: 2, feedback: 'That is the acceleration with respect to $\eta$, which is not a clock. Convert to proper time $s = 2\eta$.' }
+      - { value: 8, feedback: 'Reparametrizing to a **slower** parameter $s = 2\eta$ makes velocities smaller (by $\tfrac12$) and accelerations smaller (by $\tfrac14$), not larger.' }
+    hint: '$a_s = 2/2^2$.'
+    explanation: |
+      $$a^\rho_s = \frac{2}{2^2} = \frac12 = \frac1\rho.$$
+      The observer at $\rho$ feels a constant proper acceleration $1/\rho$: nearer the origin, a harder push. Its worldline is not a geodesic, even though the metric is flat.
+
+  - type: mcq
+    id: p2-flat
+    tag: Problem 2 · Accelerated observers
+    title: Nonzero Γ, no curvature
+    prompt: |
+      In the chart $(\eta,\rho)$ with $g = \rho^2\,d\eta\otimes d\eta - d\rho\otimes d\rho$, the Christoffel symbols $\Gamma^\rho_{\eta\eta} = \rho$ and $\Gamma^\eta_{\eta\rho} = 1/\rho$ are nonzero. Does this spacetime have gravity (curvature)?
+    options:
+      - text: 'No: it is the Minkowski metric in other coordinates, so $\mathrm{Riem} = 0$ even though $\Gamma\neq0$ in this chart'
+        correct: true
+      - text: 'Yes: nonzero Christoffel symbols mean nonzero curvature'
+        feedback: |
+          Christoffel symbols are not a tensor: they depend on the chart (inhomogeneous transformation law). Curvature is a tensor, and a tensor that vanishes in one chart vanishes in all. Here the chart $(a,\tau)$ has $\Gamma = 0$ and $\mathrm{Riem} = 0$.
+      - text: 'Yes, because the accelerated observer feels a force'
+        feedback: |
+          The force is the engine pushing the observer off a geodesic; it is a property of the worldline, not of the metric. Gravity as curvature is detected by tidal effects between geodesics, absent here.
+      - text: 'It cannot be decided without computing $\mathrm{Ric}$'
+        feedback: |
+          No computation is needed: the metric came from $d\tau^2 - da^2$ by a change of chart, and $\mathrm{Riem}$ transforms as a tensor, hence stays zero.
+    explanation: |
+      Curvature is tensorial: zero in one chart means zero in every chart. The nonzero $\Gamma$ is an artefact of using the accelerated grid, the relativistic cousin of the pseudo-forces of a rotating grid. The frame $e_0 = \tfrac1\rho\partial_\eta$, $e_1 = \partial_\rho$ at each event is orthonormal, as for any observer, but the coordinate grid is accelerated.
+
+  - type: numeric
+    id: p2-lambda
+    tag: Problem 2 · Accelerated observers
+    title: Two frames of the same observer
+    prompt: |
+      The observer at $\rho = 2$ has unit velocity $e_0(\eta) = (\sinh\eta,\ \cosh\eta)$ in the components $(a,\tau)$ of the Minkowski chart. At $\eta = 0$ and at $\eta = 2$ its frames are related by a Lorentz matrix with $\Lambda^0_0 = g(e_0(0), e_0(2))$, where $g(X,Y) = X^\tau Y^\tau - X^aY^a$. Compute $\Lambda^0_0$ (use $\cosh2\approx3.7622$).
+    answer: 3.7622
+    tolerance: 0.001
+    wrong:
+      - { value: 1, feedback: 'That would be the same frame twice. The observer''s velocity at $\eta = 2$ is $(\sinh2,\cosh2)$, not $(0,1)$.' }
+      - { value: 3.6269, feedback: 'That is $\sinh2$, a space component. The product is $g(e_0(0),e_0(2)) = 1\cdot\cosh2 - 0\cdot\sinh2$.' }
+    hint: '$e_0(0) = (0,1)$.'
+    explanation: |
+      $$\Lambda^0_0 = 1\cdot\cosh2 - 0\cdot\sinh2 = \cosh2\approx3.762.$$
+      So the relative speed is $u = \sqrt{1 - 1/\cosh^2 2} = \tanh2\approx0.964$, and the Lorentz matrix is the boost $\cosh\eta\begin{pmatrix}1&u\\u&1\end{pmatrix}$ with **rapidity** $\eta = 2$: the chart coordinate $\eta$ is the rapidity.
+
+  - type: numeric
+    id: p2-compose
+    tag: Problem 2 · Accelerated observers
+    title: Rapidities add
+    prompt: |
+      The observer's frames at $\eta = 0$ and $\eta = 1$ differ by a boost of speed $u = \tanh1\approx0.76159$, and those at $\eta = 1$ and $\eta = 2$ by another boost of the same speed in the same direction. Composing two boosts of speed $u$ in the same direction gives the speed $\dfrac{2u}{1+u^2}$. Compute it with $u = 0.76159$.
+    answer: 0.96403
+    tolerance: 0.0005
+    wrong:
+      - { value: 1.52318, feedback: 'That is $u + u$, a speed above $1$, impossible. The denominator $1 + u^2$ keeps the sum below the light speed.' }
+      - { value: 0.76159, feedback: 'That is a single boost. Two boosts one after the other give a larger speed, though smaller than $1$.' }
+    hint: '$u^2\approx0.58003$.'
+    explanation: |
+      $$\frac{2(0.76159)}{1+0.58003} = \frac{1.52318}{1.58003}\approx0.96403 = \tanh2.$$
+      Matches the single boost found by comparing the frames at $\eta = 0$ and $\eta = 2$ directly: $\tanh1\oplus\tanh1 = \tanh2$. The group of boosts is one-dimensional with parameter the rapidity, and speeds are only its shadow.
+
+  # ---------------------------------------------------------------- Problem 3
+  - type: text
+    id: p3-setup
+    tag: Problem 3 · Who gravitates?
+    title: Pressure weighs too
+    body: |
+      Consider matter at rest in an orthonormal frame, so that $g = \eta = \mathrm{diag}(1,-1,-1,-1)$ and its energy-momentum tensor has components (all lower indices)
+      $$\begin{gathered}T_{00} = \rho,\\
+      T_{11} = T_{22} = T_{33} = p,\end{gathered}$$
+      and all other components zero; $\rho$ is the energy density, $p$ the pressure. In Newtonian gravity only $\rho$ sources the field. Here the field equations $G_{ab} = 8\pi G_N\,T_{ab}$ are the rule, so let's see what actually acts as source.
+
+  - type: numeric
+    id: p3-trace
+    tag: Problem 3 · Who gravitates?
+    title: The trace of T
+    prompt: |
+      A fluid at rest has $T_{ab} = \mathrm{diag}(\rho, p, p, p)$ in an orthonormal frame, with $g = \mathrm{diag}(1,-1,-1,-1)$ and inverse $g^{-1} = g$. The trace is $T := (g^{-1})^{ab}T_{ab}$. Compute $T$ for $\rho = 5$ and $p = 1$.
+    answer: 2
+    wrong:
+      - { value: 8, feedback: 'That adds all four diagonal entries, $5 + 3\cdot1$. The inverse metric carries signs: $(g^{-1})^{00} = +1$ but $(g^{-1})^{\alpha\alpha} = -1$.' }
+      - { value: 6, feedback: 'That is $\rho + p$. All three space entries contribute, each with a minus sign: $5 - 3\cdot1$.' }
+    hint: '$T = (+1)\rho + (-1)p + (-1)p + (-1)p$.'
+    explanation: |
+      $$T = \rho - 3p = 5 - 3 = 2.$$
+
+  - type: order
+    id: p3-order
+    tag: Problem 3 · Who gravitates?
+    title: Ricci from the Einstein equations
+    prompt: Put in order the derivation of $\mathrm{Ric}_{ab} = 8\pi G_N\big(T_{ab} - \tfrac12T\,g_{ab}\big)$ from $G_{ab} = 8\pi G_N\,T_{ab}$.
+    steps:
+      - 'Start from $\mathrm{Ric}_{ab} - \tfrac12R\,g_{ab} = 8\pi G_N\,T_{ab}$.'
+      - 'Contract with $(g^{-1})^{ab}$, using $(g^{-1})^{ab}g_{ab} = 4$: $R - 2R = 8\pi G_N\,T$.'
+      - 'So $R = -8\pi G_N\,T$.'
+      - 'Isolate Ric: $\mathrm{Ric}_{ab} = 8\pi G_N\,T_{ab} + \tfrac12R\,g_{ab}$.'
+      - 'Insert $R$: $\mathrm{Ric}_{ab} = 8\pi G_N\big(T_{ab} - \tfrac12T\,g_{ab}\big)$.'
+    hint: 'Trace first; then solve for Ric.'
+    explanation: |
+      The trace turns the Einstein tensor into a multiple of $R$, which can be solved and put back. In dimension four $G$ and $T$ determine each other's traces: $-R = 8\pi G_N\,T$.
+
+  - type: build
+    id: p3-ric00
+    tag: Problem 3 · Who gravitates?
+    title: Ric₀₀ of a fluid
+    prompt: |
+      Use $\mathrm{Ric}_{ab} = 8\pi G_N(T_{ab} - \tfrac12Tg_{ab})$ with $T_{00} = \rho$, $T = \rho - 3p$ and $g_{00} = 1$. Build $\mathrm{Ric}_{00}$.
+    prefix: '\mathrm{Ric}_{00} ='
+    tiles: ['4\pi G_N', '(\rho + 3p)', '(\rho - 3p)', '8\pi G_N', '(\rho + p)']
+    answers:
+      - ['4\pi G_N', '(\rho + 3p)']
+    wrong:
+      - { answer: ['4\pi G_N', '(\rho - 3p)'], feedback: 'That is $4\pi G_N\,T$, the trace without the $\rho$. Compute $\rho - \tfrac12(\rho - 3p) = \tfrac12(\rho + 3p)$: the pressure term changes sign because of the $-\tfrac12T$.' }
+      - { answer: ['8\pi G_N', '(\rho + 3p)'], feedback: 'Factor: $8\pi G_N(\rho - \tfrac12\rho + \tfrac32p) = 8\pi G_N\cdot\tfrac12(\rho + 3p) = 4\pi G_N(\rho+3p)$.' }
+      - { answer: ['4\pi G_N', '(\rho + p)'], feedback: 'The pressure enters with weight $3$ (one per space direction), not $1$: $-\tfrac12T = -\tfrac12\rho + \tfrac32p$.' }
+    hint: '$\rho - \tfrac12(\rho - 3p)$.'
+    explanation: |
+      $$\begin{aligned}\mathrm{Ric}_{00} &= 8\pi G_N\big(\rho - \tfrac12(\rho-3p)\big)\\
+      &= 4\pi G_N(\rho + 3p).\end{aligned}$$
+      For dust ($p = 0$) this is $4\pi G_N\rho$, the value of $\mathrm{Ric}_{00}$ in the Newtonian field equation. The source of gravity is $\rho + 3p$.
+
+  - type: numeric
+    id: p3-radiation
+    tag: Problem 3 · Who gravitates?
+    title: Light gravitates twice
+    prompt: |
+      A fluid at rest has $\mathrm{Ric}_{00} = 4\pi G_N(\rho + 3p)$. For dust ($p = 0$) it is $4\pi G_N\rho$. For radiation, with $p = \tfrac13\rho$, compute the ratio $\mathrm{Ric}_{00}\big/(4\pi G_N\rho)$.
+    answer: 2
+    wrong:
+      - { value: 1, feedback: 'That is dust. For radiation the pressure $p = \rho/3$ adds $3p = \rho$ to the source.' }
+      - { value: 1.33, feedback: 'That adds $p$ once, $1 + \tfrac13$. All three space directions count: $\rho + 3p = 2\rho$.' }
+    hint: '$\rho + 3\cdot\tfrac13\rho$.'
+    explanation: |
+      $$\frac{\rho + 3p}{\rho} = 1 + 1 = 2.$$
+      Radiation of the same energy density curves spacetime twice as much as dust, since its pressure is a source too.
+
+  - type: numeric
+    id: p3-vacuum
+    tag: Problem 3 · Who gravitates?
+    title: Vacuum energy repels
+    prompt: |
+      A constant Lagrangian $\mathcal{L}_M = -\lambda$ gives $T_{ab} = \lambda g_{ab}$, that is $\rho = \lambda$ and $p = -\lambda$ (with $\lambda > 0$). Using $\mathrm{Ric}_{00} = 4\pi G_N(\rho + 3p)$, compute the ratio $\mathrm{Ric}_{00}\big/(4\pi G_N\lambda)$.
+    answer: -2
+    wrong:
+      - { value: 2, feedback: 'The pressure is **negative**, $p = -\lambda$: $\rho + 3p = \lambda - 3\lambda = -2\lambda$. A positive $\mathrm{Ric}_{00}$ would mean attraction.' }
+      - { value: -4, feedback: 'That is $\rho + 3p$ with $\rho$ also taken negative. The energy density is $+\lambda$.' }
+      - { value: 0, feedback: 'The source vanishes for $p = -\rho/3$, not for $p = -\rho$.' }
+    hint: '$\rho + 3p = \lambda + 3(-\lambda)$.'
+    explanation: |
+      $$\mathrm{Ric}_{00} = 4\pi G_N(\lambda - 3\lambda) = -8\pi G_N\lambda.$$
+      Negative: vacuum energy with positive $\lambda$ makes neighbouring free-falling particles move **apart** (the sum of the tidal accelerations per unit offset is $-\mathrm{Ric}_{00} > 0$). Positive energy density and gravitational repulsion at once.
+
+  - type: numeric
+    id: p3-neutral
+    tag: Problem 3 · Who gravitates?
+    title: The fluid that does not gravitate
+    prompt: |
+      A fluid with $\rho > 0$ has $\mathrm{Ric}_{00} = 4\pi G_N(\rho + 3p)$. Find the ratio $p/\rho$ for which $\mathrm{Ric}_{00} = 0$, so that it neither attracts nor repels.
+    answer: -0.3333
+    tolerance: 0.001
+    answerText: '-1/3'
+    wrong:
+      - { value: -1, feedback: 'That is the vacuum, which repels: $\rho + 3p = -2\rho$. Solve $\rho + 3p = 0$.' }
+      - { value: 0.3333, feedback: 'With $p>0$ the sum $\rho + 3p$ only grows. A negative pressure is needed to cancel $\rho$.' }
+      - { value: -3, feedback: 'Solve $\rho + 3p = 0$ for $p/\rho$: divide by $3\rho$.' }
+    hint: '$\rho + 3p = 0$.'
+    explanation: |
+      $$\frac{p}{\rho} = -\frac13.$$
+      Between dust ($p/\rho = 0$, attracts) and vacuum ($-1$, repels) lies the borderline $-\tfrac13$.
+
+  - type: numeric
+    id: p3-scalar
+    tag: Problem 3 · Who gravitates?
+    title: A scalar field in time
+    prompt: |
+      A homogeneous scalar field $\phi(\tau)$ with potential $V$ (constant at this instant) has Lagrangian $\mathcal{L}_M = \tfrac12\dot\phi^2 - V$ and energy-momentum components $\rho = T_{00} = \tfrac12\dot\phi^2 + V$ and $p = T_{11} = \tfrac12\dot\phi^2 - V$. Take $\dot\phi = 1$ and $V = 3$. Compute the gravitating source $\rho + 3p$.
+    answer: -4
+    wrong:
+      - { value: 11, feedback: 'The sign of $p$: $p = \tfrac12 - 3 = -2.5$, not $+2.5$. Then $\rho + 3p = 3.5 - 7.5$.' }
+      - { value: 3.5, feedback: 'That is $\rho$ alone, the Newtonian source. Add $3p = -7.5$.' }
+      - { value: -2.5, feedback: 'That is $p$ alone. The source is $\rho + 3p = 3.5 + 3(-2.5)$.' }
+    hint: '$\rho = 3.5$, $p = -2.5$.'
+    explanation: |
+      $$\begin{aligned}\rho + 3p &= (\tfrac12\dot\phi^2 + V) + 3(\tfrac12\dot\phi^2 - V)\\
+      &= 2\dot\phi^2 - 2V = 2 - 6 = -4.\end{aligned}$$
+      Negative: this field repels.
+
+  - type: numeric
+    id: p3-threshold
+    tag: Problem 3 · Who gravitates?
+    title: How fast must the field roll?
+    prompt: |
+      For a homogeneous scalar field the source of gravity is $\rho + 3p = 2\dot\phi^2 - 2V$. For $V = 3$, find the smallest $\dot\phi > 0$ for which the field no longer repels, $\rho + 3p \geq 0$.
+    answer: 1.7321
+    tolerance: 0.001
+    answerText: '\sqrt3'
+    wrong:
+      - { value: 3, feedback: 'The condition is on $\dot\phi^2$, not $\dot\phi$: $2\dot\phi^2 \geq 2V$ gives $\dot\phi^2\geq3$, so $\dot\phi\geq\sqrt3$.' }
+      - { value: 1.5, feedback: 'The kinetic energy is $\tfrac12\dot\phi^2$, but the threshold is $2\dot\phi^2 = 2V$ i.e. $\dot\phi^2 = V = 3$. Solve for $\dot\phi$.' }
+    hint: '$2\dot\phi^2 - 2V = 0$.'
+    explanation: |
+      $$\dot\phi^2 = V\ \Rightarrow\ \dot\phi = \sqrt3\approx1.732.$$
+      A field that rolls slowly, $\dot\phi^2 < V$, stores its energy mostly as potential energy and behaves like vacuum energy: it repels. A fast one acts like matter or radiation.
+
+  - type: numeric
+    id: p3-closure
+    tag: Problem 3 · Who gravitates?
+    title: Closing the loop on vacuum energy
+    prompt: |
+      Take vacuum energy with $T_{ab} = \lambda g_{ab}$ and units in which $8\pi G_N\lambda = 1$, so the field equation $G = 8\pi G_N T$ is $G_{ab} = g_{ab}$. Using $\mathrm{Ric}_{ab} = 8\pi G_N(T_{ab} - \tfrac12T g_{ab})$, we get $\mathrm{Ric}_{ab} = -g_{ab}$. Compute the scalar curvature $R = (g^{-1})^{ab}\mathrm{Ric}_{ab}$ in four dimensions.
+    answer: -4
+    wrong:
+      - { value: 4, feedback: 'The sign: $R = (g^{-1})^{ab}(-g_{ab}) = -4$. With $\mathrm{Ric} = -g$ the check is $-g - \tfrac12(-4)g = -g + 2g = g$, as required.' }
+      - { value: -1, feedback: 'The trace of $g_{ab}$ with its inverse is the dimension $4$, not $1$.' }
+    hint: '$(g^{-1})^{ab}g_{ab} = 4$.'
+    explanation: |
+      $$\begin{gathered}R = -4,\\
+      G = -g - \tfrac12(-4)g = g.\end{gathered}$$
+      This equals $8\pi G_N T = g$.
+      Consistent. Also $\mathrm{Ric}_{00} = -g_{00} = -1 = -8\pi G_N\lambda$, the value of the previous card.
+
+  - type: text
+    id: p3-wrap
+    tag: Problem 3 · Who gravitates?
+    title: What this problem showed
+    body: |
+      Two lessons. First, taking the trace of $G = 8\pi G_N T$ gives
+      $$\mathrm{Ric}_{ab} = 8\pi G_N\big(T_{ab} - \tfrac12T\,g_{ab}\big),$$
+      and for a fluid at rest
+      $$\mathrm{Ric}_{00} = 4\pi G_N(\rho + 3p):$$
+      pressure gravitates, and negative pressure repels. Second, the same energy density can attract (dust), attract twice as hard (light), or repel (vacuum, a slowly rolling scalar field). In Level 9, $\mathrm{Ric}_{00} = 4\pi G_N\rho$ was the field equation of Newtonian gravity: it is the dust case $p = 0$ of this one.
