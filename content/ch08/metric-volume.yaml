@@ -10,6 +10,9 @@ own: |
   - **Metric volume form** $\Omega^g$: in every chart of $\mathcal{A}^\uparrow$,
   {{ $$(\Omega^g_\mathscr{X})_{i_1\dots i_d} := \sqrt{|\det g_\mathscr{X}|}\;\varepsilon_{i_1\dots i_d}$$ }}
   so its scalar density is $\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}$: $1$ in cartesian, $r$ in polar (it is $\Omega_{\mathrm{E}}$), $\sin\vartheta$ on the unit sphere.
+  - **What the root measures** (Riemannian, $d = 2$): a coordinate square of side $\Delta$ at $p$ becomes, to first order, the parallelogram spanned by $\Delta\,\partial/\partial\alpha^1$, $\Delta\,\partial/\partial\alpha^2$, of area (Gram)
+  $$\text{area}^2 = (g_{11}g_{22} - g_{12}^2)\Delta^4 = \det g\,\Delta^4,$$
+  so true area$/\Delta^2\to\sqrt{\det g(p)}$. The side product $\sqrt{g_{11}g_{22}}$ is right only when $g_{12} = 0$.
   - **Why it glues**: $\sqrt{|\det g_\mathscr{Y}|} = |\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}|\sqrt{|\det g_\mathscr{X}|}$, and {{ $|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}| = \det\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ in an oriented atlas }}, which is the density law. Without the orientation the chartwise definitions differ by a sign (mirror chart).
   - **Unit volume**: if the chart-induced basis at $p$ is orthonormal ($g_{ij}(p) = 0$ for $i\neq j$, $g_{ii}(p) = \pm1$), then {{ $\omega^g_\mathscr{X}(p) = 1$ }}, in any signature (Minkowski: $\sqrt{|\det\eta|} = 1$).
   - **Integral of a function** $f$ with compact support, $\int_\mathcal{M}f := \int_\mathcal{M}\Omega^gf$, valid for any signature:
@@ -46,6 +49,41 @@ cards:
           $\int_0^\pi\cos\vartheta\,d\vartheta = 0$, and $\cos\vartheta$ vanishes on the equator, so it is not even the density of a volume form (which is nowhere zero).
     explanation: |
       $\int_0^\pi\sin\vartheta\,d\vartheta = 2$, times $2\pi$ gives $4\pi$. The circle of latitude at $\vartheta$ has radius $\sin\vartheta$, so a cell $d\vartheta\times d\varphi$ has sides $d\vartheta$ and $\sin\vartheta\,d\varphi$. This lesson shows that $\sin\vartheta$ is exactly what the metric dictates, and why the recipe works in every chart.
+
+  - type: widget
+    id: hook-widget
+    title: One square, many sizes
+    widget: area-cell
+    config:
+      chart: sphere
+      p: [1.0472, 0]
+      d: 0.5
+      parallelogram: false
+      exact: false
+    body: |
+      Left: the chart's coordinates, $\vartheta$ across and $\varphi$ up. The gold **cell** is a coordinate square of side $\Delta$ (the slider) in both coordinates, centred at the point $p$ (gold handle). Right: the same cell drawn on the sphere, with the chart's coordinate lines.
+
+      Every cell is the same square on the left. Drag $p$ toward $\vartheta = 0$ (the north pole) and watch the gold cell on the sphere; then drag it back to the equator $\vartheta = \pi/2\approx1.57$.
+
+  - type: mcq
+    id: pole-cell
+    title: A cell near the pole
+    prompt: |
+      On the unit sphere with chart $(\vartheta,\varphi)$ ($\vartheta$ polar angle from the north pole, $\varphi$ longitude), take a small coordinate square of side $\Delta$ in both coordinates, centred at $\vartheta = 0.3$. Compared with its coordinate area $\Delta^2$, its true area on the sphere is:
+    options:
+      - text: 'Smaller, about $0.3\,\Delta^2$'
+        correct: true
+      - text: 'Equal to $\Delta^2$'
+        feedback: |
+          That treats the chart as flat paper: every cell is the same square in coordinates, but not on the sphere. The meridians $\varphi = $ const all meet at the pole, so near it a step $\Delta$ in $\varphi$ covers only a short arc.
+      - text: 'Bigger: the chart crowds the polar cap into a thin strip, so each cell must hold more'
+        feedback: |
+          It is the other way round. The chart stretches the polar region: the single point at the pole becomes the whole edge $\vartheta = 0$ of the chart rectangle. Stretched coordinates mean each coordinate cell covers *less* of the sphere.
+      - text: 'It depends on the longitude $\varphi$ of the centre'
+        feedback: |
+          Rotating the sphere about its axis changes $\varphi$ and nothing else, and it moves cells to cells of the same area. Only $\vartheta$ matters.
+    explanation: |
+      Along a meridian, a step $\Delta$ in $\vartheta$ is an arc of length $\Delta$ (unit sphere). Along the circle of latitude at $\vartheta$, of radius $\sin\vartheta$, a step $\Delta$ in $\varphi$ is an arc of length $\sin\vartheta\,\Delta$. So the cell is nearly a rectangle of area $\sin\vartheta\,\Delta^2$, and $\sin0.3\approx0.30$. The rest of the lesson explains where such a factor comes from in any chart.
 
   - type: text
     id: recall-metric
@@ -152,6 +190,91 @@ cards:
       $\det\mathrm{diag}(1,r^2) = r^2$, and $r = 5$ at $(3,4)$.
     explanation: |
       $\omega^g_\mathscr{Y} = \sqrt{r^2} = r = 5$, and in cartesian $\omega^g_\mathscr{X} = \sqrt1 = 1$. These are exactly the densities of $\Omega_{\mathrm{E}}$: **the Euclidean area form is the metric volume form of the Euclidean metric**. The metric made the choice we made by hand.
+
+  - type: widget
+    id: polar-widget
+    title: What the root measures
+    widget: area-cell
+    config:
+      chart: polar
+      p: [1.25, 0.785]
+      d: 0.5
+      presets:
+        - { label: 'Far out r = 2.5', chart: polar, p: [2.5, 0.785], d: 0.5 }
+        - { label: 'Near origin r = 0.4', chart: polar, p: [0.4, 0.785], d: 0.5 }
+    body: |
+      The polar chart: $r$ across, $\theta$ up. The gold cell $[r_1,r_2]\times[\theta_1,\theta_2]$, of side $\Delta$, centred at $p$, is a **ring sector** in the plane. The purple **parallelogram** is spanned by $\Delta\,(\partial/\partial r)_p$ and $\Delta\,(\partial/\partial\theta)_p$, the chart's basis vectors at $p$ scaled by $\Delta$.
+
+      Its sides are perpendicular, of lengths $\Delta\sqrt{g_{rr}} = \Delta$ and $\Delta\sqrt{g_{\theta\theta}} = r\Delta$, so its area is
+      $$r\Delta^2 = \sqrt{\det g}\,\Delta^2.$$
+      The ring sector has area $\tfrac12\Delta(r_2^2 - r_1^2)$, and with $r_2 - r_1 = \Delta$, $r_2 + r_1 = 2r$ this is also $r\Delta^2$. Try the presets and change $\Delta$: the readout's ratio "true area $/\Delta^2$" stays equal to $\sqrt{\det g}$ at $p$.
+
+  - type: numeric
+    id: polar-cell
+    title: One ring sector
+    prompt: |
+      On the Euclidean plane with the polar chart $(r,\theta)$, where $\sqrt{\det g} = r$, take the coordinate square of side $\Delta = 0.2$ in both coordinates centred at $r = 2.5$ (so $2.4<r<2.6$, and $\theta$ in an interval of length $0.2$). What is its area?
+    answer: 0.1
+    tolerance: 0.001
+    answerText: '0.1'
+    wrong:
+      - value: 0.04
+        feedback: |
+          $0.04 = \Delta^2$ is the coordinate area. Far from the origin a step in $\theta$ covers an arc of length $r\Delta$, so multiply by $\sqrt{\det g} = r = 2.5$.
+      - value: 0.25
+        feedback: |
+          $0.25 = r^2\Delta^2 = \det g\,\Delta^2$: the density is the square root of $\det g$, one power of $r$, not two.
+      - value: 0.5
+        feedback: |
+          $0.5 = r\Delta$ is the length of the arc side alone. Multiply by the radial side $\Delta = 0.2$.
+    hint: |
+      Area $= \sqrt{\det g}\,\Delta^2$, or directly $\tfrac12\Delta(r_2^2 - r_1^2)$.
+    explanation: |
+      $2.5\cdot0.04 = 0.1$, and directly $\tfrac12\cdot0.2\cdot(2.6^2 - 2.4^2) = 0.1\cdot1 = 0.1$. So $\sqrt{\det g}$ at $p$ is the area of the coordinate cell per unit coordinate area.
+
+  - type: text
+    id: gram
+    title: Why a determinant
+    body: |
+      In polar the cell's sides meet at right angles. In general they do not, and the area of a parallelogram depends on its angle, not only on its sides. Let the metric be **Riemannian** (positive definite: $g(v,v)>0$ for $v\neq0$), write $|v| := \sqrt{g(v,v)}$, and take a parallelogram spanned by $u,w\in T_p\mathcal{M}$ at angle $\gamma$, with $\cos\gamma = g(u,w)/(|u||w|)$. Base times height:
+      $$\text{area} = |u||w|\sin\gamma,$$
+      $$\begin{aligned}\text{area}^2 &= |u|^2|w|^2(1 - \cos^2\gamma)\\ &= |u|^2|w|^2 - g(u,w)^2.\end{aligned}$$
+      Now put $u = \Delta\,\partial/\partial\alpha^1$, $w = \Delta\,\partial/\partial\alpha^2$ (the chart's basis vectors at $p$, coordinates $\alpha$): $|u|^2 = g_{11}\Delta^2$, $|w|^2 = g_{22}\Delta^2$, $g(u,w) = g_{12}\Delta^2$, so
+      $$\text{area}^2 = (g_{11}g_{22} - g_{12}^2)\,\Delta^4 = \det g\;\Delta^4.$$
+      **$\sqrt{\det g(p)}\,\Delta^2$ is the area of the parallelogram** that a small coordinate square at $p$ becomes, to first order. In $d$ dimensions the same holds for the parallelepiped of $d$ vectors (with $\sqrt{|\det g|}$ for other signatures, where "area" is no longer a length times a length).
+
+  - type: widget
+    id: sheared-widget
+    title: Slanted sides
+    widget: area-cell
+    config:
+      chart: sheared
+      p: [0, 0]
+      d: 0.75
+    body: |
+      A sheared chart of the Euclidean plane: coordinates $(a,b)$ name the point $(2a + b,\,b)$. Its basis vectors are $\partial/\partial a = (2,0)$ and $\partial/\partial b = (1,1)$, at $45°$ to each other, so
+      $$g = \begin{pmatrix}4&2\\2&2\end{pmatrix},\quad \det g = 4.$$
+      Every cell is the same parallelogram (the chart is linear). Compare the readout's two candidates for its area: $\sqrt{\det g}\,\Delta^2$ and the product of the side lengths $\sqrt{g_{aa}g_{bb}}\,\Delta^2$.
+
+  - type: mcq
+    id: side-product
+    title: Sides are not enough
+    prompt: |
+      In a chart with metric components $g_{11}, g_{12}, g_{22}$ (Riemannian), when does the product of side lengths $\sqrt{g_{11}g_{22}}\,\Delta^2$ equal the area $\sqrt{\det g}\,\Delta^2$ of the cell's parallelogram?
+    options:
+      - text: 'Exactly when $g_{12} = 0$: the coordinate lines meet at right angles'
+        correct: true
+      - text: 'When $g_{11} = g_{22}$: the sides are equal'
+        feedback: |
+          Equal sides make a rhombus, which can still be slanted: $g_{11} = g_{22} = 1$, $g_{12} = \tfrac12$ gives $\det g = \tfrac34$, so the area $\approx0.87\,\Delta^2$ is less than the side product $\Delta^2$.
+      - text: 'Always on the Euclidean plane, since the plane is flat'
+        feedback: |
+          The sheared chart lives on the flat Euclidean plane, yet at $\Delta = 0.75$ the side product is $2\sqrt2\cdot0.5625\approx1.591$ while the true area is $2\cdot0.5625 = 1.125$. The formula depends on the chart's angles, not on curvature.
+      - text: 'Never: the side product always overestimates'
+        feedback: |
+          In polar coordinates (and cartesian) $g_{12} = 0$ and the two agree exactly: $1\cdot r\cdot\Delta^2 = r\Delta^2$.
+    explanation: |
+      $\det g = g_{11}g_{22} - g_{12}^2\le g_{11}g_{22}$, with equality iff $g_{12} = 0$: the off-diagonal component carries the angle between the coordinate lines. Sheared check: $\det g = 8 - 4 = 4$, area $2\cdot0.75^2 = 1.125$, which is the base $1.5$ times the height $0.75$ of the parallelogram spanned by $(1.5,0)$ and $(0.75,0.75)$. Next: why these chartwise areas glue into one volume form.
 
   - type: build
     id: build-transform
@@ -303,6 +426,44 @@ cards:
       Orient $S^2$ so that $\mathscr{X}$ is a positive chart (the sphere is orientable; with this choice the chart's two basis vectors followed by the outward normal form a right-handed triple in $\mathbb{R}^3$). Then
       $$\omega^g_\mathscr{X} = \sqrt{\sin^2\vartheta} = |\sin\vartheta| = \sin\vartheta,$$
       the last step because $\sin\vartheta>0$ on $(0,\pi)$. The guess of the hook is the metric's own answer: $\sqrt{g_{\vartheta\vartheta}}\,d\vartheta$ and $\sqrt{g_{\varphi\varphi}}\,d\varphi = \sin\vartheta\,d\varphi$ are the side lengths of a small cell.
+
+  - type: numeric
+    id: sphere-ratio
+    title: Predict the shrinking cell
+    prompt: |
+      On the unit sphere with chart $(\vartheta,\varphi)$ and round metric $\mathrm{diag}(1,\sin^2\vartheta)$, take the coordinate square of side $\Delta$ centred at $\vartheta = \pi/3$. As $\Delta\to0$, what does the ratio (true area of the cell)$/\Delta^2$ tend to? (Three decimals.)
+    answer: 0.8660254
+    tolerance: 0.002
+    answerText: '\sin(\pi/3) = \sqrt3/2 \approx 0.866'
+    wrong:
+      - value: 0.75
+        feedback: |
+          $0.75 = \sin^2(\pi/3) = \det g$. The area of the cell is $\sqrt{\det g}\,\Delta^2$ to first order: take the square root.
+      - value: 1
+        feedback: |
+          $1$ would mean the chart does not distort areas. Away from the equator the circles of latitude are shorter than the equator, so cells there are smaller than $\Delta^2$.
+      - value: 0.5
+        feedback: |
+          $0.5 = \cos(\pi/3)$. The circle of latitude at $\vartheta$ has radius $\sin\vartheta$ (distance from the axis), not $\cos\vartheta$ (height above the equator plane).
+    hint: |
+      The cell's area is about $\sqrt{\det g(p)}\,\Delta^2$.
+    explanation: |
+      $\sqrt{\det g} = \sin(\pi/3) = \sqrt3/2\approx0.866$. For finite $\Delta$ the exact area (a band of the sphere between two circles of latitude, cut by two meridians) is $\Delta(\cos\vartheta_1 - \cos\vartheta_2) = 2\Delta\sin\vartheta\sin(\Delta/2)$, so the ratio is $\sin\vartheta\cdot\frac{\sin(\Delta/2)}{\Delta/2}$, slightly below $0.866$ and tending to it.
+
+  - type: widget
+    id: sphere-widget
+    title: The ratio tends to the density
+    widget: area-cell
+    config:
+      chart: sphere
+      p: [1.0472, 0]
+      d: 0.5
+      presets:
+        - { label: 'Equator', chart: sphere, p: [1.5708, 0], d: 0.5 }
+        - { label: 'Near the pole', chart: sphere, p: [0.35, 0], d: 0.5 }
+        - { label: 'Δ small', chart: sphere, p: [1.0472, 0], d: 0.05 }
+    body: |
+      Check your prediction. At $\vartheta = \pi/3$ with $\Delta = 0.5$ the true area (gold) and the purple parallelogram $\sqrt{\det g}\,\Delta^2$ differ by about $1\%$: the cell is curved, the parallelogram lies in the tangent plane at $p$. Shrink $\Delta$ (or press "Δ small"): the ratio true area$/\Delta^2$ tends to $\sin\vartheta = \sqrt{\det g}$ at $p$. Then compare the equator ($\sin\vartheta = 1$) with the pole.
 
   - type: numeric
     id: sphere-patch
