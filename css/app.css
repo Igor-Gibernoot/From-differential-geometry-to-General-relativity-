@@ -247,6 +247,8 @@ a { color: var(--accent); }
 }
 .build-line.correct { border-style: solid; border-color: var(--good); background: var(--good-soft); }
 .build-line.wrong { border-style: solid; border-color: var(--bad); background: var(--bad-soft); }
+.build-line.correct .tile.placed { border-color: var(--good); background: var(--good-soft); box-shadow: 0 3px 0 var(--good); }
+.build-line.wrong .tile.placed { border-color: var(--bad); background: var(--bad-soft); box-shadow: 0 3px 0 var(--bad); }
 .build-line .prefix { padding: 0 4px; }
 .build-line .placeholder { color: var(--muted); font-size: 14px; }
 .tile {
