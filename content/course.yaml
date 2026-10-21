@@ -345,7 +345,11 @@ levels:
         kind: guided
         file: ch07/sphere.yaml
         summary: Build the round metric of the sphere from lengths in space, compute its Christoffel symbols, and test meridians and parallels against the geodesic equation; only the equator survives among the parallels, and the curvature comes out constant, R = 2.
-      - { id: ch07-traps, title: Metric Traps, kind: traps }
+      - id: ch07-traps
+        title: Metric Traps
+        kind: traps
+        file: ch07/traps.yaml
+        summary: Fast questions on the classic metric mistakes, from sums without g and reciprocal inverses to determinants, proper time, geodesics that are not shortest, and Christoffel symbols mistaken for curvature.
       - { id: ch07-map, title: "Content Map: Metric", kind: map }
       - { id: ch07-review, title: Level Review, kind: review }
       - { id: ch07-challenge, title: Level Challenge, kind: challenge }

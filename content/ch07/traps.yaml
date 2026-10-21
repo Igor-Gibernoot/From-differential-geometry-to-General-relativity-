@@ -1,0 +1,489 @@
+id: ch07-traps
+title: Metric Traps
+kind: traps
+
+cards:
+  - type: text
+    id: intro
+    title: Trap round
+    body: |
+      Fast round: each question hides a tempting mistake from this level, from lowering an index to curvature. Answer quickly, then read the feedback, especially when you got it right for a shaky reason.
+
+      Notation used below: a metric $g$ is a symmetric $(0,2)$-tensor field whose flat map $\flat$ is invertible; in a chart its components are $g_{ij}$, and the components of the inverse matrix are written $(g^{-1})^{ij}$. On the plane with points $(a,b)$, the cartesian chart is $\mathscr{X}$ and the polar chart is $\mathscr{Y} = (r,\theta)$; the Euclidean metric has polar components
+      $$g_\mathscr{Y} = \mathrm{diag}(1, r^2).$$
+      The Minkowski plane has points $(t,a)$ and metric $\eta$ with cartesian components $\mathrm{diag}(-1,1)$. Signatures are written $(n_+, n_-)$: the numbers of plus and minus signs. The geodesic equation is
+      $$\ddot\gamma^k + \Gamma^k_{ij}\,\dot\gamma^i\dot\gamma^j = 0, \tag{G}$$
+      with the Christoffel symbols $\Gamma^k_{ij}$ of the Levi-Civita connection $\nabla^{\mathrm{LC}}$.
+
+  - type: numeric
+    id: same-height
+    title: A sum needs the metric
+    prompt: |
+      On the Euclidean plane, at a point with $r = 2$, two tangent vectors have polar components $x^i = (1, 2)$ and $y^i = (3, 1)$. The polar metric components there are $\mathrm{diag}(1, r^2) = \mathrm{diag}(1, 4)$. Find $g(\mathcal{X}, \mathcal{Y}) = g_{ij}\,x^iy^j$.
+    answer: 11
+    wrong:
+      - { value: 5, feedback: '$5 = \sum_i x^iy^i$ adds two upper indices at the same height. That sum is not chart independent and ignores $g$: here the $\theta$-direction has $g_{22} = 4$, so $g = 1\cdot1\cdot3 + 4\cdot2\cdot1 = 11$.' }
+      - { value: 7, feedback: 'That uses $g_{22} = r = 2$. The polar metric is $\mathrm{diag}(1, r^2)$: the vector $\partial y_2 = \partial/\partial\theta$ has length $r$, so $g_{22} = r^2 = 4$.' }
+    hint: |
+      Only $g_{11} = 1$ and $g_{22} = 4$ are nonzero: $g = g_{11}x^1y^1 + g_{22}x^2y^2$.
+    explanation: |
+      $$\begin{aligned}g(\mathcal{X},\mathcal{Y}) &= 1\cdot1\cdot3 + 4\cdot2\cdot1\\ &= 11.\end{aligned}$$
+      A contraction always pairs one upper with one lower index. Two vectors (both indices up) can only be combined through $g_{ij}$; the bare sum $\sum_i x^iy^i$ is what you get by pretending the metric is $\delta_{ij}$, true only in an orthonormal basis.
+
+  - type: numeric
+    id: flat-not-rename
+    title: Lowering is not renaming
+    prompt: |
+      On the Euclidean plane, at a point with $r = 3$, a vector $\mathcal{X}$ has polar components $x^i = (2, 1)$. Its flat $\flat(\mathcal{X})$ is the covector with components
+      $$\flat(\mathcal{X})_i = x^j g_{ji}.$$
+      Find $\flat(\mathcal{X})_2$.
+    answer: 9
+    wrong:
+      - { value: 1, feedback: 'That just moves the label down, $x_2 := x^2 = 1$, as if lowering were renaming. Lowering is a map that uses $g$: $\flat(\mathcal{X})_2 = x^1g_{12} + x^2g_{22} = 0 + 1\cdot9 = 9$.' }
+      - { value: 0.1111, feedback: '$1/9 = (g^{-1})^{22}$ belongs to the inverse map $\flat^{-1}$, which raises indices. Lowering uses $g_{ji}$ itself: $1\cdot g_{22} = 9$.' }
+      - { value: 3, feedback: 'That uses $g_{22} = r$. The polar metric is $\mathrm{diag}(1, r^2)$, so $g_{22} = 9$ at $r = 3$.' }
+    hint: |
+      The polar metric at $r = 3$ is $\mathrm{diag}(1, 9)$, with $g_{12} = 0$.
+    explanation: |
+      $$\begin{aligned}\flat(\mathcal{X})_2 &= x^1g_{12} + x^2g_{22}\\ &= 0 + 1\cdot 9 = 9,\end{aligned}$$
+      and $\flat(\mathcal{X})_1 = 2$. The covector $\flat(\mathcal{X}) = 2\,dr + 9\,d\theta$ has components that differ from $(2,1)$: lowering changes the numbers whenever $g$ is not the identity matrix.
+
+  - type: numeric
+    id: inverse-not-reciprocal
+    title: Inverse, not reciprocal
+    prompt: |
+      In some chart, a metric has the component matrix
+      $$\begin{pmatrix}g_{11} & g_{12}\\ g_{21} & g_{22}\end{pmatrix} = \begin{pmatrix}3 & 1\\ 1 & 1\end{pmatrix}.$$
+      The inverse metric components $(g^{-1})^{ij}$ are defined by $g_{ij}(g^{-1})^{jk} = \delta^k_i$. Find $(g^{-1})^{12}$.
+    answer: -0.5
+    answerText: '-1/2'
+    wrong:
+      - { value: 1, feedback: '$1 = 1/g_{12}$ inverts one entry. That works only for a diagonal matrix, and only on the diagonal. The defining condition is a matrix product, so you need the inverse matrix: $\tfrac12\begin{pmatrix}1&-1\\-1&3\end{pmatrix}$.' }
+      - { value: -1, feedback: 'That is the off-diagonal entry of $\begin{pmatrix}1&-1\\-1&3\end{pmatrix}$ before dividing by the determinant $3\cdot1 - 1\cdot1 = 2$.' }
+      - { value: 0, feedback: 'The inverse of a non-diagonal matrix is in general not diagonal. Check: the product with $\begin{pmatrix}3&1\\1&1\end{pmatrix}$ must give the identity, which forces $(g^{-1})^{12} = -\tfrac12$.' }
+    hint: |
+      For a $2\times2$ matrix, swap the diagonal entries, flip the sign of the off-diagonal ones, divide by the determinant.
+    explanation: |
+      The determinant is $3 - 1 = 2$, so
+      $$(g^{-1}) = \tfrac12\begin{pmatrix}1 & -1\\ -1 & 3\end{pmatrix}.$$
+      Check the first row: $3\cdot\tfrac12 + 1\cdot(-\tfrac12) = 1$ and $3\cdot(-\tfrac12) + 1\cdot\tfrac32 = 0$. Also $(g^{-1})^{11} = \tfrac12$, not $1/g_{11} = \tfrac13$: off the diagonal case, no entry is a reciprocal.
+
+  - type: mcq
+    id: congruence
+    title: What survives a new chart?
+    prompt: |
+      On the Minkowski plane, the cartesian chart $(t,a)$ gives $\eta$ the component matrix $\mathrm{diag}(-1, 1)$. In the chart $\mathscr{Y} = (t, 3a)$ the basis field $\partial y_2 = \tfrac13\partial x_2$, so the matrix becomes $\mathrm{diag}(-1, \tfrac19)$. Which quantity is the same in both charts?
+    options:
+      - text: 'The numbers of positive and of negative diagonal entries (the signature)'
+        correct: true
+      - text: 'The eigenvalues of the component matrix'
+        feedback: |
+          They are $\{-1, 1\}$ and $\{-1, \tfrac19\}$. Eigenvalues are invariant under similarity $\mathbf{A}^{-1}\mathbf{T}\mathbf{A}$, the law of a $(1,1)$-tensor. A metric is a $(0,2)$-tensor and changes by congruence, $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$, which keeps only the signs.
+      - text: 'The determinant of the component matrix'
+        feedback: |
+          It goes from $-1$ to $-\tfrac19$: under congruence $\det\mathbf{G}_\mathscr{Y} = (\det\mathbf{A})^2\det\mathbf{G}_\mathscr{X}$. Only its **sign** survives, since $(\det\mathbf{A})^2 > 0$.
+      - text: 'The trace of the component matrix'
+        feedback: |
+          It goes from $0$ to $-\tfrac89$. A trace is invariant only for similar matrices; the trace of $g_{ij}$ sums two lower indices, which is not a contraction.
+    explanation: |
+      With $A^i{}_k = \partial\mathscr{X}^i/\partial\mathscr{Y}^k = \mathrm{diag}(1, \tfrac13)$,
+      $$\mathbf{A}^{\mathsf{T}}\,\mathrm{diag}(-1,1)\,\mathbf{A} = \mathrm{diag}(-1,\tfrac19).$$
+      Sylvester's law: congruence can rescale entries but never changes how many are positive and how many negative. Signature $(1,1)$ in both charts.
+
+  - type: mcq
+    id: positive-entries
+    title: All entries positive
+    prompt: |
+      At a point of a 2-dimensional manifold, a metric has the component matrix
+      $$\begin{pmatrix}1 & 3\\ 3 & 4\end{pmatrix}.$$
+      What is its signature $(n_+, n_-)$?
+    options:
+      - text: '$(1,1)$'
+        correct: true
+      - text: '$(2,0)$, since every entry is positive'
+        feedback: |
+          Positive entries do not make a positive-definite metric. Complete the square: $x^2 + 6xy + 4y^2 = (x+3y)^2 - 5y^2$, one plus and one minus sign. The vector with components $(3,-1)$ has $g = 9 - 18 + 4 = -5 < 0$.
+      - text: '$(0,2)$'
+        feedback: |
+          The vector $(1,0)$ has $g = g_{11} = 1 > 0$, so there is at least one plus sign.
+      - text: 'None: the metric is degenerate'
+        feedback: |
+          Degenerate means $\det = 0$. Here $\det = 4 - 9 = -5\neq0$, so $\flat$ is invertible; the negative determinant tells you the signs differ.
+    explanation: |
+      Completing the square,
+      $$x^2 + 6xy + 4y^2 = (x+3y)^2 - 5y^2.$$
+      Quick check: $\operatorname{sign}\det = (-1)^{n_-}$, and $\det = -5 < 0$ gives $n_-$ odd, so $(1,1)$ in two dimensions. This metric is Lorentzian.
+
+  - type: mcq
+    id: det-sign
+    title: What the determinant tells you
+    prompt: |
+      On a 4-dimensional manifold, a metric has, in some chart at a point $p$, a component matrix with determinant $-3$. Which signatures $(n_+, n_-)$ are possible?
+    options:
+      - text: '$(3,1)$ or $(1,3)$'
+        correct: true
+      - text: 'Only $(3,1)$'
+        feedback: |
+          The determinant's sign is $(-1)^{n_-}$, which only sees whether $n_-$ is odd. $(1,3)$ has $n_- = 3$, also odd, and gives a negative determinant too: the mostly-minus spacetime convention.
+      - text: '$(2,2)$'
+        feedback: |
+          $n_- = 2$ is even, so $\operatorname{sign}\det = (-1)^2 = +1$. A negative determinant rules it out.
+      - text: 'Any: a determinant depends on the chart'
+        feedback: |
+          Its value does, by the factor $(\det\mathbf{A})^2 > 0$, but its sign does not. So the sign is information about the metric, not the chart.
+    explanation: |
+      Diagonalize by congruence: the determinant becomes a product of $n_-$ negative and $n_+$ positive numbers, times a positive factor, so
+      $$\operatorname{sign}\det = (-1)^{n_-}.$$
+      In 4 dimensions, $\det < 0$ leaves $n_- \in\{1, 3\}$: $(3,1)$ or $(1,3)$, the two spacetime conventions.
+
+  - type: mcq
+    id: lightlike-nonzero
+    title: Zero length, nonzero vector
+    prompt: |
+      On the Minkowski plane with $\eta = \mathrm{diag}(-1,1)$ in the chart $(t,a)$, take the vector $v = 3\,\partial x_1 - 3\,\partial x_2$. Then $\eta(v,v) = -9 + 9 = 0$. What is $v$?
+    options:
+      - text: 'A nonzero lightlike vector'
+        correct: true
+      - text: 'The zero vector, since its length is zero'
+        feedback: |
+          Its components $(3,-3)$ are not zero. "Length zero only for the zero vector" holds for positive-definite metrics; with mixed signs the plus and minus terms can cancel. Such $v$ are lightlike (null).
+      - text: 'A sign that $\eta$ is degenerate'
+        feedback: |
+          Degenerate would mean $\flat(v) = 0$, i.e. $\eta(v, w) = 0$ for **every** $w$. Here $\flat(v)_i = v^j\eta_{ji}$ gives $\flat(v) = -3\,dx^1 - 3\,dx^2 \neq 0$; for instance $\eta(v, \partial x_1) = -3$.
+      - text: 'A spacelike vector, since its $a$-component is as large as its $t$-component'
+        feedback: |
+          Spacelike means $\eta(v,v) > 0$, i.e. $|a\text{-component}| > |t\text{-component}|$. Equal sizes give exactly $0$: the borderline case, lightlike.
+    explanation: |
+      $$\eta(v,v) = -(3)^2 + (-3)^2 = 0,$$
+      yet $v\neq0$ and $\flat(v) = -3\,dx^1 - 3\,dx^2\neq0$. Nondegenerate means no nonzero vector is orthogonal to **all** vectors; it allows vectors orthogonal to themselves. They point along the light rays $a = \pm t$.
+
+  - type: numeric
+    id: reparam-energy
+    title: Same path, half the speed
+    prompt: |
+      On the Euclidean plane, the curve $\gamma(\lambda) = (3\lambda, 4\lambda)$ on $[0,1]$ runs along a segment of length $5$, and $\int_0^1 g(v_\gamma,v_\gamma)\,d\lambda = 25$. Now run the same segment at half the speed: $\delta(\mu) = (\tfrac32\mu, 2\mu)$ on $[0,2]$. Find
+      $$\int_0^2 g(v_\delta, v_\delta)\,d\mu.$$
+    answer: 12.5
+    answerText: '25/2'
+    wrong:
+      - { value: 25, feedback: 'That assumes the integral of $g(v,v)$ is unchanged by reparametrization, like the length. It is not: $g(v_\delta,v_\delta) = \tfrac94 + 4 = \tfrac{25}4$, over an interval of length $2$, gives $\tfrac{25}2$.' }
+      - { value: 5, feedback: '$5$ is the length $\int s\,d\mu$ (speed $\tfrac52$ over $[0,2]$), which is the same for $\gamma$ and $\delta$. The question integrates the square of the speed, which is not.' }
+      - { value: 50, feedback: 'Halving the speed divides $g(v,v)$ by $4$ while the interval doubles: $25\cdot\tfrac14\cdot2 = \tfrac{25}2$, not $50$.' }
+    hint: |
+      $v_\delta = (\tfrac32, 2)$, constant, so $g(v_\delta,v_\delta) = \tfrac94 + 4$.
+    explanation: |
+      $$\int_0^2 \tfrac{25}4\,d\mu = \tfrac{25}2.$$
+      The length is $\int_0^2\tfrac52\,d\mu = 5$, unchanged: the speed scales by $|\text{ᚱ}'|$ and $d\mu$ by $1/|\text{ᚱ}'|$, which cancel only under the square root. That is why the length measures paths, while $\int g(v,v)$ also cares how fast they are run.
+
+  - type: numeric
+    id: twin-time
+    title: Proper time of the traveller
+    prompt: |
+      On the Minkowski plane, points $(t,a)$, $\eta = \mathrm{diag}(-1,1)$, the proper time of a timelike curve is $\int\sqrt{-\eta(v_\gamma,v_\gamma)}\,d\lambda$. Twin A stays at $a = 0$ from $(0,0)$ to $(10,0)$. Twin B travels on straight segments $(0,0)\to(5,4)\to(10,0)$. Find B's proper time.
+    answer: 6
+    wrong:
+      - { value: 10, feedback: '$10$ is the elapsed $t$, which is A''s proper time. On each leg B has $v = \partial x_1 \pm \tfrac45\partial x_2$ per unit $t$, so $\sqrt{1 - \tfrac{16}{25}} = \tfrac35$ per unit $t$: $\tfrac35\cdot10 = 6$.' }
+      - { value: 12.806, feedback: '$2\sqrt{41}\approx12.81$ is the Euclidean length of the zigzag, with $+$ in both slots. The metric is $\eta$, with a minus on $t$: each leg gives $\sqrt{25 - 16} = 3$.' }
+      - { value: 18, feedback: 'Each leg has $-\eta = 25 - 16 = 9$ for the displacement $(5,\pm4)$; the proper time is its square root $3$, not $9$. Total $6$.' }
+    hint: |
+      Parametrize a leg by $t\in[0,5]$: $v = \partial x_1 + \tfrac45\partial x_2$, $-\eta(v,v) = 1 - \tfrac{16}{25}$.
+    explanation: |
+      Per leg,
+      $$\int_0^5\sqrt{1 - \tfrac{16}{25}}\,dt = 5\cdot\tfrac35 = 3,$$
+      so B ages $6$ while A ages $10$. The minus sign in $\eta$ makes motion in $a$ **reduce** the proper time.
+
+  - type: mcq
+    id: twin-longest
+    title: Longest, not shortest
+    prompt: |
+      On the Minkowski plane, points $(t,a)$, $\eta = \mathrm{diag}(-1,1)$, consider timelike curves from $(0,0)$ to $(10,0)$. Which has the largest proper time $\int\sqrt{-\eta(v,v)}\,d\lambda$?
+    options:
+      - text: 'The inertial worldline $a = 0$'
+        correct: true
+      - text: 'Some zigzag: the straight worldline minimizes proper time, as a straight line minimizes Euclidean distance'
+        feedback: |
+          The straight worldline is stationary, but for timelike curves it is a **maximum**: any detour in $a$ subtracts from $-\eta(v,v) = \dot t^2 - \dot a^2$. Zigzags $(0,0)\to(5,4)\to(10,0)$ give $6 < 10$, and zigzags closer to light rays give less and less, with no positive minimum.
+      - text: 'The one that moves fastest, since speed adds to the length'
+        feedback: |
+          In Euclidean geometry speed in $a$ adds a $+\dot a^2$; in $\eta$ it enters with a minus, $\dot t^2 - \dot a^2$. Fast travel shortens proper time.
+      - text: 'They all have proper time $10$, since length does not depend on parametrization'
+        feedback: |
+          Reparametrization invariance compares different parametrizations of the **same** path. Different paths between the same events have different proper times: $10$ for $a = 0$, $6$ for the zigzag through $(5,4)$.
+    explanation: |
+      For any timelike curve $\lambda\mapsto(t(\lambda), a(\lambda))$ with $\dot t > 0$,
+      $$\sqrt{\dot t^2 - \dot a^2}\le\dot t,$$
+      with equality only for $\dot a = 0$. Integrating gives at most $10$: the twin who stays inertial ages most. Geodesics are stationary curves of the length, not always minima.
+
+  - type: mcq
+    id: long-way-round
+    title: Stationary is not shortest
+    prompt: |
+      On the unit sphere, two points on the equator lie a quarter turn apart. The equator splits into two arcs between them, of lengths $\tfrac\pi2$ and $\tfrac{3\pi}2$. Geodesics are the curves whose length is stationary under every small deformation with fixed endpoints. Which arcs, run at constant speed, are geodesics?
+    options:
+      - text: 'Both arcs'
+        correct: true
+      - text: 'Only the short arc, since a geodesic is the shortest curve'
+        feedback: |
+          The definition asks for stationary length, $\tfrac{d}{d\text{ᛊ}}L = 0$, not minimal length. The long arc is a piece of a great circle and satisfies the geodesic equation at each point; it is not the shortest route, but small deformations change its length only to second order.
+      - text: 'Neither: the equator is a parallel, and parallels are not geodesics'
+        feedback: |
+          Parallels $\vartheta = \vartheta_0$ fail the geodesic equation by $-\sin\vartheta_0\cos\vartheta_0$, which vanishes at $\vartheta_0 = \tfrac\pi2$: the equator is the one parallel that is a great circle.
+      - text: 'Only the long arc, since the short one can be shortened by bending'
+        feedback: |
+          The short arc is the shortest curve between its endpoints, so no bending shortens it. It is a geodesic (and a minimum).
+    explanation: |
+      The geodesic equation is a local condition, checked point by point, and the whole equator satisfies it. Both arcs are geodesics; the short one is also the shortest. On a sphere, a great-circle arc longer than $\pi$ is a geodesic that is not shortest.
+
+  - type: mcq
+    id: coordinate-line
+    title: Straight in the chart
+    prompt: |
+      On the Euclidean plane, points $(a,b)$, take the sheared chart $(u, v)$ with
+      $$u = a,\quad v = b - a^2.$$
+      Consider the two kinds of coordinate lines, each run with unit chart speed: $\lambda\mapsto(u,v) = (\lambda, v_0)$ and $\lambda\mapsto(u,v) = (u_0, \lambda)$. Which are geodesics of the Euclidean metric?
+    options:
+      - text: 'Only the curves $(u_0, \lambda)$'
+        correct: true
+      - text: 'Both: their chart components are linear in $\lambda$, so $\ddot\gamma^k = 0$'
+        feedback: |
+          $\ddot\gamma^k = 0$ is the geodesic equation only where all Christoffel symbols vanish. In this chart they do not (the Euclidean $\Gamma^2_{11} = 2$ here), so linear chart components are not enough. In the plane, $(\lambda, v_0)$ is $(a,b) = (\lambda, v_0 + \lambda^2)$, a parabola.
+      - text: 'Only the curves $(\lambda, v_0)$'
+        feedback: |
+          In $(a,b)$ they are $(\lambda, v_0+\lambda^2)$, parabolas, which bend. The other family, $(a,b) = (u_0, u_0^2 + \lambda)$, are vertical lines at unit speed: geodesics.
+      - text: 'Neither, since the chart is not cartesian'
+        feedback: |
+          Geodesics do not depend on the chart. The curves $(u_0,\lambda)$ are $(a,b) = (u_0, u_0^2+\lambda)$, straight vertical lines run at unit speed, which are geodesics whatever chart describes them.
+    explanation: |
+      Translate to cartesian components, where (G) reads $\ddot a = \ddot b = 0$:
+      - $(\lambda, v_0)\mapsto(\lambda,\ v_0 + \lambda^2)$: $\ddot b = 2\neq0$, a parabola.
+      - $(u_0,\lambda)\mapsto(u_0,\ u_0^2 + \lambda)$: a straight line at constant speed.
+
+      Being a coordinate line says nothing by itself; the polar circles $r = r_0$ and the sphere's parallels other than the equator fail for the same reason.
+
+  - type: mcq
+    id: speed-trap
+    title: Straight but too fast
+    prompt: |
+      On the Euclidean plane, in the cartesian chart (all Christoffel symbols zero), consider
+      $$\gamma(\lambda) = (\lambda^3,\ 2\lambda^3),\quad\lambda\in[1,2].$$
+      Its trace is a piece of the straight line $b = 2a$. What is true?
+    options:
+      - text: 'It fails (G), yet it is a reparametrization of a geodesic'
+        correct: true
+      - text: 'It solves (G), since it runs along a straight line'
+        feedback: |
+          (G) in this chart is $\ddot\gamma^k = 0$, and $\ddot\gamma^1 = 6\lambda\neq0$. (G) holds only for the constant-speed parametrization; this curve speeds up, from speed $3\sqrt5$ at $\lambda = 1$ to $12\sqrt5$ at $\lambda = 2$.
+      - text: 'It is not a geodesic in any sense, since it fails (G)'
+        feedback: |
+          The length does not see the parametrization, so its stationary curves include every reparametrization of a geodesic. They solve the any-speed form $\ddot\gamma^k + \Gamma^k_{ij}\dot\gamma^i\dot\gamma^j = (\dot s/s)\,\dot\gamma^k$, and here $\dot s/s = 2/\lambda$ gives $(2/\lambda)\cdot3\lambda^2 = 6\lambda = \ddot\gamma^1$.
+      - text: 'It solves (G) after dividing by the speed'
+        feedback: |
+          (G) is not homogeneous in that way: the acceleration term has two derivatives, $\Gamma\dot\gamma\dot\gamma$ two velocity factors, and the defect is a term along the velocity, $(\dot s/s)\dot\gamma^k$. Only a change of parameter to arc length removes it.
+    explanation: |
+      $\ddot\gamma = (6\lambda, 12\lambda)$, so (G) fails. With speed $s = 3\sqrt5\,\lambda^2$,
+      $$\frac{\dot s}{s}\,\dot\gamma = \frac2\lambda\,(3\lambda^2, 6\lambda^2) = \ddot\gamma,$$
+      so the any-speed equation holds. (G) picks out the constant-speed parametrizations of geodesics.
+
+  - type: mcq
+    id: energy-vs-length
+    title: Which Lagrangian?
+    prompt: |
+      On the Euclidean plane, in the cartesian chart, the curve $\gamma(\lambda) = (\lambda^3, 2\lambda^3)$ on $[1,2]$ runs along a straight line with increasing speed. Two Lagrangians on the velocity slots $\beta$ are
+      $$\mathcal{L} = \sqrt{(\beta^1)^2 + (\beta^2)^2},$$
+      $$\mathcal{E} = \tfrac12\big((\beta^1)^2 + (\beta^2)^2\big).$$
+      Whose Euler-Lagrange equations does $\gamma$ satisfy?
+    options:
+      - text: 'Those of $\mathcal{L}$ only'
+        correct: true
+      - text: 'Both, since $\mathcal{E}$ is just $\tfrac12\mathcal{L}^2$'
+        feedback: |
+          Squaring changes the variational problem. The Euler-Lagrange equations of $\mathcal{E}$ are $\ddot\gamma^k = 0$, which demand constant velocity; here $\ddot\gamma^1 = 6\lambda\neq0$. Those of $\mathcal{L}$ are blind to the parametrization.
+      - text: 'Those of $\mathcal{E}$ only'
+        feedback: |
+          $\mathcal{E}$ gives $\ddot\gamma^k = 0$, violated here. $\mathcal{L}$ gives $\tfrac{d}{d\lambda}(\dot\gamma^k/s) = 0$, i.e. a constant direction $\dot\gamma/s = (1,2)/\sqrt5$, which holds.
+      - text: 'Neither, since the speed is not constant'
+        feedback: |
+          Constant speed is needed for $\mathcal{E}$, not for $\mathcal{L}$: the length is unchanged by reparametrization, so its Euler-Lagrange equations accept every parametrization of a straight line.
+    explanation: |
+      For $\mathcal{L}$ the equations are $\tfrac{d}{d\lambda}\big(\dot\gamma^k/s\big) = 0$: the unit direction $(1,2)/\sqrt5$ is constant, so they hold. For $\mathcal{E}$ they are $\ddot\gamma^k = 0$, which fail. The energy Lagrangian yields (G) at any speed, the length Lagrangian only after fixing constant speed.
+
+  - type: numeric
+    id: sphere-not-compatible
+    title: Torsion free is not enough
+    prompt: |
+      On the unit sphere with chart $(\vartheta,\varphi)$ and round metric $g = \mathrm{diag}(1, \sin^2\vartheta)$, define a connection $\nabla$ by declaring **all** its coefficients in this chart zero. It is torsion free (zero is symmetric). Compatibility in components reads
+      $$(\nabla_{\partial x_k}g)_{ij} = \partial_kg_{ij} - \Gamma^m_{ik}g_{mj} - \Gamma^m_{jk}g_{im}.$$
+      Find $(\nabla_{\partial x_1}g)_{22}$ at $\vartheta = \tfrac\pi4$, where $\partial x_1 = \partial/\partial\vartheta$.
+    answer: 1
+    wrong:
+      - { value: 0, feedback: 'Zero would make $\nabla$ metric compatible. Torsion free alone does not give that: with all $\Gamma = 0$ only $\partial_\vartheta g_{22} = 2\sin\vartheta\cos\vartheta$ remains, which is $1$ at $\tfrac\pi4$.' }
+      - { value: 0.5, feedback: '$\tfrac12 = \sin^2\tfrac\pi4$ is $g_{22}$ itself. The derivative is $\partial_\vartheta\sin^2\vartheta = 2\sin\vartheta\cos\vartheta = 1$.' }
+    hint: |
+      All $\Gamma$ vanish, so only $\partial_\vartheta(\sin^2\vartheta)$ is left.
+    explanation: |
+      $$\begin{aligned}(\nabla_{\partial x_1}g)_{22} &= \partial_\vartheta\sin^2\vartheta\\ &= \sin2\vartheta = 1.\end{aligned}$$
+      This $\nabla$ is torsion free but does not keep $g$ constant, so it is not $\nabla^{\mathrm{LC}}$, whose coefficients here include $\Gamma^1_{22} = -\sin\vartheta\cos\vartheta$. Its transport changes lengths.
+
+  - type: mcq
+    id: w-torsion
+    title: Compatible is not enough
+    prompt: |
+      On the plane minus the origin, the connection $\nabla^{\mathrm{W}}$ declares the unit fields $e_1 = \partial y_1$ and $e_2 = \tfrac1r\partial y_2$ parallel. Since they stay orthonormal, it keeps the Euclidean metric constant: $\nabla^{\mathrm{W}}g = 0$. Its only nonzero polar coefficient is $\Gamma^2_{21} = \tfrac1r$ (last lower index = direction). Is $\nabla^{\mathrm{W}}$ the Levi-Civita connection?
+    options:
+      - text: 'No: it has torsion, $\Gamma^2_{21} - \Gamma^2_{12} = \tfrac1r\neq0$'
+        correct: true
+      - text: 'Yes: the Levi-Civita connection is the connection that preserves lengths'
+        feedback: |
+          Many connections preserve lengths. The Levi-Civita theorem needs two conditions, compatible **and** torsion free, and the uniqueness proof uses the symmetry $\Gamma^k_{ij} = \Gamma^k_{ji}$ at the step where the cyclic sums cancel.
+      - text: 'Yes: compatibility fixes the connection, and torsion follows'
+        feedback: |
+          Compatibility gives $d\cdot\tfrac{d(d+1)}2$ equations for $d^3$ unknowns $\Gamma^k_{ij}$; the other $d\cdot\tfrac{d(d-1)}2$ are fixed by asking for zero torsion. Without it, $\nabla^{\mathrm{W}}$ is a second compatible connection.
+      - text: 'No: it does not keep the metric constant'
+        feedback: |
+          It does: $e_1, e_2$ are parallel and orthonormal, so the components of $g$ in this frame are the constant $\delta_{ij}$, and lengths and angles of transported vectors are preserved.
+    explanation: |
+      The polar Christoffel symbols are $\Gamma^1_{22} = -r$, $\Gamma^2_{12} = \Gamma^2_{21} = \tfrac1r$; $\nabla^{\mathrm{W}}$ differs (it has $\Gamma^1_{22} = 0$ and $\Gamma^2_{12} = 0$). Its torsion is
+      $$\mathtt{T}^2_{12} = \Gamma^2_{21} - \Gamma^2_{12} = \tfrac1r.$$
+      Only both properties together single out $\nabla^{\mathrm{LC}}$.
+
+  - type: numeric
+    id: scaled-gamma
+    title: Scale the metric
+    prompt: |
+      On the plane minus a cut, take $4$ times the Euclidean metric: in polar components $g' = \mathrm{diag}(4, 4r^2)$. The Euclidean Christoffel symbol is $\Gamma^1_{22} = -r$. Using
+      $$\Gamma^k_{ij} = \tfrac12(g^{-1})^{km}(\partial_ig_{mj} + \partial_jg_{mi} - \partial_mg_{ij}),$$
+      find $(\Gamma')^1_{22}$ for $g'$ at $r = 3$.
+    answer: -3
+    wrong:
+      - { value: -12, feedback: 'That scales $\Gamma$ with the metric. But the formula has one $g^{-1}$ (scaled by $\tfrac14$) and one derivative of $g$ (scaled by $4$): constant factors cancel, so $(\Gamma'')^1_{22} = -r = -3$.' }
+      - { value: -0.75, feedback: 'That divides by $4$, keeping only the factor of $(g^{-1})$. The derivatives of $g'' = 4g$ bring a $4$ back: the factors cancel.' }
+      - { value: -9, feedback: '$-9 = -r^2$ is $-g_{22}$, not the Christoffel symbol. With $((g'')^{-1})^{11} = \tfrac14$ and $\partial_rg''_{22} = 8r$: $\tfrac12\cdot\tfrac14\cdot(-8r) = -r$.' }
+    hint: |
+      $(\Gamma')^1_{22} = \tfrac12\,((g')^{-1})^{11}\,(-\partial_r g'_{22})$.
+    explanation: |
+      $$\begin{aligned}(\Gamma')^1_{22} &= \tfrac12\cdot\tfrac14\cdot(-8r)\\ &= -r = -3.\end{aligned}$$
+      Multiplying $g$ by a constant leaves the Christoffel symbols, hence $\nabla^{\mathrm{LC}}$, its geodesics and $\mathrm{Riem}^l{}_{jkm}$ unchanged. Quantities that use $g$ once more change: $R = (g^{-1})^{mk}\mathrm{Ric}_{km}$ is divided by $4$.
+
+  - type: mcq
+    id: gamma-nonzero-flat
+    title: Nonzero symbols, flat metric
+    prompt: |
+      On a region with chart $(r,\theta)$, $r > 0$, a metric has components $\mathrm{diag}(1, f(r)^2)$ with $f = 3r$. For this family,
+      $$\Gamma^1_{22} = -ff',\quad\Gamma^2_{12} = \tfrac{f'}{f},$$
+      so $\Gamma^1_{22} = -9r\neq0$. Is the metric curved?
+    options:
+      - text: 'No: $\mathrm{Riem}^1{}_{212} = -ff'''' = 0$, it is flat'
+        correct: true
+      - text: 'Yes: nonzero Christoffel symbols mean curvature'
+        feedback: |
+          The Euclidean metric in polar components already has $\Gamma^1_{22} = -r$, and the plane is flat. The $\Gamma$'s are not a tensor: they can be produced by a curvilinear chart. Curvature is $\mathrm{Riem}$, built from derivatives and products of $\Gamma$'s, and for this family it is $-ff'' = 0$ since $f'' = 0$.
+      - text: 'Cannot tell without a chart where all $\Gamma$ vanish'
+        feedback: |
+          $\mathrm{Riem}$ is a tensor, so computing it in any one chart decides: here $-ff'' = 0$ everywhere. (Such a chart exists: with $\varphi = 3\theta$ the metric becomes $\mathrm{diag}(1, r^2)$, polar coordinates of the Euclidean plane.)
+      - text: 'Yes, with $\mathrm{Riem}^1{}_{212} = -9r$'
+        feedback: |
+          $-9r$ is $\Gamma^1_{22}$ itself. For $\mathrm{diag}(1,f^2)$ the curvature component is $-ff''$, which needs the second derivative of $f$, here $0$.
+    explanation: |
+      With $\varphi := 3\theta$, $f(r)^2d\theta^2 = r^2d\varphi^2$, so locally this is the Euclidean metric in polar form. Nonzero $\Gamma$'s only tell you the chart is curvilinear; a vanishing $\mathrm{Riem}$ is the test for flatness.
+
+  - type: mcq
+    id: gamma-zero-equator
+    title: Zero symbols, curved metric
+    prompt: |
+      On the unit sphere with chart $(\vartheta,\varphi)$, the nonzero Christoffel symbols are
+      $$\Gamma^1_{22} = -\sin\vartheta\cos\vartheta,\quad\Gamma^2_{12} = \Gamma^2_{21} = \cot\vartheta.$$
+      At every point of the equator $\vartheta = \tfrac\pi2$ all of them vanish. What follows about the curvature there?
+    options:
+      - text: 'Nothing new: $\mathrm{Riem}\neq0$ there, and $R = 2$ as everywhere'
+        correct: true
+      - text: 'The sphere is flat along the equator'
+        feedback: |
+          $\mathrm{Riem}$ involves the **derivatives** of the $\Gamma$'s, not only their values. $\partial_\vartheta\Gamma^1_{22} = -\cos2\vartheta = 1$ at the equator, and $\mathrm{Riem}^1{}_{212} = \sin^2\vartheta = 1$ there.
+      - text: 'The curvature has a different sign on each side of the equator'
+        feedback: |
+          $\Gamma^1_{22}$ changes sign across the equator, but $\mathrm{Riem}^1{}_{212} = \sin^2\vartheta$ does not, and $R = 2$ at every point. The sign of a $\Gamma$ carries no curvature information.
+      - text: 'Nothing can be said, since the chart is singular at the equator'
+        feedback: |
+          The chart is singular only at the poles ($\sin\vartheta = 0$). At the equator it is perfectly regular, and $g = \mathrm{diag}(1,1)$ there.
+    explanation: |
+      $\Gamma = 0$ at a point (even along a whole curve) is always achievable and says nothing about curvature, which lives in $\partial\Gamma$ and $\Gamma\Gamma$. At the equator
+      $$\mathrm{Riem}^1{}_{212} = \partial_\vartheta\Gamma^1_{22} = 1,$$
+      since the products of $\Gamma$'s in $\mathrm{Riem}$ all vanish there and only this derivative survives.
+
+  - type: mcq
+    id: ricci-flat-4d
+    title: Empty but curved?
+    prompt: |
+      A metric on a 4-dimensional manifold has $\mathrm{Ric} = 0$ everywhere (in Level 10 this will be the vacuum condition). Must its curvature $\mathrm{Riem}$ vanish?
+    options:
+      - text: 'No: $\mathrm{Riem}$ has 20 independent components, $\mathrm{Ric}$ only 10'
+        correct: true
+      - text: 'Yes: $\mathrm{Ric}$ is built from $\mathrm{Riem}$, so it carries the same information'
+        feedback: |
+          $\mathrm{Ric}_{ab} = \mathrm{Riem}^m{}_{amb}$ is a contraction, a trace, and a trace forgets information. In 4 dimensions the 20 components of $\mathrm{Riem}$ cannot all be recovered from the 10 of $\mathrm{Ric}$.
+      - text: 'Yes: $\mathrm{Ric} = 0$ gives $R = 0$, and $R = 0$ means flat'
+        feedback: |
+          $R$ is a single function, a further trace. $R = 0$ does not even force $\mathrm{Ric} = 0$, let alone $\mathrm{Riem} = 0$.
+      - text: 'No, but only for Lorentzian signature'
+        feedback: |
+          The counting does not depend on signs: $d^2(d^2-1)/12 = 20$ components of $\mathrm{Riem}$ versus $d(d+1)/2 = 10$ of $\mathrm{Ric}$ for any 4-dimensional metric.
+    explanation: |
+      Independent components: $\mathrm{Riem}$ has $d^2(d^2-1)/12$, $\mathrm{Ric}$ has $d(d+1)/2$. They agree for $d = 3$ ($6$ and $6$), and in $d = 2$, $\mathrm{Ric} = \tfrac R2g$; there $\mathrm{Ric} = 0$ forces flatness. In $d = 4$ ($20 > 10$) it does not: vacuum spacetime can be curved, which is how gravity crosses empty space.
+
+  - type: numeric
+    id: sphere-radius
+    title: A bigger sphere
+    prompt: |
+      A sphere of radius $3$ has, in the chart $(\vartheta,\varphi)$, the metric $g = 9\,\mathrm{diag}(1, \sin^2\vartheta)$. The unit sphere has Ricci scalar $R = 2$. What is $R$ for the radius-$3$ sphere?
+    answer: 0.2222
+    answerText: '2/9'
+    tolerance: 0.002
+    wrong:
+      - { value: 2, feedback: 'The Christoffel symbols and $\mathrm{Riem}^l{}_{jkm}$ are indeed unchanged by the constant factor $9$, but $R = (g^{-1})^{mk}\mathrm{Ric}_{km}$ uses one inverse metric, which brings $\tfrac19$.' }
+      - { value: 18, feedback: 'The factor goes the other way: a bigger sphere is less curved. $(g^{-1})$ is divided by $9$, so $R = 2/9$.' }
+      - { value: 0.6667, feedback: '$\tfrac23$ scales with the radius $a = 3$. $R$ scales as $1/a^2$, since the metric carries $a^2$: $R = 2/9$.' }
+    hint: |
+      $\mathrm{Ric}_{km}$ does not change when $g$ is multiplied by a constant; $(g^{-1})^{mk}$ is divided by it.
+    explanation: |
+      $$R = \frac{2}{a^2} = \frac29\approx0.222.$$
+      Curvature has units of $1/\text{length}^2$: as $a\to\infty$ the sphere looks flatter and flatter, which is why the Earth looks flat to us.
+
+  - type: numeric
+    id: cosh-sign
+    title: cosh is not cos
+    prompt: |
+      A surface has a chart $(u,w)$, $u\in\mathbb{R}$, with metric $\mathrm{diag}(1, f(u)^2)$, $f = \cosh u$. For this family,
+      $$\mathrm{Riem}^1{}_{212} = -ff'',\quad R = \frac{2\rho}{\det g},$$
+      with $\rho := g_{11}\,\mathrm{Riem}^1{}_{212}$. Find $R$.
+    answer: -2
+    wrong:
+      - { value: 2, feedback: 'That is the sphere, $f = \sin$, where $f'''' = -f$ and $-ff'''' = \sin^2 > 0$. For $\cosh$, $f'''' = +f$: $-ff'''' = -\cosh^2u < 0$, so $R = -2\cosh^2u/\cosh^2u = -2$.' }
+      - { value: 0, feedback: '$\cosh u$ is not linear in $u$: $f'''' = \cosh u\neq0$. Flatness in this family needs $f'''' = 0$.' }
+    hint: |
+      $f'' = \cosh u = f$, $\det g = \cosh^2u$.
+    explanation: |
+      $$\begin{aligned}R &= \frac{2\cdot(-\cosh^2u)}{\cosh^2u}\\ &= -2,\end{aligned}$$
+      constant and negative, like the hyperbolic plane ($f = \sinh r$). In general $R = -2f''/f$: $f'' = -f$ (sin, cos) gives $+2$, $f'' = +f$ (sinh, cosh) gives $-2$, $f'' = 0$ gives a flat metric.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      The traps, turned into rules:
+
+      - Two upper indices never sum on their own; contract through $g$:
+      $$g(\mathcal{X},\mathcal{Y}) = g_{ij}x^iy^j.$$
+      - Lowering uses $g$, raising uses the inverse **matrix**, never reciprocals of entries:
+      $$\flat(\mathcal{X})_i = x^jg_{ji},$$
+      $$g_{ij}(g^{-1})^{jk} = \delta^k_i.$$
+      - A metric changes by congruence, $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$: eigenvalues, trace and determinant move, the signature does not, and
+      $$\operatorname{sign}\det = (-1)^{n_-}.$$
+      - Positive entries do not mean positive definite; a lightlike vector has $g(v,v) = 0$ and $v\neq0$.
+      - Length ignores the parametrization, $\int g(v,v)$ does not; in Minkowski the inertial worldline has the **largest** proper time.
+      - Geodesics are stationary, not always shortest; a coordinate line is a geodesic only if it solves (G); (G) holds only at constant speed, the any-speed form is
+      $$\ddot\gamma^k + \Gamma^k_{ij}\dot\gamma^i\dot\gamma^j = \tfrac{\dot s}{s}\dot\gamma^k.$$
+      - $\nabla^{\mathrm{LC}}$ needs both: torsion free and $\nabla g = 0$. Constant factors in $g$ leave $\Gamma$ unchanged and divide $R$.
+      - $\Gamma\neq0$ is not curvature, $\Gamma(p) = 0$ is not flatness: decide with $\mathrm{Riem}$. $\mathrm{Ric} = 0$ forces flatness only in $d = 2, 3$.
+      - For $\mathrm{diag}(1,f^2)$: $R = -2f''/f$, $+2$ for the unit sphere, $-2$ for the hyperbolic plane, $2/a^2$ for radius $a$.
+
+      **Next:** the content map of this level. You will rebuild the chain from the metric and its signature to length, geodesics, the Levi-Civita connection and curvature, box by box, among decoys.

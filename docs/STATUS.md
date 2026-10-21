@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere` built; next: `ch07-traps`)
+## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, `ch07-traps` built; next: `ch07-map`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -30,8 +30,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere` done; next
-  `ch07-traps`, then map, challenge (two sessions);
+- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, `ch07-traps` (24 cards) done; next
+  `ch07-map` (no Chapter 7 TeX file: start from the book's 7.x headings and the lessons), then challenge (two sessions);
   then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
   B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -369,6 +369,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   variation $\vartheta = \tfrac\pi3+\text{ᛊ}\cos\lambda$ on $[-\pi/2,\pi/2]$, $dL/d\text{ᛊ} = 1$, over-the-pole route $2\pi/3$ vs $\tfrac{\sqrt3}{2}\pi$; $\mathrm{Riem}^1_{212} = \sin^2\vartheta$, $R = 2$, $\mathrm{Ric} = g$ ("Einstein metric" named);
   holonomy triangle pole–equator–$\varphi=\pi/2$: $z = \partial x_1$ constant components on each leg, $90°$ = area $\pi/2$ (angle = area stated); radius $a$: $g = a^2\mathrm{diag}(1,\sin^2\vartheta)$, $R = 2/a^2$
   (scaling and $f = a\sin(r/a)$, $r = a\vartheta$). No widget, no `own:` (guided).
+  Conventions fixed here (`ch07-traps`): fresh examples (not the lessons'): polar $r = 2$ vectors $(1,2)$, $(3,1)$, $g = 11$ (vs $5$); $\flat$ of $(2,1)$ at $r = 3$ is $(2,9)$;
+  $\begin{pmatrix}3&1\\1&1\end{pmatrix}^{-1} = \tfrac12\begin{pmatrix}1&-1\\-1&3\end{pmatrix}$; Minkowski chart $(t,3a)$, $\mathrm{diag}(-1,\tfrac19)$; $\begin{pmatrix}1&3\\3&4\end{pmatrix}$ = $(1,1)$; 4D $\det = -3$ ⇒ $(3,1)$ or $(1,3)$;
+  lightlike $3\partial x_1 - 3\partial x_2$; segment $(3\lambda,4\lambda)$ at half speed: $\int g(v,v) = \tfrac{25}2$ vs $25$; twin via $(5,4)$: $6$ vs $10$; equator long arc ($\tfrac{3\pi}2$) is a geodesic;
+  sheared chart $(u,v) = (a, b-a^2)$ coordinate lines (only $(u_0,\lambda)$ geodesic); $(\lambda^3, 2\lambda^3)$ fails (G), passes (S) and length E-L, fails energy E-L;
+  sphere connection with all $(\vartheta,\varphi)$ coefficients zero: $(\nabla_{\partial x_1}g)_{22} = \sin2\vartheta = 1$ at $\pi/4$; ∇ᵂ polar only $\Gamma^2_{21} = \tfrac1r$; $4g$ keeps $\Gamma$ ($-3$ at $r = 3$);
+  $f = 3r$ flat; equator all $\Gamma = 0$ yet $\mathrm{Riem}^1{}_{212} = 1$; vacuum 20 vs 10; radius 3: $R = \tfrac29$; $f = \cosh u$ gives $R = -2$, $R = -2f''/f$. Riem written $\mathrm{Riem}^1{}_{212}$. No tags.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -382,6 +388,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch07-traps (traps, 24 cards)
+- Built `content/ch07/traps.yaml` (intro; metric: same-height sum, ♭ not renaming, inverse not reciprocal; signature: congruence vs similarity, positive entries,
+  det sign in 4D, lightlike nonzero; length: $\int g(v,v)$ not invariant, twin proper time + longest; geodesics: long way round, sheared coordinate lines, $\lambda^3$ speed,
+  energy vs length Lagrangian; LC: torsion free not compatible (sphere), ∇ᵂ compatible with torsion, scaled metric keeps Γ; curvature: $f = 3r$ flat, equator Γ = 0,
+  vacuum 4D, radius 3, cosh; summary + map teaser). Registered in `course.yaml` with summary. Choices: fresh numbers throughout (transfer, not repetition); null-geodesic
+  trap skipped (already a card in `ch07-levi-civita`), replaced by "stationary is not shortest". validate 0/0, shots 0 problems.
+- Conventions fixed here: see Current, "Chapter 7 conventions so far" (`ch07-traps`).
 ### 2026-10-20 — ch07-sphere (guided, 30 cards)
 - Built `content/ch07/sphere.yaml` (hook pilot due east + parallels guess mcq; Step 1 chart/domain, metric from $\mathbb{R}^3$ dot products, $g_{22}$ numeric, $g_{12}$ mcq,
   family text; Step 2 $\Gamma^1_{22}$ build, $\Gamma^2_{12}$ mcq, numeric at $\pi/4$, pole trap, (G) mcq (factor 2); Step 3 meridian mcq, great circles by rotation;
