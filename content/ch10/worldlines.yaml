@@ -86,6 +86,8 @@ cards:
       $$g(\text{ᛏ},v_\gamma) > 0.$$
       These are postulates: they say which curves can carry a body with mass.
 
+      A worldline is smooth, so the twin's path with a corner at $(3,5)$ is an idealization. Round the corner over a tiny $\lambda$-interval: while turning, the velocity passes through the combinations $(1-t)\,(3,5) + t\,(-3,5) = (3 - 6t, 5)$, $t\in[0,1]$, all timelike ($g = 25 - (3-6t)^2 \geq 16$) and future directed, since the future cone is closed under such combinations. The result is a smooth massive worldline, and the time on its clock (computed later in this lesson) differs from the cornered one by as little as we like.
+
   - type: mcq
     id: classify-curves
     title: Which are massive?
