@@ -444,7 +444,11 @@ levels:
         kind: guided
         file: ch09/point-mass.yaml
         summary: "One point mass through the whole chain: Γ^α₀₀ = G_NM x^α/|x|³, the full curvature off the axes, Ric₀₀ = 0 in vacuum, Kepler's third law and the co-rotating chart, a radial fall reaching the source in half an orbital period, and the tides in the chart falling with it."
-      - { id: ch09-traps, title: Newton-Cartan Traps, kind: traps }
+      - id: ch09-traps
+        title: Newton-Cartan Traps
+        kind: traps
+        file: ch09/traps.yaml
+        summary: "Fast questions on this level's tempting mistakes: dt never zero, time content outside stratified charts, x⁰ = t exactly, the Newton II parameter, pseudo-forces vs curvilinear grids, Γ = 0 at one event, uniform vs curved fields, signs of Γ, Ric and the tidal equation, vacuum is not flat, and tides as 1/r³."
       - { id: ch09-map, title: "Content Map: Newton-Cartan Theory", kind: map }
       - { id: ch09-review, title: Level Review, kind: review }
       - { id: ch09-challenge, title: Level Challenge, kind: challenge }

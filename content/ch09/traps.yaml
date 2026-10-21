@@ -1,0 +1,390 @@
+id: ch09-traps
+title: Newton-Cartan Traps
+kind: traps
+
+cards:
+  - type: text
+    id: intro
+    title: Trap round
+    body: |
+      Fast round: each question hides a tempting mistake from this level, from absolute time to the tides. Answer quickly, then read the feedback, especially when you got it right for a shaky reason. The examples are new; the rules are the ones you built.
+
+      Notation used below. Spacetime $\mathcal{M}$ is 4-dimensional, with absolute time $t\in C^\infty(\mathcal{M})$ and a torsion-free connection $\nabla$. Latin indices $i,j,k\in\{0,1,2,3\}$, Greek $\alpha,\beta,\delta\in\{1,2,3\}$. A **stratified chart** has time coordinate $x^0 = t$; an **inertial chart** is a stratified chart whose connection coefficients $\Gamma^k_{ij}$ all vanish. The time content of a vector $\mathcal{X}_p$ is the sign of $(dt)_p(\mathcal{X}_p)$: future directed ($+$), spatial ($0$), past directed ($-$). In a stratified chart a particle of mass $m$ with worldline coordinates $\gamma^\alpha(t)$ obeys
+      $$\begin{aligned}m\ddot\gamma^\alpha = f^\alpha &- m\Gamma^\alpha_{\beta\delta}\dot\gamma^\beta\dot\gamma^\delta\\ &- 2m\Gamma^\alpha_{0\beta}\dot\gamma^\beta - m\Gamma^\alpha_{00}\end{aligned}$$
+      (sums over $\beta,\delta$). Gravity with potential $\phi$, written $\partial_\alpha\phi := \partial\phi/\partial x^\alpha$ in a sources chart, sits in $\Gamma^\alpha_{00} = \partial_\alpha\phi$; its curvature is $\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi$, and $\mathrm{Ric}_{jm} := \mathrm{Riem}^k_{jkm}$.
+
+  - type: mcq
+    id: dt-never-zero
+    title: One clock, never stopping
+    prompt: |
+      On $\mathcal{M} = \mathbb{R}^4$ with global coordinates $(x^0,x^1,x^2,x^3)$, which functions are allowed as absolute time $t$? (Absolute time is one smooth function giving every event its time.)
+    multiple: true
+    options:
+      - text: '$t = x^0 + (x^1)^2$'
+        correct: true
+      - text: '$t = (x^0)^3 + x^0$'
+        correct: true
+      - text: '$t = (x^0)^3$'
+        feedback: |
+          Smooth, and it gives every event a single time, but $dt = 3(x^0)^2dx^0$ vanishes on the whole slice $x^0 = 0$. There time "stands still": no direction changes $t$, so nothing can move forward in time. Absolute time needs $(dt)_p\neq0$ at **every** event, not just one clock shared by all.
+      - text: '$t = \sin x^0$'
+        feedback: |
+          $dt = \cos x^0\,dx^0$ vanishes at $x^0 = \pi/2$, where $t$ reaches its maximum and turns back. One function for all events is not enough: $(dt)_p\neq0$ everywhere is part of the definition.
+    explanation: |
+      The rule is $(dt)_p\neq0$ at every $p$. For $x^0 + (x^1)^2$ the $dx^0$ component is always $1$; for $(x^0)^3 + x^0$ it is $3(x^0)^2 + 1\geq1$. The other two have a slice where $dt = 0$.
+
+  - type: mcq
+    id: time-content-chart
+    title: Read the time content
+    prompt: |
+      In some chart of $\mathcal{M}$ with coordinates $x^i$, absolute time is $t = x^0 + x^1$ (so this chart is **not** stratified). At an event $p$ the vector $\mathcal{X}_p$ has components $(2,-3,0,1)$. What is its time content?
+    options:
+      - text: 'Past directed: $(dt)_p(\mathcal{X}_p) = 2 - 3 = -1$'
+        correct: true
+      - text: 'Future directed: its $x^0$ component is $2 > 0$'
+        feedback: |
+          The $x^0$ component measures time content only when $x^0 = t$. Here $dt = dx^0 + dx^1$, so the $x^1$ component counts too: $2 + (-3) = -1 < 0$.
+      - text: 'Spatial: it has nonzero spatial components'
+        feedback: |
+          A vector with spatial components can still change $t$. Spatial means $(dt)_p(\mathcal{X}_p) = 0$ exactly; here it is $-1$.
+    explanation: |
+      Time content is the sign of the number $(dt)_p(\mathcal{X}_p) = \mathtt{t}_k\mathcal{X}^k$, with $\mathtt{t}_k = (1,1,0,0)$ in this chart. Only in a stratified chart does it reduce to the sign of the $0$ component.
+
+  - type: mcq
+    id: rest-not-spatial
+    title: A particle at rest
+    prompt: |
+      In a stratified chart, a particle sits still at $x^\alpha = (1,0,0)$: its worldline is $\gamma(t) = (t,1,0,0)$. What is the time content of its velocity $v_\gamma$?
+    options:
+      - text: 'Future directed: $v_\gamma$ has components $(1,0,0,0)$ and $(dt)(v_\gamma) = 1$'
+        correct: true
+      - text: 'Spatial: the particle does not move, so its velocity has zero time content'
+        feedback: |
+          "At rest" means zero **spatial** components, not a spatial vector. The velocity still advances absolute time at rate $1$. A spatial velocity would be a particle crossing space with its clock frozen, which no worldline is allowed to do.
+      - text: 'Zero: the velocity of a particle at rest is the zero vector'
+        feedback: |
+          In spacetime nothing is ever at rest: every worldline moves forward in $t$. The velocity is $\partial x_0$, components $(1,0,0,0)$, not zero.
+    explanation: |
+      Worldlines satisfy $(t\circ\gamma)' > 0$, so every velocity is future directed. Spatial vectors ($dt = 0$) are tangent to an absolute space $\mathcal{S}_\tau$; they describe displacements at one instant, never motion.
+
+  - type: mcq
+    id: which-stratified
+    title: Which charts are stratified?
+    prompt: |
+      A stratified chart has coordinates $x^i$ with $x^0 = t$. Which new charts $(y^0,y^1,y^2,y^3)$ are also stratified? (Unlisted coordinates are copied: $y^2 = x^2$, $y^3 = x^3$.)
+    multiple: true
+    options:
+      - text: '$y^0 = x^0$, $y^1 = x^1 - 4x^0$'
+        correct: true
+      - text: '$y^0 = x^0$, $y^1 = (x^1)^3 + x^1$'
+        correct: true
+      - text: '$y^0 = 2x^0$, $y^1 = x^1$'
+        feedback: |
+          Its level sets are the absolute spaces, but $y^0 = 2t$ is not absolute time: this clock runs twice as fast. A stratified chart needs $y^0 = t$ exactly, so that its Jacobian time row is $(1,0,0,0)$.
+      - text: '$y^0 = x^0 + x^1$, $y^1 = x^1$'
+        feedback: |
+          A time-like coordinate is not enough. The level sets of $y^0$ are tilted against the absolute spaces: two events with equal $y^0$ need not be simultaneous.
+    explanation: |
+      Stratified means $y^0 = t$; the spatial coordinates may move ($x^1 - 4x^0$) or be curvilinear ($(x^1)^3 + x^1$, a valid chart since its derivative $3(x^1)^2 + 1$ never vanishes). Only the clock is fixed.
+
+  - type: numeric
+    id: velocity-grid
+    title: Velocity in a moving grid
+    prompt: |
+      In a stratified chart with coordinates $x^i$, a particle is at rest: $\gamma(t) = (t,1,0,0)$. A second stratified chart has $y^0 = x^0$, $y^1 = x^1 - 4x^0$, $y^2 = x^2$, $y^3 = x^3$. Find the component $v^1$ of the particle's velocity in the chart $y$.
+    answer: -4
+    wrong:
+      - { value: 0, feedback: 'The time row of a stratified Jacobian is frozen, but the spatial rows are not: $\partial y^1/\partial x^0 = -4$ is minus the grid velocity, and it adds to the velocity. Clocks agree, grids do not.' }
+      - { value: 4, feedback: 'Sign: the grid moves at $+4$ along $x^1$, so a particle at rest drifts backwards relative to it. $y^1 = 1 - 4t$, so $\dot y^1 = -4$.' }
+    hint: |
+      Write $y^1$ along the worldline as a function of $t$.
+    explanation: |
+      $$\begin{aligned}v^1 &= \frac{\partial y^1}{\partial x^0}\cdot1 + \frac{\partial y^1}{\partial x^1}\cdot0\\ &= -4.\end{aligned}$$
+      Spatial vectors transform with the spatial block alone, but velocities have a time component $1$ that picks up the grid velocity.
+
+  - type: mcq
+    id: upper-time-zero
+    title: A spinning, accelerating grid
+    prompt: |
+      A stratified chart rotates about the third axis while its origin accelerates. Which of these connection coefficients can be nonzero in it?
+    options:
+      - text: '$\Gamma^1_{02}$'
+        correct: true
+      - text: '$\Gamma^0_{00}$'
+        feedback: |
+          Uniform flow of time, $\nabla dt = 0$, reads $\Gamma^0_{ki} = 0$ in **every** stratified chart, however the grid moves. A moving grid changes the spatial coefficients only.
+      - text: '$\Gamma^0_{12}$'
+        feedback: |
+          Every coefficient with upper index $0$ vanishes in a stratified chart: there $\mathtt{t}_k = \delta^0_k$ is constant, so $(\nabla dt)_{ki} = -\Gamma^0_{ki}$, and $\nabla dt = 0$.
+    explanation: |
+      With $x^0 = t$, uniform flow $\nabla dt = 0$ kills all $10$ coefficients $\Gamma^0_{ki}$ (symmetric in $k,i$). The rotation shows up in $\Gamma^1_{02}$ (Coriolis) and in $\Gamma^\alpha_{00}$ (centrifugal), the accelerating origin in $\Gamma^\alpha_{00}$ (translational).
+
+  - type: mcq
+    id: parameter
+    title: Which parameters are allowed?
+    prompt: |
+      In an inertial chart, a free particle sits at the spatial origin. We describe its worldline as $\gamma(\lambda) = (\tau(\lambda),0,0,0)$ with $\tau = t\circ\gamma$, and require Newton II with a spatial force (here zero), so the acceleration $a_\gamma$ must vanish. Its components are $(\tau'',0,0,0)$. Which choices of $\tau(\lambda)$ are allowed?
+    multiple: true
+    options:
+      - text: '$\tau = 3\lambda - 1$'
+        correct: true
+      - text: '$\tau = \lambda/2 + 4$'
+        correct: true
+      - text: '$\tau = \lambda + \lambda^3$'
+        feedback: |
+          It moves forward in time ($\tau' = 1 + 3\lambda^2 > 0$), but $\tau'' = 6\lambda$: the acceleration has time content $(dt)(a_\gamma) = 6\lambda\neq0$, while a force is spatial. Any worldline is fine as a set; Newton II needs a parameter with $\tau'' = 0$.
+      - text: '$\tau = -\lambda$'
+        feedback: |
+          $\tau'' = 0$, but $\tau' = -1 < 0$: the worldline runs backwards in absolute time. Worldlines require $(t\circ\gamma)' > 0$.
+    explanation: |
+      Since the force is spatial, $(dt)(a_\gamma) = \tau'' = 0$ and $\tau' > 0$: $\tau = c_1\lambda + c_2$ with $c_1 > 0$. Up to these trivial changes, the parameter **is** absolute time.
+
+  - type: numeric
+    id: polar-term
+    title: A free particle in polar coordinates
+    prompt: |
+      In an inertial plane with cartesian coordinates $(x^1,x^2)$, a free particle moves on the straight line $x(t) = (2,\,6t)$. Describe it in polar coordinates $(r,\varphi)$ of a grid **at rest**. Find $\ddot r$ at $t = 0$.
+    answer: 18
+    wrong:
+      - { value: 0, feedback: 'The particle is free and moves straight, but its distance $r(t) = \sqrt{4 + 36t^2}$ does not grow linearly. Curvilinear coordinates give nonzero coordinate accelerations even without forces.' }
+      - { value: 36, feedback: 'At $t = 0$, $r = 2$ and $\dot\varphi = 6/2 = 3$, so $r\dot\varphi^2 = 2\cdot9$.' }
+    hint: |
+      A free particle in polar coordinates obeys $\ddot r = r\dot\varphi^2$. At $t = 0$ the velocity $6$ is perpendicular to the radius, so $\dot\varphi = 6/r$.
+    explanation: |
+      $$\begin{aligned}\ddot r &= r\dot\varphi^2\\ &= 2\cdot3^2 = 18.\end{aligned}$$
+      Check: $r(t) = \sqrt{4 + 36t^2}\approx 2 + 9t^2$, so $\ddot r(0) = 18$. The term comes from $\Gamma^r_{\varphi\varphi} = -r$.
+
+  - type: mcq
+    id: pseudo-force-name
+    title: Is it a pseudo-force?
+    prompt: |
+      A free particle in an inertial plane, described in polar coordinates $(r,\varphi)$ of a grid at rest, obeys $\ddot r = r\dot\varphi^2$ (from $\Gamma^r_{\varphi\varphi} = -r$). Is $m r\dot\varphi^2$ the centrifugal pseudo-force?
+    options:
+      - text: 'No: it is a chart effect from a curvilinear grid ($\Gamma^\alpha_{\beta\delta}$), but no axes move, so it is none of the classical pseudo-forces'
+        correct: true
+      - text: 'Yes: it points outward and grows with $\dot\varphi^2$, exactly like the centrifugal force'
+        feedback: |
+          The centrifugal force is $-m\Gamma^\alpha_{00} = m\omega^2y^\alpha$, with $\omega$ the angular velocity of a **rotating grid**; it acts even on a particle at rest in that grid. Here the grid is at rest ($\Gamma^\alpha_{00} = 0$), $\dot\varphi$ is the particle's own angular velocity, and the term vanishes for a particle at rest: the signature of $\Gamma^\alpha_{\beta\delta}\dot\gamma^\beta\dot\gamma^\delta$.
+      - text: 'No: the particle is free, so no term besides $\ddot r$ appears'
+        feedback: |
+          The term is there: $r(t)$ of a straight line is not linear in $t$. Freedom of the particle means zero force $f^\alpha$, not zero $\Gamma$-terms.
+    explanation: |
+      Two usages meet here. Broadly, every $\Gamma$-term moved to the right-hand side of Newton II is a chart effect: it is proportional to $m$ and a change of chart creates or removes it. The classical name **pseudo-force** is kept for the terms of moving axes: Coriolis from $\Gamma^\alpha_{0\beta}$, and centrifugal, Euler and translational from $\Gamma^\alpha_{00}$. A curvilinear grid at rest gives only $\Gamma^\alpha_{\beta\delta}$, part of how the acceleration is written in those coordinates.
+
+  - type: numeric
+    id: coriolis-factor
+    title: Coriolis with its factor
+    prompt: |
+      A stratified chart rotates at $\omega = 0.5$ about the third axis of an inertial chart, so $\Gamma^1_{02} = -\omega$, $\Gamma^2_{01} = \omega$ and $\Gamma^\alpha_{00} = -\omega^2y^\alpha$ ($\alpha = 1,2$). A free particle passes the origin $y = 0$ with velocity $\dot y = (0,3,0)$. Newton II in this chart gives $\ddot y^\alpha = -2\Gamma^\alpha_{0\beta}\dot y^\beta - \Gamma^\alpha_{00}$. Find $\ddot y^1$.
+    answer: 3
+    wrong:
+      - { value: 1.5, feedback: 'The factor $2$ is missing: the sum over both lower indices contains the two equal terms $\Gamma^1_{02}$ and $\Gamma^1_{20}$ (torsion-free).' }
+      - { value: -3, feedback: 'Sign: $-2\Gamma^1_{02}\dot y^2 = -2\cdot(-0.5)\cdot3 = +3$.' }
+    explanation: |
+      $$\begin{aligned}\ddot y^1 &= -2\Gamma^1_{02}\dot y^2 - \Gamma^1_{00}\\ &= -2(-0.5)(3) - 0 = 3.\end{aligned}$$
+
+  - type: numeric
+    id: one-event
+    title: Zero at one event
+    prompt: |
+      In a sources chart the potential is $\phi = 3(x^1 - 1)^2$, so the only nonzero coefficient is $\Gamma^1_{00} = \partial_1\phi = 6(x^1 - 1)$. At an event $p$ with $x^1 = 1$ every $\Gamma$ vanishes. Find $\mathrm{Riem}^1_{010}(p) = \partial_1\partial_1\phi(p)$.
+    answer: 6
+    wrong:
+      - { value: 0, feedback: 'All $\Gamma$ vanish at $p$, but curvature contains their **derivatives**: $\partial_1\Gamma^1_{00} = 6$. Vanishing at one event kills only the quadratic terms.' }
+      - { value: -6, feedback: 'With $\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi$ the sign is $+$: $\partial_1\partial_1[3(x^1-1)^2] = 6$.' }
+    explanation: |
+      $\mathrm{Riem}^1_{010} = 6\neq0$ at $p$, so no chart is inertial around $p$. An inertial chart needs $\Gamma = 0$ on an **open set**, which also kills the derivatives; zero at one event is something any chart can be arranged to have.
+
+  - type: numeric
+    id: uniform-fall
+    title: Falling out of a uniform field
+    prompt: |
+      A uniform field has potential $\phi = -5x^1 + 2x^2$, so $\Gamma^1_{00} = -5$, $\Gamma^2_{00} = 2$. A chart falls with origin $b(t)$, $x^\alpha = y^\alpha + b^\alpha(t)$, $b(0) = 0$, $\dot b(0) = 0$, and in it $(\Gamma_\mathscr{Y})^\alpha_{00} = \partial_\alpha\phi + \ddot b^\alpha$. Choose $b$ so that all coefficients vanish. Find $b^1(2)$.
+    answer: 10
+    wrong:
+      - { value: -10, feedback: 'Sign: vanishing needs $\ddot b^1 = -\partial_1\phi = +5$, so $b^1 = 2.5t^2$. The chart falls the way a free particle falls, along $-\partial_\alpha\phi$.' }
+      - { value: 20, feedback: 'From $\ddot b^1 = 5$ and zero initial data, $b^1 = \tfrac12\cdot5t^2$; the $\tfrac12$ is missing.' }
+    explanation: |
+      $$\begin{aligned}b^1(t) &= \tfrac52t^2,\\ b^1(2) &= 10.\end{aligned}$$
+      Every coefficient is constant, so $\mathrm{Riem} = 0$ and the falling chart is inertial everywhere: uniform gravity is a pseudo-force (a translational one), not curvature.
+
+  - type: mcq
+    id: uniform-not-curved
+    title: Strong but uniform
+    prompt: |
+      In a sources chart, a field has $\Gamma^3_{00} = 50$ at every event (far stronger than the Earth's $9.8$), all other coefficients zero. Is spacetime curved there?
+    options:
+      - text: 'No: all coefficients are constant, so $\mathrm{Riem} = 0$, and a chart falling with $\ddot b^3 = -50$ is inertial'
+        correct: true
+      - text: 'Yes: such a strong field must curve spacetime'
+        feedback: |
+          Curvature measures how $\Gamma$ **changes** from event to event, not how big it is. A constant coefficient, however large, has zero derivatives and is removed by one falling chart.
+      - text: 'It depends on the chart, since $\Gamma$ depends on the chart'
+        feedback: |
+          $\Gamma$ depends on the chart, but $\mathrm{Riem}$ is a tensor: zero in one chart means zero in all. Here it is zero.
+    explanation: |
+      $\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi = \partial_\beta\Gamma^\alpha_{00} = 0$. Only non-uniform gravity is curvature.
+
+  - type: numeric
+    id: sign-accel
+    title: Which way does it fall?
+    prompt: |
+      In a sources chart the potential is $\phi = x^1x^2$, so $\Gamma^\alpha_{00} = \partial_\alpha\phi$. A free particle is momentarily at rest at $x = (1,3,0)$. Find its acceleration $\ddot x^1$.
+    answer: -3
+    wrong:
+      - { value: 3, feedback: 'That is $\Gamma^1_{00}$ itself. Newton II moves it to the right with a minus sign: $\ddot x^1 = -\Gamma^1_{00} = -\partial_1\phi$, downhill in $\phi$.' }
+      - { value: -1, feedback: 'That is $-\partial_2\phi = -x^1$, the acceleration along $x^2$. Along $x^1$ it is $-\partial_1\phi = -x^2 = -3$.' }
+    explanation: |
+      $\Gamma^1_{00} = +\partial_1\phi = x^2 = 3$, and at rest $\ddot x^1 = -\Gamma^1_{00} = -3$: the coefficient has the sign of the slope, the acceleration the opposite one.
+
+  - type: mcq
+    id: vacuum-curved
+    title: Empty but curved
+    prompt: |
+      In a sources chart the potential is $\phi = x^1x^2$. Its Laplacian is $\Delta\phi = \sum_\alpha\partial_\alpha\partial_\alpha\phi = 0$, so $\mathrm{Ric}_{00} = 4\pi G_N\rho = 0$: no matter here. Is this region flat?
+    options:
+      - text: 'No: $\mathrm{Riem}^1_{020} = \partial_2\partial_1\phi = 1\neq0$'
+        correct: true
+      - text: 'Yes: vacuum means $\mathrm{Ric} = 0$, and zero Ricci curvature is zero curvature'
+        feedback: |
+          $\mathrm{Ric}_{00}$ is only the trace $\sum_\alpha\mathrm{Riem}^\alpha_{0\alpha0}$. Here every diagonal component is $0$, but the mixed one $\mathrm{Riem}^1_{020} = 1$ is not. Vacuum fixes the trace, not the whole tensor.
+      - text: 'Yes: with no mass nearby, gravity can be removed by a falling chart'
+        feedback: |
+          The field $\phi = x^1x^2$ is shaped by matter elsewhere, as the Moon's orbit is shaped by the Earth. Non-uniform gravity is curvature, and a falling chart removes it along one worldline only.
+    explanation: |
+      Vacuum gives $\mathrm{Ric} = 0$; flatness needs $\mathrm{Riem} = 0$. Outside any mass the tides survive with zero trace.
+
+  - type: build
+    id: ricci-contraction
+    title: Which index pair?
+    prompt: |
+      The Ricci tensor is $\mathrm{Ric}_{jm} := \mathrm{Riem}^k_{jkm}$: the upper index is contracted with the **third** one. With $\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi = -\mathrm{Riem}^\alpha_{00\beta}$ and every component with upper index $0$ zero, build $\mathrm{Ric}_{00}$ as a sum over $\alpha\in\{1,2,3\}$.
+    prefix: '\mathrm{Ric}_{00} ='
+    tiles: ['\sum_\alpha', '\mathrm{Riem}^\alpha_{0\alpha0}', '\mathrm{Riem}^\alpha_{00\alpha}', '-\mathrm{Riem}^\alpha_{0\alpha0}']
+    answers:
+      - ['\sum_\alpha', '\mathrm{Riem}^\alpha_{0\alpha0}']
+    wrong:
+      - answer: ['\sum_\alpha', '\mathrm{Riem}^\alpha_{00\alpha}']
+        feedback: |
+          That contracts the upper index with the **last** one, giving $-\Delta\phi$: Poisson's equation would come out as $\mathrm{Ric}_{00} = -4\pi G_N\rho$. The definition contracts with the third index.
+      - answer: ['\sum_\alpha', '-\mathrm{Riem}^\alpha_{0\alpha0}']
+        feedback: |
+          No sign is needed with the third-index contraction: $\mathrm{Riem}^\alpha_{0\alpha0} = \partial_\alpha\partial_\alpha\phi$, whose sum is $+\Delta\phi$.
+    explanation: |
+      $$\begin{aligned}\mathrm{Ric}_{00} &= \textstyle\sum_\alpha\mathrm{Riem}^\alpha_{0\alpha0}\\ &= \Delta\phi = 4\pi G_N\rho.\end{aligned}$$
+      The $k = 0$ term drops out because components with upper index $0$ vanish.
+
+  - type: numeric
+    id: tidal-sign
+    title: Squeezed or stretched?
+    prompt: |
+      A point mass with $G_NM = 16$ sits at the origin. A chart falls with a body at $x = (2,0,0)$; there $\mathrm{Riem}^1_{010} = -4$, $\mathrm{Riem}^2_{020} = \mathrm{Riem}^3_{030} = 2$, other components zero. A free particle has offset $\gamma = (0,\,0.3,\,0)$ in the falling chart. Using the tidal equation $\ddot\gamma^\alpha = -\mathrm{Riem}^\alpha_{0\beta0}\gamma^\beta$, find $\ddot\gamma^2$.
+    answer: -0.6
+    wrong:
+      - { value: 0.6, feedback: 'The tidal equation has a minus sign: $\ddot\gamma^2 = -2\cdot0.3$. Sideways offsets are squeezed back toward the falling body, since both point toward the mass at slightly converging angles.' }
+      - { value: 1.2, feedback: 'That uses the radial component $-4$. For a sideways offset only $\mathrm{Riem}^2_{020} = 2$ enters.' }
+    explanation: |
+      $$\ddot\gamma^2 = -\mathrm{Riem}^2_{020}\cdot0.3 = -0.6.$$
+      Radially ($\mathrm{Riem}^1_{010} < 0$) offsets are stretched, sideways ($> 0$) squeezed.
+
+  - type: numeric
+    id: pull-vs-tide
+    title: Stronger pull, bigger tide?
+    prompt: |
+      Mass A has $G_NM = 0.5$ at distance $r = 1$; mass B has $G_NM = 9$ at distance $r = 3$. The pull is $G_NM/r^2$ (A: $0.5$, B: $1$, so B pulls twice as hard). The radial tide is $|\mathrm{Riem}^1_{010}| = 2G_NM/r^3$. Find the ratio (tide of B)/(tide of A).
+    answer: 0.6667
+    tolerance: 0.001
+    answerText: '2/3'
+    wrong:
+      - { value: 2, feedback: 'That is the ratio of the pulls. A tide is a **difference** of pulls across the body, a derivative, so it falls as $1/r^3$: B is farther away and loses more.' }
+      - { value: 1, feedback: 'Compute both: A gives $2\cdot0.5/1 = 1$, B gives $2\cdot9/27 = 2/3$.' }
+    explanation: |
+      $$\begin{aligned}\text{A: } &2\cdot0.5/1^3 = 1,\\ \text{B: } &2\cdot9/3^3 = \tfrac23.\end{aligned}$$
+      This is why the Moon raises larger ocean tides than the Sun, which pulls the Earth about $180$ times harder.
+
+  - type: mcq
+    id: two-bulges
+    title: How many bulges?
+    prompt: |
+      The Earth falls freely toward the Moon, so its center is the origin of a falling chart. Ignoring the Earth's rotation, where does the ocean bulge?
+    options:
+      - text: 'Two bulges: toward the Moon and away from it, with the ocean squeezed in between'
+        correct: true
+      - text: 'One bulge, toward the Moon, where its pull is strongest'
+        feedback: |
+          The Earth itself falls toward the Moon, so in its falling chart the uniform part of the pull is gone. What remains is the tide $-\mathrm{Riem}^\alpha_{0\beta0}\eta^\beta$, odd in the offset $\eta$: the near side is pulled toward the Moon, the far side left behind, both outward.
+      - text: 'No bulge: the Earth falls freely, so nothing is felt'
+        feedback: |
+          Free fall removes gravity only along the center's worldline. Away from it the pull differs, and $\mathrm{Riem}\neq0$ stretches the ocean along the Earth-Moon line.
+    explanation: |
+      The tidal acceleration is linear in the offset: stretched at both ends of the Earth-Moon axis, squeezed across it. Two bulges, hence two high tides a day as the Earth turns.
+
+  - type: mcq
+    id: egg-ends
+    title: The shape of the egg
+    prompt: |
+      A point mass with $G_NM = 16$ is at the origin; a ring of free particles of radius $0.2$ falls around a body at $x = (2,0,0)$. Exactly, the outer particle (at $2.2$) accelerates away from the body by $0.69$, the inner one (at $1.8$) toward the mass by $0.94$; the linear tidal equation predicts $0.8$ for both. Which end of the ring stretches more?
+    options:
+      - text: 'The inner end, nearer the mass: the pull grows faster than linearly as $r$ decreases'
+        correct: true
+      - text: 'Both equally: the tidal equation is symmetric'
+        feedback: |
+          The tidal equation is the linear approximation, symmetric by construction. The exact pull $G_NM/r^2$ is convex, so the difference is larger on the near side ($0.94$) than on the far side ($0.69$). The circle becomes an egg, not an ellipse.
+      - text: 'The outer end, which is left behind'
+        feedback: |
+          The outer particle lags the body by $16/4 - 16/2.2^2 = 0.69$, but the inner one runs ahead by $16/1.8^2 - 16/4 = 0.94$. The pull changes faster close to the mass.
+    explanation: |
+      Linear: $\pm0.8$. Exact: $+0.69$ outer, $-0.94$ inner. The tidal equation holds up to $\mathcal{O}(|\eta|^2)$ corrections, and those make the inner end longer.
+
+  - type: mcq
+    id: equivalence-local
+    title: Gravity gone everywhere?
+    prompt: |
+      Near a point mass, a chart falls with one particle $\zeta$, so all its coefficients vanish along $\zeta$. Is it an inertial chart?
+    options:
+      - text: 'No: away from $\zeta$, $(\Gamma_\mathscr{Y})^\alpha_{00}\approx\mathrm{Riem}^\alpha_{0\beta0}\eta^\beta\neq0$; inertial charts need $\Gamma = 0$ on an open set, impossible where $\mathrm{Riem}\neq0$'
+        correct: true
+      - text: 'Yes: by the equivalence principle a falling observer feels no gravity'
+        feedback: |
+          The falling observer feels no gravity **at its own position**. Particles a distance $\eta$ away still drift with the tidal acceleration, so the coefficients are nonzero there. The equivalence principle is local: along one worldline.
+      - text: 'Yes, if the chart also rotates suitably'
+        feedback: |
+          No change of chart removes curvature: $\mathrm{Riem}$ is a tensor and is nonzero near the mass. Any chart has nonzero coefficients somewhere near $\zeta$.
+    explanation: |
+      A falling chart removes gravity along one worldline; an inertial chart would need $\mathrm{Riem} = 0$ on an open set, which holds only where gravity is uniform.
+
+  - type: mcq
+    id: space-flat
+    title: What is curved?
+    prompt: |
+      Newtonian gravity in Newton-Cartan form is curvature. Which components of $\mathrm{Riem}$ can be nonzero in a sources chart?
+    options:
+      - text: 'Only $\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi$ and $\mathrm{Riem}^\alpha_{00\beta} = -\partial_\beta\partial_\alpha\phi$: spacetime is curved, each absolute space is flat'
+        correct: true
+      - text: 'The spatial ones $\mathrm{Riem}^\alpha_{\beta\delta\kappa}$: gravity curves space around a mass'
+        feedback: |
+          In a sources chart only $\Gamma^\alpha_{00}$ is nonzero, so $\mathrm{Riem}^\alpha_{\beta\delta\kappa} = 0$: each absolute space stays flat. Curved space around a mass is a feature of General Relativity, not of Newton.
+      - text: 'All of them, since gravity is curvature'
+        feedback: |
+          Only $\Gamma^\alpha_{00}$ is nonzero, and curvature needs a derivative of it in a spatial direction: only components with two time slots survive.
+    explanation: |
+      Gravity lives in the time-time slot of the connection. Its curvature mixes time and space; space alone is flat.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      The traps, turned into rules:
+
+      - Absolute time never stands still, $(dt)_p\neq0$ at every event. Time content is the sign of $(dt)_p(\mathcal{X}_p)$, read from the $0$ component only in a stratified chart; velocities are always future directed, even at rest.
+      - Stratified means $x^0 = t$ exactly; then $\Gamma^0_{ki} = 0$. Grids may move or curve; velocities pick up minus the grid velocity.
+      - Newton II needs $\tau = c_1\lambda + c_2$, $c_1 > 0$.
+      - Classical pseudo-forces come from moving axes: Coriolis $-2m\Gamma^\alpha_{0\beta}\dot\gamma^\beta$ (factor $2$), centrifugal, Euler and translational in $-m\Gamma^\alpha_{00}$. Curvilinear grids at rest give $\Gamma^\alpha_{\beta\delta}$ terms such as $r\dot\varphi^2$.
+      - Gravity and its curvature:
+      $$\Gamma^\alpha_{00} = +\partial_\alpha\phi$$
+      $$\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi$$
+      $$\mathrm{Ric}_{00} = \textstyle\sum_\alpha\mathrm{Riem}^\alpha_{0\alpha0} = 4\pi G_N\rho$$
+      Uniform fields are removable ($\mathrm{Riem} = 0$); $\Gamma = 0$ at one event proves nothing; vacuum is $\mathrm{Ric} = 0$, not flat. Space is flat, spacetime curved.
+      - Tides: $\ddot\gamma^\alpha = -\mathrm{Riem}^\alpha_{0\beta0}\gamma^\beta$, falling as $1/r^3$; two bulges; the exact egg is longer on the inner end. A falling chart removes gravity along one worldline only.
+
+      **Next:** the content map of this level. You will rebuild the chain from absolute time and Newtonian spacetime through Newton's axioms, stratified and inertial charts, gravity in the connection and the tides, box by box, among decoys.

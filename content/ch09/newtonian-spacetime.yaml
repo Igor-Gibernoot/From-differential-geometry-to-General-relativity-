@@ -20,19 +20,19 @@ cards:
     id: hook
     title: Why does everything fall alike?
     body: |
-      Newton's second law for a particle of mass $m$, in cartesian coordinates of an inertial frame: write $\gamma^\alpha_\mathcal{U}(t)$, $\alpha\in\{1,2,3\}$, for its position at time $t$, $f^\alpha_\gamma(t)$ for the other forces, and $\Phi$ for the gravitational potential (fixed by the mass density $\rho$ through $\sum_\alpha\partial_\alpha\partial_\alpha\Phi = 4\pi G_N\rho$). Then
-      $$m\,\ddot\gamma^\alpha_\mathcal{U} = f^\alpha_\gamma - m\,\partial_\alpha\Phi,$$
-      with $\partial_\alpha\Phi$ evaluated at $(t,\gamma_\mathcal{U}(t))$.
+      Newton's second law for a particle of mass $m$, in cartesian coordinates of an inertial frame: write $\gamma^\alpha_\mathcal{U}(t)$, $\alpha\in\{1,2,3\}$, for its position at time $t$, $f^\alpha_\gamma(t)$ for the other forces, and $\phi$ for the gravitational potential (fixed by the mass density $\rho$ through $\sum_\alpha\partial_\alpha\partial_\alpha\phi = 4\pi G_N\rho$). Then
+      $$m\,\ddot\gamma^\alpha_\mathcal{U} = f^\alpha_\gamma - m\,\partial_\alpha\phi,$$
+      with $\partial_\alpha\phi$ evaluated at $(t,\gamma_\mathcal{U}(t))$.
 
       Gravity is the odd one out: it is proportional to the **same** $m$ that measures inertia. So in free fall ($f_\gamma = 0$) the mass drops out,
-      $$\ddot\gamma^\alpha_\mathcal{U} = -\partial_\alpha\Phi,$$
+      $$\ddot\gamma^\alpha_\mathcal{U} = -\partial_\alpha\phi,$$
       and an apple and a feather in vacuum fall along the same path. No other force behaves like this... or does it?
 
   - type: mcq
     id: hook-pseudo
     title: Who else ignores the mass?
     prompt: |
-      In free fall under gravity alone, Newton's law $m\,\ddot\gamma^\alpha = -m\,\partial_\alpha\Phi$ gives an acceleration independent of the mass $m$. Which other effects also give every body the same acceleration, whatever its mass?
+      In free fall under gravity alone, Newton's law $m\,\ddot\gamma^\alpha = -m\,\partial_\alpha\phi$ gives an acceleration independent of the mass $m$. Which other effects also give every body the same acceleration, whatever its mass?
     options:
       - text: 'The Coriolis and centrifugal forces felt in a rotating frame'
         correct: true
