@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature` built; next: `ch07-sphere`)
+## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere` built; next: `ch07-traps`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -30,8 +30,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature` done; next
-  `ch07-sphere`, then traps, map, challenge (two sessions);
+- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere` done; next
+  `ch07-traps`, then map, challenge (two sessions);
   then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
   B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -361,6 +361,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   ($-6+4 = -2$ at $r = 1$), $\mathrm{Riem}^2_{121} = -2/r^2$, $(\mathrm{Riem}^\flat)_{1212} = (\mathrm{Riem}^\flat)_{2121} = -8$ at $r = 2$, $\mathrm{Ric} = \mathrm{diag}(-2/r^2,-2r^2)$, $R = -4/r^2$ ($-1$ at $r = 2$);
   $f = 2r$ flat (angle $\varphi = 2\theta$); $f = \sinh r$ hyperbolic plane $R = -2$ (sphere kept for `ch07-sphere`); contracted Bianchi $(g^{-1})^{kl}(\nabla_{\partial x_k}G)_{ln} = 0$ stated
   (div Ric $= \tfrac12\partial_nR$); trace $G$ in 4D $= -R$ ($R = 6\to-6$); flat ⇔ locally constant components (derived from Level 6 + compatibility); Ric $= 0$ ⇒ flat in $d = 2,3$ only. No widget.
+  Conventions fixed here (`ch07-sphere`): $S^2 := \{(a,b,c)\mid a^2+b^2+c^2=1\}$, chart $\mathscr{X} = (\vartheta,\varphi)$ (polar angle from the north pole, longitude; latitude $= 90°-\vartheta$),
+  $\vartheta\in(0,\pi)$, $\varphi\in(-\pi,\pi)$, cut $\{b=0,a\le0\}$ plus poles; round metric from $\mathbb{R}^3$ dot products $g_{ij} := \vec u_i\cdot\vec u_j$, $\vec u_\vartheta := \partial\mathscr{X}^{-1}/\partial\vartheta$,
+  $\vec u_\varphi$ (my notation), $g = \mathrm{diag}(1,\sin^2\vartheta)$ = family with $f = \sin\vartheta$; $\Gamma^1_{22} = -\sin\vartheta\cos\vartheta$ ($-\tfrac12$ at $\pi/4$), $\Gamma^2_{12} = \cot\vartheta$ ($1$ at $\pi/4$);
+  (G): $\ddot\vartheta - \sin\vartheta\cos\vartheta\dot\varphi^2 = 0$, $\ddot\varphi + 2\cot\vartheta\dot\vartheta\dot\varphi = 0$; meridian $\vartheta = \lambda$ speed 1 passes; great circles by rotation; parallel $\vartheta_0$, $\varphi = \lambda$:
+  speed $\sin\vartheta_0$, residual $-\sin\vartheta_0\cos\vartheta_0$ ($-\sqrt3/4$ at $\pi/3$), $a_\gamma$ toward the nearer pole (pilot "due east" at $30°$N banks left); equator $\varphi = \lambda^2$ fails (G) by $2$, passes (S);
+  variation $\vartheta = \tfrac\pi3+\text{ᛊ}\cos\lambda$ on $[-\pi/2,\pi/2]$, $dL/d\text{ᛊ} = 1$, over-the-pole route $2\pi/3$ vs $\tfrac{\sqrt3}{2}\pi$; $\mathrm{Riem}^1_{212} = \sin^2\vartheta$, $R = 2$, $\mathrm{Ric} = g$ ("Einstein metric" named);
+  holonomy triangle pole–equator–$\varphi=\pi/2$: $z = \partial x_1$ constant components on each leg, $90°$ = area $\pi/2$ (angle = area stated); radius $a$: $g = a^2\mathrm{diag}(1,\sin^2\vartheta)$, $R = 2/a^2$
+  (scaling and $f = a\sin(r/a)$, $r = a\vartheta$). No widget, no `own:` (guided).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -374,6 +382,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch07-sphere (guided, 30 cards)
+- Built `content/ch07/sphere.yaml` (hook pilot due east + parallels guess mcq; Step 1 chart/domain, metric from $\mathbb{R}^3$ dot products, $g_{22}$ numeric, $g_{12}$ mcq,
+  family text; Step 2 $\Gamma^1_{22}$ build, $\Gamma^2_{12}$ mcq, numeric at $\pi/4$, pole trap, (G) mcq (factor 2); Step 3 meridian mcq, great circles by rotation;
+  Step 4 speed and residual numerics, which-parallels mcq, equator $\lambda^2$ (G)/(S) mcq, pilot text + mcq (southern hemisphere); Step 5 variation text, $dL/d\text{ᛊ}$ numeric,
+  over-the-pole mcq; Step 6 Riem mcq, $R$ numeric, Ric mcq; Step 7 holonomy order card; Step 8 radius $a$ build + numeric; summary + traps teaser).
+  Choices: metric derived from the embedding (dot products of coordinate-line arrows), not by transformation law; variations included (book's paraboloid structure);
+  holonomy verified by transport equation with $z = (1,0)$ on all legs; Gauss–Bonnet only stated ("angle = area"). validate 0/0, shots 0 problems (one phone overflow fixed by splitting $F$).
+- Conventions fixed here: see Current, "Chapter 7 conventions so far" (`ch07-sphere`).
 ### 2026-10-20 — ch07-curvature (concept, 30 cards)
 - Built `content/ch07/curvature.yaml` (hook: polar Γ ≠ 0 yet flat, guess mcq; recall Riem/Ric + "from now on" chain; derivatives mcq; polar numeric 0 and
   tensor argument; family $\mathrm{diag}(1,f^2)$: Γ mcq, $-ff''$ mcq, $f = r^2$ numeric $-2$, $f = 2r$ flat mcq; Riem♭ text + build, pair numeric $-8$; normal-chart

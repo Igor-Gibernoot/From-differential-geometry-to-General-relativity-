@@ -340,7 +340,11 @@ levels:
         kind: concept
         file: ch07/curvature.yaml
         summary: Nonzero Christoffel symbols do not mean curvature; the Riemann tensor of the Levi-Civita connection does. Build a curved metric by hand, lower the index to see the four symmetries, and contract down to the Ricci scalar and the divergence-free Einstein curvature.
-      - { id: ch07-sphere, title: "Guided Problem: Meridians and Parallels of the Sphere", kind: guided }
+      - id: ch07-sphere
+        title: "Guided Problem: Meridians and Parallels of the Sphere"
+        kind: guided
+        file: ch07/sphere.yaml
+        summary: Build the round metric of the sphere from lengths in space, compute its Christoffel symbols, and test meridians and parallels against the geodesic equation; only the equator survives among the parallels, and the curvature comes out constant, R = 2.
       - { id: ch07-traps, title: Metric Traps, kind: traps }
       - { id: ch07-map, title: "Content Map: Metric", kind: map }
       - { id: ch07-review, title: Level Review, kind: review }
