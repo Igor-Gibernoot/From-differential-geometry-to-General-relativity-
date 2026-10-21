@@ -1,0 +1,481 @@
+id: ch09-gravity-connection
+title: Gravity in the Connection
+kind: concept
+
+own: |
+  - **Gravity in the connection**: in a stratified chart with cartesian, non-rotating axes at rest relative to the sources, every free fall obeys $\ddot\gamma^\alpha_\mathcal{U} = -\partial_\alpha\phi$, whatever its mass and velocity, so
+  {{ $$\Gamma^\alpha_{00} = \partial_\alpha\phi$$ }}
+  and all other coefficients vanish. Newton II keeps only the true forces: $m\ddot\gamma^\alpha_\mathcal{U} = f^\alpha_\gamma - m\,\partial_\alpha\phi$. For a point mass, $\phi = -G_NM/|x|$ gives Newton's law of gravitation.
+  - **Same slot as the translational force**: in a chart $x^\alpha = y^\alpha + b^\alpha(t)$ whose origin accelerates,
+  {{ $$(\Gamma_\mathscr{Y})^\alpha_{00} = \partial_\alpha\phi + \ddot b^\alpha$$ }}
+  If $\partial_\alpha\phi$ is uniform, the **freely falling chart** ($\ddot b^\alpha = -\partial_\alpha\phi$) is inertial: uniform gravity is a pseudo-force.
+  - **Non-uniform gravity is curvature**: the only nonzero components are
+  {{ $$\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi$$ }}
+  (and $\mathrm{Riem}^\alpha_{00\beta} = -\partial_\beta\partial_\alpha\phi$). Where they are not all zero, no chart removes gravity on an open set. Space is flat ($\mathrm{Riem}^\alpha_{\beta\delta\kappa} = 0$); spacetime is curved.
+  - **Field equation**: Poisson's equation becomes
+  {{ $$\mathrm{Ric}_{00} = \Delta\phi = 4\pi G_N\rho$$ }}
+  the only nonzero Ricci component; chart-free, $\mathrm{Ric} = 4\pi G_N\rho\,dt\otimes dt$.
+
+cards:
+  - type: text
+    id: hook
+    title: An apple in a falling elevator
+    body: |
+      In a vacuum tube, an apple and a feather released together hit the bottom together. Every body falls with the same acceleration, whatever its mass.
+
+      Now an astronaut stands in an elevator high above the ground. The cable snaps and the elevator falls freely (no air, no brakes). The astronaut holds an apple at chest height and, falling along with everything else, opens her hand: the apple is released **at rest relative to her**.
+
+  - type: mcq
+    id: hook-predict
+    title: Before any theory, predict
+    prompt: |
+      An elevator falls freely in a vacuum (cable snapped, no air). An astronaut inside releases an apple at rest relative to herself, at chest height. What does she see the apple do?
+    options:
+      - text: 'It floats in front of her, at rest relative to her'
+        correct: true
+      - text: 'It falls to the elevator floor, as on the ground'
+        feedback: |
+          The floor, the astronaut and the apple all fall with the same acceleration, since every body falls alike. Nothing makes the apple gain on the floor, so the gap between them never changes.
+      - text: 'It rises toward the ceiling, left behind as the elevator falls away'
+        feedback: |
+          That would happen if the elevator fell faster than a free body, for example pulled down by a motor. A freely falling elevator has exactly the apple's acceleration.
+      - text: 'It falls, but more slowly than on the ground'
+        feedback: |
+          The apple's acceleration relative to the ground is the full free-fall value; so is the elevator's. Relative to the elevator the difference is exactly zero, not merely smaller.
+    explanation: |
+      Apple, astronaut and elevator share one acceleration, so relative to each other none accelerates: the apple floats. In the elevator's coordinates gravity has vanished, exactly the way a pseudo-force vanishes when one stops using an accelerating grid. This lesson finds where gravity lives in Newton-Cartan theory, and when it can be made to vanish.
+
+  - type: text
+    id: observation
+    title: The observation with gravity
+    body: |
+      Recall: in a stratified chart $(\mathcal{U},\mathscr{X})$ (coordinates $x^i$, $i\in\{0,1,2,3\}$, with $x^0 = t$ the absolute time), a free particle's spatial coordinates $\gamma^\alpha_\mathcal{U} := \mathscr{X}^\alpha\circ\gamma$ ($\alpha\in\{1,2,3\}$) obey Newton I,
+      $$\ddot\gamma^\alpha_\mathcal{U} + \Gamma^\alpha_{jk}\dot\gamma^j\dot\gamma^k = 0,$$
+      with $\dot\gamma^0 = 1$. Without gravity there is an inertial chart, where all $\Gamma$ vanish.
+
+      With gravity, observation says instead: take a stratified chart with cartesian spatial axes, **not rotating** and with origin **at rest relative to the sources** (the masses). Every freely falling body obeys
+      $$\ddot\gamma^\alpha_\mathcal{U} = -\partial_\alpha\phi$$
+      whatever its mass and velocity. Here $\phi\in C^\infty(\mathcal{U})$ is the **gravitational potential** and $\partial_\alpha\phi := \partial x_\alpha\lfloor\phi\rceil$ its partial derivative along $x^\alpha$, evaluated on the worldline. The potential is fixed by the mass density $\rho$ through **Poisson's equation**
+      $$\Delta\phi := \sum_\alpha\partial_\alpha\partial_\alpha\phi = 4\pi G_N\rho,$$
+      with $G_N$ Newton's gravitational constant.
+
+  - type: mcq
+    id: not-force
+    title: Why not a force?
+    prompt: |
+      Every freely falling body obeys $\ddot\gamma^\alpha_\mathcal{U} = -\partial_\alpha\phi$ in a suitable stratified chart, independently of its mass $m$ and its velocity. Newton-Cartan theory puts this term into the connection coefficients, not into the force $f_\gamma$ of Newton II, $m\ddot\gamma^\alpha + m\Gamma^\alpha_{jk}\dot\gamma^j\dot\gamma^k = f^\alpha_\gamma$. What makes the connection the natural home?
+    options:
+      - text: 'The acceleration is the same for every mass: a force produces $f/m$, which depends on $m$, while $\Gamma$ acts on every body alike'
+        correct: true
+      - text: 'Forces must be spatial vectors, and gravity has a time component'
+        feedback: |
+          Gravity's acceleration $-\partial_\alpha\phi$ has only spatial components $\alpha\in\{1,2,3\}$; it would be a perfectly spatial force. The reason lies elsewhere: its independence from the mass.
+      - text: 'Gravity is too weak to count as a force'
+        feedback: |
+          Strength is irrelevant to the bookkeeping. A force of any size gives acceleration $f/m$, different for different masses; gravity gives one acceleration to all of them, which is what $\Gamma$ does.
+      - text: 'The potential $\phi$ is not a smooth function, so it cannot enter a force'
+        feedback: |
+          $\phi$ is smooth wherever there is no point mass. The point is that the acceleration it produces is the same for every body, like the effect of a coefficient $\Gamma$, and unlike a force.
+    explanation: |
+      $\Gamma$ enters Newton I with no mass in it: every free particle through an event, whatever its mass, follows the same rule. Gravity behaves exactly so (the apple and the feather), while a genuine force gives the heavier body a smaller acceleration.
+
+  - type: mcq
+    id: gamma00-sign
+    title: Reading off the coefficient
+    prompt: |
+      In a stratified chart, Newton I for a free particle reads $\ddot\gamma^\alpha + \Gamma^\alpha_{jk}\dot\gamma^j\dot\gamma^k = 0$ with $\dot\gamma^0 = 1$. Observation gives $\ddot\gamma^\alpha = -\partial_\alpha\phi$ for every free particle, in particular for one momentarily at rest ($\dot\gamma^\beta = 0$, $\beta\in\{1,2,3\}$). What is $\Gamma^\alpha_{00}$?
+    options:
+      - text: '$\Gamma^\alpha_{00} = \partial_\alpha\phi$'
+        correct: true
+      - text: '$\Gamma^\alpha_{00} = -\partial_\alpha\phi$'
+        feedback: |
+          At rest Newton I is $\ddot\gamma^\alpha + \Gamma^\alpha_{00} = 0$, so $\Gamma^\alpha_{00} = -\ddot\gamma^\alpha$. Copying the minus sign of the acceleration into $\Gamma$ forgets that $\Gamma$ sits on the left of the equation.
+      - text: '$\Gamma^\alpha_{00} = m\,\partial_\alpha\phi$'
+        feedback: |
+          Newton I contains no mass: the coefficients are the same for every particle. The factor $m$ belongs to the force form $m\ddot\gamma^\alpha = -m\,\partial_\alpha\phi$.
+      - text: '$\Gamma^\alpha_{00} = 0$: gravity is a force, not part of $\Gamma$'
+        feedback: |
+          With $\Gamma^\alpha_{00} = 0$ a particle at rest would have $\ddot\gamma^\alpha = 0$, but observation gives $-\partial_\alpha\phi$, which is nonzero near any mass.
+    explanation: |
+      At rest only $(j,k) = (0,0)$ survives: $\ddot\gamma^\alpha + \Gamma^\alpha_{00} = 0$, and $\ddot\gamma^\alpha = -\partial_\alpha\phi$ gives $\Gamma^\alpha_{00} = \partial_\alpha\phi$.
+
+  - type: text
+    id: gravity-connection
+    title: Gravity moves into the connection
+    body: |
+      Moving particles add nothing new: the observed acceleration $-\partial_\alpha\phi$ does not depend on the velocity, so (as for inertial charts) the terms linear and quadratic in $\dot\gamma^\beta$ must vanish: $\Gamma^\alpha_{0\beta} = 0$ and $\Gamma^\alpha_{\beta\delta} = 0$. Uniform flow of time already gave $\Gamma^0_{jk} = 0$. So in this chart
+      $$\Gamma^\alpha_{00} = \partial_\alpha\phi$$
+      and **all other** $\Gamma^i_{jk} = 0$.
+
+      Newton II, $m\ddot\gamma^\alpha + m\Gamma^\alpha_{jk}\dot\gamma^j\dot\gamma^k = f^\alpha_\gamma$, then reads
+      $$m\ddot\gamma^\alpha_\mathcal{U} = f^\alpha_\gamma - m\,\partial_\alpha\phi,$$
+      the familiar law, but now $f_\gamma$ holds only the genuine forces (electric, contact, …). Gravity is no longer a force: it is part of the connection, the rule that says which worldlines are free.
+
+  - type: text
+    id: point-mass
+    title: A point mass
+    body: |
+      A point mass $M$ sits at the spatial origin of the chart. Write $|x| := \sqrt{\sum_\beta(x^\beta)^2}$ for the distance from it. Its potential is
+      $$\phi = -\frac{G_NM}{|x|}.$$
+      Since $\partial_\alpha|x| = x^\alpha/|x|$,
+      $$\Gamma^\alpha_{00} = \partial_\alpha\phi = \frac{G_NM\,x^\alpha}{|x|^3}.$$
+      For a free particle of mass $m$ this gives Newton's law of universal gravitation:
+      $$m\ddot\gamma^\alpha_\mathcal{U} = -\frac{G_NMm}{|\gamma_\mathcal{U}|^3}\gamma^\alpha_\mathcal{U}.$$
+
+  - type: numeric
+    id: point-mass-num
+    title: A coefficient near a mass
+    prompt: |
+      A point mass sits at the spatial origin of a stratified, non-rotating cartesian chart, with $G_NM = 8$. There $\Gamma^\alpha_{00} = \partial_\alpha\phi$, with
+      $$\phi = -\frac{G_NM}{|x|}.$$
+      What is $\Gamma^1_{00}$ at the spatial point $x = (2, 0, 0)$?
+    answer: 2
+    wrong:
+      - value: -2
+        feedback: |
+          Sign: $\partial_1(-G_NM/|x|) = +G_NM\,x^1/|x|^3$, positive for $x^1 > 0$. The minus sign appears only in the acceleration, $\ddot\gamma^1 = -\Gamma^1_{00}$.
+      - value: -4
+        feedback: |
+          That is $\phi$ itself, $-8/2$. The coefficient is its derivative $\partial_1\phi = G_NM\,x^1/|x|^3$.
+      - value: 1
+        feedback: |
+          $G_NM/|x|^3 = 8/8 = 1$ is missing the factor $x^1 = 2$ that comes from $\partial_1|x| = x^1/|x|$.
+    hint: |
+      $\partial_1\phi = G_NM\,x^1/|x|^3$.
+    explanation: |
+      $\Gamma^1_{00} = 8\cdot2/2^3 = 2$. A free particle at rest there has $\ddot\gamma^1 = -2$: it accelerates toward the mass, with magnitude $G_NM/|x|^2 = 2$, Newton's inverse square.
+
+  - type: text
+    id: same-slot
+    title: The slot of the translational force
+    body: |
+      Recall: without gravity, axes that do not rotate but whose origin moves as $b^\alpha(t)$ in an inertial chart have one nonzero coefficient,
+      $$\Gamma^\alpha_{00} = \ddot b^\alpha,$$
+      the **translational** pseudo-force $-m\ddot b^\alpha$, felt in an accelerating vehicle and the same for every body. For example $b = (t^2, 0, 0)$ gives $\Gamma^1_{00} = 2$.
+
+      Gravity lands in exactly the same slot, $\Gamma^\alpha_{00}$, and also acts alike on every body. So: is gravity a pseudo-force?
+
+  - type: mcq
+    id: cabin
+    title: Inside a closed cabin
+    multiple: true
+    prompt: |
+      An observer in a closed, windowless cabin uses a stratified chart with cartesian, non-rotating axes fixed to the cabin. Over the whole cabin every free particle at rest accelerates with $\ddot\gamma^3 = -9.8$, $\ddot\gamma^1 = \ddot\gamma^2 = 0$; so $\Gamma^3_{00} = 9.8$ there. Which situations produce exactly these measurements? Select all that apply.
+    options:
+      - text: 'The cabin rests on a planet whose gravity near the surface is uniform, $\partial_3\phi = 9.8$'
+        correct: true
+      - text: 'The cabin is far from all masses and a rocket accelerates it with $\ddot b^3 = 9.8$'
+        correct: true
+      - text: 'Neither: a pseudo-force needs rotating axes'
+        feedback: |
+          Rotation produces Coriolis, centrifugal and Euler terms, but an accelerating origin alone produces the translational term $\Gamma^\alpha_{00} = \ddot b^\alpha$. A rocket gives exactly $\Gamma^3_{00} = 9.8$.
+    explanation: |
+      Both fill the same slot with the same number: $\Gamma^3_{00} = \partial_3\phi$ on the planet, $\Gamma^3_{00} = \ddot b^3$ in the rocket. From $\Gamma^\alpha_{00}$ in one chart the observer cannot tell gravity from an accelerating grid; in a general stratified chart $\Gamma^\alpha_{00}$ mixes the two.
+
+  - type: text
+    id: falling-chart
+    title: A chart that falls
+    body: |
+      Start from the sources chart $(\mathcal{U},\mathscr{X})$ (coordinates $x^i$, $\Gamma^\alpha_{00} = \partial_\alpha\phi$, all others zero) and build a stratified chart $(\mathcal{V},\mathscr{Y})$ with coordinates $y^i$ whose origin moves along $b^\alpha(t)$, without rotating:
+      $$\begin{gathered}x^0 = y^0 = t\\ x^\alpha = y^\alpha + b^\alpha(t).\end{gathered}$$
+      A worldline's spatial coordinates in the two charts differ by $b$:
+      $$\gamma^\alpha_\mathcal{V} = \gamma^\alpha_\mathcal{U} - b^\alpha.$$
+      The change is linear in space, so the new chart still has $(\Gamma_\mathscr{Y})^\alpha_{0\beta} = (\Gamma_\mathscr{Y})^\alpha_{\beta\delta} = 0$; only $(\Gamma_\mathscr{Y})^\alpha_{00}$ can change, and for any free particle $\ddot\gamma^\alpha_\mathcal{V} = -(\Gamma_\mathscr{Y})^\alpha_{00}$.
+
+  - type: build
+    id: build-falling
+    title: The coefficient in the moving chart
+    prompt: |
+      The sources chart has $\Gamma^\alpha_{00} = \partial_\alpha\phi$ (all other coefficients zero), so free particles obey $\ddot\gamma^\alpha_\mathcal{U} = -\partial_\alpha\phi$. A second stratified chart $x^\alpha = y^\alpha + b^\alpha(t)$ has $\gamma^\alpha_\mathcal{V} = \gamma^\alpha_\mathcal{U} - b^\alpha$, and its only possibly nonzero coefficient satisfies $\ddot\gamma^\alpha_\mathcal{V} = -(\Gamma_\mathscr{Y})^\alpha_{00}$. Build it.
+    prefix: '(\Gamma_\mathscr{Y})^\alpha_{00} ='
+    tiles: ['\partial_\alpha\phi', '+', '-', '\ddot b^\alpha', '\dot b^\alpha']
+    answers:
+      - ['\partial_\alpha\phi', '+', '\ddot b^\alpha']
+      - ['\ddot b^\alpha', '+', '\partial_\alpha\phi']
+    wrong:
+      - answer: ['\partial_\alpha\phi', '-', '\ddot b^\alpha']
+        feedback: |
+          Differentiate twice: $\ddot\gamma^\alpha_\mathcal{V} = \ddot\gamma^\alpha_\mathcal{U} - \ddot b^\alpha = -\partial_\alpha\phi - \ddot b^\alpha$. The coefficient is minus this, so both terms come with a plus.
+      - answer: ['\partial_\alpha\phi', '+', '\dot b^\alpha']
+        feedback: |
+          A grid moving at constant velocity creates no coefficient (Galilean relativity). Two time derivatives act on $b^\alpha$, giving $\ddot b^\alpha$.
+    hint: |
+      Differentiate $\gamma^\alpha_\mathcal{V} = \gamma^\alpha_\mathcal{U} - b^\alpha$ twice in $t$, then use $(\Gamma_\mathscr{Y})^\alpha_{00} = -\ddot\gamma^\alpha_\mathcal{V}$.
+    explanation: |
+      $$\begin{aligned}(\Gamma_\mathscr{Y})^\alpha_{00} &= -\ddot\gamma^\alpha_\mathcal{V}\\ &= -\ddot\gamma^\alpha_\mathcal{U} + \ddot b^\alpha\\ &= \partial_\alpha\phi + \ddot b^\alpha.\end{aligned}$$
+      Gravity plus the translational term, in one slot.
+
+  - type: text
+    id: second-derivation
+    title: Second derivation, by the transformation law
+    body: |
+      Recall the transformation law of the coefficients from $\mathscr{X}$ to $\mathscr{Y}$: a homogeneous part, built from $\Gamma_\mathscr{X}$ and first derivatives of the change, plus the inhomogeneous term
+      $$\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}.$$
+      For $x^\alpha = y^\alpha + b^\alpha(t)$ the time row of the Jacobian is frozen and its spatial block is the identity, so the homogeneous part copies $\Gamma^\alpha_{00} = \partial_\alpha\phi$ unchanged (its only other ingredients, $\partial\mathscr{X}^0/\partial\mathscr{Y}^0 = 1$, enter squared). The only nonzero second derivative is
+      $$\frac{\partial^2\mathscr{X}^\alpha}{\partial\mathscr{Y}^0\partial\mathscr{Y}^0} = \ddot b^\alpha,$$
+      and $\partial\mathscr{Y}^\alpha/\partial\mathscr{X}^\sigma = \delta^\alpha_\sigma$ passes it on. Again $(\Gamma_\mathscr{Y})^\alpha_{00} = \partial_\alpha\phi + \ddot b^\alpha$.
+
+  - type: numeric
+    id: uniform-b
+    title: Letting the grid fall
+    prompt: |
+      Near a planet's surface the potential is $\phi = 9.8\,x^3$ ($x^3$ the height), so $\partial_3\phi = 9.8$ everywhere and $\partial_1\phi = \partial_2\phi = 0$. A chart $x^\alpha = y^\alpha + b^\alpha(t)$ has $(\Gamma_\mathscr{Y})^\alpha_{00} = \partial_\alpha\phi + \ddot b^\alpha$. Choose $b = (0, 0, b^3(t))$ with $b^3(0) = 0$, $\dot b^3(0) = 0$ so that $(\Gamma_\mathscr{Y})^3_{00} = 0$. What is $b^3(2)$?
+    answer: -19.6
+    wrong:
+      - value: 19.6
+        feedback: |
+          To cancel $+9.8$ one needs $\ddot b^3 = -9.8$: the origin must fall, i.e. move down. Then $b^3 = -4.9t^2$, negative.
+      - value: -39.2
+        feedback: |
+          Integrating $\ddot b^3 = -9.8$ twice from rest gives $-\tfrac12\cdot9.8\,t^2$; the factor $\tfrac12$ is missing.
+      - value: -9.8
+        feedback: |
+          $-9.8$ is $\ddot b^3$, the acceleration. The position after $t = 2$ is $-4.9\cdot2^2$.
+    hint: |
+      $\ddot b^3 = -9.8$; integrate twice from rest at $0$.
+    explanation: |
+      $\ddot b^3 = -9.8$, so $b^3(t) = -4.9\,t^2$ and $b^3(2) = -19.6$. The origin of $\mathscr{Y}$ falls freely, like a dropped stone. Since $\partial_\alpha\phi$ is the same everywhere, $(\Gamma_\mathscr{Y})^\alpha_{00} = 0$ **everywhere**, and the falling chart is inertial.
+
+  - type: text
+    id: elevator-resolved
+    title: The elevator, resolved
+    body: |
+      When $\partial_\alpha\phi$ is the same at every point (**uniform gravity**), the **freely falling chart**, with
+      $$\ddot b^\alpha = -\partial_\alpha\phi,$$
+      has $(\Gamma_\mathscr{Y})^\alpha_{00} = \partial_\alpha\phi + \ddot b^\alpha = 0$, and all its coefficients vanish: it is an inertial chart.
+
+      This is the astronaut's elevator. In its coordinates every free body moves straight at constant velocity, so the released apple stays at rest and floats. Uniform gravity disappears completely, exactly as a translational pseudo-force does: **uniform gravity is a pseudo-force**.
+
+  - type: numeric
+    id: nonuniform-cancel
+    title: Can one chart cancel a point mass?
+    prompt: |
+      A point mass at the origin, $G_NM = 8$, gives in the sources chart
+      $$\Gamma^1_{00} = \frac{G_NM\,x^1}{|x|^3}.$$
+      A chart $x^\alpha = y^\alpha + b^\alpha(t)$ has $(\Gamma_\mathscr{Y})^1_{00} = \partial_1\phi + \ddot b^1$. At some instant $\ddot b^1 = -2$, chosen to cancel gravity at $x = (2, 0, 0)$. At the same instant, what is $(\Gamma_\mathscr{Y})^1_{00}$ at $x = (4, 0, 0)$?
+    answer: -1.5
+    wrong:
+      - value: 0
+        feedback: |
+          $\ddot b^1$ depends only on time, while $\partial_1\phi$ changes from point to point: $8\cdot4/4^3 = 0.5$ at $x^1 = 4$, not $2$. The cancellation works only where it was tuned.
+      - value: 2.5
+        feedback: |
+          $\ddot b^1 = -2$ enters with its own sign: $(\Gamma_\mathscr{Y})^1_{00} = 0.5 + (-2)$.
+    hint: |
+      $\partial_1\phi$ at $(4,0,0)$ is $8\cdot4/64$.
+    explanation: |
+      $(\Gamma_\mathscr{Y})^1_{00} = 0.5 - 2 = -1.5$. A free particle at rest there accelerates at $+1.5$ in the falling chart, away from the origin of $\mathscr{Y}$: the farther particle falls more slowly than the chart. One $\ddot b^\alpha(t)$ is a single vector per instant, while a non-uniform $\partial_\alpha\phi$ differs from point to point.
+
+  - type: text
+    id: why-riem
+    title: No cleverer chart either?
+    body: |
+      Translations of the origin cannot cancel a non-uniform field. Could some other chart, curvilinear or rotating, make all coefficients vanish on an open set? Recall the tensor argument: if $\Gamma_\mathscr{Y} = 0$ on an open set, then $\mathrm{Riem} = 0$ there, in every chart. So it suffices to compute $\mathrm{Riem}$ in the sources chart: if it is nonzero, no chart removes gravity.
+
+      Recall the components (summation index $n$, over $0,\dots,3$):
+      $$\begin{aligned}&\mathrm{Riem}^i_{jkm}\\ &= \partial x_k\lfloor\Gamma^i_{jm}\rceil - \partial x_m\lfloor\Gamma^i_{jk}\rceil\\ &\quad + \Gamma^i_{nk}\Gamma^n_{jm} - \Gamma^i_{nm}\Gamma^n_{jk}.\end{aligned}$$
+      In the sources chart, only $\Gamma^\alpha_{00} = \partial_\alpha\phi$ is nonzero.
+
+  - type: mcq
+    id: riem-quadratic
+    title: The quadratic terms
+    prompt: |
+      In a chart where the only nonzero coefficients are $\Gamma^\alpha_{00}$ ($\alpha\in\{1,2,3\}$), consider a product $\Gamma^i_{nk}\Gamma^n_{jm}$ from $\mathrm{Riem}^i_{jkm}$ (summed over $n$). Why does it vanish for all index values?
+    options:
+      - text: '$\Gamma^n_{jm}\neq0$ needs $n$ spatial, and every coefficient with a spatial lower index, such as $\Gamma^i_{nk}$, is zero'
+        correct: true
+      - text: 'Products of two coefficients are always negligible'
+        feedback: |
+          Nothing is small here: these are exact formulas. In polar coordinates of the plane the products are exactly what cancels the derivative terms. They vanish for a reason of indices.
+      - text: 'The two quadratic terms are always equal and cancel'
+        feedback: |
+          $\Gamma^i_{nk}\Gamma^n_{jm}$ and $\Gamma^i_{nm}\Gamma^n_{jk}$ differ by swapping $k$ and $m$; in general they are different. Here each one vanishes on its own.
+    explanation: |
+      For $\Gamma^n_{jm}\neq0$ we need $n = \nu$ spatial and $j = m = 0$. Then the other factor is $\Gamma^i_{\nu k}$, with a spatial lower index $\nu$, and every such coefficient vanishes. Only the derivative terms survive.
+
+  - type: mcq
+    id: riem-0b0
+    title: The surviving component
+    prompt: |
+      In a stratified chart where the only nonzero coefficients are $\Gamma^\alpha_{00} = \partial_\alpha\phi$, the quadratic terms of
+      $$\begin{aligned}&\mathrm{Riem}^i_{jkm}\\ &= \partial x_k\lfloor\Gamma^i_{jm}\rceil - \partial x_m\lfloor\Gamma^i_{jk}\rceil + \dots\end{aligned}$$
+      all vanish. What is $\mathrm{Riem}^\alpha_{0\beta0}$ ($\alpha,\beta\in\{1,2,3\}$)?
+    options:
+      - text: '$\partial_\beta\partial_\alpha\phi$'
+        correct: true
+      - text: '$-\partial_\beta\partial_\alpha\phi$'
+        feedback: |
+          With $(i,j,k,m) = (\alpha,0,\beta,0)$ the first term is $\partial x_\beta\lfloor\Gamma^\alpha_{00}\rceil$ with a plus sign; the second, $\partial x_0\lfloor\Gamma^\alpha_{0\beta}\rceil$, vanishes because $\Gamma^\alpha_{0\beta} = 0$.
+      - text: '$\partial_0\partial_\alpha\phi$, the time derivative of the field'
+        feedback: |
+          The time derivative would act on $\Gamma^\alpha_{0\beta}$, which is identically zero. The derivative that survives is along $x^\beta$ (the slot $k = \beta$) acting on $\Gamma^\alpha_{00}$.
+      - text: '$0$, because only one coefficient type is nonzero'
+        feedback: |
+          One nonzero coefficient is enough: its derivative appears in $\mathrm{Riem}$. Only the quadratic terms needed two.
+    explanation: |
+      $$\begin{aligned}\mathrm{Riem}^\alpha_{0\beta0} &= \partial x_\beta\lfloor\Gamma^\alpha_{00}\rceil - \partial x_0\lfloor\Gamma^\alpha_{0\beta}\rceil\\ &= \partial_\beta\partial_\alpha\phi - 0.\end{aligned}$$
+
+  - type: mcq
+    id: riem-00b
+    title: Sign check
+    prompt: |
+      In a stratified chart where the only nonzero coefficients are $\Gamma^\alpha_{00} = \partial_\alpha\phi$, one has $\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi$. What is $\mathrm{Riem}^\alpha_{00\beta}$, with the last two indices swapped?
+    options:
+      - text: '$-\partial_\beta\partial_\alpha\phi$'
+        correct: true
+      - text: '$\partial_\beta\partial_\alpha\phi$'
+        feedback: |
+          $\mathrm{Riem}^i_{jkm}$ is antisymmetric in its last two indices $k,m$ (swap the two directions of the loop): the sign flips.
+      - text: '$0$'
+        feedback: |
+          Directly: $\partial x_0\lfloor\Gamma^\alpha_{0\beta}\rceil - \partial x_\beta\lfloor\Gamma^\alpha_{00}\rceil = 0 - \partial_\beta\partial_\alpha\phi$, not zero.
+    explanation: |
+      Antisymmetry in the last pair, or directly from the formula: $\mathrm{Riem}^\alpha_{00\beta} = -\partial_\beta\partial_\alpha\phi$. Every other component vanishes: a nonzero one needs a $\Gamma^\alpha_{00}$ differentiated along a spatial direction, which forces $j = 0$ and one time index among $k,m$.
+
+  - type: numeric
+    id: riem-num
+    title: Curvature near a point mass
+    prompt: |
+      A point mass at the origin, $G_NM = 8$, gives
+      $$\partial_1\phi = \frac{G_NM\,x^1}{|x|^3}$$
+      with $|x| = \sqrt{\sum_\beta(x^\beta)^2}$, and in this chart $\mathrm{Riem}^1_{010} = \partial_1\partial_1\phi$. What is $\mathrm{Riem}^1_{010}$ at $x = (2, 0, 0)$?
+    answer: -2
+    wrong:
+      - value: 1
+        feedback: |
+          $G_NM/|x|^3 = 1$ is only the part from differentiating the factor $x^1$. Differentiating $|x|^{-3}$ adds $-3G_NM(x^1)^2/|x|^5 = -3$.
+      - value: 2
+        feedback: |
+          That is $\partial_1\phi$ itself, the coefficient. The curvature needs one more derivative along $x^1$.
+      - value: 4
+        feedback: |
+          Watch the sign of the term from $|x|^{-3}$: $\partial_1|x|^{-3} = -3x^1/|x|^5$.
+    hint: |
+      $\partial_1\big(x^1|x|^{-3}\big) = |x|^{-3} - 3(x^1)^2|x|^{-5}$.
+    explanation: |
+      $$\begin{aligned}\partial_1\partial_1\phi &= G_NM\Big(\frac1{|x|^3} - \frac{3(x^1)^2}{|x|^5}\Big)\\ &= 8\Big(\frac18 - \frac{12}{32}\Big) = -2.\end{aligned}$$
+      Similarly $\mathrm{Riem}^2_{020} = \mathrm{Riem}^3_{030} = 8/8 = 1$ there. Nonzero curvature: no chart removes the point mass's gravity on any open set around this event.
+
+  - type: text
+    id: verdict
+    title: Spacetime, not space, is curved
+    body: |
+      **Non-uniform gravity is not a pseudo-force.** Wherever some $\partial_\beta\partial_\alpha\phi\neq0$, $\mathrm{Riem}\neq0$ in the sources chart, hence in every chart, and no chart has all $\Gamma = 0$ on a neighborhood. Uniform gravity has $\partial_\beta\partial_\alpha\phi = 0$, $\mathrm{Riem} = 0$, and the falling chart removes it, consistent with the elevator.
+
+      Note which components survive: $\mathrm{Riem}^\alpha_{0\beta0}$ and $\mathrm{Riem}^\alpha_{00\beta}$, each carrying the time index $0$ twice. The purely spatial ones vanish,
+      $$\mathrm{Riem}^\alpha_{\beta\delta\kappa} = 0:$$
+      space is flat, as Newton had it; what gravity curves is **spacetime**. In a general stratified chart $\Gamma^\alpha_{00}$ mixes gravity with pseudo-forces, and only the curvature separates them.
+
+  - type: text
+    id: field-eq
+    title: Poisson's equation as curvature
+    body: |
+      The potential obeys Poisson's equation $\Delta\phi = 4\pi G_N\rho$, with $\Delta\phi := \sum_\alpha\partial_\alpha\partial_\alpha\phi$. Its left side looks like a trace of $\partial_\beta\partial_\alpha\phi$, the curvature components just found.
+
+      Recall the **Ricci curvature**: the contraction of the upper index of $\mathrm{Riem}$ with its third,
+      $$\mathrm{Ric}_{jm} := \mathrm{Riem}^k_{jkm}.$$
+
+  - type: mcq
+    id: ric-which
+    title: Which Ricci component?
+    prompt: |
+      In a stratified chart whose only nonzero curvature components are $\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi$ and $\mathrm{Riem}^\alpha_{00\beta} = -\partial_\beta\partial_\alpha\phi$ ($\alpha,\beta\in\{1,2,3\}$), with $\mathrm{Ric}_{jm} := \mathrm{Riem}^k_{jkm}$, which Ricci component equals $\Delta\phi = \sum_\alpha\partial_\alpha\partial_\alpha\phi$?
+    options:
+      - text: '$\mathrm{Ric}_{00}$'
+        correct: true
+      - text: '$\mathrm{Ric}_{11} + \mathrm{Ric}_{22} + \mathrm{Ric}_{33}$'
+        feedback: |
+          $\mathrm{Ric}_{\beta\beta} = \mathrm{Riem}^k_{\beta k\beta}$ has a spatial second index, and every nonzero component has $0$ there. All spatial Ricci components vanish.
+      - text: '$-\mathrm{Ric}_{00}$'
+        feedback: |
+          That would come from contracting with the last index, $\sum_\alpha\mathrm{Riem}^\alpha_{00\alpha} = -\Delta\phi$. The Ricci convention contracts the upper index with the third one: $\sum_\alpha\mathrm{Riem}^\alpha_{0\alpha0} = +\Delta\phi$.
+      - text: '$\mathrm{Ric}_{01}$'
+        feedback: |
+          $\mathrm{Ric}_{01} = \mathrm{Riem}^\alpha_{0\alpha1}$ has two spatial indices in the last pair, and such components vanish.
+    explanation: |
+      $$\begin{aligned}\mathrm{Ric}_{00} &= \mathrm{Riem}^k_{0k0} = \sum_\alpha\mathrm{Riem}^\alpha_{0\alpha0}\\ &= \sum_\alpha\partial_\alpha\partial_\alpha\phi = \Delta\phi\end{aligned}$$
+      ($k = 0$ contributes nothing, since $\mathrm{Riem}^0_{\dots} = 0$). Every other Ricci component is zero.
+
+  - type: numeric
+    id: ric-vacuum
+    title: Ricci outside the mass
+    prompt: |
+      Near a point mass with $G_NM = 8$, at $x = (2, 0, 0)$ (where there is no matter), the curvature components are
+      $$\begin{gathered}\mathrm{Riem}^1_{010} = -2\\ \mathrm{Riem}^2_{020} = 1\\ \mathrm{Riem}^3_{030} = 1.\end{gathered}$$
+      With $\mathrm{Ric}_{00} = \sum_\alpha\mathrm{Riem}^\alpha_{0\alpha0}$, what is $\mathrm{Ric}_{00}$ there?
+    answer: 0
+    wrong:
+      - value: -2
+        feedback: |
+          The contraction sums over all three spatial $\alpha$, not only the radial one: $-2 + 1 + 1$.
+      - value: 4
+        feedback: |
+          Add the values with their signs: $-2 + 1 + 1$.
+    explanation: |
+      $\mathrm{Ric}_{00} = -2 + 1 + 1 = 0 = 4\pi G_N\rho$ with $\rho = 0$: Poisson's equation in vacuum. The curvature is nonzero (gravity is there), but its trace vanishes.
+
+  - type: text
+    id: field-eq-free
+    title: The field equation
+    body: |
+      So Poisson's equation is a statement about curvature:
+      $$\mathrm{Ric}_{00} = \Delta\phi = 4\pi G_N\rho,$$
+      and all other Ricci components vanish. In a stratified chart $dt$ has components $\delta^0_k$, so $dt\otimes dt$ has the single component $1$ in slot $(0,0)$. Hence
+      $$\mathrm{Ric} = 4\pi G_N\rho\,dt\otimes dt.$$
+      Both sides are tensors, so verified in one chart this holds in every chart. **Matter fixes the Ricci curvature; the curvature tells free particles how to fall.** This is the time-time part of the Einstein equations (Level 10).
+
+  - type: mcq
+    id: trap-one-event
+    title: 'Trap: zero at one event'
+    prompt: |
+      True or false: if at an event $p$ all connection coefficients of some chart vanish, then $\mathrm{Riem}(p) = 0$.
+
+      Test case: a stratified chart with only $\Gamma^1_{00} = \partial_1\phi$ nonzero, $\phi = (x^1)^2$, at an event with $x^1 = 0$.
+    shuffle: false
+    options:
+      - text: 'True'
+        feedback: |
+          At $x^1 = 0$, $\Gamma^1_{00} = 2x^1 = 0$, but $\mathrm{Riem}^1_{010} = \partial_1\Gamma^1_{00} = 2$. Curvature contains **derivatives** of the coefficients, which zero values at one point do not control.
+      - text: 'False'
+        correct: true
+    explanation: |
+      $\mathrm{Riem}$ is built from $\Gamma$ and its first derivatives. Vanishing at one event kills only the quadratic terms; vanishing on an open set kills the derivatives too. Here $\Gamma^1_{00} = 2x^1$ is zero at $x^1 = 0$ while $\mathrm{Riem}^1_{010} = 2$.
+
+  - type: mcq
+    id: trap-uniform
+    title: 'Trap: a constant coefficient'
+    prompt: |
+      In a stratified chart, the only nonzero coefficient is $\Gamma^3_{00} = 3$, the same at every event. Someone says: "this is real gravity, so no chart can make all coefficients vanish." Which is right?
+    options:
+      - text: 'Every coefficient is constant, so $\mathrm{Riem} = 0$; the chart with $\ddot b^3 = -3$ is inertial, whether the cause is uniform gravity or an accelerating grid'
+        correct: true
+      - text: 'The claim is right: a nonzero $\Gamma^\alpha_{00}$ always signals gravity, which cannot be removed'
+        feedback: |
+          A nonzero $\Gamma^\alpha_{00}$ also arises from an accelerating origin (translational pseudo-force). And uniform gravity itself is removed by the freely falling chart, $(\Gamma_\mathscr{Y})^3_{00} = 3 + \ddot b^3 = 0$.
+      - text: 'One must first find out whether masses are nearby, by measuring $\phi$'
+        feedback: |
+          No measurement of free particles distinguishes uniform gravity from an accelerating grid: both give the same $\Gamma$. Only the curvature carries chart-independent information, and here it is $0$.
+    explanation: |
+      Derivatives of a constant vanish and so do the quadratic terms, so $\mathrm{Riem} = 0$. Curvature, not the size of $\Gamma$, separates removable effects (pseudo-forces, uniform gravity) from non-removable gravity.
+
+  - type: mcq
+    id: trap-vacuum
+    title: 'Trap: zero Ricci'
+    prompt: |
+      Outside a point mass, $\rho = 0$, so $\mathrm{Ric} = 4\pi G_N\rho\,dt\otimes dt = 0$. Does it follow that gravity there can be removed by a chart, as in the falling elevator?
+    options:
+      - text: 'No: $\mathrm{Ric}$ is only a trace; $\mathrm{Riem}^1_{010} = -2$, $\mathrm{Riem}^2_{020} = \mathrm{Riem}^3_{030} = 1$ (at distance $2$, $G_NM = 8$) sum to $0$ but are not $0$'
+        correct: true
+      - text: 'Yes: zero Ricci curvature means zero curvature'
+        feedback: |
+          $\mathrm{Ric}_{00}$ sums $\mathrm{Riem}^\alpha_{0\alpha0}$ over $\alpha$; terms of opposite sign cancel in the sum while each stays nonzero. Removability needs the full $\mathrm{Riem}$ to vanish.
+      - text: 'Yes: without matter there is no gravity at that point'
+        feedback: |
+          The Moon has no matter between it and the Earth, yet it falls. Poisson's equation fixes only the trace $\Delta\phi$ locally; $\phi$ and its other second derivatives are shaped by distant matter.
+    explanation: |
+      In vacuum $\mathrm{Ric} = 0$ but $\mathrm{Riem}\neq0$: the radial component is negative and the two transverse ones positive. Gravity there is real and not removable on any open set.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** non-uniform gravity cannot be removed on a region, but can it be removed along **one** worldline? Let a chart fall with one particle: two nearby particles released at rest then drift apart along the direction to the mass and squeeze together across it, and $\mathrm{Riem}^\alpha_{0\beta0}$ measures exactly this tidal acceleration.

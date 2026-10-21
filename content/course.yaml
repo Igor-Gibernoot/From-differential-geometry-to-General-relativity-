@@ -429,7 +429,11 @@ levels:
         kind: concept
         file: ch09/pseudo-forces.yaml
         summary: Charts in which free particles move straight have all connection coefficients zero; from them, rigidly moving axes produce exactly the Coriolis, centrifugal, Euler and translational forces.
-      - { id: ch09-gravity-connection, title: Gravity in the Connection, kind: concept }
+      - id: ch09-gravity-connection
+        title: Gravity in the Connection
+        kind: concept
+        file: ch09/gravity-connection.yaml
+        summary: "Free fall the same for every mass puts gravity into the connection, Γ^α₀₀ = ∂_αφ; uniform gravity is a pseudo-force removed by a freely falling chart, non-uniform gravity is curvature, Riem^α₀β₀ = ∂_β∂_αφ, and Poisson's equation becomes Ric₀₀ = 4πG_N ρ."
       - { id: ch09-tidal, title: Tidal Acceleration, kind: concept }
       - { id: ch09-point-mass, title: "Guided Problem: A Point Mass in Newton-Cartan Theory", kind: guided }
       - { id: ch09-traps, title: Newton-Cartan Traps, kind: traps }
