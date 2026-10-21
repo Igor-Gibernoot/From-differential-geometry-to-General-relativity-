@@ -607,3 +607,9 @@ polyline.w-level { fill: none; }
 .wc-clock.off { opacity: .35; }
 .wc-dot { fill: var(--ink); }
 .widget .readout .wc-bad-text { color: var(--bad); font-weight: 650; }
+
+/* ---------- observer-frame ---------- */
+.of-hyp { fill: none; stroke: var(--muted); stroke-opacity: .7; stroke-width: 1.3px; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }
+.of-axis { stroke: var(--basis); stroke-opacity: .35; stroke-width: 1.3px; vector-effect: non-scaling-stroke; }
+.w-basis.of-faint { opacity: .35; }
+.w-label.of-faint-l { fill-opacity: .6; }
