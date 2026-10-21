@@ -330,7 +330,11 @@ levels:
         kind: guided
         file: ch07/geodesic-equation.yaml
         summary: Feed the metric's Lagrangian to the Euler-Lagrange equations, run the curve at constant speed, symmetrize and raise an index; out comes the geodesic equation, whose polar coefficients rebuild the flat connection.
-      - { id: ch07-levi-civita, title: The Levi-Civita Connection, kind: concept }
+      - id: ch07-levi-civita
+        title: The Levi-Civita Connection
+        kind: concept
+        file: ch07/levi-civita.yaml
+        summary: The geodesic equation has the shape of an autoparallel equation. Its coefficients, the Christoffel symbols, define the Levi-Civita connection, the only connection that is torsion free and keeps the metric constant, so its parallel transport preserves lengths and angles.
       - { id: ch07-curvature, title: Curvature of the Metric, kind: concept }
       - { id: ch07-sphere, title: "Guided Problem: Meridians and Parallels of the Sphere", kind: guided }
       - { id: ch07-traps, title: Metric Traps, kind: traps }

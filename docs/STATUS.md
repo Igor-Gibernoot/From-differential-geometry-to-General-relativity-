@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation` built; next: `ch07-levi-civita`)
+## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita` built; next: `ch07-curvature`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -30,8 +30,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation` done; next
-  `ch07-levi-civita`, then `ch07-curvature`, `ch07-sphere`, traps, map, challenge (two sessions);
+- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita` done; next
+  `ch07-curvature`, then `ch07-sphere`, traps, map, challenge (two sessions);
   then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
   B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -344,6 +344,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   arc length $\mu = \text{ᚱ}^{-1}(\lambda) := L_{[a,\lambda]}[\gamma]$. Polar checks: $(\Gamma_\mathscr{Y})^1_{22} = -r$, $(\Gamma_\mathscr{Y})^2_{12} = 1/r$ ($-5$, $0.2$ at $r = 5$, = ∇ᴱ of ch06); polar (G):
   $\ddot r - r\dot\theta^2 = 0$, $\ddot\theta + \tfrac2r\dot r\dot\theta = 0$; hook curves $r = \lambda$ (pass), circle $r = 1,\theta = \lambda$ (fail, $-1$), $r = \lambda^2$ on $[1,2]$ (fails (G) with $2$, passes (S));
   horizontal line $(\lambda,1)$: $\ddot r = r\dot\theta^2 = (1+\lambda^2)^{-3/2}$. Energy Lagrangian generalized to $\mathcal{E}_\mathscr{X} := \tfrac12g_{ij}\beta^i\beta^j$ (gives (G) at any speed). No widget, no `own:` (guided).
+  Conventions fixed here (`ch07-levi-civita`): book labels $\nabla^{\mathrm{LC}}$ and $(\Gamma^{\mathrm{LC}}_\mathscr{X})^k_{ji}$ (written $\Gamma^k_{ji}$ when the chart is clear), "Christoffel symbols" named here;
+  metric compatible $\nabla_\mathcal{X}g = 0$, chart form $(\nabla_{\partial x_k}g)_{ij} = \partial_kg_{ij} - \Gamma^m_{ik}g_{mj} - \Gamma^m_{jk}g_{im}$ (direction in the last index); for LC
+  $\Gamma^m_{ik}g_{mj} = \Gamma_{jik}$, so $\partial_kg_{ij} = \Gamma_{jik} + \Gamma_{ijk}$; uniqueness via cyclic orders $(k,i,j)$, $(i,j,k)$, $(j,k,i)$ (add last two, subtract first),
+  $2g_{km}\Gamma^m_{ij} = \partial_ig_{jk}+\partial_jg_{ki}-\partial_kg_{ij}$; existence from uniqueness on overlaps (connections $\nabla^\mathscr{X}$, $\nabla^\mathscr{Y}$ per chart, my notation).
+  Scorecard on the Euclidean plane: ∇ᴱ = ∇ᴸᶜ; ∇ᴾ torsion free, not compatible ($(\nabla^{\mathrm{P}}_{\partial y_1}g)_{22} = 2r$, $10$ at $r=5$); ∇ᵂ compatible ($10-5-5 = 0$), torsion $\mathtt{T}^2_{12} = \tfrac1r$
+  (polar); antisymmetric example torsion $-2$, $(\nabla_{\partial x_2}g)_{11} = -2$. Lowered polar $\Gamma_{221} = r$. Transport identity with the $(\nabla_{v_\gamma}g)$ term
+  $\dot\gamma^kx^iy^j(\nabla_{\partial x_k}g)_{ij}$; ∇ᴾ autoparallel $r = 1+\lambda$, $\theta = \lambda$: $g(v,v) = 2\to5$; null geodesics named (Minkowski $(t_0+\lambda,a_0+\lambda)$).
+  Widget preset new: `parallel-transport` `radial` θ₀ = 0 with E/P/W, $z_0 = (0,1)$ (∇ᴾ length $1\to6$), view `{x: -1.5, y: -3, w: 9.5, h: 9.5}`, plus vertical W preset.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -357,6 +365,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch07-levi-civita (concept, 31 cards)
+- Built `content/ch07/levi-civita.yaml` (hook (G) vs (A), "what must be checked" mcq (transformation law); recall ∇ᴱ/∇ᴾ/∇ᵂ polar coefficients;
+  widget ray E/P/W with length mcq and ∇ᴾ numeric 6; Christoffel + LC definition; compatibility definition, chart build, ∇ᴱ/∇ᴾ numerics; LC compatible via
+  lowered symbols (mcq, polar numeric); torsion free + theorem; cyclic build, solve mcq, proof order; existence from uniqueness + mcq; traps ∇ᵂ (numeric, mcq),
+  antisymmetric, how-many, Γ not a tensor; transport identity, consequence mcq, ∇ᴾ speed trap, constant speed + null geodesics, Minkowski mcq; own + teaser).
+  Choices: hook question is the existence debt (resolved by uniqueness) rather than a count, the count is asked late ("how-many"); added ∇ᴾ as the
+  torsion-free-but-not-compatible counterexample (not in the plan). validate 0/0, shots 0 problems; widget preset viewed.
+- Conventions fixed here: see Current, "Chapter 7 conventions so far" (`ch07-levi-civita`).
 ### 2026-10-20 — ch07-geodesic-equation (guided, 29 cards)
 - Built `content/ch07/geodesic-equation.yaml` (hook: polar equations tested on radial line, circle, $r = \lambda^2$; Step 1 velocity-slot mcq, position-slot
   build, polar numeric; Step 2 insert the curve, "why multiply by ᛇs" mcq; Step 3 constant-speed mcq, chain-rule build, product rule; Step 4 swap mcq,

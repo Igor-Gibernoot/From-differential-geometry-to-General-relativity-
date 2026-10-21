@@ -1,0 +1,541 @@
+id: ch07-levi-civita
+title: The Levi-Civita Connection
+kind: concept
+
+own: |
+  - **Christoffel symbols** of a metric $g$ in a chart $(\mathcal{U},\mathscr{X})$, smooth functions on $\mathcal{U}$, symmetric in $i,j$, not tensor components:
+  {{ $$\begin{aligned}(\Gamma^{\mathrm{LC}}_\mathscr{X})^k_{ji} := \tfrac12(g^{-1})^{km}\big(&\partial_i g_{mj} + \partial_j g_{mi}\\ &- \partial_m g_{ij}\big)\end{aligned}$$ }}
+  The **Levi-Civita connection** $\nabla^{\mathrm{LC}}$ has these as its coefficients in every chart, so its autoparallel equation (A) is the geodesic equation (G), term by term.
+  - **Metric compatible**: $\nabla_\mathcal{X}g = 0$ for every vector field $\mathcal{X}$; in a chart
+  {{ $$(\nabla_{\partial x_k}g)_{ij} = \partial_k g_{ij} - \Gamma^m_{ik}\,g_{mj} - \Gamma^m_{jk}\,g_{im}$$ }}
+  must vanish. **Torsion free**: $\mathtt{T}^k_{ji} = \Gamma^k_{ij} - \Gamma^k_{ji} = 0$, symmetric coefficients. $\nabla^{\mathrm{LC}}$ has both: with the lowered $\Gamma_{mij}$, $\partial_k g_{ij} = \Gamma_{ijk} + \Gamma_{jik}$.
+  - **Levi-Civita theorem**: $\nabla^{\mathrm{LC}}$ is the only torsion-free, metric-compatible connection. Writing compatibility for the index orders $(k,i,j)$, $(i,j,k)$, $(j,k,i)$, adding the last two and subtracting the first, symmetry leaves
+  {{ $$2\,g_{km}\Gamma^m_{ij} = \partial_i g_{jk} + \partial_j g_{ki} - \partial_k g_{ij}$$ }}
+  and $\tfrac12(g^{-1})^{lk}$ solves for $\Gamma^l_{ij}$. Uniqueness also gives existence: on an overlap the two charts' connections agree, so the Christoffel symbols obey the transformation law automatically.
+  - **Transport keeps the metric**: for fields $\mathcal{X}_\gamma,\mathcal{Y}_\gamma$ along $\gamma$,
+  {{ $$\begin{aligned}&\tfrac{d}{d\lambda}g(\mathcal{X}_\gamma,\mathcal{Y}_\gamma)\\ &= g(\nabla_{v_\gamma}\mathcal{X}_\gamma,\mathcal{Y}_\gamma) + g(\mathcal{X}_\gamma,\nabla_{v_\gamma}\mathcal{Y}_\gamma)\end{aligned}$$ }}
+  so parallel transport keeps lengths and angles, and along an autoparallelly transported curve $g(v_\gamma,v_\gamma)$, $\text{ᛇ}_\gamma$ and $s_\gamma$ are constant: these curves are the constant-speed geodesics, plus the **null geodesics** ($\text{ᛇ}_\gamma = 0$).
+  - **Not the same**: autoparallels depend on $\nabla$, geodesics only on $g$. $\nabla^{\mathrm{W}}$ is compatible but has torsion; $\nabla^{\mathrm{P}}$ is torsion free but not compatible; an antisymmetric addition keeps every autoparallel and adds torsion.
+
+cards:
+  - type: text
+    id: hook
+    title: Two equations, one shape
+    body: |
+      Two equations from earlier levels, both in a chart $(\mathcal{U},\mathscr{X})$, for a curve $\gamma$ with velocity components $\dot\gamma^i$ (a dot is $d/d\lambda$, Einstein summation).
+
+      **From a metric $g$** (the previous lesson): a constant-speed curve with nonzero sign is a geodesic, a curve of stationary length, if and only if
+      $$\ddot\gamma^k + \Gamma^k_{ij}\,\dot\gamma^i\dot\gamma^j = 0,\tag{G}$$
+      with coefficients built from $g$ alone:
+      $$\begin{aligned}\Gamma^k_{ij} = \tfrac12(g^{-1})^{km}\big(&\partial_i g_{mj} + \partial_j g_{mi}\\ &- \partial_m g_{ij}\big).\end{aligned}$$
+
+      **From a connection $\nabla$** (Level 6): a curve is autoparallelly transported, its acceleration $a_\gamma = \nabla_{v_\gamma}v_\gamma$ vanishes, if and only if
+      $$\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = 0,\tag{A}$$
+      with the connection coefficients $\Gamma^k_{ji}$ of $\nabla$ (last lower index = direction).
+
+      Same shape. Before any theory: **is there a connection whose (A) is (G), in every chart? And is there only one?**
+
+  - type: mcq
+    id: hook-check
+    title: What could go wrong?
+    prompt: |
+      On a manifold with metric $g$, try to build a connection by declaring, in **every** chart $(\mathcal{U},\mathscr{X})$ of the atlas, its coefficients to be
+      $$\begin{aligned}\Gamma^k_{ji} := \tfrac12(g^{-1})^{km}\big(&\partial_i g_{mj} + \partial_j g_{mi}\\ &- \partial_m g_{ij}\big).\end{aligned}$$
+      Then the autoparallel equation of this connection would be the geodesic equation of $g$. What must still be checked before this defines **one** connection on the whole manifold?
+    options:
+      - text: 'That on the overlap of two charts the two sets of coefficients obey the transformation law of connection coefficients'
+        correct: true
+      - text: 'That the coefficients are symmetric in their lower indices'
+        feedback: |
+          That is automatic: swapping $i\leftrightarrow j$ exchanges $\partial_i g_{mj}$ and $\partial_j g_{mi}$ and keeps $\partial_m g_{ij} = \partial_m g_{ji}$. Symmetry is a property the candidate has for free, not an obstacle to its existence.
+      - text: 'That the coefficients transform as the components of a $(1,2)$-tensor field'
+        feedback: |
+          Connection coefficients never do: they pick up a second-derivative term under a change of chart. Here too, they vanish in the cartesian chart of the Euclidean plane but $\Gamma^1_{22} = -r$ in the polar chart, impossible for a tensor.
+      - text: 'Nothing: any choice of functions in each chart is a connection'
+        feedback: |
+          In **one** chart, any smooth functions define a connection on that chart's domain. But a point usually lies in several charts, and the connections defined there must be the same connection, which happens only if their coefficients are related by the transformation law. Nothing guarantees that a formula imposed chart by chart passes this test.
+    explanation: |
+      Each chart separately is fine. The danger is the overlap $\mathcal{U}\cap\mathcal{V}$: the connection built from $\mathscr{X}$ and the one built from $\mathscr{Y}$ must agree there, i.e. the coefficients must obey
+      $$\Gamma_\mathscr{Y} = (\text{Jacobians})\,\Gamma_\mathscr{X} + (\text{second derivatives}).$$
+      Checking this directly is a long computation. This lesson finds a short way around it.
+
+  - type: text
+    id: recall
+    title: "Recall: three connections on the plane"
+    body: |
+      The Euclidean plane, points $(a,b)$, metric $g = dx^1\otimes dx^1 + dx^2\otimes dx^2$; polar chart $\mathscr{Y} = (r,\theta)$, $\theta\in(-\pi,\pi)$, where $g$ has components $\mathrm{diag}(1,r^2)$. Level 6 built three connections; here are their **polar** coefficients $\Gamma^k_{ji}$ (the ones not listed vanish).
+      - $\nabla^{\mathrm{E}}$, cartesian components constant: $\Gamma^1_{22} = -r$, $\Gamma^2_{12} = \Gamma^2_{21} = \tfrac1r$.
+      - $\nabla^{\mathrm{P}}$, polar components constant: all $\Gamma^k_{ji} = 0$.
+      - $\nabla^{\mathrm{W}}$, the unit radial and angular fields $e_1 = \partial y_1$, $e_2 = \tfrac1r\partial y_2$ declared parallel: only $\Gamma^2_{21} = \tfrac1r$, while $\Gamma^2_{12} = 0$.
+
+      The previous lesson computed the metric's coefficients in polar components: $\Gamma^1_{22} = -r$, $\Gamma^2_{12} = \Gamma^2_{21} = \tfrac1r$. **Exactly $\nabla^{\mathrm{E}}$'s.** On the plane the answer to the opening question is at least "yes, $\nabla^{\mathrm{E}}$". What makes $\nabla^{\mathrm{E}}$ special among the three? Carry a vector and watch its length.
+
+  - type: widget
+    id: lengths-widget
+    title: Does transport keep the length?
+    widget: parallel-transport
+    config:
+      curve: { type: radial, theta0: 0 }
+      connection: P
+      connections: [E, P, W]
+      z0: [0, 1]
+      showAcceleration: false
+      badge: false
+      residual: false
+      trail: true
+      view: { x: -1.5, y: -3, w: 9.5, h: 9.5 }
+      presets:
+        - { label: 'Ray, ∇ᴾ', curve: { type: radial, theta0: 0 }, connection: P, z0: [0, 1], lambda: 3 }
+        - { label: 'Ray, ∇ᴱ', curve: { type: radial, theta0: 0 }, connection: E, z0: [0, 1], lambda: 3 }
+        - { label: 'Vertical line, ∇ᵂ', curve: { type: vertical, x0: 1, range: [-1, 1] }, connection: W, z0: [1, 0], lambda: 1 }
+    body: |
+      The ray $\gamma(\lambda) = (\lambda, 0)$, $\lambda\in[0.5,3]$, carries $\mathcal{Z}$, which starts as $\partial x_2$ (length $1$) at $(0.5,0)$. Slide $\lambda$ and switch between $\nabla^{\mathrm{E}}$, $\nabla^{\mathrm{P}}$ and $\nabla^{\mathrm{W}}$. The length of $\mathcal{Z}$ is $\sqrt{(z^1)^2 + r^2(z^2)^2}$ from its polar components. Then try the vertical line under $\nabla^{\mathrm{W}}$: $\mathcal{Z}$ turns, but does it stretch?
+
+  - type: mcq
+    id: lengths-which
+    title: Which connections keep lengths?
+    prompt: |
+      Euclidean plane. Along the ray $\gamma(\lambda) = (\lambda,0)$, $\lambda\in[0.5,3]$, transport the vector that starts as $\partial x_2$ at $(0.5,0)$ (length $1$) under three connections: $\nabla^{\mathrm{E}}$ (cartesian components constant), $\nabla^{\mathrm{P}}$ (polar components constant), $\nabla^{\mathrm{W}}$ (components along the unit radial and angular fields constant). Under which does it keep length $1$?
+    multiple: true
+    options:
+      - text: '$\nabla^{\mathrm{E}}$'
+        correct: true
+      - text: '$\nabla^{\mathrm{W}}$'
+        correct: true
+      - text: '$\nabla^{\mathrm{P}}$'
+        feedback: |
+          Constant polar components look harmless, but $\partial y_2$ has length $r$: the polar basis vector stretches as you move outward. Constant components $(0,2)$ along a basis that grows give a vector that grows, from length $1$ at $r = 0.5$ to $6$ at $r = 3$.
+    explanation: |
+      $\nabla^{\mathrm{E}}$ keeps $\mathcal{Z} = \partial x_2$. $\nabla^{\mathrm{W}}$ keeps its components along $e_1, e_2$, which have length $1$ and are perpendicular, so the length $\sqrt{(z^1_e)^2 + (z^2_e)^2}$ is constant (on the ray, $e_2 = \partial x_2$ anyway). $\nabla^{\mathrm{P}}$ keeps the polar components $(0,2)$, and $|\partial y_2| = r$ grows. A ruler carried by $\nabla^{\mathrm{P}}$ stretches.
+
+  - type: numeric
+    id: lengths-p
+    title: How long under the polar connection?
+    prompt: |
+      Euclidean plane, polar chart $(r,\theta)$ with metric components $\mathrm{diag}(1,r^2)$. The connection $\nabla^{\mathrm{P}}$ keeps polar components constant. A vector starts at $(0.5,0)$ as $\partial x_2 = \tfrac1r\partial y_2$, i.e. polar components $(0,2)$, and is transported under $\nabla^{\mathrm{P}}$ along the ray to $(3,0)$. What is its length there?
+    answer: 6
+    answerText: '6'
+    wrong:
+      - { value: 1, feedback: 'Length $1$ is what $\nabla^{\mathrm{E}}$ gives. Under $\nabla^{\mathrm{P}}$ the polar components stay $(0,2)$, and the length is $\sqrt{g_{22}}\cdot2 = r\cdot2$, evaluated at the **new** point $r = 3$.' }
+      - { value: 2, feedback: 'That is the component $z^2 = 2$, not the length. The length uses the metric at the point: $\sqrt{g_{22}(z^2)^2} = \sqrt{9\cdot4}$.' }
+    hint: The length of a vector with polar components $(z^1,z^2)$ at radius $r$ is $\sqrt{(z^1)^2 + r^2(z^2)^2}$.
+    explanation: |
+      $\sqrt{0 + 3^2\cdot2^2} = 6$. The same rule at the start, $\sqrt{0.25\cdot4} = 1$, confirms the starting length. $\nabla^{\mathrm{P}}$ does not respect the metric; the next cards make "respect" precise.
+
+  - type: text
+    id: christoffel
+    title: Christoffel symbols and the Levi-Civita connection
+    body: |
+      Name the metric's coefficients. On a manifold with metric $g$, in a chart $(\mathcal{U},\mathscr{X})$, the **Christoffel symbols** of $g$ are the functions on $\mathcal{U}$
+      $$\begin{aligned}(\Gamma^{\mathrm{LC}}_\mathscr{X})^k_{ji} := \tfrac12(g^{-1})^{km}\big(&\partial_i g_{mj} + \partial_j g_{mi}\\ &- \partial_m g_{ij}\big),\end{aligned}$$
+      where $\partial_i g_{mj}$ is the derivative of $g_{mj}\circ\mathscr{X}^{-1}$ in its $i$-th slot. They are symmetric, $(\Gamma^{\mathrm{LC}}_\mathscr{X})^k_{ji} = (\Gamma^{\mathrm{LC}}_\mathscr{X})^k_{ij}$, so the order of the lower indices does not matter. When the chart is clear, write just $\Gamma^k_{ji}$.
+
+      The **Levi-Civita connection** $\nabla^{\mathrm{LC}}$ ("LC") is the connection whose coefficients are, **in every chart**, the Christoffel symbols. Then (A) becomes (G) term by term: its straightest curves are the curves of stationary length.
+
+      This is a definition with a debt: the opening question showed it only makes sense if the Christoffel symbols of overlapping charts obey the transformation law. To pay it, look for **properties** that $\nabla^{\mathrm{E}}$ has and $\nabla^{\mathrm{P}}$ lacks.
+
+  - type: text
+    id: compatible-def
+    title: Metric compatibility
+    body: |
+      Recall from Level 6 how a connection differentiates a $(0,2)$-tensor field such as $g$: by the Leibniz rule, for vector fields $\mathcal{X},\mathcal{Y},\mathcal{Z}$,
+      $$\begin{aligned}&(\nabla_\mathcal{X}g)(\mathcal{Y},\mathcal{Z})\\ &= \mathcal{X}\lfloor g(\mathcal{Y},\mathcal{Z})\rceil - g(\nabla_\mathcal{X}\mathcal{Y},\mathcal{Z}) - g(\mathcal{Y},\nabla_\mathcal{X}\mathcal{Z}).\end{aligned}$$
+      It measures how much the inner product $g(\mathcal{Y},\mathcal{Z})$ changes **beyond** what the change of $\mathcal{Y}$ and $\mathcal{Z}$ themselves explains.
+
+      A connection is **metric compatible** if
+      $$\nabla_\mathcal{X}g = 0$$
+      for every vector field $\mathcal{X}\in\Gamma T\mathcal{M}$.
+      Then the rule of a product holds for inner products: $\mathcal{X}\lfloor g(\mathcal{Y},\mathcal{Z})\rceil = g(\nabla_\mathcal{X}\mathcal{Y},\mathcal{Z}) + g(\mathcal{Y},\nabla_\mathcal{X}\mathcal{Z})$. In words: $g$ is constant for $\nabla$. Fields that $\nabla$ calls constant keep their lengths and angles, which is what a ruler needs.
+
+  - type: build
+    id: compatible-components
+    title: Compatibility in a chart
+    prompt: |
+      In a chart $(\mathcal{U},\mathscr{X})$, a connection has coefficients $\Gamma^m_{ji}$ defined by $\nabla_{\partial x_i}\partial x_j = \Gamma^m_{ji}\,\partial x_m$ (last lower index = direction). Its derivative of the metric is
+      $$\begin{aligned}&(\nabla_{\partial x_k}g)(\partial x_i,\partial x_j)\\ &= \partial_k g_{ij} - g(\nabla_{\partial x_k}\partial x_i,\partial x_j)\\ &\quad - g(\partial x_i,\nabla_{\partial x_k}\partial x_j).\end{aligned}$$
+      Build its components $(\nabla_{\partial x_k}g)_{ij}$.
+    prefix: '(\nabla_{\partial x_k}g)_{ij} ='
+    tiles: ['\partial_k g_{ij}', '-\Gamma^m_{ik}\,g_{mj}', '-\Gamma^m_{jk}\,g_{im}', '-\Gamma^m_{ki}\,g_{mj}', '+\Gamma^m_{ik}\,g_{mj}']
+    answers:
+      - ['\partial_k g_{ij}', '-\Gamma^m_{ik}\,g_{mj}', '-\Gamma^m_{jk}\,g_{im}']
+      - ['\partial_k g_{ij}', '-\Gamma^m_{jk}\,g_{im}', '-\Gamma^m_{ik}\,g_{mj}']
+    wrong:
+      - { answer: ['\partial_k g_{ij}', '-\Gamma^m_{ki}\,g_{mj}', '-\Gamma^m_{jk}\,g_{im}'], feedback: 'The direction is $\partial x_k$, and the direction goes in the **last** lower index: $\nabla_{\partial x_k}\partial x_i = \Gamma^m_{ik}\,\partial x_m$. $\Gamma^m_{ki}$ would be $\nabla_{\partial x_i}\partial x_k$. For a connection with torsion the two differ.' }
+      - { answer: ['\partial_k g_{ij}', '+\Gamma^m_{ik}\,g_{mj}', '-\Gamma^m_{jk}\,g_{im}'], feedback: 'Both $\Gamma$ terms come with a minus sign: $g$ has two lower indices, and each lower index brings one $-\Gamma$ term (as for a covector).' }
+    hint: Insert $\nabla_{\partial x_k}\partial x_i = \Gamma^m_{ik}\,\partial x_m$ and use $g(\partial x_m,\partial x_j) = g_{mj}$.
+    explanation: |
+      $$\begin{aligned}&(\nabla_{\partial x_k}g)_{ij}\\ &= \partial_k g_{ij} - \Gamma^m_{ik}\,g_{mj} - \Gamma^m_{jk}\,g_{im}.\end{aligned}$$
+      One $-\Gamma$ term per lower index, the rule of Level 6. Metric compatibility is: this vanishes for all $i,j,k$.
+
+  - type: numeric
+    id: compatible-e
+    title: Is the Euclidean connection compatible?
+    prompt: |
+      Euclidean plane, polar chart: $g_{11} = 1$, $g_{22} = r^2$, $g_{12} = 0$. The connection $\nabla^{\mathrm{E}}$ has polar coefficients $\Gamma^1_{22} = -r$, $\Gamma^2_{12} = \Gamma^2_{21} = \tfrac1r$, the others $0$. Compute, at $r = 5$,
+      $$\begin{aligned}&(\nabla^{\mathrm{E}}_{\partial y_1}g)_{22}\\ &= \partial_1 g_{22} - \Gamma^m_{21}\,g_{m2} - \Gamma^m_{21}\,g_{2m}.\end{aligned}$$
+    answer: 0
+    answerText: '0'
+    wrong:
+      - { value: 10, feedback: 'That is $\partial_1 g_{22} = 2r$ alone. The two $\Gamma$ terms each contribute $\Gamma^2_{21}g_{22} = \tfrac15\cdot25 = 5$, with a minus sign.' }
+      - { value: 5, feedback: 'Only one $\Gamma$ term was subtracted. There are two, one for each lower index of $g$: $10 - 5 - 5$.' }
+    hint: Only $m = 2$ survives in the sums, since $\Gamma^1_{21} = 0$; $\partial_1 g_{22} = \partial_r(r^2)$.
+    explanation: |
+      $\partial_1 g_{22} = 2r = 10$, and each sum is $\Gamma^2_{21}g_{22} = \tfrac1r r^2 = r = 5$. So $10 - 5 - 5 = 0$. The other components vanish too, so $\nabla^{\mathrm{E}}$ is metric compatible: $\partial_r$ of $r^2$ is exactly balanced by the $\Gamma$'s.
+
+  - type: numeric
+    id: compatible-p
+    title: Is the polar connection compatible?
+    prompt: |
+      Euclidean plane, polar chart: $g_{11} = 1$, $g_{22} = r^2$, $g_{12} = 0$. The connection $\nabla^{\mathrm{P}}$ has **all** polar coefficients $\Gamma^k_{ji} = 0$. Compute $(\nabla^{\mathrm{P}}_{\partial y_1}g)_{22}$ at $r = 5$, using
+      $$\begin{aligned}&(\nabla_{\partial y_k}g)_{ij}\\ &= \partial_k g_{ij} - \Gamma^m_{ik}\,g_{mj} - \Gamma^m_{jk}\,g_{im}.\end{aligned}$$
+    answer: 10
+    answerText: '10'
+    wrong:
+      - { value: 0, feedback: 'All coefficients vanish, but the first term does not: the components of $g$ change, $\partial_1 g_{22} = 2r$. With no $\Gamma$ to balance it, $\nabla^{\mathrm{P}}g\neq0$.' }
+      - { value: 25, feedback: 'That is $g_{22}$ itself. The formula needs its derivative $\partial_r(r^2) = 2r$.' }
+    hint: With all $\Gamma = 0$, only $\partial_1 g_{22} = \partial_r(r^2)$ remains.
+    explanation: |
+      $(\nabla^{\mathrm{P}}_{\partial y_1}g)_{22} = 2r = 10\neq0$. $\nabla^{\mathrm{P}}$ is **not** metric compatible, which is why the widget's vector stretched: $\nabla^{\mathrm{P}}$ calls $\partial y_2$ constant, and $g(\partial y_2,\partial y_2) = r^2$ is not.
+
+  - type: text
+    id: lc-compatible
+    title: The Christoffel symbols are compatible
+    body: |
+      Is $\nabla^{\mathrm{LC}}$ compatible for **every** metric? Use the lowered coefficients of the previous lesson,
+      $$\Gamma_{mij} := \tfrac12(\partial_i g_{mj} + \partial_j g_{mi} - \partial_m g_{ij}),$$
+      with $\Gamma^k_{ij} = (g^{-1})^{km}\Gamma_{mij}$. Lowering back with $g$, using $g_{mj}(g^{-1})^{mn} = \delta^n_j$ (recall $g$ and $g^{-1}$ are symmetric):
+      $$\Gamma^m_{ik}\,g_{mj} = \Gamma_{jik}$$
+      $$\Gamma^m_{jk}\,g_{im} = \Gamma_{ijk}$$
+      So for $\nabla^{\mathrm{LC}}$ the compatibility condition reads
+      $$\partial_k g_{ij} = \Gamma_{jik} + \Gamma_{ijk}.$$
+
+  - type: mcq
+    id: lc-sum
+    title: Add the two lowered symbols
+    prompt: |
+      For a metric $g$ in a chart, the lowered Christoffel symbols are
+      $$\Gamma_{mij} := \tfrac12(\partial_i g_{mj} + \partial_j g_{mi} - \partial_m g_{ij}).$$
+      What is $\Gamma_{jik} + \Gamma_{ijk}$?
+    options:
+      - text: '$\partial_k g_{ij}$'
+        correct: true
+      - text: '$0$'
+        feedback: |
+          Two terms do cancel, $\tfrac12\partial_i g_{jk}$ against $-\tfrac12\partial_i g_{jk}$ and likewise for $\partial_j g_{ik}$, but the remaining two are equal and **add**: $\tfrac12\partial_k g_{ji} + \tfrac12\partial_k g_{ij} = \partial_k g_{ij}$.
+      - text: '$2\,\partial_k g_{ij}$'
+        feedback: |
+          Count the factor $\tfrac12$ in front of each symbol: the two surviving terms are $\tfrac12\partial_k g_{ji}$ and $\tfrac12\partial_k g_{ij}$, which sum to $\partial_k g_{ij}$, not $2\,\partial_k g_{ij}$.
+      - text: '$\partial_i g_{jk} + \partial_j g_{ik}$'
+        feedback: |
+          These are the terms that cancel: $\Gamma_{jik}$ contains $+\tfrac12\partial_i g_{jk}$ and $-\tfrac12\partial_j g_{ik}$, while $\Gamma_{ijk}$ contains $+\tfrac12\partial_j g_{ik}$ and $-\tfrac12\partial_i g_{jk}$.
+    explanation: |
+      $$\begin{aligned}\Gamma_{jik} &= \tfrac12(\partial_i g_{jk} + \partial_k g_{ji} - \partial_j g_{ik})\\ \Gamma_{ijk} &= \tfrac12(\partial_j g_{ik} + \partial_k g_{ij} - \partial_i g_{jk})\end{aligned}$$
+      The sum is $\partial_k g_{ij}$, using $g_{ji} = g_{ij}$. So $\nabla^{\mathrm{LC}}$ is metric compatible, for every metric and in every chart, straight from its definition.
+
+  - type: numeric
+    id: lc-polar
+    title: A lowered symbol in polar
+    prompt: |
+      Euclidean plane, polar chart: $g_{11} = 1$, $g_{22} = r^2$, $g_{12} = 0$. Compute the lowered Christoffel symbol
+      $$\Gamma_{221} = \tfrac12(\partial_2 g_{21} + \partial_1 g_{22} - \partial_2 g_{21})$$
+      at $r = 5$, and check that $\Gamma_{221} + \Gamma_{221} = \partial_1 g_{22}$.
+    answer: 5
+    answerText: '5'
+    wrong:
+      - { value: 10, feedback: 'That is $\partial_1 g_{22} = 2r$ without the $\tfrac12$. The compatibility check needs **two** copies of $\Gamma_{221}$ to give $10$.' }
+      - { value: 0.2, feedback: 'That is the raised symbol $\Gamma^2_{21} = (g^{-1})^{22}\Gamma_{221} = \tfrac{1}{r^2}\cdot r$. The lowered one keeps the factor $g_{22}$: $\Gamma_{221} = r$.' }
+    hint: The two $\partial_2 g_{21}$ terms cancel (and vanish anyway); $\partial_1 g_{22} = \partial_r(r^2) = 2r$.
+    explanation: |
+      $\Gamma_{221} = \tfrac12\cdot2r = r = 5$, and $5 + 5 = 10 = \partial_1 g_{22}$. Raising, $\Gamma^2_{21} = \tfrac1{25}\cdot5 = 0.2 = \tfrac1r$, the $\nabla^{\mathrm{E}}$ coefficient.
+
+  - type: text
+    id: torsion-free
+    title: The second property, torsion free
+    body: |
+      Recall the torsion tensor of a connection (Level 6), in components
+      $$\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}.$$
+      It vanishes exactly when the coefficients are symmetric in their lower indices. The Christoffel symbols are symmetric, so $\nabla^{\mathrm{LC}}$ is **torsion free**.
+
+      Score the plane's three connections:
+      - $\nabla^{\mathrm{E}}$: compatible, torsion free;
+      - $\nabla^{\mathrm{P}}$: torsion free (all coefficients $0$), **not** compatible;
+      - $\nabla^{\mathrm{W}}$: to be scored below.
+
+      **Levi-Civita theorem.** On a manifold with metric $g$ (any signature), $\nabla^{\mathrm{LC}}$ is the **only** connection that is both torsion free and metric compatible.
+
+      Uniqueness is the heart of it: assume a connection $\nabla$ has both properties, with coefficients $\Gamma^k_{ji}$ in a chart, and show they must be the Christoffel symbols.
+
+  - type: build
+    id: cyclic
+    title: The cyclic trick
+    prompt: |
+      A connection with coefficients $\Gamma^m_{ij} = \Gamma^m_{ji}$ (torsion free) is metric compatible, so for every index order
+      $$\begin{aligned}\partial_k g_{ij} &= \Gamma^m_{ik}g_{mj} + \Gamma^m_{jk}g_{im}\\ \partial_i g_{jk} &= \Gamma^m_{ji}g_{mk} + \Gamma^m_{ki}g_{jm}\\ \partial_j g_{ki} &= \Gamma^m_{kj}g_{mi} + \Gamma^m_{ij}g_{km}\end{aligned}$$
+      Add the second and third lines and subtract the first. On the right, the symmetry of $\Gamma$ and of $g$ cancels four terms and leaves $2\,g_{km}\Gamma^m_{ij}$. Build the left side.
+    prefix: '2\,g_{km}\Gamma^m_{ij} ='
+    tiles: ['\partial_i g_{jk}', '+\partial_j g_{ki}', '-\partial_k g_{ij}', '+\partial_k g_{ij}', '-\partial_j g_{ki}']
+    answers:
+      - ['\partial_i g_{jk}', '+\partial_j g_{ki}', '-\partial_k g_{ij}']
+      - ['\partial_i g_{jk}', '-\partial_k g_{ij}', '+\partial_j g_{ki}']
+    wrong:
+      - { answer: ['\partial_i g_{jk}', '+\partial_j g_{ki}', '+\partial_k g_{ij}'], feedback: 'Adding all three lines does not help: then no terms cancel on the right. The first line is **subtracted**, which is what makes $\Gamma^m_{ki}g_{jm} - \Gamma^m_{ik}g_{mj}$ and $\Gamma^m_{kj}g_{mi} - \Gamma^m_{jk}g_{im}$ vanish.' }
+      - { answer: ['\partial_i g_{jk}', '-\partial_j g_{ki}', '-\partial_k g_{ij}'], feedback: 'The third line is added, not subtracted: "add the second and third, subtract the first".' }
+    hint: Start with the left side of the second line, $\partial_i g_{jk}$; the signs follow the instruction.
+    explanation: |
+      $$\begin{aligned}&\partial_i g_{jk} + \partial_j g_{ki} - \partial_k g_{ij}\\ &= \Gamma^m_{ji}g_{mk} + \Gamma^m_{ij}g_{km}\\ &\quad + (\Gamma^m_{ki}g_{jm} - \Gamma^m_{ik}g_{mj})\\ &\quad + (\Gamma^m_{kj}g_{mi} - \Gamma^m_{jk}g_{im})\end{aligned}$$
+      Both brackets vanish ($\Gamma^m_{ki} = \Gamma^m_{ik}$, $g_{jm} = g_{mj}$), and $\Gamma^m_{ji}g_{mk} = \Gamma^m_{ij}g_{km}$. So the right side is $2\,g_{km}\Gamma^m_{ij}$.
+
+  - type: mcq
+    id: solve
+    title: Solve for the coefficients
+    prompt: |
+      A torsion-free, metric-compatible connection satisfies, in a chart,
+      $$2\,g_{km}\Gamma^m_{ij} = \partial_i g_{jk} + \partial_j g_{ki} - \partial_k g_{ij}.$$
+      How do you isolate $\Gamma^l_{ij}$?
+    options:
+      - text: 'Multiply by $\tfrac12(g^{-1})^{lk}$ and sum over $k$, using $(g^{-1})^{lk}g_{km} = \delta^l_m$'
+        correct: true
+      - text: 'Divide by $2\,g_{km}$'
+        feedback: |
+          $g_{km}\Gamma^m_{ij}$ is a **sum** over $m$, not a product of two numbers, so there is nothing to divide by; and $g_{km}$ may vanish (e.g. off the diagonal). Undoing a sum with $g$ needs the inverse matrix: multiply by $(g^{-1})^{lk}$ and sum over $k$.
+      - text: 'Multiply by $\tfrac12 g^{lk}$, the components of $g$ with raised indices, obtained by renaming'
+        feedback: |
+          Indices are not raised by renaming. The numbers needed are the entries of the **inverse** matrix, $(g^{-1})^{lk}$, defined by $(g^{-1})^{lk}g_{km} = \delta^l_m$; that is what "$g^{lk}$" means when it is used as shorthand.
+      - text: 'It cannot be isolated: the equation only fixes the symmetric part of $\Gamma$'
+        feedback: |
+          Torsion freeness already made $\Gamma$ symmetric, so there is no other part. And $g$ is invertible (its musical map is bijective), so the sum over $m$ can be undone.
+    explanation: |
+      $$\begin{aligned}&\Gamma^l_{ij}\\ &= \tfrac12(g^{-1})^{lk}\big(\partial_i g_{jk} + \partial_j g_{ki} - \partial_k g_{ij}\big),\end{aligned}$$
+      the Christoffel symbol. The derivation used nothing but the two properties, so **any** torsion-free, metric-compatible connection has the Christoffel symbols as its coefficients in every chart: it is $\nabla^{\mathrm{LC}}$.
+
+  - type: order
+    id: proof-order
+    title: The uniqueness proof
+    prompt: Put the proof that a torsion-free, metric-compatible connection $\nabla$ is the Levi-Civita connection in order.
+    steps:
+      - 'Fix a chart and let $\Gamma^k_{ji}$ be the coefficients of $\nabla$ there'
+      - 'Translate both properties: $\Gamma^m_{ij} = \Gamma^m_{ji}$ and $\partial_k g_{ij} = \Gamma^m_{ik}g_{mj} + \Gamma^m_{jk}g_{im}$'
+      - 'Write the compatibility relation for the index orders $(k,i,j)$, $(i,j,k)$, $(j,k,i)$'
+      - 'Add the last two relations and subtract the first'
+      - 'Symmetry of $\Gamma$ and $g$ cancels four terms and leaves $2\,g_{km}\Gamma^m_{ij}$ on the right'
+      - 'Multiply by $\tfrac12(g^{-1})^{lk}$: $\Gamma^l_{ij}$ equals the Christoffel symbol'
+      - 'The chart was arbitrary, so $\nabla = \nabla^{\mathrm{LC}}$'
+    hint: Translate first, combine second, solve last.
+    explanation: |
+      The cyclic sum is the key step: compatibility alone gives the $\partial g$'s in terms of $\Gamma$'s, and symmetry lets three such relations be solved for a single $\Gamma$. The same steps, run with symbols you invent, would recover the Christoffel formula even if you had never seen it.
+
+  - type: text
+    id: existence
+    title: Uniqueness pays the debt
+    body: |
+      Back to the opening worry: do the Christoffel symbols of two overlapping charts $\mathscr{X}$ and $\mathscr{Y}$ obey the transformation law?
+
+      On $\mathcal{U}$, the Christoffel symbols of $\mathscr{X}$ define a connection $\nabla^\mathscr{X}$ (any smooth coefficients do, in one chart). It is torsion free and metric compatible, by the computations above. Likewise $\nabla^\mathscr{Y}$ on $\mathcal{V}$.
+
+      On the overlap $\mathcal{U}\cap\mathcal{V}$, both are torsion free and metric compatible. The uniqueness proof works inside any one chart, so it applies there: $\nabla^\mathscr{X} = \nabla^\mathscr{Y}$ on $\mathcal{U}\cap\mathcal{V}$. Two equal connections have coefficients related by the transformation law. So the law holds **automatically**, and the pieces assemble into one connection $\nabla^{\mathrm{LC}}$ on the whole manifold.
+
+      No Jacobians, no second derivatives: a uniqueness theorem turned a long computation into two lines.
+
+  - type: mcq
+    id: existence-check
+    title: Why do the charts agree?
+    prompt: |
+      On a manifold with metric $g$, two charts $\mathscr{X}$ and $\mathscr{Y}$ overlap on $\mathcal{U}\cap\mathcal{V}$. In each chart, the Christoffel symbols of $g$ define a connection on that chart's domain. Why do the two connections agree on $\mathcal{U}\cap\mathcal{V}$?
+    options:
+      - text: 'Both are torsion free and metric compatible there, and only one connection on $\mathcal{U}\cap\mathcal{V}$ has both properties'
+        correct: true
+      - text: 'Because the Christoffel symbols are tensor components, so they transform correctly'
+        feedback: |
+          They are not tensor components: in the Euclidean plane they all vanish in the cartesian chart while $\Gamma^1_{22} = -r$ in the polar chart. They obey the (inhomogeneous) law of connection coefficients, and the point is to show that without computing it.
+      - text: 'Because both charts give the same numbers for the Christoffel symbols'
+        feedback: |
+          They do not: cartesian and polar Christoffel symbols of the Euclidean plane are $0$ and $-r$, $\tfrac1r$. Different numbers can describe the same connection, exactly as different components describe the same vector.
+      - text: 'They need not agree; the Levi-Civita connection is only defined chart by chart'
+        feedback: |
+          Then the autoparallels would depend on the chart used to compute them, while geodesics do not (they come from the length). Uniqueness rules this out: on the overlap both connections are torsion free and metric compatible, hence equal.
+    explanation: |
+      Uniqueness is a statement about any open set with a chart, in particular $\mathcal{U}\cap\mathcal{V}$. So the existence of $\nabla^{\mathrm{LC}}$ on the whole manifold follows from uniqueness plus the two checks (symmetric coefficients, $\partial_k g_{ij} = \Gamma_{jik} + \Gamma_{ijk}$).
+
+  - type: numeric
+    id: trap-w-compatible
+    tag: Trap
+    title: Score the frame connection
+    prompt: |
+      Euclidean plane, polar chart: $g_{11} = 1$, $g_{22} = r^2$, $g_{12} = 0$. The connection $\nabla^{\mathrm{W}}$ (unit radial and angular fields parallel) has a single nonzero polar coefficient, $\Gamma^2_{21} = \tfrac1r$ (so $\nabla_{\partial y_1}\partial y_2 = \tfrac1r\partial y_2$), while $\Gamma^2_{12} = 0$. Compute at $r = 5$
+      $$\begin{aligned}&(\nabla^{\mathrm{W}}_{\partial y_1}g)_{22}\\ &= \partial_1 g_{22} - \Gamma^m_{21}\,g_{m2} - \Gamma^m_{21}\,g_{2m}.\end{aligned}$$
+    answer: 0
+    answerText: '0'
+    wrong:
+      - { value: 10, feedback: 'That uses $\Gamma^2_{12} = 0$ in place of $\Gamma^2_{21}$. The direction is $\partial y_1$, so it sits in the **last** lower index: the coefficients needed are $\Gamma^m_{21}$, and $\Gamma^2_{21} = \tfrac15$.' }
+      - { value: 5, feedback: 'Two $\Gamma$ terms, one for each lower index of $g$: $10 - 5 - 5$.' }
+    hint: Only $m = 2$ contributes; $\partial_1 g_{22} = 2r$ and $\Gamma^2_{21}g_{22} = r$.
+    explanation: |
+      $10 - 5 - 5 = 0$. The other components vanish too (every remaining $\Gamma$ is $0$ and $g_{12} = 0$), so $\nabla^{\mathrm{W}}$ **is** metric compatible. No surprise: its parallel frame $e_1, e_2$ is orthonormal, so transported vectors keep their lengths, as the widget showed on the vertical line.
+
+  - type: mcq
+    id: trap-w-lc
+    tag: Trap
+    title: Compatible, so Levi-Civita?
+    prompt: |
+      On the Euclidean plane minus the origin, $\nabla^{\mathrm{W}}$ declares the unit radial and angular fields $e_1, e_2$ parallel. It is metric compatible for the Euclidean metric $g$. Its polar coefficients are $\Gamma^2_{21} = \tfrac1r$, $\Gamma^2_{12} = 0$, all others $0$. Is $\nabla^{\mathrm{W}}$ the Levi-Civita connection of $g$?
+    options:
+      - text: 'No: its torsion $\mathtt{T}^2_{12} = \Gamma^2_{21} - \Gamma^2_{12} = \tfrac1r$ is nonzero'
+        correct: true
+      - text: 'Yes: metric compatibility is what defines the Levi-Civita connection'
+        feedback: |
+          Compatibility is half the characterization. Many connections are compatible (any one whose parallel frames are orthonormal); the theorem needs torsion free **as well**, and $\nabla^{\mathrm{W}}$ fails it: $\Gamma^2_{21}\neq\Gamma^2_{12}$.
+      - text: 'Yes: it has the same autoparallels as the Euclidean connection'
+        feedback: |
+          It does not: its straightest curves are rays, circles about the origin and logarithmic spirals, not straight lines. And even equal autoparallels would not make it Levi-Civita, as the next card shows.
+      - text: 'No: it is not metric compatible after all'
+        feedback: |
+          It is: $(\nabla^{\mathrm{W}}_{\partial y_1}g)_{22} = 2r - r - r = 0$ and the other components vanish. A vector transported by $\nabla^{\mathrm{W}}$ turns but keeps its length. The failure is elsewhere.
+    explanation: |
+      $\nabla^{\mathrm{W}}$ and $\nabla^{\mathrm{E}}$ are both compatible; only $\nabla^{\mathrm{E}}$ is torsion free, and indeed the Christoffel symbols are $\nabla^{\mathrm{E}}$'s. The score: $\nabla^{\mathrm{P}}$ fails compatibility, $\nabla^{\mathrm{W}}$ fails torsion freeness, $\nabla^{\mathrm{E}} = \nabla^{\mathrm{LC}}$ passes both.
+
+  - type: mcq
+    id: trap-antisym
+    tag: Trap
+    title: Same straightest curves, same connection?
+    prompt: |
+      On the plane, a connection $\nabla$ has cartesian coefficients $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$, all others $0$. In its autoparallel equation
+      $$\ddot\gamma^k + \Gamma^k_{ji}\,\dot\gamma^i\dot\gamma^j = 0$$
+      the two terms cancel, $(\Gamma^1_{12} + \Gamma^1_{21})\dot\gamma^1\dot\gamma^2 = 0$, so its autoparallelly transported curves are exactly the straight lines at constant speed, the geodesics of the Euclidean metric. Is $\nabla$ the Levi-Civita connection of the Euclidean metric?
+    options:
+      - text: 'No: it has torsion $\mathtt{T}^1_{12} = -2$, and only the torsion-free part is fixed by the curves'
+        correct: true
+      - text: 'Yes: its autoparallels are the geodesics, and that is what the Levi-Civita connection was built for'
+        feedback: |
+          The autoparallel equation contains $\Gamma^k_{ji}\dot\gamma^i\dot\gamma^j$, symmetric in $i, j$, so it sees only the symmetric part of the coefficients. Adding any antisymmetric part keeps every autoparallel. The Levi-Civita connection is the one with the geodesics as autoparallels **and** no torsion.
+      - text: 'Yes, because in the cartesian chart its coefficients sum to zero'
+        feedback: |
+          Coefficients summing to zero in pairs is not coefficients being zero. Transport tells them apart: carrying $(0,1)$ along $(\lambda,0)$ with this $\nabla$ gives $(\lambda,1)$, while the Euclidean connection keeps $(0,1)$.
+      - text: 'It cannot be decided without a second chart'
+        feedback: |
+          One chart suffices. The torsion is a tensor: $\mathtt{T}^1_{12} = \Gamma^1_{21} - \Gamma^1_{12} = -2\neq0$ in this chart means $\mathtt{T}\neq0$, in every chart.
+    explanation: |
+      $\mathtt{T}^1_{12} = \Gamma^1_{21} - \Gamma^1_{12} = -1 - 1 = -2$. It is not even compatible: $(\nabla_{\partial x_2}g)_{11} = -\Gamma^1_{12} - \Gamma^1_{12} = -2$. The autoparallels fix only the symmetric part of a connection; among **torsion-free** connections they fix it completely.
+
+  - type: mcq
+    id: how-many
+    title: The opening question, answered
+    prompt: |
+      On a manifold with metric $g$, how many connections have as autoparallelly transported curves exactly the constant-speed geodesics of $g$?
+    options:
+      - text: 'Infinitely many, but exactly one of them is torsion free: the Levi-Civita connection'
+        correct: true
+      - text: 'Exactly one, the Levi-Civita connection'
+        feedback: |
+          Add to the Christoffel symbols any coefficients antisymmetric in the lower indices (in the plane, $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$): the term $\Gamma^k_{ji}\dot\gamma^i\dot\gamma^j$ does not change, so neither do the autoparallels. Uniqueness needs the torsion to vanish.
+      - text: 'None in general; only flat metrics have one'
+        feedback: |
+          The Levi-Civita connection exists for every metric, flat or not, and its autoparallel equation is the geodesic equation term by term. Existence came from uniqueness: the Christoffel symbols of overlapping charts define the same connection.
+      - text: 'One for each chart, since the Christoffel symbols depend on the chart'
+        feedback: |
+          The numbers depend on the chart, the connection does not: on an overlap, the connections built from two charts are both torsion free and compatible, hence equal.
+    explanation: |
+      The curves fix $\Gamma^k_{ij} + \Gamma^k_{ji}$, so the symmetric part. Torsion free fixes the rest: $\nabla^{\mathrm{LC}}$. Notice that compatibility then comes for free; equivalently, compatibility plus torsion free single out the same connection without mentioning curves at all.
+
+  - type: mcq
+    id: trap-tensor
+    tag: Trap
+    title: Zero symbols, zero derivative?
+    prompt: |
+      In the cartesian chart of the Euclidean plane, every Christoffel symbol of $g = dx^1\otimes dx^1 + dx^2\otimes dx^2$ vanishes. Which statement follows?
+    options:
+      - text: 'In that chart, $(\nabla^{\mathrm{LC}}_\mathcal{X}\mathcal{Y})^k$ is the plain derivative $\mathcal{X}\lfloor\tilde x^k\rceil$ of the cartesian components $\tilde x^k$ of $\mathcal{Y}$'
+        correct: true
+      - text: 'The Christoffel symbols vanish in every chart of the plane'
+        feedback: |
+          They are not tensor components, so vanishing in one chart says nothing about another: in the polar chart $\Gamma^1_{22} = -r$ and $\Gamma^2_{12} = \tfrac1r$, because the polar basis turns and stretches.
+      - text: '$\nabla^{\mathrm{LC}}_\mathcal{X}\mathcal{Y} = 0$ for all vector fields $\mathcal{X},\mathcal{Y}$'
+        feedback: |
+          The component formula is $(\nabla_\mathcal{X}\mathcal{Y})^k = \mathcal{X}\lfloor\tilde x^k\rceil + \Gamma^k_{ji}\tilde x^jx^i$. Zero $\Gamma$'s remove only the second term; for the swirl $\mathcal{Y} = -b\,\partial x_1 + a\,\partial x_2$, $\nabla_{\partial x_2}\mathcal{Y} = -\partial x_1\neq0$.
+      - text: 'Christoffel symbols vanish only for the Euclidean plane, in any chart'
+        feedback: |
+          They depend on the chart: polar components of the same Euclidean metric give nonzero symbols. Whether **some** chart makes them vanish around a point is a property of the metric, tied to its curvature (next lesson).
+    explanation: |
+      With all $\Gamma = 0$ in cartesian components, $\nabla^{\mathrm{LC}}$ differentiates cartesian components directly: it is $\nabla^{\mathrm{E}}$. In polar components the same connection needs the $\Gamma$ terms.
+
+  - type: text
+    id: transport-keeps
+    title: Transport keeps the metric
+    body: |
+      Take fields $\mathcal{X}_\gamma$, $\mathcal{Y}_\gamma$ along a curve $\gamma$, with components $x^i$, $y^j$, and recall the chart formula (C) of Level 6, $(\nabla_{v_\gamma}\mathcal{X}_\gamma)^i = \dot x^i + \Gamma^i_{mk}x^m\dot\gamma^k$. Differentiate $g(\mathcal{X}_\gamma,\mathcal{Y}_\gamma) = g_{ij}x^iy^j$ with the product and chain rules:
+      $$\begin{aligned}&\tfrac{d}{d\lambda}(g_{ij}x^iy^j)\\ &= (\partial_kg_{ij})\dot\gamma^kx^iy^j + g_{ij}\dot x^iy^j + g_{ij}x^i\dot y^j.\end{aligned}$$
+      Replace $\dot x^i = (\nabla_{v_\gamma}\mathcal{X}_\gamma)^i - \Gamma^i_{mk}x^m\dot\gamma^k$, the same for $\dot y^j$, and rename summed indices. The $\Gamma$ terms join $\partial_kg_{ij}$ into exactly the compatibility expression:
+      $$\begin{aligned}&\tfrac{d}{d\lambda}g(\mathcal{X}_\gamma,\mathcal{Y}_\gamma)\\ &= \dot\gamma^kx^iy^j\,(\nabla_{\partial x_k}g)_{ij}\\ &\quad + g(\nabla_{v_\gamma}\mathcal{X}_\gamma,\mathcal{Y}_\gamma) + g(\mathcal{X}_\gamma,\nabla_{v_\gamma}\mathcal{Y}_\gamma).\end{aligned}$$
+      For a metric-compatible connection, such as $\nabla^{\mathrm{LC}}$, the first line on the right is $0$.
+
+  - type: mcq
+    id: transport-consequence
+    title: What transport preserves
+    prompt: |
+      For a metric-compatible connection and fields $\mathcal{X}_\gamma,\mathcal{Y}_\gamma$ along a curve $\gamma$,
+      $$\begin{aligned}&\tfrac{d}{d\lambda}g(\mathcal{X}_\gamma,\mathcal{Y}_\gamma)\\ &= g(\nabla_{v_\gamma}\mathcal{X}_\gamma,\mathcal{Y}_\gamma) + g(\mathcal{X}_\gamma,\nabla_{v_\gamma}\mathcal{Y}_\gamma).\end{aligned}$$
+      Both fields are parallelly transported, $\nabla_{v_\gamma}\mathcal{X}_\gamma = \nabla_{v_\gamma}\mathcal{Y}_\gamma = 0$. Which of these stay constant along $\gamma$?
+    multiple: true
+    options:
+      - text: '$g(\mathcal{X}_\gamma,\mathcal{Y}_\gamma)$'
+        correct: true
+      - text: '$g(\mathcal{X}_\gamma,\mathcal{X}_\gamma)$'
+        correct: true
+      - text: 'The components $x^i$ of $\mathcal{X}_\gamma$ in a chart'
+        feedback: |
+          Components change whenever the basis does: under $\nabla^{\mathrm{E}}$ the polar components of a transported vector change around a circle, while its length stays fixed. Only chart-free quantities built with $g$ are protected.
+    explanation: |
+      Both terms on the right vanish, so every inner product of transported vectors is constant, in particular each length (take $\mathcal{Y}_\gamma = \mathcal{X}_\gamma$) and, in a Riemannian metric, each angle. Transport carries an orthonormal basis to an orthonormal basis.
+
+  - type: numeric
+    id: speed-p
+    tag: Trap
+    title: Speed along a polar straight curve
+    prompt: |
+      Euclidean plane, polar chart, metric components $\mathrm{diag}(1,r^2)$. The connection $\nabla^{\mathrm{P}}$ has all polar coefficients $0$, so its autoparallel equation is $\ddot r = 0$, $\ddot\theta = 0$; the curve $r = 1 + \lambda$, $\theta = \lambda$ ($0\le\lambda<\pi$) solves it. At $\lambda = 0$, $g(v_\gamma,v_\gamma) = 1 + 1 = 2$. What is $g(v_\gamma,v_\gamma)$ at $\lambda = 1$?
+    answer: 5
+    answerText: '5'
+    wrong:
+      - { value: 2, feedback: 'Constant $g(v_\gamma,v_\gamma)$ along autoparallelly transported curves needs a metric-compatible connection, and $\nabla^{\mathrm{P}}$ is not. Compute: $\dot r^2 + r^2\dot\theta^2$ with $r = 2$.' }
+      - { value: 3, feedback: 'The angular term carries the metric component $g_{22} = r^2 = 4$, not $r = 2$: $1 + 4\cdot1$.' }
+    hint: $g(v_\gamma,v_\gamma) = \dot r^2 + r^2\dot\theta^2$ with $\dot r = \dot\theta = 1$.
+    explanation: |
+      $1 + 2^2\cdot1 = 5$, up from $2$: this "straightest" curve of $\nabla^{\mathrm{P}}$ (a spiral) speeds up. For $\nabla^{\mathrm{LC}}$ that cannot happen: with $\mathcal{X}_\gamma = \mathcal{Y}_\gamma = v_\gamma$ and $\nabla_{v_\gamma}v_\gamma = 0$, $g(v_\gamma,v_\gamma)$ is constant.
+
+  - type: text
+    id: constant-speed
+    title: Geodesics and autoparallels, reconciled
+    body: |
+      Take $\nabla = \nabla^{\mathrm{LC}}$ and an autoparallelly transported curve, $\nabla_{v_\gamma}v_\gamma = 0$. Setting $\mathcal{X}_\gamma = \mathcal{Y}_\gamma = v_\gamma$:
+      $$\tfrac{d}{d\lambda}g(v_\gamma,v_\gamma) = 0.$$
+      So $g(v_\gamma,v_\gamma)$ is constant, hence the sign $\text{ᛇ}_\gamma$ and the speed $s_\gamma$ are constant. Recall that (G) was derived **assuming** constant speed; now any solution of (G) has it automatically, so nothing was lost.
+
+      Two cases:
+      - $\text{ᛇ}_\gamma\neq0$: the curve is a constant-speed geodesic, a curve of stationary length. Conversely every constant-speed geodesic solves (G).
+      - $\text{ᛇ}_\gamma = 0$ (possible only for an indefinite metric): the length is $0$ and the variational definition does not apply. These solutions are called **null geodesics**; in spacetime they will be light rays.
+
+      For a general connection the two notions differ: **autoparallels depend on $\nabla$, geodesics only on $g$.**
+
+  - type: mcq
+    id: null-geodesic
+    title: A light ray stays a light ray
+    prompt: |
+      Minkowski plane, points $(t,a)$, metric $\eta = -dx^1\otimes dx^1 + dx^2\otimes dx^2$ in the chart $\mathscr{X} = (t,a)$, where all Christoffel symbols vanish. A curve solves $\ddot\gamma^k + \Gamma^k_{ij}\dot\gamma^i\dot\gamma^j = 0$ and starts with the lightlike velocity $\partial x_1 + \partial x_2$. What can you say about its velocity later on?
+    options:
+      - text: 'It stays lightlike: $\eta(v_\gamma,v_\gamma) = 0$ for all $\lambda$, a null geodesic'
+        correct: true
+      - text: 'It becomes timelike: a light ray slows down'
+        feedback: |
+          With all Christoffel symbols $0$ the equation is $\ddot\gamma^k = 0$, so the velocity stays $\partial x_1 + \partial x_2$. In general, $\eta(v_\gamma,v_\gamma)$ is constant along solutions because the Levi-Civita connection is metric compatible.
+      - text: 'Nothing: the geodesic equation was derived for nonzero sign, so it says nothing here'
+        feedback: |
+          The derivation from the length needed $\text{ᛇ}_\gamma\neq0$, but the equation itself, as the autoparallel equation of $\nabla^{\mathrm{LC}}$, makes sense for any starting velocity. Its solutions with $\text{ᛇ}_\gamma = 0$ are the null geodesics.
+      - text: 'Its length grows linearly in $\lambda$'
+        feedback: |
+          The length is $\int\sqrt{\text{ᛇ}_\gamma\,\eta(v_\gamma,v_\gamma)}\,d\lambda$ with $\eta(v_\gamma,v_\gamma) = -1 + 1 = 0$ all along: the length is $0$, which is why stationary length could not define these curves.
+    explanation: |
+      Solutions are $(t_0 + \lambda, a_0 + \lambda)$, the light ray, with $\eta(v_\gamma,v_\gamma) = -1 + 1 = 0$ throughout. Compatibility guarantees the same in any chart and for any metric: the sign of the velocity never changes along an autoparallel of $\nabla^{\mathrm{LC}}$.
+
+  - type: text
+    id: summary
+    body: |
+      **Next: "Curvature of the Metric".** A metric now comes with its own connection, so it has a curvature: $\mathrm{Riem}$ of $\nabla^{\mathrm{LC}}$, computed from $g$ alone. The polar chart has nonzero Christoffel symbols, yet the plane is flat; the sphere has them too, and is not. Which part of $\partial g$ and $\partial^2 g$ tells a curved metric from a flat one written in strange coordinates?
