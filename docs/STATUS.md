@@ -1,12 +1,13 @@
 # Status
 
 Read only **Current** at the start of a session (`sed -n '/^## Current/,/^## Log/p' docs/STATUS.md`).
-- **Intuition lesson `ch06-intuition-curvature`** (before `ch06-traps`): Riem^i_{jkm} slots (output i, carried j, loop directions k,m; anchor: first term ∂_kΓ^i_{jm}), antisymmetric pair = the two direction slots (T: j,k; Riem: k,m), commutator [X,Y]^i = X⌊x̃^i⌉ − Y⌊x^i⌉, T^i_{jk} = Γ^i_{kj} − Γ^i_{jk} (direction is the LAST lower index of Γ), Ric_ab = Riem^m_{amb} (output contracted with the first loop direction).
 At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
 ## Current (2026-10-21, Chapter 10 started: widgets `light-cones`, `worldline-clock`, `observer-frame`, `ch10-spacetime`, `ch10-worldlines`, `ch10-observers`; widget `area-cell` built and used in `ch08-metric-volume`; next: `ch10-lorentz`)
+- **Intuition lesson `ch08-intuition-metric`** (before `ch08-traps`): lowering `♭(X)_i = x^j g_{ji}` (g has two lower slots, eats an upper index), raising `♭⁻¹(𝗑)^i = 𝗑_j (g⁻¹)^{ji}` (book names, never `x_i`), g⁻¹ is the matrix inverse (not entrywise reciprocals), scaling test g→λ²g (♭ ×λ², ♭⁻¹ and g⁻¹ ×λ⁻², √|det g| ×λ^d), density between charts √|det g_Y| = |det ᛞ_UV| √|det g_X| (ᛞ_UV = ∂X/∂Y, lower indices follow old-in-terms-of-new; polar check r), `area-cell` sheared widget at the start; Lorentzian null vector card.
+- **Intuition lesson `ch06-intuition-curvature`** (before `ch06-traps`): Riem^i_{jkm} slots (output i, carried j, loop directions k,m; anchor: first term ∂_kΓ^i_{jm}), antisymmetric pair = the two direction slots (T: j,k; Riem: k,m), commutator [X,Y]^i = X⌊x̃^i⌉ − Y⌊x^i⌉, T^i_{jk} = Γ^i_{kj} − Γ^i_{jk} (direction is the LAST lower index of Γ), Ric_ab = Riem^m_{amb} (output contracted with the first loop direction).
 - **Intuition lesson `ch05-intuition-lie`** (before `ch05-traps`): L_X on function, vector (= commutator), covector, (1,1), (0,2); rule: transport term x^m∂_m plus one term per index, **−** per upper and **+** per lower (opposite to Γ), derivative index on the top of x (upper) or on ∂ (lower). Components of X are x^i, of Y x̃^i, covector A with a_k; ∂_i := ∂/∂X^i on component functions. The book has no Lie derivative section (only the commutator, Ch. 6), so the lesson defines it itself.
 
 - **More intuition lessons:** `ch04-intuition-jacobian` (after `ch04-cotangent-basis`; chain-rule mnemonic, scaling and cancellation tests, polar–cartesian numbers at p=(0,2)) and `ch06-intuition-christoffel` (after `ch06-christoffel`; reading Γ^i_{jk}, +Γ upper / −Γ lower, transformation law = tensor part + extra term, 1D numerics with x=y²). Use Einstein summation in both.
@@ -1282,3 +1283,7 @@ long box titles.
 ### 2026-10-21 — intuition lesson `ch05-intuition-lie` (18 cards)
 
 Self-contained (book has no Lie derivative section; defines L_X f = X⌊f⌉, L_X Y = [X,Y], covector via Leibniz, derived by an order card). Build cards: commutator, covector, (1,1), (0,2); numerics give data only (1D X = x², Y = x∂_x, A = x dx at x=3 give −9, 27; shear X = y∂_1, A = dx; (1,1) → 54; g = δ → 8). Doubt: the task said "+ per upper, − per lower like Γ", but the true Lie-derivative signs are the reverse (− upper, + lower); taught the true ones and contrasted with Γ. Conventions fixed here: ∂_i acts on component functions; covector A with components a_k; −upper/+lower with the derivative index at the top of x (upper) or on ∂ (lower).
+
+### 2026-10-21 — intuition lesson `ch08-intuition-metric` (19 cards)
+
+Index placement of ♭ and ♭⁻¹ with the book's component names, matrix inverse of g, scaling test g → λ²g (incl. √|det g| ~ λ^d), density law between charts, area-cell sheared widget, null vector in diag(1,−1,−1,−1). Numeric cards give data, not the law. All numbers hand-checked (g = [[4,2],[2,2]], det 4, g⁻¹ = ¼[[2,−2],[−2,4]]). Conventions fixed here: lowering uses g (sum index adjacent), raising uses g⁻¹; ᛞ_UV = ∂X/∂Y with √|det g_Y| = |det ᛞ_UV|√|det g_X|; scaling factors λ², λ⁻², λ^d.

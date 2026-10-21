@@ -1,0 +1,292 @@
+id: ch08-intuition-metric
+title: "Intuition: Raising, Lowering and the Square Root of det g"
+kind: intuition
+own: |
+  - **Lowering** with $g$ (components $x^j$ of $\mathcal{X}$): the summed index sits next to $g$, one up and one down,
+    {{ $$\flat(\mathcal{X})_i = x^j\,g_{ji}$$ }}
+  - **Raising** with the inverse metric (components $\mathtt{x}_j$ of $\mathsf{X}$), the matrix inverse of $g$, not the entries' reciprocals:
+    {{ $$\flat^{-1}(\mathsf{X})^i = \mathtt{x}_j\,(g^{-1})^{ji}$$ }}
+    {{ $$g_{ij}\,(g^{-1})^{jk} = \delta_i^k$$ }}
+  - **Scaling test**, $g\to\lambda^2 g$ in dimension $d$: $\flat(\mathcal{X})_i$ grows by $\lambda^2$, $\flat^{-1}(\mathsf{X})^i$ shrinks by $\lambda^{-2}$, and
+    {{ $$\sqrt{|\det g|}\ \to\ \lambda^{d}\sqrt{|\det g|}$$ }}
+  - **Density between charts** ($\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ is the Jacobian $\partial\mathscr{X}/\partial\mathscr{Y}$, old chart in terms of new): $\det g$ picks up the determinant twice, so
+    {{ $$\sqrt{|\det g_\mathscr{Y}|} = \big|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}\big|\,\sqrt{|\det g_\mathscr{X}|}$$ }}
+
+cards:
+  - type: text
+    id: hook
+    title: Change the ruler, what changes?
+    body: |
+      Suppose a chart is re-calibrated so that every length doubles: the metric becomes $g\to 4g$ (lengths scale like $\sqrt g$). The components $x^i$ of a vector, and $\mathtt{x}_i$ of a covector, stay as they are. In a 2-dimensional chart ask four questions about this change:
+
+      1. the **lowered** components of the vector, the vector's partner covector;
+      2. the **raised** components of a covector, its partner vector;
+      3. the **inverse metric**;
+      4. the **density** $\sqrt{|\det g|}$, the factor that turns a coordinate cell into an area.
+
+      Which grow and which shrink? This lesson derives nothing. It gives a mnemonic for the index placement of $g$ and $g^{-1}$, then a scaling test that answers all four at a glance. Repeated indices are summed; $\flat$ ("flat") lowers an index, $\flat^{-1}$ raises it; $g^{-1}$ is the inverse metric, $(g^{-1})^{ij}$ its components.
+
+  - type: widget
+    id: cell
+    title: What the density measures
+    widget: area-cell
+    config:
+      chart: sheared
+      p: [0, 0]
+      d: 0.75
+    body: |
+      A sheared chart of the Euclidean plane: coordinates $(a,b)$ name the point $(2a+b,\,b)$. The gold cell is a coordinate square of side $\Delta$ (slider). The readout shows $g_{ij}$, $\det g$ and the true area of the cell.
+
+      Move the slider and compare the area with $\Delta^2$: the ratio is the same for every $\Delta$. That constant is the density, the first of our four quantities.
+
+  - type: numeric
+    id: cell-area
+    prompt: |
+      In a 2-dimensional chart the metric components are
+      $$g_{ij} = \begin{pmatrix}4&2\\2&2\end{pmatrix}.$$
+      A coordinate square of side $\Delta = 0.5$ is a parallelogram on the manifold (the chart is linear). Find its area.
+    answer: 0.5
+    tolerance: 0.001
+    wrong:
+      - { value: 1, feedback: 'That is $\det g\,\Delta^2 = 4\cdot 0.25$. The density is the **square root** of the determinant: $g$ already contains two lengths per direction, and an area has only one factor per direction.' }
+      - { value: 0.25, feedback: 'That is $\Delta^2$, the area in coordinate units. The metric converts it into true area through the density.' }
+      - { value: 0.707, feedback: 'That is $\sqrt{g_{aa}g_{bb}}\,\Delta^2$, the product of the two side lengths. The sides are not perpendicular ($g_{ab}\neq0$), so the area is smaller than that product.' }
+    hint: 'True area = (density) × (coordinate area), with the density a function of $\det g$.'
+    explanation: |
+      $$\begin{aligned}\det g &= 4\cdot 2 - 2\cdot 2 = 4,\\ \text{area} &= \sqrt{4}\cdot 0.5^2 = 0.5 .\end{aligned}$$
+
+  - type: text
+    id: index-rule
+    title: 'Index placement: g eats an upper index'
+    body: |
+      Given a vector $\mathcal{X}$ with components $x^j$ and a covector $\mathsf{X}$ with components $\mathtt{x}_j$, the two maps are
+      $$\begin{aligned}\flat(\mathcal{X})_i &= x^j\,g_{ji},\\ \flat^{-1}(\mathsf{X})^i &= \mathtt{x}_j\,(g^{-1})^{ji}.\end{aligned}$$
+      One picture decides which metric to use. The metric $g_{ji}$ has **two lower** slots: it can only be summed against an **upper** index ($x^j$) and leaves a **lower** one. The inverse metric $(g^{-1})^{ji}$ has **two upper** slots: it is summed against a **lower** index ($\mathtt{x}_j$) and leaves an **upper** one.
+
+      Rule: the summed index appears once up and once down, and the free index $i$ keeps its place on the left of the equation. Both are always checked by reading the indices, never by remembering which one "goes" where.
+
+  - type: mcq
+    id: legal-lowering
+    prompt: |
+      Which of these are legal ways to write the components $\flat(\mathcal{X})_i$ of the lowered vector? The vector has components $x^j$, the covector in the other expressions has components $\mathtt{x}_j$. Select all.
+    multiple: true
+    options:
+      - text: '$x^j\,g_{ji}$'
+        correct: true
+      - text: '$x^j\,g_{ij}$'
+        correct: true
+        feedback: Legal because $g$ is symmetric, $g_{ij}=g_{ji}$.
+      - text: '$x^j\,(g^{-1})^{ji}$'
+        feedback: |
+          Two upper indices are summed ($x^j$ and $(g^{-1})^{ji}$ both carry $j$ up), and the free index $i$ comes out **upper**: this is not a covector's component.
+      - text: '$\mathtt{x}_j\,g_{ji}$'
+        feedback: |
+          Two lower indices are summed ($\mathtt{x}_j$ and $g_{ji}$ both carry $j$ down). A sum must pair an upper with a lower index; this expression is not a tensor equation.
+    explanation: |
+      Lowering uses $g$ and leaves $i$ down: $x^j g_{ji}$, or $x^j g_{ij}$ by symmetry.
+
+  - type: build
+    id: build-lower
+    prompt: 'Build the components of the lowered vector, from the components $x^j$ of $\mathcal{X}$.'
+    prefix: '\flat(\mathcal{X})_i ='
+    tiles: ['x^j', 'g_{ji}', '(g^{-1})^{ji}', '\mathtt{x}_j']
+    answers:
+      - ['x^j', 'g_{ji}']
+      - ['g_{ji}', 'x^j']
+    wrong:
+      - answer: ['x^j', '(g^{-1})^{ji}']
+        feedback: |
+          Raising and lowering are inverse maps, so lowering must use $g$, the object with lower slots. $x^j(g^{-1})^{ji}$ also fails index balance: two uppers are summed.
+    hint: 'The vector component is upper; the summed index needs a lower partner.'
+    explanation: |
+      $$\flat(\mathcal{X})_i = x^j\,g_{ji}.$$
+
+  - type: build
+    id: build-raise
+    prompt: 'Build the components of the raised covector, from the components $\mathtt{x}_j$ of $\mathsf{X}$.'
+    prefix: '\flat^{-1}(\mathsf{X})^i ='
+    tiles: ['\mathtt{x}_j', '(g^{-1})^{ji}', 'g_{ji}', 'x^j']
+    answers:
+      - ['\mathtt{x}_j', '(g^{-1})^{ji}']
+      - ['(g^{-1})^{ji}', '\mathtt{x}_j']
+    wrong:
+      - answer: ['\mathtt{x}_j', 'g_{ji}']
+        feedback: |
+          Two lower indices are summed, and the result $i$ is lower: that is not a vector. A covector is raised with the object that has two **upper** slots, the inverse metric.
+    hint: 'The covector component is lower; the summed index needs an upper partner.'
+    explanation: |
+      $$\flat^{-1}(\mathsf{X})^i = \mathtt{x}_j\,(g^{-1})^{ji}.$$
+
+  - type: numeric
+    id: lower-number
+    prompt: |
+      In a 2-dimensional chart the metric components at a point are
+      $$g_{ij} = \begin{pmatrix}4&2\\2&2\end{pmatrix},$$
+      and a vector $\mathcal{X}$ has components $x^1 = 2$, $x^2 = -1$. Find the first component $\flat(\mathcal{X})_1$ of its lowered covector.
+    answer: 6
+    wrong:
+      - { value: 8, feedback: 'You kept only the diagonal term $x^1g_{11}$. The sum over $j$ also includes $x^2g_{21}=-2$.' }
+      - { value: 1.5, feedback: 'You used the inverse metric $(g^{-1})$, which raises. Lowering uses $g$ itself.' }
+    hint: 'Sum over the repeated index: $j=1$ and $j=2$.'
+    explanation: |
+      $$\begin{aligned}\flat(\mathcal{X})_1 &= x^1g_{11} + x^2g_{21}\\ &= 2\cdot4 + (-1)\cdot2 = 6 .\end{aligned}$$
+      The other component is $\flat(\mathcal{X})_2 = 2\cdot2 + (-1)\cdot2 = 2$.
+
+  - type: numeric
+    id: inverse-entry
+    prompt: |
+      For the metric components
+      $$g_{ij} = \begin{pmatrix}4&2\\2&2\end{pmatrix},$$
+      find the component $(g^{-1})^{12}$ of the inverse metric.
+    answer: -0.5
+    tolerance: 0.001
+    answerText: '$-\tfrac12$'
+    wrong:
+      - { value: 0.5, feedback: 'You took $1/g_{12}$. The inverse metric is the **matrix** inverse of $g$, not the entry-by-entry reciprocal: $g_{ij}(g^{-1})^{jk} = \delta_i^k$ mixes entries.' }
+      - { value: -2, feedback: 'That is the cofactor $-g_{12}$ of the inverse, before dividing by $\det g = 4$.' }
+    hint: 'For a $2\times2$ matrix, swap the diagonal, flip the sign of the off-diagonal and divide by the determinant.'
+    explanation: |
+      $$\begin{aligned}\det g &= 4\cdot2-2\cdot2 = 4,\\ (g^{-1}) &= \tfrac14\begin{pmatrix}2&-2\\-2&4\end{pmatrix}.\end{aligned}$$
+      Check: the first row of $g$ times the second column of $g^{-1}$ is $4\cdot(-\tfrac12)+2\cdot1 = 0=\delta_1^2$.
+
+  - type: numeric
+    id: raise-number
+    prompt: |
+      With the same metric components
+      $$g_{ij} = \begin{pmatrix}4&2\\2&2\end{pmatrix},$$
+      a covector $\mathsf{X}$ has components $\mathtt{x}_1 = 6$, $\mathtt{x}_2 = 2$. Find the second component $\flat^{-1}(\mathsf{X})^2$ of the vector it raises to.
+    answer: -1
+    wrong:
+      - { value: 16, feedback: 'You summed against $g$, which lowers. Raising uses the inverse metric.' }
+      - { value: 2, feedback: 'You kept only $\mathtt{x}_2\,(g^{-1})^{22}$. The sum over $j$ also contains $\mathtt{x}_1\,(g^{-1})^{12}$.' }
+    hint: 'Use the inverse metric found above: $\tfrac14\begin{pmatrix}2&-2\\-2&4\end{pmatrix}$.'
+    explanation: |
+      $$\begin{aligned}\flat^{-1}(\mathsf{X})^2 &= \mathtt{x}_1(g^{-1})^{12} + \mathtt{x}_2(g^{-1})^{22}\\ &= 6\cdot(-\tfrac12) + 2\cdot1 = -1 .\end{aligned}$$
+      This is the vector $(2,-1)$ of the previous example: raising undoes lowering.
+
+  - type: mcq
+    id: scaling-predict
+    title: Predict the scaling
+    prompt: |
+      In a 2-dimensional chart the metric is replaced by $4g$ (all lengths double). The components $x^i$ of a vector and $\mathtt{x}_i$ of a covector are held fixed. Select **every** quantity that gets **bigger**.
+    multiple: true
+    options:
+      - text: '$g(\mathcal{X},\mathcal{X})$, the squared length of the vector'
+        correct: true
+      - text: 'the lowered components $\flat(\mathcal{X})_i$'
+        correct: true
+      - text: 'the density $\sqrt{|\det g|}$'
+        correct: true
+      - text: 'the inverse metric components $(g^{-1})^{ij}$'
+        feedback: |
+          The inverse metric is the matrix inverse of $g$, so it goes the other way: $(4g)^{-1} = \tfrac14 g^{-1}$ gets smaller.
+      - text: 'the raised components $\flat^{-1}(\mathsf{X})^i$'
+        feedback: |
+          Raising uses $g^{-1}$, which gets smaller, so the raised components shrink by the same factor $\tfrac14$.
+    explanation: |
+      Everything built from $g$ grows, everything built from $g^{-1}$ shrinks. In dimension 2, $\det(4g)=16\det g$, so the density $\sqrt{|\det g|}$ grows by $4$.
+
+  - type: numeric
+    id: scale-raise
+    prompt: |
+      With the metric $g_{ij}=\begin{pmatrix}4&2\\2&2\end{pmatrix}$ a covector with components $(6,2)$ raises to the vector with second component $-1$. Now every metric component is multiplied by $4$ (lengths double), with the covector's components still $(6,2)$. Find the new second component of the raised vector.
+    answer: -0.25
+    tolerance: 0.001
+    answerText: '$-\tfrac14$'
+    wrong:
+      - { value: -4, feedback: 'You scaled the raised components with $g$. They are built from the inverse metric, which shrinks when $g$ grows.' }
+      - { value: -0.5, feedback: 'The metric is multiplied by $4=\lambda^2$ with $\lambda=2$; the inverse metric picks up $\lambda^{-2}=\tfrac14$, not $\lambda^{-1}$.' }
+      - { value: -1, feedback: 'The raised components do change: the inverse metric of $4g$ is $\tfrac14g^{-1}$.' }
+    hint: 'The inverse of $4g$ is $\tfrac14 g^{-1}$; no need to redo the matrix inverse.'
+    explanation: |
+      $$\flat^{-1}(\mathsf{X})^2\big|_{4g} = \tfrac14\cdot(-1) = -\tfrac14 .$$
+
+  - type: numeric
+    id: scale-density
+    prompt: |
+      In a 3-dimensional chart, at a point, $\sqrt{|\det g|} = 5$. The metric is multiplied by $4$ (all lengths double). Find the new value of $\sqrt{|\det g|}$.
+    answer: 40
+    wrong:
+      - { value: 20, feedback: 'You multiplied by $4$, the factor of $g$ itself. The determinant of a $3\times3$ matrix collects the factor once per row: $\det(4g)=4^3\det g$.' }
+      - { value: 10, feedback: 'You multiplied by $2$, the length factor $\lambda$. The density measures a **volume**: three lengths, $\lambda^3$.' }
+      - { value: 320, feedback: 'That is $5\cdot 4^3$: you forgot to take the square root after scaling the determinant.' }
+    hint: 'Each row of the $3\times3$ matrix is multiplied by $4$; then take the square root.'
+    explanation: |
+      $$\begin{aligned}\det(4g) &= 4^3\det g = 64\det g,\\ \sqrt{|\det(4g)|} &= 8\sqrt{|\det g|} = 8\cdot5 = 40 .\end{aligned}$$
+
+  - type: text
+    id: scaling-table
+    title: The scaling test
+    body: |
+      Under $g\to\lambda^2g$ (all lengths multiplied by $\lambda>0$), in dimension $d$, with $x^i$ and $\mathtt{x}_i$ fixed:
+
+      | quantity | factor |
+      |---|---|
+      | length of a vector | $\lambda$ |
+      | $g(\mathcal{X},\mathcal{X})$, $\flat(\mathcal{X})_i$ | $\lambda^2$ |
+      | $(g^{-1})^{ij}$, $\flat^{-1}(\mathsf{X})^i$ | $\lambda^{-2}$ |
+      | $\sqrt{\lvert\det g\rvert}$ | $\lambda^{d}$ |
+
+      Use it to catch a wrong formula: a lowering that does not scale like $\lambda^2$, or a volume element that does not scale like $\lambda^d$, is wrong.
+
+  - type: text
+    id: density-rule
+    title: The density between two charts
+    body: |
+      Recall: the Jacobian $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ has entries $\partial\mathscr{X}^i/\partial\mathscr{Y}^k$ (the old chart $\mathscr{X}$ in terms of the new one $\mathscr{Y}$), and the metric, a $(0,2)$-tensor, has **two lower** indices, each paired with one such Jacobian:
+      $$(g_\mathscr{Y})_{kl} = (\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_k\,(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^j_l\,(g_\mathscr{X})_{ij}.$$
+      Taking determinants, the determinant of the product is the product of the determinants, and the Jacobian appears **twice** (the transpose has the same determinant):
+      $$\det g_\mathscr{Y} = (\det\text{ᛞ}_{\mathcal{U}\mathcal{V}})^2\,\det g_\mathscr{X}.$$
+      The square root removes the square, leaving one absolute value. Check against a known case: cartesian $(x,y)$ has $g=\mathrm{diag}(1,1)$ and density $1$; polar $(r,\theta)$ has $g=\mathrm{diag}(1,r^2)$ and density $r$, and $|\det\partial(x,y)/\partial(r,\theta)| = r$.
+
+  - type: build
+    id: build-density
+    prompt: 'Build the law for the density in the new chart $\mathscr{Y}$ in terms of the old chart $\mathscr{X}$ ($\text{ᛞ}_{\mathcal{U}\mathcal{V}} = \partial\mathscr{X}/\partial\mathscr{Y}$, $\text{ᛞ}_{\mathcal{V}\mathcal{U}} = \partial\mathscr{Y}/\partial\mathscr{X}$).'
+    prefix: '\sqrt{|\det g_\mathscr{Y}|} ='
+    tiles:
+      - '\big|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}\big|'
+      - '\big|\det\text{ᛞ}_{\mathcal{V}\mathcal{U}}\big|'
+      - '\sqrt{|\det g_\mathscr{X}|}'
+    answers:
+      - ['\big|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}\big|', '\sqrt{|\det g_\mathscr{X}|}']
+      - ['\sqrt{|\det g_\mathscr{X}|}', '\big|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}\big|']
+    wrong:
+      - answer: ['\big|\det\text{ᛞ}_{\mathcal{V}\mathcal{U}}\big|', '\sqrt{|\det g_\mathscr{X}|}']
+        feedback: |
+          That is the Jacobian of the wrong direction. The lower indices of $g_\mathscr{Y}$ are paired with $\partial\mathscr{X}/\partial\mathscr{Y}$, as for any covariant component. Test with polar coordinates: it would give $\tfrac1r$ instead of $r$.
+    hint: 'Lower indices follow the derivative of the old chart with respect to the new.'
+    explanation: |
+      $$\sqrt{|\det g_\mathscr{Y}|} = \big|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}\big|\,\sqrt{|\det g_\mathscr{X}|}.$$
+
+  - type: numeric
+    id: density-chart
+    prompt: |
+      Two charts of a 2-dimensional manifold are related by $\mathscr{Y}^1 = 2\mathscr{X}^1$, $\mathscr{Y}^2 = 2\mathscr{X}^2$. At a point, $\sqrt{|\det g_\mathscr{X}|} = 6$. Find $\sqrt{|\det g_\mathscr{Y}|}$ there.
+    answer: 1.5
+    tolerance: 0.001
+    wrong:
+      - { value: 24, feedback: 'You used $\partial\mathscr{Y}/\partial\mathscr{X}$, so $|\det|=4$. The density uses $\partial\mathscr{X}/\partial\mathscr{Y}$, whose entries are $\tfrac12$. Sanity check: the new coordinates are bigger numbers for the same points, so a unit coordinate cell is smaller on the manifold.' }
+      - { value: 12, feedback: 'The determinant of a $2\times2$ matrix of entries $\tfrac12$ is $\tfrac14$, not $2$ or $\tfrac12$: both rows are scaled.' }
+      - { value: 3, feedback: 'That uses $\tfrac12$ alone. In dimension $2$ the determinant of $\partial\mathscr{X}/\partial\mathscr{Y}=\tfrac12\mathbb{1}$ is $\tfrac14$.' }
+    hint: '$\partial\mathscr{X}^i/\partial\mathscr{Y}^j = \tfrac12\delta^i_j$; take its determinant in two dimensions.'
+    explanation: |
+      $$\sqrt{|\det g_\mathscr{Y}|} = \big|\det(\tfrac12\mathbb{1})\big|\cdot 6 = \tfrac14\cdot6 = 1.5 .$$
+      Same check as scaling: doubling the coordinate numbers divides each side of a unit coordinate cell by $2$, the area by $4$.
+
+  - type: numeric
+    id: lorentz-pairing
+    prompt: |
+      A 4-dimensional chart has the Lorentzian metric components $g=\mathrm{diag}(1,-1,-1,-1)$ and a vector $\mathcal{X}$ has components $(5,3,0,4)$. Find the number $x^i\,\flat(\mathcal{X})_i$, that is, the lowered covector applied to $\mathcal{X}$ itself.
+    answer: 0
+    wrong:
+      - { value: 50, feedback: 'You added all squares, $25+9+0+16$. The metric $\mathrm{diag}(1,-1,-1,-1)$ lowers the three spatial components with a **minus sign**.' }
+      - { value: 16, feedback: 'You subtracted only the first two squares and dropped $-4^2$. All three spatial components carry a minus.' }
+    hint: 'Lower first: $\flat(\mathcal{X})_i = x^j g_{ji}$. Then pair with $x^i$.'
+    explanation: |
+      $$\begin{aligned}\flat(\mathcal{X}) &= (5,-3,0,-4),\\ x^i\,\flat(\mathcal{X})_i &= 25-9-0-16 = 0 .\end{aligned}$$
+      The vector is **null** (lightlike): it has zero length yet is not the zero vector.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** a round of fast traps on integration, built on the usual misconceptions about the absolute determinant, densities and the metric volume form.
