@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 8 in progress; next: `ch08-circle-length`)
+## Current (2026-10-20, Chapter 8 in progress; next: `ch08-traps`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -31,9 +31,9 @@ append a short entry at the end of **Log** (a few lines, ending with
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Chapter 8 in progress:** `ch08-volume-forms` (concept, 33 cards), `ch08-integration` (concept, 25 cards), `ch08-metric-volume` (concept, 22 cards).
+- **Chapter 8 in progress:** `ch08-volume-forms` (concept, 33 cards), `ch08-integration` (concept, 25 cards), `ch08-metric-volume` (concept, 22 cards), `ch08-circle-length` (guided, 27 cards).
 - **Queue (one unit each):** Chapter 8 (Integrals) in `course.yaml` order:
-  `ch08-circle-length` (guided), `ch08-traps`, `ch08-map`, `ch08-challenge` (two sessions); then Chapters 9–10 (each with map and challenge).
+  `ch08-traps`, `ch08-map`, `ch08-challenge` (two sessions); then Chapters 9–10 (each with map and challenge).
   `archive/tex_exercises/` has no Chapter 8 file: the book (8.1–8.3, B.19–B.20, C.7) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
@@ -427,6 +427,9 @@ append a short entry at the end of **Log** (a few lines, ending with
   two proofs: density-law route (build $|\det\mathbf{A}|\sqrt{|\det g_\mathscr{X}|}$) and component route (order card, shorthand $\text{ᛞ}$); mirror trap with $\mathscr{Z}$ (opposite orientation gives $-\Omega_{\mathrm{E}}$); orthonormal $\Rightarrow\omega^g = 1$, converse false (light-cone matrix $\begin{pmatrix}0&1\\1&0\end{pmatrix}$);
   Minkowski $\mathscr{Y} = (2t,2a)$: $\omega^g = \tfrac14$, region $0<t<1$, $0<a<3$ volume $3$ ($\tfrac14\cdot12$); GR form $\sqrt{-\det g}$ named once; sphere $(\vartheta,\varphi)$ oriented so it is positive, $\omega^g = \sin\vartheta$, patch $\tfrac\pi3<\vartheta<\tfrac{2\pi}3$, $0<\varphi<\tfrac\pi2$ area $\tfrac\pi2$;
   full sphere $4\pi$ via "a set of zero area can be dropped" (stated without proof) after naming the two-chart + partition route; plausibility $\epsilon$-regions area $2\cos\epsilon(2\pi-2\epsilon)$; $\int_\mathcal{M}f := \int_\mathcal{M}\Omega^gf$ in a three-line `aligned`. No widget.
+  Conventions fixed here (`ch08-circle-length`): projection chart $(\mathcal{W},\mathscr{P})$, $\mathscr{P}(a,b) := a$ on the lower half, coordinate $u\in(-R,R)$ (book's $\mathscr{Z}$, $\gamma$ renamed: $\mathscr{Z}$ is the mirror chart, $\gamma$ a curve); circle of radius $R$, angle charts $\alpha\in(0,2\pi)$ on $\mathcal{U}$, $\beta\in(-\pi,\pi)$ on $\mathcal{V}$ (book); $\text{ᛖ}_{\mathcal{W}\mathcal{U}} := \mathscr{X}\circ\mathscr{P}^{-1}$, $\alpha = 2\pi-\arccos(u/R)$, $\text{ᛞ}_{\mathcal{U}\mathcal{W}} = d\alpha/du = 1/\sqrt{R^2-u^2}$ ($1/\sqrt3$ at $R=2,u=1$);
+  induced metric component = squared speed of the inverse chart ($R^2$; $R^2/(R^2-u^2)$, $\frac43$), density = speed ($R$; $R/\sqrt{R^2-u^2}$, $2/\sqrt3$); arc example $R = 2$, $\alpha\in(\frac{4\pi}3,\frac{5\pi}3)$, $u\in(-1,1)$, length $\frac{2\pi}3$ (vs $\frac\pi3$ and $2$ without density); $\arcsin(\cos\alpha) = \alpha-\frac{3\pi}2$ on $(\pi,2\pi)$;
+  flipped projection $\mathscr{P}'(a,b) := -a$, coordinate $u'$, $\alpha = \pi+\arccos(u'/R)$, density $-R/\sqrt{R^2-u'^2}$ ("$\sqrt{|\det g|}$ only in charts of the oriented atlas"), value $-\frac{2\pi}3$; partition with the ch08-integration step $h$ (book's $\chi(s) = h(-s)$): $\text{ᚹ}_1 = h(-a/R)$, $\text{ᚹ}_2 = h(a/R)$, total $4\pi$ at $R=2$; one-chart shortcut justified by "zero length can be dropped". No widget.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -440,6 +443,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch08-circle-length (guided, 27 cards)
+- Built `content/ch08/circle-length.yaml` from the circle integration example: setup (three charts), Step 1 direction of $u$, transition map, Jacobian at $u=1$, oriented-atlas check;
+  Step 2 induced metric as squared speed; Step 3 densities and the density law; Steps 4–5 arc in both charts (antiderivative, arcsin identity, no-density trap); Step 6 flipped projection;
+  Steps 7–8 partition (supports, build of the first term, periodic shift, total $4pi$, one-chart shortcut); wrap-up + teaser for `ch08-traps`. Validate clean, shots 0 problems.
+- Choices: projection chart named $mathscr{P}$ with coordinate $u$ (book $mathscr{Z}$, $gamma$ clash with the mirror chart and curves); book's step $chi$ replaced by the earlier $h$.
+- Conventions fixed here: see Current, "Chapter 8 conventions so far" (`ch08-circle-length`).
 ### 2026-10-20 — ch08-metric-volume (concept, 22 cards)
 - Built `content/ch08/metric-volume.yaml` (hook: who chose $\Omega_{\mathrm{E}}$, sphere density guess; recall of the metric law, $\det g$ at $(3,4)$, determinant law, why the square root,
   definition, polar check, build of the density law, orientation MCQ, component-proof order card, mirror trap, orthonormal unit volume, Minkowski rescaled chart, light-cone converse trap,
