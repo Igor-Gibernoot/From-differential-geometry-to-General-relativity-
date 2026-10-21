@@ -1,0 +1,417 @@
+id: ch07-signature
+title: Signature
+kind: concept
+own: |
+  - **No eigenvalues**: for a $(1,1)$-tensor, $T^i_j\,x^j = \lambda\,x^i$ compares the components of two vectors, so $\lambda$ is the same in every chart. For a metric, $g_{ij}\,x^j = \lambda\,x^i$ compares the covector $\flat(\mathcal{X})$ with the vector $\lambda\mathcal{X}$, and $\lambda$ changes with the chart. With $A^i{}_k := \partial\mathscr{X}^i/\partial\mathscr{Y}^k$, a $(1,1)$-matrix changes by similarity, $\mathbf{T}_\mathscr{Y} = \mathbf{A}^{-1}\mathbf{T}_\mathscr{X}\mathbf{A}$, but the metric's matrix by congruence:
+  {{ $$\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\,\mathbf{G}_\mathscr{X}\,\mathbf{A}$$ }}
+  - **Sylvester's law of inertia**: at every $p$ some chart around $p$ has
+  {{ $$g_{ij}(p) = \mathrm{diag}(\pm1,\dots,\pm1),$$ }}
+  and the number $n_+$ of $+1$'s (so also the number $n_-$ of $-1$'s) is the same for every such chart. No zeros, because $g_p$ is non-degenerate: {{ $n_+ + n_- = \dim\mathcal{M}$ }}. The **signature** is $(n_+,n_-)$; it is constant on a connected manifold.
+  - **Finding it**: complete squares in $g_p(v,v) = g_{ij}x^ix^j$, or count the positive and negative eigenvalues of the matrix $\big(g_{ij}(p)\big)$ in **any** chart (their values change, their signs do not). Not the signs of the entries: $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ and $\begin{pmatrix}1&2\\2&1\end{pmatrix}$ are both $(1,1)$.
+  - **Classes**: **Riemannian** $n_+ = \dim\mathcal{M}$ (positive-definite, $g_p$ an inner product); **pseudo-Riemannian** $0 < n_+ < \dim\mathcal{M}$, with nonzero **null vectors** $g_p(\mathcal{X}_p,\mathcal{X}_p) = 0$, which form a cone, not a subspace; **Lorentzian** {{ $n_+ = 1$ or $n_- = 1$ }} (spacetime: $\mathrm{diag}(-1,1,1,1)$).
+  - **Sign of the determinant** is chart-independent, its value is not:
+  {{ $$\det\mathbf{G}_\mathscr{Y} = (\det\mathbf{A})^2\,\det\mathbf{G}_\mathscr{X}$$ }}
+  so $\operatorname{sign}\det = (-1)^{n_-}$.
+
+cards:
+  - type: text
+    id: hook
+    title: One metric, three matrices
+    body: |
+      Recall the Minkowski metric on $\mathbb{R}^2$ with points $(t,a)$ (time, position, $c = 1$): in the chart $\mathscr{X}(t,a) = (t,a)$,
+      $$\eta = -dx^1\otimes dx^1 + dx^2\otimes dx^2,$$
+      so its components are $(\eta_\mathscr{X})_{ij} = \mathrm{diag}(-1,1)$. Two other linear charts see the **same** tensor field differently:
+      - the rescaled chart $\mathscr{Y}(t,a) = (2t,\ 2a)$ gives
+      $$(\eta_\mathscr{Y})_{kl} = \begin{pmatrix}-\tfrac14&0\\0&\tfrac14\end{pmatrix};$$
+      - the chart rotated by $45°$, $\mathscr{Z}(t,a) = \big(\tfrac{t+a}{\sqrt2},\ \tfrac{a-t}{\sqrt2}\big)$, gives
+      $$(\eta_\mathscr{Z})_{kl} = \begin{pmatrix}0&1\\1&0\end{pmatrix}.$$
+
+      Every number in the matrix moved, and the third one has no minus sign at all. Before any theory, guess: is there anything about $\eta$'s "minus sign" that **no** chart can change?
+
+  - type: mcq
+    id: hook-guess
+    title: Guess the invariant
+    prompt: |
+      The Minkowski metric $\eta$ on $\mathbb{R}^2$ (points $(t,a)$) has components $\mathrm{diag}(-1,1)$ in the chart $(t,a)$, $\mathrm{diag}(-\tfrac14,\tfrac14)$ in the rescaled chart $(2t,2a)$, and $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ in the chart $\big(\tfrac{t+a}{\sqrt2},\tfrac{a-t}{\sqrt2}\big)$. Which of these is a good candidate for a property **every** chart agrees on?
+    options:
+      - text: 'How many "plus" and how many "minus" directions there are: one of each'
+        correct: true
+      - text: 'The determinant of the matrix'
+        feedback: |
+          The determinants are $-1$, $-\tfrac1{16}$ and $-1$: the value moved under rescaling. Only its **sign** agrees here, a clue the lesson follows up.
+      - text: 'The trace of the matrix (sum of the diagonal entries)'
+        feedback: |
+          All three traces are $0$, but by luck. The chart $(2t,\ a)$, rescaling only time, gives $\mathrm{diag}(-\tfrac14, 1)$, trace $\tfrac34$. Agreeing on three examples is not an invariant.
+      - text: 'The number of negative entries'
+        feedback: |
+          $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ has no negative entry, yet it is the same metric as $\mathrm{diag}(-1,1)$, which has one. Entries are chart-dependent numbers.
+    explanation: |
+      The guess the lesson makes precise: every metric can be brought, at a point, to a diagonal matrix of $+1$'s and $-1$'s, and **how many** of each is fixed. That count is the **signature**.
+
+  - type: text
+    id: law-recall
+    title: How the matrices change
+    body: |
+      Recall the transformation law of a $(0,2)$-tensor field (Einstein summation, old coordinates differentiated by new):
+      $$(g_\mathscr{Y})_{kl} = \frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k}\frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^l}\,(g_\mathscr{X})_{ij}.$$
+      Name the Jacobian matrix $\mathbf{A}$, with entries $A^i{}_k := \partial\mathscr{X}^i/\partial\mathscr{Y}^k$ (row $i$, column $k$), and the component matrices $\mathbf{G}_\mathscr{X}$, $\mathbf{G}_\mathscr{Y}$. The law reads, as matrices ($\mathsf{T}$ = transpose),
+      $$\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\,\mathbf{G}_\mathscr{X}\,\mathbf{A}.$$
+
+      Check with the rescaled chart $\mathscr{Y} = (2t,2a)$: $t = \mathscr{Y}^1/2$ and $a = \mathscr{Y}^2/2$, so $\mathbf{A} = \mathrm{diag}(\tfrac12,\tfrac12)$ and
+      $$\mathbf{A}^{\mathsf{T}}\,\mathrm{diag}(-1,1)\,\mathbf{A} = \mathrm{diag}(-\tfrac14,\tfrac14).$$
+      In the next cards: why the numbers on the diagonal are not "eigenvalues of $g$".
+
+  - type: text
+    id: eigen-tensor
+    title: Eigenvalues need two vectors
+    body: |
+      A $(1,1)$-tensor $T_p$ at $p$ (one covector slot, one vector slot) turns a vector $\mathcal{X}_p$ into the vector $T_p(\cdot,\mathcal{X}_p)$, with components $T^i_j(p)\,x^j$. The eigenvalue equation
+      $$T^i_j(p)\,x^j = \lambda\,x^i$$
+      sets the components of **two vectors** equal, $T_p(\cdot,\mathcal{X}_p)$ and $\lambda\mathcal{X}_p$. Two vectors that agree in one chart agree in every chart, so $\lambda$ does not depend on the chart. In matrices: the $(1,1)$ law is
+      $$\mathbf{T}_\mathscr{Y} = \mathbf{A}^{-1}\,\mathbf{T}_\mathscr{X}\,\mathbf{A},$$
+      a **similarity**, and similar matrices have the same eigenvalues.
+
+      Now try the same with the metric:
+      $$g_{ij}(p)\,x^j = \lambda\,x^i.$$
+
+  - type: mcq
+    id: eigen-metric
+    title: What does the left side describe?
+    prompt: |
+      For a metric $g$ and a vector $\mathcal{X}_p$ with components $x^j$ in a chart, the numbers $g_{ij}(p)\,x^j$ (one free lower index $i$) are the components of which object? And what does that say about the "eigenvalue equation" $g_{ij}(p)\,x^j = \lambda\,x^i$?
+    options:
+      - text: 'Of the covector $\flat_p(\mathcal{X}_p)$; the equation sets covector components equal to vector components, which is not a chart-independent statement'
+        correct: true
+      - text: 'Of the vector $g_p(\mathcal{X}_p,\mathcal{X}_p)\,\mathcal{X}_p$; the equation is chart-independent like the $(1,1)$ one'
+        feedback: |
+          $g_p(\mathcal{X}_p,\mathcal{X}_p)$ is a number, $g_{ij}x^ix^j$, with both indices summed. The expression $g_{ij}x^j$ still has a free **lower** index $i$: it is the musical map $\flat_p(\mathcal{X}_p)_i$, a covector.
+      - text: 'Of the vector $\flat^{-1}_p(\mathcal{X}_p)$; the equation compares two vectors'
+        feedback: |
+          $\flat^{-1}$ eats covectors, not vectors, and it raises an index with $(g^{-1})^{ij}$. Contracting $x^j$ with the lower-index $g_{ij}$ **lowers**: the result is the covector $\flat_p(\mathcal{X}_p)$.
+    explanation: |
+      Recall $\flat(\mathcal{X})_i = x^j g_{ji}$, and $g$ is symmetric. The left side transforms like a covector (with $\partial\mathscr{X}/\partial\mathscr{Y}$), the right side like a vector (with $\partial\mathscr{Y}/\partial\mathscr{X}$). An equality that holds in one chart then generally fails in another, so "$\lambda$" depends on the chart. The next card shows it in numbers.
+
+  - type: numeric
+    id: eigen-rescaled
+    title: An eigenvalue that moves
+    prompt: |
+      Minkowski metric $\eta$ on $\mathbb{R}^2$, points $(t,a)$. In the chart $\mathscr{X} = (t,a)$, $(\eta_\mathscr{X})_{ij} = \mathrm{diag}(-1,1)$ and the vector $\partial x_2$ (components $(0,1)$) solves $(\eta_\mathscr{X})_{ij}x^j = \lambda x^i$ with $\lambda = 1$. In the rescaled chart $\mathscr{Y} = (2t,2a)$, $(\eta_\mathscr{Y})_{kl} = \mathrm{diag}(-\tfrac14,\tfrac14)$ and the same vector has components $y^k = (\partial\mathscr{Y}^k/\partial\mathscr{X}^i)\,x^i = (0,2)$. Which $\lambda$ solves $(\eta_\mathscr{Y})_{kl}\,y^l = \lambda\,y^k$?
+    answer: 0.25
+    answerText: '1/4'
+    wrong:
+      - { value: 1, feedback: 'That is the chart-$\mathscr{X}$ value. In chart $\mathscr{Y}$: $(\eta_\mathscr{Y})_{2l}y^l = \tfrac14\cdot2 = \tfrac12$, and $\tfrac12 = \lambda\cdot 2$ gives $\lambda = \tfrac14$.' }
+      - { value: 0.5, feedback: '$\tfrac12$ is the left side $(\eta_\mathscr{Y})_{2l}y^l$. The equation asks $\tfrac12 = \lambda\, y^2 = 2\lambda$, so $\lambda = \tfrac14$.' }
+    hint: The second component of the left side is $\tfrac14\cdot2$; divide by $y^2 = 2$.
+    explanation: |
+      $\lambda$ went from $1$ to $\tfrac14$: same metric, same vector, different "eigenvalue". The covector components shrank by $\tfrac12$ while the vector components grew by $2$. A metric has no eigenvalues. Notice what **did** survive: $\lambda$ stayed positive.
+
+  - type: text
+    id: sylvester
+    title: Sylvester's law of inertia
+    body: |
+      What survives is a count of signs. **Sylvester's law of inertia** (real, finite-dimensional, symmetric and non-degenerate is all it needs) says: at every $p\in\mathcal{M}$ there is a chart $(\mathcal{U},\mathscr{X})$ with $p\in\mathcal{U}$ whose components at $p$ are diagonal with entries $\pm1$,
+      $$g_{ij}(p) = 0 \text{ for } i\neq j,$$
+      $$g_{ii}(p)\in\{+1,-1\},$$
+      i.e. the basis $(\partial x_1)_p,\dots,(\partial x_d)_p$ of $T_p\mathcal{M}$ is "orthonormal" for $g_p$. And the number $n_+$ of $+1$'s, hence the number $n_-$ of $-1$'s, is the **same for every such chart**.
+
+      The pair $(n_+, n_-)$ is the **signature** of $g$ at $p$. Minkowski $\eta$ in the chart $(t,a)$ is already of this form: signature $(1,1)$. No zeros ever appear on the diagonal, so
+      $$n_+ + n_- = \dim\mathcal{M}.$$
+      (A symmetric form that is degenerate would also get $0$'s, as many as the dimension of the kernel of $\flat_p$; a metric has none.)
+
+  - type: mcq
+    id: no-zeros
+    title: Why no zeros?
+    prompt: |
+      Suppose a chart at $p$ made the metric's components $g_{ij}(p)$ diagonal with $g_{11}(p) = 0$. Why is this impossible for a metric (symmetric, with bijective musical map $\flat$, $\flat(\mathcal{X})_i = x^jg_{ji}$)?
+    options:
+      - text: 'Then $g_p\big((\partial x_1)_p, (\partial x_j)_p\big) = 0$ for every $j$, so $\flat_p\big((\partial x_1)_p\big) = 0$ with $(\partial x_1)_p\neq0$: $\flat_p$ is not injective'
+        correct: true
+      - text: 'Because $g_{11}(p) = g\big((\partial x_1)_p,(\partial x_1)_p\big)$ is a squared length and lengths are positive'
+        feedback: |
+          A metric need not be positive: $\eta(\partial x_1,\partial x_1) = -1$, and lightlike vectors have $\eta(\mathcal{W},\mathcal{W}) = 0$ with $\mathcal{W}\neq0$. A zero on the diagonal is excluded only because the matrix is **diagonal**: then the row of $\partial x_1$ is entirely zero.
+      - text: 'It is possible: diagonal zeros are allowed, only zero determinant is forbidden'
+        feedback: |
+          For a **diagonal** matrix the determinant is the product of the diagonal entries, so one zero makes $\det = 0$. (Off-diagonal matrices can have zero diagonal entries, as $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ does, with $\det = -1$.)
+    explanation: |
+      Diagonal plus $g_{11}(p) = 0$ makes the whole first row zero, so $(\partial x_1)_p$ is orthogonal to everything, $\flat_p$ has a kernel, and $\det\big(g_{ij}(p)\big) = 0$. Non-degeneracy forbids it: every diagonal entry is $+1$ or $-1$.
+
+  - type: numeric
+    id: spacetime-count
+    title: Counting in four dimensions
+    prompt: |
+      Spacetime is a manifold of dimension $4$. Its metric has signature $(n_+, n_-)$ with $n_- = 1$ (one time direction). Using Sylvester's law, what is $n_+$?
+    answer: 3
+    wrong:
+      - { value: 4, feedback: 'The four basis vectors of a diagonalizing chart split into $+1$ and $-1$ entries: $n_+ + n_- = 4$, so $n_+ = 3$.' }
+      - { value: 1, feedback: 'That is $n_-$. The remaining $4 - 1 = 3$ diagonal entries are $+1$.' }
+    explanation: |
+      $n_+ = 4 - 1 = 3$: in a suitable chart at each point, $g_{ij}(p) = \mathrm{diag}(-1,1,1,1)$, one time and three space directions. No zeros, since the metric is non-degenerate.
+
+  - type: order
+    id: existence-proof
+    title: Why a diagonal basis exists
+    prompt: |
+      Let $V$ be a real vector space of dimension $d\geq1$ and $b$ a symmetric, non-degenerate bilinear form on it (for us: $V = T_p\mathcal{M}$, $b = g_p$). Put the induction proof that $V$ has a basis $\hat e_1,\dots,\hat e_d$ with $b(\hat e_a,\hat e_c) = 0$ for $a\neq c$ and $b(\hat e_a,\hat e_a) = \pm1$ in order.
+    steps:
+      - 'Some $\mathcal{X}_0$ has $b(\mathcal{X}_0,\mathcal{X}_0)\neq0$; otherwise $b(\mathcal{X},\mathcal{Y}) = \tfrac12[b(\mathcal{X}+\mathcal{Y},\mathcal{X}+\mathcal{Y}) - b(\mathcal{X},\mathcal{X}) - b(\mathcal{Y},\mathcal{Y})] = 0$ for all pairs, against non-degeneracy.'
+      - 'Normalize: $\hat e_1 := \mathcal{X}_0/\sqrt{|b(\mathcal{X}_0,\mathcal{X}_0)|}$ has $b(\hat e_1,\hat e_1) = \pm1$.'
+      - 'Let $W$ be the vectors with $b(\hat e_1,\mathcal{W}) = 0$; it has dimension $d-1$, and every $\mathcal{X}$ splits uniquely as $\alpha\hat e_1 + \mathcal{W}$.'
+      - '$b$ restricted to $W$ is still non-degenerate: a $\mathcal{W}_0\in W$ orthogonal to all of $W$ is also orthogonal to $\hat e_1$, hence to all of $V$, so $\mathcal{W}_0 = 0$.'
+      - 'By induction $W$ has such a basis $\hat e_2,\dots,\hat e_d$; together with $\hat e_1$ it is the basis we want.'
+    hint: First find one vector of nonzero "squared length", then split it off.
+    explanation: |
+      The polarization step is where non-degeneracy enters: a form with $b(\mathcal{X},\mathcal{X}) = 0$ for every $\mathcal{X}$ is zero. To make the basis a **chart**-induced basis, write $\hat e_a = A^i{}_a\,(\partial x_i)_p$ in any chart $\mathscr{X}$ and use the linear chart $\mathscr{Y}^a := (A^{-1})^a{}_i\big(\mathscr{X}^i - \mathscr{X}^i(p)\big)$: its basis at $p$ is exactly $(\partial y_a)_p = \hat e_a$.
+
+  - type: mcq
+    id: uniqueness-idea
+    title: Why the count cannot change
+    prompt: |
+      Take two diagonalizing bases of $T_p\mathcal{M}$ as in Sylvester's law (dimension $d$), with $n_+$ and $n'_+$ plus signs. Let $V_+$ be the span of the first basis' $+1$ vectors (dimension $n_+$) and $V'_-$ the span of the second basis' $-1$ vectors (dimension $d - n'_+$). What is the key fact giving $n_+\leq n'_+$?
+    options:
+      - text: '$V_+\cap V''_- = \{0\}$, since $g_p(v,v) > 0$ on nonzero $v\in V_+$ and $< 0$ on nonzero $v\in V''_-$; so $n_+ + (d - n''_+)\leq d$'
+        correct: true
+      - text: '$V_+ = V''_+$, because the plus directions are determined by $g_p$'
+        feedback: |
+          The plus **subspace** is not unique. For $\eta$ in the chart $(t,a)$ it is the span of $\partial x_2$; after a boost it is the span of a tilted vector. Only its **dimension** is fixed, and that is what the argument proves.
+      - text: 'The two bases are related by an orthogonal matrix, which preserves eigenvalues'
+        feedback: |
+          Two diagonalizing bases need not be related by an orthogonal matrix: for $\eta$ the Lorentz boosts relate them, and they are not rotations. The proof uses no matrix relation at all, only the signs of $g_p(v,v)$ on two subspaces.
+    explanation: |
+      A vector in both subspaces would have $g_p(v,v)$ both positive and negative, so only $0$ is shared. Two subspaces meeting only in $0$ have dimensions adding to at most $d$: $n_+ + d - n'_+\leq d$, so $n_+\leq n'_+$. Swapping the bases gives $n'_+\leq n_+$.
+
+  - type: text
+    id: complete-square
+    title: Finding the signature by completing squares
+    body: |
+      At a point $p$, in some chart, a metric has components
+      $$g_{ij}(p) = \begin{pmatrix}2&1\\1&1\end{pmatrix},$$
+      symmetric with $\det = 1\neq0$. For a vector with components $x^i$,
+      $$g_p(v,v) = g_{ij}x^ix^j = 2(x^1)^2 + 2x^1x^2 + (x^2)^2.$$
+      Sylvester's law asks for new coordinates $y^1, y^2$ (linear in $x^1, x^2$) in which this is $\pm(y^1)^2\pm(y^2)^2$. School algebra does it: **complete the square** in $x^1$,
+      $$2(x^1)^2 + 2x^1x^2 = 2\big(x^1 + \tfrac12x^2\big)^2 - \tfrac12(x^2)^2.$$
+
+  - type: numeric
+    id: square-leftover
+    title: What is left over
+    prompt: |
+      A metric has components $\begin{pmatrix}2&1\\1&1\end{pmatrix}$ at $p$, so $g_p(v,v) = 2(x^1)^2 + 2x^1x^2 + (x^2)^2$. Using $2(x^1)^2 + 2x^1x^2 = 2(x^1 + \tfrac12x^2)^2 - \tfrac12(x^2)^2$, write
+      $$g_p(v,v) = 2\big(x^1+\tfrac12x^2\big)^2 + c\,(x^2)^2.$$
+      What is $c$?
+    answer: 0.5
+    answerText: '1/2'
+    wrong:
+      - { value: 1, feedback: 'The square $2(x^1+\tfrac12x^2)^2$ already contains $\tfrac12(x^2)^2$. What is left of the original $(x^2)^2$ is $1 - \tfrac12 = \tfrac12$.' }
+      - { value: -0.5, feedback: 'That is the correction term alone. The original metric also contributes $+(x^2)^2$: $c = 1 - \tfrac12 = \tfrac12$.' }
+    explanation: |
+      $c = \tfrac12$, so $g_p(v,v) = 2(x^1+\tfrac12x^2)^2 + \tfrac12(x^2)^2$: two positive squares. With
+      $$y^1 := \sqrt2\big(x^1+\tfrac12x^2\big)$$
+      and
+      $$y^2 := \tfrac{1}{\sqrt2}x^2$$
+      it reads $(y^1)^2 + (y^2)^2$. These are the components in the linear chart $\mathscr{Y}^1 = \sqrt2(\mathscr{X}^1 + \tfrac12\mathscr{X}^2)$, $\mathscr{Y}^2 = \mathscr{X}^2/\sqrt2$, where $g_{ij}(p) = \mathrm{diag}(1,1)$. Signature $(2,0)$.
+
+  - type: text
+    id: eigen-route
+    title: A second route, through matrix eigenvalues
+    body: |
+      The metric has no eigenvalues, but its **matrix** in one chart, $\mathbf{G} = \big(g_{ij}(p)\big)$, is a real symmetric matrix and has eigenvalues $\lambda_1,\dots,\lambda_d$. Linear algebra gives an orthogonal $\mathbf{O}$ ($\mathbf{O}^{\mathsf{T}} = \mathbf{O}^{-1}$) with
+      $$\mathbf{O}^{\mathsf{T}}\,\mathbf{G}\,\mathbf{O} = \mathrm{diag}(\lambda_1,\dots,\lambda_d).$$
+      Because $\mathbf{O}^{\mathsf{T}} = \mathbf{O}^{-1}$, this is at the same time a similarity **and** a change of basis for $g$ (a congruence, $\mathbf{A} = \mathbf{O}$). Rescaling the new basis vectors by $1/\sqrt{|\lambda_a|}$ turns each $\lambda_a$ into $\pm1$. So, by Sylvester's law:
+      $$n_+ = \#\{\text{positive eigenvalues of } \mathbf{G}\},$$
+      in **whichever** chart $\mathbf{G}$ was written. The eigenvalues' values change from chart to chart, their signs do not. For $\begin{pmatrix}2&1\\1&1\end{pmatrix}$: trace $3$, determinant $1$, eigenvalues $\tfrac{3\pm\sqrt5}{2}\approx 2.62,\ 0.38$, both positive: $(2,0)$ again. In the Euclidean plane: $\mathrm{diag}(1,1)$ in cartesian and $\mathrm{diag}(1,r^2)$ in polar charts, different values, both positive.
+
+  - type: mcq
+    id: lightcone-signature
+    title: A metric with no minus sign
+    prompt: |
+      In the chart $\mathscr{Z} = \big(\tfrac{t+a}{\sqrt2},\tfrac{a-t}{\sqrt2}\big)$ on $\mathbb{R}^2$ (points $(t,a)$), the Minkowski metric has components $(\eta_\mathscr{Z})_{kl} = \begin{pmatrix}0&1\\1&0\end{pmatrix}$, so $\eta(v,v) = 2z^1z^2$ for a vector with components $z^k$. What is its signature $(n_+,n_-)$?
+    options:
+      - text: '$(1,1)$'
+        correct: true
+      - text: '$(2,0)$'
+        feedback: |
+          "No negative entry, so no minus sign" confuses entries with signs after diagonalizing. $2z^1z^2 = \tfrac12(z^1+z^2)^2 - \tfrac12(z^1-z^2)^2$: one plus square, one minus square. The matrix's eigenvalues are $+1$ and $-1$.
+      - text: '$(0,0)$: the diagonal entries are zero, so there are no signs to count'
+        feedback: |
+          Sylvester's law counts the signs **after** diagonalizing, and a metric never ends with zeros: $n_+ + n_- = 2$. Here $2z^1z^2 = \tfrac12(z^1+z^2)^2 - \tfrac12(z^1-z^2)^2$.
+      - text: 'It is not defined: the matrix is not diagonal'
+        feedback: |
+          The signature is defined for any chart's matrix: diagonalize first. $2z^1z^2 = \tfrac12(z^1+z^2)^2 - \tfrac12(z^1-z^2)^2$, one $+$ and one $-$.
+    explanation: |
+      $2z^1z^2 = \tfrac12(z^1+z^2)^2 - \tfrac12(z^1-z^2)^2$ (expand: $\tfrac12\cdot 4z^1z^2$), or: the eigenvalues of $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ are $\pm1$. Signature $(1,1)$, as in the chart $(t,a)$: the rotated chart did not change the count, as Sylvester's law promised.
+
+  - type: mcq
+    id: positive-entries-trap
+    title: All entries positive
+    prompt: |
+      At a point, in some chart, a metric has components $\begin{pmatrix}1&2\\2&1\end{pmatrix}$. Every entry is positive. What is the signature $(n_+,n_-)$?
+    options:
+      - text: '$(1,1)$'
+        correct: true
+      - text: '$(2,0)$'
+        feedback: |
+          Positive entries, even positive diagonal entries, do not make positive squares. Complete the square: $(x^1)^2 + 4x^1x^2 + (x^2)^2 = (x^1+2x^2)^2 - 3(x^2)^2$. The determinant $1 - 4 = -3 < 0$ already shows one sign of each.
+      - text: '$(0,2)$'
+        feedback: |
+          Two minus signs would make $g_p(v,v) < 0$ for every $v\neq0$, but $v = (1,0)$ gives $g_{11} = 1 > 0$. Completing the square, $(x^1+2x^2)^2 - 3(x^2)^2$: one of each.
+    explanation: |
+      $(x^1)^2 + 4x^1x^2 + (x^2)^2 = (x^1+2x^2)^2 - 3(x^2)^2$; the eigenvalues are $3$ and $-1$. The vector $v = (1,-1)$ shows it directly: $g_p(v,v) = 1 - 4 + 1 = -2 < 0$, although every entry is positive.
+
+  - type: text
+    id: classes
+    title: Riemannian, pseudo-Riemannian, Lorentzian
+    body: |
+      Metrics are classified by their signature ($d := \dim\mathcal{M}$):
+      1. **Riemannian**, $n_+ = d$. Then $g$ is **positive-definite**:
+      $$g_p(\mathcal{X}_p,\mathcal{X}_p) > 0 \text{ for all } \mathcal{X}_p\neq0,$$
+      so each $g_p$ is an **inner product** on $T_p\mathcal{M}$: lengths and angles as at school. Example: the Euclidean plane. ($n_- = d$, negative-definite, is conventionally included: $-g$ is Riemannian.)
+      2. **Pseudo-Riemannian**, $0 < n_+ < d$. Then there are nonzero **null vectors**, $g_p(\mathcal{X}_p,\mathcal{X}_p) = 0$ with $\mathcal{X}_p\neq0$: if $g_{aa}(p) = +1$ and $g_{bb}(p) = -1$ in a diagonalizing chart, take $\mathcal{X}_p = (\partial x_a)_p + (\partial x_b)_p$, giving $1 - 1 = 0$. Each $g_p$ is symmetric, bilinear, non-degenerate but not positive: a **pseudo-inner product**.
+      3. **Lorentzian**, the special case $n_+ = 1$ or $n_- = 1$ (with $d\geq2$). This is general relativity's case. Both sign conventions are common: $\mathrm{diag}(-1,1,1,1)$, signature $(3,1)$, and $\mathrm{diag}(1,-1,-1,-1)$, signature $(1,3)$.
+
+  - type: mcq
+    id: which-lorentzian
+    title: Which are Lorentzian?
+    multiple: true
+    prompt: |
+      Each matrix gives a metric's components at a point in some chart. Lorentzian means signature with $n_+ = 1$ or $n_- = 1$ (dimension at least $2$). Select every Lorentzian one.
+    options:
+      - text: '$\mathrm{diag}(-1,1,1,1)$'
+        correct: true
+      - text: '$\mathrm{diag}(1,-1,-1,-1)$'
+        correct: true
+      - text: '$\begin{pmatrix}0&1\\1&0\end{pmatrix}$'
+        correct: true
+      - text: '$\mathrm{diag}(-1,-1,1,1)$'
+        feedback: |
+          Signature $(2,2)$: pseudo-Riemannian (it has null vectors such as $\partial x_1 + \partial x_3$), but with two minus and two plus directions it is not Lorentzian.
+      - text: '$\mathrm{diag}(1,1,1)$'
+        feedback: |
+          Signature $(3,0)$: Riemannian, positive-definite, no null vectors. Lorentzian needs exactly one sign different from the others.
+    explanation: |
+      $(3,1)$ and $(1,3)$ are the two conventions for spacetime; $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ is $(1,1)$, the Minkowski plane in a rotated chart. $(2,2)$ is pseudo-Riemannian but not Lorentzian; $(3,0)$ is Riemannian.
+
+  - type: numeric
+    id: null-basis
+    title: A basis of light rays
+    prompt: |
+      In the chart $\mathscr{Z} = \big(\tfrac{t+a}{\sqrt2},\tfrac{a-t}{\sqrt2}\big)$ the Minkowski metric has components $(\eta_\mathscr{Z})_{kl} = \begin{pmatrix}0&1\\1&0\end{pmatrix}$. Compute $\eta(\partial z_1,\partial z_1)$, the "squared length" of the first chart-induced basis vector.
+    answer: 0
+    wrong:
+      - { value: 1, feedback: '$\eta(\partial z_1,\partial z_1) = (\eta_\mathscr{Z})_{11}$, the top-left entry, which is $0$. The $1$ is the off-diagonal entry $\eta(\partial z_1,\partial z_2)$.' }
+      - { value: -1, feedback: 'In the chart $(t,a)$, $\eta(\partial x_1,\partial x_1) = -1$; but this is the chart $\mathscr{Z}$, where $(\eta_\mathscr{Z})_{11} = 0$.' }
+    explanation: |
+      $(\eta_\mathscr{Z})_{11} = 0$: the basis vector $\partial z_1$ is **null**. Indeed $t = (z^1 - z^2)/\sqrt2$ and $a = (z^1+z^2)/\sqrt2$, so $\partial z_1 = \tfrac{1}{\sqrt2}(\partial x_1 + \partial x_2)$, a light ray's direction; $\partial z_2 = \tfrac{1}{\sqrt2}(-\partial x_1 + \partial x_2)$ is the other light ray. This is why $\mathscr{Z}$ is called a **light-cone chart**: both its coordinate lines are light rays.
+
+  - type: mcq
+    id: null-cone
+    title: Do null vectors form a subspace?
+    prompt: |
+      For the Minkowski metric with components $\mathrm{diag}(-1,1)$ in the chart $(t,a)$, both $\partial x_1 + \partial x_2$ and $\partial x_1 - \partial x_2$ are null ($-1 + 1 = 0$). Is the set of null vectors at a point a vector subspace of $T_p\mathcal{M}$?
+    options:
+      - text: 'No: their sum $2\,\partial x_1$ has $\eta = -4\neq0$; the null vectors form a cone (two lines here), not a subspace'
+        correct: true
+      - text: 'Yes: it is the kernel of $\flat_p$'
+        feedback: |
+          The kernel of $\flat_p$ is $\{\mathcal{X}_p : g_p(\mathcal{X}_p,\mathcal{Y}_p) = 0 \text{ for all } \mathcal{Y}_p\}$, which is $\{0\}$ for a metric. A null vector is orthogonal only to **itself**: $\eta(\partial x_1+\partial x_2,\ \partial x_1) = -1\neq0$.
+      - text: 'Yes: $\eta(\mathcal{X},\mathcal{X})$ is linear in $\mathcal{X}$, so its zeros form a subspace'
+        feedback: |
+          $\eta(\mathcal{X},\mathcal{X})$ is **quadratic** in $\mathcal{X}$: doubling $\mathcal{X}$ multiplies it by $4$. Zeros of a quadratic form are closed under scaling but not under adding: $(\partial x_1+\partial x_2) + (\partial x_1-\partial x_2) = 2\partial x_1$, with $\eta = -4$.
+    explanation: |
+      $\eta(2\partial x_1, 2\partial x_1) = 4\cdot(-1) = -4$. The null vectors are closed under scaling only: in the plane, the two diagonal lines $a = \pm t$; in 4D spacetime, the light cone. A Riemannian metric has no nonzero null vectors at all.
+
+  - type: text
+    id: constant
+    title: The same signature everywhere
+    body: |
+      The signature was defined point by point. It cannot jump from one point to the next, as long as the manifold is **connected** (in one piece: not the union of two disjoint non-empty open sets). The idea:
+      - In a chart, the eigenvalues of the matrix $\big(g_{ij}(p)\big)$ depend continuously on $p$, and their signs count $n_+$ and $n_-$ (the eigenvalue route above).
+      - Their product is $\det\big(g_{ij}(p)\big)$, which never vanishes for a metric.
+      - An eigenvalue changing sign would have to pass through $0$, making the determinant $0$. So the signature is locally constant, hence constant on a connected manifold.
+
+      So we just speak of "the signature of $g$".
+
+  - type: mcq
+    id: disconnected
+    title: Two signatures on one plane?
+    prompt: |
+      On $\mathbb{R}^2$ with points $(a,b)$ and cartesian chart, consider $g := a\,dx^1\otimes dx^1 + dx^2\otimes dx^2$, with components $\mathrm{diag}(a, 1)$. Which statement is true?
+    options:
+      - text: 'It is not a metric on $\mathbb{R}^2$ (degenerate on the line $a = 0$); on the plane minus that line it is a metric, of signature $(2,0)$ where $a > 0$ and $(1,1)$ where $a < 0$'
+        correct: true
+      - text: 'It is a metric on $\mathbb{R}^2$ whose signature changes across $a = 0$'
+        feedback: |
+          At $a = 0$ the determinant $a\cdot 1$ is $0$: $\flat_p(\partial x_1) = 0$, so $g$ is not a metric there. That is exactly the mechanism of the constancy argument: a sign change forces a zero of the determinant.
+      - text: 'On the plane minus the line $a = 0$ it cannot be a metric, since the signature would differ between the two halves'
+        feedback: |
+          The plane minus a line is **not connected**: it is two disjoint open half-planes. Constancy holds on each connected piece, and each piece here has its own constant signature. Nothing forbids $(2,0)$ on one and $(1,1)$ on the other.
+    explanation: |
+      The determinant $a$ vanishes on $a = 0$, the only place where an eigenvalue could change sign. Removing that line leaves two pieces, each with constant signature. On a connected manifold such a jump is impossible.
+
+  - type: text
+    id: det-sign
+    title: The sign of the determinant
+    body: |
+      Take determinants in $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$ ($\det\mathbf{A}^{\mathsf{T}} = \det\mathbf{A}$):
+      $$\det\mathbf{G}_\mathscr{Y} = (\det\mathbf{A})^2\,\det\mathbf{G}_\mathscr{X}.$$
+      $(\det\mathbf{A})^2 > 0$ because a chart change has an invertible Jacobian. So the **value** of the determinant depends on the chart, but its **sign** does not. In a diagonalizing chart the determinant is a product of $n_-$ factors $-1$ and $n_+$ factors $+1$:
+      $$\operatorname{sign}\det\big(g_{ij}(p)\big) = (-1)^{n_-}.$$
+
+  - type: numeric
+    id: det-rescaled
+    title: The determinant after rescaling
+    prompt: |
+      Minkowski metric on $\mathbb{R}^2$, $\det\mathbf{G}_\mathscr{X} = \det\mathrm{diag}(-1,1) = -1$ in the chart $\mathscr{X} = (t,a)$. The rescaled chart $\mathscr{Y} = (2t,2a)$ has Jacobian $\mathbf{A} = \big(\partial\mathscr{X}^i/\partial\mathscr{Y}^k\big) = \mathrm{diag}(\tfrac12,\tfrac12)$. Using $\det\mathbf{G}_\mathscr{Y} = (\det\mathbf{A})^2\det\mathbf{G}_\mathscr{X}$, compute $\det\mathbf{G}_\mathscr{Y}$.
+    answer: -0.0625
+    answerText: '-1/16'
+    wrong:
+      - { value: -1, feedback: 'The determinant is not chart-independent: $(\det\mathbf{A})^2 = (\tfrac14)^2 = \tfrac1{16}$ multiplies it. Only the sign is kept.' }
+      - { value: -0.25, feedback: '$\det\mathbf{A} = \tfrac12\cdot\tfrac12 = \tfrac14$, and the law uses its **square**: $\tfrac1{16}\cdot(-1) = -\tfrac1{16}$.' }
+      - { value: 0.0625, feedback: 'The factor $(\det\mathbf{A})^2$ is positive, so the sign of $-1$ stays: $-\tfrac1{16}$.' }
+    explanation: |
+      $\det\mathrm{diag}(-\tfrac14,\tfrac14) = -\tfrac1{16}$: the value shrank, the sign stayed negative, as $(-1)^{n_-} = (-1)^1$ demands.
+
+  - type: mcq
+    id: det-trap
+    title: What the determinant's sign tells
+    prompt: |
+      A metric's components at a point have $\det\big(g_{ij}(p)\big) > 0$. Using $\operatorname{sign}\det = (-1)^{n_-}$ (with $n_-$ the number of minus signs in the signature), what can you conclude?
+    options:
+      - text: '$n_-$ is even; in dimension $2$ the metric is $(2,0)$ or $(0,2)$, but in dimension $4$ it could also be $(2,2)$'
+        correct: true
+      - text: 'The metric is Riemannian'
+        feedback: |
+          $\det > 0$ only says $n_-$ is even. $\mathrm{diag}(-1,-1)$ has $\det = 1$ and is negative-definite; $\mathrm{diag}(-1,-1,1,1)$ has $\det = 1$ and is $(2,2)$, pseudo-Riemannian.
+      - text: 'Nothing: the determinant depends on the chart'
+        feedback: |
+          Its value does, its sign does not: $\det\mathbf{G}_\mathscr{Y} = (\det\mathbf{A})^2\det\mathbf{G}_\mathscr{X}$ with $(\det\mathbf{A})^2 > 0$. The sign is $(-1)^{n_-}$ in every chart.
+    explanation: |
+      The sign of the determinant is a chart-independent shadow of the signature, $(-1)^{n_-}$. In two dimensions it is decisive for the Lorentzian case: $\det < 0$ exactly when the signature is $(1,1)$. For a 4D spacetime metric of signature $(3,1)$, $\det g_{ij} < 0$ in every chart, a fact relativity uses constantly.
+
+  - type: mcq
+    id: what-invariant
+    title: Chart-independent or not?
+    multiple: true
+    prompt: |
+      Let $g$ be a metric and $p$ a point. Select every quantity that is the **same in every chart** around $p$.
+    options:
+      - text: 'The signature $(n_+,n_-)$'
+        correct: true
+      - text: 'The sign of $\det\big(g_{ij}(p)\big)$'
+        correct: true
+      - text: 'The number of positive eigenvalues of the matrix $\big(g_{ij}(p)\big)$'
+        correct: true
+      - text: 'The eigenvalues of the matrix $\big(g_{ij}(p)\big)$'
+        feedback: |
+          Their signs are fixed, their values are not: the Euclidean plane has $\mathrm{diag}(1,1)$ in cartesian and $\mathrm{diag}(1,25)$ in polar coordinates at $(3,4)$, where $r = 5$.
+      - text: 'The number of negative entries of $\big(g_{ij}(p)\big)$'
+        feedback: |
+          Minkowski $\eta$ is $\mathrm{diag}(-1,1)$ in the chart $(t,a)$ (one negative entry) and $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ in a light-cone chart (none).
+      - text: 'The trace of $\big(g_{ij}(p)\big)$'
+        feedback: |
+          The rescaled chart $(2t, a)$ turns $\mathrm{diag}(-1,1)$ into $\mathrm{diag}(-\tfrac14,1)$: trace $0$ becomes $\tfrac34$. A trace is invariant for a $(1,1)$-tensor (similarity), not for a $(0,2)$ one (congruence).
+    explanation: |
+      Under the congruence $\mathbf{A}^{\mathsf{T}}\mathbf{G}\mathbf{A}$ only sign information survives: the signature, equivalently the counts of positive and negative eigenvalues, and with it the sign $(-1)^{n_-}$ of the determinant.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** with a Riemannian metric, the length of a curve $\gamma$ adds up $\sqrt{g(v_\gamma,v_\gamma)}$ along it. But in a Lorentzian spacetime $g(v_\gamma,v_\gamma)$ is negative for the worldline of a clock, and the square root breaks. How do we measure a timelike curve, and which curves are the "straightest"? That is **length and geodesics**.

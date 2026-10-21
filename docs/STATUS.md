@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 7 started: `ch07-metric` built; next: `ch07-signature`)
+## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature` built; next: `ch07-length`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -30,7 +30,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric` done; next `ch07-signature`, then `ch07-length`,
+- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature` done; next `ch07-length`, then
   `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, traps, map, challenge (two sessions);
   then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
   B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
@@ -319,6 +319,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   injective-not-bijective $(\mathscr{X}^1)^2dx^1\otimes dx^1$ on $\mathbb{R}$; Minkowski $\eta$ as in ch05 (points $(t,a)$, $\eta_{ij} = \mathrm{diag}(-1,1)$, $\kappa$), lightlike
   $\partial x_1 + \partial x_2$ with $\flat = (-1,1)$, $\flat(2\partial x_1+\partial x_2) = -2dx^1 + dx^2$; "lightlike (null)" named. Widget preset new: `chart-basis` cartesian + polar
   (`cut: left`), `jacobian: false`, $p = (3,4)$, $v = (-4,3)$, view `{x: -2.5, y: -0.75, w: 9, h: 9}`.
+  Conventions fixed here (`ch07-signature`): Jacobian matrix $\mathbf{A}$, $A^i{}_k := \partial\mathscr{X}^i/\partial\mathscr{Y}^k$ (old by new, as the B.12 remark), component matrices
+  $\mathbf{G}_\mathscr{X}$, congruence $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$ vs similarity $\mathbf{A}^{-1}\mathbf{T}\mathbf{A}$; Minkowski charts $\mathscr{Y} = (2t,2a)$ ($\mathrm{diag}(-	frac14,	frac14)$, rechecked),
+  light-cone chart $\mathscr{Z} = ((t+a)/\sqrt2,(a-t)/\sqrt2)$ ($egin{pmatrix}0&1\1&0\end{pmatrix}$, rechecked), $\partial z_1 = (\partial x_1+\partial x_2)/\sqrt2$; signature $(n_+,n_-)$ (book order),
+  spacetime $\mathrm{diag}(-1,1,1,1)$ = $(3,1)$; $\operatorname{sign}\det = (-1)^{n_-}$; examples $egin{pmatrix}2&1\1&1\end{pmatrix}$ = $(2,0)$ by completing squares, $egin{pmatrix}1&2\2&1\end{pmatrix}$ = $(1,1)$;
+  degenerate-on-a-line $a\,dx^1\otimes dx^1 + dx^2\otimes dx^2$; "connected" defined inline; "null vectors" form a cone; no widget.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -332,6 +337,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch07-signature (concept, 27 cards)
+- Built `content/ch07/signature.yaml` (hook: $\eta$ in three charts, guess the invariant; no eigenvalues (covector vs vector, $\lambda$ moves $1	o	frac14$);
+  Sylvester's law, no zeros, order card for the B.12 existence proof, uniqueness mcq; completing squares; eigenvalue-sign route; light-cone and
+  all-positive-entries traps; classes, Lorentzian select-all, null basis, null cone; constancy on connected manifolds with a disconnected example;
+  determinant sign). `own:` with 5 blanks. Choices: no widget fits (numeric instead); $\mathbf{A}$ named for the Jacobian to avoid Chapter 2's $J$.
+  Doubt resolved: the hook's $\mathrm{diag}(-	frac14,	frac14)$ and $egin{pmatrix}0&1\1&0\end{pmatrix}$ rechecked by hand, correct; metric.yaml teaser unchanged.
+  validate 0/0, shots 0 problems.
+- Conventions fixed here: see Current, "Chapter 7 conventions so far" (`ch07-signature`).
 ### 2026-10-20 — ch07-metric (concept, 30 cards)
 - Built `content/ch07/metric.yaml` (hook: polar components $(0,1)$ at $(3,4)$, length 1 or 5?; `chart-basis` widget early; metric definition, pointwise
   non-degeneracy, metric-or-not, injective-not-enough; components, Euclidean polar $\mathrm{diag}(1,r^2)$; lowering, raising, $g^{-1}$ (order card for

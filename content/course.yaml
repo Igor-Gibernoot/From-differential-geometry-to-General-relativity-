@@ -310,7 +310,11 @@ levels:
         kind: concept
         file: ch07/metric.yaml
         summary: Components alone cannot give a length. A metric is a symmetric (0,2)-tensor field whose musical map is invertible; it lowers and raises indices, and need not be positive (Minkowski).
-      - { id: ch07-signature, title: Signature, kind: concept }
+      - id: ch07-signature
+        title: Signature
+        kind: concept
+        file: ch07/signature.yaml
+        summary: A metric has no eigenvalues, but Sylvester's law gives a chart-independent count of plus and minus signs, the signature. It sorts metrics into Riemannian, pseudo-Riemannian and Lorentzian, and only the latter two have null vectors.
       - { id: ch07-length, title: Length and Geodesics, kind: concept }
       - { id: ch07-euler-lagrange, title: Variations and the Euler-Lagrange Equations, kind: concept }
       - { id: ch07-geodesic-equation, title: "Guided Problem: Deriving the Geodesic Equation", kind: guided }
