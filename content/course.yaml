@@ -414,7 +414,11 @@ levels:
         kind: concept
         file: ch09/newtonian-spacetime.yaml
         summary: "Why gravity looks like geometry (mass drops out of free fall, as for the Coriolis and centrifugal forces), then the stage: an absolute time t with dt never zero, the absolute spaces as its slices and absolute simultaneity, their tangent spaces ker dt, uniform flow ∇dt = 0 (no Γ with upper time index), and the Newtonian spacetime (M, O, A, ∇, t) with no spatial metric."
-      - { id: ch09-newton-axioms, title: Newton's Axioms on a Manifold, kind: concept }
+      - id: ch09-newton-axioms
+        title: Newton's Axioms on a Manifold
+        kind: concept
+        file: ch09/newton-axioms.yaml
+        summary: "Tangent vectors sorted by time content (future directed, spatial, past directed), worldlines that always move forward in absolute time, Newton I as the rule by which free particles define the connection (gravity is not a force), Newton II with spatial forces, and why it forces absolute time as the parameter: the time content of the acceleration is the second derivative of t along the worldline."
       - { id: ch09-stratified, title: Stratified Atlases, kind: concept }
       - { id: ch09-pseudo-forces, title: Inertial Charts and Pseudo-Forces, kind: concept }
       - { id: ch09-gravity-connection, title: Gravity in the Connection, kind: concept }
