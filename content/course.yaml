@@ -315,7 +315,11 @@ levels:
         kind: concept
         file: ch07/signature.yaml
         summary: A metric has no eigenvalues, but Sylvester's law gives a chart-independent count of plus and minus signs, the signature. It sorts metrics into Riemannian, pseudo-Riemannian and Lorentzian, and only the latter two have null vectors.
-      - { id: ch07-length, title: Length and Geodesics, kind: concept }
+      - id: ch07-length
+        title: Length and Geodesics
+        kind: concept
+        file: ch07/length.yaml
+        summary: A sign rune keeps the square root real, so the metric measures any curve, Euclidean or Minkowski, where length becomes proper time (the twin paradox). The length ignores how fast the path is run, and its stationary curves are the geodesics.
       - { id: ch07-euler-lagrange, title: Variations and the Euler-Lagrange Equations, kind: concept }
       - { id: ch07-geodesic-equation, title: "Guided Problem: Deriving the Geodesic Equation", kind: guided }
       - { id: ch07-levi-civita, title: The Levi-Civita Connection, kind: concept }

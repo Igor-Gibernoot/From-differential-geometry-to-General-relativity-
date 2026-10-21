@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature` built; next: `ch07-length`)
+## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length` built; next: `ch07-euler-lagrange`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -30,8 +30,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature` done; next `ch07-length`, then
-  `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, traps, map, challenge (two sessions);
+- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length` done; next
+  `ch07-euler-lagrange`, then `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, traps, map, challenge (two sessions);
   then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
   B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -324,6 +324,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   light-cone chart $\mathscr{Z} = ((t+a)/\sqrt2,(a-t)/\sqrt2)$ ($egin{pmatrix}0&1\1&0\end{pmatrix}$, rechecked), $\partial z_1 = (\partial x_1+\partial x_2)/\sqrt2$; signature $(n_+,n_-)$ (book order),
   spacetime $\mathrm{diag}(-1,1,1,1)$ = $(3,1)$; $\operatorname{sign}\det = (-1)^{n_-}$; examples $egin{pmatrix}2&1\1&1\end{pmatrix}$ = $(2,0)$ by completing squares, $egin{pmatrix}1&2\2&1\end{pmatrix}$ = $(1,1)$;
   degenerate-on-a-line $a\,dx^1\otimes dx^1 + dx^2\otimes dx^2$; "connected" defined inline; "null vectors" form a cone; no widget.
+  Conventions fixed here (`ch07-length`): sign rune $\text{ᛇ}_\gamma := \mathrm{sgn}(g(v_\gamma,v_\gamma))$ (read "sign"), speed $s_\gamma$, $L_{[a,b]}[\gamma]$ (square brackets = curve argument),
+  chart components $\dot\gamma^i := (\mathscr{X}^i\circ\gamma)'$; reparametrization $\text{ᚱ}$ with new parameter $\mu$ (as ch04), $\delta := \gamma\circ\text{ᚱ}$, $[\tilde a,\tilde b] := \text{ᚱ}^{-1}([a,b])$,
+  $s_\delta = |\text{ᚱ}'|\,s_\gamma\circ\text{ᚱ}$; runners $\gamma = (5\cos\lambda,5\sin\lambda)$ on $[0,2\pi]$ and $\delta = (5\cos2\lambda,5\sin2\lambda)$ on $[0,\pi]$ (speeds 5, 10, length $10\pi$;
+  $\int g(v,v) = 50\pi$ vs $100\pi$; $[0,4\pi]$ gives $20\pi$); Minkowski clock at rest $(\lambda,0)$, light ray $(\lambda,\lambda)$, piecewise $(\lambda,\tfrac12\lambda^2)$ ($\eta = \lambda^2-1$, $s(2) = \sqrt3$);
+  timelike/spacelike/lightlike as ch05 ($\eta<0$ timelike); twin B out at $\tfrac35$ to $(5,3)$ and back: $8$ vs $10$ ($\kappa = \tfrac54$); proper time named, postulate deferred to Level 10;
+  geodesic = stationary length (fixed endpoints, $\text{ᛇ}\neq0$), Minkowski inertial worldline is a maximum; deformation rune $\text{ᛊ}$ named in the teaser only. No widget.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -337,6 +343,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch07-length (concept, 28 cards)
+- Built `content/ch07/length.yaml` (hook: two runners on the radius-5 circle; Minkowski clock breaks the root; sign rune and speed; length functional;
+  circle in polar ($10\pi$) and polar slips; null curves select-all; piecewise sign; proper time, moving clock ($4$), twin paradox ($8$), longest worldline;
+  reparametrization recall, $|\text{ᚱ}'|$ mcq, substitution, build card for the reversing case, order card for the invariance proof; traps: twice round,
+  backwards, integral of $g(v,v)$; geodesic as stationary length, "why stationary"). `own:` with 4 blanks. Choices: parameter $\mu$ (ch04) instead of the
+  proof's $\tilde\lambda$; proof extended to indefinite metrics interval by interval ($\text{ᛇ}_\delta = \text{ᛇ}_\gamma\circ\text{ᚱ}$); no widget (numerics serve better).
+  Doubt: earlier STATUS entries (ch07-signature) contain broken escapes (tab for "\t", "egin" for "\begin"); left untouched.
+  validate 0/0, shots 0 problems.
+- Conventions fixed here: see Current, "Chapter 7 conventions so far" (`ch07-length`).
 ### 2026-10-20 — ch07-signature (concept, 27 cards)
 - Built `content/ch07/signature.yaml` (hook: $\eta$ in three charts, guess the invariant; no eigenvalues (covector vs vector, $\lambda$ moves $1	o	frac14$);
   Sylvester's law, no zeros, order card for the B.12 existence proof, uniqueness mcq; completing squares; eigenvalue-sign route; light-cone and
