@@ -350,7 +350,11 @@ levels:
         kind: traps
         file: ch07/traps.yaml
         summary: Fast questions on the classic metric mistakes, from sums without g and reciprocal inverses to determinants, proper time, geodesics that are not shortest, and Christoffel symbols mistaken for curvature.
-      - { id: ch07-map, title: "Content Map: Metric", kind: map }
+      - id: ch07-map
+        title: "Content Map: Metric"
+        kind: map
+        file: ch07/map.yaml
+        summary: Rebuild the chapter box by box, from a tangent space without lengths through the metric, its signature, length and geodesics, to the Levi-Civita connection and the curvatures it hands to Einstein's equations.
       - { id: ch07-review, title: Level Review, kind: review }
       - { id: ch07-challenge, title: Level Challenge, kind: challenge }
 

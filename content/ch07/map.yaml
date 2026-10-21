@@ -1,0 +1,386 @@
+id: ch07-map
+title: "Content Map: Metric"
+kind: map
+name: Chapter 7, Metric
+
+intro: |
+  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition. An arrow goes from a concept to a concept built on it, and its label says how; read it as a sentence, for example "metric *measures curves* length", "geodesic equation *coefficients* Christoffel symbols" or "Ricci curvature *$-\tfrac12Rg$* Einstein curvature".
+
+  You will rebuild the Chapter 7 map one box at a time, starting from the problem that forces a new structure on a manifold $\mathcal{M}$: a tangent space $T_p\mathcal{M}$ is a vector space with no lengths and no angles, and the components of a vector alone do not give its length. For each glowing box, pick the card that belongs there. The other cards look alike but each hides a classic mistake of this level, so read the details.
+
+  Tap a finished box at any time to reread its card.
+
+cols: 3
+nodes:
+  - id: problem
+    title: "Compo­nents give no length"
+    row: 1
+    col: 1
+    body: |
+      A tangent space $T_p\mathcal{M}$ is a vector space: it has no lengths and no angles. "Square root of the sum of the squared components" only works in cartesian charts of the plane: at $p = (3,4)$ the vector with polar components $(0,1)$ is $(\partial y_2)_p$, cartesian components $(-4,3)$, an arrow of length $5$, not $1$. A connection does not help either: it decides which curves are straight, not how long anything is.
+    decoys:
+      - body: |
+          A tangent space $T_p\mathcal{M}$ is a vector space, and every vector space has lengths: the square root of the sum of the squared components, in any chart. At $p = (3,4)$ the vector with polar components $(0,1)$ has length $\sqrt{0^2+1^2} = 1$, and every chart agrees.
+        feedback: |
+          The rule depends on the chart. At $(3,4)$ the polar components $(0,1)$ describe $(\partial y_2)_p$, whose cartesian components are $(-4,3)$: the cartesian rule gives $5$, the polar one $1$. Two charts, two answers, so "sum of squares" is not a property of the vector. A vector space only has adding and scaling; a length is **extra** structure.
+      - body: |
+          A tangent space $T_p\mathcal{M}$ is a vector space with no lengths of its own, but a connection supplies them: parallel transport carries a vector to every other point unchanged, so its length is the same everywhere and can be fixed once, at one point.
+        feedback: |
+          A connection compares vectors at different points but says nothing about how long they are. On the plane the connection $\nabla^{\mathrm{P}}$ (polar components constant) carries the polar components $(0,1)$ to $(0,1)$ everywhere, yet that vector has length $r$, which changes as it is moved. Lengths need their own structure, the metric; only then can one ask a connection to respect it.
+    explanation: |
+      The problem that opens the level. The arrow reads "fixed by": a symmetric, non-degenerate bilinear form on every tangent space.
+
+  - id: metric
+    title: 'Metric $g$'
+    row: 2
+    col: 2
+    body: |
+      A $(0,2)$-tensor field that is **symmetric**, $g(\mathcal{X},\mathcal{Y}) = g(\mathcal{Y},\mathcal{X})$, and **non-degenerate**: at every $p$,
+      $$\det\big(g_{ij}(p)\big)\neq0,$$
+      with components $g_{ij} := g(\partial x_i,\partial x_j)$ and $g(\mathcal{X},\mathcal{Y}) = x^i\tilde x^jg_{ij}$. Positivity is **not** required: Minkowski $\eta = \mathrm{diag}(-1,1)$ is a metric. Euclidean plane: $\delta_{ij}$ cartesian, $\mathrm{diag}(1,r^2)$ polar.
+    decoys:
+      - body: |
+          A $(0,2)$-tensor field that is **symmetric**, $g(\mathcal{X},\mathcal{Y}) = g(\mathcal{Y},\mathcal{X})$, and **positive definite**: at every $p$,
+          $$g_p(\mathcal{X}_p,\mathcal{X}_p) > 0\ \text{ for }\mathcal{X}_p\neq0,$$
+          with components $g_{ij} := g(\partial x_i,\partial x_j)$. Euclidean plane: $\delta_{ij}$ cartesian, $\mathrm{diag}(1,r^2)$ polar.
+        feedback: |
+          Positivity is what an inner product needs, and it is tempting because lengths "should" be positive. But it would throw out spacetime: Minkowski $\eta = \mathrm{diag}(-1,1)$ gives $\eta(\partial x_1,\partial x_1) = -1$ and $\eta(v,v) = 0$ for the light-like $v = \partial x_1+\partial x_2$. The metric only has to be non-degenerate, $\det(g_{ij})\neq0$, so that its musical map is invertible.
+      - body: |
+          A $(0,2)$-tensor field that is **symmetric**, $g(\mathcal{X},\mathcal{Y}) = g(\mathcal{Y},\mathcal{X})$, and **non-degenerate**: in every chart and at every $p$, every component is nonzero,
+          $$g_{ij}(p)\neq0\ \text{ for all }i,j.$$
+          Positivity is not required: Minkowski $\eta = \mathrm{diag}(-1,1)$ is a metric.
+        feedback: |
+          Non-degenerate is a condition on the whole matrix, $\det(g_{ij}(p))\neq0$, not on its entries. Cartesian $\delta_{ij}$ itself has zeros off the diagonal, and Minkowski in the light-cone chart has components $\begin{pmatrix}0&1\\1&0\end{pmatrix}$, zeros on the diagonal, yet determinant $-1$: a perfectly good metric.
+    explanation: |
+      The new structure, the gravitational field of the last level. Three arrows leave it: it is a map (musical maps), it has a chart-independent sign count (signature), and it measures curves (length).
+
+  - id: musical
+    title: 'Musical maps $\flat$, $\flat^{-1}$'
+    row: 3
+    col: 1
+    body: |
+      The metric turns vectors into covectors, $\flat(\mathcal{X})\lceil\mathcal{Y}\rfloor := g(\mathcal{X},\mathcal{Y})$, a bijection by non-degeneracy. Lowering and raising:
+      $$\flat(\mathcal{X})_i = x^j\,g_{ji},$$
+      $$\flat^{-1}(\mathsf{X})^i = \mathtt{x}_j\,(g^{-1})^{ji},$$
+      where the inverse metric's matrix is the inverse matrix, $g_{ij}(g^{-1})^{jk} = \delta^k_i$. Example: $\begin{pmatrix}2&1\\1&1\end{pmatrix}^{-1} = \begin{pmatrix}1&-1\\-1&2\end{pmatrix}$.
+    decoys:
+      - body: |
+          The metric turns vectors into covectors, $\flat(\mathcal{X})\lceil\mathcal{Y}\rfloor := g(\mathcal{X},\mathcal{Y})$, a bijection by non-degeneracy. Lowering and raising:
+          $$\flat(\mathcal{X})_i = x^j\,g_{ji},$$
+          $$\flat^{-1}(\mathsf{X})^i = \mathtt{x}_j\,(g^{-1})^{ji},$$
+          where each entry of the inverse metric is the reciprocal, $(g^{-1})^{ij} = 1/g_{ij}$. Example: $\begin{pmatrix}2&1\\1&1\end{pmatrix}^{-1} = \begin{pmatrix}1/2&1\\1&1\end{pmatrix}$.
+        feedback: |
+          Reciprocals only work for **diagonal** matrices, which is why polar $\mathrm{diag}(1,r^2)$ has inverse $\mathrm{diag}(1,1/r^2)$. In general the inverse metric is defined by $g_{ij}(g^{-1})^{jk} = \delta^k_i$, the matrix inverse. Check: $\begin{pmatrix}2&1\\1&1\end{pmatrix}\begin{pmatrix}1&-1\\-1&2\end{pmatrix}$ is the identity, while the entrywise reciprocals give first entry $2\cdot\tfrac12 + 1\cdot1 = 2$.
+      - body: |
+          The metric is not needed to turn a vector into a covector: in every chart, the covector $\flat(\mathcal{X})$ has the **same numbers** as the vector,
+          $$\flat(\mathcal{X})_i = x^i,$$
+          and raising undoes it, $\flat^{-1}(\mathsf{X})^i = \mathtt{x}_i$.
+        feedback: |
+          "Same numbers" is the cartesian special case, $g_{ij} = \delta_{ij}$. It cannot hold in every chart, because vector and covector components change with inverse Jacobians. In polar coordinates at radius $r$, the vector with components $(0,1)$ gives $\flat(\mathcal{X})_2 = x^jg_{j2} = r^2$, so $\flat(\mathcal{X}) = (0,r^2)$, not $(0,1)$. The metric is exactly what pairs the two spaces.
+    explanation: |
+      The metric seen as a map. It raises the index in the Christoffel symbols and lowers the one in the Riemann–Christoffel curvature further down.
+
+  - id: signature
+    title: "Signa­ture"
+    row: 3
+    col: 3
+    body: |
+      A metric has **no eigenvalues**: its matrix changes by congruence, $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$. **Sylvester's law**: some chart around $p$ gives
+      $$g_{ij}(p) = \mathrm{diag}(\pm1,\dots,\pm1),$$
+      and the counts $(n_+,n_-)$, with $n_++n_- = \dim\mathcal{M}$, are the same for every such chart. Riemannian: $n_- = 0$. **Lorentzian**: $n_+ = 1$ or $n_- = 1$ (spacetime $(3,1)$), with nonzero **null vectors** forming a cone.
+    decoys:
+      - body: |
+          A metric has **eigenvalues**, the same in every chart, because its matrix changes by similarity, $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{-1}\mathbf{G}_\mathscr{X}\mathbf{A}$. The **signature** lists them; Minkowski has eigenvalues $-1, 1$ in every chart. Lorentzian: exactly one eigenvalue of the minority sign (spacetime $(3,1)$).
+        feedback: |
+          Similarity is the law of a $(1,1)$-tensor; the metric is $(0,2)$ and changes by congruence, $\mathbf{A}^{\mathsf{T}}\mathbf{G}\mathbf{A}$, which moves eigenvalues. Minkowski in the chart $(2t,2a)$ has components $\mathrm{diag}(-\tfrac14,\tfrac14)$. Only the **signs** survive (Sylvester's law), so the signature counts signs, not values.
+      - body: |
+          A metric has no eigenvalues, but its signature can be read off in **any** chart: count the positive and the negative entries on the diagonal of $\big(g_{ij}(p)\big)$. The counts $(n_+,n_-)$ are the same in every chart. Lorentzian: $n_+ = 1$ or $n_- = 1$ (spacetime $(3,1)$).
+        feedback: |
+          Diagonal entries mislead when the matrix is not diagonal. The light-cone chart of Minkowski has components $\begin{pmatrix}0&1\\1&0\end{pmatrix}$, no positive or negative diagonal entry, and $\begin{pmatrix}1&2\\2&1\end{pmatrix}$ has two positive ones; both have signature $(1,1)$. Complete the squares, or count the signs of the eigenvalues of the matrix in any one chart.
+    explanation: |
+      The metric's one chart-independent label at a point. Its signs reach the length through the sign rune: in a Lorentzian metric curves can be timelike, spacelike or light-like.
+
+  - id: length
+    title: 'Length $L$'
+    row: 4
+    col: 2
+    body: |
+      With the sign rune $\text{ᛇ}_\gamma := \mathrm{sgn}\big(g(v_\gamma,v_\gamma)\big)$ (read "sign") and speed $s_\gamma := \sqrt{\text{ᛇ}_\gamma\,g(v_\gamma,v_\gamma)}$,
+      $$L_{[a,b]}[\gamma] := \int_a^b s_\gamma(\lambda)\,d\lambda,$$
+      unchanged by any reparametrization $\text{ᚱ}$. In Minkowski, for a timelike worldline, it is the **proper time** of a clock: twin at speed $\tfrac35$ out and back ages $8$ while the one at rest ages $10$.
+    decoys:
+      - body: |
+          With the sign rune $\text{ᛇ}_\gamma := \mathrm{sgn}\big(g(v_\gamma,v_\gamma)\big)$, the root can be dropped, since it adds nothing to the comparison of curves:
+          $$L_{[a,b]}[\gamma] := \int_a^b g(v_\gamma,v_\gamma)\,d\lambda,$$
+          unchanged by any reparametrization $\text{ᚱ}$. In Minkowski, for a timelike worldline, it is the proper time of a clock.
+        feedback: |
+          Without the root the integral depends on the speed. The circle of radius $5$ run once at speed $5$ gives $\int g(v,v)\,d\lambda = 50\pi$, run at speed $10$ it gives $100\pi$, yet the path is the same, with length $10\pi$ both times. The root makes the factor $|\text{ᚱ}'|$ of the speed exactly the one the substitution needs.
+      - body: |
+          With the sign rune $\text{ᛇ}_\gamma := \mathrm{sgn}\big(g(v_\gamma,v_\gamma)\big)$ and speed $s_\gamma := \sqrt{\text{ᛇ}_\gamma\,g(v_\gamma,v_\gamma)}$,
+          $$L_{[a,b]}[\gamma] := \int_a^b s_\gamma(\lambda)\,d\lambda.$$
+          In Minkowski, for a timelike worldline, it is the proper time, and the inertial twin, who takes the straight route, ages **least**: $8$ against $10$ for the twin who goes out at speed $\tfrac35$ and back.
+        feedback: |
+          The Euclidean intuition "straight is shortest" flips its sign here. The minus sign in $\eta$ makes motion **reduce** proper time: the travelling twin ages $\sqrt{1-(3/5)^2}\cdot10 = 8$, the one at rest $10$. The straight (inertial) worldline has the **most** proper time.
+    explanation: |
+      The metric measuring whole curves. The length belongs to the path traced, not to the speed; its stationary curves will be the geodesics.
+
+  - id: variation
+    title: "Vari­ations"
+    row: 5
+    col: 1
+    body: |
+      For $\text{ᛇ}_\gamma\neq0$ on $[a,b]$ and $\gamma_\mathcal{U} := \mathscr{X}\circ\gamma$, bend the curve with a knob $\text{ᛊ}$ and a shape $\text{ᛉ}$ with $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$:
+      $$\gamma_{\text{ᛊ}} := \mathscr{X}^{-1}\big(\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}\big).$$
+      A **geodesic** has stationary length for every shape:
+      $$\frac{d}{d\text{ᛊ}}L_{[a,b]}[\gamma_{\text{ᛊ}}]\Big|_{\text{ᛊ}=0} = 0.$$
+      Stationary, not necessarily shortest.
+    decoys:
+      - body: |
+          For $\text{ᛇ}_\gamma\neq0$ on $[a,b]$ and $\gamma_\mathcal{U} := \mathscr{X}\circ\gamma$, bend the curve with a knob $\text{ᛊ}$ and a shape $\text{ᛉ}$ with $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$:
+          $$\gamma_{\text{ᛊ}} := \mathscr{X}^{-1}\big(\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}\big).$$
+          A **geodesic** is the shortest curve between its endpoints: every bent curve is longer.
+        feedback: |
+          Stationary is weaker than minimal. On the unit sphere, the long way round the equator between two points a quarter turn apart, length $\tfrac{3\pi}2$, is a geodesic, though the short arc is shorter. In Minkowski the inertial worldline is even a **maximum** of proper time. The definition only asks that the first-order change vanish.
+      - body: |
+          For $\text{ᛇ}_\gamma\neq0$ on $[a,b]$ and $\gamma_\mathcal{U} := \mathscr{X}\circ\gamma$, bend the curve with a knob $\text{ᛊ}$ and **any** smooth shape $\text{ᛉ}$, endpoints included:
+          $$\gamma_{\text{ᛊ}} := \mathscr{X}^{-1}\big(\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}\big).$$
+          A **geodesic** has stationary length for every shape: $\frac{d}{d\text{ᛊ}}L[\gamma_{\text{ᛊ}}] = 0$ at $\text{ᛊ} = 0$.
+        feedback: |
+          If the endpoints may move, no curve passes, not even a straight segment. The segment $(\lambda,0)$ on $[0,1]$ with the shape $(\lambda,0)$ becomes $((1+\text{ᛊ})\lambda,0)$, of length $1+\text{ᛊ}$: derivative $1$. Fixing the endpoints is also what kills the boundary term in the integration by parts.
+    explanation: |
+      The precise meaning of "geodesic". The condition does not depend on the chart used to bend the curve, since only the first-order shape enters.
+
+  - id: el
+    title: "Euler–Lagrange equations"
+    row: 6
+    col: 2
+    body: |
+      With the Lagrangian on the tangent bundle, in the bundle chart (positions $\alpha$, velocities $\beta$),
+      $$\mathcal{L}_\mathscr{X}(\alpha;\beta) = \sqrt{\text{ᛇ}_\gamma\,g_{ij}\,\beta^i\beta^j},$$
+      chain rule, integration by parts and $\text{ᛉ}$ arbitrary give: $\gamma$ is a geodesic if and only if, for $m = 1,\dots,d$,
+      $$\frac{d}{d\lambda}\big[\partial_{d+m}\mathcal{L}_\mathscr{X}\big] - \partial_m\mathcal{L}_\mathscr{X} = 0$$
+      at every $\lambda$ (partials at $(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})$).
+    decoys:
+      - body: |
+          With the Lagrangian on the tangent bundle, in the bundle chart (positions $\alpha$, velocities $\beta$),
+          $$\mathcal{L}_\mathscr{X}(\alpha;\beta) = \sqrt{\text{ᛇ}_\gamma\,g_{ij}\,\beta^i\beta^j},$$
+          the chain rule gives: $\gamma$ is a geodesic if and only if, for $m = 1,\dots,d$, both partials vanish separately,
+          $$\partial_{d+m}\mathcal{L}_\mathscr{X} = 0,$$
+          $$\partial_m\mathcal{L}_\mathscr{X} = 0.$$
+        feedback: |
+          This forgets the integration by parts, which moves the derivative off $\text{ᛉ}'$ and combines the two terms. Separately the conditions are impossible: in the cartesian plane $\partial_{d+m}\mathcal{L}_\mathscr{X} = \beta^m/\mathcal{L}_\mathscr{X}$, which vanishes for no moving curve, so not even straight lines would be geodesics. Only the combination $\tfrac{d}{d\lambda}[\partial_{d+m}\mathcal{L}] - \partial_m\mathcal{L}$ must vanish.
+      - body: |
+          With the Lagrangian on the tangent bundle, in the bundle chart (positions $\alpha$, velocities $\beta$),
+          $$\mathcal{L}_\mathscr{X}(\alpha;\beta) = \sqrt{\text{ᛇ}_\gamma\,g_{ij}\,\beta^i\beta^j},$$
+          chain rule and integration by parts give: $\gamma$ is a geodesic if and only if, for $m = 1,\dots,d$, the **integral** vanishes,
+          $$\int_a^b\Big(\tfrac{d}{d\lambda}\big[\partial_{d+m}\mathcal{L}\big] - \partial_m\mathcal{L}\Big)d\lambda = 0,$$
+          which does not force the integrand to vanish at each $\lambda$.
+        feedback: |
+          After integration by parts the condition is $\int_a^b E_m\,\text{ᛉ}^m\,d\lambda = 0$ for **every** shape $\text{ᛉ}$, not just for $\text{ᛉ} = 1$ (which is not even allowed: it does not vanish at the endpoints). Choosing $\text{ᛉ}$ as a bump around any $\lambda_0$ forces $E_m(\lambda_0) = 0$ (fundamental lemma): differential equations at every point.
+    explanation: |
+      The variational principle turned into differential equations. The proof works for any $C^2$ Lagrangian; the arrow feeds it the metric's.
+
+  - id: geodesic
+    title: "Geo­desic equation"
+    row: 7
+    col: 3
+    body: |
+      Feeding the metric's Lagrangian in and running the curve at **constant speed** ($\dot s_\gamma = 0$) gives
+      $$\ddot\gamma^k + \Gamma^k_{ij}\,\dot\gamma^i\dot\gamma^j = 0, \tag{G}$$
+      with coefficients built from $g$ and its first derivatives. At other speeds the right side is $(\dot s_\gamma/s_\gamma)\,\dot\gamma^k$. Polar plane: $\ddot r - r\dot\theta^2 = 0$ and $\ddot\theta + \tfrac2r\dot r\dot\theta = 0$.
+    decoys:
+      - body: |
+          Feeding the metric's Lagrangian in gives, for **every** parametrization,
+          $$\ddot\gamma^k + \Gamma^k_{ij}\,\dot\gamma^i\dot\gamma^j = 0, \tag{G}$$
+          with coefficients built from $g$ and its first derivatives, since the length does not care about the speed. Polar plane: $\ddot r - r\dot\theta^2 = 0$ and $\ddot\theta + \tfrac2r\dot r\dot\theta = 0$.
+        feedback: |
+          The length ignores the speed, so its Euler-Lagrange equations hold for every parametrization, but they are the any-speed form, with right side $(\dot s_\gamma/s_\gamma)\dot\gamma^k$. (G) is that form at constant speed. The ray $r = \lambda^2$, $\theta$ fixed, on $[1,2]$ is a geodesic path, yet $\ddot r - r\dot\theta^2 = 2\neq0$.
+      - body: |
+          Feeding the metric's Lagrangian in and running the curve at constant speed gives
+          $$\ddot\gamma^k + \Gamma^k_{ij}\,\dot\gamma^i\dot\gamma^j = 0. \tag{G}$$
+          In the polar plane any curve with **constant** polar velocity components is a solution, for example the unit circle $r = 1$, $\theta = \lambda$.
+        feedback: |
+          Constant components make $\ddot\gamma^k = 0$, but the $\Gamma$ term remains. For the unit circle, $\ddot r - r\dot\theta^2 = 0 - 1\cdot1 = -1\neq0$: it fails (G), as it should, since a circle is not a straight line of the plane. Constant components are a cartesian test only.
+    explanation: |
+      The equation every geodesic run at constant speed obeys. Its coefficients get their own box: they will define a connection.
+
+  - id: christoffel
+    title: "Christ­offel symbols"
+    row: 8
+    col: 2
+    body: |
+      The coefficients of (G), in a chart:
+      $$\begin{aligned}\Gamma^k_{ji} := \tfrac12(g^{-1})^{km}\big(&\partial_ig_{mj}+\partial_jg_{mi}\\ &-\partial_mg_{ij}\big),\end{aligned}$$
+      symmetric in $i,j$ and **not** tensor components. Euclidean plane: all zero in cartesian coordinates, yet in polar ones $\Gamma^1_{22} = -r$ and $\Gamma^2_{12} = \tfrac1r$.
+    decoys:
+      - body: |
+          The coefficients of (G), in a chart:
+          $$\begin{aligned}\Gamma^k_{ji} := \tfrac12(g^{-1})^{km}\big(&\partial_ig_{mj}+\partial_jg_{mi}\\ &-\partial_mg_{ij}\big),\end{aligned}$$
+          the components of a $(1,2)$-tensor field, so a nonzero $\Gamma$ in one chart means a curved manifold: polar $\Gamma^1_{22} = -r$.
+        feedback: |
+          Derivatives of $g$ change with second derivatives of the transition map, so $\Gamma$ is not a tensor and can be made nonzero by a mere change of chart. The Euclidean plane has all $\Gamma = 0$ in cartesian coordinates and $\Gamma^1_{22} = -r$ in polar ones, and it is flat. Curvature needs a tensor, the Riemann tensor.
+      - body: |
+          The coefficients of (G), in a chart, need no inverse metric:
+          $$\begin{aligned}\Gamma^k_{ji} := \tfrac12\big(&\partial_ig_{kj}+\partial_jg_{ki}\\ &-\partial_kg_{ij}\big),\end{aligned}$$
+          symmetric in $i,j$. Polar plane: $\Gamma^1_{22} = -r$ and $\Gamma^2_{12} = r$.
+        feedback: |
+          This is the lowered combination $\Gamma_{kij}$; its free index $k$ is a lower one, while (G) needs an upper index to sit next to $\ddot\gamma^k$. Raising it costs $(g^{-1})^{km}$. In polar coordinates $\Gamma_{212} = \tfrac12\partial_rg_{22} = r$, and $(g^{-1})^{22} = 1/r^2$ turns it into $\Gamma^2_{12} = 1/r$, the value that makes rays solve (G).
+    explanation: |
+      The bridge from the metric to connections: the geodesic equation has the shape of an autoparallel equation with these coefficients.
+
+  - id: lc
+    title: 'Levi-Civita $\nabla^{\mathrm{LC}}$'
+    row: 9
+    col: 1
+    body: |
+      The connection whose coefficients are the Christoffel symbols in every chart, so its autoparallels are the geodesics. It is **torsion free** and **metric compatible**,
+      $$\nabla_\mathcal{X}g = 0,$$
+      and it is the **only** connection with both properties (Levi-Civita theorem). Its parallel transport keeps lengths and angles.
+    decoys:
+      - body: |
+          The connection whose coefficients are the Christoffel symbols in every chart, so its autoparallels are the geodesics. It is the **only** metric-compatible connection,
+          $$\nabla_\mathcal{X}g = 0,$$
+          so torsion need not be checked. Its parallel transport keeps lengths and angles.
+        feedback: |
+          Compatibility alone leaves room. On the plane $\nabla^{\mathrm{W}}$ (radial and angular unit fields constant) keeps the metric constant too, yet it has torsion: in polar coordinates $\mathtt{T}^2_{12} = \tfrac1r$. Uniqueness needs both conditions; the proof uses the symmetry of $\Gamma$ to solve the three cyclic compatibility equations.
+      - body: |
+          The connection whose coefficients are the Christoffel symbols in every chart, so its autoparallels are the geodesics. It is the **only** torsion-free connection,
+          $$\Gamma^k_{ij} = \Gamma^k_{ji},$$
+          so compatibility with $g$ need not be checked. Its parallel transport keeps lengths and angles.
+        feedback: |
+          Symmetric coefficients still leave $d^2(d+1)/2$ free functions in a chart. On the plane $\nabla^{\mathrm{P}}$ (polar components constant) is torsion free but not compatible: $(\nabla^{\mathrm{P}}_{\partial y_1}g)_{22} = 2r$, and a transported vector changes its length. It takes compatibility as well to pin $\nabla$ down.
+    explanation: |
+      The metric picks a connection. From here on every curvature is the curvature of $\nabla^{\mathrm{LC}}$, so the metric alone decides it.
+
+  - id: riem
+    title: "Riemann–Christ­offel curvature"
+    row: 10
+    col: 2
+    body: |
+      $\mathrm{Riem}$ of $\nabla^{\mathrm{LC}}$, with up to second derivatives of $g$, its index lowered:
+      $$(\mathrm{Riem}^\flat)_{ajkm} = g_{al}\,\mathrm{Riem}^l_{jkm}.$$
+      Antisymmetric in $(k,m)$ and in $(a,j)$, unchanged under the pair exchange $(a,j)\leftrightarrow(k,m)$, and cyclic sum over $j,k,m$ zero (algebraic Bianchi). Independent components $d^2(d^2-1)/12$: $1, 6, 20$ for $d = 2,3,4$. Unit sphere: $\mathrm{Riem}^1{}_{212} = \sin^2\vartheta$.
+    decoys:
+      - body: |
+          $\mathrm{Riem}$ of $\nabla^{\mathrm{LC}}$, with up to second derivatives of $g$, its index lowered:
+          $$(\mathrm{Riem}^\flat)_{ajkm} = g_{al}\,\mathrm{Riem}^l_{jkm}.$$
+          Built from $\Gamma$ and its derivatives, it vanishes at any point where all Christoffel symbols vanish, so a chart with $\Gamma(p) = 0$ shows the metric is flat at $p$.
+        feedback: |
+          $\mathrm{Riem}$ contains the **derivatives** of $\Gamma$, which need not vanish where $\Gamma$ does. On the unit sphere, at a point of the equator, $\Gamma^1_{22} = -\sin\vartheta\cos\vartheta$ and $\Gamma^2_{12} = \cot\vartheta$ are both $0$, yet $\mathrm{Riem}^1{}_{212} = \sin^2\vartheta = 1$. A chart with $\Gamma(p) = 0$ exists at every point of every metric manifold.
+      - body: |
+          $\mathrm{Riem}$ of $\nabla^{\mathrm{LC}}$, with up to second derivatives of $g$, its index lowered:
+          $$(\mathrm{Riem}^\flat)_{ajkm} = g_{al}\,\mathrm{Riem}^l_{jkm}.$$
+          Antisymmetric in $(k,m)$ only; lowering the index adds no symmetry, so in $d = 4$ there are $4^4 = 256$ components, half of them independent.
+        feedback: |
+          Lowering the index is what reveals the hidden symmetries of the Levi-Civita curvature: antisymmetry in $(a,j)$ (compatibility), the pair exchange and the algebraic Bianchi identity (no torsion). Together they cut the count to $d^2(d^2-1)/12$: $20$ in four dimensions, not $128$.
+    explanation: |
+      Curvature now belongs to the metric. Two arrows leave it: its contraction (Ricci) and its vanishing (flat).
+
+  - id: ricci
+    title: 'Ricci and $R$'
+    row: 11
+    col: 1
+    body: |
+      The Ricci curvature contracts the upper with the middle index, $\mathrm{Ric}_{ab} = \mathrm{Riem}^m{}_{amb}$, and is **symmetric** (pair exchange). Contracting again with the inverse metric gives the **Ricci scalar**, a chart-independent function:
+      $$R := (g^{-1})^{mk}\,\mathrm{Ric}_{km}.$$
+      In two dimensions $\mathrm{Ric} = \tfrac R2\,g$. Sphere of radius $a$: $R = 2/a^2$.
+    decoys:
+      - body: |
+          The Ricci curvature contracts the upper with the middle index, $\mathrm{Ric}_{ab} = \mathrm{Riem}^m{}_{amb}$, and is symmetric. The **Ricci scalar** is the sum of its diagonal components, a chart-independent function:
+          $$R := \textstyle\sum_k\mathrm{Ric}_{kk}.$$
+          In two dimensions $\mathrm{Ric} = \tfrac R2\,g$.
+        feedback: |
+          A sum of two lower indices at the same height is not a contraction and changes with the chart. For the metric $\mathrm{diag}(1,r^4)$, at $r = 2$, $\mathrm{Ric} = \mathrm{diag}(-\tfrac12,-8)$: the diagonal sum is $-8.5$, but with $(g^{-1})^{22} = 1/r^4 = \tfrac1{16}$ the true scalar is $R = -\tfrac12 - \tfrac12 = -1$.
+      - body: |
+          The Ricci curvature contracts the upper with the middle index, $\mathrm{Ric}_{ab} = \mathrm{Riem}^m{}_{amb}$, and is symmetric; with the inverse metric, the **Ricci scalar** $R := (g^{-1})^{mk}\mathrm{Ric}_{km}$. Since $\mathrm{Ric}$ keeps all the information of $\mathrm{Riem}$,
+          $$\mathrm{Ric} = 0\ \Rightarrow\ \mathrm{Riem} = 0$$
+          in every dimension.
+        feedback: |
+          Contraction loses information once $d\geq4$. In four dimensions $\mathrm{Riem}$ has $20$ independent components and $\mathrm{Ric}$ only $10$, so $\mathrm{Ric} = 0$ (vacuum) still allows curvature: tides around a star. Only in dimensions $2$ and $3$ does $\mathrm{Ric}$ determine $\mathrm{Riem}$.
+    explanation: |
+      The averaged curvature. The arrow down adds the one correction that makes it divergence free.
+
+  - id: einstein
+    title: "Ein­stein curvature"
+    row: 12
+    col: 2
+    body: |
+      $$G := \mathrm{Ric} - \tfrac12R\,g,$$
+      symmetric, zero in two dimensions, and **divergence free** by the contracted Bianchi identity:
+      $$(g^{-1})^{kl}(\nabla_{\partial x_k}G)_{ln} = 0.$$
+      The left-hand side of Einstein's equations.
+    decoys:
+      - body: |
+          $$G := \mathrm{Ric} - R\,g,$$
+          symmetric and **divergence free** by the contracted Bianchi identity:
+          $$(g^{-1})^{kl}(\nabla_{\partial x_k}G)_{ln} = 0.$$
+          The left-hand side of Einstein's equations.
+        feedback: |
+          The factor is $\tfrac12$ because the divergence of $\mathrm{Ric}$ is $\tfrac12\partial_nR$, and the divergence of $Rg$ is $\partial_nR$ (compatibility keeps $g$ constant). With the full $Rg$ the divergence is $-\tfrac12\partial_nR\neq0$. Also in two dimensions $\mathrm{Ric} - Rg = -\tfrac R2g$, while the true $G$ vanishes there.
+      - body: |
+          $$G := \mathrm{Ric} - \tfrac12R\,g,$$
+          symmetric, zero in two dimensions. The correction $-\tfrac12Rg$ is cosmetic: $\mathrm{Ric}$ itself is already divergence free,
+          $$(g^{-1})^{kl}(\nabla_{\partial x_k}\mathrm{Ric})_{ln} = 0.$$
+        feedback: |
+          The contracted Bianchi identity says the divergence of $\mathrm{Ric}$ is $\tfrac12\partial_nR$, zero only where $R$ is constant. The term $-\tfrac12Rg$ is exactly what cancels it, and a divergence-free left side is what Einstein's equations need, since the matter side is conserved.
+    explanation: |
+      The end of the chain $g\to\nabla^{\mathrm{LC}}\to\mathrm{Riem}\to\mathrm{Ric}\to G$, ready for gravity.
+
+  - id: flat
+    title: "Flat metric"
+    row: 11
+    col: 3
+    body: |
+      $\mathrm{Riem} = 0$ if and only if around every point some chart has **constant** metric components (and then all $\Gamma = 0$ there). Test with $\mathrm{Riem}$, never with $\Gamma$: for $\mathrm{diag}(1,f(r)^2)$, $\mathrm{Riem}^1{}_{212} = -ff''$, so $f = r$ and $f = 2r$ are flat, $f = r^2$ is curved. Minkowski is flat.
+    decoys:
+      - body: |
+          $\mathrm{Riem} = 0$ if and only if around every point some chart has the **identity** as metric components, $g_{ij} = \delta_{ij}$. Test with $\mathrm{Riem}$, never with $\Gamma$: for $\mathrm{diag}(1,f(r)^2)$, $\mathrm{Riem}^1{}_{212} = -ff''$, so $f = r$ and $f = 2r$ are flat, $f = r^2$ is curved.
+        feedback: |
+          Constant, not identity: the signature cannot change with the chart. Minkowski $\eta = \mathrm{diag}(-1,1)$ has $\mathrm{Riem} = 0$ (all $\Gamma = 0$ in the inertial chart), but no chart turns it into $\delta_{ij}$, since Sylvester's law keeps one minus sign. A flat metric has constant components, $\mathrm{diag}(\pm1,\dots,\pm1)$ after a linear change of chart.
+      - body: |
+          $\mathrm{Riem} = 0$ if and only if around every point some chart has constant metric components. A quicker test in every dimension: the metric is flat exactly when its Ricci scalar vanishes,
+          $$R = 0.$$
+        feedback: |
+          One function cannot carry all of the curvature once $d\geq3$: in four dimensions $\mathrm{Riem}$ has $20$ independent components, $R$ is a single number per point. $R = 0$ does not even force $\mathrm{Ric} = 0$. Only in two dimensions, where $\mathrm{Riem}$ has one component, is $R = 0$ the same as flat.
+    explanation: |
+      The answer to "when is a metric really the flat one in disguise?": when its curvature tensor vanishes.
+
+edges:
+  - { from: problem, to: metric, label: fixed by }
+  - { from: metric, to: musical, label: as a map }
+  - { from: metric, to: signature, label: count signs }
+  - { from: metric, to: length, label: measures curves }
+  - { from: signature, to: length, label: 'sign $\text{ᛇ}$' }
+  - { from: length, to: variation, label: bend }
+  - { from: variation, to: el, label: stationary }
+  - { from: el, to: geodesic, label: constant speed }
+  - { from: geodesic, to: christoffel, label: coefficients }
+  - { from: christoffel, to: lc, label: 'as $\Gamma$' }
+  - { from: lc, to: riem, label: curvature }
+  - { from: riem, to: ricci, label: contract }
+  - { from: riem, to: flat, label: '$= 0$' }
+  - { from: ricci, to: einstein, label: '$-\tfrac12Rg$' }
+
+outroTitle: Chapter 7 in one picture
+outro: |
+  Read it top to bottom. Components alone give no length, so a manifold gets a **metric**: a symmetric $(0,2)$-tensor field with
+  $$\det\big(g_{ij}(p)\big)\neq0,$$
+  not necessarily positive. As a map it lowers and raises indices:
+  $$\flat(\mathcal{X})_i = x^j\,g_{ji},$$
+  $$g_{ij}\,(g^{-1})^{jk} = \delta^k_i.$$
+  It has no eigenvalues, but a **signature** $(n_+,n_-)$ (Sylvester's law); spacetime is Lorentzian, $(3,1)$. It measures curves:
+  $$L_{[a,b]}[\gamma] := \int_a^b\sqrt{\text{ᛇ}_\gamma\,g(v_\gamma,v_\gamma)}\,d\lambda,$$
+  independent of the parametrization, proper time in spacetime. **Geodesics** are the curves of stationary length under **variations** with fixed endpoints; the **Euler-Lagrange equations**
+  $$\frac{d}{d\lambda}\big[\partial_{d+m}\mathcal{L}_\mathscr{X}\big] = \partial_m\mathcal{L}_\mathscr{X}$$
+  turn this, at constant speed, into the **geodesic equation**
+  $$\ddot\gamma^k + \Gamma^k_{ij}\,\dot\gamma^i\dot\gamma^j = 0,$$
+  whose **Christoffel symbols**
+  $$\begin{aligned}\Gamma^k_{ji} = \tfrac12(g^{-1})^{km}\big(&\partial_ig_{mj}+\partial_jg_{mi}\\ &-\partial_mg_{ij}\big)\end{aligned}$$
+  define the **Levi-Civita connection**, the only one that is torsion free and has $\nabla g = 0$. Its curvature, lowered, is the **Riemann–Christoffel curvature**
+  $$(\mathrm{Riem}^\flat)_{ajkm} = g_{al}\,\mathrm{Riem}^l_{jkm},$$
+  with four symmetries; it vanishes exactly for **flat** metrics. Contracting gives $\mathrm{Ric}$ and
+  $$R = (g^{-1})^{mk}\,\mathrm{Ric}_{km},$$
+  and the divergence-free **Einstein curvature**
+  $$G = \mathrm{Ric} - \tfrac12R\,g.$$
+
+  **Next: the Level Challenge.** Harder problems that combine the whole map. Can the contracted Christoffel symbols $\Gamma^k_{ki}$ be read off from a single function, the determinant of $g$, without computing a single $\Gamma$?

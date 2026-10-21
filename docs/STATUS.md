@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, `ch07-traps` built; next: `ch07-map`)
+## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, `ch07-traps`, `ch07-map` built; next: `ch07-challenge` part 1)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -31,7 +31,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, `ch07-traps` (24 cards) done; next
-  `ch07-map` (no Chapter 7 TeX file: start from the book's 7.x headings and the lessons), then challenge (two sessions);
+  `ch07-map` (14 boxes) done; next `ch07-challenge` (two sessions);
   then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
   B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -375,6 +375,16 @@ append a short entry at the end of **Log** (a few lines, ending with
   sheared chart $(u,v) = (a, b-a^2)$ coordinate lines (only $(u_0,\lambda)$ geodesic); $(\lambda^3, 2\lambda^3)$ fails (G), passes (S) and length E-L, fails energy E-L;
   sphere connection with all $(\vartheta,\varphi)$ coefficients zero: $(\nabla_{\partial x_1}g)_{22} = \sin2\vartheta = 1$ at $\pi/4$; ∇ᵂ polar only $\Gamma^2_{21} = \tfrac1r$; $4g$ keeps $\Gamma$ ($-3$ at $r = 3$);
   $f = 3r$ flat; equator all $\Gamma = 0$ yet $\mathrm{Riem}^1{}_{212} = 1$; vacuum 20 vs 10; radius 3: $R = \tfrac29$; $f = \cosh u$ gives $R = -2$, $R = -2f''/f$. Riem written $\mathrm{Riem}^1{}_{212}$. No tags.
+  Conventions fixed here (`ch07-map`, 14 boxes, 12 rows): problem r1c1; metric r2c2; musical c1, signature c3; length r4c2 (metric→length two-row vertical through empty r3c2);
+  variation r5c1; el r6c2; geodesic r7c3; christoffel r8c2; lc r9c1; riem r10c2; ricci c1, flat c3; einstein r12c2 (zigzag, one concept per row in the chain).
+  Labels "fixed by", "as a map", "count signs", "measures curves", "sign ᛇ", "bend", "stationary", "constant speed", "coefficients", "as $\Gamma$", "curvature",
+  "contract", "$= 0$", "$-\tfrac12Rg$". No dashed edges, no musical→Christoffel/Riem♭ edges (would cross boxes; said in explanations). Titles with soft hyphens
+  ("Compo­nents give no length", "Signa­ture", "Vari­ations", "Geo­desic equation", "Christ­offel symbols", "Riemann–Christ­offel curvature", "Ein­stein curvature").
+  Decoys: no length in a vector space / connection gives lengths (∇ᴾ keeps $(0,1)$, length $r$); positive definite / entries nonzero; reciprocal inverse / same numbers;
+  eigenvalues by similarity / diagonal signs; no root / inertial twin ages least; shortest / free endpoints (segment $L = 1+\text{ᛊ}$); partials vanish separately / integral only;
+  (G) any speed / constant components (circle); Γ a tensor / no $g^{-1}$ ($\Gamma^2_{12} = r$); compatible alone (∇ᵂ) / torsion free alone (∇ᴾ); Γ(p)=0 ⇒ flat / 256 components;
+  diagonal sum of Ric ($-8.5$ vs $R = -1$ for $\mathrm{diag}(1,r^4)$ at $r = 2$) / Ric = 0 ⇒ flat; $\mathrm{Ric} - Rg$ / Ric divergence free; identity components / $R = 0$.
+  Outro teaser for the challenge: contracted Christoffel symbols $\Gamma^k_{ki}$ from $\det g$.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -388,6 +398,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch07-map (map, 14 boxes, 12 rows)
+- Built `content/ch07/map.yaml` from the book's 7.x headings and intro paragraphs plus the lessons' `own:` summaries (no Chapter 7 TeX file); registered in
+  `course.yaml` with `file:` and summary. Choices: one concept per row along the chain length→variations→E-L→(G)→Christoffel→LC→Riem, so 12 rows (taller than
+  ch06's 8, but no horizontal edges and no arrow behind a box); Levi-Civita box holds torsion free + compatible + uniqueness; flat beside Ricci. validate 0/0,
+  shots 0 problems; complete-map phone image checked (labels clear, no overlaps).
+- Conventions fixed here: see Current, "Chapter 7 conventions so far" (`ch07-map`).
 ### 2026-10-20 — ch07-traps (traps, 24 cards)
 - Built `content/ch07/traps.yaml` (intro; metric: same-height sum, ♭ not renaming, inverse not reciprocal; signature: congruence vs similarity, positive entries,
   det sign in 4D, lightlike nonzero; length: $\int g(v,v)$ not invariant, twin proper time + longest; geodesics: long way round, sheared coordinate lines, $\lambda^3$ speed,
