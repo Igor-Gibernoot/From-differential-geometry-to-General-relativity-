@@ -1,0 +1,491 @@
+id: ch07-euler-lagrange
+title: Variations and the Euler-Lagrange Equations
+kind: concept
+own: |
+  - **Variation with fixed endpoints** of a smooth curve $\gamma$ with $\text{ᛇ}_\gamma\neq0$ on $[a,b]$ and $\gamma([a,b])\subseteq\mathcal{U}$, chart representative $\gamma_\mathcal{U} := \mathscr{X}\circ\gamma$: for a deformation parameter $\text{ᛊ}\in(-\text{ᛊ}_0,\text{ᛊ}_0)$ and a smooth shape $\text{ᛉ}\colon[a,b]\to\mathbb{R}^d$ with $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$,
+  {{ $$\gamma_{\text{ᛊ}} := \mathscr{X}^{-1}\big(\gamma_\mathcal{U} + \text{ᛊ}\,\text{ᛉ}\big)$$ }}
+  The chart representative is shifted linearly in $\text{ᛊ}$; the endpoints never move.
+  - **Geodesic**: the length is stationary under every such variation,
+  {{ $$\frac{d}{d\text{ᛊ}}L_{[a,b]}[\gamma_{\text{ᛊ}}]\Big|_{\text{ᛊ}=0} = 0\ \text{ for every }\text{ᛉ}$$ }}
+  Stationary, not necessarily minimal (the inertial worldline in Minkowski is a maximum). The condition does not depend on the chart used to deform: the derivative only sees the first-order shape, which every chart translates into another chart's shape vanishing at the endpoints.
+  - **Lagrangian**: $\mathcal{L}(\mathcal{X}_p) := \sqrt{\text{ᛇ}_\gamma\,g_p(\mathcal{X}_p,\mathcal{X}_p)}$, a function on the tangent bundle (not a covector field); in the bundle chart $\xi_\mathscr{X}$, with $d$ position slots $\alpha$ and $d$ velocity slots $\beta$,
+  {{ $$\mathcal{L}_\mathscr{X}(\alpha;\beta) = \sqrt{\text{ᛇ}_\gamma\,g_{ij}\big(\mathscr{X}^{-1}(\alpha)\big)\,\beta^i\beta^j}$$ }}
+  and $L_{[a,b]}[\gamma_{\text{ᛊ}}] = \int_a^b\mathcal{L}_\mathscr{X}(\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}\,;\,\dot\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}')\,d\lambda$.
+  - **Euler-Lagrange equations** (chain rule, integration by parts, boundary term killed by $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$, then $\text{ᛉ}$ arbitrary): $\gamma$ is a geodesic if and only if, for $m = 1,\dots,d$,
+  {{ $$\frac{d}{d\lambda}\big[\partial_{d+m}\mathcal{L}_\mathscr{X}\big] - \partial_m\mathcal{L}_\mathscr{X} = 0$$ }}
+  both partials evaluated at $(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})$. Cartesian Euclidean plane: $\frac{d}{d\lambda}(\dot\gamma^m/s_\gamma) = 0$, straight lines run at any speed. The proof works for any $C^2$ Lagrangian; the energy Lagrangian $\tfrac12\big((\beta^1)^2+(\beta^2)^2\big)$ gives $\ddot\gamma^m = 0$, straight lines at constant speed.
+
+cards:
+  - type: text
+    id: hook
+    title: A family of bent paths
+    body: |
+      Work in the Euclidean plane with its cartesian chart $\mathscr{X}$, where the metric has components $g_{ij} = \mathrm{diag}(1,1)$. The straight segment from $(0,0)$ to $(1,0)$ can be bent into a whole family of curves, one for each real number $\text{ᛊ}$ (the rune ᛊ, a "deformation knob"):
+      $$\gamma_{\text{ᛊ}}(\lambda) = \big(\lambda,\ \text{ᛊ}\sin(\pi\lambda)\big),$$
+      for $\lambda\in[0,1]$. At $\text{ᛊ} = 0$ it is the segment; for $\text{ᛊ}\neq0$ an arch of height $|\text{ᛊ}|$. Every member starts at $(0,0)$ and ends at $(1,0)$, since $\sin0 = \sin\pi = 0$.
+
+      Its length $L(\text{ᛊ}) := L_{[0,1]}[\gamma_{\text{ᛊ}}]$ is an ordinary function of one real variable. Before computing anything, guess its shape near $\text{ᛊ} = 0$.
+
+  - type: mcq
+    id: hook-guess
+    title: Guess the first-order term
+    prompt: |
+      Euclidean plane, cartesian chart. The curves $\gamma_{\text{ᛊ}}(\lambda) = \big(\lambda,\ \text{ᛊ}\sin(\pi\lambda)\big)$, $\lambda\in[0,1]$, all join $(0,0)$ to $(1,0)$; $\text{ᛊ} = 0$ is the straight segment. Expand their length as $L(\text{ᛊ}) = 1 + c_1\,\text{ᛊ} + c_2\,\text{ᛊ}^2 + \dots$ Which is true?
+    options:
+      - text: '$c_1 = 0$ and $c_2 > 0$: the length grows only quadratically'
+        correct: true
+      - text: '$c_1 > 0$: bending upwards ($\text{ᛊ} > 0$) adds length linearly'
+        feedback: |
+          Bending upwards does add length, but so does bending downwards: $\gamma_{-\text{ᛊ}}$ is the mirror image of $\gamma_{\text{ᛊ}}$ in the horizontal axis, with the same length. So $L(-\text{ᛊ}) = L(\text{ᛊ})$, an even function, and an even function has no linear term.
+      - text: '$c_1 = 0$ and $c_2 = 0$: a small bump does not change the length'
+        feedback: |
+          The bump does change the length, only slowly. The speed is $\sqrt{1+\pi^2\text{ᛊ}^2\cos^2(\pi\lambda)}$, larger than $1$ wherever $\cos(\pi\lambda)\neq0$, so the length exceeds $1$ for every $\text{ᛊ}\neq0$, at order $\text{ᛊ}^2$.
+      - text: '$c_1 < 0$: some small bends shorten the path'
+        feedback: |
+          Nothing is shorter than the straight segment between two points of the Euclidean plane. And $L$ is even in $\text{ᛊ}$ (mirror symmetry), so a negative linear term for $\text{ᛊ} > 0$ would need a positive one for $\text{ᛊ} < 0$, which is impossible.
+    explanation: |
+      The mirror symmetry $L(-\text{ᛊ}) = L(\text{ᛊ})$ already kills $c_1$. Next card: compute $c_2$.
+
+  - type: text
+    id: hook-speed
+    title: The speed of the bent path
+    body: |
+      The chart components of the velocity of $\gamma_{\text{ᛊ}}(\lambda) = \big(\lambda,\ \text{ᛊ}\sin(\pi\lambda)\big)$ are $\big(1,\ \pi\text{ᛊ}\cos(\pi\lambda)\big)$, so its speed is
+      $$s(\lambda) = \sqrt{1+\pi^2\text{ᛊ}^2\cos^2(\pi\lambda)}.$$
+      For small $u$, $\sqrt{1+u} = 1 + \tfrac12u + O(u^2)$, where $O(u^2)$ means "terms of order $u^2$ or smaller". Here $u$ is itself of order $\text{ᛊ}^2$.
+
+  - type: numeric
+    id: hook-coefficient
+    title: The quadratic coefficient
+    prompt: |
+      Euclidean plane, cartesian chart. The curve $\gamma_{\text{ᛊ}}(\lambda) = \big(\lambda,\ \text{ᛊ}\sin(\pi\lambda)\big)$ on $[0,1]$ has speed $\sqrt{1+\pi^2\text{ᛊ}^2\cos^2(\pi\lambda)}$. Its length is
+      $$L(\text{ᛊ}) = 1 + c_2\,\text{ᛊ}^2 + O(\text{ᛊ}^4).$$
+      Find $c_2$ (a decimal is fine).
+    answer: 2.4674
+    tolerance: 0.01
+    answerText: '\pi^2/4 \approx 2.467'
+    wrong:
+      - { value: 4.9348, feedback: 'That is $\pi^2/2$: the factor $\tfrac12$ from $\sqrt{1+u}\approx1+\tfrac12u$ is there, but the average of $\cos^2(\pi\lambda)$ over $[0,1]$ is $\tfrac12$, not $1$.' }
+      - { value: 9.8696, feedback: 'That is $\pi^2$, the coefficient inside the root. Two factors $\tfrac12$ are missing: one from $\sqrt{1+u}\approx1+\tfrac12u$, one from $\int_0^1\cos^2(\pi\lambda)\,d\lambda = \tfrac12$.' }
+      - { value: 1.2337, feedback: 'That is $\pi^2/8$, one factor $\tfrac12$ too many. $\int_0^1\big(1+\tfrac12\pi^2\text{ᛊ}^2\cos^2(\pi\lambda)\big)d\lambda = 1 + \tfrac12\pi^2\text{ᛊ}^2\cdot\tfrac12$.' }
+    hint: Expand the root with $\sqrt{1+u}\approx1+\tfrac12u$, then use $\int_0^1\cos^2(\pi\lambda)\,d\lambda = \tfrac12$.
+    explanation: |
+      $$L(\text{ᛊ}) \approx \int_0^1\Big(1+\tfrac12\pi^2\text{ᛊ}^2\cos^2(\pi\lambda)\Big)d\lambda$$
+      which is $1 + \tfrac{\pi^2}{4}\text{ᛊ}^2$. So $c_2 = \pi^2/4\approx2.467$ and the derivative $\frac{dL}{d\text{ᛊ}}$ vanishes at $\text{ᛊ} = 0$.
+
+  - type: text
+    id: hook-resolve
+    title: Stationary means no first-order change
+    body: |
+      $L(\text{ᛊ}) = 1 + \tfrac{\pi^2}{4}\text{ᛊ}^2 + \dots$ has zero derivative at $\text{ᛊ} = 0$: the segment is **stationary** for this family. Recall: a **geodesic** is a curve whose length is stationary under every small deformation that keeps its endpoints fixed.
+
+      One family proves nothing about all deformations, and a computation per family is hopeless. This lesson does the computation **once**, for every family at the same time, on any manifold with a metric. The outcome is a differential equation that the curve must satisfy: the **Euler-Lagrange equations**.
+
+  - type: text
+    id: variation
+    title: Variations with fixed endpoints
+    body: |
+      Let $\gamma\colon\mathbb{R}\to\mathcal{M}$ be a smooth curve on a manifold with metric $g$, studied between parameter values $a<b$, with sign $\text{ᛇ}_\gamma(\lambda)\neq0$ for all $\lambda\in[a,b]$. Let $(\mathcal{U},\mathscr{X})$ be a chart with $\gamma([a,b])\subseteq\mathcal{U}$, and $\gamma_\mathcal{U} := \mathscr{X}\circ\gamma\colon[a,b]\to\mathbb{R}^d$ the chart representative of $\gamma$.
+
+      Pick a smooth **shape** $\text{ᛉ}\colon[a,b]\to\mathbb{R}^d$ (the rune ᛉ) with
+      $$\text{ᛉ}(a) = \text{ᛉ}(b) = 0,$$
+      and a real **deformation parameter** $\text{ᛊ}\in(-\text{ᛊ}_0,\text{ᛊ}_0)$, independent of $\lambda$. The **variation** of $\gamma$ is the family
+      $$\gamma_{\text{ᛊ}}(\lambda) := \mathscr{X}^{-1}\big(\gamma_\mathcal{U}(\lambda) + \text{ᛊ}\,\text{ᛉ}(\lambda)\big).$$
+      In words: shift the chart representative by $\text{ᛊ}$ times the shape, then map back to $\mathcal{M}$. The number $\text{ᛊ}_0 > 0$ is chosen small enough that $\gamma_\mathcal{U} + \text{ᛊ}\,\text{ᛉ}$ stays inside $\mathscr{X}(\mathcal{U})$, where $\mathscr{X}^{-1}$ is defined.
+
+      Then $\gamma_{\text{ᛊ}=0} = \gamma$, and every member has the endpoints $\gamma(a)$ and $\gamma(b)$.
+
+  - type: mcq
+    id: shape-hook
+    title: Find the shape
+    prompt: |
+      A variation of a curve $\gamma$ in a chart $\mathscr{X}$ is $\gamma_{\text{ᛊ}} := \mathscr{X}^{-1}(\gamma_\mathcal{U} + \text{ᛊ}\,\text{ᛉ})$, with shape $\text{ᛉ}\colon[a,b]\to\mathbb{R}^d$, $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$. In the Euclidean plane (cartesian chart), the family $\big(\lambda,\ \text{ᛊ}\sin(\pi\lambda)\big)$, $\lambda\in[0,1]$, is a variation of the segment $\gamma_\mathcal{U}(\lambda) = (\lambda,0)$. What is its shape $\text{ᛉ}(\lambda)$?
+    options:
+      - text: '$\big(0,\ \sin(\pi\lambda)\big)$'
+        correct: true
+      - text: '$\big(\lambda,\ \sin(\pi\lambda)\big)$'
+        feedback: |
+          That is the whole curve at $\text{ᛊ} = 1$, the segment plus the shift. The shape is only the shift: subtract $\gamma_\mathcal{U}(\lambda) = (\lambda,0)$ and divide by $\text{ᛊ}$. Also, $(\lambda,\sin\pi\lambda)$ is $(1,0)\neq0$ at $\lambda = 1$.
+      - text: '$\big(0,\ \text{ᛊ}\sin(\pi\lambda)\big)$'
+        feedback: |
+          That is $\text{ᛊ}\,\text{ᛉ}$, the shift for one value of $\text{ᛊ}$. The shape $\text{ᛉ}$ does not depend on $\text{ᛊ}$: one fixed function, scaled by the knob $\text{ᛊ}$.
+      - text: '$\big(0,\ \cos(\pi\lambda)\big)$'
+        feedback: |
+          $\cos(\pi\lambda)$ is the derivative direction of the arch, up to a factor $\pi$. As a shape it would give $\text{ᛉ}(0) = (0,1)\neq0$: the endpoints would move, which a variation forbids.
+    explanation: |
+      $\gamma_\mathcal{U} + \text{ᛊ}\,\text{ᛉ} = (\lambda,0) + \text{ᛊ}\,(0,\sin\pi\lambda)$, and $\text{ᛉ}(0) = \text{ᛉ}(1) = (0,0)$: the endpoints stay put.
+
+  - type: mcq
+    id: sign-why
+    title: Why a nonzero sign?
+    prompt: |
+      Variations $\gamma_{\text{ᛊ}}$ of a smooth curve $\gamma$ are only considered when the sign $\text{ᛇ}_\gamma := \mathrm{sgn}\big(g(v_\gamma,v_\gamma)\big)$ is nonzero on all of $[a,b]$. The speed is $s_\gamma = \sqrt{\text{ᛇ}_\gamma\,g(v_\gamma,v_\gamma)}$, and the plan is to differentiate the length $\int_a^b s_{\gamma_{\text{ᛊ}}}\,d\lambda$ with respect to $\text{ᛊ}$. Why is $\text{ᛇ}_\gamma\neq0$ needed?
+    options:
+      - text: 'The root $\sqrt{u}$ is not differentiable at $u = 0$, so the speed must stay away from zero'
+        correct: true
+      - text: 'Curves with $\text{ᛇ}_\gamma = 0$ somewhere have no length'
+        feedback: |
+          They do have a length: a light ray in Minkowski has length $0$, and a curve whose sign vanishes at isolated points still has a well-defined integral. The issue is not defining $L$ but differentiating it: $\sqrt{u}$ has an infinite slope at $u = 0$.
+      - text: 'The chart $\mathscr{X}$ cannot be defined near points where $\text{ᛇ}_\gamma = 0$'
+        feedback: |
+          Charts belong to the manifold and know nothing about the metric or the curve. The sign is about the velocity, $g(v_\gamma,v_\gamma)$; the trouble is the square root of something that can reach $0$.
+      - text: 'Only Riemannian metrics allow variations'
+        feedback: |
+          Indefinite metrics are allowed, as long as $g(v_\gamma,v_\gamma)$ never vanishes on $[a,b]$: a timelike worldline in Minkowski has $\text{ᛇ}_\gamma = -1$ throughout and can be varied. Excluded are only the null velocities (and $v_\gamma = 0$).
+    explanation: |
+      $\frac{d}{du}\sqrt u = \frac{1}{2\sqrt u}$ blows up at $u = 0$. With $\text{ᛇ}_\gamma\neq0$: since $g(v_\gamma,v_\gamma)$ is continuous in $\lambda$ and never $0$ on $[a,b]$, it keeps one sign, so $\text{ᛇ}_\gamma$ is a constant $\pm1$ there. For small $|\text{ᛊ}|$ the velocities of $\gamma_{\text{ᛊ}}$ stay close to those of $\gamma$, so every member has the same constant sign and a smooth speed. For a Riemannian metric the condition only excludes $v_\gamma = 0$.
+
+  - type: text
+    id: geodesic-def
+    title: The precise definition
+    body: |
+      A smooth curve $\gamma$ with $\text{ᛇ}_\gamma\neq0$ on $[a,b]$ is a **geodesic** if
+      $$\frac{d}{d\text{ᛊ}}L_{[a,b]}[\gamma_{\text{ᛊ}}]\Big|_{\text{ᛊ}=0} = 0$$
+      for **every** smooth shape $\text{ᛉ}$ with $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$.
+
+      Two remarks. First, the chart $\mathscr{X}$ is a tool to write the deformations down: in another chart $\mathscr{Y}$ the same family is in general **not** linear in $\text{ᛊ}$. The end of the lesson shows that the condition does not depend on this choice. Second, if $\gamma([a,b])$ does not fit in one chart domain, cut $[a,b]$ into finitely many pieces that do (possible because $[a,b]$ is compact) and vary one piece at a time.
+
+  - type: text
+    id: lagrangian
+    title: The Lagrangian
+    body: |
+      Recall the **bundle chart** $\xi_\mathscr{X}$: it describes a vector $\mathcal{X}_p = x^k_p\,(\partial x_k)_p$ over $p\in\mathcal{U}$ by $2d$ numbers,
+      $$\xi_\mathscr{X}(\mathcal{X}_p) = \big(\mathscr{X}(p)\,;\,x^1_p,\dots,x^d_p\big),$$
+      the $d$ coordinates of the base point and the $d$ components. Write $(\alpha\,;\beta)\in\mathbb{R}^d\times\mathbb{R}^d$ for these slots: $\alpha$ = **position slots**, $\beta$ = **velocity slots**.
+
+      All curves of the variation have the same constant sign $\text{ᛇ}_\gamma$, so their speeds are the values of one function on vectors, the **Lagrangian**:
+      $$\mathcal{L}(\mathcal{X}_p) := \sqrt{\text{ᛇ}_\gamma\,g_p(\mathcal{X}_p,\mathcal{X}_p)},$$
+      defined where $\text{ᛇ}_\gamma\,g_p(\mathcal{X}_p,\mathcal{X}_p) > 0$. Since $g_p(\mathcal{X}_p,\mathcal{X}_p) = g_{ij}(p)\,x^i_px^j_p$, its chart representative $\mathcal{L}_\mathscr{X} := \mathcal{L}\circ\xi_\mathscr{X}^{-1}$ is the function of $2d$ real variables
+      $$\mathcal{L}_\mathscr{X}(\alpha;\beta) = \sqrt{\text{ᛇ}_\gamma\,g_{ij}\big(\mathscr{X}^{-1}(\alpha)\big)\,\beta^i\beta^j}.$$
+      Notation: $\partial_m\mathcal{L}_\mathscr{X}$ is its partial derivative in the $m$-th position slot $\alpha^m$, and $\partial_{d+m}\mathcal{L}_\mathscr{X}$ in the $m$-th velocity slot $\beta^m$. A functional $\gamma\mapsto\int\mathcal{L}(v_\gamma)\,d\lambda$ built this way is an **action functional**; the length is the action of this $\mathcal{L}$.
+
+  - type: mcq
+    id: lagrangian-not-covector
+    title: Is the Lagrangian a covector field?
+    prompt: |
+      The Lagrangian $\mathcal{L}(\mathcal{X}_p) := \sqrt{\text{ᛇ}_\gamma\,g_p(\mathcal{X}_p,\mathcal{X}_p)}$ eats a tangent vector and returns a real number, at every point $p$. Recall: a covector field assigns to each $p$ a **linear** map $T_p\mathcal{M}\to\mathbb{R}$. Is $\mathcal{L}$ a covector field?
+    options:
+      - text: 'No: on each $T_p\mathcal{M}$ it is not linear, for instance $\mathcal{L}(-\mathcal{X}_p) = \mathcal{L}(\mathcal{X}_p)$'
+        correct: true
+      - text: 'Yes: it eats one vector and returns a number'
+        feedback: |
+          Eating a vector and returning a number is not enough: a covector must also be linear. $\mathcal{L}(-\mathcal{X}_p) = \sqrt{\text{ᛇ}_\gamma\,g_p(\mathcal{X}_p,\mathcal{X}_p)} = \mathcal{L}(\mathcal{X}_p)$, whereas linearity would demand $-\mathcal{L}(\mathcal{X}_p)$.
+      - text: 'Yes: it is homogeneous, $\mathcal{L}(2\mathcal{X}_p) = 2\mathcal{L}(\mathcal{X}_p)$'
+        feedback: |
+          Positive scaling is respected, but linearity also needs negative scalars and sums. $\mathcal{L}(-\mathcal{X}_p) = +\mathcal{L}(\mathcal{X}_p)$, and in the Euclidean plane $\mathcal{L}(\partial x_1 + \partial x_2) = \sqrt2 \neq 1 + 1$.
+      - text: 'No: it is a $(0,2)$-tensor field, since it is built from $g$'
+        feedback: |
+          $g$ is a $(0,2)$-tensor field, eating two vectors. $\mathcal{L}$ eats one vector and takes a square root, which is not multilinear at all. It is a function on the tangent bundle $T\mathcal{M}$, nothing more.
+    explanation: |
+      $\mathcal{L}$ is a function on the tangent bundle: it depends on the point (through $g_p$) and on the velocity, nonlinearly. Such functions are called **Lagrangians**. That is why its chart representative needs all $2d$ slots.
+
+  - type: build
+    id: slots-build
+    title: The slots of a deformed curve
+    prompt: |
+      A variation $\gamma_{\text{ᛊ}} := \mathscr{X}^{-1}(\gamma_\mathcal{U} + \text{ᛊ}\,\text{ᛉ})$ has chart representative $\mathscr{X}\circ\gamma_{\text{ᛊ}} = \gamma_\mathcal{U} + \text{ᛊ}\,\text{ᛉ}$, so its velocity has position slots $\gamma_\mathcal{U}(\lambda) + \text{ᛊ}\,\text{ᛉ}(\lambda)$ in the bundle chart $\xi_\mathscr{X}$. Recall: the velocity slots are the $\lambda$-derivatives of the chart representative. Build them.
+    prefix: '\beta ='
+    tiles: ['\dot\gamma_\mathcal{U}', '+', '\text{ᛊ}', '\text{ᛉ}^{\prime}', '\text{ᛉ}', '\dot{\text{ᛊ}}']
+    answers:
+      - ['\dot\gamma_\mathcal{U}', '+', '\text{ᛊ}', '\text{ᛉ}^{\prime}']
+    wrong:
+      - { answer: ['\dot\gamma_\mathcal{U}', '+', '\text{ᛊ}', '\text{ᛉ}'], feedback: 'The shape $\text{ᛉ}$ depends on $\lambda$, so differentiating $\gamma_\mathcal{U}(\lambda) + \text{ᛊ}\,\text{ᛉ}(\lambda)$ in $\lambda$ gives $\dot\gamma_\mathcal{U} + \text{ᛊ}\,\text{ᛉ}^{\prime}$: the velocity shifts by the derivative of the shape.' }
+      - { answer: ['\dot\gamma_\mathcal{U}', '+', '\dot{\text{ᛊ}}', '\text{ᛉ}'], feedback: 'The deformation parameter $\text{ᛊ}$ does not depend on $\lambda$: it labels the curve, it does not move along it. Its $\lambda$-derivative is $0$; the derivative falls on $\text{ᛉ}$.' }
+    hint: Differentiate $\gamma_\mathcal{U}(\lambda) + \text{ᛊ}\,\text{ᛉ}(\lambda)$ with respect to $\lambda$, at fixed $\text{ᛊ}$.
+    explanation: |
+      So the length of every member is one integral over the same Lagrangian:
+      $$L_{[a,b]}[\gamma_{\text{ᛊ}}] = \int_a^b\mathcal{L}_\mathscr{X}\big(\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}\,;\,\dot\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}'\big)\,d\lambda.$$
+      $\text{ᛊ}$ enters both the position slots (through $\text{ᛉ}$) and the velocity slots (through $\text{ᛉ}'$).
+
+  - type: text
+    id: polar-lagrangian
+    title: Position slots can matter
+    body: |
+      In the cartesian chart of the Euclidean plane, $g_{ij} = \mathrm{diag}(1,1)$ everywhere and $\text{ᛇ} = +1$, so
+      $$\mathcal{L}_\mathscr{X}(\alpha;\beta) = \sqrt{(\beta^1)^2+(\beta^2)^2}.$$
+      The position slots do not appear at all: $\partial_1\mathcal{L}_\mathscr{X} = \partial_2\mathcal{L}_\mathscr{X} = 0$.
+
+      Now the polar chart $\mathscr{Y} = (r,\theta)$, where $g$ has components $\mathrm{diag}(1,r^2)$. Writing the position slots as $(r,\theta)$:
+      $$\mathcal{L}_\mathscr{Y}(r,\theta;\beta^1,\beta^2) = \sqrt{(\beta^1)^2+r^2(\beta^2)^2}.$$
+      Same metric, same function $\mathcal{L}$ on vectors, but now the position slot $r$ appears. Which slots matter depends on the chart.
+
+  - type: numeric
+    id: polar-partial
+    title: A position-slot derivative
+    prompt: |
+      Euclidean plane in the polar chart $\mathscr{Y} = (r,\theta)$, where the chart representative of the Lagrangian is
+      $$\mathcal{L}_\mathscr{Y}(r,\theta;\beta^1,\beta^2) = \sqrt{(\beta^1)^2+r^2(\beta^2)^2}.$$
+      Compute the position-slot derivative $\partial_1\mathcal{L}_\mathscr{Y} = \partial\mathcal{L}_\mathscr{Y}/\partial r$ at $(r,\theta;\beta^1,\beta^2) = (2,0;0,1)$.
+    answer: 1
+    wrong:
+      - { value: 0, feedback: 'Position slots do matter here: $r$ appears inside the root. $\partial_r\sqrt{(\beta^1)^2+r^2(\beta^2)^2} = r(\beta^2)^2/\mathcal{L}_\mathscr{Y}$, which is $2\cdot1/2$ at the given point. (In the cartesian chart it would be $0$.)' }
+      - { value: 2, feedback: 'That is $r(\beta^2)^2$, the numerator. The root contributes the denominator: $\partial_r\sqrt{u} = \tfrac{1}{2\sqrt u}\partial_ru$ with $\partial_ru = 2r(\beta^2)^2$, so the result is $r(\beta^2)^2/\mathcal{L}_\mathscr{Y} = 2/2$.' }
+      - { value: 4, feedback: 'That is $\partial_r\big(r^2(\beta^2)^2\big) = 2r(\beta^2)^2$, the derivative of what is under the root. The chain rule through $\sqrt u$ adds the factor $\tfrac{1}{2\sqrt u} = \tfrac14$ here.' }
+    hint: $\partial_r\sqrt u = \frac{1}{2\sqrt u}\,\partial_r u$ with $u = (\beta^1)^2 + r^2(\beta^2)^2$.
+    explanation: |
+      $\partial_1\mathcal{L}_\mathscr{Y} = r(\beta^2)^2/\mathcal{L}_\mathscr{Y} = 2\cdot1/2 = 1$. This slot describes a vector at $(r,\theta) = (2,0)$ pointing in the $\theta$ direction: moving its base point outwards at fixed components $\beta$ makes it longer, since the $\theta$ coordinate lines spread apart.
+
+  - type: text
+    id: derive-chain
+    title: Differentiate the length
+    body: |
+      Now the general computation. Fix $\text{ᛉ}$. For $|\text{ᛊ}|$ small the integrand $\mathcal{L}_\mathscr{X}\big(\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}\,;\,\dot\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}'\big)$ is a smooth function of $(\text{ᛊ},\lambda)$ on a compact rectangle, so the derivative may go **under the integral sign**.
+
+      At fixed $\lambda$, $\text{ᛊ}$ enters all $2d$ slots, each affinely: the $m$-th position slot is $\gamma^m_\mathcal{U} + \text{ᛊ}\,\text{ᛉ}^m$, with $\text{ᛊ}$-derivative $\text{ᛉ}^m$, and the $m$-th velocity slot $\dot\gamma^m_\mathcal{U} + \text{ᛊ}\,\text{ᛉ}'^m$, with $\text{ᛊ}$-derivative $\text{ᛉ}'^m$. The chain rule, then $\text{ᛊ} = 0$:
+      $$\frac{dL}{d\text{ᛊ}}\Big|_0 = \int_a^b\sum_{m=1}^d\big(Q_m\,\text{ᛉ}^m + P_m\,\text{ᛉ}'^m\big)d\lambda,$$
+      with the shorthands, both evaluated on the undeformed curve,
+      $$\begin{aligned}Q_m(\lambda) &:= (\partial_m\mathcal{L}_\mathscr{X})(\gamma_\mathcal{U};\dot\gamma_\mathcal{U}),\\ P_m(\lambda) &:= (\partial_{d+m}\mathcal{L}_\mathscr{X})(\gamma_\mathcal{U};\dot\gamma_\mathcal{U}).\end{aligned}$$
+      The second term has $\text{ᛉ}'$, not $\text{ᛉ}$. To factor out $\text{ᛉ}$, move the derivative off it.
+
+  - type: build
+    id: ibp-build
+    title: Integrate by parts
+    prompt: |
+      For a fixed $m$, let $P(\lambda) := (\partial_{d+m}\mathcal{L}_\mathscr{X})(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})$ (a $C^1$ function of $\lambda$, with derivative $\dot P$) and let $\text{ᛉ}$ stand for the component $\text{ᛉ}^m$. The product rule gives $\frac{d}{d\lambda}(P\,\text{ᛉ}) = \dot P\,\text{ᛉ} + P\,\text{ᛉ}^{\prime}$. Integrate it over $[a,b]$ and build $\int_a^bP\,\text{ᛉ}^{\prime}\,d\lambda$.
+    prefix: '\int_a^b P\,\text{ᛉ}^{\prime}\,d\lambda ='
+    tiles: ['\big[P\,\text{ᛉ}\big]_a^b', '-', '+', '\int_a^b\dot P\,\text{ᛉ}\,d\lambda', '\int_a^bP\,\text{ᛉ}\,d\lambda']
+    answers:
+      - ['\big[P\,\text{ᛉ}\big]_a^b', '-', '\int_a^b\dot P\,\text{ᛉ}\,d\lambda']
+    wrong:
+      - { answer: ['\big[P\,\text{ᛉ}\big]_a^b', '+', '\int_a^b\dot P\,\text{ᛉ}\,d\lambda'], feedback: 'Integrating the product rule gives $\big[P\,\text{ᛉ}\big]_a^b = \int\dot P\,\text{ᛉ} + \int P\,\text{ᛉ}^{\prime}$. Solving for $\int P\,\text{ᛉ}^{\prime}$ moves $\int\dot P\,\text{ᛉ}$ to the other side with a minus sign.' }
+      - { answer: ['\big[P\,\text{ᛉ}\big]_a^b', '-', '\int_a^bP\,\text{ᛉ}\,d\lambda'], feedback: 'The derivative moves off $\text{ᛉ}$ and onto $P$; it does not disappear. The remaining integral is $\int_a^b\dot P\,\text{ᛉ}\,d\lambda$.' }
+    hint: Integrate $\frac{d}{d\lambda}(P\,\text{ᛉ}) = \dot P\,\text{ᛉ} + P\,\text{ᛉ}^{\prime}$ from $a$ to $b$ (fundamental theorem of calculus on the left), then solve for $\int P\,\text{ᛉ}^{\prime}$.
+    explanation: |
+      $$\int_a^bP\,\text{ᛉ}'\,d\lambda = \big[P\,\text{ᛉ}\big]_a^b - \int_a^b\dot P\,\text{ᛉ}\,d\lambda.$$
+      The boundary term $\big[P\,\text{ᛉ}\big]_a^b = P(b)\,\text{ᛉ}(b) - P(a)\,\text{ᛉ}(a)$ is the only place where the endpoints enter.
+
+  - type: mcq
+    id: boundary-term
+    title: The boundary term
+    prompt: |
+      Differentiating the length of a variation $\gamma_{\text{ᛊ}} = \mathscr{X}^{-1}(\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ})$ and integrating by parts produces, for each $m$, the boundary term
+      $$P_m(b)\,\text{ᛉ}^m(b) - P_m(a)\,\text{ᛉ}^m(a),$$
+      with $P_m := (\partial_{d+m}\mathcal{L}_\mathscr{X})(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})$. What happens to it?
+    options:
+      - text: 'It vanishes, because the shape satisfies $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$ (fixed endpoints)'
+        correct: true
+      - text: 'It vanishes, because $P_m(a) = P_m(b)$ for a geodesic'
+        feedback: |
+          Nothing forces $P_m$ to take equal values at the ends: even if it did, $P_m(b)\,\text{ᛉ}^m(b) - P_m(a)\,\text{ᛉ}^m(a)$ would still depend on the two values of $\text{ᛉ}^m$. The term dies because the factor $\text{ᛉ}^m$ is $0$ at both ends.
+      - text: 'It survives, and the geodesic condition sets it to $0$ separately'
+        feedback: |
+          It would survive if the endpoints could move. Variations here keep them fixed, $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$, so the term is $0$ for every variation and imposes no condition.
+      - text: 'It vanishes, because the fundamental theorem of calculus removes boundary terms'
+        feedback: |
+          The fundamental theorem of calculus is what **creates** the boundary term: $\int_a^b\frac{d}{d\lambda}(P\,\text{ᛉ})\,d\lambda = \big[P\,\text{ᛉ}\big]_a^b$. Removing it needs the fixed endpoints.
+    explanation: |
+      What remains is
+      $$\frac{dL}{d\text{ᛊ}}\Big|_0 = \int_a^b\sum_{m=1}^d\big(Q_m - \dot P_m\big)\,\text{ᛉ}^m\,d\lambda,$$
+      with $Q_m := (\partial_m\mathcal{L}_\mathscr{X})(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})$. This is where "fixed endpoints" is used.
+
+  - type: text
+    id: lemma
+    title: From every shape to every point
+    body: |
+      So far, with $Q_m := (\partial_m\mathcal{L}_\mathscr{X})(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})$ and $P_m := (\partial_{d+m}\mathcal{L}_\mathscr{X})(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})$:
+      $$\frac{dL}{d\text{ᛊ}}\Big|_0 = \int_a^b\sum_{m=1}^d E_m\,\text{ᛉ}^m\,d\lambda,$$
+      where $E_m := Q_m - \dot P_m$ is a continuous function of $\lambda$. A geodesic makes this $0$ for **every** shape $\text{ᛉ}$ vanishing at the endpoints. Does that force $E_m = 0$ everywhere?
+
+      If all $E_m = 0$, the integral is $0$ for every $\text{ᛉ}$: that direction is free. Conversely, suppose some $E_m(\lambda_0)\neq0$. Choose a shape adapted to $E$ itself:
+      $$\text{ᛉ}^m(\lambda) := (\lambda-a)(b-\lambda)\,E_m(\lambda).$$
+      The integrand becomes $(\lambda-a)(b-\lambda)\sum_mE_m^2$: never negative, and positive near $\lambda_0$. So the integral is $> 0$, a contradiction. This is the **fundamental lemma of the calculus of variations**: an integral against every test shape vanishes only if the function itself does.
+
+  - type: mcq
+    id: lemma-factor
+    title: Why the factor?
+    prompt: |
+      To show that $\int_a^b\sum_mE_m\,\text{ᛉ}^m\,d\lambda = 0$ for every smooth shape $\text{ᛉ}$ with $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$ forces the continuous functions $E_m$ to vanish, one uses the shape $\text{ᛉ}^m := (\lambda-a)(b-\lambda)\,E_m$. Why not simply $\text{ᛉ}^m := E_m$?
+    options:
+      - text: '$E_m$ need not vanish at $a$ and $b$, so it may not be an allowed shape; the factor $(\lambda-a)(b-\lambda)$ fixes the endpoints without changing the sign inside'
+        correct: true
+      - text: 'With $\text{ᛉ}^m := E_m$ the integrand $\sum_mE_m^2$ could be negative'
+        feedback: |
+          A sum of squares is never negative. That choice would give a perfect integrand; its only defect is that $E_m(a)$ or $E_m(b)$ may be nonzero, so it might move the endpoints.
+      - text: 'The factor makes $\text{ᛉ}$ small, so that the variation stays in the chart'
+        feedback: |
+          Staying in the chart is the job of $\text{ᛊ}_0$: any shape works for $|\text{ᛊ}|$ small enough. The factor is there for the endpoint condition $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$.
+      - text: 'The factor is needed for the integral to converge'
+        feedback: |
+          $E_m$ is continuous on the compact interval $[a,b]$, so $\int E_m^2$ converges anyway. The factor serves the endpoint condition.
+    explanation: |
+      $(\lambda-a)(b-\lambda)$ is $0$ at both ends and positive in between: it repairs the boundary condition without spoiling positivity. Hence $E_m = 0$ on $(a,b)$, and on $[a,b]$ by continuity.
+
+  - type: text
+    id: euler-lagrange
+    title: The Euler-Lagrange equations
+    body: |
+      **Result.** A smooth curve $\gamma$ with $\text{ᛇ}_\gamma\neq0$ and $\gamma([a,b])\subseteq\mathcal{U}$ is a geodesic if and only if, for $m = 1,\dots,d$ and all $\lambda\in[a,b]$,
+      $$\begin{aligned}&\frac{d}{d\lambda}\Big[(\partial_{d+m}\mathcal{L}_\mathscr{X})(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})\Big]\\ &\quad-(\partial_m\mathcal{L}_\mathscr{X})(\gamma_\mathcal{U};\dot\gamma_\mathcal{U}) = 0.\end{aligned}$$
+      These are the **Euler-Lagrange equations**: $d$ equations, one per slot pair. The integral condition "for every shape" has become a condition **at every point**.
+
+      Physicists write them as
+      $$\frac{d}{d\lambda}\frac{\partial\mathcal{L}}{\partial\dot x^m} - \frac{\partial\mathcal{L}}{\partial x^m} = 0,$$
+      where "$\partial/\partial\dot x^m$" means the velocity slot and "$\partial/\partial x^m$" the position slot, both treated as independent variables. Only **after** differentiating are the slots filled with $\gamma_\mathcal{U}$ and $\dot\gamma_\mathcal{U}$, and then $\frac{d}{d\lambda}$ acts along the curve.
+
+  - type: order
+    id: derivation-order
+    title: The derivation in order
+    prompt: |
+      Prove: a smooth curve $\gamma$ with $\text{ᛇ}_\gamma\neq0$ on $[a,b]$ has stationary length under every variation $\gamma_{\text{ᛊ}} = \mathscr{X}^{-1}(\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ})$, $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$, if and only if the Euler-Lagrange equations of $\mathcal{L}_\mathscr{X}(\alpha;\beta) = \sqrt{\text{ᛇ}_\gamma\,g_{ij}\beta^i\beta^j}$ hold. Put the steps in order.
+    steps:
+      - 'For small $|\text{ᛊ}|$, $\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}$ stays in $\mathscr{X}(\mathcal{U})$ and keeps the sign $\text{ᛇ}_\gamma$, so $L_{[a,b]}[\gamma_{\text{ᛊ}}] = \int_a^b\mathcal{L}_\mathscr{X}(\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ};\dot\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}'')\,d\lambda$ is defined.'
+      - 'The integrand is smooth in $(\text{ᛊ},\lambda)$ on a compact rectangle: differentiate under the integral sign.'
+      - 'Chain rule at $\text{ᛊ} = 0$: the integrand of the derivative is $\sum_m\big(\partial_m\mathcal{L}_\mathscr{X}\,\text{ᛉ}^m + \partial_{d+m}\mathcal{L}_\mathscr{X}\,\text{ᛉ}''^m\big)$.'
+      - 'Integrate the $\text{ᛉ}''^m$ term by parts: it becomes a boundary term minus $\int\frac{d}{d\lambda}\big[\partial_{d+m}\mathcal{L}_\mathscr{X}\big]\text{ᛉ}^m$.'
+      - 'The boundary term vanishes because $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$.'
+      - 'The derivative is now $\int_a^b\sum_mE_m\,\text{ᛉ}^m\,d\lambda$; it vanishes for every $\text{ᛉ}$ iff each continuous $E_m$ vanishes (test with $\text{ᛉ}^m = (\lambda-a)(b-\lambda)E_m$).'
+    hint: Make sure the integral exists, then differentiate, then deal with $\text{ᛉ}'$, then use that $\text{ᛉ}$ is arbitrary.
+    explanation: |
+      Two moves: (I) compute $\frac{dL}{d\text{ᛊ}}\big|_0$ as one integral of $\text{ᛉ}$ times something; (II) since $\text{ᛉ}$ is arbitrary, that something vanishes at every point. Nothing in the proof used the square-root form of $\mathcal{L}_\mathscr{X}$: it works for any Lagrangian that is $C^2$ (twice continuously differentiable) near the curve's points $(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})$.
+
+  - type: text
+    id: cartesian-check
+    title: Check in the Euclidean plane
+    body: |
+      Cartesian chart, $\mathcal{L}_\mathscr{X}(\alpha;\beta) = \sqrt{(\beta^1)^2+(\beta^2)^2}$. The position derivatives vanish, $\partial_m\mathcal{L}_\mathscr{X} = 0$, and the velocity ones are
+      $$\partial_{2+m}\mathcal{L}_\mathscr{X} = \frac{\beta^m}{\sqrt{(\beta^1)^2+(\beta^2)^2}}.$$
+      On the curve, $\beta^m = \dot\gamma^m$ and the root is the speed $s_\gamma$. The Euler-Lagrange equations read
+      $$\frac{d}{d\lambda}\Big(\frac{\dot\gamma^m}{s_\gamma}\Big) = 0,\quad m = 1,2.$$
+      So $\dot\gamma/s_\gamma$, the velocity divided by its length, is a constant vector.
+
+  - type: mcq
+    id: cartesian-solutions
+    title: Which curves solve it?
+    prompt: |
+      In the cartesian chart of the Euclidean plane, the Euler-Lagrange equations of the length Lagrangian $\mathcal{L}_\mathscr{X}(\alpha;\beta) = \sqrt{(\beta^1)^2+(\beta^2)^2}$ are
+      $$\frac{d}{d\lambda}\Big(\frac{\dot\gamma^m}{s_\gamma}\Big) = 0,\quad m = 1,2,$$
+      with speed $s_\gamma = \sqrt{(\dot\gamma^1)^2+(\dot\gamma^2)^2} > 0$. Which curves solve them?
+    options:
+      - text: 'Straight lines, run at any (nonzero) speed, even a varying one'
+        correct: true
+      - text: 'Straight lines run at constant speed only'
+        feedback: |
+          The equations only fix the direction $\dot\gamma/s_\gamma$. With direction $u$ constant, $\dot\gamma = s_\gamma\,u$ for any positive function $s_\gamma$: for instance $\gamma(\lambda) = (\lambda^2,0)$ on $[1,2]$ has $\dot\gamma/s_\gamma = (1,0)$ although its speed $2\lambda$ changes.
+      - text: 'Straight lines and circles'
+        feedback: |
+          On a circle the direction $\dot\gamma/s_\gamma$ turns, so its derivative is not $0$. Circles are not stationary: pulling an arc of one towards its chord shortens it at first order.
+      - text: 'Every curve, since the position slots never appear'
+        feedback: |
+          The absence of position slots kills the term $\partial_m\mathcal{L}_\mathscr{X}$, but the other term $\frac{d}{d\lambda}(\dot\gamma^m/s_\gamma)$ remains and must vanish. That is a real condition: the direction must stay fixed.
+    explanation: |
+      $\dot\gamma = s_\gamma\,u$ with a fixed unit vector $u$ integrates to $\gamma_\mathcal{U}(\lambda) = \gamma_\mathcal{U}(a) + \big(\int_a^\lambda s_\gamma\big)\,u$: a straight segment. The hook's segment is one of them, as it should be.
+
+  - type: text
+    id: energy
+    title: A Lagrangian without the root
+    body: |
+      The proof never used the root, so try the simplest Lagrangian of physics, the kinetic energy of a free particle of unit mass, in the cartesian chart of the Euclidean plane:
+      $$\mathcal{E}_\mathscr{X}(\alpha;\beta) := \tfrac12\big((\beta^1)^2+(\beta^2)^2\big).$$
+      Its action $\int\mathcal{E}\,d\lambda$ is not the length. The Euler-Lagrange equations: $\partial_m\mathcal{E}_\mathscr{X} = 0$ and $\partial_{2+m}\mathcal{E}_\mathscr{X} = \beta^m$, so
+      $$\ddot\gamma^m = 0,\quad m = 1,2.$$
+      This is Newton's free particle. Its solutions are straight lines run at **constant** speed: a stricter condition than the length's.
+
+  - type: numeric
+    id: energy-test
+    title: Same path, two Lagrangians
+    prompt: |
+      Euclidean plane, cartesian chart. The curve $\gamma(\lambda) = (\lambda^2,\ 0)$, $\lambda\in[1,2]$, runs along a straight line with velocity components $(\dot\gamma^1,\dot\gamma^2) = (2\lambda,0)$. For the energy Lagrangian $\mathcal{E}_\mathscr{X}(\alpha;\beta) = \tfrac12\big((\beta^1)^2+(\beta^2)^2\big)$, the $m = 1$ Euler-Lagrange expression is
+      $$\frac{d}{d\lambda}\big[\partial_3\mathcal{E}_\mathscr{X}\big] - \partial_1\mathcal{E}_\mathscr{X}.$$
+      Evaluate it on this curve.
+    answer: 2
+    wrong:
+      - { value: 0, feedback: '$0$ is what the length Lagrangian gives on this curve: $\dot\gamma^1/s_\gamma = 2\lambda/2\lambda = 1$, constant. For $\mathcal{E}_\mathscr{X}$, $\partial_3\mathcal{E}_\mathscr{X} = \beta^1 = 2\lambda$, whose $\lambda$-derivative is $2$.' }
+      - { value: 4, feedback: 'The velocity slot is $\beta^1 = \dot\gamma^1 = 2\lambda$; its $\lambda$-derivative is $2$. The position term $\partial_1\mathcal{E}_\mathscr{X}$ is $0$, since $\mathcal{E}_\mathscr{X}$ has no position slots.' }
+    hint: '$\partial_3\mathcal{E}_\mathscr{X} = \beta^1$, which on the curve is $\dot\gamma^1 = 2\lambda$; and $\partial_1\mathcal{E}_\mathscr{X} = 0$.'
+    explanation: |
+      The result is $\ddot\gamma^1 = 2\neq0$: $\gamma$ is **not** stationary for the energy, although it is for the length (there $\frac{d}{d\lambda}(2\lambda/2\lambda) = 0$). Same path, different verdicts: the energy cares about the speed, the length does not.
+
+  - type: mcq
+    id: reparam-freedom
+    title: Why the length cannot fix the speed
+    prompt: |
+      The length functional is reparametrization invariant: $L_{\text{ᚱ}^{-1}([a,b])}[\gamma\circ\text{ᚱ}] = L_{[a,b]}[\gamma]$ for every diffeomorphism $\text{ᚱ}\colon\mathbb{R}\to\mathbb{R}$. What does this imply for the Euler-Lagrange equations of the length Lagrangian $\mathcal{L}(\mathcal{X}_p) = \sqrt{\text{ᛇ}_\gamma\,g_p(\mathcal{X}_p,\mathcal{X}_p)}$?
+    options:
+      - text: 'If $\gamma$ solves them, so does every reparametrization $\gamma\circ\text{ᚱ}$: they fix the path, not the speed'
+        correct: true
+      - text: 'They have no solutions, since a reparametrized curve changes the length'
+        feedback: |
+          Reparametrizing does **not** change the length: that is exactly the invariance. Varying $\gamma\circ\text{ᚱ}$ is the same as varying $\gamma$ and reparametrizing, so stationarity passes from one to the other.
+      - text: 'They pick out the constant-speed parametrization'
+        feedback: |
+          That is the energy Lagrangian $\tfrac12 g(v,v)$, whose action is **not** reparametrization invariant. In the Euclidean plane $\gamma(\lambda) = (\lambda^2,0)$ solves the length's equations with speed $2\lambda$, not constant.
+      - text: 'Nothing: invariance of $L$ says nothing about its stationary curves'
+        feedback: |
+          It says a lot: a deformation of $\gamma\circ\text{ᚱ}$ is a reparametrized deformation of $\gamma$, with the same length. So the derivatives in $\text{ᛊ}$ agree, and both curves are stationary or neither is.
+    explanation: |
+      The $d$ length equations cannot determine the $d$ functions $\gamma^m_\mathcal{U}(\lambda)$ completely: one free function, the speed profile, always remains. That is why the next step chooses a parametrization (constant speed) before simplifying them.
+
+  - type: mcq
+    id: trap-minimum
+    title: Stationary means shortest?
+    prompt: |
+      A smooth curve $\gamma$ with $\text{ᛇ}_\gamma\neq0$ satisfies the Euler-Lagrange equations of the length Lagrangian on $[a,b]$, so $\frac{d}{d\text{ᛊ}}L_{[a,b]}[\gamma_{\text{ᛊ}}]\big|_0 = 0$ for every variation with fixed endpoints. Which conclusion is justified?
+    options:
+      - text: 'Only that the length has no first-order change: it may be a minimum, a maximum or a saddle'
+        correct: true
+      - text: '$\gamma$ is the shortest curve between its endpoints'
+        feedback: |
+          Tempting, from the Euclidean segment. But a zero derivative is also met at a maximum: in Minkowski the inertial worldline of the twin at rest has proper time $10$, every slanted timelike detour less (twin B: $8$). There a solution of the equations is a **maximum**.
+      - text: '$\gamma$ is the longest curve between its endpoints'
+        feedback: |
+          That holds for the timelike inertial worldline in Minkowski, not in general: in the Euclidean plane the straight segment, which solves the equations, is the **shortest** curve, as the hook showed ($L = 1 + \tfrac{\pi^2}{4}\text{ᛊ}^2$).
+      - text: 'Nothing about first order: the equations only control the second derivative'
+        feedback: |
+          It is the other way round. The equations are equivalent to the vanishing of the **first** derivative $\frac{dL}{d\text{ᛊ}}\big|_0$; whether it is a minimum or maximum would need the second derivative, which they do not control.
+    explanation: |
+      Like $f'(x_0) = 0$ for a function of one variable, stationarity says nothing about which kind of critical point it is. Telling minima from maxima would need the second derivative $\frac{d^2L}{d\text{ᛊ}^2}$.
+
+  - type: mcq
+    id: trap-free-end
+    title: Letting an endpoint move
+    prompt: |
+      In the derivation of the Euler-Lagrange equations, integration by parts gives, for each $m$, the boundary term $P_m(b)\,\text{ᛉ}^m(b) - P_m(a)\,\text{ᛉ}^m(a)$, with $P_m := (\partial_{d+m}\mathcal{L}_\mathscr{X})(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})$. Suppose the endpoint at $b$ were **free**: shapes with $\text{ᛉ}(a) = 0$ but any $\text{ᛉ}(b)$. What changes?
+    options:
+      - text: 'The Euler-Lagrange equations still hold, plus a new condition $P_m(b) = 0$ for every $m$'
+        correct: true
+      - text: 'Nothing: the boundary term always vanishes'
+        feedback: |
+          It vanished only because $\text{ᛉ}(b) = 0$. With $\text{ᛉ}^m(b)$ free, the term $P_m(b)\,\text{ᛉ}^m(b)$ survives and must vanish separately for every choice of $\text{ᛉ}^m(b)$.
+      - text: 'The Euler-Lagrange equations no longer hold'
+        feedback: |
+          Shapes that vanish at both ends are still allowed among the free-end ones, and they alone force the Euler-Lagrange equations. The free end adds a condition; it removes none.
+      - text: 'The new condition is $Q_m(b) = 0$, with $Q_m := (\partial_m\mathcal{L}_\mathscr{X})(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})$'
+        feedback: |
+          The position derivative $Q_m$ stays inside the integral; only the velocity term was integrated by parts, so only $P_m$ appears at the boundary.
+    explanation: |
+      First the shapes with $\text{ᛉ}(b) = 0$ give the equations, which kill the integral; then any $\text{ᛉ}(b)$ leaves $\sum_mP_m(b)\,\text{ᛉ}^m(b) = 0$. For the length, $P_m\neq0$ (it is $\text{ᛇ}_\gamma\,g_{mj}\dot\gamma^j/s_\gamma$, a nonzero covector), so no free-end stationary curve exists: fixing the endpoints is what makes the problem sensible.
+
+  - type: text
+    id: chart-independence
+    title: Does the chart matter?
+    body: |
+      The variation was built through the chart $\mathscr{X}$. Take another chart $(\mathcal{V},\mathscr{Y})$ also containing $\gamma([a,b])$, with representative $\gamma_\mathcal{V} := \mathscr{Y}\circ\gamma$, and a family linear in $\mathscr{Y}$: $\mathscr{Y}\circ\gamma_{\text{ᛊ}} = \gamma_\mathcal{V} + \text{ᛊ}\,\text{ᛉ}_\mathscr{Y}$, with $\text{ᛉ}_\mathscr{Y}(a) = \text{ᛉ}_\mathscr{Y}(b) = 0$. Seen in $\mathscr{X}$ it is not linear, but Taylor in $\text{ᛊ}$ gives
+      $$\mathscr{X}\circ\gamma_{\text{ᛊ}} = \gamma_\mathcal{U} + \text{ᛊ}\,\tilde{\text{ᛉ}} + O(\text{ᛊ}^2),$$
+      with $\tilde{\text{ᛉ}}^i = (\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j\,\text{ᛉ}_\mathscr{Y}^j$ (the Jacobian $\partial\mathscr{X}^i/\partial\mathscr{Y}^j$ along $\gamma$), again $0$ at $a$ and $b$.
+
+      The chain rule step of the derivation only used the first $\text{ᛊ}$-derivative of the slots at $\text{ᛊ} = 0$; the $O(\text{ᛊ}^2)$ terms drop out. So this $\mathscr{Y}$-family has the same $\frac{dL}{d\text{ᛊ}}\big|_0$ as the $\mathscr{X}$-variation with shape $\tilde{\text{ᛉ}}$. Stationary for all $\mathscr{X}$-variations implies stationary for all $\mathscr{Y}$-variations, and by symmetry conversely: **being a geodesic does not depend on the chart.**
+
+  - type: mcq
+    id: trap-chart
+    title: Chart-made deformations
+    prompt: |
+      A variation $\gamma_{\text{ᛊ}} = \mathscr{X}^{-1}(\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ})$ is linear in $\text{ᛊ}$ in the chart $\mathscr{X}$ but in general not in another chart $\mathscr{Y}$. In the Euclidean plane, the length Lagrangian has no position slots in cartesian components but a position slot $r$ in polar ones. What follows for "being a geodesic"?
+    options:
+      - text: 'It is chart independent: $\frac{dL}{d\text{ᛊ}}\big|_0$ only sees the first-order shape, which each chart turns into another allowed shape'
+        correct: true
+      - text: 'A curve can be a geodesic in the cartesian chart but not in the polar one'
+        feedback: |
+          The length $L_{[a,b]}[\gamma_{\text{ᛊ}}]$ is a number attached to curves on the manifold, and a family linear in polar coordinates is, in cartesian ones, $\gamma_\mathcal{U}+\text{ᛊ}\,\tilde{\text{ᛉ}}+O(\text{ᛊ}^2)$ with $\tilde{\text{ᛉ}}$ vanishing at the endpoints. The first derivative ignores the $O(\text{ᛊ}^2)$ part, so the two charts agree.
+      - text: 'It is chart independent because the Euler-Lagrange equations look the same in every chart'
+        feedback: |
+          The equations do **not** look the same: in cartesian components the position term is $0$, in polar ones $\partial_r\mathcal{L}_\mathscr{Y} = r(\beta^2)^2/\mathcal{L}_\mathscr{Y}$ is not. Different-looking equations, same solutions: the reason is the first-order argument.
+      - text: 'It depends on the chart, so one fixes the cartesian chart by convention'
+        feedback: |
+          A general manifold has no cartesian chart, and no convention is needed: a family linear in one chart is linear to first order in any other, with a shape that still vanishes at the endpoints, and only first order enters $\frac{dL}{d\text{ᛊ}}\big|_0$.
+    explanation: |
+      Chart-dependent tools, chart-independent result. The individual terms $\partial_m\mathcal{L}_\mathscr{X}$ and $\frac{d}{d\lambda}\partial_{d+m}\mathcal{L}_\mathscr{X}$ change from chart to chart, but their difference vanishes in one chart exactly when it vanishes in every other.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** plug the metric's Lagrangian $\sqrt{\text{ᛇ}_\gamma\,g_{ij}\beta^i\beta^j}$ into the Euler-Lagrange equations and simplify, using the freedom to run the curve at constant speed. A guided problem: out come $d$ second-order equations for $\gamma_\mathcal{U}$, and a combination of derivatives of $g_{ij}$ that looks very much like the Christoffel symbols of Level 6: the **geodesic equation**.

@@ -320,7 +320,11 @@ levels:
         kind: concept
         file: ch07/length.yaml
         summary: A sign rune keeps the square root real, so the metric measures any curve, Euclidean or Minkowski, where length becomes proper time (the twin paradox). The length ignores how fast the path is run, and its stationary curves are the geodesics.
-      - { id: ch07-euler-lagrange, title: Variations and the Euler-Lagrange Equations, kind: concept }
+      - id: ch07-euler-lagrange
+        title: Variations and the Euler-Lagrange Equations
+        kind: concept
+        file: ch07/euler-lagrange.yaml
+        summary: Bend a curve in a chart with a knob ᛊ and a shape ᛉ that keeps the endpoints fixed, ask that the length not change to first order, and integration by parts turns this into differential equations at every point, the Euler-Lagrange equations.
       - { id: ch07-geodesic-equation, title: "Guided Problem: Deriving the Geodesic Equation", kind: guided }
       - { id: ch07-levi-civita, title: The Levi-Civita Connection, kind: concept }
       - { id: ch07-curvature, title: Curvature of the Metric, kind: concept }
