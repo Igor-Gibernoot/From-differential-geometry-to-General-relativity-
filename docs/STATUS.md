@@ -320,9 +320,9 @@ append a short entry at the end of **Log** (a few lines, ending with
   $\partial x_1 + \partial x_2$ with $\flat = (-1,1)$, $\flat(2\partial x_1+\partial x_2) = -2dx^1 + dx^2$; "lightlike (null)" named. Widget preset new: `chart-basis` cartesian + polar
   (`cut: left`), `jacobian: false`, $p = (3,4)$, $v = (-4,3)$, view `{x: -2.5, y: -0.75, w: 9, h: 9}`.
   Conventions fixed here (`ch07-signature`): Jacobian matrix $\mathbf{A}$, $A^i{}_k := \partial\mathscr{X}^i/\partial\mathscr{Y}^k$ (old by new, as the B.12 remark), component matrices
-  $\mathbf{G}_\mathscr{X}$, congruence $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$ vs similarity $\mathbf{A}^{-1}\mathbf{T}\mathbf{A}$; Minkowski charts $\mathscr{Y} = (2t,2a)$ ($\mathrm{diag}(-	frac14,	frac14)$, rechecked),
-  light-cone chart $\mathscr{Z} = ((t+a)/\sqrt2,(a-t)/\sqrt2)$ ($egin{pmatrix}0&1\1&0\end{pmatrix}$, rechecked), $\partial z_1 = (\partial x_1+\partial x_2)/\sqrt2$; signature $(n_+,n_-)$ (book order),
-  spacetime $\mathrm{diag}(-1,1,1,1)$ = $(3,1)$; $\operatorname{sign}\det = (-1)^{n_-}$; examples $egin{pmatrix}2&1\1&1\end{pmatrix}$ = $(2,0)$ by completing squares, $egin{pmatrix}1&2\2&1\end{pmatrix}$ = $(1,1)$;
+  $\mathbf{G}_\mathscr{X}$, congruence $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$ vs similarity $\mathbf{A}^{-1}\mathbf{T}\mathbf{A}$; Minkowski charts $\mathscr{Y} = (2t,2a)$ ($\mathrm{diag}(-\tfrac14,\tfrac14)$, rechecked),
+  light-cone chart $\mathscr{Z} = ((t+a)/\sqrt2,(a-t)/\sqrt2)$ ($\begin{pmatrix}0&1\\1&0\end{pmatrix}$, rechecked), $\partial z_1 = (\partial x_1+\partial x_2)/\sqrt2$; signature $(n_+,n_-)$ (book order),
+  spacetime $\mathrm{diag}(-1,1,1,1)$ = $(3,1)$; $\operatorname{sign}\det = (-1)^{n_-}$; examples $\begin{pmatrix}2&1\\1&1\end{pmatrix}$ = $(2,0)$ by completing squares, $\begin{pmatrix}1&2\\2&1\end{pmatrix}$ = $(1,1)$;
   degenerate-on-a-line $a\,dx^1\otimes dx^1 + dx^2\otimes dx^2$; "connected" defined inline; "null vectors" form a cone; no widget.
   Conventions fixed here (`ch07-length`): sign rune $\text{ᛇ}_\gamma := \mathrm{sgn}(g(v_\gamma,v_\gamma))$ (read "sign"), speed $s_\gamma$, $L_{[a,b]}[\gamma]$ (square brackets = curve argument),
   chart components $\dot\gamma^i := (\mathscr{X}^i\circ\gamma)'$; reparametrization $\text{ᚱ}$ with new parameter $\mu$ (as ch04), $\delta := \gamma\circ\text{ᚱ}$, $[\tilde a,\tilde b] := \text{ᚱ}^{-1}([a,b])$,
@@ -353,11 +353,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   validate 0/0, shots 0 problems.
 - Conventions fixed here: see Current, "Chapter 7 conventions so far" (`ch07-length`).
 ### 2026-10-20 — ch07-signature (concept, 27 cards)
-- Built `content/ch07/signature.yaml` (hook: $\eta$ in three charts, guess the invariant; no eigenvalues (covector vs vector, $\lambda$ moves $1	o	frac14$);
+- Built `content/ch07/signature.yaml` (hook: $\eta$ in three charts, guess the invariant; no eigenvalues (covector vs vector, $\lambda$ moves $1\to\tfrac14$);
   Sylvester's law, no zeros, order card for the B.12 existence proof, uniqueness mcq; completing squares; eigenvalue-sign route; light-cone and
   all-positive-entries traps; classes, Lorentzian select-all, null basis, null cone; constancy on connected manifolds with a disconnected example;
   determinant sign). `own:` with 5 blanks. Choices: no widget fits (numeric instead); $\mathbf{A}$ named for the Jacobian to avoid Chapter 2's $J$.
-  Doubt resolved: the hook's $\mathrm{diag}(-	frac14,	frac14)$ and $egin{pmatrix}0&1\1&0\end{pmatrix}$ rechecked by hand, correct; metric.yaml teaser unchanged.
+  Doubt resolved: the hook's $\mathrm{diag}(-\tfrac14,\tfrac14)$ and $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ rechecked by hand, correct; metric.yaml teaser unchanged.
   validate 0/0, shots 0 problems.
 - Conventions fixed here: see Current, "Chapter 7 conventions so far" (`ch07-signature`).
 ### 2026-10-20 — ch07-metric (concept, 30 cards)
