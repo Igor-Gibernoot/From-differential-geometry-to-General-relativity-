@@ -47,6 +47,7 @@ Static web app on GitHub Pages (laptop and phone). Deploy = commit + push to
 3. **Traps** (`kind: traps`): fast questions, each built on a common
    misconception.
 4. **Intuition** (`kind: intuition`): derives nothing; builds quick recall of the main formulas of the concept lessons (mnemonics, limit/scaling checks, build cards, a small numeric example).
+   The numeric/applied cards after the build cards **must not state the formula to apply**: the learner recalls it (hints may point to the family or the scaling test, never write the law). Give data, not the law.
 5. **End of every level:** **content map** (`kind: map`, rebuild the
    chapter's concept map box by box among decoys; start from the old TeX
    map and check it against the book), **level review** (`kind: review`,
@@ -114,6 +115,7 @@ and put the weight on understanding and on the physics.
 13. **Theme-neutral wording.** Never "the black arrow": name things by label
     or by the fixed hues (basis purple, vector components blue, covectors
     orange).
+14. **Tables.** Plain Markdown tables only; the house style lives in `css/app.css` (`.prose table`: bordered, shaded header, zebra rows). Never style a table per lesson.
 
 ### Building sessions (token efficiency)
 

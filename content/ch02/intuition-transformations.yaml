@@ -251,41 +251,48 @@ cards:
     prompt: |
       A shear: the bases are related by
       $$\hat{x}_1 = \hat{y}_1,\qquad \hat{x}_2 = \hat{y}_1 + \hat{y}_2 .$$
-      So $J_1^1 = 1$, $J_1^2 = 0$, $J_2^1 = 1$, $J_2^2 = 1$. A vector has old components $(x^1, x^2) = (3, 2)$. Use $y^j = \sum_i J_i^j\,x^i$ to find $y^1$.
+      A vector has old components $(x^1, x^2) = (3, 2)$. Find its new component $y^1$. (Recall which family vector components belong to.)
     answer: 5
     answerText: '5'
     wrong:
-      - { value: 3, feedback: 'You dropped the term $J_2^1\,x^2 = 1\cdot 2$. Both old components contribute to $y^1$.' }
-    hint: '$y^1 = J_1^1\,x^1 + J_2^1\,x^2$.'
+      - { value: 3, feedback: 'You dropped the contribution of $x^2$. Both old components feed into $y^1$.' }
+      - { value: 1, feedback: 'You used $J^{-1}$ (the covariant law). Vector components have an upper index and go **against** the basis, so they use $J$, the matrix that writes old in terms of new.' }
+    hint: 'Upper index, so the opposite of the basis law. Or skip the law: write $3\hat{x}_1 + 2\hat{x}_2$ in terms of $\hat{y}_1,\hat{y}_2$.'
     explanation: |
-      $$y^1 = 1\cdot 3 + 1\cdot 2 = 5 .$$
+      Vector components use $J$, summed on the lower (old) index:
+      $$y^1 = J_1^1\,x^1 + J_2^1\,x^2 = 1\cdot 3 + 1\cdot 2 = 5 .$$
       Likewise $y^2 = 0\cdot 3 + 1\cdot 2 = 2$.
       Direct check: $3\hat{x}_1 + 2\hat{x}_2 = 3\hat{y}_1 + 2(\hat{y}_1 + \hat{y}_2) = 5\hat{y}_1 + 2\hat{y}_2$.
 
   - type: numeric
     id: shear-cov
     prompt: |
-      Same shear: $\hat{y}_1 = \hat{x}_1$ and $\hat{y}_2 = \hat{x}_2 - \hat{x}_1$. A covector has old components $(\mathtt{x}_1, \mathtt{x}_2) = (1, 4)$. Using $\mathtt{y}_j = \mathsf{X}(\hat{y}_j)$ and linearity, find $\mathtt{y}_2$.
+      Same shear, $\hat{x}_1 = \hat{y}_1$ and $\hat{x}_2 = \hat{y}_1 + \hat{y}_2$. A covector has old components $(\mathtt{x}_1, \mathtt{x}_2) = (1, 4)$. Find its new component $\mathtt{y}_2$.
     answer: 3
     answerText: '3'
     wrong:
-      - { value: 5, feedback: 'You added $\mathtt{x}_1$ instead of subtracting: $\hat{y}_2 = \hat{x}_2 - \hat{x}_1$.' }
-    hint: '$\mathsf{X}(\hat{x}_2 - \hat{x}_1) = \mathtt{x}_2 - \mathtt{x}_1$.'
+      - { value: 4, feedback: 'You used $J$ (reading $J_i^2$ off the relations). Covector components have a lower index and follow the basis, so they need $J^{-1}$: express $\hat{y}_2$ in terms of the old basis first.' }
+      - { value: 5, feedback: 'Right idea, wrong sign: $\hat{y}_2 = \hat{x}_2 - \hat{x}_1$, so $\mathtt{x}_1$ is subtracted.' }
+    hint: 'Lower index: same table as the basis vectors, but new from old. Invert the relations to get $\hat{y}_2$, then use $\mathtt{y}_2 = \mathsf{X}(\hat{y}_2)$.'
     explanation: |
-      $$\mathtt{y}_2 = \mathtt{x}_2 - \mathtt{x}_1 = 4 - 1 = 3,\qquad \mathtt{y}_1 = \mathtt{x}_1 = 1 .$$
-      This is $\mathtt{y}_j = \sum_l (J^{-1})_j^l\,\mathtt{x}_l$ with $\hat{y}_2 = -\hat{x}_1 + \hat{x}_2$.
+      Inverting, $\hat{y}_1 = \hat{x}_1$ and $\hat{y}_2 = \hat{x}_2 - \hat{x}_1$, so
+      $$\mathtt{y}_2 = \mathsf{X}(\hat{x}_2 - \hat{x}_1) = \mathtt{x}_2 - \mathtt{x}_1 = 4 - 1 = 3 .$$
+      Likewise $\mathtt{y}_1 = \mathtt{x}_1 = 1$.
+      This is the $J^{-1}$ law: $\mathtt{y}_j = \sum_l (J^{-1})_j^l\,\mathtt{x}_l$.
 
   - type: numeric
     id: shear-pairing
     prompt: |
-      In the same shear the vector has new components $(y^1, y^2) = (5, 2)$ and the covector has new components $(\mathtt{y}_1, \mathtt{y}_2) = (1, 3)$. Compute the measurement
-      $$\mathsf{X}(\mathcal{X}) = \mathtt{y}_1\,y^1 + \mathtt{y}_2\,y^2 .$$
+      Same shear. A vector has **new** components $(y^1, y^2) = (5, 2)$ and a covector has **old** components $(\mathtt{x}_1, \mathtt{x}_2) = (1, 4)$. What number does the covector give when it measures the vector?
     answer: 11
     answerText: '11'
-    hint: 'Compare with the old basis: $1\cdot 3 + 4\cdot 2$.'
+    wrong:
+      - { value: 13, feedback: 'You paired $1\cdot 5 + 4\cdot 2$, mixing components from **different** bases. The pairing is only basis-independent when both sets of components belong to the same basis.' }
+    hint: 'Bring both to the same basis first: convert the covector to the new basis (it has a lower index), or the vector to the old one.'
     explanation: |
+      Convert the covector: $(\mathtt{y}_1, \mathtt{y}_2) = (1, 3)$, then
       $$1\cdot 5 + 3\cdot 2 = 11 = 1\cdot 3 + 4\cdot 2 .$$
-      Same number in both bases: the $J$ and $J^{-1}$ cancel inside the pairing, which is exactly why the two families go in opposite directions.
+      The last product uses the old components $(3, 2)$ of the same vector. Same number in both bases: the $J$ and $J^{-1}$ cancel inside the pairing, which is why the two families go in opposite directions.
 
   - type: text
     id: summary

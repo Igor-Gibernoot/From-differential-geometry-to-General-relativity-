@@ -164,6 +164,10 @@ Applies to every string with math (body, prompt, options, hint, feedback, explan
   A bundled runic font makes them render everywhere; no need to avoid them.
 - Never write "the book" or section labels (C.3, B.5) in lessons.
 
+## Tables
+
+Write plain Markdown tables (`| a | b |` with a `|---|---|` row). The `.prose table` style in `css/app.css` gives the one house layout: outer border, rounded corners, shaded uppercase header, cell borders, zebra rows. Never restyle per lesson; keep 2–4 short columns (phone width).
+
 ## YAML gotchas
 
 - TeX in **single quotes** or block scalars (`|`); never double quotes (`"\sum"` breaks).

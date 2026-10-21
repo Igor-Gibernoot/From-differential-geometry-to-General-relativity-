@@ -473,6 +473,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+
+- Intuition lesson revision: shear cards no longer state the law to apply (learner recalls it); house table style added in css/app.css (.prose table), applies to every Markdown table (incl. dual-basis-law). Conventions fixed here: intuition application cards give data, never the formula; tables are plain Markdown.
 ### 2026-10-21 — new lesson kind `intuition`, first lesson `ch02-intuition-transformations` (18 cards)
 - Engine: kind registered in validate (own: allowed), icons/KIND_LABEL (lightning icon, "Intuition lesson"), recap includes it. Placed in ch02 before `ch02-tensors`.
 - Conventions fixed here: new-from-old, upper-index objects ($y^j$, $hat{mathfrak{y}}^j$) take $J$, lower-index ($hat{y}_j$, $mathtt{y}_j$) take $J^{-1}$; in $J_i^j$ lower = old, upper = new.
