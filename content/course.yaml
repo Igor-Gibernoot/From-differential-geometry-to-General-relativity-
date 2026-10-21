@@ -516,7 +516,11 @@ levels:
         kind: concept
         file: ch10/lorentz.yaml
         summary: "Two observers meeting at an event: the matrix between their frames, the condition that makes it a Lorentz transformation, why only orthochronous ones occur, the 1+1 boosts, and why this is a statement about frames, not coordinates."
-      - { id: ch10-einstein-hilbert, title: The Einstein Equations from an Action, kind: concept }
+      - id: ch10-einstein-hilbert
+        title: The Einstein Equations from an Action
+        kind: concept
+        file: ch10/einstein-hilbert.yaml
+        summary: "The metric as the unknown: the Einstein–Hilbert action, what varying g means, the variations of the inverse metric, the volume density and the Ricci tensor (Palatini identity), why the second derivatives form a total divergence, the vacuum equations G = 0, and the matter term that gives G = 8πG_N T."
       - { id: ch10-matter, title: Coupling to Matter, kind: concept }
       - { id: ch10-schwarzschild, title: "Guided Problem: Checking the Schwarzschild Metric", kind: guided }
       - { id: ch10-traps, title: Relativity Traps, kind: traps }
