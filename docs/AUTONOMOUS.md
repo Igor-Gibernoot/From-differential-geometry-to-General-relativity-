@@ -5,8 +5,11 @@ of Chapter 3"). The main session is then a **lean coordinator**: it builds
 nothing and reads nothing itself (no lesson files, no book, no docs), so its
 context stays small. Igor reviews the level on the live site at the end.
 
+- **Agent model = the session's own model and effort.** Pass `model` matching
+  the model this session runs on (Sonnet session → `sonnet`, Opus session →
+  `opus`) and leave `effort` unset so it inherits; never pick another model.
 - For each unit, in `course.yaml` order and **strictly sequentially** (never
-  in parallel), spawn one fresh agent (model: Opus) whose prompt is the
+  in parallel), spawn one fresh agent whose prompt is the
   ready-to-paste unit prompt plus: "You are running autonomously: follow
   CLAUDE.md 'Building sessions' exactly, one unit only; you cannot ask Igor
   questions, so make reasonable choices and record them in the Log entry.
