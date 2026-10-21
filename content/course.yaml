@@ -536,6 +536,10 @@ levels:
         kind: traps
         file: ch10/traps.yaml
         summary: "Fast questions on this level's tempting mistakes: signs of timelike and spacelike, the cone is not a subspace, proper time vs coordinate time, the straight worldline is the longest, Lorentz matrices and speeds, Ricci-flat is not flat, the volume density, signs and sizes of T, and Schwarzschild's r, clocks and tides."
-      - { id: ch10-map, title: "Content Map: General Relativity", kind: map }
+      - id: ch10-map
+        title: "Content Map: General Relativity"
+        kind: map
+        file: ch10/map.yaml
+        summary: "Rebuild the Chapter 10 map box by box: spacetime and its light cone, the time orientation, worldlines and proper time, observers and Lorentz matrices on one side; the Einstein-Hilbert action, the energy-momentum tensor, the Einstein equations, conservation, Schwarzschild and its tides on the other."
       - { id: ch10-review, title: Level Review, kind: review }
       - { id: ch10-challenge, title: Level Challenge, kind: challenge }

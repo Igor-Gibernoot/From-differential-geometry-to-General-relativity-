@@ -1,0 +1,342 @@
+id: ch10-map
+title: "Content Map: General Relativity"
+kind: map
+name: Chapter 10, General Relativity
+
+intro: |
+  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition. An arrow goes from a concept to a concept built on it, and its label says how; read it as a sentence, for example "spacetime *classifies vectors* into the light cone", "an observer *changes frame* by a Lorentz matrix" or "the action *plus matter* gives the field equation".
+
+  You will rebuild the Chapter 10 map one box at a time. It starts from spacetime and splits in two. On the left is the **kinematics**: the light cone, the time orientation, worldlines and proper time, observers and the Lorentz matrices that relate them. On the right is the **dynamics**: the Einstein–Hilbert action, the energy-momentum tensor of matter, the field equation, its conservation law, and its first solution, Schwarzschild, with its tides. For each glowing box, pick the card that belongs there. The other cards look alike but each hides a classic mistake of this level, so read the details.
+
+  Tap a finished box at any time to reread its card.
+
+cols: 3
+nodes:
+  - id: spacetime
+    title: 'Spacetime'
+    row: 1
+    col: 2
+    body: |
+      The sextuple
+      $$(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,\nabla^{\mathrm{LC}},g,\text{ᛏ})_4$$
+      a 4-dimensional oriented manifold with a Lorentzian metric $g$ (signature $(+,-,-,-)$), its Levi-Civita connection $\nabla^{\mathrm{LC}}$, **fixed by $g$**, and a time orientation $\text{ᛏ}$.
+    decoys:
+      - body: |
+          The sextuple
+          $$(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,\nabla,g,\text{ᛏ})_4$$
+          a 4-dimensional oriented manifold with a Lorentzian metric $g$ (signature $(+,-,-,-)$), an **independent** connection $\nabla$ chosen freely, and a time orientation $\text{ᛏ}$.
+        feedback: |
+          The connection is the one the metric fixes: the Levi-Civita connection is the unique torsion-free, metric-compatible one. In the Newtonian level the connection was the fundamental object because there was no metric; here it is a consequence of $g$.
+      - body: |
+          The sextuple
+          $$(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,\nabla^{\mathrm{LC}},g,\text{ᛏ})_4$$
+          a 4-dimensional oriented manifold with a **positive definite** metric $g$, its Levi-Civita connection $\nabla^{\mathrm{LC}}$ and a time orientation $\text{ᛏ}$.
+        feedback: |
+          A positive definite $g$ has $g(\mathcal{X},\mathcal{X})>0$ for every non-zero $\mathcal{X}$: no light cone, no spacelike directions, nothing to orient in time. Spacetime needs the Lorentzian signature, one sign against three, so that $\det g<0$.
+    explanation: |
+      The arena. Everything else on this map is read off $g$, or asks what $g$ should be.
+
+  - id: cone
+    title: 'Light cone'
+    row: 2
+    col: 1
+    body: |
+      A non-zero $\mathcal{X}_p\in T_p\mathcal{M}$ is
+      $$\text{timelike: } g_p(\mathcal{X}_p,\mathcal{X}_p)>0,$$
+      lightlike (null) if the value is $0$, and spacelike if it is $<0$. The null vectors form a **cone** in $T_p\mathcal{M}$: closed under scaling, but **not a subspace**.
+    decoys:
+      - body: |
+          A non-zero $\mathcal{X}_p\in T_p\mathcal{M}$ is
+          $$\text{timelike: } g_p(\mathcal{X}_p,\mathcal{X}_p)<0,$$
+          lightlike (null) if the value is $0$, and spacelike if it is $>0$. The null vectors form a **cone** in $T_p\mathcal{M}$: closed under scaling, but **not a subspace**.
+        feedback: |
+          The signs are swapped. With $(+,-,-,-)$ the time direction gives $g(e_0,e_0)=+1$, so timelike means $>0$. The other convention $(-,+,+,+)$ flips every inequality, but one must not mix the two.
+      - body: |
+          A non-zero $\mathcal{X}_p\in T_p\mathcal{M}$ is
+          $$\text{timelike: } g_p(\mathcal{X}_p,\mathcal{X}_p)>0,$$
+          lightlike (null) if the value is $0$, and spacelike if it is $<0$. The null vectors form a **subspace** of $T_p\mathcal{M}$: the sum of two null vectors is null.
+        feedback: |
+          Take $(1,1)$ and $(1,-1)$ in 1+1 dimensions with $g=\mathrm{diag}(1,-1)$: both are null, their sum $(2,0)$ has $g=4>0$, timelike. The null vectors are closed under scaling only.
+    explanation: |
+      The metric sorts the vectors at each point into three classes; the cone is where the sort changes.
+
+  - id: orient
+    title: 'Time orientation'
+    row: 3
+    col: 1
+    body: |
+      A smooth vector field $\text{ᛏ}$ with
+      $$g_p(\text{ᛏ}(p),\text{ᛏ}(p))>0\ \text{ for every } p.$$
+      A causal $\mathcal{X}_p$ is **future directed** if $g_p(\text{ᛏ}(p),\mathcal{X}_p)>0$, past directed if $<0$.
+    decoys:
+      - body: |
+          A smooth vector field $\text{ᛏ}$ with
+          $$g_p(\text{ᛏ}(p),\text{ᛏ}(p))>0\ \text{ for every } p.$$
+          A causal $\mathcal{X}_p$ is **future directed** if $g_p(\mathcal{X}_p,\mathcal{X}_p)>0$, past directed if $<0$.
+        feedback: |
+          $g(\mathcal{X},\mathcal{X})$ cannot tell $\mathcal{X}$ from $-\mathcal{X}$, so it cannot tell future from past. Only the pairing with $\text{ᛏ}$, $g(\text{ᛏ},\mathcal{X})$, picks the half of the cone.
+      - body: |
+          A smooth vector field $\text{ᛏ}$ that is **non-zero** at every $p$.
+          A causal $\mathcal{X}_p$ is **future directed** if $g_p(\text{ᛏ}(p),\mathcal{X}_p)>0$, past directed if $<0$.
+        feedback: |
+          Non-zero is not enough: if $\text{ᛏ}$ were spacelike, $g(\text{ᛏ},\mathcal{X})$ would be positive on part of the future cone and negative on the rest. $\text{ᛏ}$ must be **timelike** everywhere, so that it points into one half of the cone.
+    explanation: |
+      The metric cannot choose a direction of time; a timelike vector field does.
+
+  - id: worldline
+    title: 'Worldlines and proper time'
+    row: 4
+    col: 1
+    body: |
+      A **massive** worldline has a timelike, future-directed velocity; a massless one a lightlike, future-directed velocity. For a massive $\gamma$,
+      $$\tau[\gamma]=\int_{\lambda_1}^{\lambda_2}\sqrt{g(v_\gamma,v_\gamma)}\,d\lambda$$
+      the time on a clock carried along. The straight worldline has the **longest** proper time.
+    decoys:
+      - body: |
+          A **massive** worldline has a timelike, future-directed velocity; a massless one a lightlike, future-directed velocity. For a massive $\gamma$,
+          $$\tau[\gamma]=\int_{\lambda_1}^{\lambda_2}\sqrt{g(v_\gamma,v_\gamma)}\,d\lambda$$
+          the time on a clock carried along. The straight worldline has the **shortest** proper time.
+        feedback: |
+          Euclidean thinking: the straight line is the shortest path. In flat 1+1 spacetime from $(0,0)$ to $(0,10)$, the straight worldline gives $10$, while the zigzag through $(3,5)$ gives $4+4=8$. The metric subtracts the space part, so detours cost time.
+      - body: |
+          A **massive** worldline has a timelike, future-directed velocity; a massless one a lightlike, future-directed velocity. For a massive $\gamma$,
+          $$\tau[\gamma]=x^0(\gamma(\lambda_2))-x^0(\gamma(\lambda_1))$$
+          the time on a clock carried along, the same for every path between the endpoints.
+        feedback: |
+          That would be an absolute time, as in the previous level. Here a clock reads the **metric length** of its own path, which depends on the path and not only on the endpoints: in the twin example the two clocks read $10$ and $8$ between the same events.
+    explanation: |
+      Clocks measure length along the worldline; light, with length zero, carries no clock.
+
+  - id: observer
+    title: 'Observer'
+    row: 5
+    col: 1
+    body: |
+      A massive worldline $\gamma$ with four vector fields $e_a$ along it, and
+      $$g(e_a,e_b)=\eta_{ab},\qquad e_0=v_\gamma$$
+      The time component of a vector is read on its clock, $\epsilon^0(\mathcal{X})=g(v_\gamma,\mathcal{X})$.
+    decoys:
+      - body: |
+          A massive worldline $\gamma$ with four vector fields $e_a$ along it, and
+          $$g(e_a,e_b)=\delta_{ab},\qquad e_0=v_\gamma$$
+          The time component of a vector is read on its clock, $\epsilon^0(\mathcal{X})=g(v_\gamma,\mathcal{X})$.
+        feedback: |
+          $\delta_{ab}$ is the Euclidean condition, with $g(e_\alpha,e_\alpha)=+1$ for the three spatial vectors. In Lorentzian signature the rulers are spacelike: $g(e_\alpha,e_\alpha)=-1$, so the right-hand side is $\eta_{ab}=\mathrm{diag}(1,-1,-1,-1)$.
+      - body: |
+          A massive worldline $\gamma$ with four vector fields $e_a$ along it, and
+          $$g(e_a,e_b)=\eta_{ab}$$
+          and $e_0$ is any timelike vector.
+          The time component of a vector is read on its clock, $\epsilon^0(\mathcal{X})=g(v_\gamma,\mathcal{X})$.
+        feedback: |
+          The observer's clock axis is its own velocity, $e_0=v_\gamma$. With any other timelike $e_0$ the frame would belong to another motion, and $g(v_\gamma,\mathcal{X})$ would not be the component along $e_0$.
+    explanation: |
+      A worldline with a clock and rulers: the way a frame at an event is built from the metric.
+
+  - id: lorentz
+    title: 'Lorentz transformation'
+    row: 6
+    col: 1
+    body: |
+      Two frames at the same event, $\tilde e_a=\Lambda^b_a\,e_b$, both Lorentz-orthonormal:
+      $$\eta_{ab}=\Lambda^m_a\Lambda^n_b\,\eta_{mn}$$
+      i.e. $\Lambda^T\eta\Lambda=\eta$ and, being orthochronous, $\Lambda^0_0\ge1$. It relates frames at an event, not charts of a curved spacetime.
+    decoys:
+      - body: |
+          Two frames at the same event, $\tilde e_a=\Lambda^b_a\,e_b$, both Lorentz-orthonormal:
+          $$\delta_{ab}=\Lambda^m_a\Lambda^n_b\,\delta_{mn}$$
+          i.e. $\Lambda^T\Lambda=1$ and, being orthochronous, $\Lambda^0_0\ge1$. It relates frames at an event, not charts of a curved spacetime.
+        feedback: |
+          That is the condition for rotations, which keep a sum of squares. A boost keeps $(x^0)^2-(x^1)^2-\dots$: the matrix $\gamma_u\begin{pmatrix}1&u\\u&1\end{pmatrix}$ satisfies $\Lambda^T\eta\Lambda=\eta$ but not $\Lambda^T\Lambda=1$.
+      - body: |
+          Two frames at the same event, $\tilde e_a=\Lambda^b_a\,e_b$, both Lorentz-orthonormal:
+          $$\eta_{ab}=\Lambda^m_a\Lambda^n_b\,\eta_{mn}$$
+          i.e. $\Lambda^T\eta\Lambda=\eta$ and, being orthochronous, $\Lambda^0_0\ge1$. In any spacetime, it also relates the **coordinates** of two charts.
+        feedback: |
+          $\Lambda$ acts on the single vector space $T_p\mathcal{M}$. A chart change by a Lorentz matrix needs $g_{ij}=\eta_{ij}$ on the whole chart, which forces $\Gamma=0$ and hence $\mathrm{Riem}=0$. In a curved spacetime, charts change by any transition map.
+    explanation: |
+      How two observers at the same event translate their measurements into each other.
+
+  - id: action
+    title: 'Einstein–Hilbert action'
+    row: 2
+    col: 3
+    body: |
+      The metric is the unknown. For a region $\mathcal{D}$,
+      $$S_\mathcal{D}[g]=\kappa\int_\mathcal{D}\sqrt{-\det g}\;R\;d^4x$$
+      with $\kappa=-1/(16\pi G_N)$.
+      $S_\mathcal{D}$ is critical iff $G=\mathrm{Ric}-\tfrac12R\,g=0$: in 4D $\mathrm{Ric}=0$, not $\mathrm{Riem}=0$.
+    decoys:
+      - body: |
+          The metric is the unknown. For a region $\mathcal{D}$,
+          $$S_\mathcal{D}[g]=\kappa\int_\mathcal{D}\sqrt{-\det g}\;R\;d^4x$$
+          with $\kappa=-1/(16\pi G_N)$.
+          $S_\mathcal{D}$ is critical iff $\mathrm{Riem}=0$: only flat spacetime is a vacuum solution.
+        feedback: |
+          The variation gives $G=0$, whose trace in 4D reads $R=0$ and then $\mathrm{Ric}=0$: ten equations, while $\mathrm{Riem}$ has twenty independent components. Schwarzschild solves $\mathrm{Ric}=0$ and is not flat: its tides are non-zero.
+      - body: |
+          The metric is the unknown. For a region $\mathcal{D}$,
+          $$S_\mathcal{D}[g]=\kappa\int_\mathcal{D}R\;d^4x$$
+          with $\kappa=-1/(16\pi G_N)$.
+          $S_\mathcal{D}$ is critical iff $G=\mathrm{Ric}-\tfrac12R\,g=0$: in 4D $\mathrm{Ric}=0$, not $\mathrm{Riem}=0$.
+        feedback: |
+          The volume density $\sqrt{-\det g}$ is needed for the integral to be chart independent, and it varies too: $\delta\sqrt{-\det g}=\tfrac12\sqrt{-\det g}\,(g^{-1})^{ij}\text{ᛉ}_{ij}$ is what produces the $-\tfrac12R\,g$ in $G$.
+    explanation: |
+      The simplest scalar built from $g$ alone; varying it gives the vacuum equation.
+
+  - id: matter
+    title: 'Energy-momentum tensor'
+    row: 3
+    col: 2
+    body: |
+      The response of the matter action to the metric:
+      $$\delta S_M=-\tfrac12\int\sqrt{-\det g}\;\hat T^{ij}\,\text{ᛉ}_{ij}\,d^4x$$
+      With $\delta\mathcal{L}_M=\Theta^{ij}\text{ᛉ}_{ij}$:
+      $$\hat T^{ij}=-2\,\Theta^{ij}-\mathcal{L}_M\,(g^{-1})^{ij}$$
+    decoys:
+      - body: |
+          The response of the matter action to the metric:
+          $$\delta S_M=-\tfrac12\int\sqrt{-\det g}\;\hat T^{ij}\,\text{ᛉ}_{ij}\,d^4x$$
+          With $\delta\mathcal{L}_M=\Theta^{ij}\text{ᛉ}_{ij}$:
+          $$\hat T^{ij}=-2\,\Theta^{ij}+\mathcal{L}_M\,(g^{-1})^{ij}$$
+        feedback: |
+          Check with a constant $\mathcal{L}_M=-\lambda$, which has $\Theta=0$: the volume-density term must give $T_{ab}=\lambda g_{ab}$ ($p=-\rho$). With $+\mathcal{L}_M$ one would get $-\lambda g_{ab}$.
+      - body: |
+          The response of the matter action to the **matter fields** $\Phi$:
+          $$\delta S_M=\int\sqrt{-\det g}\;\hat T^{ij}\,\delta\Phi_{ij}\,d^4x$$
+          so $T$ is the left-hand side of the matter field equations, like Maxwell's.
+        feedback: |
+          Varying $\Phi$ with $g$ fixed gives the **matter field equations** (Maxwell, Klein–Gordon). $T$ comes from the other variation, of $g$ with $\Phi$ fixed, just as a charge current is the response of the action to the potential.
+    explanation: |
+      Computed, not postulated: constant term, scalar field, electromagnetism.
+
+  - id: field
+    title: 'Einstein equations'
+    row: 4
+    col: 3
+    body: |
+      Varying $S_\mathcal{D}+S_M$ with respect to $g$:
+      $$G_{ab}=8\pi G_N\,T_{ab}$$
+      Equivalently, with $T$ the trace,
+      $$\mathrm{Ric}_{ab}=8\pi G_N\big(T_{ab}-\tfrac12\,T\,g_{ab}\big)$$
+    decoys:
+      - body: |
+          Varying $S_\mathcal{D}+S_M$ with respect to $g$:
+          $$G_{ab}=8\pi G_N\,T_{ab}$$
+          Equivalently, with $T$ the trace,
+          $$\mathrm{Ric}_{ab}=8\pi G_N\,T_{ab}$$
+        feedback: |
+          The trace of $G=8\pi G_NT$ in 4D gives $-R=8\pi G_NT$, so $R$ comes back in: $\mathrm{Ric}=8\pi G_N(T-\tfrac12Tg)$. For dust, $\mathrm{Ric}_{00}=8\pi G_N(\rho-\tfrac12\rho)=4\pi G_N\rho$, the Newtonian field equation; without the trace term it would be $8\pi G_N\rho$.
+      - body: |
+          Varying $S_\mathcal{D}+S_M$ with respect to $g$:
+          $$\mathrm{Ric}_{ab}-R\,g_{ab}=8\pi G_N\,T_{ab}$$
+          Equivalently, with $T$ the trace,
+          $$\mathrm{Ric}_{ab}=8\pi G_N\big(T_{ab}-\tfrac12\,T\,g_{ab}\big)$$
+        feedback: |
+          The tensor is $G=\mathrm{Ric}-\tfrac12R\,g$. The $\tfrac12$ comes from $\delta\sqrt{-\det g}$, and it is exactly what makes $\operatorname{div}G=0$ (contracted Bianchi). Without it the left side would not be divergence free.
+    explanation: |
+      Geometry on the left, matter on the right: Newton's $\mathrm{Ric}_{00}=4\pi G_N\rho$ is its weak-field shadow.
+
+  - id: conserv
+    title: 'Conservation'
+    row: 5
+    col: 2
+    body: |
+      The contracted Bianchi identity $\operatorname{div}G=0$ forces
+      $$(g^{-1})^{kl}(\nabla_{\partial x_k}T)_{ln}=0$$
+      and the matter equations guarantee it: $S_M$ does not depend on the chart.
+    decoys:
+      - body: |
+          The contracted Bianchi identity $\operatorname{div}G=0$ forces
+          $$\partial_k\hat T^{kn}=0$$
+          with ordinary partial derivatives, as in special relativity.
+        feedback: |
+          In a curved spacetime a partial derivative of components is not a tensor. The divergence must use $\nabla$: $(g^{-1})^{kl}(\nabla_{\partial x_k}T)_{ln}=0$. The extra $\Gamma$ terms are the exchange of energy-momentum between matter and the gravitational field.
+      - body: |
+          The contracted Bianchi identity $\operatorname{div}G=0$ forces
+          $$(g^{-1})^{kl}(\nabla_{\partial x_k}T)_{ln}=0$$
+          an extra equation that must be **imposed** on every kind of matter, separately.
+        feedback: |
+          It is automatic: $S_M$ does not depend on the chart, so moving $g$ and $\Phi$ together along a vector field changes nothing, and with the matter equations satisfied that gives $\operatorname{div}T=0$. The field equation needs it through $\operatorname{div}G=0$.
+    explanation: |
+      The left side is automatically divergence free, so the right side must be.
+
+  - id: schwarzschild
+    title: 'Schwarzschild'
+    row: 5
+    col: 3
+    body: |
+      The vacuum solution, $\mathrm{Ric}=0$:
+      $$g=\mathrm{diag}\Big(f,\,-\frac1f,\,-r^2,\,-r^2\sin^2\vartheta\Big)$$
+      with $f=1-r_S/r$, $r_S=2G_NM$. It matches the Newtonian $g_{00}\approx1+2\phi$ far away; $r$ is the area radius.
+    decoys:
+      - body: |
+          The vacuum solution, $\mathrm{Ric}=0$:
+          $$g=\mathrm{diag}\Big(f,\,-\frac1f,\,-r^2,\,-r^2\sin^2\vartheta\Big)$$
+          with $f=1-r_S^2/r^2$, $r_S=2G_NM$. It matches the Newtonian $g_{00}\approx1+2\phi$ far away; $r$ is the area radius.
+        feedback: |
+          With $f=1-r_S^2/r^2$ the equation fails: $\mathrm{Ric}_{00}=\frac{f}{2r^2}(r^2f')'=-\frac{r_S^2f}{r^4}\ne0$. And far away $g_{00}$ would be $1-r_S^2/r^2$, which cannot match $1+2\phi$ with $\phi=-G_NM/r$, falling like $1/r$.
+      - body: |
+          The vacuum solution, $\mathrm{Ric}=0$:
+          $$g=\mathrm{diag}\Big(f,\,-f,\,-r^2,\,-r^2\sin^2\vartheta\Big)$$
+          with $f=1-r_S/r$, $r_S=2G_NM$. It matches the Newtonian $g_{00}\approx1+2\phi$ far away; $r$ is the area radius.
+        feedback: |
+          The radial entry is $-1/f$, not $-f$: the solution has $g_{00}\,g_{11}=-1$. With $-f$ the metric is not Ricci flat, and the radial stretch would be $\sqrt f<1$ when it is $1/\sqrt f>1$.
+    explanation: |
+      The first exact solution: the field outside a spherical mass.
+
+  - id: tides
+    title: 'Tides'
+    row: 6
+    col: 3
+    body: |
+      Ricci-flat but not flat:
+      $$\mathrm{Riem}^1_{\ 010}=-\frac{2fG_NM}{r^3}$$
+      $$\mathrm{Riem}^2_{\ 020}=\mathrm{Riem}^3_{\ 030}=\frac{fG_NM}{r^3}$$
+      Stretching radially, squeezing sideways, and the three add up to $0$.
+    decoys:
+      - body: |
+          Ricci-flat, hence flat:
+          $$\mathrm{Riem}^1_{\ 010}=0$$
+          $$\mathrm{Riem}^2_{\ 020}=\mathrm{Riem}^3_{\ 030}=0$$
+          so there are no tides: a falling observer feels nothing.
+        feedback: |
+          Ricci-flat is not flat: $\mathrm{Ric}$ is only a trace of $\mathrm{Riem}$. Here $-2+1+1=0$, but the three tidal components are non-zero: free particles near a mass still approach each other sideways and separate radially.
+      - body: |
+          Ricci-flat but not flat:
+          $$\mathrm{Riem}^1_{\ 010}=\frac{2fG_NM}{r^3}$$
+          $$\mathrm{Riem}^2_{\ 020}=\mathrm{Riem}^3_{\ 030}=\frac{fG_NM}{r^3}$$
+          Squeezing in all three directions, with no stretching.
+        feedback: |
+          The three components must add up to zero because $\mathrm{Ric}_{00}=0$. All three positive would give a non-zero trace. The radial one is negative, and in the tidal equation $\ddot\gamma^\alpha\approx-\mathrm{Riem}^\alpha_{\ 0\beta0}\gamma^\beta$ that means stretching.
+    explanation: |
+      What curvature does to a falling body, and the sign pattern that Ricci-flat forces.
+
+edges:
+  - { from: spacetime, to: cone, label: classifies vectors }
+  - { from: spacetime, to: action, label: g unknown }
+  - { from: cone, to: orient, label: pick a half }
+  - { from: orient, to: worldline, label: future directed }
+  - { from: worldline, to: observer, label: add a frame }
+  - { from: observer, to: lorentz, label: change frame }
+  - { from: action, to: matter, dashed: true, label: same variation }
+  - { from: action, to: field, label: plus matter }
+  - { from: matter, to: field, label: source }
+  - { from: field, to: conserv, label: Bianchi }
+  - { from: field, to: schwarzschild, label: vacuum }
+  - { from: schwarzschild, to: tides, label: curvature }
+
+outroTitle: Chapter 10 in one picture
+outro: |
+  Read it in two columns. **Spacetime** $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,\nabla^{\mathrm{LC}},g,\text{ᛏ})_4$ uses the metric to sort vectors into timelike, null and spacelike,
+  $$g_p(\mathcal{X}_p,\mathcal{X}_p)>0,\ =0,\ <0,$$
+  and a timelike field $\text{ᛏ}$ picks the future half of every cone. **Massive worldlines** carry a clock that reads
+  $$\tau=\int\sqrt{g(v_\gamma,v_\gamma)}\,d\lambda,$$
+  longest for the straight one. An **observer** adds a frame with $g(e_a,e_b)=\eta_{ab}$, $e_0=v_\gamma$, and two observers at one event differ by a **Lorentz matrix**, $\Lambda^T\eta\Lambda=\eta$.
+
+  On the other side, the metric is the unknown of the **Einstein–Hilbert action**
+  $$S_\mathcal{D}[g]=\kappa\int_\mathcal{D}\sqrt{-\det g}\;R\;d^4x.$$
+  Matter enters through its **energy-momentum tensor**, the response to $g$, and the **Einstein equations**
+  $$G_{ab}=8\pi G_N\,T_{ab}$$
+  follow; the Bianchi identity makes $\operatorname{div}T=0$ automatic. The vacuum solution around a mass is **Schwarzschild**, $f=1-r_S/r$, which is not flat: its **tides** stretch along $r$ and squeeze sideways, with zero trace.
+
+  **Next: the Level Challenge.** Harder problems that combine the whole map: clocks, frames, matter and the sphere, all in one place.
