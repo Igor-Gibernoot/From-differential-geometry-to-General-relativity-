@@ -595,3 +595,15 @@ polyline.w-level { fill: none; }
 .widget .readout .lc-green { color: var(--good); }
 .widget .readout .lc-gold { color: var(--gold); font-weight: 650; }
 .widget .readout .lc-space { font-weight: 650; }
+
+/* ---------- worldline-clock ---------- */
+.wc-curve { fill: none; stroke: var(--ink); stroke-opacity: .85; stroke-width: 2.6px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.wc-curve.null { stroke: var(--gold); stroke-opacity: 1; }
+.wc-curve.bad { stroke: var(--bad); stroke-opacity: 1; }
+.wc-straight { stroke: var(--ink); stroke-opacity: .5; stroke-width: 2px; stroke-dasharray: 7 5; vector-effect: non-scaling-stroke; }
+.wc-ctrl { stroke: var(--muted); stroke-width: 1px; stroke-dasharray: 3 4; vector-effect: non-scaling-stroke; }
+.wc-clock circle { fill: var(--surface); stroke: var(--ink); stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
+.wc-clock line { stroke: var(--ink); stroke-width: 2px; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.wc-clock.off { opacity: .35; }
+.wc-dot { fill: var(--ink); }
+.widget .readout .wc-bad-text { color: var(--bad); font-weight: 650; }
