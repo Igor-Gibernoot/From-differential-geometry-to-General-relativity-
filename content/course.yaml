@@ -387,7 +387,11 @@ levels:
         kind: guided
         file: ch08/circle-length.yaml
         summary: "The whole integration machinery on a circle of radius R: an oriented atlas of two angle charts and a projection chart, the induced metric and its density in each, one arc measured in two charts (and in a chart of the wrong orientation), and the full length 2πR from a partition of unity."
-      - { id: ch08-traps, title: Integration Traps, kind: traps }
+      - id: ch08-traps
+        title: Integration Traps
+        kind: traps
+        file: ch08/traps.yaml
+        summary: "Fast questions on the classic mistakes of integration on manifolds: the absolute Jacobian determinant, densities that are not scalars, ε as a symbol, mirror charts and oriented atlases, compact closures and supports, partitions of unity, and the square root of |det g|."
       - { id: ch08-map, title: "Content Map: Integrals", kind: map }
       - { id: ch08-review, title: Level Review, kind: review }
       - { id: ch08-challenge, title: Level Challenge, kind: challenge }

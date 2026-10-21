@@ -1,0 +1,395 @@
+id: ch08-traps
+title: Integration Traps
+kind: traps
+
+cards:
+  - type: text
+    id: intro
+    title: Trap round
+    body: |
+      Fast round: each question hides a tempting mistake from this level, from the change-of-variables factor to the metric volume form. Answer quickly, then read the feedback, especially when you got it right for a shaky reason. The examples are new; the rules are the ones you built.
+
+      Notation used below. On the plane with points $(a,b)$, the cartesian chart $\mathscr{X}$ has coordinates $\alpha = (a,b)$. For charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ with coordinates $\alpha$ and $\beta$, the Jacobian $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ has entries
+      $$(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j = \frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}$$
+      (first subscript = chart of the row index), and $J := \det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)$. A volume form $\Omega$ has components $\varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X}$, with scalar density $\omega_\mathscr{X}$ and the Levi-Civita symbol $\varepsilon$. The Euclidean area form $\Omega_{\mathrm{E}}$ has $\omega_\mathscr{X} = 1$. An oriented atlas $\mathcal{A}^\uparrow$ has all Jacobian determinants positive; the integral of $f$ over a region inside one of its charts is
+      $$\int_\mathcal{D}\Omega f = \int_{\mathscr{X}(\mathcal{D})}d^d\alpha\;\omega_\mathscr{X}\,f$$
+      (both written in the coordinates $\alpha$). A partition of unity is written with the rune $\text{ᚹ}$ (wynn).
+
+  - type: build
+    id: factor-direction
+    title: Which Jacobian?
+    prompt: |
+      Two charts $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ of a $d$-dimensional manifold have coordinates $\alpha = \mathscr{X}(p)$ and $\beta = \mathscr{Y}(p)$. The Jacobians are $(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j = \partial\mathscr{X}^i/\partial\mathscr{Y}^j$ and $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j = \partial\mathscr{Y}^i/\partial\mathscr{X}^j$. Build the change of variables that turns an integral over $\alpha$ into an integral over $\beta$.
+    prefix: 'd^d\alpha ='
+    tiles: ['d^d\beta', '|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}|', '\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}', '|\det\text{ᛞ}_{\mathcal{V}\mathcal{U}}|']
+    answers:
+      - ['d^d\beta', '|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}|']
+      - ['|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}|', 'd^d\beta']
+    wrong:
+      - answer: ['d^d\beta', '\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}']
+        feedback: |
+          Calculus measures size, which is never negative: the factor is the **absolute value** $|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}|$. The sign of the determinant is the job of the scalar density, not of $d^d\alpha$.
+      - answer: ['d^d\beta', '|\det\text{ᛞ}_{\mathcal{V}\mathcal{U}}|']
+        feedback: |
+          That is the inverse Jacobian. The old coordinates are functions of the new ones, $\alpha(\beta)$, so the factor contains the derivatives $\partial\alpha^i/\partial\beta^j = \partial\mathscr{X}^i/\partial\mathscr{Y}^j$: the entries of $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$.
+    hint: |
+      Think of $d^1\alpha = |d\alpha/d\beta|\,d\beta$ in one dimension: the derivative of the old coordinate with respect to the new one.
+    explanation: |
+      $$d^d\alpha = d^d\beta\;|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}(\beta)|.$$
+      A small coordinate box of volume $d^d\beta$ is mapped to a parallelepiped in the $\alpha$ coordinates spanned by the columns of $\partial\mathscr{X}^i/\partial\mathscr{Y}^j$, whose volume is the absolute value of their determinant.
+
+  - type: numeric
+    id: abs-det
+    title: A tilted grid
+    prompt: |
+      On the plane with cartesian coordinates $\alpha = (a,b)$, a chart $\mathscr{Y}$ with coordinates $\beta = (s,t)$ is given by
+      $$a = s + 2t,\qquad b = 3s + t.$$
+      The region $\mathcal{D}$ is the set of points whose $\mathscr{Y}$-coordinates fill the unit square $0<s<1$, $0<t<1$. Find its area $\int_{\mathscr{X}(\mathcal{D})}d^2\alpha$.
+    answer: 5
+    wrong:
+      - { value: -5, feedback: 'That is $\det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j) = 1\cdot1 - 2\cdot3 = -5$ without the absolute value. An area is never negative: the change of variables uses $|\det|$.' }
+      - { value: -0.2, feedback: 'That is the determinant of the inverse Jacobian $\partial\mathscr{Y}^i/\partial\mathscr{X}^j$ (and still negative). The factor uses the derivatives of the old coordinates $(a,b)$ with respect to the new ones $(s,t)$.' }
+      - { value: 0.2, feedback: 'That is $|\det|$ of the inverse Jacobian. The factor uses $\partial a/\partial s$, $\partial a/\partial t$, …: the derivatives of the old coordinates with respect to the new ones, whose determinant is $-5$.' }
+      - { value: 1, feedback: 'That integrates $d^2\beta$ over the unit square without any factor. A chart change stretches areas: the square becomes a parallelogram.' }
+    hint: |
+      The Jacobian matrix $\partial(a,b)/\partial(s,t)$ is $\begin{pmatrix}1&2\\3&1\end{pmatrix}$.
+    explanation: |
+      $$\begin{aligned}\int d^2\alpha &= \int_0^1\!\!\int_0^1 ds\,dt\,|1 - 6|\\ &= 5.\end{aligned}$$
+      Check by geometry: $\mathscr{X}(\mathcal{D})$ is the parallelogram spanned by the columns $(1,3)$ and $(2,1)$, of area $|1\cdot1 - 2\cdot3| = 5$.
+
+  - type: numeric
+    id: scaled-density
+    title: Same form, new chart
+    prompt: |
+      On the plane with points $(a,b)$, the Euclidean area form $\Omega_{\mathrm{E}}$ has density $\omega_\mathscr{X} = 1$ in the cartesian chart $\mathscr{X}$. A new chart is
+      $$\mathscr{S}(a,b) := (3a, 3b).$$
+      The density law is $\omega_\mathscr{S} = \det(\partial\mathscr{X}^i/\partial\mathscr{S}^j)\,\omega_\mathscr{X}$. Find $\omega_\mathscr{S}$ at the point $p = (1,1)$.
+    answer: 0.1111
+    tolerance: 0.001
+    answerText: '1/9'
+    wrong:
+      - { value: 1, feedback: 'That treats $\omega$ as a scalar field, whose value at $p$ is the same in every chart. A scalar density is a component of $\Omega$ in a chart and picks up the determinant of the Jacobian.' }
+      - { value: 9, feedback: 'That uses $\det(\partial\mathscr{S}^i/\partial\mathscr{X}^j) = 9$, the inverse Jacobian. Since $\mathscr{X} = \mathscr{S}/3$, the law needs $\det(\partial\mathscr{X}^i/\partial\mathscr{S}^j) = \tfrac13\cdot\tfrac13$.' }
+      - { value: 0.3333, feedback: 'In two dimensions both coordinates are scaled: the determinant of $\mathrm{diag}(\tfrac13,\tfrac13)$ is $\tfrac19$.' }
+    hint: |
+      Write $\mathscr{X}$ in terms of $\mathscr{S}$: $a = s_1/3$, $b = s_2/3$.
+    explanation: |
+      $$\omega_\mathscr{S} = \det\mathrm{diag}(\tfrac13,\tfrac13)\cdot1 = \tfrac19.$$
+      Check by area: a unit square in the $\mathscr{S}$ coordinates is a square of side $\tfrac13$ in the plane, area $\tfrac19$. Contrast with a scalar field such as $f(a,b) = a + b$: in any chart its value at $p$ is $f(p) = 2$. The density is not a function on the manifold; it is a function of the chart.
+
+  - type: mcq
+    id: nowhere-zero
+    title: Which densities are allowed?
+    multiple: true
+    prompt: |
+      On the plane with points $(a,b)$, a $(0,2)$-tensor field has components $\varepsilon_{ij}\,\omega_\mathscr{X}$ in the cartesian chart $\mathscr{X}$, with $\varepsilon_{12} = 1 = -\varepsilon_{21}$, $\varepsilon_{11} = \varepsilon_{22} = 0$. A volume form must be totally antisymmetric and nonzero at every point. For which choices of $\omega_\mathscr{X}$ is it a volume form? Select all that apply.
+    options:
+      - text: '$\omega_\mathscr{X} = 1 + a^2$'
+        correct: true
+      - text: '$\omega_\mathscr{X} = -3$'
+        correct: true
+      - text: '$\omega_\mathscr{X} = e^b$'
+        correct: true
+      - text: '$\omega_\mathscr{X} = a$'
+        feedback: |
+          It vanishes on the whole line $a = 0$: there $\Omega_p = 0$, and a volume form must be nonzero at every point. Antisymmetry alone is not enough.
+    explanation: |
+      $1 + a^2$, $-3$ and $e^b$ never vanish, so all three are volume forms. A **negative** density is allowed: $\omega_\mathscr{X} = -3$ is $-3\,\Omega_{\mathrm{E}}$, which simply orients the plane the other way (it is positive in the mirror chart $(a,-b)$). Only $\omega_\mathscr{X} = a$ fails, on the line $a = 0$.
+
+  - type: mcq
+    id: repeated-vector
+    title: A proposal with a diagonal
+    prompt: |
+      In a chart of a 2-dimensional manifold, someone proposes a "volume form" with components
+      $$\begin{pmatrix}\Omega_{11} & \Omega_{12}\\ \Omega_{21} & \Omega_{22}\end{pmatrix} = \begin{pmatrix}1 & 1\\ -1 & 0\end{pmatrix}.$$
+      It is nonzero. Is it a volume form?
+    options:
+      - text: 'No: $\Omega(\partial x_1, \partial x_1) = 1\neq0$, and a volume form must vanish whenever a vector is repeated'
+        correct: true
+      - text: 'Yes: it is nonzero and $\Omega_{12} = -\Omega_{21}$'
+        feedback: |
+          Total antisymmetry means $\Omega(v,w) = -\Omega(w,v)$ for **all** $v,w$, including $w = v$, which forces $\Omega(v,v) = 0$, so every diagonal component vanishes. Here $\Omega_{11} = 1$. Geometrically: two equal edges span a flat parallelogram, of zero signed area.
+      - text: 'Yes, if the chart is changed so that $\Omega_{11}$ becomes $0$'
+        feedback: |
+          Antisymmetry is chart independent: if $\Omega(v,v)\neq0$ for the vector $v = \partial x_1$, it is nonzero in every chart, since $\Omega(v,v)$ is a number that does not refer to a chart.
+    explanation: |
+      In two dimensions a volume form has exactly one free number per chart:
+      $$\Omega_{ij} = \varepsilon_{ij}\,\omega_\mathscr{X},$$
+      so $\Omega_{11} = \Omega_{22} = 0$ and $\Omega_{21} = -\Omega_{12}$. The diagonal of the proposal rules it out.
+
+  - type: mcq
+    id: eps-not-tensor
+    title: Is ε a tensor?
+    prompt: |
+      The Levi-Civita symbol $\varepsilon_{ij}$ on a 2-dimensional manifold is $\varepsilon_{12} = 1$, $\varepsilon_{21} = -1$, $\varepsilon_{11} = \varepsilon_{22} = 0$, in every chart. Is there a $(0,2)$-tensor field $T$ on the plane whose components are $\varepsilon_{ij}$ in **every** chart?
+    options:
+      - text: 'No: if $T$ has components $\varepsilon_{ij}$ in the cartesian chart, then in $\mathscr{S}(a,b) = (3a,3b)$ its components are $\tfrac19\varepsilon_{ij}$'
+        correct: true
+      - text: 'Yes: $\varepsilon$ is the Levi-Civita tensor'
+        feedback: |
+          $\varepsilon$ is a **symbol**: a fixed array of numbers attached to every chart. A tensor's components change with the Jacobian, $T^\mathscr{S}_{ij} = T^\mathscr{X}_{kl}\,\tfrac{\partial\mathscr{X}^k}{\partial\mathscr{S}^i}\tfrac{\partial\mathscr{X}^l}{\partial\mathscr{S}^j}$, which for $\mathscr{S} = (3a,3b)$ multiplies $\varepsilon$ by $\tfrac19$.
+      - text: 'Yes, but only on charts of an oriented atlas'
+        feedback: |
+          Orientation fixes the **sign** of the determinant, not its size. $\mathscr{S}(a,b) = (3a,3b)$ and the cartesian chart have Jacobian determinant $\tfrac19 > 0$, so they are in one oriented atlas, and the components still change by $\tfrac19$.
+    explanation: |
+      In two dimensions, for an antisymmetric $(0,2)$-tensor,
+      $$T^\mathscr{S}_{ij} = \det\Big(\frac{\partial\mathscr{X}^k}{\partial\mathscr{S}^l}\Big)\,T^\mathscr{X}_{ij}.$$
+      That is why a volume form is $\varepsilon_{ij}\,\omega_\mathscr{X}$: the symbol is fixed, and the density $\omega_\mathscr{X}$ carries the whole change of chart.
+
+  - type: numeric
+    id: mirror-sign
+    title: Integrating in a mirror
+    prompt: |
+      On the plane with points $(a,b)$ and the Euclidean area form $\Omega_{\mathrm{E}}$ ($\omega_\mathscr{X} = 1$ in the cartesian chart), take $f(a,b) = b$ and the rectangle $\mathcal{D}$: $0<a<2$, $1<b<2$. In the cartesian chart, $\int_\mathcal{D}\Omega_{\mathrm{E}}f = 3$. Now use the mirror chart $\mathscr{Z}(a,b) := (a,-b)$ with coordinates $\zeta$, where the density law gives
+      $$\omega_\mathscr{Z} = \det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Z}^j}\Big) = -1.$$
+      Compute $\int_{\mathscr{Z}(\mathcal{D})}d^2\zeta\;\omega_\mathscr{Z}\,(f\circ\mathscr{Z}^{-1})$.
+    answer: -3
+    wrong:
+      - { value: 3, feedback: 'That drops a sign: either $\omega_\mathscr{Z} = -1$ was replaced by $|{-1}| = 1$, or $f\circ\mathscr{Z}^{-1}(\zeta) = -\zeta_2$ by $\zeta_2$. The calculus integral uses $|\det|$, but the density keeps its sign, so the answer flips.' }
+      - { value: 0, feedback: 'Nothing cancels: $\mathscr{Z}(\mathcal{D})$ is $0<\zeta_1<2$, $-2<\zeta_2<-1$, where $-\zeta_2 > 0$, and the density is the constant $-1$.' }
+    hint: |
+      $f\circ\mathscr{Z}^{-1}(\zeta) = -\zeta_2$, and $\mathscr{Z}(\mathcal{D})$ is $0<\zeta_1<2$, $-2<\zeta_2<-1$.
+    explanation: |
+      $$\begin{aligned}&\int_0^2\!\!d\zeta_1\int_{-2}^{-1}\!\!d\zeta_2\,(-1)(-\zeta_2)\\ &= 2\cdot\big(-\tfrac32\big) = -3.\end{aligned}$$
+      The mirror chart has $J = -1$ with the cartesian chart, so it is not in the oriented atlas of $\mathscr{X}$: there, the factor $|J|/J = -1$ survives and the integral changes sign.
+
+  - type: mcq
+    id: both-in-atlas
+    title: Mirror charts and atlases
+    multiple: true
+    prompt: |
+      On the plane, $\mathscr{X}(a,b) = (a,b)$ and the mirror chart $\mathscr{Z}(a,b) = (a,-b)$ are both defined on the whole plane, with Jacobian determinant $\det(\partial\mathscr{Z}^i/\partial\mathscr{X}^j) = -1$. Which of these sets are oriented atlases? Select all that apply.
+    options:
+      - text: '$\{\mathscr{X}\}$'
+        correct: true
+      - text: '$\{\mathscr{Z}\}$'
+        correct: true
+      - text: '$\{\mathscr{X},\mathscr{Z}\}$'
+        feedback: |
+          On the overlap (the whole plane) the Jacobian determinant is $-1 < 0$. An oriented atlas needs it positive for every pair of its charts at every point of their overlap.
+    explanation: |
+      Each one-chart set covers the plane and has no pair to compare, so it is oriented. The mirror chart is not "forbidden": it orients the plane the other way. What is forbidden is mixing the two orientations in one atlas, which is exactly what would make integrals ambiguous by a sign.
+
+  - type: mcq
+    id: overlap-everywhere
+    title: Checked at one point
+    prompt: |
+      On the real line, take the chart $\mathscr{X}(p) = p$ on $\mathcal{U} = \mathbb{R}$ and a second chart on the open set $\mathcal{V} = (-2,-1)\cup(1,2)$:
+      $$\mathscr{Y}(p) = \begin{cases}p & p\in(1,2),\\ -p-10 & p\in(-2,-1).\end{cases}$$
+      At $p = 1.5$ the Jacobian $d\mathscr{Y}/d\mathscr{X} = 1 > 0$. Is $\{\mathscr{X},\mathscr{Y}\}$ an oriented atlas?
+    options:
+      - text: 'No: on the piece $(-2,-1)$ of the overlap, $d\mathscr{Y}/d\mathscr{X} = -1$'
+        correct: true
+      - text: 'Yes: the Jacobian is never zero and is positive at one point, so by continuity it is positive everywhere'
+        feedback: |
+          Continuity carries the sign only along a **connected** set. The overlap $\mathcal{U}\cap\mathcal{V} = (-2,-1)\cup(1,2)$ has two pieces, and the sign can differ from piece to piece: here it is $+1$ on one and $-1$ on the other.
+      - text: 'It is not an atlas at all: $\mathscr{Y}$ is not a chart'
+        feedback: |
+          $\mathscr{Y}$ is injective and continuous with continuous inverse onto the open set $(-9,-8)\cup(1,2)$, and smooth with smooth inverse: a valid chart. The problem is only its orientation on one piece.
+    explanation: |
+      The rule: positive at **every** point of the overlap. A transition Jacobian determinant is continuous and never zero, so on a connected overlap one point does decide; on a disconnected overlap, check one point of each piece. (That is why the "positive charts" built from a volume form were taken with connected domains.)
+
+  - type: mcq
+    id: whole-chart-domain
+    title: Which regions fit in one chart?
+    multiple: true
+    prompt: |
+      On the circle $S^1$, the angle chart $\theta\in(0,2\pi)$ is defined on $\mathcal{U} = S^1\setminus\{(1,0)\}$. The one-chart integral $\int_\mathcal{D}\Omega f$ requires the closure $\overline{\mathcal{D}}$ (the region plus its boundary points) to be compact and contained in $\mathcal{U}$. Which arcs $\mathcal{D}$ qualify? Select all that apply.
+    options:
+      - text: '$1<\theta<2$'
+        correct: true
+      - text: '$\tfrac\pi2<\theta<\tfrac{3\pi}2$'
+        correct: true
+      - text: '$0<\theta<\pi$'
+        feedback: |
+          Its closure contains the endpoint $\theta\to0$, which is the point $(1,0)$, not in $\mathcal{U}$. The arc itself fits inside the chart, but it touches the chart's edge.
+      - text: '$0<\theta<2\pi$, the whole domain $\mathcal{U}$'
+        feedback: |
+          Its closure is the whole circle, which contains $(1,0)\notin\mathcal{U}$. The formula would still produce $\int_0^{2\pi}d\theta$, but the definition does not license it; the honest routes are a partition of unity, or the fact that a set of zero length can be dropped (stated without proof).
+    explanation: |
+      An open region is not enough: it must stay a positive distance away from the points the chart misses. Arcs whose closure avoids $(1,0)$ are fine; any arc ending at $\theta = 0$ or $\theta = 2\pi$ is not.
+
+  - type: mcq
+    id: support-closure
+    title: Support of a square
+    prompt: |
+      On the plane with points $(a,b)$, the function $f(a,b) = a^2$ vanishes exactly on the line $a = 0$. The support of $f$ is
+      $$\mathrm{supp}\,f := \overline{\{p\mid f(p)\neq0\}}.$$
+      What is $\mathrm{supp}\,f$?
+    options:
+      - text: 'The whole plane'
+        correct: true
+      - text: 'The plane minus the line $a = 0$'
+        feedback: |
+          That is the set where $f\neq0$, before the closure. Every point of the line $a = 0$ is a limit of points with $a\neq0$, so the closure adds the whole line back.
+      - text: 'The line $a = 0$'
+        feedback: |
+          That is the zero set of $f$, the opposite of where it lives.
+    explanation: |
+      $\mathrm{supp}\,f = \mathbb{R}^2$. To leave a point out of its support, a function must vanish on a whole **neighbourhood** of the point, not just at it. This is why a partition of unity cannot be built from polynomials that merely vanish at the point a chart misses.
+
+  - type: mcq
+    id: indicator-split
+    title: Cut along the chart domains
+    multiple: true
+    prompt: |
+      On the circle $S^1$ with the volume form $\Omega$ of density $1$ in both angle charts ($\theta$ on $\mathcal{U} = S^1\setminus\{(1,0)\}$, $\varphi$ on $\mathcal{V} = S^1\setminus\{(-1,0)\}$), a student splits $f = 1$ with the indicator functions of $\mathcal{U}$ and $\mathcal{V}$ (each $1$ on its domain, $0$ elsewhere) and gets $2\pi + 2\pi = 4\pi$. Which are real flaws of this split? Select all that apply.
+    options:
+      - text: 'The two functions add to $2$ (not $1$) on the overlap $\mathcal{U}\cap\mathcal{V}$'
+        correct: true
+      - text: 'The support of each indicator is the whole circle, not inside its chart domain'
+        correct: true
+      - text: 'The indicators are not smooth'
+        correct: true
+      - text: 'The two angle charts are not an oriented atlas'
+        feedback: |
+          They are: on both pieces of the overlap $\theta = \varphi$ or $\theta = \varphi + 2\pi$, so $d\theta/d\varphi = 1 > 0$. The fault is in the split, not in the atlas.
+    explanation: |
+      A partition of unity must be smooth, sum to $1$ at **every** point, and have each support (a closure) inside one chart domain. The indicators fail all three: they count the overlap twice, which is why $4\pi$ is twice the length $2\pi$. A valid split is $\text{ᚹ}_1(q) = h(-q_1)$, $\text{ᚹ}_2(q) = h(q_1)$ with the smooth step $h$.
+
+  - type: numeric
+    id: partition-independence
+    title: A lopsided partition
+    prompt: |
+      On the circle $S^1$ (points $q = (q_1,q_2)$) with the volume form $\Omega$ of density $1$ in both angle charts, the total $\int_{S^1}\Omega\cdot1 = 2\pi$ was found with a symmetric partition of unity (two pieces of $\pi$ each). Now take the lopsided partition, built from the same smooth step $h$ ($h(s)+h(-s) = 1$):
+      $$\text{ᚹ}_1(q) = h(-q_1-\tfrac14),\quad\text{ᚹ}_2(q) = h(q_1+\tfrac14).$$
+      A numerical computation gives $\int\Omega\,\text{ᚹ}_1\approx2.628$. What is $\int\Omega\,\text{ᚹ}_2$?
+    answer: 3.655
+    tolerance: 0.01
+    answerText: '2π − 2.628 ≈ 3.655'
+    wrong:
+      - { value: 3.1416, feedback: 'Each piece is $\pi$ only for the symmetric partition. Here $\text{ᚹ}_1$ is the smaller piece, but the total does not depend on the partition: the pieces must add to $2\pi$.' }
+      - { value: 2.628, feedback: 'The two pieces are not equal: $\text{ᚹ}_1$ equals $1$ only where $q_1\le-\tfrac34$, while $\text{ᚹ}_2$ equals $1$ wherever $q_1\ge\tfrac14$. Only their sum is fixed.' }
+      - { value: 5.256, feedback: 'Doubling one piece assumes the pieces are equal. Use the independence of the partition: the sum is the length $2\pi$.' }
+    hint: |
+      The integral over the whole manifold does not depend on which partition of unity is used.
+    explanation: |
+      $\text{ᚹ}_1+\text{ᚹ}_2 = 1$ (with $s = -q_1-\tfrac14$, it is $h(s)+h(-s)$), each support lies in one chart domain ($\text{ᚹ}_1 = 0$ for $q_1\ge\tfrac14$, $\text{ᚹ}_2 = 0$ for $q_1\le-\tfrac34$), so
+      $$2\pi - 2.628\approx3.655.$$
+      The individual pieces depend on the partition; their sum does not.
+
+  - type: mcq
+    id: needs-metric
+    title: What does an integral need?
+    multiple: true
+    prompt: |
+      Which ingredients are needed to define $\int_\mathcal{M}\Omega f$ for a smooth function $f$ of compact support on a smooth manifold $\mathcal{M}$? Select all that apply.
+    options:
+      - text: 'An oriented atlas $\mathcal{A}^\uparrow$'
+        correct: true
+      - text: 'A volume form $\Omega$'
+        correct: true
+      - text: 'A partition of unity subordinate to the chart domains (any one: the result does not depend on it)'
+        correct: true
+      - text: 'A metric $g$'
+        feedback: |
+          A volume form is a nowhere-zero, totally antisymmetric tensor field: it measures signed volume without lengths or angles. $\Omega_{\mathrm{E}}$ was written down with no metric at all. A metric is one way to **choose** a volume form ($\Omega^g$), not a requirement.
+    explanation: |
+      Orientation fixes the sign, the volume form fixes the measure, the partition glues chart pieces. The metric enters only if you want the volume form it singles out, $\Omega^g$, and then the integral is written $\int_\mathcal{M}f := \int_\mathcal{M}\Omega^gf$.
+
+  - type: numeric
+    id: root-not-det
+    title: The density of a metric
+    prompt: |
+      In a chart $\mathscr{X}$ of an oriented atlas, a Riemannian metric has, at a point $p$, the components
+      $$\begin{pmatrix}g_{11} & g_{12}\\ g_{21} & g_{22}\end{pmatrix} = \begin{pmatrix}2 & 1\\ 1 & 5\end{pmatrix}.$$
+      Find the density $\omega^g_\mathscr{X}(p)$ of the metric volume form $\Omega^g$.
+    answer: 3
+    wrong:
+      - { value: 9, feedback: '$9 = \det g_\mathscr{X}$. Under a chart change $\det g$ picks up $(\det\mathbf{A})^2$, while a density must pick up $\det\mathbf{A}$ once: the square root fixes the power.' }
+      - { value: 3.1623, feedback: '$\sqrt{10} = \sqrt{g_{11}g_{22}}$ ignores the off-diagonal entries. The determinant is $2\cdot5 - 1\cdot1 = 9$.' }
+      - { value: 7, feedback: '$7$ is the trace. The density is built from the determinant: $\sqrt{|\det g_\mathscr{X}|}$.' }
+    hint: |
+      $\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}$.
+    explanation: |
+      $$\omega^g_\mathscr{X}(p) = \sqrt{|2\cdot5 - 1|} = \sqrt9 = 3.$$
+      The law $\det g_\mathscr{Y} = (\det\mathbf{A})^2\det g_\mathscr{X}$ is quadratic in the Jacobian; the square root turns it into the density law, linear in $\det\mathbf{A}$ (up to its sign, fixed by the orientation).
+
+  - type: numeric
+    id: abs-lorentz
+    title: A negative determinant
+    prompt: |
+      In a chart $\mathscr{X}$ of an oriented atlas of a 2-dimensional spacetime, a Lorentzian metric has, at a point $p$, the components
+      $$\begin{pmatrix}g_{11} & g_{12}\\ g_{21} & g_{22}\end{pmatrix} = \begin{pmatrix}-1 & 2\\ 2 & 0\end{pmatrix}.$$
+      Find $\omega^g_\mathscr{X}(p)$. (If you think it is undefined, enter $0$.)
+    answer: 2
+    wrong:
+      - { value: 0, feedback: '$\det g_\mathscr{X} = 0 - 4 = -4$, and $\sqrt{-4}$ is not real, but the definition takes $\sqrt{|\det g_\mathscr{X}|}$. The absolute value is there precisely for non-Riemannian signatures.' }
+      - { value: -4, feedback: 'That is $\det g_\mathscr{X}$ itself. The density is $\sqrt{|\det g_\mathscr{X}|} = \sqrt4$.' }
+      - { value: -2, feedback: 'In a chart of the oriented atlas the density is the positive root $\sqrt{|\det g_\mathscr{X}|}$. A minus sign appears only in a chart of the opposite orientation.' }
+    hint: |
+      $\det g_\mathscr{X} = (-1)\cdot0 - 2\cdot2$.
+    explanation: |
+      $$\omega^g_\mathscr{X} = \sqrt{|-4|} = 2.$$
+      In Lorentzian signature $\det g < 0$ in every chart (its sign survives chart changes), so general relativity writes the same density as $\sqrt{-\det g}$.
+
+  - type: numeric
+    id: wrong-orientation-density
+    title: The metric volume form in a mirror
+    prompt: |
+      The Euclidean plane is oriented by the atlas $\{\mathscr{X}\}$ (the cartesian chart), so $\Omega^g = \Omega_{\mathrm{E}}$, with density $1$. In the mirror chart $\mathscr{Z}(a,b) := (a,-b)$, the metric components are $\mathrm{diag}(1,1)$, so $\sqrt{|\det g_\mathscr{Z}|} = 1$. What is the density $\omega^g_\mathscr{Z}$ of $\Omega^g$ in $\mathscr{Z}$?
+    answer: -1
+    wrong:
+      - { value: 1, feedback: 'The formula $\omega^g = \sqrt{|\det g|}$ holds only in charts of the oriented atlas. $\mathscr{Z}$ has $J = \det(\partial\mathscr{X}^i/\partial\mathscr{Z}^j) = -1$, so the density law gives $\omega^g_\mathscr{Z} = J\cdot\omega^g_\mathscr{X} = -1$.' }
+    hint: |
+      Apply the density law $\omega_\mathscr{Z} = \det(\partial\mathscr{X}^i/\partial\mathscr{Z}^j)\,\omega_\mathscr{X}$, with $\mathscr{X} = (\zeta_1, -\zeta_2)$.
+    explanation: |
+      $$\omega^g_\mathscr{Z} = \det\mathrm{diag}(1,-1)\cdot1 = -1.$$
+      $\Omega^g$ is one tensor field; in a chart of the wrong orientation its density is $-\sqrt{|\det g|}$. Using $+\sqrt{|\det g|}$ in every chart would define a different form in each orientation, and the pieces would not glue.
+
+  - type: mcq
+    id: unit-not-orthonormal
+    title: Unit volume
+    prompt: |
+      In a chart of the oriented atlas of a Riemannian 2-manifold, at a point $p$,
+      $$g_\mathscr{X}(p) = \begin{pmatrix}2 & 1\\ 1 & 1\end{pmatrix},$$
+      so $\omega^g_\mathscr{X}(p) = \sqrt{2 - 1} = 1$. Is the coordinate basis orthonormal at $p$?
+    options:
+      - text: 'No: $g_{11} = 2$ and $g_{12} = 1$'
+        correct: true
+      - text: 'Yes: unit volume means orthonormal'
+        feedback: |
+          Only one direction holds: orthonormal gives $\det g = \pm1$, so $\omega^g = 1$. The converse fails: a parallelogram with a long, slanted pair of edges can still have area $1$. Here the first basis vector has length $\sqrt2$ and is not orthogonal to the second.
+      - text: 'Yes, up to a chart of the opposite orientation'
+        feedback: |
+          Orthonormality is about the numbers $g_{ij}$ in this chart: it needs $g_{ij} = \delta_{ij}$ (Riemannian case). Orientation only affects the sign of $\omega^g$, not the lengths and angles.
+    explanation: |
+      Orthonormal $\Rightarrow$ $\omega^g = 1$, in any signature (for $\mathrm{diag}(-1,1,1,1)$, $\sqrt{|-1|} = 1$). But $\omega^g = 1$ only says the basis spans unit volume: here the edges have lengths $\sqrt2$ and $1$, with $g(\partial x_1,\partial x_2) = 1\neq0$.
+
+  - type: numeric
+    id: shadow-length
+    title: Length or shadow?
+    prompt: |
+      On the unit circle ($R = 1$), the projection chart $\mathscr{P}(a,b) := a$ on the lower half has coordinate $u\in(-1,1)$, and the metric volume form has density
+      $$\omega^g_\mathscr{P} = \frac{1}{\sqrt{1-u^2}}.$$
+      The arc between the angles $\tfrac{5\pi}4$ and $\tfrac{7\pi}4$ is $-\tfrac{\sqrt2}2<u<\tfrac{\sqrt2}2$. Find its length $\int\Omega^g$ (a decimal is fine).
+    answer: 1.5708
+    tolerance: 0.002
+    answerText: 'π/2 ≈ 1.571'
+    wrong:
+      - { value: 1.4142, feedback: '$\sqrt2 = \int du$ without the density: the length of the arc''s **shadow** on the $a$-axis. Near the ends the arc runs steeply, so it is longer than its shadow; the density $1/\sqrt{1-u^2}$ restores that.' }
+      - { value: 0.7854, feedback: 'That is half the arc. $\int_{-\sqrt2/2}^{\sqrt2/2}\frac{du}{\sqrt{1-u^2}} = 2\arcsin\tfrac{\sqrt2}2 = 2\cdot\tfrac\pi4$.' }
+    hint: |
+      An antiderivative of $1/\sqrt{1-u^2}$ is $\arcsin u$.
+    explanation: |
+      $$\begin{aligned}\int_{-\sqrt2/2}^{\sqrt2/2}\frac{du}{\sqrt{1-u^2}} &= 2\arcsin\tfrac{\sqrt2}2\\ &= \tfrac\pi2,\end{aligned}$$
+      the same as the angle span $\tfrac{7\pi}4 - \tfrac{5\pi}4$ times $R = 1$. In one dimension $\int\Omega^g$ is length, and only with the density.
+
+  - type: text
+    id: summary
+    title: What you now own
+    body: |
+      The traps, turned into rules:
+
+      - Change of variables uses the Jacobian of the old coordinates by the new, in absolute value:
+      $$d^d\alpha = d^d\beta\;|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}|.$$
+      - A scalar density is a component, not a scalar field; it changes with the determinant, without absolute value:
+      $$\omega_\mathscr{Y} = J\,\omega_\mathscr{X}.$$
+      - A volume form is totally antisymmetric ($\Omega(v,v) = 0$) and nonzero everywhere; negative densities are fine. $\varepsilon$ is a symbol, not a tensor; $\Omega_{i\dots} = \varepsilon_{i\dots}\omega_\mathscr{X}$.
+      - A mirror chart flips the sign of every integral; it can orient a manifold, but never in the same atlas as the original. Jacobian determinants must be positive on every piece of every overlap.
+      - One-chart integrals need $\overline{\mathcal{D}}$ compact and inside the chart. Supports are closures. A partition of unity is smooth and sums to $1$ everywhere; the total does not depend on it.
+      - An integral needs orientation and a volume form, not a metric. With a metric,
+      $$\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}$$
+      in charts of the oriented atlas only. Orthonormal gives $\omega^g = 1$, not conversely. In one dimension $\int\Omega^g$ is length, not shadow.
+
+      **Next:** the content map of this level. You will rebuild the chain from the chart-dependent integral to volume forms, orientation, integration with partitions of unity and the metric volume form, box by box, among decoys.
