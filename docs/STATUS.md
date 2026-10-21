@@ -7,6 +7,7 @@ append a short entry at the end of **Log** (a few lines, ending with
 
 ## Current (2026-10-21, Chapter 10 started: widgets `light-cones`, `worldline-clock`, `observer-frame`, `ch10-spacetime`, `ch10-worldlines`, `ch10-observers`; widget `area-cell` built and used in `ch08-metric-volume`; next: `ch10-lorentz`)
 
+- **Summary rule (`own:`):** the final "what you now own" card restates the lesson's main formulas as math (displayed `$$...$$`, phone-safe, long ones split), not prose. Fixed 2026-10-21 in ch02 tensors/change-of-basis, ch03 homeomorphisms/hausdorff/charts/standard-topology, ch04 tangent-space/tensor-space, ch05 tensor-fields.
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
   `ch03-standard-topology`, `ch03-homeomorphisms`, `ch03-hausdorff`,

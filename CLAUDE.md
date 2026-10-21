@@ -51,6 +51,7 @@ Static web app on GitHub Pages (laptop and phone). Deploy = commit + push to
    map and check it against the book), **level review** (`kind: review`,
    automatic), **level challenge** (`kind: challenge`, harder problems
    combining the level's concepts; built last).
+   **Summaries show the math:** each `own:` bullet restates its main formulas (displayed, phone-safe), never only prose.
 5. **Review** is automatic: every question enters a spaced-repetition deck,
    so prompts, hints and feedback must be **self-contained**.
 
