@@ -1,0 +1,391 @@
+id: ch08-metric-volume
+title: The Metric Volume Form
+kind: concept
+
+own: |
+  - **Setting**: an oriented metric manifold $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,g)$; in a chart $(\mathcal{U},\mathscr{X})\in\mathcal{A}^\uparrow$ the function $\det g_\mathscr{X} := \det((g_\mathscr{X})_{ij})$ on $\mathcal{U}$ (a function of the chart, not a scalar field).
+  - **Determinant law**: with $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ the Jacobian $(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)$, the congruence $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$ gives
+  {{ $$\det g_\mathscr{Y} = (\det\text{ᛞ}_{\mathcal{U}\mathcal{V}})^2\det g_\mathscr{X}$$ }}
+  Polar chart of the Euclidean plane: $\det g_\mathscr{Y} = r^2$.
+  - **Metric volume form** $\Omega^g$: in every chart of $\mathcal{A}^\uparrow$,
+  {{ $$(\Omega^g_\mathscr{X})_{i_1\dots i_d} := \sqrt{|\det g_\mathscr{X}|}\;\varepsilon_{i_1\dots i_d}$$ }}
+  so its scalar density is $\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}$: $1$ in cartesian, $r$ in polar (it is $\Omega_{\mathrm{E}}$), $\sin\vartheta$ on the unit sphere.
+  - **Why it glues**: $\sqrt{|\det g_\mathscr{Y}|} = |\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}|\sqrt{|\det g_\mathscr{X}|}$, and {{ $|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}| = \det\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ in an oriented atlas }}, which is the density law. Without the orientation the chartwise definitions differ by a sign (mirror chart).
+  - **Unit volume**: if the chart-induced basis at $p$ is orthonormal ($g_{ij}(p) = 0$ for $i\neq j$, $g_{ii}(p) = \pm1$), then {{ $\omega^g_\mathscr{X}(p) = 1$ }}, in any signature (Minkowski: $\sqrt{|\det\eta|} = 1$).
+  - **Integral of a function** $f$ with compact support, $\int_\mathcal{M}f := \int_\mathcal{M}\Omega^gf$, valid for any signature:
+  {{ $$\begin{aligned}\int_\mathcal{M}f =&\sum_n\int_{\mathscr{X}_n(\mathcal{U}_n)}d^d\alpha\\ &\cdot\sqrt{|\det g_{\mathscr{X}_n}|}\circ\mathscr{X}_n^{-1}\\ &\cdot(\text{ᚹ}_nf)\circ\mathscr{X}_n^{-1}\end{aligned}$$ }}
+  Unit sphere: area $\int\sin\vartheta\,d\vartheta\,d\varphi = 4\pi$.
+
+cards:
+  - type: text
+    id: hook
+    title: Who chose the area form?
+    body: |
+      Recall the **Euclidean area form** $\Omega_{\mathrm{E}} := dx^1\otimes dx^2 - dx^2\otimes dx^1$ on the plane, a volume form (nowhere zero, totally antisymmetric $(0,2)$-tensor field). Its scalar density is $\omega_\mathscr{X} = 1$ in the cartesian chart $\mathscr{X}$ and $\omega_\mathscr{Y} = r$ in the polar chart $\mathscr{Y} = (r,\theta)$, and integrating against it gives ordinary areas.
+
+      But nothing in the definition of a volume form picks $\Omega_{\mathrm{E}}$: $2\Omega_{\mathrm{E}}$, or $e^{x^1}\Omega_{\mathrm{E}}$, is just as good a volume form, and gives different "areas". We chose $\Omega_{\mathrm{E}}$ because we already knew what area should be. In physics that knowledge is the **metric** (Level 7): a mass density must be integrated against the volume that rulers measure, not an arbitrary one.
+
+      On a curved manifold there is no cartesian chart to tell us what $\omega$ should be. So which volume form does the metric choose?
+
+  - type: mcq
+    id: hook-guess
+    title: Guess the sphere's density
+    prompt: |
+      Before any theory, guess. On the unit sphere $S^2$, use the chart $(\vartheta,\varphi)$: polar angle $\vartheta\in(0,\pi)$ from the north pole, longitude $\varphi\in(-\pi,\pi)$. Its area should be $4\pi$. Which scalar density $\omega(\vartheta,\varphi)$, integrated as $\int\!\!\int\omega\,d\vartheta\,d\varphi$ over $(0,\pi)\times(-\pi,\pi)$, gives $4\pi$?
+    options:
+      - text: '$\omega = \sin\vartheta$'
+        correct: true
+      - text: '$\omega = 1$'
+        feedback: |
+          That gives $\pi\cdot2\pi = 2\pi^2\approx19.7$, too much: it treats the chart rectangle as if it were flat paper. Near the poles a step $d\varphi$ in longitude covers almost no distance, so those regions must count less.
+      - text: '$\omega = \sin^2\vartheta$'
+        feedback: |
+          $\int_0^\pi\sin^2\vartheta\,d\vartheta = \tfrac\pi2$, so the total is $\pi^2\approx9.9$, too little. $\sin^2\vartheta$ is the metric component $g_{\varphi\varphi}$, which measures squared lengths; an area needs lengths, one power less.
+      - text: '$\omega = \cos\vartheta$'
+        feedback: |
+          $\int_0^\pi\cos\vartheta\,d\vartheta = 0$, and $\cos\vartheta$ vanishes on the equator, so it is not even the density of a volume form (which is nowhere zero).
+    explanation: |
+      $\int_0^\pi\sin\vartheta\,d\vartheta = 2$, times $2\pi$ gives $4\pi$. The circle of latitude at $\vartheta$ has radius $\sin\vartheta$, so a cell $d\vartheta\times d\varphi$ has sides $d\vartheta$ and $\sin\vartheta\,d\varphi$. This lesson shows that $\sin\vartheta$ is exactly what the metric dictates, and why the recipe works in every chart.
+
+  - type: text
+    id: recall-metric
+    title: 'Recall: metric components and their law'
+    body: |
+      Recall: in a chart $(\mathcal{U},\mathscr{X})$ the metric $g$ has components $(g_\mathscr{X})_{ij} := g(\partial/\partial\mathscr{X}^i,\partial/\partial\mathscr{X}^j)$, collected in the symmetric matrix $\mathbf{G}_\mathscr{X}$. For a second chart $(\mathcal{V},\mathscr{Y})$, write
+      $$(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_k := \frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^k},$$
+      the Jacobian matrix with entries "old by new" (first subscript $\mathcal{U}$ = chart of the row index), called $\mathbf{A}$ in matrix formulas. Then
+      $$(g_\mathscr{Y})_{kl} = (\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_k(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^j_l(g_\mathscr{X})_{ij},$$
+      that is, the congruence
+      $$\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}.$$
+      Euclidean plane: $\mathbf{G}_\mathscr{X} = \mathrm{diag}(1,1)$ in cartesian and $\mathbf{G}_\mathscr{Y} = \mathrm{diag}(1,r^2)$ in polar.
+
+      New notation: $\det g_\mathscr{X} := \det((g_\mathscr{X})_{ij})$, the determinant of the component matrix, a smooth function on $\mathcal{U}$. It is never zero, because $g$ is non-degenerate.
+
+  - type: numeric
+    id: det-polar
+    title: The determinant at one point
+    prompt: |
+      On the Euclidean plane, the metric has components $\mathrm{diag}(1,1)$ in the cartesian chart $\mathscr{X}$ and $\mathrm{diag}(1,r^2)$ in the polar chart $\mathscr{Y} = (r,\theta)$. Write $\det g_\mathscr{Y}$ for the determinant of the polar component matrix. What is $\det g_\mathscr{Y}$ at the point $p = (3,4)$?
+    answer: 25
+    answerText: '25'
+    wrong:
+      - value: 5
+        feedback: |
+          $5$ is $r$ at $(3,4)$. The component matrix is $\mathrm{diag}(1,r^2)$, whose determinant is $1\cdot r^2 = 25$.
+      - value: 1
+        feedback: |
+          $1$ is the cartesian determinant. In polar coordinates the matrix is $\mathrm{diag}(1,r^2)$, with determinant $r^2 = 25$ at $(3,4)$.
+    hint: |
+      $r = \sqrt{3^2+4^2}$; the determinant of a diagonal matrix is the product of its diagonal entries.
+    explanation: |
+      $r = 5$, so $\det g_\mathscr{Y}(p) = 25$, while $\det g_\mathscr{X}(p) = 1$ at the same point. So $\det g$ is **not a scalar field**: its value at a point depends on the chart. It is a number attached to a chart, like the scalar density of a volume form.
+
+  - type: mcq
+    id: det-law
+    title: How the determinant transforms
+    prompt: |
+      Under a change of chart the metric's component matrices obey $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$, with $\mathbf{A}$ the Jacobian $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$, entries $\partial\mathscr{X}^i/\partial\mathscr{Y}^k$. Writing $\det g_\mathscr{X}$ for $\det\mathbf{G}_\mathscr{X}$, which law holds?
+    options:
+      - text: '$\det g_\mathscr{Y} = (\det\mathbf{A})^2\det g_\mathscr{X}$'
+        correct: true
+      - text: '$\det g_\mathscr{Y} = \det\mathbf{A}\,\det g_\mathscr{X}$'
+        feedback: |
+          That would be the law of a scalar density. But $\mathbf{A}$ appears twice in $\mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$, once for each index of $g$, and $\det\mathbf{A}^{\mathsf{T}} = \det\mathbf{A}$: two factors.
+      - text: '$\det g_\mathscr{Y} = \det g_\mathscr{X}$'
+        feedback: |
+          Tempting because the determinant of a similarity $\mathbf{A}^{-1}\mathbf{T}\mathbf{A}$ is unchanged. The metric transforms by congruence, $\mathbf{A}^{\mathsf{T}}\mathbf{G}\mathbf{A}$, and $\det\mathbf{A}^{\mathsf{T}}\det\mathbf{A}\neq1$ in general. Polar check: $r^2\neq1$.
+      - text: '$\det g_\mathscr{Y} = (\det\mathbf{A})^{-2}\det g_\mathscr{X}$'
+        feedback: |
+          Inverse powers would appear for the inverse metric $(g^{-1})^{ij}$, whose indices are up. The components $g_{ij}$ have lower indices and pick up $\mathbf{A}$ itself, twice.
+    explanation: |
+      The determinant is multiplicative and a transpose has the same determinant:
+      $$\begin{aligned}\det\mathbf{G}_\mathscr{Y} &= \det\mathbf{A}^{\mathsf{T}}\det\mathbf{G}_\mathscr{X}\det\mathbf{A}\\ &= (\det\mathbf{A})^2\det\mathbf{G}_\mathscr{X}.\end{aligned}$$
+      Polar check: the polar Jacobian has $\det\mathbf{A} = r$, so $\det g_\mathscr{Y} = r^2\cdot1 = r^2$.
+
+  - type: mcq
+    id: why-root
+    title: Making a density
+    prompt: |
+      Recall: a volume form has components $(\Omega_\mathscr{X})_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X}$ ($\varepsilon$ the Levi-Civita symbol), and its scalar density obeys $\omega_\mathscr{Y} = \det\mathbf{A}\;\omega_\mathscr{X}$, with $\mathbf{A}$ the Jacobian $\partial\mathscr{X}^i/\partial\mathscr{Y}^k$. The metric gives a function $\det g_\mathscr{X}$ in each chart, obeying $\det g_\mathscr{Y} = (\det\mathbf{A})^2\det g_\mathscr{X}$. Which function of $\det g_\mathscr{X}$ comes closest to obeying the density law?
+    options:
+      - text: '$\sqrt{|\det g_\mathscr{X}|}$'
+        correct: true
+      - text: '$\det g_\mathscr{X}$ itself'
+        feedback: |
+          It picks up $(\det\mathbf{A})^2$, one factor too many. Polar check: $\det g_\mathscr{Y} = r^2$, but the area density in polar is $r$.
+      - text: '$|\det g_\mathscr{X}|$'
+        feedback: |
+          The absolute value removes signs but keeps the square: it still picks up $(\det\mathbf{A})^2$.
+      - text: '$1/\det g_\mathscr{X}$'
+        feedback: |
+          It picks up $(\det\mathbf{A})^{-2}$: wrong power, and wrong direction. Polar check: $1/r^2$, which makes cells near the origin count more, not less.
+    explanation: |
+      The square root halves the power: $\sqrt{(\det\mathbf{A})^2} = |\det\mathbf{A}|$. The absolute value inside the root is needed because $\det g$ is negative for some metrics (Minkowski). What is left is $|\det\mathbf{A}|$ instead of $\det\mathbf{A}$: the gap is a sign, and an orientation will close it.
+
+  - type: text
+    id: definition
+    title: The metric volume form
+    body: |
+      Let $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,g)$ be an **oriented metric manifold**: a manifold with topology $\mathcal{O}$, an oriented atlas $\mathcal{A}^\uparrow$ and a metric $g$ of any signature. The **metric volume form** $\Omega^g$ has, in every chart $(\mathcal{U},\mathscr{X})\in\mathcal{A}^\uparrow$, the components
+      $$(\Omega^g_\mathscr{X})_{i_1\dots i_d} := \sqrt{|\det g_\mathscr{X}|}\;\varepsilon_{i_1\dots i_d},$$
+      so its scalar density is
+      $$\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}.$$
+      It is smooth and positive, since $\det g_\mathscr{X}$ is smooth and never zero.
+
+      Requirements, each with a reason: a **metric** (to have $\det g$), an **orientation** (next cards), any **signature** (the absolute value). A definition chart by chart only makes sense if the pieces agree on overlaps: that is the proof to come.
+
+  - type: numeric
+    id: polar-density
+    title: Back to the plane
+    prompt: |
+      On the Euclidean plane, the metric volume form has scalar density $\omega^g = \sqrt{|\det g|}$ in each chart of an oriented atlas. In the polar chart $\mathscr{Y} = (r,\theta)$ the metric's component matrix is $\mathrm{diag}(1,r^2)$. What is $\omega^g_\mathscr{Y}$ at the point $p = (3,4)$?
+    answer: 5
+    answerText: '5'
+    wrong:
+      - value: 25
+        feedback: |
+          $25$ is $\det g_\mathscr{Y} = r^2$ itself. The density is its square root, $r = 5$.
+      - value: 1
+        feedback: |
+          $1$ is the cartesian density. In polar coordinates $\sqrt{|\det g_\mathscr{Y}|} = \sqrt{r^2} = r = 5$.
+    hint: |
+      $\det\mathrm{diag}(1,r^2) = r^2$, and $r = 5$ at $(3,4)$.
+    explanation: |
+      $\omega^g_\mathscr{Y} = \sqrt{r^2} = r = 5$, and in cartesian $\omega^g_\mathscr{X} = \sqrt1 = 1$. These are exactly the densities of $\Omega_{\mathrm{E}}$: **the Euclidean area form is the metric volume form of the Euclidean metric**. The metric made the choice we made by hand.
+
+  - type: build
+    id: build-transform
+    title: The density law, almost
+    prompt: |
+      For charts $\mathscr{X},\mathscr{Y}$ with Jacobian $\mathbf{A} = \text{ᛞ}_{\mathcal{U}\mathcal{V}}$ (entries $\partial\mathscr{X}^i/\partial\mathscr{Y}^k$), the metric determinants obey $\det g_\mathscr{Y} = (\det\mathbf{A})^2\det g_\mathscr{X}$. Take $\sqrt{|\cdot|}$ of both sides. Build the right-hand side.
+    prefix: '\sqrt{|\det g_\mathscr{Y}|} ='
+    tiles: ['|\det\mathbf{A}|', '\det\mathbf{A}', '(\det\mathbf{A})^2', '\sqrt{|\det g_\mathscr{X}|}', '|\det g_\mathscr{X}|']
+    answers:
+      - ['|\det\mathbf{A}|', '\sqrt{|\det g_\mathscr{X}|}']
+      - ['\sqrt{|\det g_\mathscr{X}|}', '|\det\mathbf{A}|']
+    wrong:
+      - answer: ['\det\mathbf{A}', '\sqrt{|\det g_\mathscr{X}|}']
+        feedback: |
+          The square root of a square is the absolute value: $\sqrt{(-2)^2} = 2$, not $-2$. So the factor is $|\det\mathbf{A}|$, which differs from $\det\mathbf{A}$ when the Jacobian has negative determinant.
+      - answer: ['\sqrt{|\det g_\mathscr{X}|}', '\det\mathbf{A}']
+        feedback: |
+          The square root of a square is the absolute value: $\sqrt{(-2)^2} = 2$, not $-2$. So the factor is $|\det\mathbf{A}|$, which differs from $\det\mathbf{A}$ when the Jacobian has negative determinant.
+      - answer: ['(\det\mathbf{A})^2', '\sqrt{|\det g_\mathscr{X}|}']
+        feedback: |
+          The root acts on the whole right-hand side, including $(\det\mathbf{A})^2$: it becomes $|\det\mathbf{A}|$.
+      - answer: ['|\det\mathbf{A}|', '|\det g_\mathscr{X}|']
+        feedback: |
+          The root also acts on $|\det g_\mathscr{X}|$, which becomes $\sqrt{|\det g_\mathscr{X}|}$, the density in the chart $\mathscr{X}$.
+    hint: |
+      $\sqrt{ab} = \sqrt a\sqrt b$ for $a,b\geq0$, and $\sqrt{x^2} = |x|$.
+    explanation: |
+      $$\sqrt{|\det g_\mathscr{Y}|} = |\det\mathbf{A}|\sqrt{|\det g_\mathscr{X}|}.$$
+      Compare the density law $\omega_\mathscr{Y} = \det\mathbf{A}\;\omega_\mathscr{X}$: the two agree exactly when $|\det\mathbf{A}| = \det\mathbf{A}$, that is, when $\det\mathbf{A}>0$.
+
+  - type: mcq
+    id: sign-step
+    title: Closing the gap
+    prompt: |
+      The metric gives $\sqrt{|\det g_\mathscr{Y}|} = |\det\mathbf{A}|\sqrt{|\det g_\mathscr{X}|}$, with $\mathbf{A}$ the Jacobian $\partial\mathscr{X}^i/\partial\mathscr{Y}^k$, while a scalar density must obey $\omega_\mathscr{Y} = \det\mathbf{A}\;\omega_\mathscr{X}$. What guarantees $|\det\mathbf{A}| = \det\mathbf{A}$ on every overlap?
+    options:
+      - text: 'Both charts belong to one oriented atlas $\mathcal{A}^\uparrow$'
+        correct: true
+      - text: 'The metric is Riemannian, so $\det g>0$'
+        feedback: |
+          The sign of $\det g$ was already removed by the absolute value inside the root. The remaining sign is that of $\det\mathbf{A}$, a property of the charts, not of the metric: a reflection has $\det\mathbf{A} = -1$ even for the Euclidean metric.
+      - text: 'Nothing: the two laws always agree'
+        feedback: |
+          They differ by $\det\mathbf{A}/|\det\mathbf{A}|$, which is $-1$ for a reflection such as $(a,b)\mapsto(a,-b)$.
+      - text: 'One of the two charts is cartesian'
+        feedback: |
+          A cartesian chart and its mirror image $(a,-b)$ are both "cartesian", yet the Jacobian between them has determinant $-1$. What matters is how the two charts are oriented relative to each other.
+    explanation: |
+      An oriented atlas is by definition one in which every Jacobian between its charts has positive determinant. Then $\mathrm{sgn}(\det\mathbf{A}) = +1$, $\sqrt{|\det g|}$ obeys the density law, and the chartwise definitions are the scalar densities of one volume form $\Omega^g$.
+
+  - type: order
+    id: tensor-law-proof
+    title: The same proof, component by component
+    prompt: |
+      Prove that the components $(\Omega^g_\mathscr{X})_{i_1\dots i_d} := \sqrt{|\det g_\mathscr{X}|}\,\varepsilon_{i_1\dots i_d}$ transform like a $(0,d)$-tensor field between charts of an oriented atlas, writing $\text{ᛞ} := \text{ᛞ}_{\mathcal{U}\mathcal{V}}$ (entries $\partial\mathscr{X}^i/\partial\mathscr{Y}^j$). Recall: for any matrix $T$, $\det(T)\,\varepsilon_{j_1\dots j_d} = T^{i_1}_{j_1}\cdots T^{i_d}_{j_d}\varepsilon_{i_1\dots i_d}$. Put the steps in order.
+    steps:
+      - 'Start: $(\Omega^g_\mathscr{Y})_{j_1\dots j_d} = \sqrt{|\det g_\mathscr{Y}|}\,\varepsilon_{j_1\dots j_d}$.'
+      - 'Metric law, determinant multiplicative: $\det g_\mathscr{Y} = (\det\text{ᛞ})^2\det g_\mathscr{X}$.'
+      - 'Root of a square: $\sqrt{(\det\text{ᛞ})^2} = \mathrm{sgn}(\det\text{ᛞ})\det\text{ᛞ}$.'
+      - 'The recalled fact turns $\det(\text{ᛞ})\,\varepsilon_{j_1\dots j_d}$ into $\text{ᛞ}^{i_1}_{j_1}\cdots\text{ᛞ}^{i_d}_{j_d}\varepsilon_{i_1\dots i_d}$.'
+      - 'Oriented atlas: $\mathrm{sgn}(\det\text{ᛞ}) = +1$, leaving $\text{ᛞ}^{i_1}_{j_1}\cdots\text{ᛞ}^{i_d}_{j_d}(\Omega^g_\mathscr{X})_{i_1\dots i_d}$.'
+    hint: |
+      Start from the definition in $\mathscr{Y}$, rewrite the determinant, take the root, trade $\det$ times $\varepsilon$ for Jacobian factors, and use the orientation last.
+    explanation: |
+      The result is the $(0,d)$-tensor law
+      $$(\Omega^g_\mathscr{Y})_{j_1\dots j_d} = \text{ᛞ}^{i_1}_{j_1}\cdots\text{ᛞ}^{i_d}_{j_d}(\Omega^g_\mathscr{X})_{i_1\dots i_d}.$$
+      So the chartwise definitions are the components of one $(0,d)$-tensor field, totally antisymmetric (as $\varepsilon$ is) and nowhere zero: a volume form. This is the same argument as the density-law route, written for components.
+
+  - type: mcq
+    id: mirror-trap
+    title: Forget the orientation
+    prompt: |
+      On the Euclidean plane take the cartesian chart $\mathscr{X}$ and the mirror chart $\mathscr{Z}(a,b) = (a,-b)$, with coordinates $\zeta$. In both, the metric has components $\mathrm{diag}(1,1)$, so $\sqrt{|\det g|} = 1$ in each. Suppose we ignore orientation and set "$\omega = \sqrt{|\det g|}$ in every chart". Does this define one volume form on the plane?
+    options:
+      - text: 'No: a volume form with $\omega_\mathscr{X} = 1$ must have $\omega_\mathscr{Z} = -1$'
+        correct: true
+      - text: 'Yes: both charts give $1$, so they agree'
+        feedback: |
+          Agreement of the numbers is not the test; the test is the density law. A volume form with density $1$ in $\mathscr{X}$ has $\omega_\mathscr{Z} = \det(\partial\mathscr{X}^i/\partial\mathscr{Z}^j)\cdot1 = -1$, since the Jacobian is $\mathrm{diag}(1,-1)$. The prescription "$1$ in $\mathscr{Z}$" contradicts it.
+      - text: 'Yes, because the metric is the same in both charts'
+        feedback: |
+          The metric is the same, but a volume form is not built from the metric alone: it also measures orientation (signed volume). Swapping the handedness of the chart flips the sign of its density, and $\sqrt{|\det g|}$ cannot see that.
+      - text: 'No, because $\det g$ is different in the two charts'
+        feedback: |
+          Here $\det g = 1$ in both charts. The trouble is the sign of the Jacobian $\det\mathrm{diag}(1,-1) = -1$, not the metric.
+    explanation: |
+      Without an orientation, the chartwise definitions differ by a sign wherever $\det\text{ᛞ}<0$. So $\Omega^g$ needs the metric **and** an orientation: on an oriented atlas the mirror chart is excluded (or, choosing the opposite orientation, it is $\mathscr{X}$ that is excluded and $\Omega^g$ becomes $-\Omega_{\mathrm{E}}$).
+
+  - type: text
+    id: orthonormal
+    title: Unit volume for an orthonormal basis
+    body: |
+      Recall Sylvester's law of inertia (Level 7): at each point some basis makes the metric diagonal with entries $\pm1$, an **orthonormal** basis. Suppose the chart-induced basis $(\partial/\partial\mathscr{X}^i)_p$ is orthonormal at $p$:
+      $$g_{ij}(p) = 0\ (i\neq j),\quad g_{ii}(p) = \pm1.$$
+      Then $\det g_\mathscr{X}(p)$ is a product of $\pm1$'s, so $|\det g_\mathscr{X}(p)| = 1$ and
+      $$\omega^g_\mathscr{X}(p) = 1.$$
+      Meaning: $\Omega^g_p$, fed the basis vectors, gives $(\Omega^g_\mathscr{X})_{1\dots d} = \omega^g_\mathscr{X}\varepsilon_{1\dots d} = 1$. **The parallelepiped spanned by an orthonormal basis has unit volume**, the metric version of "the unit square has area $1$".
+
+      This holds in **any signature**. Minkowski spacetime in an inertial chart has $\eta = \mathrm{diag}(-1,1,1,1)$, $\det\eta = -1$, and $\sqrt{|\det\eta|} = 1$: this is why the absolute value is in the definition. In general relativity the volume element is written $\sqrt{-\det g}\,d^4\alpha$, which is the same thing since $\det g<0$ there.
+
+  - type: numeric
+    id: minkowski-scaled
+    title: A rescaled clock and ruler
+    prompt: |
+      On 1+1 Minkowski spacetime (points $(t,a)$) the metric is $\eta = \mathrm{diag}(-1,1)$ in the inertial chart $\mathscr{X} = (t,a)$. In the chart $\mathscr{Y} = (2t,2a)$ its component matrix is $\mathrm{diag}(-\tfrac14,\tfrac14)$. What is the metric volume form's density $\omega^g_\mathscr{Y} = \sqrt{|\det g_\mathscr{Y}|}$?
+    answer: 0.25
+    answerText: '1/4'
+    wrong:
+      - value: -0.0625
+        feedback: |
+          $-\tfrac1{16}$ is $\det g_\mathscr{Y}$ itself. Take its absolute value and then the square root: $\sqrt{1/16} = \tfrac14$.
+      - value: 1
+        feedback: |
+          $1$ is the density in the orthonormal chart $\mathscr{X}$. The basis of $\mathscr{Y}$ is not orthonormal: its vectors have $\eta(\partial y_i,\partial y_i) = \mp\tfrac14$.
+      - value: 4
+        feedback: |
+          The density goes the other way: $\mathscr{X} = \mathscr{Y}/2$, so the Jacobian $\partial\mathscr{X}^i/\partial\mathscr{Y}^j = \mathrm{diag}(\tfrac12,\tfrac12)$ has determinant $\tfrac14$, and $\omega_\mathscr{Y} = \tfrac14\cdot1$.
+    hint: |
+      $\det\mathrm{diag}(-\tfrac14,\tfrac14) = -\tfrac1{16}$.
+    explanation: |
+      $\sqrt{|-\tfrac1{16}|} = \tfrac14$. Check with the density law: $\partial\mathscr{X}^i/\partial\mathscr{Y}^j = \mathrm{diag}(\tfrac12,\tfrac12)$, determinant $\tfrac14>0$ (same orientation), so $\omega_\mathscr{Y} = \tfrac14\,\omega_\mathscr{X} = \tfrac14$. A cell $\Delta\beta^1\times\Delta\beta^2$ of the new coordinates is a quarter of the size in proper time times proper length.
+
+  - type: mcq
+    id: unit-volume-converse
+    title: Unit volume, not orthonormal
+    prompt: |
+      On 1+1 Minkowski spacetime the light-cone chart has metric components $\begin{pmatrix}0&1\\1&0\end{pmatrix}$: both basis vectors are lightlike (null). Which statement is true?
+    options:
+      - text: '$\omega^g = 1$ in this chart, although the basis is not orthonormal'
+        correct: true
+      - text: '$\omega^g = 0$, because the basis vectors are null'
+        feedback: |
+          Null vectors have zero "length", but the volume form measures the parallelepiped they span, which depends on $\det g = 0\cdot0-1\cdot1 = -1$. So $\omega^g = \sqrt{|-1|} = 1$; a volume form is never zero.
+      - text: '$\omega^g$ is undefined, because $\det g<0$'
+        feedback: |
+          The definition uses $\sqrt{|\det g|}$, exactly so that negative determinants (any Lorentzian metric) are allowed: $\sqrt{|-1|} = 1$.
+      - text: '$\omega^g = 1$ shows the basis is orthonormal'
+        feedback: |
+          Orthonormal implies $\omega^g = 1$, not conversely: here $g_{11} = g_{22} = 0$, not $\pm1$, yet $|\det g| = 1$.
+    explanation: |
+      $\det\begin{pmatrix}0&1\\1&0\end{pmatrix} = -1$, so $\omega^g = 1$. Unit volume needs only $|\det g| = 1$; orthonormality is one way to get it. (Check: this chart is reached from the inertial one by a rotation by $45°$ in the $(t,a)$ plane, Jacobian determinant $1$.)
+
+  - type: text
+    id: sphere
+    title: The sphere
+    body: |
+      Back to the hook. On the unit sphere $S^2$ with the chart $\mathscr{X} = (\vartheta,\varphi)$, $\vartheta\in(0,\pi)$, $\varphi\in(-\pi,\pi)$, the round metric (dot products of the chart's tangent vectors in $\mathbb{R}^3$) is
+      $$\mathbf{G}_\mathscr{X} = \mathrm{diag}(1,\sin^2\vartheta).$$
+      Orient $S^2$ so that $\mathscr{X}$ is a positive chart (the sphere is orientable; with this choice the chart's two basis vectors followed by the outward normal form a right-handed triple in $\mathbb{R}^3$). Then
+      $$\omega^g_\mathscr{X} = \sqrt{\sin^2\vartheta} = |\sin\vartheta| = \sin\vartheta,$$
+      the last step because $\sin\vartheta>0$ on $(0,\pi)$. The guess of the hook is the metric's own answer: $\sqrt{g_{\vartheta\vartheta}}\,d\vartheta$ and $\sqrt{g_{\varphi\varphi}}\,d\varphi = \sin\vartheta\,d\varphi$ are the side lengths of a small cell.
+
+  - type: numeric
+    id: sphere-patch
+    title: A patch of the sphere
+    prompt: |
+      On the unit sphere with chart $(\vartheta,\varphi)$ ($\vartheta$ polar angle, $\varphi$ longitude), the metric volume form has density $\omega^g = \sin\vartheta$. Find the area of the region $\tfrac\pi3<\vartheta<\tfrac{2\pi}3$, $0<\varphi<\tfrac\pi2$ (its closure lies inside the chart domain, so the one-chart integral applies).
+    answer: 1.5707963
+    tolerance: 0.001
+    answerText: '\pi/2 \approx 1.571'
+    wrong:
+      - value: 1.6449341
+        feedback: |
+          That is $\tfrac\pi3\cdot\tfrac\pi2$, the area of the coordinate rectangle with $\omega = 1$. Include the density: $\int_{\pi/3}^{2\pi/3}\sin\vartheta\,d\vartheta = 1$.
+      - value: 1
+        feedback: |
+          $1$ is the $\vartheta$-integral alone. Multiply by the length of the $\varphi$-interval, $\tfrac\pi2$.
+    hint: |
+      $\int\sin\vartheta\,d\vartheta = -\cos\vartheta$, and $\cos\tfrac\pi3 = \tfrac12$, $\cos\tfrac{2\pi}3 = -\tfrac12$.
+    explanation: |
+      $$\begin{aligned}\int_0^{\pi/2}\!\!\int_{\pi/3}^{2\pi/3}\sin\vartheta\,d\vartheta\,d\varphi &= 1\cdot\tfrac\pi2\\ &= \tfrac\pi2.\end{aligned}$$
+      The band around the equator between latitudes $\pm30°$ has area $2\pi$, a quarter of it is $\tfrac\pi2$: cells near the equator count fully, cells near the poles count little.
+
+  - type: text
+    id: poles-and-cut
+    title: What the chart misses
+    body: |
+      To get the whole sphere, be careful. The chart $(\vartheta,\varphi)$ misses the two poles and the cut meridian $\varphi = \pm\pi$ (a closed half circle from pole to pole). Recall the one-chart integral: a region may be integrated in a chart only if its closure is compact and contained in the chart domain. The whole chart domain fails this, since its closure is all of $S^2$.
+
+      The honest route is the gluing recipe: add a second chart covering the missing half circle (for example, the same angles measured from a different axis), take a partition of unity $\{\text{ᚹ}_1,\text{ᚹ}_2\}$ subordinate to the two domains ($\text{ᚹ}$, "wynn": smooth functions in $[0,1]$ summing to $1$), and add the two one-chart integrals.
+
+      To actually compute, we use a fact **stated here without proof**: a set of zero area, such as a curve or finitely many points, can be dropped without changing an integral. The glued total therefore equals the integral over the chart domain alone, computed as an ordinary (improper) integral over the open rectangle $(0,\pi)\times(-\pi,\pi)$. Plausibility check: the region $\epsilon<\vartheta<\pi-\epsilon$, $|\varphi|<\pi-\epsilon$ is allowed for every small $\epsilon>0$, and its area $2\cos\epsilon\,(2\pi-2\epsilon)$ tends to the full value as $\epsilon\to0$.
+
+  - type: numeric
+    id: sphere-total
+    title: The area of the sphere
+    prompt: |
+      The unit sphere's area is the integral of the metric volume form, which in the chart $(\vartheta,\varphi)$ has density $\sin\vartheta$. Dropping the poles and the cut meridian (a set of zero area, which does not change the integral), compute $\int_{-\pi}^{\pi}\!\int_0^\pi\sin\vartheta\,d\vartheta\,d\varphi$.
+    answer: 12.566371
+    tolerance: 0.001
+    answerText: '4\pi \approx 12.566'
+    wrong:
+      - value: 19.739209
+        feedback: |
+          That is $2\pi^2$, the integral of $1$ over the chart rectangle: the density $\sin\vartheta$ was left out.
+      - value: 6.2831853
+        feedback: |
+          $2\pi$ is the $\varphi$-integral alone. The $\vartheta$-integral is $\int_0^\pi\sin\vartheta\,d\vartheta = 2$, so the total is $4\pi$.
+      - value: 2
+        feedback: |
+          $2$ is the $\vartheta$-integral alone. Multiply by the $\varphi$-range $2\pi$.
+    hint: |
+      $\int_0^\pi\sin\vartheta\,d\vartheta = [-\cos\vartheta]_0^\pi$.
+    explanation: |
+      $2\cdot2\pi = 4\pi$, the area of the unit sphere, and nobody chose the density: the round metric did. In the $\epsilon$-regions of the previous reasoning, $2\cos\epsilon\,(2\pi-2\epsilon)\to4\pi$ as well.
+
+  - type: text
+    id: integral-formula
+    title: Integrating with the metric
+    body: |
+      On an oriented metric manifold the metric volume form is the default, and one writes $\int_\mathcal{M}f := \int_\mathcal{M}\Omega^gf$ for a smooth $f$ with compact support. Inserting $\omega^g = \sqrt{|\det g|}$ into the gluing recipe, with a partition of unity $\{\text{ᚹ}_n\}$, $\mathrm{supp}\,\text{ᚹ}_n\subseteq\mathcal{U}_n$ for charts $(\mathcal{U}_n,\mathscr{X}_n)\in\mathcal{A}^\uparrow$ with coordinates $\alpha$:
+      $$\begin{aligned}\int_\mathcal{M}f =&\sum_n\int_{\mathscr{X}_n(\mathcal{U}_n)}d^d\alpha\\ &\cdot\sqrt{|\det g_{\mathscr{X}_n}|}\circ\mathscr{X}_n^{-1}\\ &\cdot(\text{ᚹ}_nf)\circ\mathscr{X}_n^{-1}.\end{aligned}$$
+      Every ingredient is computable: the metric components in each chart, a determinant, a root, and calculus integrals. It is **valid for any signature**: only $|\det g|$ enters. On spacetime this is the integral of general relativity: total charge, or the action $\int_\mathcal{M}\mathcal{L}$ whose extremum gives the field equations.
+
+  - type: numeric
+    id: spacetime-volume
+    title: A spacetime volume
+    prompt: |
+      On 1+1 Minkowski spacetime, the region $0<t<1$, $0<a<3$ in the inertial chart $\mathscr{X} = (t,a)$ has spacetime volume $1\cdot3 = 3$ (density $1$). Recompute it in the chart $\mathscr{Y} = (2t,2a)$, where the metric volume form has density $\omega^g_\mathscr{Y} = \tfrac14$: integrate $\tfrac14$ over the image of the region in $\mathscr{Y}$-coordinates.
+    answer: 3
+    answerText: '3'
+    wrong:
+      - value: 0.75
+        feedback: |
+          That is $\tfrac14\cdot3$: the density was applied, but the region was not mapped. In $\mathscr{Y}$-coordinates it is $0<\beta^1<2$, $0<\beta^2<6$, area $12$.
+      - value: 12
+        feedback: |
+          $12$ is the coordinate area of the image $(0,2)\times(0,6)$. Multiply by the density $\tfrac14$.
+    hint: |
+      The image is the rectangle $0<\beta^1<2$, $0<\beta^2<6$.
+    explanation: |
+      $\tfrac14\cdot2\cdot6 = 3$. The coordinate area grows by $\det(\partial\mathscr{Y}^i/\partial\mathscr{X}^j) = 4$ and the density shrinks by $\tfrac14$: the spacetime volume, built from $\sqrt{|\det g|}$, is the same in both charts, even though $\det g<0$.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** "Guided Problem: The Length of a Circle, Chart by Chart". Take a circle of radius $R$ with its metric, compute $\sqrt{|\det g|}$ in two different charts, check that they glue, and assemble the length $2\pi R$ from a partition of unity, piece by piece.

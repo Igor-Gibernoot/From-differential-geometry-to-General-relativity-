@@ -377,7 +377,11 @@ levels:
         kind: concept
         file: ch08/integration.yaml
         summary: "The integral of a function against a volume form inside one chart, why it is the same in every chart of an oriented atlas (and flips sign with the orientation), supports and partitions of unity, and the integral over a whole manifold, with the length of a circle glued from two angle charts."
-      - { id: ch08-metric-volume, title: The Metric Volume Form, kind: concept }
+      - id: ch08-metric-volume
+        title: The Metric Volume Form
+        kind: concept
+        file: ch08/metric-volume.yaml
+        summary: "How a metric picks one volume form, with density the square root of |det g| in every chart of an oriented atlas: why it glues (and needs the orientation), unit volume for orthonormal bases in any signature, the area 4π of the unit sphere, and spacetime volumes."
       - { id: ch08-circle-length, title: "Guided Problem: The Length of a Circle, Chart by Chart", kind: guided }
       - { id: ch08-traps, title: Integration Traps, kind: traps }
       - { id: ch08-map, title: "Content Map: Integrals", kind: map }
