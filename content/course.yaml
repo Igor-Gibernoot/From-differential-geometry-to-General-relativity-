@@ -546,4 +546,4 @@ levels:
         title: Level Challenge
         kind: challenge
         file: ch10/challenge.yaml
-        summary: "Harder problems combining the level: twins with two different speeds, the Lorentz matrix at the turnaround and what the home clock reads in between; a chart of accelerated observers, flat but with nonzero Christoffel symbols, where rapidities add; and which sources gravitate, from dust and light to vacuum energy and a scalar field that repels."
+        summary: "Harder problems combining the level: twins with two different speeds, the Lorentz matrix at the turnaround and what the home clock reads in between; a chart of accelerated observers, flat but with nonzero Christoffel symbols, where rapidities add; and which sources gravitate, from dust and light to vacuum energy and a scalar field that repels; the energy-momentum tensor of a plane light wave; and static clocks outside a star, with a modified metric whose Ricci tensor is that of an electric field."
