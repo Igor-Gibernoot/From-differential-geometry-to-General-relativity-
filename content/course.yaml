@@ -409,7 +409,11 @@ levels:
     title: Newton-Cartan Theory
     blurb: Newtonian gravity rewritten on a 4-dimensional manifold, with gravity living in the connection.
     lessons:
-      - { id: ch09-newtonian-spacetime, title: Absolute Time and Newtonian Spacetime, kind: concept }
+      - id: ch09-newtonian-spacetime
+        title: Absolute Time and Newtonian Spacetime
+        kind: concept
+        file: ch09/newtonian-spacetime.yaml
+        summary: "Why gravity looks like geometry (mass drops out of free fall, as for the Coriolis and centrifugal forces), then the stage: an absolute time t with dt never zero, the absolute spaces as its slices and absolute simultaneity, their tangent spaces ker dt, uniform flow ∇dt = 0 (no Γ with upper time index), and the Newtonian spacetime (M, O, A, ∇, t) with no spatial metric."
       - { id: ch09-newton-axioms, title: Newton's Axioms on a Manifold, kind: concept }
       - { id: ch09-stratified, title: Stratified Atlases, kind: concept }
       - { id: ch09-pseudo-forces, title: Inertial Charts and Pseudo-Forces, kind: concept }

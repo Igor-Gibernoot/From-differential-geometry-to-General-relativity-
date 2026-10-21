@@ -1,0 +1,451 @@
+id: ch09-newtonian-spacetime
+title: Absolute Time and Newtonian Spacetime
+kind: concept
+
+own: |
+  - **Absolute time** on a 4-dimensional smooth manifold $(\mathcal{M},\mathcal{O},\mathcal{A})$: a scalar field $t\in C^\infty(\mathcal{M})$ with {{ $(dt)_p\neq0$ for every $p\in\mathcal{M}$ }} ("time never stands still"). Counterexample: $t = \tau^2$, whose differential $2\tau\,d\tau$ vanishes on $\tau = 0$. Curved slices are allowed ($\tau + 0.3\sin a$).
+  - **Absolute space** at time $\tau\in t(\mathcal{M})$, the events simultaneous at $\tau$:
+  {{ $$\mathcal{S}_\tau := \mathrm{preim}_t(\{\tau\})$$ }}
+  and $\mathcal{M} = \dot{\bigcup}_{\tau}\mathcal{S}_\tau$: every event lies on exactly one slice, so simultaneity is absolute (a different time function, such as a boosted one, slices differently; the structure fixes one $t$).
+  - **Tangent space of a slice**: each $\mathcal{S}_\tau$ is a 3-dimensional submanifold, and by rank–nullity
+  {{ $$T_p\mathcal{S}_{t(p)} = \ker(dt)_p$$ }}
+  has dimension $4-1 = 3$: $v$ is tangent to the slice iff $(dt)_p(v) = 0$.
+  - **Uniform flow**: with $\mathtt{t}_k := \partial x_k\lfloor t\rceil$,
+  {{ $$\nabla dt = 0$$ }}
+  that is $\partial x_i\lfloor\mathtt{t}_k\rceil - \Gamma^j_{ki}\mathtt{t}_j = 0$; in a chart with $\mathscr{X}^0 = t$ it reads {{ $\Gamma^0_{ki} = 0$ for all $k,i$ }} (10 of the 40 torsion-free coefficients).
+  - **Newtonian spacetime** $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla,t)$: a 4-dimensional torsion-free affine manifold with an absolute time that flows uniformly. No spatial metric: gravity will live in $\nabla$ alone.
+
+cards:
+  - type: text
+    id: hook
+    title: Why does everything fall alike?
+    body: |
+      Newton's second law for a particle of mass $m$, in cartesian coordinates of an inertial frame: write $\gamma^\alpha_\mathcal{U}(t)$, $\alpha\in\{1,2,3\}$, for its position at time $t$, $f^\alpha_\gamma(t)$ for the other forces, and $\Phi$ for the gravitational potential (fixed by the mass density $\rho$ through $\sum_\alpha\partial_\alpha\partial_\alpha\Phi = 4\pi G_N\rho$). Then
+      $$m\,\ddot\gamma^\alpha_\mathcal{U} = f^\alpha_\gamma - m\,\partial_\alpha\Phi,$$
+      with $\partial_\alpha\Phi$ evaluated at $(t,\gamma_\mathcal{U}(t))$.
+
+      Gravity is the odd one out: it is proportional to the **same** $m$ that measures inertia. So in free fall ($f_\gamma = 0$) the mass drops out,
+      $$\ddot\gamma^\alpha_\mathcal{U} = -\partial_\alpha\Phi,$$
+      and an apple and a feather in vacuum fall along the same path. No other force behaves like this... or does it?
+
+  - type: mcq
+    id: hook-pseudo
+    title: Who else ignores the mass?
+    prompt: |
+      In free fall under gravity alone, Newton's law $m\,\ddot\gamma^\alpha = -m\,\partial_\alpha\Phi$ gives an acceleration independent of the mass $m$. Which other effects also give every body the same acceleration, whatever its mass?
+    options:
+      - text: 'The Coriolis and centrifugal forces felt in a rotating frame'
+        correct: true
+      - text: 'The electric force $q\,E$ on a charge $q$'
+        feedback: |
+          It gives the acceleration $qE/m$, which depends on the charge-to-mass ratio: an electron and a proton in the same field accelerate very differently.
+      - text: 'Air drag'
+        feedback: |
+          Drag depends on shape and speed but not on $m$, so the acceleration it causes is (drag)$/m$: that is exactly why a feather falls slower than an apple in air.
+      - text: 'A spring force $-k\,x$'
+        feedback: |
+          The acceleration is $-kx/m$: a heavy mass on the same spring oscillates more slowly. Only forces proportional to $m$ itself make $m$ drop out.
+    explanation: |
+      In a rotating frame every body feels the Coriolis force $-2m\,\vec\omega\times\dot{\vec x}$ and the centrifugal force $-m\,\vec\omega\times(\vec\omega\times\vec x)$, both proportional to $m$. And no body causes them: they come from the **choice of frame**. Gravity shares this mark. Perhaps gravity, too, is a property of the frame, or better, of the geometry: of what "moving straight" means. This level makes that precise, and it starts with the stage: spacetime.
+
+  - type: text
+    id: stage
+    title: The stage is spacetime
+    body: |
+      Recall: a smooth manifold $(\mathcal{M},\mathcal{O},\mathcal{A})$ is a set $\mathcal{M}$ with a topology $\mathcal{O}$ and a smooth atlas $\mathcal{A}$. Here $\mathcal{M}$ is **4-dimensional** and its points are **events**: a place at an instant ("this flash, here, now").
+
+      Newtonian physics assumes every event happens at a universal time. So the first new structure is a scalar field
+      $$t\colon\mathcal{M}\to\mathbb{R},$$
+      the time at which event $p$ happens. Events with the same value of $t$ form a **slice** of spacetime: all of space at one instant.
+
+      To draw it we drop two space dimensions: the next widget shows a 1+1-dimensional spacetime, with a space coordinate $a$ across and a coordinate $\tau$ up.
+
+  - type: widget
+    id: widget-flat
+    title: Slices of a time function
+    widget: time-slices
+    config:
+      time: flat
+      times: [flat]
+      p: [0, 0]
+      c: 0
+      kernel: false
+      stack: false
+      badge: false
+    body: |
+      Here $t = \tau$. The vertical axis $\tau$ is a **chart coordinate**, a number labelling events; the slice where $t$ takes the value $c$ is written $\mathcal{S}_c$ (gold), because the letter $\tau$ is already taken by the axis. Drag the slider $c$ and watch the gold slice sweep through the picture. Then drag $p$: the readout names the one slice containing it.
+
+  - type: mcq
+    id: one-slice
+    title: How many slices through an event?
+    prompt: |
+      A time function $t\colon\mathcal{M}\to\mathbb{R}$ defines the slices $\mathcal{S}_c := \{q\in\mathcal{M} : t(q) = c\}$, one for each real value $c$. Given an event $p$, how many slices contain $p$?
+    options:
+      - text: 'Exactly one, $\mathcal{S}_{t(p)}$'
+        correct: true
+      - text: 'At least two, since slices can cross'
+        feedback: |
+          A point on $\mathcal{S}_c$ and on $\mathcal{S}_{c'}$ would have $t(p) = c$ and $t(p) = c'$. A function has a single value at each point, so $c = c'$: distinct slices never meet.
+      - text: 'Possibly none, if $p$ falls between two slices'
+        feedback: |
+          The drawing shows only some slices (one every $0.5$), but there is a slice for every real value. $p$ lies on $\mathcal{S}_{t(p)}$, whatever the number $t(p)$ is.
+    explanation: |
+      $p\in\mathcal{S}_c$ means $t(p) = c$, and $t(p)$ is one number. So the slices cut $\mathcal{M}$ into disjoint pieces that together cover it. This is just "a function has one value per point", and it will turn into a physical statement: simultaneity is absolute.
+
+  - type: text
+    id: def-absolute-time
+    title: 'Absolute time: time never stands still'
+    body: |
+      Recall: for a scalar field $t$, the differential $(dt)_p\in T_p^*\mathcal{M}$ is the covector $(dt)_p(v) := v(t)$, the rate of change of $t$ along the tangent vector $v\in T_p\mathcal{M}$.
+
+      **Definition.** On a 4-dimensional smooth manifold, an **absolute time** is a scalar field $t\in C^\infty(\mathcal{M})$ ($C^\infty$ = smooth) with
+      $$(dt)_p\neq0\quad\text{for every }p\in\mathcal{M}.$$
+
+      Meaning: at every event there is a direction along which $t$ increases. Time never stands still. In the widget, $(dt)_p$ is drawn as two orange level lines, the displacements $w$ from $p$ with $(dt)_p(w) = +1$ and $= -1$; the line in between, $\ker(dt)_p$ ($\ker$ = kernel, the vectors sent to $0$), holds the directions along which $t$ does not change.
+
+  - type: mcq
+    id: dt-nonzero-means
+    title: What does the condition say?
+    prompt: |
+      An absolute time $t$ on a manifold $\mathcal{M}$ must satisfy $(dt)_p\neq0$ at every event $p$, where $(dt)_p(v) = v(t)$ for tangent vectors $v\in T_p\mathcal{M}$. What does $(dt)_p\neq0$ say?
+    options:
+      - text: 'Some tangent vector $v$ at $p$ has $(dt)_p(v)\neq0$, so $t$ changes along some direction'
+        correct: true
+      - text: '$t(p)\neq0$'
+        feedback: |
+          That confuses the value of $t$ with its rate of change. $t(p) = 0$ is harmless (it is just where the clock reads zero); what matters is that $t$ changes near $p$.
+      - text: '$(dt)_p(v)\neq0$ for every nonzero $v$'
+        feedback: |
+          Impossible in dimension $\ge2$: a linear map from a space of dimension $4$ to $\mathbb{R}$ always sends some nonzero vectors to $0$ (its kernel). Those are the directions along the slice. $(dt)_p\neq0$ only rules out sending **all** vectors to $0$.
+      - text: '$t$ increases along every direction'
+        feedback: |
+          Along $-v$ the rate is $(dt)_p(-v) = -(dt)_p(v)$, so if $t$ increases along $v$ it decreases along $-v$. The condition gives one direction of increase, not all.
+    explanation: |
+      $(dt)_p$ is a linear map $T_p\mathcal{M}\to\mathbb{R}$; it is nonzero iff some $v$ has $(dt)_p(v)\neq0$. Flipping the sign of $v$ if needed, $(dt)_p(v)>0$: there is a direction toward the future.
+
+  - type: widget
+    id: widget-squared
+    title: A clock that stops
+    widget: time-slices
+    config:
+      time: squared
+      times: [squared, wavy]
+      p: [1, 0]
+      kernel: true
+      stack: true
+      badge: true
+    body: |
+      Now $t = \tau^2$, a perfectly smooth function, placed at $p = (1,0)$ on the line $\tau = 0$. Read $(dt)_p$, the kernel and the badge. Move $p$ up and down: watch the orange level lines run away as $p$ approaches $\tau = 0$, and drag the slider to see which values $c$ have a slice. Then press the button $\tau + 0.3\sin a$ and compare the badge.
+
+  - type: mcq
+    id: squared-fails
+    title: What goes wrong at τ = 0?
+    prompt: |
+      On a 1+1-dimensional spacetime with chart coordinates $(a,\tau)$, take $t = \tau^2$, so $dt = 2\tau\,d\tau$. At an event $p$ on the line $\tau = 0$, why is $t$ not an absolute time?
+    options:
+      - text: '$(dt)_p = 0$: no direction at $p$ changes $t$ to first order, and $\ker(dt)_p$ is the whole tangent space'
+        correct: true
+      - text: '$t$ is not smooth at $\tau = 0$'
+        feedback: |
+          $\tau^2$ is a polynomial, smooth everywhere. The defect is not in smoothness but in the differential: $2\tau\,d\tau$ is the zero covector at $\tau = 0$.
+      - text: 'The slice $\mathcal{S}_0$ is empty'
+        feedback: |
+          $\mathcal{S}_0 = \{\tau = 0\}$ is a whole line; it is the slices $\mathcal{S}_c$ with $c<0$ that are empty. Empty slices are harmless anyway (the time simply never takes those values).
+      - text: '$t$ takes the same value at many events'
+        feedback: |
+          Every time function does: it is constant along each slice, and that is the point of slices. The problem at $\tau = 0$ is that the clock stops there.
+    explanation: |
+      At $\tau = 0$ the tangent space of the slice should be the 1-dimensional line $\ker(dt)_p$, but $\ker(dt)_p$ is all of $T_p\mathcal{M}$ (dimension 2), while $\mathcal{S}_0$ is still a line: the kernel no longer describes the slice. Worse, above the line $t$ grows upward and below it $t$ grows downward, so "the future" flips across $\tau = 0$. The condition $(dt)_p\neq0$ rules all of this out.
+
+  - type: mcq
+    id: wavy-ok
+    title: Are curved slices allowed?
+    prompt: |
+      On a 1+1-dimensional spacetime with chart coordinates $(a,\tau)$, take $t = \tau + 0.3\sin a$. Its slices are the wavy curves $\tau = c - 0.3\sin a$. Is $t$ an absolute time?
+    options:
+      - text: 'Yes: $dt = 0.3\cos a\,da + d\tau$ is never zero'
+        correct: true
+      - text: 'No: the slices of an absolute time must be straight'
+        feedback: |
+          "Straight" has no meaning yet: there is no connection or metric in the definition, only the smooth structure. And straightness depends on the chart: a smooth change of chart can bend the slices of $t = \tau$ into these very curves.
+      - text: 'No: $dt$ vanishes where $\cos a = 0$'
+        feedback: |
+          At $\cos a = 0$ only the $da$ component vanishes; the $d\tau$ component is always $1$, so $dt\neq0$ everywhere.
+    explanation: |
+      The $d\tau$ component is $\partial t/\partial\tau = 1$ at every event, so $(dt)_p\neq0$ everywhere, and the badge says Yes. An absolute time is about the smooth structure alone: wavy, tilted or flat slices are equally fine, as long as the clock never stops.
+
+  - type: text
+    id: def-absolute-space
+    title: Absolute space and absolute simultaneity
+    body: |
+      **Definition.** The **absolute space** at time $\tau\in t(\mathcal{M})$ (a value of $t$, not the widget's axis) is the slice
+      $$\mathcal{S}_\tau := \mathrm{preim}_t(\{\tau\}),$$
+      the preimage (all events sent to $\tau$): every event that happens at time $\tau$. As every event lies on exactly one slice, $\mathcal{M}$ is their **disjoint union**,
+      $$\mathcal{M} = \mathop{\dot{\bigcup}}_{\tau\in t(\mathcal{M})}\mathcal{S}_\tau.$$
+
+      Two events are **simultaneous** if they lie on the same slice. This depends on $t$ alone, a structure of spacetime, and not on who looks: in Newtonian spacetime simultaneity is **absolute**.
+
+      Is that automatic? Compare with special relativity.
+
+  - type: widget
+    id: widget-boosted
+    title: Another observer's slices
+    widget: time-slices
+    config:
+      time: flat
+      times: [flat, boosted]
+      p: [0, 0]
+      kernel: false
+      stack: false
+      badge: true
+    body: |
+      Recall the Minkowski boost: an observer moving at speed $0.5$ (in units with $c_{\text{light}} = 1$) uses the time $t' = (\tau - 0.5\,a)/\sqrt{0.75}$. Switch between $\tau$ and the boosted time, keeping $p$ fixed. Then drag $p$ to $(2,0)$ under each and read $t(p)$.
+
+  - type: numeric
+    id: boosted-value
+    title: Same instant?
+    prompt: |
+      On a 1+1-dimensional spacetime with coordinates $(a,\tau)$, the events $p = (0,0)$ and $q = (2,0)$ both have $\tau = 0$. A boosted observer uses the time function $t' = (\tau - 0.5\,a)/\sqrt{0.75}$. What is $t'(q)$? (Two decimals.)
+    answer: -1.1547
+    tolerance: 0.01
+    answerText: '-1.15'
+    wrong:
+      - { value: 0, feedback: 'That is $t''(p)$, at $a = 0$. At $q$ the term $-0.5\,a = -1$ is no longer zero.' }
+      - { value: -1, feedback: 'That is the numerator $\tau - 0.5\,a$; divide by $\sqrt{0.75}\approx0.866$.' }
+    hint: |
+      Substitute $a = 2$, $\tau = 0$; $\sqrt{0.75}\approx0.866$.
+    explanation: |
+      $t'(q) = (0-1)/0.866 \approx -1.15$, while $t'(p) = 0$. For $\tau$ the two events are simultaneous; for the boosted time they are not. Both functions have $dt\neq0$ everywhere (the badge says Yes for both), so each is an absolute time by the definition.
+
+  - type: mcq
+    id: simultaneity-choice
+    title: Whose simultaneity?
+    prompt: |
+      On a 1+1-dimensional spacetime, both $t = \tau$ and the boosted $t' = (\tau - 0.5\,a)/\sqrt{0.75}$ are smooth with nowhere-zero differential, yet they disagree on which events are simultaneous. How does Newtonian spacetime make simultaneity absolute?
+    options:
+      - text: 'It includes **one** absolute time $t$ as part of its structure; simultaneity means equal $t$, for every observer'
+        correct: true
+      - text: 'Only $\tau$ satisfies $(dt)_p\neq0$, so the boosted time is ruled out by the definition'
+        feedback: |
+          Both satisfy it: $dt' = (-0.5\,da + d\tau)/\sqrt{0.75}$ is never zero. The definition alone allows many time functions; the structure must pick one.
+      - text: 'Each observer chooses the time function adapted to their motion'
+        feedback: |
+          That is the special-relativistic picture, where the Minkowski metric singles out no time function and simultaneity is relative. In Newtonian spacetime $t$ is given in advance, shared by all observers.
+      - text: 'It is not absolute: it depends on the chart $(a,\tau)$'
+        feedback: |
+          $t$ is a scalar field, a function on events, not on coordinates. Changing chart relabels events but never changes $t(p)$, so the slices are chart independent.
+    explanation: |
+      The slices $\mathcal{S}_\tau$ are a structure on $\mathcal{M}$, fixed once $t$ is fixed. Newtonian physics fixes it: simultaneity is absolute because $t$ is part of the spacetime, not of an observer. General relativity (Level 10) will drop this and keep only a Lorentzian metric.
+
+  - type: text
+    id: tangent-slice
+    title: The tangent space of a slice
+    body: |
+      Because $(dt)_p\neq0$ everywhere, each slice $\mathcal{S}_\tau$ is a smooth **3-dimensional submanifold** of $\mathcal{M}$ (a smooth surface-like subset of one dimension less), and its tangent space at $p$ is
+      $$T_p\mathcal{S}_{t(p)} = \ker(dt)_p.$$
+      Why: a curve inside the slice keeps $t$ constant, so its velocity $v$ has $(dt)_p(v) = v(t) = 0$. Directions inside the slice are exactly those along which the clock does not advance.
+
+      Dimension count. **Rank–nullity**: for a linear map $L\colon V\to W$ between finite-dimensional vector spaces, $\dim V = \dim\ker L + \dim\operatorname{im}L$ ($\operatorname{im}$ = image).
+
+  - type: numeric
+    id: dim-kernel
+    title: Count the spatial directions
+    prompt: |
+      On a 4-dimensional manifold, $(dt)_p\colon T_p\mathcal{M}\to\mathbb{R}$ is linear and nonzero. Rank–nullity says $\dim T_p\mathcal{M} = \dim\ker(dt)_p + \dim\operatorname{im}(dt)_p$. What is $\dim\ker(dt)_p$, the dimension of the tangent space of the slice through $p$?
+    answer: 3
+    answerText: '3'
+    wrong:
+      - { value: 1, feedback: 'That is the dimension of the image: a nonzero linear map to $\mathbb{R}$ is onto, so $\dim\operatorname{im} = 1$. The kernel gets the rest, $4 - 1$.' }
+      - { value: 4, feedback: 'That would need $(dt)_p = 0$, the forbidden case of a stopped clock (like $t = \tau^2$ on $\tau = 0$).' }
+    hint: |
+      A nonzero linear map to $\mathbb{R}$ hits every real number, so its image has dimension $1$.
+    explanation: |
+      $\dim\operatorname{im}(dt)_p = 1$, so $\dim\ker(dt)_p = 4 - 1 = 3$: absolute space is 3-dimensional, as it should be. In the 1+1 picture, $2 - 1 = 1$: the kernel is a line, tangent to the slice.
+
+  - type: widget
+    id: widget-wavy
+    title: The kernel hugs the slice
+    widget: time-slices
+    config:
+      time: wavy
+      times: [wavy]
+      p: [1, 0.5]
+      kernel: true
+      stack: true
+      badge: false
+    body: |
+      Back to $t = \tau + 0.3\sin a$, now at $p = (1, 0.5)$. Read $(dt)_p$ in the readout and look at the line $\ker(dt)_p$: drag $p$ along the gold slice (press **Slice through p** first) and watch the kernel line stay tangent to it.
+
+  - type: numeric
+    id: kernel-vector
+    title: A vector along the slice
+    prompt: |
+      On a 1+1-dimensional spacetime with coordinates $(a,\tau)$, the time $t = \tau + 0.3\sin a$ has, at $p = (1,0.5)$,
+      $$(dt)_p = 0.16\,da + 1\,d\tau$$
+      (since $0.3\cos1\approx0.16$). A tangent vector $v$ at $p$ has components $v^a = 2$ and $v^\tau$. Which $v^\tau$ makes $v$ tangent to the slice, $(dt)_p(v) = 0$?
+    answer: -0.32
+    tolerance: 0.01
+    answerText: '-0.32'
+    wrong:
+      - { value: -0.16, feedback: 'That is $v^\tau$ for $v^a = 1$. Here $v^a = 2$, so the $a$ contribution is $0.16\cdot2 = 0.32$, and $v^\tau$ must cancel it.' }
+      - { value: 0.32, feedback: 'Then $(dt)_p(v) = 0.32 + 0.32 = 0.64\neq0$: $t$ would increase along $v$. The $\tau$ component must cancel the $a$ contribution.' }
+      - { value: 0, feedback: 'A horizontal $v$ gives $(dt)_p(v) = 0.32$: along $a$ alone the wavy time still changes. Tilt $v$ down to compensate.' }
+    hint: |
+      $(dt)_p(v) = 0.16\,v^a + 1\cdot v^\tau$ with $v^a = 2$; set it to $0$.
+    explanation: |
+      $0.16\cdot2 + v^\tau = 0$ gives $v^\tau = -0.32$: the vector $(2,-0.32)$, twice the kernel vector $(1,-0.16)$. Check: the slice through $p$ is $\tau = 0.75 - 0.3\sin a$, of slope $-0.3\cos1\approx-0.16$ at $a = 1$, the same as $v$ ($-0.32/2$). The kernel is the tangent line of the slice.
+
+  - type: text
+    id: uniform-why
+    title: Does time flow at the same rate everywhere?
+    body: |
+      An absolute time says **when** events happen. Newtonian physics also says that time flows **uniformly**: a second here is a second there. To compare the covector $dt$ at different events we need a connection.
+
+      Recall: a connection $\nabla$ differentiates tensor fields; in a chart $(\mathcal{U},\mathscr{X})$ with coefficients $\Gamma^j_{ki}$ (last lower index = direction), a covector field $\mathsf{X}$ with components $\mathtt{x}_k$ has
+      $$(\nabla_{\mathcal{X}}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil - \Gamma^j_{ki}\,\mathtt{x}_j\,x^i,$$
+      where $x^i$ are the components of the direction $\mathcal{X}$ (Einstein summation).
+
+      **Definition.** Absolute time **flows uniformly** if
+      $$\nabla_\mathcal{X}dt = 0\quad\text{for all }\mathcal{X}\in\Gamma T\mathcal{M},$$
+      written compactly $\nabla dt = 0$. The components of $dt$ are $\mathtt{t}_k := \partial x_k\lfloor t\rceil$, the derivatives of $t$ along the chart's basis fields.
+
+  - type: build
+    id: build-uniform
+    title: Uniform flow in components
+    prompt: |
+      A covector field $\mathsf{X}$ with components $\mathtt{x}_k$ has $(\nabla_\mathcal{X}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil - \Gamma^j_{ki}\mathtt{x}_jx^i$, where $x^i$ are the components of $\mathcal{X}$ and $\Gamma^j_{ki}$ the connection coefficients (last lower index = direction). For $\mathsf{X} = dt$, with components $\mathtt{t}_k := \partial x_k\lfloor t\rceil$, and the direction $\mathcal{X} = \partial x_i$, build the components of $\nabla_{\partial x_i}dt$.
+    prefix: '(\nabla_{\partial x_i}dt)_k ='
+    tiles: ['\partial x_i\lfloor\mathtt{t}_k\rceil', '-', '+', '\Gamma^j_{ki}', '\Gamma^k_{ji}', '\mathtt{t}_j']
+    answers:
+      - ['\partial x_i\lfloor\mathtt{t}_k\rceil', '-', '\Gamma^j_{ki}', '\mathtt{t}_j']
+      - ['\partial x_i\lfloor\mathtt{t}_k\rceil', '-', '\mathtt{t}_j', '\Gamma^j_{ki}']
+    wrong:
+      - { answer: ['\partial x_i\lfloor\mathtt{t}_k\rceil', '+', '\Gamma^j_{ki}', '\mathtt{t}_j'], feedback: 'The plus sign belongs to vector fields. For a covector the $\Gamma$-term comes with a minus, because $\mathsf{X}(\mathcal{Y})$ is a scalar and the two corrections must cancel.' }
+      - { answer: ['\partial x_i\lfloor\mathtt{t}_k\rceil', '-', '\Gamma^k_{ji}', '\mathtt{t}_j'], feedback: 'The free index $k$ is a lower index of the result, so it must sit low on $\Gamma$; the summed index $j$ pairs the upper index of $\Gamma$ with $\mathtt{t}_j$.' }
+    hint: |
+      The direction $\partial x_i$ has components $x^m = \delta^m_i$, which picks out the last lower index of $\Gamma$.
+    explanation: |
+      $$(\nabla_{\partial x_i}dt)_k = \partial x_i\lfloor\mathtt{t}_k\rceil - \Gamma^j_{ki}\mathtt{t}_j,$$
+      so uniform flow is the system of equations $\partial x_i\lfloor\mathtt{t}_k\rceil = \Gamma^j_{ki}\mathtt{t}_j$ for all $i,k$. It constrains $t$ and $\nabla$ **together**: the same $t$ may flow uniformly for one connection and not for another.
+
+  - type: numeric
+    id: wavy-not-uniform
+    title: Wavy time, flat connection
+    prompt: |
+      On a 1+1-dimensional spacetime with chart coordinates $(a,\tau)$, take the connection whose coefficients all vanish in this chart, and the time $t = \tau + 0.3\sin a$, with components $\mathtt{t}_a = 0.3\cos a$, $\mathtt{t}_\tau = 1$. Uniform flow requires $(\nabla_{\partial x_i}dt)_k = \partial x_i\lfloor\mathtt{t}_k\rceil - \Gamma^j_{ki}\mathtt{t}_j = 0$. What is $(\nabla_{\partial a}dt)_a$ at $p = (1,0.5)$? (Two decimals.)
+    answer: -0.2524
+    tolerance: 0.01
+    answerText: '-0.25'
+    wrong:
+      - { value: 0, feedback: 'With $\Gamma = 0$ only the derivative term remains, $\partial_a(0.3\cos a) = -0.3\sin a$, which is not zero at $a = 1$.' }
+      - { value: 0.1621, feedback: 'That is $\mathtt{t}_a = 0.3\cos1$ itself. Uniform flow asks for its **derivative** along $\partial a$.' }
+    hint: |
+      With all $\Gamma = 0$: $(\nabla_{\partial a}dt)_a = \partial_a\mathtt{t}_a$. Use $\sin1\approx0.841$.
+    explanation: |
+      $\partial_a(0.3\cos a) = -0.3\sin a\approx-0.25$ at $a = 1$. So with this connection the wavy time does **not** flow uniformly, while $t = \tau$ does (all its components are constant). A connection with suitable nonzero $\Gamma$ could make the wavy time uniform: the condition is on the pair $(\nabla,t)$.
+
+  - type: text
+    id: adapted-chart
+    title: Uniform flow in a chart that reads the time
+    body: |
+      From now on, in four dimensions, chart indices are numbered $0,1,2,3$: Latin letters $i,j,k,\dots$ run over $\{0,1,2,3\}$, Greek letters $\alpha,\beta,\dots$ over the spatial $\{1,2,3\}$.
+
+      Choose a chart whose $0$-th coordinate function is the absolute time itself, $\mathscr{X}^0 = t$ (such charts exist around every event, because $dt\neq0$). Then $dt = dx^0$, whose components are constant,
+      $$\mathtt{t}_k = \delta^0_k,$$
+      so the derivative term drops out:
+      $$(\nabla_{\partial x_i}dt)_k = -\Gamma^0_{ki}.$$
+      Uniform flow becomes a condition on the coefficients alone:
+      $$\nabla dt = 0\iff\Gamma^0_{ki} = 0\ \ \forall\,k,i.$$
+      No coefficient with an upper time index survives.
+
+  - type: numeric
+    id: count-gamma
+    title: How many coefficients die?
+    prompt: |
+      A torsion-free connection in four dimensions has coefficients $\Gamma^j_{ki} = \Gamma^j_{ik}$, indices in $\{0,1,2,3\}$: $4$ choices of the upper index times $10$ symmetric pairs, $40$ independent coefficients. In a chart with $\mathscr{X}^0 = t$, uniform flow $\nabla dt = 0$ means $\Gamma^0_{ki} = 0$ for all $k,i$. How many of the $40$ independent coefficients does it force to vanish?
+    answer: 10
+    answerText: '10'
+    wrong:
+      - { value: 16, feedback: 'That counts the pairs $(k,i)$ as if $\Gamma^0_{ki}$ and $\Gamma^0_{ik}$ were different. Torsion-free makes them equal, so only the $10$ symmetric pairs count.' }
+      - { value: 4, feedback: 'That counts only one lower index. $\Gamma^0_{ki}$ has two, forming $10$ symmetric pairs.' }
+    hint: |
+      Count the unordered pairs $\{k,i\}$ from $\{0,1,2,3\}$, repeats allowed.
+    explanation: |
+      $\binom{4}{2} + 4 = 10$ symmetric pairs, all with upper index $0$. The remaining $30$ are the $\Gamma^\alpha_{ki}$ with a spatial upper index: they will hold gravity and the pseudo-forces.
+
+  - type: mcq
+    id: trap-constant
+    title: Constant components, uniform flow?
+    prompt: |
+      In four dimensions, a chart has $\mathscr{X}^0 = t$, so $dt = dx^0$ has constant components $\mathtt{t}_k = \delta^0_k$. A torsion-free connection has, in this chart, all coefficients zero except $\Gamma^0_{11} = 1$. Does $t$ flow uniformly ($\nabla dt = 0$)?
+    options:
+      - text: 'No: $(\nabla_{\partial x_1}dt)_1 = -\Gamma^0_{11} = -1$'
+        correct: true
+      - text: 'Yes: the components of $dt$ are constant, so all derivatives of $dt$ vanish'
+        feedback: |
+          Constant components kill only the term $\partial x_i\lfloor\mathtt{t}_k\rceil$. The covariant derivative also has $-\Gamma^j_{ki}\mathtt{t}_j = -\Gamma^0_{ki}$, which is $-1$ for $k = i = 1$. "Constant in a chart" is not "parallel".
+      - text: 'Yes: the connection is torsion-free'
+        feedback: |
+          Torsion-free ($\Gamma^j_{ki} = \Gamma^j_{ik}$) is a separate condition; $\Gamma^0_{11} = 1$ satisfies it and still breaks uniform flow.
+      - text: 'It cannot be decided without a spatial metric'
+        feedback: |
+          $\nabla dt$ needs only the connection and $t$. No metric enters the definition of uniform flow.
+    explanation: |
+      $(\nabla_{\partial x_1}dt)_1 = 0 - \Gamma^0_{11}\mathtt{t}_0 = -1\neq0$. Physically: recall the autoparallel equation $\ddot x^k + \Gamma^k_{ji}\dot x^j\dot x^i = 0$; its time component gives $\ddot x^0 = -(\dot x^1)^2$, so a free particle moving along $x^1$ would see absolute time slow down along its own path. Uniform flow forbids exactly this.
+
+  - type: text
+    id: def-newtonian
+    title: Newtonian spacetime
+    body: |
+      **Definition.** A **Newtonian spacetime** is the quintuple
+      $$(\mathcal{M},\mathcal{O},\mathcal{A},\nabla,t)$$
+      where $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla)$ is a 4-dimensional **torsion-free** affine manifold (smooth manifold with a connection) and $t$ is an absolute time that flows uniformly, $\nabla dt = 0$.
+
+      Why torsion-free? Free particles will move along autoparallels, $\ddot x^k + \Gamma^k_{ji}\dot x^j\dot x^i = 0$, and this equation only sees the symmetric part of $\Gamma$ (the sum over $j,i$ symmetrizes it). So particles leave the torsion undetermined; setting it to zero selects the one connection fixed by free particles. Torsion would matter only for transporting other vectors, such as a gyroscope's axis.
+
+      What is **missing**: no notion of spatial distance enters. All of Newtonian gravity will be described by $\nabla$ alone.
+
+  - type: mcq
+    id: not-in-structure
+    title: What is not part of it?
+    prompt: |
+      A Newtonian spacetime is a 4-dimensional manifold with topology $\mathcal{O}$ and smooth atlas $\mathcal{A}$, a torsion-free connection $\nabla$, and an absolute time $t$ with $\nabla dt = 0$. Which of these is **not** part of that structure?
+    options:
+      - text: 'A metric measuring spatial distances'
+        correct: true
+      - text: 'A scalar field $t$ with $(dt)_p\neq0$ everywhere'
+        feedback: |
+          That is the absolute time, the fifth entry of $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla,t)$.
+      - text: 'A connection whose torsion vanishes'
+        feedback: |
+          The connection $\nabla$ is part of the structure, and torsion-free is required (free particles cannot see torsion).
+      - text: 'The condition that $\nabla dt = 0$'
+        feedback: |
+          That is uniform flow, part of the definition: it forces $\Gamma^0_{ki} = 0$ in a chart with $\mathscr{X}^0 = t$.
+    explanation: |
+      Distances in space are not needed: gravity, inertia and the pseudo-forces will all be read from $\nabla$. A spatial metric can be added later, but Newton's theory of motion runs without it.
+
+  - type: mcq
+    id: why-spacetime
+    title: Why not geometry on space?
+    prompt: |
+      Idea: gravity is not a force but part of the geometry, and free particles follow the autoparallels of a connection. An autoparallel is fixed by a starting point and an initial velocity, and doubling the velocity only traces the same path faster. Throw two balls from the same point in the same horizontal direction, one slow and one fast. Why must the connection live on 4-dimensional spacetime, not on 3-dimensional space?
+    options:
+      - text: 'In space both balls start with the same direction yet bend differently; in spacetime the speed tilts the worldline, so their initial directions differ'
+        correct: true
+      - text: 'Because gravity depends on the mass, which only spacetime can record'
+        feedback: |
+          Mass drops out of free fall: that is the very reason gravity can be geometry. The problem is the speed, not the mass.
+      - text: 'It would work on space too; autoparallels can bend in any way'
+        feedback: |
+          Autoparallels with velocities $v$ and $2v$ at the same point have the same path, traced at different rates. But the slow ball's parabola bends more sharply than the fast one's: two different paths, same starting direction. No connection on space produces both.
+      - text: 'Because space has no metric, so it has no connection'
+        feedback: |
+          A connection needs no metric (a Newtonian spacetime has none either). The obstruction is that, in space, the speed is not part of the direction.
+    explanation: |
+      On space, direction forgets the speed, and free-fall paths depend on it. On spacetime a worldline climbs one unit of $t$ while moving $v$ units across, so a faster ball has a more tilted worldline: the speed is part of the direction. That is why gravity as geometry needs spacetime, and why Newtonian spacetime carries a connection $\nabla$. Free fall will be the autoparallels of $\nabla$.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** Newton's axioms on this stage. Tangent vectors split into future directed, spatial and past directed by the sign of $(dt)_p(v)$; free particles follow the autoparallels of $\nabla$; forces are spatial and measure the deviation from them; and absolute time turns out to be the natural parameter of every worldline.
