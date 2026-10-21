@@ -398,7 +398,11 @@ levels:
         file: ch08/map.yaml
         summary: "Rebuild the Chapter 8 map box by box: from the chart dependence of naive integrals, through the change of variables, volume forms, the Levi-Civita symbol, scalar densities and oriented atlases, to integrals in one chart and over the whole manifold with partitions of unity, and the metric volume form with its lengths and areas."
       - { id: ch08-review, title: Level Review, kind: review }
-      - { id: ch08-challenge, title: Level Challenge, kind: challenge }
+      - id: ch08-challenge
+        title: Level Challenge
+        kind: challenge
+        file: ch08/challenge.yaml
+        summary: "Harder problems combining the level: why the closure of a region must be compact and inside the chart (an interval as a manifold, a chart whose density blows up at its edge), a partition of unity built by hand on the line with the roles of Hausdorff and second countability, and the area of a torus over several charts."
 
   - id: ch09
     number: 9

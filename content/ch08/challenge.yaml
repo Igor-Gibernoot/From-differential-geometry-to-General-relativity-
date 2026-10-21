@@ -1,0 +1,602 @@
+id: ch08-challenge
+title: Level Challenge
+kind: challenge
+
+# Organization: intro, then one block per problem (cards tagged
+# "Problem N · …", ids prefixed pN-), then wrap-up. Session 1 wrote
+# problems 1-3; part 2 adds problems 4-5 to the intro list, their blocks
+# after the Problem 3 block, and the wrap-up card.
+
+cards:
+  - type: text
+    id: intro
+    title: Compact closures, partitions, a torus
+    body: |
+      This challenge pushes each idea of the level to its edge. Keep pencil and paper at hand: every answer can be checked by hand.
+
+      Recall the toolkit. On an oriented manifold $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow)$ ($\mathcal{O}$ the topology, $\mathcal{A}^\uparrow$ an oriented atlas) a volume form $\Omega$ has, in each chart $(\mathcal{U},\mathscr{X})$, a **scalar density** $\omega_\mathscr{X}$, and between two charts
+      $$\omega_\mathscr{Y} = \det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)\,\omega_\mathscr{X}.$$
+      For an open region $\mathcal{D}\subseteq\mathcal{U}$ whose closure $\overline{\mathcal{D}}$ is compact and contained in $\mathcal{U}$, the one-chart integral of a smooth $f$ is
+      $$\begin{aligned}\int_\mathcal{D}\Omega f :=&\int_{\mathscr{X}(\mathcal{D})}d^d\alpha\,(\omega_\mathscr{X}\circ\mathscr{X}^{-1})(\alpha)\\ &\qquad\cdot(f\circ\mathscr{X}^{-1})(\alpha),\end{aligned}$$
+      with $d^d\alpha := d\alpha^1\cdots d\alpha^d$. A partition of unity $\{\text{ᚹ}_n\}$ (rune ᚹ, "wynn") glues such pieces into $\int_\mathcal{M}\Omega f$, and a metric $g$ picks the metric volume form $\Omega^g$, with density $\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}$ in every chart of $\mathcal{A}^\uparrow$.
+
+      1. Why the closure must be compact: what the hypothesis buys, on an open interval and at the edge of a chart where the density blows up.
+      2. Building a partition of unity: a function flat at $0$, a staircase partition of $\mathbb{R}$, and where Hausdorff and second countability enter.
+      3. The area of a torus: induced metric, two patches in two charts, a chart of the wrong orientation, and a partition over four charts.
+
+  # ---------------------------------------------------------------- Problem 1
+  - type: text
+    id: p1-setup
+    tag: Problem 1 · Why the closure must be compact
+    title: What the hypothesis buys
+    body: |
+      The one-chart integral demands that the closure $\overline{\mathcal{D}}$ be **compact** and **contained in $\mathcal{U}$**. Recall the two words:
+      - the **closure** $\overline{\mathcal{D}}$ is the smallest closed set of $\mathcal{M}$ containing $\mathcal{D}$: the region plus its boundary points. In $\mathbb{R}$, the closure of $(-1,1)$ is $[-1,1]$.
+      - a set is **compact** if every family of open sets covering it has a finite subfamily that still covers it. In $\mathbb{R}^d$ the compact sets are exactly the closed and bounded ones (the Heine–Borel theorem, not proved here).
+
+      Two facts about compact sets: a **continuous image** of a compact set is compact, and a **continuous function** on a compact set is bounded (its image is compact, hence bounded).
+
+      **Claim:** under the hypothesis, $|\int_\mathcal{D}\Omega f|<\infty$ for every smooth $f$. This problem proves it, then breaks each half of the hypothesis on purpose to see what goes wrong.
+
+  - type: order
+    id: p1-proof
+    tag: Problem 1 · Why the closure must be compact
+    title: The finiteness proof
+    prompt: |
+      Claim: if $\mathcal{D}\subseteq\mathcal{U}$ is open with $\overline{\mathcal{D}}$ compact and contained in the chart domain $\mathcal{U}$, then $|\int_\mathcal{D}\Omega f|<\infty$. Write
+      $$h(\alpha) := (\omega_\mathscr{X}\circ\mathscr{X}^{-1})(\alpha)\,(f\circ\mathscr{X}^{-1})(\alpha),$$
+      the integrand, a continuous function on $\mathscr{X}(\mathcal{U})$. Recall: continuous images of compact sets are compact, and compact subsets of $\mathbb{R}^d$ are bounded. Put the proof in order.
+    steps:
+      - '$\mathscr{X}$ is continuous on $\mathcal{U}\supseteq\overline{\mathcal{D}}$, so $\mathscr{X}(\overline{\mathcal{D}})$ is compact.'
+      - 'Compact in $\mathbb{R}^d$ means bounded: $\mathscr{X}(\mathcal{D})\subseteq\mathscr{X}(\overline{\mathcal{D}})\subseteq[-L,L]^d$ for some $L>0$.'
+      - '$h$ is continuous on the compact set $\mathscr{X}(\overline{\mathcal{D}})$, so $|h|\le C$ there for some $C\ge0$.'
+      - 'Estimate: $|\int_\mathcal{D}\Omega f|\le\int_{\mathscr{X}(\mathcal{D})}d^d\alpha\,|h(\alpha)|$.'
+      - 'Bound the integrand by $C$ and the region by the cube: the total is at most $C\,(2L)^d<\infty$.'
+    hint: First make the region bounded, then the integrand; only then estimate.
+    explanation: |
+      $$\begin{aligned}\Big|\int_\mathcal{D}\Omega f\Big| &\le\int_{\mathscr{X}(\mathcal{D})}d^d\alpha\,|h(\alpha)|\\ &\le C\int_{[-L,L]^d}d^d\alpha\\ &= C\,(2L)^d.\end{aligned}$$
+      Both halves of the hypothesis were used: compactness of $\overline{\mathcal{D}}$ (for the two bounds), and $\overline{\mathcal{D}}\subseteq\mathcal{U}$, since $\mathscr{X}$ and $h$ are only defined on $\mathcal{U}$ and $\mathscr{X}(\mathcal{U})$. The result is an ordinary integral of a bounded continuous function over a bounded set.
+
+  - type: numeric
+    id: p1-bound
+    tag: Problem 1 · Why the closure must be compact
+    title: The bound in numbers
+    prompt: |
+      Euclidean plane, points $(a,b)$, cartesian chart $\mathscr{X}$ (density $\omega_\mathscr{X} = 1$), $f(a,b) = a^2+b^2$, and $\mathcal{D}$ the open disc of radius $2$ centred at the origin. The finiteness proof bounds
+      $$\Big|\int_\mathcal{D}\Omega f\Big|\le C\,(2L)^d,$$
+      where $\mathscr{X}(\overline{\mathcal{D}})\subseteq[-L,L]^d$ and $|h|\le C$ on $\mathscr{X}(\overline{\mathcal{D}})$, with $h$ the integrand. Take the smallest $L$ and $C$ that work and compute the bound.
+    answer: 64
+    tolerance: 0.01
+    wrong:
+      - { value: 16, feedback: 'That is $(2L)^d = 4^2$, the area of the square $[-2,2]^2$. The integrand is not $1$: on the closed disc $h = a^2+b^2$ reaches $C = 4$ at the rim, so the bound is $4\cdot16$.' }
+      - { value: 25.1327, feedback: 'That is the actual value $8\pi$. The proof only gives an upper bound, cruder but much easier: the largest integrand times the area of a square containing the region.' }
+    hint: The closed disc fits in $[-2,2]^2$, and $a^2+b^2\le4$ on it.
+    explanation: |
+      $L = 2$, $d = 2$, $C = 4$: the bound is $4\cdot4^2 = 64$. The true value, in polar coordinates, is
+      $$\int_0^{2\pi}\!\!\int_0^2 r^2\,r\,dr\,d\theta = 8\pi\approx25.1.$$
+      Crude, but finite: that is all the proof needs.
+
+  - type: mcq
+    id: p1-closure-in-m
+    tag: Problem 1 · Why the closure must be compact
+    title: An interval as a whole manifold
+    prompt: |
+      Let the manifold be the open interval $\mathcal{M} = (0,1)$ itself (an open subset of $\mathbb{R}$), with the single chart $\mathscr{X}(p) = p$, the volume form of density $\omega_\mathscr{X} = 1$, the function $f(p) = 1/p$, and the region $\mathcal{D} = \mathcal{M}$. Then
+      $$\int_\mathcal{D}\Omega f = \int_0^1\frac{dp}{p} = \infty.$$
+      Which part of the hypothesis fails?
+    options:
+      - text: 'The closure of $\mathcal{D}$ in $\mathcal{M}$ is $\mathcal{M}$ itself, which is not compact'
+        correct: true
+      - text: '$f$ is not smooth, since it blows up at $0$'
+        feedback: |
+          $0$ is not a point of $\mathcal{M} = (0,1)$, and on $(0,1)$ the function $1/p$ is smooth. It only blows up as $p$ approaches a point the manifold does not contain.
+      - text: 'Nothing fails: the closure is $[0,1]$, which is compact'
+        feedback: |
+          The closure is taken in $\mathcal{M}$, the smallest closed subset **of $\mathcal{M}$** containing $\mathcal{D}$; $[0,1]$ is not even a subset of $\mathcal{M}$. Inside $\mathcal{M}$, $\mathcal{D} = \mathcal{M}$ is already closed, so its closure is $(0,1)$, not compact.
+      - text: '$\mathcal{D}$ is not contained in the chart domain'
+        feedback: |
+          The chart domain is $\mathcal{U} = \mathcal{M} = \mathcal{D}$, so the containment holds. The failure is compactness.
+    explanation: |
+      In $\mathcal{M} = (0,1)$ the closure of $\mathcal{D} = \mathcal{M}$ is $\mathcal{M}$. It is not compact: the open sets $(\tfrac1n,1)$, $n = 2,3,\dots$, cover it, but finitely many of them leave out $(0,\tfrac1N]$. Compactness is relative to the manifold: the same interval inside $\mathbb{R}$ has compact closure $[0,1]$, and every smooth function on $\mathbb{R}$ is bounded there, but $1/p$ is not a smooth function on $\mathbb{R}$.
+
+  - type: numeric
+    id: p1-cutoff
+    tag: Problem 1 · Why the closure must be compact
+    title: Stopping short of the edge
+    prompt: |
+      Manifold $\mathcal{M} = (0,1)$ with the chart $\mathscr{X}(p) = p$, density $\omega_\mathscr{X} = 1$, and $f(p) = 1/p$. The region $\mathcal{D}_\epsilon := (\epsilon,\tfrac12)$, with $0<\epsilon<\tfrac12$, has closure $[\epsilon,\tfrac12]$ in $\mathcal{M}$: compact and inside the chart domain. Compute $\int_{\mathcal{D}_\epsilon}\Omega f$ for $\epsilon = \tfrac1{100}$.
+    answer: 3.912
+    tolerance: 0.005
+    answerText: '\ln 50\approx3.912'
+    wrong:
+      - { value: 4.605, feedback: 'That is $\ln100$, the integral up to $1$. The region stops at $\tfrac12$: $\ln\tfrac12-\ln\tfrac1{100} = \ln50$.' }
+      - { value: -3.912, feedback: 'The integral of $1/p$ is $\ln p$, evaluated as upper minus lower: $\ln\tfrac12-\ln\tfrac1{100} = \ln50>0$, positive like the integrand.' }
+    hint: '$\int dp/p = \ln p$; evaluate from $\epsilon$ to $\tfrac12$.'
+    explanation: |
+      $$\int_\epsilon^{1/2}\frac{dp}{p} = \ln\frac{1}{2\epsilon} = \ln50\approx3.912.$$
+      Finite for every $\epsilon>0$, as the proof promises, with the bound $C = 1/\epsilon$ on the integrand. As $\epsilon\to0$, $C$ and the integral both grow without limit: the closure approaches the missing point $0$.
+
+  - type: text
+    id: p1-edge-setup
+    tag: Problem 1 · Why the closure must be compact
+    title: Reaching the edge of a chart
+    body: |
+      Now keep compactness and break containment. Manifold $\mathcal{M} = \mathbb{R}$ with the identity chart $\mathscr{X}(p) = p$ (coordinate $\alpha$), density $\omega_\mathscr{X} = 1$, and $f = 1$, so integrals are lengths.
+
+      Recall: the chart $\tan(\pi(p-\tfrac12))$ on $(0,1)$ stretches the region $(0,1)$ onto all of $\mathbb{R}$, an unbounded region. Here is another way to reach the edge. The chart $(\mathcal{U},\mathscr{Y})$ with $\mathcal{U} = (0,\infty)$ and
+      $$\mathscr{Y}(p) := p^2,$$
+      coordinate $\beta\in(0,\infty)$, inverse $\mathscr{Y}^{-1}(\beta) = \sqrt\beta$. Both directions are smooth on $(0,\infty)$, and $d\mathscr{Y}/dp = 2p>0$, so $\mathscr{Y}$ belongs to the oriented atlas.
+
+      Take $\mathcal{D} = (0,1)$. Its closure $[0,1]$ is compact, but the endpoint $0$ is not in $\mathcal{U}$. This time the region stays bounded in the chart: $\mathscr{Y}(\mathcal{D}) = (0,1)$.
+
+  - type: numeric
+    id: p1-edge-density
+    tag: Problem 1 · Why the closure must be compact
+    title: The density near the edge
+    prompt: |
+      On $\mathbb{R}$, the identity chart $\mathscr{X}(p) = p$ has density $\omega_\mathscr{X} = 1$. The chart $\mathscr{Y}(p) := p^2$ on $\mathcal{U} = (0,\infty)$ has coordinate $\beta$ and inverse $\mathscr{Y}^{-1}(\beta) = \sqrt\beta$. In one dimension the density law reads
+      $$\omega_\mathscr{Y} = \frac{d\mathscr{X}}{d\mathscr{Y}}\,\omega_\mathscr{X}.$$
+      Compute $(\omega_\mathscr{Y}\circ\mathscr{Y}^{-1})(\beta)$ at $\beta = \tfrac1{100}$.
+    answer: 5
+    tolerance: 0.001
+    wrong:
+      - { value: 0.2, feedback: 'That is $d\mathscr{Y}/dp = 2p = 2\sqrt\beta$, the Jacobian the wrong way round. The law needs the old coordinate differentiated by the new one: $d\sqrt\beta/d\beta$.' }
+      - { value: 1, feedback: 'A scalar density is not a scalar field: it changes with the chart. Only in the identity chart is it $1$; in $\mathscr{Y}$ it picks up $d\mathscr{X}/d\mathscr{Y}$.' }
+    hint: Write $\mathscr{X}$ as a function of $\beta$, namely $\sqrt\beta$, and differentiate.
+    explanation: |
+      $$(\omega_\mathscr{Y}\circ\mathscr{Y}^{-1})(\beta) = \frac{d\sqrt\beta}{d\beta} = \frac{1}{2\sqrt\beta} = 5$$
+      at $\beta = \tfrac1{100}$. The chart squeezes the region near $p = 0$ into very little coordinate, so the density must grow to compensate: it blows up as $\beta\to0$. The integral still gives the right length, as an improper integral:
+      $$\int_0^1\frac{d\beta}{2\sqrt\beta} = \big[\sqrt\beta\,\big]_0^1 = 1.$$
+
+  - type: mcq
+    id: p1-edge-step
+    tag: Problem 1 · Why the closure must be compact
+    title: Which step breaks
+    prompt: |
+      On $\mathbb{R}$ (identity chart with density $1$, $f = 1$), the chart $\mathscr{Y}(p) = p^2$ on $(0,\infty)$ has density $1/(2\sqrt\beta)$ in its coordinate $\beta$. Integrate over $\mathcal{D} = (0,1)$ in this chart; $\overline{\mathcal{D}} = [0,1]$ is compact but $0$ is outside the chart domain. The finiteness proof has two bounds: (1) the region $\mathscr{Y}(\mathcal{D})$ is bounded, (2) the integrand is bounded on it. Which fails?
+    options:
+      - text: 'Only (2): the region $(0,1)$ is bounded, the integrand $1/(2\sqrt\beta)$ is not'
+        correct: true
+      - text: 'Only (1): the region is unbounded'
+        feedback: |
+          That is what happens with the chart $\tan(\pi(p-\tfrac12))$, which stretches $(0,1)$ onto $\mathbb{R}$. Here $\mathscr{Y}(\mathcal{D}) = (0,1)$ is bounded; the density blows up instead.
+      - text: 'Neither: the integral converges to $1$, so the hypothesis holds'
+        feedback: |
+          Converging is not the hypothesis. The hypothesis is about the closure, and $0\in\overline{\mathcal{D}}$ is not in the chart domain. The integral converges only as an improper integral, thanks to the mild blow-up of $1/(2\sqrt\beta)$; the proof's bound $|h|\le C$ fails.
+      - text: '$\mathscr{Y}$ is not in the oriented atlas, so its density means nothing'
+        feedback: |
+          $d\mathscr{Y}/dp = 2p>0$ on $(0,\infty)$, and $\mathscr{Y}$ is smooth with smooth inverse there: it is a fine chart of the oriented atlas. The problem is only the region, which reaches its edge.
+    explanation: |
+      When $\overline{\mathcal{D}}$ leaves the chart domain, either bound of the proof can fail: the region in coordinates (tan chart) or the integrand (the chart $p^2$). Shrinking to $(\tfrac12,1)$, with closure $[\tfrac12,1]\subseteq(0,\infty)$, restores both: the density is at most $1/(2\sqrt{1/4}) = 1$ there.
+
+  - type: mcq
+    id: p1-lesson
+    tag: Problem 1 · Why the closure must be compact
+    title: Each half, its job
+    prompt: |
+      The one-chart integral $\int_\mathcal{D}\Omega f$ requires $\overline{\mathcal{D}}$ (i) compact and (ii) contained in the chart domain $\mathcal{U}$. Examples: $1/p$ on the manifold $(0,1)$ diverges; on $\mathbb{R}$ with density $1$, the charts $\tan(\pi(p-\tfrac12))$ and $p^2$ give the length of $(0,1)$ only as improper integrals. What does each half buy?
+    options:
+      - text: '(i) keeps the integral finite; (ii) lets one chart show it as an ordinary integral of a bounded function over a bounded set'
+        correct: true
+      - text: '(ii) keeps the integral finite; without it the integral diverges'
+        feedback: |
+          Both edge-of-chart examples still give the finite value $1$, the true length. What fails without (ii) is the form of the answer: an improper integral, whose convergence rests on how the integrand behaves at the edge.
+      - text: 'Neither matters: every open region of a manifold has a finite integral'
+        feedback: |
+          $1/p$ on the manifold $(0,1)$, and $f = 1$ on $(0,\infty)\subseteq\mathbb{R}$, both give $\infty$. Compactness is what rules them out.
+      - text: 'They make the value the same in every chart'
+        feedback: |
+          Chart independence comes from the density law together with the oriented atlas ($\det>0$ on overlaps). The closure condition is about finiteness and about using a single chart.
+    explanation: |
+      Compactness of $\overline{\mathcal{D}}$ makes the integral finite; containment in $\mathcal{U}$ makes a single chart prove it with an ordinary integral. A region too big for one chart is cut into pieces that each fit: that is the job of a partition of unity, built by hand in the next problem.
+
+  # ---------------------------------------------------------------- Problem 2
+  - type: text
+    id: p2-setup
+    tag: Problem 2 · Building a partition of unity
+    title: Smooth, yet switched off
+    body: |
+      Recall: a **partition of unity** subordinate to an open cover $\{\mathcal{U}_a\}$ is a family of smooth $\text{ᚹ}_n\colon\mathcal{M}\to[0,1]$, each with support (the closure of the set where it is nonzero) inside some $\mathcal{U}_a$, **locally finite** (each point has a neighbourhood meeting finitely many supports), with $\sum_n\text{ᚹ}_n = 1$. Their existence was stated without proof; this problem builds one on $\mathbb{R}$ and locates where the axioms of a manifold enter.
+
+      Everything rests on one function of a single variable (unrelated to the metric):
+      $$g(t) := \begin{cases}e^{-1/t}, & t>0,\\ 0, & t\le0.\end{cases}$$
+      Recall the smooth step built from it,
+      $$h(s) := \frac{g(\tfrac12+s)}{g(\tfrac12+s)+g(\tfrac12-s)},$$
+      with $h(s) = 0$ for $s\le-\tfrac12$, $h(s) = 1$ for $s\ge\tfrac12$, and $h(s)+h(-s) = 1$. But a function glued from two smooth pieces can have a corner, like $|t|$ at $0$. Is $g$ really smooth at $t = 0$?
+
+  - type: build
+    id: p2-derivative
+    tag: Problem 2 · Building a partition of unity
+    title: The first derivative
+    prompt: |
+      Let $g(t) := e^{-1/t}$ for $t>0$ and $g(t) := 0$ for $t\le0$. Build $g'(t)$ for $t>0$ (chain rule).
+    prefix: "g'(t) ="
+    tiles: ['e^{-1/t}', '\frac{1}{t^2}', '-\frac{1}{t^2}', '\frac{1}{t}']
+    answers:
+      - ['e^{-1/t}', '\frac{1}{t^2}']
+      - ['\frac{1}{t^2}', 'e^{-1/t}']
+    wrong:
+      - { answer: ['e^{-1/t}', '-\frac{1}{t^2}'], feedback: 'The inner function is $-1/t = -t^{-1}$, whose derivative is $+t^{-2}$: two minus signs cancel. And $g$ grows for $t>0$, so $g''$ must be positive.' }
+      - { answer: ['e^{-1/t}'], feedback: 'The exponential reproduces itself, but the chain rule multiplies by the derivative of the exponent $-1/t$, which is $1/t^2$.' }
+      - { answer: ['e^{-1/t}', '\frac{1}{t}'], feedback: 'The exponent is $-1/t$, not $\ln t$: its derivative is $1/t^2$, not $1/t$.' }
+    hint: Derivative of the exponent $-t^{-1}$ times the exponential.
+    explanation: |
+      $$g'(t) = \frac{1}{t^2}\,e^{-1/t},\qquad t>0.$$
+      Differentiating again only produces more powers of $1/t$: every derivative is a polynomial in $1/t$ times $e^{-1/t}$.
+
+  - type: numeric
+    id: p2-flat
+    tag: Problem 2 · Building a partition of unity
+    title: How flat near zero
+    prompt: |
+      For $t>0$, $g(t) = e^{-1/t}$ has slope $g'(t) = t^{-2}e^{-1/t}$. Compute this slope at $t = \tfrac1{10}$ (four significant figures are plenty).
+    answer: 0.00454
+    tolerance: 0.00003
+    answerText: '100\,e^{-10}\approx0.00454'
+    wrong:
+      - { value: 0.0000454, feedback: 'That is $e^{-10}$ alone. The factor $t^{-2} = 100$ is missing; even with it, the slope is tiny.' }
+      - { value: 0.000454, feedback: 'The factor is $t^{-2} = 100$, not $t^{-1} = 10$.' }
+    hint: '$t^{-2} = 100$ and $e^{-10}\approx4.54\times10^{-5}$.'
+    explanation: |
+      $100\,e^{-10}\approx0.00454$: the power $100$ loses badly to the exponential. In general, with $x := 1/t$,
+      $$t^{-m}e^{-1/t} = x^me^{-x}\to0\quad(x\to\infty)$$
+      for every power $m$: the exponential beats any polynomial.
+
+  - type: mcq
+    id: p2-smooth
+    tag: Problem 2 · Building a partition of unity
+    title: Why it is smooth at zero
+    prompt: |
+      $g(t) := e^{-1/t}$ for $t>0$, $g(t) := 0$ for $t\le0$. Why is $g$ smooth (all derivatives exist and are continuous) at $t = 0$?
+    options:
+      - text: 'For $t>0$ each derivative is a polynomial in $1/t$ times $e^{-1/t}$, which tends to $0$; so every derivative exists at $0$, equals $0$, and matches the left side'
+        correct: true
+      - text: 'It is continuous at $0$ and smooth on each side, which is enough'
+        feedback: |
+          $|t|$ is continuous at $0$ and smooth on each side, yet has a corner: slopes $-1$ and $+1$ meet. Each derivative must also match from both sides, which here requires $t^{-m}e^{-1/t}\to0$.
+      - text: 'It equals its Taylor series at $0$'
+        feedback: |
+          Its Taylor series at $0$ has all coefficients $g^{(k)}(0) = 0$, so it is the zero series, while $g(t)>0$ for $t>0$. $g$ is smooth but **not** analytic, and that is exactly why bump functions can exist: an analytic function that vanishes on an interval vanishes everywhere.
+      - text: 'It is a composition of smooth functions on all of $\mathbb{R}$'
+        feedback: |
+          $-1/t$ is not defined at $t = 0$, so $e^{-1/t}$ is not a composition of functions smooth on $\mathbb{R}$. Smoothness at $0$ needs the limit argument.
+    explanation: |
+      At $0$, the right-hand difference quotient of each derivative is again of the form $t^{-m}e^{-1/t}\to0$, and the left-hand one is $0$. So $g^{(k)}(0) = 0$ for every $k$, and each $g^{(k)}$ is continuous. Hence $h$, built from $g$ by sums and a quotient with nonvanishing denominator, is smooth too.
+
+  - type: text
+    id: p2-staircase
+    tag: Problem 2 · Building a partition of unity
+    title: A staircase on the line
+    body: |
+      Cover $\mathbb{R}$ by the open intervals
+      $$\mathcal{U}_n := (n-1,\,n+1),\qquad n\in\mathbb{Z}.$$
+      Shift and squeeze the step: for each $n$,
+      $$H_n(p) := h(2p-2n+1)$$
+      is $0$ for $p\le n-\tfrac34$, $1$ for $p\ge n-\tfrac14$, and never decreases (neither does $h$). So $H_n$ climbs from $0$ to $1$ just left of $n$, and $H_{n+1}$ climbs just left of $n+1$.
+
+      Goal: smooth $\text{ᚹ}_n\ge0$ with support inside $\mathcal{U}_n$, adding up to exactly $1$.
+
+  - type: build
+    id: p2-build
+    tag: Problem 2 · Building a partition of unity
+    title: Steps into a partition
+    prompt: |
+      On $\mathbb{R}$, the smooth steps $H_n(p) := h(2p-2n+1)$, $n\in\mathbb{Z}$, are $0$ for $p\le n-\tfrac34$, $1$ for $p\ge n-\tfrac14$, and nondecreasing. Build $\text{ᚹ}_n$ from them so that $\text{ᚹ}_n\ge0$, its support lies in $\mathcal{U}_n = (n-1,n+1)$, and the sum over $n$ collapses to $1$.
+    prefix: '\text{ᚹ}_n ='
+    tiles: ['H_n', '-', '+', 'H_{n+1}', 'H_{n-1}']
+    answers:
+      - ['H_n', '-', 'H_{n+1}']
+      - ['-', 'H_{n+1}', '+', 'H_n']
+    wrong:
+      - { answer: ['H_{n+1}', '-', 'H_n'], feedback: 'The steps never decrease and $H_{n+1}$ climbs later, so $H_{n+1}\le H_n$: this difference is $\le0$. A partition of unity takes values in $[0,1]$.' }
+      - { answer: ['H_n', '+', 'H_{n+1}'], feedback: 'A sum of steps is $2$ far to the right, and adding over all $n$ gives infinitely many terms near $2$. A difference makes the sum telescope.' }
+      - { answer: ['H_n'], feedback: '$H_n = 1$ on the whole half-line $p\ge n-\tfrac14$: its support is not inside $(n-1,n+1)$, and infinitely many $H_n$ equal $1$ at each point.' }
+      - { answer: ['H_{n-1}', '-', 'H_n'], feedback: 'This is a partition of unity, but for the wrong cover: it is nonzero on $(n-\tfrac74,\,n-\tfrac14)$, which sticks out of $\mathcal{U}_n = (n-1,n+1)$ on the left. Shift by one.' }
+    hint: A difference of two neighbouring steps is a bump, and a sum of differences telescopes.
+    explanation: |
+      $$\text{ᚹ}_n(p) = h(2p-2n+1)-h(2p-2n-1).$$
+      It is nonzero only on $(n-\tfrac34,\,n+\tfrac34)$, so its support $[n-\tfrac34,n+\tfrac34]$ lies in $\mathcal{U}_n$; it is in $[0,1]$ since $H_{n+1}\le H_n$. At a fixed $p$, for $N$ large,
+      $$\sum_{n=-N}^{N}\text{ᚹ}_n(p) = H_{-N}(p)-H_{N+1}(p) = 1-0.$$
+
+  - type: numeric
+    id: p2-value
+    tag: Problem 2 · Building a partition of unity
+    title: Halfway between two integers
+    prompt: |
+      On $\mathbb{R}$, $\text{ᚹ}_n(p) := h(2p-2n+1)-h(2p-2n-1)$, where $h$ is a smooth step: $h(s) = 0$ for $s\le-\tfrac12$, $h(s) = 1$ for $s\ge\tfrac12$, and $h(s)+h(-s) = 1$ for all $s$. Compute $\text{ᚹ}_3(3.5)$.
+    answer: 0.5
+    answerText: '\tfrac12'
+    wrong:
+      - { value: 1, feedback: 'The first step is $h(2) = 1$, but the second is $h(2\cdot3.5-6-1) = h(0)$, not $0$: from $h(0)+h(0) = 1$, $h(0) = \tfrac12$.' }
+      - { value: 0, feedback: 'Only the second step is at its midpoint: $h(2\cdot3.5-6+1) = h(2) = 1$ and $h(0) = \tfrac12$.' }
+    hint: Evaluate both arguments; the symmetry at $s = 0$ gives $h(0)$.
+    explanation: |
+      $\text{ᚹ}_3(3.5) = h(2)-h(0) = 1-\tfrac12 = \tfrac12$, and likewise $\text{ᚹ}_4(3.5) = h(0)-h(-2) = \tfrac12$: the two neighbours share the point equally, and the sum is $1$.
+
+  - type: numeric
+    id: p2-local
+    tag: Problem 2 · Building a partition of unity
+    title: How many at once
+    prompt: |
+      On $\mathbb{R}$, $\text{ᚹ}_n(p) := h(2p-2n+1)-h(2p-2n-1)$ for $n\in\mathbb{Z}$, with $h(s) = 0$ for $s\le-\tfrac12$, $h(s) = 1$ for $s\ge\tfrac12$, $h$ strictly between $0$ and $1$ in between. How many of the $\text{ᚹ}_n$ are nonzero at $p = 3.3$?
+    answer: 2
+    wrong:
+      - { value: 1, feedback: '$\text{ᚹ}_4(3.3) = h(-0.4)-h(-2.4) = h(-0.4)$, and $-0.4>-\tfrac12$, so $h(-0.4)>0$. Both $\text{ᚹ}_3$ and $\text{ᚹ}_4$ are on.' }
+      - { value: 3, feedback: '$\text{ᚹ}_2(3.3) = h(3.6)-h(1.6) = 1-1 = 0$: by $p = 3.3$ both steps of $\text{ᚹ}_2$ have finished climbing.' }
+    hint: '$\text{ᚹ}_n$ is nonzero exactly on $(n-\tfrac34,n+\tfrac34)$.'
+    explanation: |
+      $\text{ᚹ}_3$ and $\text{ᚹ}_4$: $3.3$ is within $\tfrac34$ of $3$ and of $4$ only. The supports are intervals of length $\tfrac32$ centred at the integers, so a small interval around any point meets at most three of them: **locally finite**, although there are infinitely many functions.
+
+  - type: mcq
+    id: p2-refine
+    tag: Problem 2 · Building a partition of unity
+    title: Too many charts
+    prompt: |
+      The integral over a manifold needs a partition of unity subordinate to the cover by the chart domains of the oriented atlas $\mathcal{A}^\uparrow$. On $\mathbb{R}$, a maximal $\mathcal{A}^\uparrow$ contains, for every $c\in\mathbb{R}$, the identity chart restricted to $(c-1,c+1)$. Why can't a partition of unity give each chart domain its own nonzero function?
+    options:
+      - text: 'Each point lies in infinitely many of those domains, so the functions could not be locally finite; one first picks fewer sets, like $(n-1,n+1)$, $n\in\mathbb{Z}$'
+        correct: true
+      - text: 'Overlapping domains would count the overlap twice'
+        feedback: |
+          Overlaps are harmless: the weights $\text{ᚹ}_n$ add up to $1$ at each point, so nothing is counted twice. The problem is how many sets overlap at each point.
+      - text: 'A partition of unity may only contain finitely many functions'
+        feedback: |
+          The staircase $\text{ᚹ}_n$, $n\in\mathbb{Z}$, has infinitely many functions and is a fine partition of unity: only finitely many are nonzero near each point. That is the requirement, local finiteness.
+      - text: 'Charts whose domains overlap are not allowed in the same atlas'
+        feedback: |
+          Atlases are made of overlapping charts; the transition maps on overlaps are what compatibility and orientation are about.
+    explanation: |
+      Every $p$ lies in all $(c-1,c+1)$ with $|c-p|<1$: uncountably many sets, and every neighbourhood of $p$ meets them all. So the proof first **refines** the cover: it chooses open sets, each inside some chart domain, finitely many near each point. A space where every open cover has such a locally finite refinement is called **paracompact**; it is the property partitions of unity really rest on.
+
+  - type: order
+    id: p2-existence
+    tag: Problem 2 · Building a partition of unity
+    title: The existence proof in outline
+    prompt: |
+      Outline of why every open cover $\{\mathcal{U}_a\}$ of a manifold (Hausdorff, second countable) admits a subordinate partition of unity. Bump functions: smooth, $\ge0$, positive at a chosen point, with compact support. Put the steps in order.
+    steps:
+      - 'Second countability: countably many basic open sets with compact closures cover $\mathcal{M}$.'
+      - 'From them, compact sets $\mathcal{K}_1\subseteq\mathcal{K}_2\subseteq\dots$ exhaust $\mathcal{M}$, each inside the interior of the next.'
+      - 'Cut $\mathcal{M}$ into compact rings $\mathcal{K}_{j+1}\setminus\mathrm{int}\,\mathcal{K}_j$.'
+      - 'Compactness of each ring: finitely many bump functions, each with support in some $\mathcal{U}_a$, suffice to have one positive at every point of the ring.'
+      - 'Each point meets only the bumps of nearby rings: the family is locally finite.'
+      - 'Divide each bump by the sum of all bumps, a finite and positive sum near each point.'
+    hint: Countably many sets first, then compact pieces, then finitely many bumps per piece, and normalize last.
+    explanation: |
+      Second countability enters only at the start, supplying countably many sets and hence an exhaustion by countably many compact sets. Hausdorff enters through "compact sets are closed" (needed for closures and for extending bumps by zero). Compactness reduces each ring to finitely many bumps; the last step is
+      $$\text{ᚹ}_n := \frac{\varphi_n}{\sum_k\varphi_k},$$
+      for bumps $\varphi_n$, smooth because near each point the sum is finite.
+
+  - type: mcq
+    id: p2-hausdorff
+    tag: Problem 2 · Building a partition of unity
+    title: Two origins, one contradiction
+    prompt: |
+      The line with two origins: two copies of $\mathbb{R}$ glued at every $t\neq0$, keeping two origins $0_A$ and $0_B$ (every neighbourhood of either contains the points $t\neq0$ near $0$). Cover it by $\mathcal{U}_A$ (copy $A$, contains $0_A$ but not $0_B$) and $\mathcal{U}_B$. Suppose $\text{ᚹ}_A+\text{ᚹ}_B = 1$ with $\mathrm{supp}\,\text{ᚹ}_A\subseteq\mathcal{U}_A$, $\mathrm{supp}\,\text{ᚹ}_B\subseteq\mathcal{U}_B$. Since $0_A\notin\mathrm{supp}\,\text{ᚹ}_B$, $\text{ᚹ}_B = 0$ near $0_A$. What does continuity then force for $\text{ᚹ}_A(0_B)$?
+    options:
+      - text: '$1$, contradicting $0_B\notin\mathrm{supp}\,\text{ᚹ}_A$'
+        correct: true
+      - text: '$0$, with no contradiction'
+        feedback: |
+          $\text{ᚹ}_A = 1-\text{ᚹ}_B = 1$ at every $t\neq0$ near $0$. Those points crowd around $0_B$ too, so continuity forces $\text{ᚹ}_A(0_B) = 1$, while the support condition forces $0$. Both cannot hold.
+      - text: '$\tfrac12$, shared between the two origins'
+        feedback: |
+          Nothing splits the value: $\text{ᚹ}_A = 1$ at all $t\neq0$ near $0$, and continuity at $0_B$ copies that value, $1$.
+      - text: 'It is undefined, because $0_B$ is not in $\mathcal{U}_A$'
+        feedback: |
+          $\text{ᚹ}_A$ is a function on the whole manifold; outside its support it is $0$. The trouble is that continuity demands $1$ there instead.
+    explanation: |
+      $\text{ᚹ}_A = 1$ at all $t\neq0$ close to $0$, and every neighbourhood of $0_B$ contains such $t$, so $\text{ᚹ}_A(0_B) = 1$. But $0_B\notin\mathcal{U}_A\supseteq\mathrm{supp}\,\text{ᚹ}_A$ gives $\text{ᚹ}_A(0_B) = 0$. No such partition exists: without Hausdorff, partitions of unity can fail.
+
+  - type: mcq
+    id: p2-long-line
+    tag: Problem 2 · Building a partition of unity
+    title: Too long to integrate
+    prompt: |
+      The long line is built by gluing uncountably many intervals end to end: connected, Hausdorff, locally like $\mathbb{R}$, but not second countable (no countable basis of open sets). Why can it have no countable partition of unity subordinate to its chart domains, as the integral over a manifold uses?
+    options:
+      - text: 'The supports would put the whole space inside countably many chart domains, and then rational balls in those charts would give a countable basis'
+        correct: true
+      - text: 'It is not Hausdorff'
+        feedback: |
+          The long line is Hausdorff; it fails only second countability. Hausdorff failures are the line with two origins.
+      - text: 'Smooth steps cannot be defined on it'
+        feedback: |
+          Locally it looks like $\mathbb{R}$, so bump functions exist inside every chart. The obstruction is global: too many charts are needed.
+      - text: 'It is compact, so no partition is needed'
+        feedback: |
+          It is not compact (it is far too long), and compactness would not remove the need for a partition: the circle is compact and still needs two charts.
+    explanation: |
+      Every point has some $\text{ᚹ}_n>0$, so the countably many supports cover the space, each inside a chart domain $\mathcal{U}_k$. The preimages $\mathscr{X}_k^{-1}(B)$ of the balls $B$ with rational centres and radii then form a countable basis. The long line has none, so integrals over it cannot be glued from chart integrals: second countability is not a technicality.
+
+  # ---------------------------------------------------------------- Problem 3
+  - type: text
+    id: p3-setup
+    tag: Problem 3 · The area of a torus
+    title: A doughnut in charts
+    body: |
+      A **torus** with radii $R>\rho>0$ is the surface in $\mathbb{R}^3$ swept by a circle of radius $\rho$ whose centre runs round a horizontal circle of radius $R$. Points $(a,b,c)\in\mathbb{R}^3$; chart $\mathscr{X} = (\vartheta,\varphi)$, with $\vartheta$ the angle round the tube ($\vartheta = 0$ on the outer rim) and $\varphi$ the angle round the vertical axis, both in $(0,2\pi)$. Its inverse:
+      $$\begin{aligned}a &= (R+\rho\cos\vartheta)\cos\varphi,\\ b &= (R+\rho\cos\vartheta)\sin\varphi,\\ c &= \rho\sin\vartheta.\end{aligned}$$
+      $\mathscr{X}$ misses two circles: the outer rim $\vartheta = 0$ and the cross-section $\varphi = 0$.
+
+      The metric is **induced** from $\mathbb{R}^3$: with the coordinate-line arrows $\vec u_\vartheta := \partial\mathscr{X}^{-1}/\partial\vartheta$ and $\vec u_\varphi := \partial\mathscr{X}^{-1}/\partial\varphi$, the components are the dot products $g_{ij} = \vec u_i\cdot\vec u_j$. Orient the torus by declaring $\mathscr{X}$ positive. The area of a region is its integral of $f = 1$ against $\Omega^g$.
+
+  - type: mcq
+    id: p3-guess
+    tag: Problem 3 · The area of a torus
+    title: Guess first
+    prompt: |
+      A torus in $\mathbb{R}^3$: the surface swept by a circle of radius $\rho$ whose centre runs round a circle of radius $R>\rho$. Before computing, guess its area.
+    options:
+      - text: '$4\pi^2R\rho$'
+        correct: true
+      - text: '$2\pi^2R\rho^2$'
+        feedback: |
+          That is the **volume** of the solid torus: the disc area $\pi\rho^2$ times the path length $2\pi R$. Area needs the circumference $2\pi\rho$, not the disc.
+      - text: '$4\pi^2(R+\rho)\rho$'
+        feedback: |
+          That treats every point as if it went round the outer rim, at distance $R+\rho$ from the axis. The inner side is closer, at distance down to $R-\rho$, and runs a shorter way round.
+      - text: '$4\pi\rho^2$'
+        feedback: |
+          That is a sphere of radius $\rho$. The torus area must grow with $R$: a bigger ring has a longer tube.
+    explanation: |
+      $4\pi^2R\rho = (2\pi\rho)(2\pi R)$: the tube's circumference times the length of its centre line, as for a cylinder bent into a ring. The outer half is stretched and the inner half compressed, and the computation below shows the two effects cancel exactly.
+
+  - type: mcq
+    id: p3-metric
+    tag: Problem 3 · The area of a torus
+    title: The induced metric
+    prompt: |
+      Torus with radii $R>\rho>0$, chart $(\vartheta,\varphi)$ with inverse
+      $$\begin{aligned}a &= (R+\rho\cos\vartheta)\cos\varphi,\\ b &= (R+\rho\cos\vartheta)\sin\varphi,\\ c &= \rho\sin\vartheta.\end{aligned}$$
+      The induced metric has components $g_{ij} = \vec u_i\cdot\vec u_j$, the dot products in $\mathbb{R}^3$ of $\vec u_\vartheta := \partial\mathscr{X}^{-1}/\partial\vartheta$ and $\vec u_\varphi := \partial\mathscr{X}^{-1}/\partial\varphi$. Which matrix is $(g_{ij})$?
+    options:
+      - text: '$\mathrm{diag}(\rho^2,\,(R+\rho\cos\vartheta)^2)$'
+        correct: true
+      - text: '$\mathrm{diag}(1,\,(R+\rho\cos\vartheta)^2)$'
+        feedback: |
+          $\vec u_\vartheta = \rho(-\sin\vartheta\cos\varphi,-\sin\vartheta\sin\varphi,\cos\vartheta)$ carries the factor $\rho$: one radian round a tube of radius $\rho$ covers length $\rho$, so $g_{\vartheta\vartheta} = \rho^2$.
+      - text: '$\mathrm{diag}(\rho^2,\,R^2)$'
+        feedback: |
+          Going round the axis, a point travels on a horizontal circle of radius $R+\rho\cos\vartheta$, its distance to the axis, not $R$: $\vec u_\varphi = (R+\rho\cos\vartheta)(-\sin\varphi,\cos\varphi,0)$.
+      - text: '$\begin{pmatrix}\rho^2&\rho(R+\rho\cos\vartheta)\\ \rho(R+\rho\cos\vartheta)&(R+\rho\cos\vartheta)^2\end{pmatrix}$'
+        feedback: |
+          The off-diagonal entry is the dot product $\vec u_\vartheta\cdot\vec u_\varphi$, not the product of the lengths. Here it is $0$: the two coordinate lines cross at right angles. (This matrix even has determinant $0$, which no metric allows.)
+    hint: 'Compute $\vec u_\vartheta = \rho(-\sin\vartheta\cos\varphi,-\sin\vartheta\sin\varphi,\cos\vartheta)$ and $\vec u_\varphi = (R+\rho\cos\vartheta)(-\sin\varphi,\cos\varphi,0)$.'
+    explanation: |
+      $|\vec u_\vartheta|^2 = \rho^2$, $|\vec u_\varphi|^2 = (R+\rho\cos\vartheta)^2$, and
+      $$\begin{aligned}\frac{\vec u_\vartheta\cdot\vec u_\varphi}{\rho(R+\rho\cos\vartheta)} &= \sin\vartheta\cos\varphi\sin\varphi\\ &\quad-\sin\vartheta\sin\varphi\cos\varphi\\ &= 0.\end{aligned}$$
+      So $\det g_\mathscr{X} = \rho^2(R+\rho\cos\vartheta)^2$.
+
+  - type: numeric
+    id: p3-density
+    tag: Problem 3 · The area of a torus
+    title: The density on the inner side
+    prompt: |
+      Torus with radii $R = 3$, $\rho = 1$, chart $\mathscr{X} = (\vartheta,\varphi)$ declared positive, induced metric
+      $$(g_{ij}) = \mathrm{diag}\big(\rho^2,(R+\rho\cos\vartheta)^2\big).$$
+      Compute the density $\omega^g_\mathscr{X}$ of the metric volume form at $\vartheta = \tfrac{2\pi}3$.
+    answer: 2.5
+    tolerance: 0.001
+    wrong:
+      - { value: 6.25, feedback: 'That is $\det g_\mathscr{X} = (3-\tfrac12)^2$. The density is its square root: areas scale with lengths, not squared lengths.' }
+      - { value: 4, feedback: 'That is $\rho(R+\rho)$, the value on the outer rim $\vartheta = 0$. At $\vartheta = \tfrac{2\pi}3$, $\cos\vartheta = -\tfrac12$: the point is on the inner side.' }
+      - { value: 3, feedback: 'That is $\rho R$, the value on the top circle $\vartheta = \tfrac\pi2$. Here $\cos\vartheta = -\tfrac12$ lowers it.' }
+    hint: '$\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|} = \rho\,(R+\rho\cos\vartheta)$, positive because $R>\rho$.'
+    explanation: |
+      $$\omega^g_\mathscr{X} = \rho\,(R+\rho\cos\vartheta) = 1\cdot(3-\tfrac12) = 2.5.$$
+      The density is largest on the outer rim ($4$) and smallest on the inner rim ($2$): the inner side is squeezed.
+
+  - type: numeric
+    id: p3-inner
+    tag: Problem 3 · The area of a torus
+    title: The inner patch
+    prompt: |
+      Torus with $R = 3$, $\rho = 1$, chart $\mathscr{X} = (\vartheta,\varphi)\in(0,2\pi)^2$, density $\omega^g_\mathscr{X} = \rho(R+\rho\cos\vartheta)$. The inner patch $\mathcal{D}_{\mathrm{in}}$: $\tfrac\pi2<\vartheta<\tfrac{3\pi}2$, $\tfrac\pi2<\varphi<\tfrac{3\pi}2$ (closure inside the chart domain). Compute its area.
+    answer: 23.3257
+    tolerance: 0.01
+    answerText: '\pi(3\pi-2)\approx23.33'
+    wrong:
+      - { value: 29.6088, feedback: 'That is $3\pi^2$, the area of a straight cylinder patch with density $\rho R = 3$. The $\cos\vartheta$ term does not vanish here: on $(\tfrac\pi2,\tfrac{3\pi}2)$, $\cos\vartheta<0$.' }
+      - { value: 35.892, feedback: 'Sign slip: $[\sin\vartheta]_{\pi/2}^{3\pi/2} = -1-1 = -2$, so the cosine term subtracts. The inner side has less area than a cylinder, not more.' }
+    hint: Integrate $3+\cos\vartheta$ over $\vartheta$, then multiply by the $\varphi$-width $\pi$.
+    explanation: |
+      $$\begin{aligned}\int_{\pi/2}^{3\pi/2}(3+\cos\vartheta)\,d\vartheta &= 3\pi+[\sin\vartheta]_{\pi/2}^{3\pi/2}\\ &= 3\pi-2,\end{aligned}$$
+      times $\pi$ for $\varphi$: area $\pi(3\pi-2)\approx23.33$.
+
+  - type: text
+    id: p3-second-chart
+    tag: Problem 3 · The area of a torus
+    title: The outer patch needs another chart
+    body: |
+      The outer patch $\mathcal{D}_{\mathrm{out}}$: $-\tfrac\pi2<\vartheta<\tfrac\pi2$, same $\varphi$ range. Its closure contains the outer rim $\vartheta = 0$, which $\mathscr{X}$ misses, so $\mathscr{X}$ cannot integrate it.
+
+      Take the chart $\mathscr{Y}$ given by the same formulas with $\vartheta\in(-\pi,\pi)$ and $\varphi\in(0,2\pi)$. On the overlap, the $\vartheta$ of $\mathscr{Y}$ equals that of $\mathscr{X}$ or that minus $2\pi$, and $\varphi$ is unchanged: the Jacobian is the identity, determinant $1>0$. So $\mathscr{Y}$ belongs to the oriented atlas, and since $\cos$ has period $2\pi$, its metric components and density are given by the same formula, $\omega^g_\mathscr{Y} = \rho(R+\rho\cos\vartheta)$.
+
+  - type: numeric
+    id: p3-outer
+    tag: Problem 3 · The area of a torus
+    title: The outer patch
+    prompt: |
+      Torus with $R = 3$, $\rho = 1$, chart $\mathscr{Y}$ with $\vartheta\in(-\pi,\pi)$, $\varphi\in(0,2\pi)$, in the oriented atlas, density $\omega^g_\mathscr{Y} = \rho(R+\rho\cos\vartheta)$. The outer patch: $-\tfrac\pi2<\vartheta<\tfrac\pi2$, $\tfrac\pi2<\varphi<\tfrac{3\pi}2$. Compute its area.
+    answer: 35.892
+    tolerance: 0.01
+    answerText: '\pi(3\pi+2)\approx35.89'
+    wrong:
+      - { value: 23.3257, feedback: 'That is the inner patch, where $\cos\vartheta<0$. On $(-\tfrac\pi2,\tfrac\pi2)$, $\cos\vartheta>0$ and $[\sin\vartheta]_{-\pi/2}^{\pi/2} = +2$.' }
+      - { value: 29.6088, feedback: 'That is $3\pi^2$, as if the density were the constant $\rho R = 3$. The outer side is farther from the axis: the cosine term adds $2\pi$.' }
+    hint: Integrate $3+\cos\vartheta$ from $-\tfrac\pi2$ to $\tfrac\pi2$, then multiply by $\pi$.
+    explanation: |
+      $(3\pi+2)\cdot\pi\approx35.89$. Inner plus outer: $6\pi^2\approx59.22$, half the torus (half a turn in $\varphi$, both halves of the tube; the two seam circles $\vartheta = \pm\tfrac\pi2$ have zero area). The outer half beats the inner half by exactly $4\pi$.
+
+  - type: numeric
+    id: p3-mirror
+    tag: Problem 3 · The area of a torus
+    title: Swapping the coordinates
+    prompt: |
+      Torus with $R = 3$, $\rho = 1$, oriented by declaring $\mathscr{X} = (\vartheta,\varphi)\in(0,2\pi)^2$ positive; $\Omega^g$ has density $\rho(R+\rho\cos\vartheta)$ in $\mathscr{X}$. The chart $\mathscr{Z} := (\varphi,\vartheta)$ lists the same angles in the other order. Using the density law for $\Omega^g$ in $\mathscr{Z}$, compute the one-chart integral of $f = 1$ over the inner patch $\tfrac\pi2<\vartheta,\varphi<\tfrac{3\pi}2$ in $\mathscr{Z}$.
+    answer: -23.3257
+    tolerance: 0.01
+    answerText: '-\pi(3\pi-2)\approx-23.33'
+    wrong:
+      - { value: 23.3257, feedback: '$\sqrt{|\det g|}$ is the density only in charts of the oriented atlas. Swapping the coordinates has Jacobian $\begin{pmatrix}0&1\\1&0\end{pmatrix}$, determinant $-1$, so the density law gives $\omega^g_\mathscr{Z} = -\rho(R+\rho\cos\vartheta)$.' }
+    hint: 'Density law: $\omega_\mathscr{Z} = \det(\partial\mathscr{X}^i/\partial\mathscr{Z}^j)\,\omega_\mathscr{X}$, and swapping two coordinates has determinant $-1$.'
+    explanation: |
+      $\omega^g_\mathscr{Z} = -\rho(R+\rho\cos\vartheta)$, so the same patch gives $-\pi(3\pi-2)\approx-23.33$. A chart of the wrong orientation does not change the area; it reports it with the opposite sign. Areas are computed with charts of $\mathcal{A}^\uparrow$ only.
+
+  - type: numeric
+    id: p3-cover
+    tag: Problem 3 · The area of a torus
+    title: Two charts are not enough
+    prompt: |
+      On the torus, choose for each angle the range $(0,2\pi)$ or $(-\pi,\pi)$: four charts. $\mathscr{X}$ has both angles in $(0,2\pi)$, so it misses the circles $\vartheta = 0$ and $\varphi = 0$. $\mathscr{W}$ has both angles in $(-\pi,\pi)$, so it misses the circles $\vartheta = \pi$ and $\varphi = \pi$. How many points of the torus lie in **neither** domain?
+    answer: 2
+    wrong:
+      - { value: 0, feedback: 'On the circle, angle ranges $(0,2\pi)$ and $(-\pi,\pi)$ do cover everything. On the torus a point is missed if **either** angle hits a cut: the point $(\vartheta,\varphi) = (0,\pi)$ lies on a missing circle of each chart.' }
+      - { value: 4, feedback: '$(0,0)$ lies in $\mathscr{W}$ and $(\pi,\pi)$ lies in $\mathscr{X}$. Only the mixed points $(0,\pi)$ and $(\pi,0)$ are missed by both.' }
+    hint: Missed by $\mathscr{X}$ means $\vartheta = 0$ or $\varphi = 0$; missed by $\mathscr{W}$ means $\vartheta = \pi$ or $\varphi = \pi$. Combine.
+    explanation: |
+      Missed by both: ($\vartheta = 0$ or $\varphi = 0$) and ($\vartheta = \pi$ or $\varphi = \pi$), which leaves $(\vartheta,\varphi) = (0,\pi)$ and $(\pi,0)$. A third chart with mixed ranges, such as $\mathscr{Y}$, is needed; using all four keeps the next construction symmetric.
+
+  - type: numeric
+    id: p3-total
+    tag: Problem 3 · The area of a torus
+    title: The whole torus
+    prompt: |
+      Torus with $R = 3$, $\rho = 1$, chart $\mathscr{X} = (\vartheta,\varphi)\in(0,2\pi)^2$, density $\rho(R+\rho\cos\vartheta)$. $\mathscr{X}$ misses only two circles, a set of zero area, which can be dropped. Compute the area of the whole torus.
+    answer: 118.4353
+    tolerance: 0.05
+    answerText: '12\pi^2\approx118.44'
+    wrong:
+      - { value: 375.0356, feedback: 'That is $\int\!\!\int(3+\cos\vartheta)^2 = 38\pi^2$: the determinant without the square root.' }
+      - { value: 59.2176, feedback: 'That is $6\pi^2$, the half torus $\tfrac\pi2<\varphi<\tfrac{3\pi}2$. The full turn in $\varphi$ has width $2\pi$.' }
+      - { value: 157.9137, feedback: 'That is $16\pi^2 = 4\pi^2(R+\rho)\rho$, as if the whole torus had the outer-rim density $4$. The cosine term averages to zero over a full turn.' }
+    hint: Over a full turn, $\int_0^{2\pi}\cos\vartheta\,d\vartheta = 0$.
+    explanation: |
+      $$\begin{aligned}\int_0^{2\pi}\!\!\int_0^{2\pi}\rho(R+\rho\cos\vartheta)\,d\vartheta\,d\varphi &= 2\pi\cdot2\pi\rho R\\ &= 4\pi^2R\rho,\end{aligned}$$
+      $12\pi^2\approx118.44$ at $R = 3$, $\rho = 1$: the guess $(2\pi\rho)(2\pi R)$ was right.
+
+  - type: mcq
+    id: p3-partition
+    tag: Problem 3 · The area of a torus
+    title: The same answer from a partition
+    prompt: |
+      Torus with radii $R>\rho$, covered by the four charts whose angles $\vartheta,\varphi$ each range over $(0,2\pi)$ or $(-\pi,\pi)$, all in the oriented atlas, each with density $\rho(R+\rho\cos\vartheta)$. Since $\cos\vartheta$ and $\cos\varphi$ are defined at every point, the products
+      $$h(\pm\cos\vartheta)\,h(\pm\cos\varphi)$$
+      ($h$ the smooth step, $h(s)+h(-s) = 1$; minus sign for the range $(0,2\pi)$, plus for $(-\pi,\pi)$) form a partition of unity subordinate to the four charts. Why do the four chart integrals add up to $4\pi^2R\rho$?
+    options:
+      - text: 'Each integrand vanishes near the edges of its square and has period $2\pi$, so each can be moved to $(0,2\pi)^2$; there the four weights add to $1$'
+        correct: true
+      - text: 'Each of the four pieces equals a quarter of the area, $\pi^2R\rho$'
+        feedback: |
+          In $\varphi$ each weight averages to $\tfrac12$, but in $\vartheta$ the weight $h(-\cos\vartheta)$ favours the inner side, where the density is smaller. So the pieces are unequal; only their sum is fixed.
+      - text: 'The overlaps are counted twice, so their areas must be subtracted at the end'
+        feedback: |
+          The weights add up to $1$ at every point, so each point contributes exactly once in total. Nothing is double counted, and nothing needs subtracting.
+      - text: 'Only one chart contributes; the other three integrals vanish'
+        feedback: |
+          Every weight is positive somewhere (each product is $1$ near some point), so every piece is a positive area. They share the torus, they do not ignore it.
+    explanation: |
+      Each piece is $\iint\rho(R+\rho\cos\vartheta)\,\text{ᚹ}\,d\vartheta\,d\varphi$ over its chart's square. The supports avoid the cut circles, and all functions involved have period $2\pi$ in both angles, so every piece equals the integral of its own integrand over $(0,2\pi)^2$. Adding,
+      $$\begin{aligned}&\big(h(-\cos\vartheta)+h(\cos\vartheta)\big)\\ &\cdot\big(h(-\cos\varphi)+h(\cos\varphi)\big) = 1,\end{aligned}$$
+      leaves $\iint_{(0,2\pi)^2}\rho(R+\rho\cos\vartheta) = 4\pi^2R\rho$: the shortcut "drop a set of zero area" agrees with the definition.
