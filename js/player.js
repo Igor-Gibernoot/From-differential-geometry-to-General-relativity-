@@ -12,7 +12,7 @@ import { progress } from './progress.js';
 import { sounds, soundOn, setSound } from './sound.js';
 import { themeButton } from './theme.js';
 
-export function runSession(root, { items, mode, startAt = 0, readOnly = false, onFinish, onExit }) {
+export function runSession(root, { items, mode, startAt = 0, readOnly = false, onProgress, onFinish, onExit }) {
   const stats = { questions: 0, firstTry: 0 };
   const requeued = new Set();
   const answered = new Map(); // item index -> { firstTry }; set once solved or revealed; revisits (Back) show the answer
@@ -56,7 +56,7 @@ export function runSession(root, { items, mode, startAt = 0, readOnly = false, o
   const cleanup = () => document.removeEventListener('keydown', onKey);
 
   function exit() {
-    if (!readOnly && i > 0 && i < items.length && !confirm('Leave now? Progress inside this session is not saved.')) return;
+    if (!readOnly && i > 0 && i < items.length && !confirm(mode === 'lesson' ? 'Leave now? You can continue from this card later.' : 'Leave now? Progress inside this session is not saved.')) return;
     cleanup();
     onExit();
   }
@@ -108,6 +108,7 @@ export function runSession(root, { items, mode, startAt = 0, readOnly = false, o
 
   function show() {
     const item = items[i];
+    if (!readOnly) onProgress?.(i, items.length);
     fill.style.width = `${((i + 1) / items.length) * 100}%`;
     counter.textContent = `${i + 1}/${items.length}`;
     stage.replaceChildren();

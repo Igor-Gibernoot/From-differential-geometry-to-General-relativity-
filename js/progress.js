@@ -13,12 +13,12 @@ const KEY = 'dg2gr.progress.v1';
 const INTERVALS = [0, 1, 3, 7, 16, 35];
 
 const today = () => Math.floor((Date.now() - new Date().getTimezoneOffset() * 60000) / 86400000);
-const blank = () => ({ version: 1, epoch: 0, lessons: {}, cards: {}, recap: {}, streak: { count: 0, last: null } });
+const blank = () => ({ version: 1, epoch: 0, lessons: {}, cards: {}, recap: {}, partial: {}, streak: { count: 0, last: null } });
 
 function load() {
   try {
     const s = JSON.parse(localStorage.getItem(KEY));
-    return s && s.lessons && s.cards ? { recap: {}, ...s } : blank();
+    return s && s.lessons && s.cards ? { recap: {}, partial: {}, ...s } : blank();
   } catch { return blank(); }
 }
 
@@ -55,6 +55,11 @@ function merge(a, b) {
     const x = a.recap?.[k], y = b.recap?.[k];
     out.recap[k] = !x ? y : !y ? x : (y.at ?? 0) > (x.at ?? 0) ? y : x;
   }
+  // Position inside an unfinished lesson: the most recent save wins (`at: null` = cleared).
+  for (const k of new Set([...Object.keys(a.partial ?? {}), ...Object.keys(b.partial ?? {})])) {
+    const x = a.partial?.[k], y = b.partial?.[k];
+    out.partial[k] = !x ? y : !y ? x : (y.t ?? 0) > (x.t ?? 0) ? y : x;
+  }
   const sa = a.streak, sb = b.streak;
   out.streak = (sb.last ?? -1) > (sa.last ?? -1) || ((sb.last ?? -1) === (sa.last ?? -1) && sb.count > sa.count) ? { ...sb } : { ...sa };
   return out;
@@ -85,7 +90,19 @@ export const progress = {
       runs: (prev?.runs ?? 0) + 1,
       last: today(),
     };
+    state.partial[id] = { at: null, t: Date.now() };
     bumpStreak();
+    save();
+  },
+
+  // Where the reader stopped in an unfinished lesson: { at: 0-based card, n: cards }, or undefined.
+  partial: id => {
+    const p = state.partial[id];
+    return p && p.at > 0 ? p : undefined;
+  },
+
+  savePartial(id, at, n) {
+    state.partial[id] = { at, n, t: Date.now() };
     save();
   },
 
@@ -147,7 +164,7 @@ export const progress = {
   // Combine a remote state into the local one; returns the merged state.
   mergeRemote(remote) {
     if (!remote || !remote.lessons || !remote.cards) return state;
-    state = merge(state, { streak: { count: 0, last: null }, ...remote });
+    state = merge(state, { streak: { count: 0, last: null }, partial: {}, ...remote });
     save();
     return state;
   },

@@ -4,7 +4,7 @@ Static site, no build step, served by GitHub Pages from the repo root.
 
 - `js/`: `cards.js` (card types), `widgets.js` (interactive SVG widgets,
   registry `WIDGETS` at the bottom), `player.js` (lesson flow and feedback),
-  `trail.js`, `progress.js` (localStorage with export/import codes, Leitner
+  `trail.js`, `progress.js` (localStorage with export/import codes, per-lesson resume position `partial`, Leitner
   spaced repetition), `main.js` (router), `render.js` (Markdown + KaTeX; short
   inline math keeps trailing punctuation on its line).
 - `vendor/`: KaTeX, js-yaml, marked. No CDN, so the app works offline.

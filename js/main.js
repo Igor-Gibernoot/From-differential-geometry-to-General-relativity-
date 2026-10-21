@@ -55,6 +55,7 @@ async function playLesson(id, startAt, readOnly = false) {
     mode: 'lesson',
     readOnly,
     startAt: Math.max(0, Math.min(startAt || 0, data.cards.length - 1)),
+    onProgress: (at, n) => { if (at > 0 || progress.partial(id)) progress.savePartial(id, at, n); },
     onExit: () => { location.hash = '#/'; },
     onFinish: async stats => {
       if (readOnly) { location.hash = '#/'; return; }
