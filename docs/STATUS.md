@@ -518,7 +518,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   validate 0/0, shots 0 problems (one summary overflow fixed with `aligned`).
 - Conventions fixed here: see Current, "Chapter 8 conventions so far" (`ch08-integration`).
 ### 2026-10-20 — ch08-volume-forms (concept, 33 cards)
-- Built `content/ch08/volume-forms.yaml` (hook disc $\pi$ vs $2\pi$, `chart-basis` polar patch widget, change of variables, volume form, $arepsilon$ and det,
+- Built `content/ch08/volume-forms.yaml` (hook disc $\pi$ vs $2\pi$, `chart-basis` polar patch widget, change of variables, volume form, $\varepsilon$ and det,
   scalar density law, disc resolved, not-a-scalar trap, oriented atlas with mirror chart, orientability, volume form orients); registered with summary.
   Choices: the book's facts (a)-(c) shown as (a) plus the det formula plus "(b)" = book's (c); "a volume form fixes an orientation" proved (positive charts,
   flip $-\mathscr{X}^1$ on connected pieces), not in the book's 8.1 text; widget kept to the polar chart alone (cartesian arrows overlapped the polar ones at $p$).
