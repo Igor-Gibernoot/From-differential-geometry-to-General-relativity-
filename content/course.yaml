@@ -241,6 +241,11 @@ levels:
         kind: guided
         file: ch05/differentials.yaml
         summary: Every function gives a covector field df, but which covector fields come from a function? A local symmetry test, a construction on a disc, and an angle field that passes the test yet fails around the origin.
+      - id: ch05-intuition-lie
+        title: "Intuition: Signs and Slots of the Lie Derivative"
+        kind: intuition
+        file: ch05/intuition-lie.yaml
+        summary: Which terms, which signs and which slots in the Lie derivative of a function, vector, covector and any tensor, and the commutator in components, with quick checks.
       - id: ch05-traps
         title: Field Traps
         kind: traps

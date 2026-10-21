@@ -1,0 +1,294 @@
+id: ch05-intuition-lie
+title: "Intuition: Signs and Slots of the Lie Derivative"
+kind: intuition
+own: |
+  - **Function and vector**: the Lie derivative along $\mathcal{X}$ of a function is the directional derivative, and of a vector field it is the commutator, whose components are
+    {{ $$(\mathcal{L}_\mathcal{X}f) = \mathcal{X}\lfloor f\rceil,\qquad \mathcal{L}_\mathcal{X}\mathcal{Y} = [\mathcal{X},\mathcal{Y}]$$ }}
+    {{ $$[\mathcal{X},\mathcal{Y}]^k = x^i\,\partial_i\tilde x^k - \tilde x^i\,\partial_i x^k$$ }}
+  - **Covector**: the correction has the opposite sign and the derivative index moves to the free slot:
+    {{ $$(\mathcal{L}_\mathcal{X}\mathsf{A})_k = x^i\,\partial_i\mathtt{a}_k + \mathtt{a}_i\,\partial_k x^i$$ }}
+  - **Sign rule**: start from $x^m\partial_m$ of the components, then add one term per index, each with a derivative of the components of $\mathcal{X}$: {{ **$-$ for each upper index, $+$ for each lower index** }}. A tensor of type $(1,1)$:
+    $$(\mathcal{L}_\mathcal{X}T)^i_j = x^m\partial_mT^i_j - T^m_j\,\partial_mx^i + T^i_m\,\partial_jx^m.$$
+  - **Compared with $\Gamma$**: the same shape of formula, but the signs are reversed ($\Gamma$: $+$ upper, $-$ lower), and the correction needs no connection, only the derivatives $\partial_jx^i$ of $\mathcal{X}$.
+  - **Checks**: in one dimension a $(1,1)$ tensor gets only {{ $x\,t'$ }} (its two corrections cancel); every term has exactly one derivative and one component of $\mathcal{X}$.
+
+cards:
+  - type: text
+    id: hook
+    title: Comparing a tensor with itself, a step away
+    body: |
+      To say how a vector field $\mathcal{Y}$ **changes** as you move along another field $\mathcal{X}$, you must compare vectors sitting at different points. Differences of components are not chart-independent, and a connection is one way out. The **Lie derivative** $\mathcal{L}_\mathcal{X}$ is another: it needs no extra structure, because the field $\mathcal{X}$ itself drags the tensor along its own flow and the result is compared with the tensor already there.
+
+      Three questions come up every time you compute one:
+
+      1. **Which terms?** The derivative of the components, plus one correction per index.
+      2. **Which sign** does each correction have, and where does its derivative index go?
+      3. **What is the commutator** $[\mathcal{X},\mathcal{Y}]$ in components?
+
+      This lesson derives only what is needed to rebuild the pattern. Notation: in a chart $\mathscr{X}$, write $\partial_i := \partial/\partial\mathscr{X}^i$ for the derivative of a **function** with respect to the $i$-th coordinate, $x^i$ for the components of $\mathcal{X}$, $\tilde x^i$ for those of $\mathcal{Y}$, and $\mathcal{X}\lfloor f\rceil = x^i\partial_if$ for the derivative of a function $f$ along $\mathcal{X}$. Repeated indices (once up, once down) are summed.
+
+  - type: text
+    id: definitions
+    title: The first two cases are definitions
+    body: |
+      - **A function.** $\mathcal{L}_\mathcal{X}f$ is how fast $f$ changes along the flow of $\mathcal{X}$, that is
+      $$\mathcal{L}_\mathcal{X}f := \mathcal{X}\lfloor f\rceil .$$
+      - **A vector field.** $\mathcal{L}_\mathcal{X}\mathcal{Y}$ is the **commutator**, the vector field defined by its action on functions:
+      $$\begin{gathered}\mathcal{L}_\mathcal{X}\mathcal{Y} := [\mathcal{X},\mathcal{Y}],\\ [\mathcal{X},\mathcal{Y}]\lfloor f\rceil := \mathcal{X}\big\lfloor\mathcal{Y}\lfloor f\rceil\big\rceil - \mathcal{Y}\big\lfloor\mathcal{X}\lfloor f\rceil\big\rceil .\end{gathered}$$
+      One can show that $[\mathcal{X},\mathcal{Y}] = 0$ exactly when the flows of $\mathcal{X}$ and $\mathcal{Y}$ commute: moving along $\mathcal{X}$ then $\mathcal{Y}$ ends at the same point as $\mathcal{Y}$ then $\mathcal{X}$.
+      - **Covectors and general tensors** follow from one requirement, the Leibniz rule: $\mathcal{L}_\mathcal{X}$ is linear and obeys the product rule under contraction. For a covector field $\mathsf{A}$ it reads
+      $$\mathcal{L}_\mathcal{X}\big(\mathsf{A}(\mathcal{Y})\big) = (\mathcal{L}_\mathcal{X}\mathsf{A})(\mathcal{Y}) + \mathsf{A}(\mathcal{L}_\mathcal{X}\mathcal{Y}).$$
+
+  - type: mcq
+    id: commutator-props
+    prompt: |
+      The commutator of vector fields on a manifold is $[\mathcal{X},\mathcal{Y}]\lfloor f\rceil = \mathcal{X}\lfloor\mathcal{Y}\lfloor f\rceil\rfloor - \mathcal{Y}\lfloor\mathcal{X}\lfloor f\rceil\rfloor$. Select every true statement.
+    multiple: true
+    options:
+      - text: '$[\mathcal{X},\mathcal{Y}] = -[\mathcal{Y},\mathcal{X}]$'
+        correct: true
+      - text: 'For a chart, $[\partial_j,\partial_k] = 0$ (as vector fields $\partial/\partial\mathscr{X}^j$).'
+        correct: true
+      - text: '$[\mathcal{X},g\,\mathcal{Y}] = g\,[\mathcal{X},\mathcal{Y}]$ for every function $g$'
+        feedback: |
+          Tempting because the commutator is linear in each slot. But it is linear only over the **constants**: the product rule gives an extra term, $[\mathcal{X},g\,\mathcal{Y}] = \mathcal{X}\lfloor g\rceil\,\mathcal{Y} + g\,[\mathcal{X},\mathcal{Y}]$. So $[\mathcal{X},\mathcal{Y}]$ is **not** a tensor.
+      - text: '$[\mathcal{X},\mathcal{Y}]_p$ depends only on the two vectors $\mathcal{X}_p$ and $\mathcal{Y}_p$'
+        feedback: |
+          It depends on how the fields **vary** near $p$: for $\mathcal{X} = x\,\partial_x$ and $\mathcal{Y} = \partial_x$ on the line we get $-\partial_x\neq 0$, although at $p = 0$ the vector $\mathcal{X}_p$ is zero.
+      - text: '$[\mathcal{X},\mathcal{X}] = 0$'
+        correct: true
+    explanation: |
+      Antisymmetry and $[\mathcal{X},\mathcal{X}] = 0$ are immediate from the definition. For the chart fields, $[\partial_j,\partial_k]\lfloor f\rceil = \partial_j\partial_kf - \partial_k\partial_jf = 0$ (equality of mixed partials). The failure of $C^\infty$-linearity in the second slot is exactly why $\mathcal{L}_\mathcal{X}$ is not a tensor in $\mathcal{Y}$.
+
+  - type: text
+    id: comm-comp
+    title: The commutator in components
+    body: |
+      Act on a function with $\mathcal{X} = x^i\partial_i$ and $\mathcal{Y} = \tilde x^j\partial_j$ and use the product rule. The second-derivative terms $x^i\tilde x^j\partial_i\partial_jf$ appear in both pieces and **cancel** by equality of mixed partials. What survives is a first-order operator, a vector field.
+
+      In the next cards you rebuild its components, then the rule for covectors, and finally the pattern for any tensor.
+
+  - type: build
+    id: build-comm
+    prompt: 'Build the $k$-th component of the commutator $[\mathcal{X},\mathcal{Y}]$ in a chart: components $x^i$ of $\mathcal{X}$, components $\tilde x^i$ of $\mathcal{Y}$, with $\partial_i$ acting on component functions.'
+    prefix: '[\mathcal{X},\mathcal{Y}]^k ='
+    tiles: ['x^i\,\partial_i\tilde x^k', '-\tilde x^i\,\partial_i x^k', '+\tilde x^i\,\partial_i x^k', '-\tilde x^k\,\partial_i x^i']
+    answers:
+      - ['x^i\,\partial_i\tilde x^k', '-\tilde x^i\,\partial_i x^k']
+      - ['-\tilde x^i\,\partial_i x^k', 'x^i\,\partial_i\tilde x^k']
+    wrong:
+      - answer: ['x^i\,\partial_i\tilde x^k', '+\tilde x^i\,\partial_i x^k']
+        feedback: |
+          A plus would make the bracket symmetric in $\mathcal{X}\leftrightarrow\mathcal{Y}$, but a commutator is antisymmetric: swapping the fields must flip the sign. Also $[\mathcal{X},\mathcal{X}]$ would be $2\,x^i\partial_ix^k\neq 0$.
+      - answer: ['x^i\,\partial_i\tilde x^k', '-\tilde x^k\,\partial_i x^i']
+        feedback: |
+          That keeps the free index $k$ on $\tilde x$ and differentiates the trace $\partial_ix^i$ (the divergence), a different object. The second term of the commutator is the derivative of **$\mathcal{X}$'s $k$-th component** along $\mathcal{Y}$: the summed index of $\tilde x^i$ is the derivative index.
+    hint: 'Each term is "one field differentiates the components of the other". Antisymmetry fixes the sign.'
+    explanation: |
+      $$[\mathcal{X},\mathcal{Y}]^k = x^i\,\partial_i\tilde x^k - \tilde x^i\,\partial_i x^k .$$
+      Shorthand: $\mathcal{X}\lfloor\tilde x^k\rceil - \mathcal{Y}\lfloor x^k\rceil$.
+
+  - type: numeric
+    id: comm-number
+    prompt: |
+      In the plane with chart coordinates $(x,y)$ (indices $1,2$), let $\mathcal{X} = y\,\partial_1$ and $\mathcal{Y} = x\,\partial_2$. Find the **first component** of $[\mathcal{X},\mathcal{Y}]$ at the point $(x,y) = (2,3)$.
+    answer: -2
+    answerText: '$-2$'
+    wrong:
+      - { value: 2, feedback: 'That is the first component of $[\mathcal{Y},\mathcal{X}]$: you subtracted in the wrong order. The first term is $\mathcal{X}$ differentiating the components of $\mathcal{Y}$.' }
+      - { value: 0, feedback: 'The first term does vanish, because $\mathcal{Y}$ has no first component. But the second term does not: $\mathcal{Y}$ differentiates the first component $y$ of $\mathcal{X}$, and $\mathcal{Y} = x\,\partial_2$ does act on $y$.' }
+      - { value: 3, feedback: 'That is the **second** component of $[\mathcal{X},\mathcal{Y}]$, namely $\mathcal{X}\lfloor x\rceil = y = 3$.' }
+    hint: 'Components of $\mathcal{X}$: $(y,0)$. Components of $\mathcal{Y}$: $(0,x)$. First component: $\mathcal{X}\lfloor 0\rceil - \mathcal{Y}\lfloor y\rceil$.'
+    explanation: |
+      $$\begin{aligned}[\mathcal{X},\mathcal{Y}]^1 &= \mathcal{X}\lfloor 0\rceil - \mathcal{Y}\lfloor y\rceil = -x = -2,\\ [\mathcal{X},\mathcal{Y}]^2 &= \mathcal{X}\lfloor x\rceil - \mathcal{Y}\lfloor 0\rceil = y = 3.\end{aligned}$$
+      So $[\mathcal{X},\mathcal{Y}] = -x\,\partial_1 + y\,\partial_2$ and $[\mathcal{Y},\mathcal{X}]$ is its negative.
+
+  - type: order
+    id: derive-covector
+    prompt: |
+      Put in order the derivation of the components $(\mathcal{L}_\mathcal{X}\mathsf{A})_k$ of a covector field $\mathsf{A}$ (components $\mathtt{a}_k = \mathsf{A}(\partial_k)$), using the Leibniz rule.
+    steps:
+      - 'Apply Leibniz to $\mathsf{A}(\partial_k)$: $\ (\mathcal{L}_\mathcal{X}\mathsf{A})(\partial_k) = \mathcal{L}_\mathcal{X}\big(\mathsf{A}(\partial_k)\big) - \mathsf{A}(\mathcal{L}_\mathcal{X}\partial_k)$.'
+      - 'The first term is the derivative of a function: $\ \mathcal{L}_\mathcal{X}(\mathtt{a}_k) = \mathcal{X}\lfloor\mathtt{a}_k\rceil = x^i\partial_i\mathtt{a}_k$.'
+      - 'The second needs $[\mathcal{X},\partial_k]$. By the component formula (components of $\partial_k$ are constants), $\ [\mathcal{X},\partial_k]^m = -\partial_kx^m$.'
+      - 'So $\ \mathsf{A}\big([\mathcal{X},\partial_k]\big) = -\mathtt{a}_m\,\partial_kx^m$.'
+      - 'Combine: $\ (\mathcal{L}_\mathcal{X}\mathsf{A})_k = x^i\partial_i\mathtt{a}_k + \mathtt{a}_m\,\partial_kx^m$.'
+    hint: 'The key is the sign: the minus in Leibniz meets the minus in $[\mathcal{X},\partial_k]$.'
+    explanation: |
+      Two minus signs give a plus. That is the whole reason a lower index has the opposite sign to an upper one.
+
+  - type: build
+    id: build-cov
+    prompt: 'Build the components of the Lie derivative of a **covector** field $\mathsf{A}$ (components $\mathtt{a}_k$) along $\mathcal{X}$ (components $x^i$).'
+    prefix: '(\mathcal{L}_\mathcal{X}\mathsf{A})_k ='
+    tiles: ['x^i\,\partial_i\mathtt{a}_k', '+\mathtt{a}_i\,\partial_k x^i', '-\mathtt{a}_i\,\partial_k x^i', '+\mathtt{a}_i\,\partial_i x^k']
+    answers:
+      - ['x^i\,\partial_i\mathtt{a}_k', '+\mathtt{a}_i\,\partial_k x^i']
+      - ['+\mathtt{a}_i\,\partial_k x^i', 'x^i\,\partial_i\mathtt{a}_k']
+    wrong:
+      - answer: ['x^i\,\partial_i\mathtt{a}_k', '-\mathtt{a}_i\,\partial_k x^i']
+        feedback: |
+          That is the sign of a **vector** (upper index). For a covector, the minus of the Leibniz rule meets the minus of $[\mathcal{X},\partial_k]$ and gives a plus.
+      - answer: ['x^i\,\partial_i\mathtt{a}_k', '+\mathtt{a}_i\,\partial_i x^k']
+        feedback: |
+          Right sign, wrong slot. The free index $k$ is a lower index of the output, so it must sit on the **derivative** ($\partial_k$), and the summed $i$ links $\mathtt{a}_i$ with the component $x^i$. Here the free $k$ sits on $x^k$, which is the vector pattern.
+    hint: 'Free lower index $k$ on the derivative; $\mathtt{a}_i$ contracts with the upper $x^i$.'
+    explanation: |
+      $$(\mathcal{L}_\mathcal{X}\mathsf{A})_k = x^i\,\partial_i\mathtt{a}_k + \mathtt{a}_i\,\partial_k x^i .$$
+
+  - type: text
+    id: rule
+    title: The pattern for any tensor
+    body: |
+      Compare the two results. Start with the transport term $x^m\partial_m$ acting on each component, then add **one correction per index**, built from the matrix $\partial_jx^i$ (the derivatives of the components of $\mathcal{X}$):
+
+      | index of the tensor | correction | where the derivative index goes |
+      |---|---|---|
+      | upper $i$ | $-\,T^{m\dots}\,\partial_m x^i$ | the free upper $i$ sits on $x^i$ |
+      | lower $j$ | $+\,T_{m\dots}\,\partial_j x^m$ | the free lower $j$ sits on $\partial_j$ |
+
+      **Mnemonic:** in each correction the index of the tensor is replaced by a summed $m$, and the old index goes to the matching place on $\partial x$: the upper one to the top of $x$, the lower one to the bottom of $\partial$. This is the opposite sign convention to $\Gamma$ in the covariant derivative, where $+\Gamma$ goes with each upper index and $-\Gamma$ with each lower one.
+
+      Why the opposite? For a torsion-free connection, $\mathcal{L}_\mathcal{X}\mathcal{Y} = \nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X}$. The first part has the $\Gamma$ term $+\Gamma^k_{ji}\tilde x^jx^i$, the second one has $\Gamma^k_{ji}x^j\tilde x^i$, and after the subtraction only $-\tilde x^i\partial_ix^k$ is left, the $\Gamma$'s cancelling by symmetry.
+
+  - type: mcq
+    id: which-formula
+    prompt: |
+      A vector field $\mathcal{Y}$ has components $\tilde x^j$, and $\mathcal{X}$ has components $x^i$. Two quick tests rule out wrong formulas for $(\mathcal{L}_\mathcal{X}\mathcal{Y})^k$: **every term must contain exactly one derivative and exactly one factor of the components of each field**, and the indices must balance (free $k$ up, every other index summed once up and once down). Which candidate passes?
+    options:
+      - text: '$x^i\partial_i\tilde x^k - \tilde x^i\partial_i x^k$'
+        correct: true
+      - text: '$x^i\partial_i\tilde x^k - \tilde x^k\,\partial_i x^i$'
+        feedback: |
+          Indices balance, but the second term has the wrong structure: the divergence $\partial_ix^i$ has no free index, so $k$ had to be pasted on $\tilde x$. It is the rescaling $\tilde x\to\tilde x\,\mathrm{div}\,\mathcal{X}$, not the dragging of a vector.
+      - text: '$x^i\partial_i\tilde x^k - \tilde x^i\partial_k x^i$'
+        feedback: |
+          The index $i$ in the second term is up on $\tilde x^i$ and **up** on $x^i$: it does not balance, and the free $k$ is down on $\partial_k$ while the left side has $k$ up. This is the covector pattern.
+      - text: '$x^i\partial_i\tilde x^k - \tilde x^i\partial_i x^k\ +\ \tilde x^k$'
+        feedback: |
+          The extra term has no derivative. Lie derivatives are first order: each term has one derivative, so a bare $\tilde x^k$ cannot appear.
+    explanation: |
+      Only the first candidate balances and keeps one derivative per term. The counting test also shows why scaling $\mathcal{X}\to 2\mathcal{X}$ doubles $\mathcal{L}_\mathcal{X}\mathcal{Y}$: every term has exactly one factor of $x^i$.
+
+  - type: build
+    id: build-11
+    prompt: 'Build the Lie derivative of a tensor field $T$ of type $(1,1)$ (components $T^i_j$) along $\mathcal{X}$. Use one correction for the upper index and one for the lower index.'
+    prefix: '(\mathcal{L}_\mathcal{X}T)^i_j ='
+    tiles: ['x^m\partial_mT^i_j', '-T^m_j\,\partial_m x^i', '+T^i_m\,\partial_j x^m', '+T^m_j\,\partial_m x^i', '-T^i_m\,\partial_j x^m']
+    answers:
+      - ['x^m\partial_mT^i_j', '-T^m_j\,\partial_m x^i', '+T^i_m\,\partial_j x^m']
+      - ['x^m\partial_mT^i_j', '+T^i_m\,\partial_j x^m', '-T^m_j\,\partial_m x^i']
+      - ['-T^m_j\,\partial_m x^i', 'x^m\partial_mT^i_j', '+T^i_m\,\partial_j x^m']
+      - ['-T^m_j\,\partial_m x^i', '+T^i_m\,\partial_j x^m', 'x^m\partial_mT^i_j']
+      - ['+T^i_m\,\partial_j x^m', 'x^m\partial_mT^i_j', '-T^m_j\,\partial_m x^i']
+      - ['+T^i_m\,\partial_j x^m', '-T^m_j\,\partial_m x^i', 'x^m\partial_mT^i_j']
+    wrong:
+      - answer: ['x^m\partial_mT^i_j', '+T^m_j\,\partial_m x^i', '-T^i_m\,\partial_j x^m']
+        feedback: |
+          These are the signs of $\Gamma$ (plus for the upper index, minus for the lower). For the Lie derivative they are reversed: **minus** for each upper index, **plus** for each lower index.
+      - answer: ['x^m\partial_mT^i_j', '-T^m_j\,\partial_m x^i', '-T^i_m\,\partial_j x^m']
+        feedback: |
+          The upper-index term is right, but a lower index always gets a **plus**: the signs are tied to the position of the index, not the same for both.
+    hint: 'Upper index: minus, derivative index at the top of $x$. Lower index: plus, derivative index at the bottom of $\partial$.'
+    explanation: |
+      $$(\mathcal{L}_\mathcal{X}T)^i_j = x^m\partial_mT^i_j - T^m_j\,\partial_m x^i + T^i_m\,\partial_j x^m .$$
+
+  - type: build
+    id: build-metric
+    prompt: 'Build the Lie derivative of a $(0,2)$ tensor field $g$ (components $g_{jk}$) along $\mathcal{X}$ (components $x^m$): two lower indices.'
+    prefix: '(\mathcal{L}_\mathcal{X}g)_{jk} ='
+    tiles: ['x^m\partial_mg_{jk}', '+g_{mk}\,\partial_j x^m', '+g_{jm}\,\partial_k x^m', '-g_{mk}\,\partial_j x^m', '+g_{jk}\,\partial_m x^m']
+    answers:
+      - ['x^m\partial_mg_{jk}', '+g_{mk}\,\partial_j x^m', '+g_{jm}\,\partial_k x^m']
+      - ['x^m\partial_mg_{jk}', '+g_{jm}\,\partial_k x^m', '+g_{mk}\,\partial_j x^m']
+      - ['+g_{mk}\,\partial_j x^m', 'x^m\partial_mg_{jk}', '+g_{jm}\,\partial_k x^m']
+      - ['+g_{mk}\,\partial_j x^m', '+g_{jm}\,\partial_k x^m', 'x^m\partial_mg_{jk}']
+      - ['+g_{jm}\,\partial_k x^m', 'x^m\partial_mg_{jk}', '+g_{mk}\,\partial_j x^m']
+      - ['+g_{jm}\,\partial_k x^m', '+g_{mk}\,\partial_j x^m', 'x^m\partial_mg_{jk}']
+    wrong:
+      - answer: ['x^m\partial_mg_{jk}', '-g_{mk}\,\partial_j x^m', '+g_{jm}\,\partial_k x^m']
+        feedback: |
+          Both indices are lower, so both corrections are plus. A minus on one of them would break the symmetry $j\leftrightarrow k$ that the result must have for a symmetric $g$.
+      - answer: ['x^m\partial_mg_{jk}', '+g_{jk}\,\partial_m x^m']
+        feedback: |
+          That is a single term with the divergence of $\mathcal{X}$. Each **index** gets its own correction, with that index moved onto $\partial x$; two lower indices give two terms.
+    hint: 'Each lower index: replace it by $m$ on $g$, and put the old index at the bottom of $\partial$.'
+    explanation: |
+      $$(\mathcal{L}_\mathcal{X}g)_{jk} = x^m\partial_mg_{jk} + g_{mk}\,\partial_jx^m + g_{jm}\,\partial_kx^m .$$
+      If this vanishes, $\mathcal{X}$ generates symmetries of the metric.
+
+  - type: numeric
+    id: n-vector
+    prompt: |
+      On the line, with coordinate $x$, let $\mathcal{X} = x^2\,\partial_x$ and let $\mathcal{Y} = x\,\partial_x$. Find the component of the Lie derivative $\mathcal{L}_\mathcal{X}\mathcal{Y}$ at $x = 3$.
+    answer: -9
+    answerText: '$-9$'
+    wrong:
+      - { value: 27, feedback: 'You used the covector pattern (plus the derivative of $\mathcal{X}$). For a vector field the correction is minus.' }
+      - { value: 9, feedback: 'That is only the transport term $x^2\cdot 1$. The correction $-\tilde x\,(\mathrm{d}x^2/\mathrm{d}x)$ is also needed.' }
+      - { value: 18, feedback: 'That is the size of the correction alone, $x\cdot 2x$, and its sign is missing. The result is transport term minus correction.' }
+    hint: 'Components: $x^1 = x^2$ and $\tilde x^1 = x$. One term differentiates $\mathcal{Y}$ along $\mathcal{X}$, the other $\mathcal{X}$ along $\mathcal{Y}$.'
+    explanation: |
+      $$x^2\cdot 1 - x\cdot 2x = -x^2 = -9 \quad\text{at } x=3 .$$
+
+  - type: numeric
+    id: n-covector
+    prompt: |
+      On the line, with coordinate $x$, let $\mathcal{X} = x^2\,\partial_x$ and let $\mathsf{A} = x\,dx$ (covector with component $\mathtt{a} = x$). Find the component of $\mathcal{L}_\mathcal{X}\mathsf{A}$ at $x = 3$.
+    answer: 27
+    answerText: '$27$'
+    wrong:
+      - { value: -9, feedback: 'That is the value for the **vector** $x\,\partial_x$. For a covector the correction has the opposite sign: here $9+18$, not $9-18$.' }
+      - { value: 9, feedback: 'That is only the transport term. The correction $\mathtt{a}\,\partial_xx^1 = x\cdot 2x$ is also needed.' }
+    hint: 'Transport term plus correction. The correction multiplies the component of $\mathsf{A}$ by the derivative of the component of $\mathcal{X}$.'
+    explanation: |
+      $$x^2\cdot 1 + x\cdot 2x = 3x^2 = 27 .$$
+      Check with Leibniz: $\mathsf{A}(\mathcal{Y}) = x\cdot x = x^2$ for $\mathcal{Y} = x\,\partial_x$, so $\mathcal{X}\lfloor x^2\rceil = x^2\cdot 2x = 54$; and $(\mathcal{L}_\mathcal{X}\mathsf{A})(\mathcal{Y}) + \mathsf{A}(\mathcal{L}_\mathcal{X}\mathcal{Y}) = 27\cdot 3 + 3\cdot(-9) = 54$.
+
+  - type: numeric
+    id: n-slot
+    prompt: |
+      In the plane with coordinates $(x,y)$ (indices $1,2$), let $\mathcal{X} = y\,\partial_1$ and let $\mathsf{A} = dx$ (components $\mathtt{a} = (1,0)$, constant). Find the **second** component $(\mathcal{L}_\mathcal{X}\mathsf{A})_2$.
+    answer: 1
+    answerText: '$1$'
+    wrong:
+      - { value: 0, feedback: 'This comes from putting the derivative index on the upper slot of $\mathcal{X}$ (the vector pattern), which gives $\partial_1x^2 = 0$. For a covector the free lower index $k=2$ goes on the derivative, $\partial_2$ of the first component of $\mathcal{X}$.' }
+      - { value: -1, feedback: 'The magnitude is right, but a lower index has a plus sign: the minus belongs to upper indices.' }
+    hint: 'The transport term vanishes because $\mathsf{A}$ has constant components. What is left is a correction with $\partial_k$ applied to a component of $\mathcal{X}$.'
+    explanation: |
+      $$(\mathcal{L}_\mathcal{X}\mathsf{A})_2 = x^i\partial_i(0) + \mathtt{a}_1\,\partial_2x^1 = 1\cdot\partial_y(y) = 1,$$
+      so $\mathcal{L}_\mathcal{X}\,dx = dy$: the flow of $y\,\partial_x$ shears $dx$ into $dx + t\,dy$.
+
+  - type: numeric
+    id: n-tensor
+    prompt: |
+      On the line, with coordinate $x$, let $\mathcal{X} = x^2\,\partial_x$ and let $T$ be a tensor field of type $(1,1)$ with the single component $T^1_1 = x^2$. Find the component of $\mathcal{L}_\mathcal{X}T$ at $x = 3$.
+    answer: 54
+    answerText: '$54$'
+    wrong:
+      - { value: 162, feedback: 'You added both corrections. The upper index must contribute with a minus sign.' }
+      - { value: -54, feedback: 'You subtracted both corrections. The lower index contributes with a plus sign.' }
+      - { value: 0, feedback: 'That would drop the transport term. In one dimension the two corrections cancel, but $x^m\partial_mT^i_j$ remains.' }
+    hint: 'Count the corrections: one for the upper index, one for the lower. In one dimension they involve the same number.'
+    explanation: |
+      With $\partial_xx^1 = 2x = 6$ and $T = 9$, the two corrections are $-9\cdot 6$ and $+9\cdot 6$: they cancel, leaving the transport term $9\cdot 6 = 54$. (A $(1,1)$ tensor in one dimension is just a function, the trace, and the Lie derivative of a function is $\mathcal{X}\lfloor\cdot\rceil$.)
+
+  - type: numeric
+    id: n-metric
+    prompt: |
+      In the plane with cartesian coordinates $(x,y)$ the Euclidean metric has components $g_{jk} = \delta_{jk}$ (constant). Let $\mathcal{X} = x^2\,\partial_1$ and take the point $(x,y) = (2,5)$. Find the component $(\mathcal{L}_\mathcal{X}g)_{11}$.
+    answer: 8
+    answerText: '$8$'
+    wrong:
+      - { value: 4, feedback: 'That is a single correction ($g_{11}\,\partial_1x^1 = 4$). The index pair $(1,1)$ has **two** lower indices, so two equal corrections.' }
+      - { value: -8, feedback: 'Lower indices give plus signs. The negative sign belongs to upper indices.' }
+      - { value: 0, feedback: 'Only the transport term vanishes (the components of $g$ are constant). The corrections do not: they use derivatives of $\mathcal{X}$.' }
+    hint: 'The transport term is $0$. One correction per lower index.'
+    explanation: |
+      $$\begin{aligned}(\mathcal{L}_\mathcal{X}g)_{11} &= 0 + g_{11}\,\partial_1x^1 + g_{11}\,\partial_1x^1\\ &= 2\cdot 2x = 8 .\end{aligned}$$
+      For a rotation $\mathcal{X} = -y\,\partial_1 + x\,\partial_2$ every component would vanish: rotations preserve the Euclidean metric.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** with torsion and curvature you will use the commutator of vector fields, and later the Lie derivative of the metric, in the form you just rebuilt, to say when a vector field generates a symmetry.

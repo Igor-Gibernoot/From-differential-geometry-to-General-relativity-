@@ -6,6 +6,7 @@ append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
 ## Current (2026-10-21, Chapter 10 started: widgets `light-cones`, `worldline-clock`, `observer-frame`, `ch10-spacetime`, `ch10-worldlines`, `ch10-observers`; widget `area-cell` built and used in `ch08-metric-volume`; next: `ch10-lorentz`)
+- **Intuition lesson `ch05-intuition-lie`** (before `ch05-traps`): L_X on function, vector (= commutator), covector, (1,1), (0,2); rule: transport term x^m∂_m plus one term per index, **−** per upper and **+** per lower (opposite to Γ), derivative index on the top of x (upper) or on ∂ (lower). Components of X are x^i, of Y x̃^i, covector A with a_k; ∂_i := ∂/∂X^i on component functions. The book has no Lie derivative section (only the commutator, Ch. 6), so the lesson defines it itself.
 
 - **More intuition lessons:** `ch04-intuition-jacobian` (after `ch04-cotangent-basis`; chain-rule mnemonic, scaling and cancellation tests, polar–cartesian numbers at p=(0,2)) and `ch06-intuition-christoffel` (after `ch06-christoffel`; reading Γ^i_{jk}, +Γ upper / −Γ lower, transformation law = tensor part + extra term, 1D numerics with x=y²). Use Einstein summation in both.
 - **Intuition lessons (`kind: intuition`)**: a new lesson class that derives nothing; it builds quick recall of the main expressions of the concept lessons (a mnemonic, scaling/limit checks, build cards, one small numeric example), with `own:` summary and Recap like a concept lesson. First one: `ch02-intuition-transformations` (J vs J⁻¹: anchor $hat{x}_i = sum_j J_i^jhat{y}_j$; lower index follows the basis, upper goes against; scaling test and index balance). Add more later for other chapters' formulas.
@@ -1272,3 +1273,7 @@ long box titles.
 - Conventions fixed here: whole displayed laws (rule blocks, Leibniz, transformation law, Riemann components) are blanked as one `{{ $$…$$ }}` line;
   of two equivalent forms (transport equation vs covariant derivative along a curve) only one is marked; definitions with a symbol (`a_\gamma := …`,
   parallel/autoparallel conditions) blank the formula and keep the term.
+
+### 2026-10-21 — intuition lesson `ch05-intuition-lie` (18 cards)
+
+Self-contained (book has no Lie derivative section; defines L_X f = X⌊f⌉, L_X Y = [X,Y], covector via Leibniz, derived by an order card). Build cards: commutator, covector, (1,1), (0,2); numerics give data only (1D X = x², Y = x∂_x, A = x dx at x=3 give −9, 27; shear X = y∂_1, A = dx; (1,1) → 54; g = δ → 8). Doubt: the task said "+ per upper, − per lower like Γ", but the true Lie-derivative signs are the reverse (− upper, + lower); taught the true ones and contrasted with Γ. Conventions fixed here: ∂_i acts on component functions; covector A with components a_k; −upper/+lower with the derivative index at the top of x (upper) or on ∂ (lower).
