@@ -521,7 +521,11 @@ levels:
         kind: concept
         file: ch10/einstein-hilbert.yaml
         summary: "The metric as the unknown: the Einstein–Hilbert action, what varying g means, the variations of the inverse metric, the volume density and the Ricci tensor (Palatini identity), why the second derivatives form a total divergence, the vacuum equations G = 0, and the matter term that gives G = 8πG_N T."
-      - { id: ch10-matter, title: Coupling to Matter, kind: concept }
+      - id: ch10-matter
+        title: Coupling to Matter
+        kind: concept
+        file: ch10/matter.yaml
+        summary: "Where the right-hand side comes from: T as the response of the matter action to the metric, T̂ = −2Θ − L g⁻¹ when L has no derivatives of g, checks with a constant term (p = −ρ) and a scalar field, electromagnetism and the Einstein–Maxwell equations, and why the matter equations make div T = 0."
       - { id: ch10-schwarzschild, title: "Guided Problem: Checking the Schwarzschild Metric", kind: guided }
       - { id: ch10-traps, title: Relativity Traps, kind: traps }
       - { id: ch10-map, title: "Content Map: General Relativity", kind: map }

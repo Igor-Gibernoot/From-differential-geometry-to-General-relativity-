@@ -396,21 +396,21 @@ cards:
     id: kappa-role
     title: What the constant does
     prompt: |
-      Suppose the action had a different constant, $S_\mathcal{D} = \	ildekappa\int\sqrt{-\det g}\,R\,d^4x$, with the same matter action. What changes?
+      Suppose the action had a different constant, $S_\mathcal{D} = \tilde\kappa\int\sqrt{-\det g}\,R\,d^4x$, with the same matter action. What changes?
     options:
-      - text: 'Vacuum: nothing, since $G = 0$ does not involve $\	ildekappa$. With matter: $G = -\dfrac{1}{2\	ildekappa}\,T$, so $\	ildekappa$ sets the coupling strength'
+      - text: 'Vacuum: nothing, since $G = 0$ does not involve $\tilde\kappa$. With matter: $G = -\dfrac{1}{2\tilde\kappa}\,T$, so $\tilde\kappa$ sets the coupling strength'
         correct: true
       - text: 'Nothing at all, with or without matter'
         feedback: |
-          Without matter, yes. With matter, the two terms of the variation are $-\	ildekappa\hat G^{ij}$ and $-\tfrac12\hat T^{ij}$, so the ratio fixes the coefficient of $T$ in the equation.
-      - text: 'The vacuum equation becomes $G = \	ildekappa\,g$'
+          Without matter, yes. With matter, the two terms of the variation are $-\tilde\kappa\hat G^{ij}$ and $-\tfrac12\hat T^{ij}$, so the ratio fixes the coefficient of $T$ in the equation.
+      - text: 'The vacuum equation becomes $G = \tilde\kappa\,g$'
         feedback: |
           A term $\propto g$ would come from adding a *volume* term to the action (a cosmological constant), not from rescaling $\kappa$.
       - text: 'The equations become fourth order'
         feedback: |
           The order is set by the integrand ($R$), not by the constant in front.
     explanation: |
-      $-\	ildekappa\hat G^{ij} - \tfrac12\hat T^{ij} = 0$ gives $G = -\frac{1}{2\	ildekappa}T$. With $\	ildekappa = -\frac{1}{16\pi G_N}$ this is $8\pi G_N T$, a convention fixed by comparison with Newtonian gravity, where $\mathrm{Ric}_{00} = 4\pi G_N\rho$ (Level 9).
+      $-\tilde\kappa\hat G^{ij} - \tfrac12\hat T^{ij} = 0$ gives $G = -\frac{1}{2\tilde\kappa}T$. With $\tilde\kappa = -\frac{1}{16\pi G_N}$ this is $8\pi G_N T$, a convention fixed by comparison with Newtonian gravity, where $\mathrm{Ric}_{00} = 4\pi G_N\rho$ (Level 9).
 
   - type: text
     id: trace-reverse

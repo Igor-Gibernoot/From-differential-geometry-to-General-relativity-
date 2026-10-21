@@ -1,0 +1,554 @@
+id: ch10-matter
+title: Coupling to Matter
+kind: concept
+
+own: |
+  - **Energy-momentum tensor**: for a matter action $S_M = \int\sqrt{-\det g}\,\mathcal{L}_M\,d^4x$, $T$ is the response of $S_M$ to the metric,
+  {{ $$\delta S_M = -\tfrac12\int\sqrt{-\det g}\;\hat T^{ij}\,\text{ᛉ}_{ij}\,d^4x$$ }}
+  where $\hat T^{ij}$ is $T_{ab}$ with both indices raised by $(g^{-1})^{ab}$, just as a current is the response of the action to the potential.
+  - **No derivatives of $g$ in $\mathcal{L}_M$**: if $\delta\mathcal{L}_M = \Theta^{ij}\,\text{ᛉ}_{ij}$ ($\Theta$ symmetric), then
+  {{ $$\hat T^{ij} = -2\,\Theta^{ij} - \mathcal{L}_M\,(g^{-1})^{ij}$$ }}
+  the second term coming from the volume density. A constant $\mathcal{L}_M = -\lambda$ gives $T_{ab} = \lambda g_{ab}$ ($p = -\rho$); a scalar field gives $T_{ab} = \partial_a\phi\,\partial_b\phi - g_{ab}\mathcal{L}_M$.
+  - **Electromagnetism**: with $F_{ab} = \partial_a\mathtt{a}_b - \partial_b\mathtt{a}_a$ and $\mathcal{L}_{\mathrm{EM}} = -\tfrac14 F_{ab}\hat F^{ab}$,
+  {{ $$T_{mn} = -(g^{-1})^{bd}F_{mb}F_{nd} + \tfrac14\,g_{mn}F_{ab}\hat F^{ab}$$ }}
+  it has $T_{00} = \tfrac12(|\mathbf{e}|^2 + |\mathbf{b}|^2)\ge0$ and zero trace. Varying $\mathtt{a}$ gives Maxwell, $\nabla_a\hat F^{ab} = 0$; varying $g$ gives $G = 8\pi G_N T$ (Einstein–Maxwell).
+  - **Conservation**: the contracted Bianchi identity $\operatorname{div}G = 0$ forces
+  {{ $$(g^{-1})^{kl}(\nabla_{\partial x_k}T)_{ln} = 0$$ }}
+  and the matter equations guarantee it, because $S_M$ does not depend on the chart: moving $g$ and $\Phi$ along a vector field $\xi$ changes nothing.
+
+cards:
+  - type: text
+    id: hook
+    title: Where does the right-hand side come from?
+    body: |
+      The previous lesson ended with $G = 8\pi G_N\,T$, with a symmetric $(0,2)$-tensor field $T$ on the right that we defined, but never computed for any real matter. Does it have to be guessed, field by field?
+
+      No, and the reason is an old idea from electromagnetism. A **charge current** $J$ is not put in by hand: it is the **response of the action to the potential**. If the matter action changes by $\delta S$ when the potential changes by $\delta A$, then $J$ is the coefficient of that change.
+
+      Gravity has exactly the same structure, with the metric playing the role of the potential:
+      $$\text{current } J \leftrightarrow \text{response to } A,\qquad T\leftrightarrow\text{response to } g.$$
+      So once we know the **action of a kind of matter**, its $T$ follows. In this lesson we compute it for a constant term, a scalar field and the electromagnetic field, and we ask why energy and momentum come out conserved.
+
+  - type: mcq
+    id: hook-predict
+    title: Before any theory, guess
+    prompt: |
+      Matter is described by fields $\Phi$ and an action $S_M[g,\Phi]$. Which statement about its energy-momentum tensor $T$ is the most reasonable?
+    options:
+      - text: '$T$ is obtained from $S_M$ by asking how $S_M$ responds to a change of the metric $g$'
+        correct: true
+      - text: '$T$ is a new field with its own equation, to be postulated separately for every kind of matter'
+        feedback: |
+          It would work, but it would waste the action. Since $S_M$ already depends on $g$, its response to $g$ is determined: $T$ is *computed*, not postulated.
+      - text: '$T$ is obtained by varying $S_M$ with respect to the matter fields $\Phi$'
+        feedback: |
+          Varying $\Phi$ (with $g$ fixed) gives the **matter field equations**, e.g. Maxwell''s equations. $T$ comes from the other variation: of $g$ with $\Phi$ fixed.
+      - text: '$T$ is the Ricci tensor of $g$'
+        feedback: |
+          That is the left side of the Einstein equations (up to the trace term). $T$ is a property of the matter.
+    explanation: |
+      Two independent variations of the total action: of $\Phi$ at fixed $g$ (the matter equations) and of $g$ at fixed $\Phi$ (the Einstein equations, with $T$ as the source).
+
+  - type: text
+    id: recall
+    title: Recall the definition
+    body: |
+      Recall: the matter action is
+      $$S_M[g,\Phi] = \int_\mathcal{D}\sqrt{-\det g}\;\mathcal{L}_M\,d^4x,$$
+      where $\Phi$ stands for the matter fields (tensor fields on spacetime) and the **Lagrangian** $\mathcal{L}_M$ is a scalar function built from $\Phi$, its derivatives and $g$. A metric variation is $g_\text{ᛊ} = g + \text{ᛊ}\,\text{ᛉ}$ with $\text{ᛉ}$ symmetric and zero near $\partial\mathcal{D}$, and $\delta F := \frac{d}{d\text{ᛊ}}F_\text{ᛊ}\big|_0$.
+
+      The energy-momentum tensor $T$ is *defined* by
+      $$\delta S_M = -\frac12\int_\mathcal{D}\sqrt{-\det g}\;\hat T^{ij}\,\text{ᛉ}_{ij}\,d^4x,$$
+      $$\hat T^{ij} := (g^{-1})^{ia}(g^{-1})^{jb}\,T_{ab},$$
+      for every admissible $\text{ᛉ}$. Since $\text{ᛉ}$ is an arbitrary symmetric tensor, only the symmetric part of the coefficient matters: this fixes $T$ uniquely and symmetric.
+
+      Also recall from the previous lesson the variation of the volume density:
+      $$\delta\sqrt{-\det g} = \tfrac12\sqrt{-\det g}\;(g^{-1})^{ij}\,\text{ᛉ}_{ij}.$$
+
+  - type: text
+    id: derive
+    title: When $\mathcal{L}_M$ has no derivatives of $g$
+    body: |
+      The simplest case: $\mathcal{L}_M$ depends on $g$ itself, but not on its derivatives. Then the change of $\mathcal{L}_M$ under $g\to g+\text{ᛊ}\,\text{ᛉ}$ is linear in $\text{ᛉ}$, with no derivative of $\text{ᛉ}$ in it:
+      $$\delta\mathcal{L}_M = \Theta^{ij}\,\text{ᛉ}_{ij},$$
+      where $\Theta^{ij}$ is a symmetric array computed from $\Phi$ and $g$ (the coefficient of $\text{ᛉ}_{ij}$).
+
+      Now apply the product rule to the integrand $\sqrt{-\det g}\,\mathcal{L}_M$:
+      $$\delta\big(\sqrt{-\det g}\,\mathcal{L}_M\big) = \sqrt{-\det g}\,\Big(\tfrac12(g^{-1})^{ij}\mathcal{L}_M + \Theta^{ij}\Big)\text{ᛉ}_{ij}.$$
+      Compare with $-\frac12\sqrt{-\det g}\,\hat T^{ij}\,\text{ᛉ}_{ij}$. Both coefficients of $\text{ᛉ}_{ij}$ are symmetric, so they must be equal, and $\hat T^{ij}$ can be read off.
+
+  - type: build
+    id: derive-build
+    title: Read off $\hat T^{ij}$
+    prompt: |
+      Matching $\sqrt{-\det g}\,\big(\tfrac12(g^{-1})^{ij}\mathcal{L}_M + \Theta^{ij}\big)$ with $-\tfrac12\sqrt{-\det g}\,\hat T^{ij}$, where $\delta\mathcal{L}_M = \Theta^{ij}\text{ᛉ}_{ij}$, build $\hat T^{ij}$.
+    prefix: '\hat T^{ij} ='
+    tiles: ['-2\,\Theta^{ij}', '-\mathcal{L}_M\,(g^{-1})^{ij}', '+\mathcal{L}_M\,(g^{-1})^{ij}', '-\Theta^{ij}', '+2\,\Theta^{ij}', '-\tfrac12\mathcal{L}_M\,(g^{-1})^{ij}']
+    answers:
+      - ['-2\,\Theta^{ij}', '-\mathcal{L}_M\,(g^{-1})^{ij}']
+    wrong:
+      - answer: ['-2\,\Theta^{ij}', '+\mathcal{L}_M\,(g^{-1})^{ij}']
+        feedback: |
+          Multiply $\tfrac12\mathcal{L}_M(g^{-1})^{ij} + \Theta^{ij} = -\tfrac12\hat T^{ij}$ by $-2$: both terms change sign, so the volume term is $-\mathcal{L}_M(g^{-1})^{ij}$.
+      - answer: ['-\Theta^{ij}', '-\tfrac12\mathcal{L}_M\,(g^{-1})^{ij}']
+        feedback: |
+          That solves for $\tfrac12\hat T$. The factor $-\tfrac12$ in front of $\hat T$ in the definition means multiplying by $-2$, not by $-1$.
+    hint: 'Multiply the matched equation $\tfrac12\mathcal{L}_M(g^{-1})^{ij} + \Theta^{ij} = -\tfrac12\hat T^{ij}$ by $-2$.'
+    explanation: |
+      $$\hat T^{ij} = -2\,\Theta^{ij} - \mathcal{L}_M\,(g^{-1})^{ij}.$$
+      The first term is the response of $\mathcal{L}_M$ itself; the second comes from the volume density, and is present even if $\mathcal{L}_M$ were a constant.
+
+  - type: mcq
+    id: volume-term
+    title: Where the second term comes from
+    prompt: |
+      In $\hat T^{ij} = -2\Theta^{ij} - \mathcal{L}_M(g^{-1})^{ij}$, what is the origin of the term $-\mathcal{L}_M(g^{-1})^{ij}$?
+    options:
+      - text: 'The variation of the volume density $\sqrt{-\det g}$, which also depends on $g$'
+        correct: true
+      - text: 'The variation of $\mathcal{L}_M$ itself, which is already the term $\Theta^{ij}$'
+        feedback: |
+          $\Theta^{ij}$ is exactly the response of $\mathcal{L}_M$. The extra term has another source.
+      - text: 'A boundary term, which does not vanish for a general $\text{ᛉ}$'
+        feedback: |
+          $\text{ᛉ}$ vanishes near $\partial\mathcal{D}$, and no integration by parts was needed here (no derivatives of $g$ in $\mathcal{L}_M$).
+      - text: 'An arbitrary choice of normalization of $T$'
+        feedback: |
+          The normalization $-\tfrac12$ is a convention, but the *relative* weight of the two terms is fixed: it comes from the product rule.
+    explanation: |
+      The action is an integral over a region measured by $g$ itself. Changing $g$ changes the volume element, and this contributes even when $\mathcal{L}_M$ does not depend on $g$ at all.
+
+  - type: text
+    id: constant
+    title: "Check 1: a constant Lagrangian"
+    body: |
+      Take the simplest matter action: $\mathcal{L}_M = -\lambda$ with $\lambda$ a constant. It has no field and does not depend on $g$ (apart from the volume element), so $\Theta^{ij} = 0$ and
+      $$\hat T^{ij} = -\mathcal{L}_M\,(g^{-1})^{ij} = \lambda\,(g^{-1})^{ij}\quad\Longrightarrow\quad T_{ab} = \lambda\,g_{ab}.$$
+      At a point where $g = \eta = \mathrm{diag}(1,-1,-1,-1)$, write $T_{ab} = \mathrm{diag}(\rho,p,p,p)$: $\rho$ is the **energy density** and $p$ the **pressure**. Here the energy density is $\rho = T_{00} = \lambda$.
+
+  - type: numeric
+    id: constant-p
+    title: The pressure of a constant
+    prompt: |
+      For $\mathcal{L}_M = -\lambda$ with $\lambda = 3$, at a point where $g = \eta = \mathrm{diag}(1,-1,-1,-1)$, we found $T_{ab} = \lambda\,g_{ab}$. What is the pressure $p = T_{11}$?
+    answer: -3
+    tolerance: 0.001
+    answerText: '-3'
+    wrong:
+      - { value: 3, feedback: 'That forgets the sign of the metric: $T_{11} = \lambda\,g_{11}$ and $g_{11} = -1$. A constant Lagrangian has *negative* pressure, $p = -\rho$.' }
+      - { value: 0, feedback: 'The matter has no fields, but $T_{ab} = \lambda g_{ab}$ is non-zero in every direction, including space.' }
+    hint: '$T_{11} = \lambda\,g_{11}$ and $g_{11} = -1$.'
+    explanation: |
+      $T_{11} = 3\cdot(-1) = -3 = -\rho$. This is the equation of state of a **vacuum energy** (a cosmological constant): $p = -\rho$.
+
+  - type: numeric
+    id: constant-ric
+    title: Does it attract?
+    prompt: |
+      Use $\mathrm{Ric}_{ab} = 8\pi G_N\big(T_{ab} - \tfrac12 T\,g_{ab}\big)$, with $T := (g^{-1})^{ab}T_{ab}$ the trace. For $T_{ab} = \lambda\,g_{ab}$ in four dimensions at $g = \eta$, compute $\mathrm{Ric}_{00}$ in units of $\pi G_N\lambda$. (Newtonian dust, $T = \mathrm{diag}(\rho,0,0,0)$, has $\mathrm{Ric}_{00} = +4\pi G_N\rho>0$: attraction.)
+    answer: -8
+    tolerance: 0.001
+    answerText: '-8'
+    wrong:
+      - { value: 8, feedback: 'Check the trace: $T = (g^{-1})^{ab}\lambda g_{ab} = 4\lambda$ in four dimensions, so $T_{00} - \tfrac12Tg_{00} = \lambda - 2\lambda = -\lambda$.' }
+      - { value: 4, feedback: 'That is the dust value $4\pi G_N\rho$. For the constant term the pressure is not zero, and the trace is $4\lambda$.' }
+    hint: '$T_{00} = \lambda$, $T = 4\lambda$, $g_{00} = 1$.'
+    explanation: |
+      $\mathrm{Ric}_{00} = 8\pi G_N\big(\lambda - \tfrac12\cdot4\lambda\big) = -8\pi G_N\lambda$. In general, $\mathrm{Ric}_{00} = 4\pi G_N(\rho + 3p)$; here $\rho + 3p = \lambda - 3\lambda = -2\lambda<0$: the constant term **repels**. Its Einstein equation $G = 8\pi G_N\lambda\,g$ is the cosmological constant term.
+
+  - type: text
+    id: scalar
+    title: "Check 2: a scalar field"
+    body: |
+      A **scalar field** is a function $\phi$ on spacetime. Its simplest Lagrangian, with signature $(+,-,-,-)$ and a potential $V(\phi)$ (a given function of $\phi$), is
+      $$\mathcal{L}_M = \tfrac12\,(g^{-1})^{ab}\,\partial_a\phi\,\partial_b\phi - V(\phi).$$
+      The first term depends on $g$ only through the inverse metric. Recall $\delta(g^{-1})^{ab} = -(g^{-1})^{ar}(g^{-1})^{bs}\,\text{ᛉ}_{rs}$, and write $\partial^i\phi := (g^{-1})^{ia}\partial_a\phi$ (raised index).
+
+  - type: mcq
+    id: scalar-theta
+    title: The coefficient $\Theta^{ij}$
+    prompt: |
+      For $\mathcal{L}_M = \tfrac12(g^{-1})^{ab}\partial_a\phi\,\partial_b\phi - V(\phi)$, with $\partial^i\phi = (g^{-1})^{ia}\partial_a\phi$, what is $\Theta^{ij}$ in $\delta\mathcal{L}_M = \Theta^{ij}\,\text{ᛉ}_{ij}$?
+    options:
+      - text: '$-\tfrac12\,\partial^i\phi\,\partial^j\phi$'
+        correct: true
+      - text: '$+\tfrac12\,\partial^i\phi\,\partial^j\phi$'
+        feedback: |
+          The sign: the inverse metric varies with a minus sign, $\delta(g^{-1})^{ab} = -(g^{-1})^{ar}(g^{-1})^{bs}\text{ᛉ}_{rs}$. A larger $g$ gives a smaller $g^{-1}$.
+      - text: '$-\tfrac12\,(g^{-1})^{ij}\,\mathcal{L}_M$'
+        feedback: |
+          That is a volume-density type term, and it is not part of $\Theta$ (it enters separately in $\hat T^{ij}$). $\Theta$ is the response of $\mathcal{L}_M$ alone.
+      - text: '$-\tfrac12\,V(\phi)\,(g^{-1})^{ij}$'
+        feedback: |
+          $V(\phi)$ does not depend on $g$ at all, so it does not contribute to $\Theta$.
+    explanation: |
+      Only the kinetic term depends on $g$: $\delta\big(\tfrac12(g^{-1})^{ab}\big)\partial_a\phi\,\partial_b\phi = -\tfrac12\,\partial^r\phi\,\partial^s\phi\,\text{ᛉ}_{rs}$. So $\Theta^{rs} = -\tfrac12\partial^r\phi\,\partial^s\phi$, symmetric as required.
+
+  - type: text
+    id: scalar-T
+    title: The energy-momentum tensor of a scalar field
+    body: |
+      Insert $\Theta^{ij} = -\frac12\partial^i\phi\,\partial^j\phi$ in $\hat T^{ij} = -2\Theta^{ij} - \mathcal{L}_M(g^{-1})^{ij}$ and lower the indices:
+      $$T_{ab} = \partial_a\phi\,\partial_b\phi - g_{ab}\,\mathcal{L}_M.$$
+      Test it at a point where $g = \eta$, for a field that depends on time only, so that $\partial_0\phi = \dot\phi$ and $\partial_i\phi = 0$. Then $\mathcal{L}_M = \tfrac12\dot\phi^2 - V$.
+
+  - type: numeric
+    id: scalar-rho
+    title: Energy density of a scalar
+    prompt: |
+      At a point with $g = \eta$, a scalar field with $\dot\phi = 2$ (time derivative), no spatial gradient, and $V(\phi) = 1$. Compute the energy density $\rho = T_{00}$ from $T_{ab} = \partial_a\phi\,\partial_b\phi - g_{ab}\mathcal{L}_M$.
+    answer: 3
+    tolerance: 0.001
+    answerText: '3'
+    wrong:
+      - { value: 4, feedback: 'That is $\partial_0\phi\,\partial_0\phi$ alone. The term $-g_{00}\mathcal{L}_M$ (from the volume density) also contributes, with $\mathcal{L}_M = \tfrac12\dot\phi^2 - V$.' }
+      - { value: 5, feedback: 'Sign slip in $\mathcal{L}_M$: it is $\tfrac12\dot\phi^2 - V = 2 - 1 = 1$, and $T_{00} = 4 - 1\cdot g_{00}$.' }
+      - { value: 1, feedback: 'That is $\mathcal{L}_M$ itself. $T_{00} = \dot\phi^2 - \mathcal{L}_M$.' }
+    hint: '$\mathcal{L}_M = \tfrac12\cdot4 - 1 = 1$, and $T_{00} = \dot\phi^2 - g_{00}\mathcal{L}_M$.'
+    explanation: |
+      $T_{00} = 4 - 1\cdot1 = 3 = \tfrac12\dot\phi^2 + V = 2 + 1$: kinetic energy plus potential energy, as a Hamiltonian would say.
+
+  - type: numeric
+    id: scalar-p
+    title: Pressure of a scalar
+    prompt: |
+      Same data: $g = \eta$, $\dot\phi = 2$, no spatial gradient, $V = 1$. Compute the pressure $p = T_{11}$.
+    answer: 1
+    tolerance: 0.001
+    answerText: '1'
+    wrong:
+      - { value: -1, feedback: 'Sign: $T_{11} = \partial_1\phi\,\partial_1\phi - g_{11}\mathcal{L}_M = 0 - (-1)\mathcal{L}_M = +\mathcal{L}_M$.' }
+      - { value: 3, feedback: 'That is the energy density. The pressure is $T_{11}$, and $\partial_1\phi = 0$ here.' }
+      - { value: 0, feedback: 'The gradient term vanishes, but $-g_{11}\mathcal{L}_M = +\mathcal{L}_M$ does not.' }
+    hint: '$\partial_1\phi = 0$, $g_{11} = -1$, and $\mathcal{L}_M = 1$.'
+    explanation: |
+      $T_{11} = 0 + \mathcal{L}_M = \tfrac12\dot\phi^2 - V = 1$. In general $\rho = \tfrac12\dot\phi^2 + V$ and $p = \tfrac12\dot\phi^2 - V$: a potential-dominated field ($\dot\phi\to0$) has $p = -\rho$, like the constant of Check 1, which is the case $\dot\phi = 0$, $V = \lambda$.
+
+  - type: mcq
+    id: scalar-sign
+    title: Which sign of the kinetic term?
+    prompt: |
+      Someone writes the scalar Lagrangian with the opposite kinetic sign, $\mathcal{L}' = -\tfrac12(g^{-1})^{ab}\partial_a\phi\,\partial_b\phi - V$. Repeating the computation at $g=\eta$ with $\partial_i\phi=0$ and $\partial_0\phi = \dot\phi$, what happens to $T_{00}$?
+    options:
+      - text: '$T_{00} = -\tfrac12\dot\phi^2 + V$: the kinetic part of the energy becomes negative (a "ghost")'
+        correct: true
+      - text: 'Nothing: $T_{00}$ is still $\tfrac12\dot\phi^2 + V$'
+        feedback: |
+          $\Theta$ flips sign with the kinetic term, and so does the $\partial\phi\,\partial\phi$ part of $T$: $T_{ab} = -\partial_a\phi\,\partial_b\phi - g_{ab}\mathcal{L}'$, giving $T_{00} = -\dot\phi^2 + \tfrac12\dot\phi^2 + V$.
+      - text: '$T_{00} = 0$, since the two sign changes cancel'
+        feedback: |
+          Nothing cancels: $\Theta$ and $\mathcal{L}$ both flip, but $V$ does not.
+      - text: '$T_{00}$ cannot be computed, because the action is not covariant'
+        feedback: |
+          It is a perfectly good scalar Lagrangian; it simply gives the wrong-sign energy.
+    explanation: |
+      The sign of the kinetic term is not a free convention: with signature $(+,-,-,-)$, only $+\tfrac12(g^{-1})^{ab}\partial_a\phi\,\partial_b\phi$ gives $T_{00} = \tfrac12\dot\phi^2 + \tfrac12|\nabla\phi|^2 + V\ge0$ (for $V\ge0$). The requirement $T_{00}\ge0$ selects the sign of the Lagrangian.
+
+  - type: text
+    id: em-def
+    title: The electromagnetic field
+    body: |
+      In electromagnetism, the field is a **covector field** $\mathsf{A}$ (the potential) with components $\mathtt{a}_i$ in a chart. Its **field strength** has components
+      $$F_{ab} := \partial_a\mathtt{a}_b - \partial_b\mathtt{a}_a,$$
+      antisymmetric: $F_{ba} = -F_{ab}$. At $g = \eta$, $F_{0i}$ are the electric components and $F_{ij}$ the magnetic ones. Write $\hat F^{ab} := (g^{-1})^{ar}(g^{-1})^{bs}F_{rs}$ for the raised version. The Lagrangian is
+      $$\mathcal{L}_\mathrm{EM} = -\tfrac14\,F_{ab}\,\hat F^{ab}.$$
+      It depends on $g$ only through the two inverse metrics, with no derivative of $g$: the formula of this lesson applies.
+
+  - type: numeric
+    id: em-invariant
+    title: The invariant $F_{ab}\hat F^{ab}$
+    prompt: |
+      At $g = \eta = \mathrm{diag}(1,-1,-1,-1)$, let $F_{01} = 3$ and $F_{12} = 4$ (with $F_{10} = -3$, $F_{21} = -4$ and all other components zero). Compute the full double sum $F_{ab}\hat F^{ab} = \sum_{a,b}(g^{-1})^{aa}(g^{-1})^{bb}F_{ab}F_{ab}$.
+    answer: 14
+    tolerance: 0.001
+    answerText: '14'
+    wrong:
+      - { value: 7, feedback: 'The sum runs over **all** ordered pairs $(a,b)$: both $F_{01}$ and $F_{10}$ contribute, and both $F_{12}$ and $F_{21}$. That doubles each pair.' }
+      - { value: 50, feedback: 'The signs of $\eta$ are missing: the pair $(0,1)$ has $(g^{-1})^{00}(g^{-1})^{11} = -1$, the pair $(1,2)$ has $(-1)(-1) = +1$.' }
+      - { value: -14, feedback: 'Check which pair gets which sign: electric components ($0i$) come with $-1$, magnetic ones ($ij$) with $+1$.' }
+    hint: 'Pairs $(0,1)$ and $(1,0)$: $2\cdot(-1)\cdot9$. Pairs $(1,2)$ and $(2,1)$: $2\cdot(+1)\cdot16$.'
+    explanation: |
+      $-18 + 32 = 14$. In terms of $\mathbf{e}$ ($e_i = F_{0i}$) and $\mathbf{b}$ ($F_{12} = b_3$, …): $F_{ab}\hat F^{ab} = 2(|\mathbf{b}|^2 - |\mathbf{e}|^2)$, so $\mathcal{L}_\mathrm{EM} = \tfrac12(|\mathbf{e}|^2 - |\mathbf{b}|^2)$, the textbook Lagrangian.
+
+  - type: text
+    id: em-T
+    title: Its energy-momentum tensor
+    body: |
+      Since $F_{ab}$ does not depend on $g$ (only on derivatives of the potential), the variation acts on the two inverse metrics of $\hat F^{ab}$, which are equal by symmetry:
+      $$\delta\mathcal{L}_\mathrm{EM} = -\tfrac14F_{ab}\cdot2\,\delta(g^{-1})^{ar}(g^{-1})^{bs}F_{rs} = \tfrac12\,(g^{-1})^{ai}(g^{-1})^{rj}(g^{-1})^{bs}F_{ab}F_{rs}\,\text{ᛉ}_{ij}.$$
+      That is $\Theta^{ij}$. Then $\hat T^{ij} = -2\Theta^{ij} - \mathcal{L}_\mathrm{EM}(g^{-1})^{ij}$ and, lowering both indices,
+      $$T_{mn} = -(g^{-1})^{bd}\,F_{mb}\,F_{nd} + \tfrac14\,g_{mn}\,F_{ab}\hat F^{ab}.$$
+      Test it with the data $F_{01} = 3$, $F_{12} = 4$ at $g = \eta$, where $F_{ab}\hat F^{ab} = 14$.
+
+  - type: numeric
+    id: em-t00
+    title: Energy density of the field
+    prompt: |
+      With $g = \eta$, $F_{01} = 3$, $F_{12} = 4$ (others zero up to antisymmetry) and $F_{ab}\hat F^{ab} = 14$, compute $T_{00} = -(g^{-1})^{bd}F_{0b}F_{0d} + \tfrac14 g_{00}F_{ab}\hat F^{ab}$.
+    answer: 12.5
+    tolerance: 0.001
+    answerText: '12.5'
+    wrong:
+      - { value: 9, feedback: 'That is the first term alone: $-(g^{-1})^{11}F_{01}^2 = 9$. The trace term $\tfrac14g_{00}\cdot14 = 3.5$ must be added.' }
+      - { value: 3.5, feedback: 'That is the second term alone. The first one, $-(g^{-1})^{bd}F_{0b}F_{0d} = +9$, comes from the electric component.' }
+      - { value: -5.5, feedback: 'Sign: $(g^{-1})^{11} = -1$, so $-(g^{-1})^{11}F_{01}^2 = +9$, not $-9$.' }
+    hint: 'Only $b = d = 1$ contributes to the first term, with $(g^{-1})^{11} = -1$.'
+    explanation: |
+      $T_{00} = 9 + 3.5 = 12.5 = \tfrac12(|\mathbf{e}|^2 + |\mathbf{b}|^2) = \tfrac12(9+16)$. In general $T_{00} = \tfrac12(|\mathbf{e}|^2+|\mathbf{b}|^2)\ge0$: the electromagnetic field never carries negative energy density.
+
+  - type: numeric
+    id: em-t11
+    title: A stress component
+    prompt: |
+      Same data. Compute $T_{11} = -(g^{-1})^{bd}F_{1b}F_{1d} + \tfrac14g_{11}F_{ab}\hat F^{ab}$ (here $F_{10} = -3$, $F_{12} = 4$, $F_{ab}\hat F^{ab} = 14$, $g_{11} = -1$).
+    answer: 3.5
+    tolerance: 0.001
+    answerText: '3.5'
+    wrong:
+      - { value: -3.5, feedback: 'The first term is $-\big[(g^{-1})^{00}F_{10}^2 + (g^{-1})^{22}F_{12}^2\big] = -[9 - 16] = +7$; then $\tfrac14g_{11}\cdot14 = -3.5$.' }
+      - { value: 25, feedback: 'The signs of $\eta$ matter: the term $b=d=2$ has $(g^{-1})^{22} = -1$, opposite to the term $b=d=0$.' }
+    hint: 'First term: $b=d=0$ gives $-(+1)(9)$, and $b=d=2$ gives $-(-1)(16)$.'
+    explanation: |
+      $T_{11} = 7 - 3.5 = 3.5$. With $\mathbf{e} = (3,0,0)$ and $\mathbf{b} = (0,0,4)$ this is $\tfrac12(e^2+b^2) - e_1^2 - b_1^2 = 12.5 - 9 - 0$: the Maxwell stress. The other diagonal components are $T_{22} = 12.5$ and $T_{33} = -3.5$ (checked the same way).
+
+  - type: mcq
+    id: em-trace
+    title: A traceless tensor
+    prompt: |
+      For the data above, $T_{00}=12.5$, $T_{11}=3.5$, $T_{22}=12.5$, $T_{33}=-3.5$ at $g=\eta$. Its trace $T = (g^{-1})^{ab}T_{ab} = T_{00}-T_{11}-T_{22}-T_{33}$ is $0$. In general, for any $F$ in four dimensions, why?
+    options:
+      - text: 'The trace of the first term is $-F_{ab}\hat F^{ab}$, and the trace of the second is $\tfrac14\cdot4\,F_{ab}\hat F^{ab}$ (since $(g^{-1})^{ab}g_{ab} = 4$): they cancel'
+        correct: true
+      - text: 'Because $F$ is antisymmetric, every component of $T$ with two equal indices vanishes'
+        feedback: |
+          $T_{00} = 12.5\neq0$ above. Antisymmetry kills $F_{aa}$, not $F_{ab}F_{ab}$.
+      - text: 'Because the field has no mass, $T$ is zero'
+        feedback: |
+          $T\neq0$ (its components are not zero); only its **trace** is. The trace-free property is special to four dimensions: in dimension $n$ the second term gives $\tfrac n4F\hat F$ and the cancellation fails.
+      - text: 'Because $\nabla_aF^{ab}=0$ holds'
+        feedback: |
+          The Maxwell equation is not used: the trace vanishes for every $F$, solution or not.
+    explanation: |
+      $T = -F_{ab}\hat F^{ab} + F_{ab}\hat F^{ab} = 0$ in dimension $4$. By the trace of the Einstein equation, $R = -8\pi G_N T = 0$: electromagnetic fields do not change the Ricci scalar (but they do curve spacetime through $\mathrm{Ric}_{ab}$).
+
+  - type: text
+    id: em-two
+    title: Two variations, two sets of equations
+    body: |
+      Now vary the two independent things in $S_\mathcal{D} + S_\mathrm{EM}$.
+
+      **Vary the potential** ($g$ fixed): $\delta F_{ab} = \partial_a\delta\mathtt{a}_b - \partial_b\delta\mathtt{a}_a$, so $\delta\mathcal{L}_\mathrm{EM} = -\hat F^{ab}\partial_a\delta\mathtt{a}_b$. An integration by parts (the boundary term vanishes since $\delta\mathtt{a}=0$ near $\partial\mathcal{D}$) leaves
+      $$\nabla_a\hat F^{ab} = 0\qquad\text{(Maxwell)}.$$
+
+      **Vary the metric** ($\mathtt{a}$ fixed): $G = 8\pi G_N\,T$ with the $T$ above:
+      $$G_{mn} = 8\pi G_N\Big(-(g^{-1})^{bd}F_{mb}F_{nd} + \tfrac14g_{mn}F_{ab}\hat F^{ab}\Big).$$
+      Together they are the **Einstein–Maxwell equations**: the field curves spacetime, and spacetime enters Maxwell's equation through $g$.
+
+  - type: mcq
+    id: em-which
+    title: Which variation gives what
+    prompt: |
+      In the total action $S_\mathcal{D}[g] + S_\mathrm{EM}[g,\mathsf{A}]$, which statement is correct?
+    options:
+      - text: 'Varying $\mathsf{A}$ with $g$ fixed gives Maxwell''s equation; varying $g$ with $\mathsf{A}$ fixed gives $G = 8\pi G_N T$'
+        correct: true
+      - text: 'Varying $g$ gives both equations at once'
+        feedback: |
+          Varying $g$ alone only gives the Einstein equation. Maxwell''s equation is the critical-point condition in the *other* direction of the space of fields, $\mathsf{A}$.
+      - text: 'Maxwell''s equation is an extra assumption, not derived from the action'
+        feedback: |
+          It is derived: $\delta_\mathsf{A}S_\mathrm{EM} = 0$ for all $\delta\mathtt{a}$ vanishing near $\partial\mathcal{D}$.
+      - text: 'Varying $\mathsf{A}$ gives $G = 8\pi G_N T$ because $T$ depends on $\mathsf{A}$'
+        feedback: |
+          $T$ depends on $\mathsf{A}$, but $G$ is built from $g$ only. The equation $G=8\pi G_N T$ requires a variation of the **metric**.
+    explanation: |
+      Critical points of a function of two sets of variables need zero derivative in each of them separately: $\delta_\mathsf{A}S = 0$ and $\delta_gS = 0$.
+
+  - type: text
+    id: conservation
+    title: Why energy and momentum are conserved
+    body: |
+      Recall (Level 7): the **divergence** of a symmetric $(0,2)$-tensor field $S$ is $(\operatorname{div}S)_n := (g^{-1})^{kl}(\nabla_{\partial x_k}S)_{ln}$, and the contracted Bianchi identity says
+      $$\operatorname{div}G = 0\quad\text{for every metric.}$$
+      Nothing is imposed: it follows from the definition of curvature. Now look at $G = 8\pi G_N T$. If it holds, then taking the divergence,
+      $$\operatorname{div}T = 0$$
+      **local conservation of energy and momentum**. Gravity forces its source to be conserved. But $T$ comes from matter, not from gravity, so conservation must have a matter-side reason too.
+
+  - type: mcq
+    id: conservation-status
+    title: Assumption or consequence?
+    prompt: |
+      In the Einstein equation $G = 8\pi G_N T$, what is the status of $\operatorname{div}T = 0$?
+    options:
+      - text: 'A necessary condition: $\operatorname{div}G = 0$ always, so any source $T$ for which the equation can hold must be divergence-free'
+        correct: true
+      - text: 'An extra axiom that must be added to the theory'
+        feedback: |
+          It is not added: it follows from the left side of the equation by the Bianchi identity.
+      - text: 'True for every symmetric tensor field $T$'
+        feedback: |
+          False: for a random $T$ (say $T = \mathrm{diag}(\rho(t,x),0,0,0)$ with non-constant $\rho$ in flat space) the divergence is non-zero, and then $G=8\pi G_NT$ has no solution $g$.
+      - text: 'True only for dust'
+        feedback: |
+          It is a statement valid for any matter described by a chart-independent action, as the next cards show.
+    explanation: |
+      Conservation is demanded by the geometry. The question is whether real matter delivers it: it does, when its fields obey their own equations.
+
+  - type: text
+    id: conservation-proof
+    title: "Matter delivers it: the argument"
+    body: |
+      Take a vector field $\xi$ vanishing near $\partial\mathcal{D}$. Let its flow, for a small parameter $\text{ᛊ}$, carry the metric to $g_\text{ᛊ}$ and the matter fields to $\Phi_\text{ᛊ}$. To first order, $g\to g+\text{ᛊ}\,\text{ᛉ}$ with
+      $$\text{ᛉ}_{ij} = (\mathcal{L}_\xi g)_{ij} = \nabla_i\xi_j + \nabla_j\xi_i,$$
+      where $\xi_j := g_{jk}\xi^k$ and $\mathcal{L}_\xi$ is the Lie derivative (Level 5).
+
+      The matter action is built from tensors and the volume form only, with no reference to charts. Relabeling every point by the flow therefore changes **nothing**: $S_M[g_\text{ᛊ},\Phi_\text{ᛊ}] = S_M[g,\Phi]$. Differentiating at $\text{ᛊ}=0$ gives zero, which splits into a part from $g$ and a part from $\Phi$.
+
+  - type: order
+    id: conservation-order
+    title: Put the argument in order
+    prompt: |
+      Put the proof that $\operatorname{div}T = 0$ in order, starting from the invariance of the matter action under the flow of a vector field $\xi$ vanishing near $\partial\mathcal{D}$.
+    steps:
+      - '$S_M$ does not change when $g$ and $\Phi$ are moved together by the flow of $\xi$, so $\frac{d}{d\text{ᛊ}}S_M = 0$'
+      - 'Split the derivative into a $\Phi$-part and a $g$-part'
+      - 'The $\Phi$-part vanishes: the matter field equations say $S_M$ is critical in $\Phi$'
+      - 'The $g$-part is $-\tfrac12\int\sqrt{-\det g}\,\hat T^{ij}(\nabla_i\xi_j+\nabla_j\xi_i) = -\int\sqrt{-\det g}\,\hat T^{ij}\nabla_i\xi_j$ (symmetry of $T$)'
+      - 'Integrate by parts: $\int\sqrt{-\det g}\,(\nabla_i\hat T^{ij})\,\xi_j = 0$, with no boundary term'
+      - 'This holds for every $\xi$, so $\nabla_i\hat T^{ij} = 0$'
+    hint: 'First the invariance, then the split, then use the equations of $\Phi$, then the definition of $T$, then integrate by parts.'
+    explanation: |
+      Two ingredients: chart independence of $S_M$ (so the total derivative vanishes) and the matter equations (so only the $g$-part is left). Without the matter equations, $\operatorname{div}T$ need not vanish.
+
+  - type: text
+    id: scalar-check
+    title: "Check 3: the scalar field conserves $T$ only on shell"
+    body: |
+      Test it on the scalar field, $T_{ab} = \partial_a\phi\,\partial_b\phi - g_{ab}\mathcal{L}_M$ with $\mathcal{L}_M = \tfrac12\partial^c\phi\,\partial_c\phi - V$. Using $\nabla g = 0$ and writing $\Box\phi := (g^{-1})^{ab}\nabla_a\partial_b\phi$,
+      $$(g^{-1})^{ab}\nabla_aT_{bn} = \big(\Box\phi + V'(\phi)\big)\,\partial_n\phi.$$
+      Here $V' = dV/d\phi$. The matter field equation, from varying $\phi$ in $S_M$, is $\Box\phi + V'(\phi) = 0$ (Klein–Gordon).
+
+  - type: mcq
+    id: scalar-check-q
+    title: When is the scalar $T$ conserved?
+    prompt: |
+      For a scalar field, $\operatorname{div}T = (\Box\phi + V')\,\partial\phi$, and the field equation is $\Box\phi + V' = 0$. For a field $\phi$ that does **not** satisfy this equation, with $\partial\phi\neq0$, what happens?
+    options:
+      - text: '$\operatorname{div}T\neq0$: energy-momentum is conserved only if the matter equations hold; the Einstein equation then has no solution'
+        correct: true
+      - text: '$\operatorname{div}T=0$ anyway, by the Bianchi identity'
+        feedback: |
+          The Bianchi identity constrains $G$. It says $T$ must be divergence-free if the Einstein equation holds, not that every $T$ is.
+      - text: '$\operatorname{div}T = 0$ anyway, because $T$ is symmetric'
+        feedback: |
+          Symmetry alone does not give a vanishing divergence (take any non-constant symmetric tensor field).
+      - text: 'The equation $\Box\phi+V'' = 0$ is an extra assumption of the Einstein equations'
+        feedback: |
+          It follows from the action (varying $\phi$), and is *forced* by the Einstein equation through the identity above.
+    explanation: |
+      The Einstein equation and the matter equation are consistent with each other: the matter equation is exactly what makes $\operatorname{div}T = 0$, the condition required by $\operatorname{div}G = 0$. (In practice the field equations for $\phi$ are even a consequence of $\operatorname{div}T=0$ where $\partial\phi\neq0$.)
+
+  - type: mcq
+    id: const-conserved
+    title: Check 1 revisited
+    prompt: |
+      For the constant term, $T_{ab} = \lambda\,g_{ab}$ with $\lambda$ constant, there is no field and no matter equation. Why is $\operatorname{div}T = 0$ anyway?
+    options:
+      - text: 'Because $\nabla g = 0$ for the Levi-Civita connection and $\lambda$ is constant'
+        correct: true
+      - text: 'Because $g_{ab}$ is a constant matrix in every chart'
+        feedback: |
+          Components of $g$ depend on the point in general (polar coordinates, curved spacetime). It is the **covariant derivative** of $g$ that vanishes, not its partial derivatives.
+      - text: 'Because $\lambda=0$'
+        feedback: |
+          No: $\lambda\neq0$ is the interesting case (vacuum energy).
+      - text: 'It is not: a constant term violates conservation'
+        feedback: |
+          It conserves: $\nabla_a(\lambda g_{bn}) = \lambda\nabla_ag_{bn} = 0$.
+    explanation: |
+      $\nabla_a(\lambda g_{bn}) = \lambda\,\nabla_ag_{bn} = 0$. A cosmological constant is the one source consistent with Bianchi without any matter equation.
+
+  - type: mcq
+    id: trap-sign
+    title: "Trap: the sign of $T$"
+    prompt: |
+      A student defines $T$ by $\delta S_M = +\tfrac12\int\sqrt{-\det g}\,\hat T^{ij}\text{ᛉ}_{ij}$ (plus sign) but keeps $G = 8\pi G_N T$. For a scalar field this $T$ would have $T_{00} = -\big(\tfrac12\dot\phi^2+V\big)$ at $g=\eta$. What is the consequence?
+    options:
+      - text: 'Positive energy density would source the wrong sign of $\mathrm{Ric}_{00}$: gravity would repel ordinary matter, contradicting the Newtonian limit $\mathrm{Ric}_{00} = 4\pi G_N\rho$'
+        correct: true
+      - text: 'Nothing: the sign of $T$ is a pure convention'
+        feedback: |
+          The sign is fixed relative to $G$, and the combination is tested by the Newtonian limit $\mathrm{Ric}_{00} = +4\pi G_N\rho$. Flipping one sign without the other turns attraction into repulsion.
+      - text: 'The Einstein equation becomes second order only'
+        feedback: |
+          The order is unrelated to the sign of $T$.
+      - text: 'Maxwell''s equation changes'
+        feedback: |
+          The matter equations come from varying the matter fields and do not involve $T$ at all.
+    explanation: |
+      The factor $-\tfrac12$ in the definition (together with $\kappa = -1/(16\pi G_N)$) is chosen so that $T_{00}=\rho>0$ for ordinary matter and $G = +8\pi G_NT$.
+
+  - type: mcq
+    id: trap-separate
+    title: "Trap: $T$ is not an independent input"
+    prompt: |
+      For the electromagnetic field in curved spacetime, a student says: "I can choose $F$ and $T$ independently and then solve Einstein''s equation." What is wrong?
+    options:
+      - text: '$T$ is computed from $F$ and $g$ by the formula of this lesson; and $F$ must solve Maxwell''s equation on the same $g$, which depends on $T$: all unknowns are coupled'
+        correct: true
+      - text: 'Nothing: $T$ can be anything symmetric'
+        feedback: |
+          $T$ must be conserved, $\operatorname{div}T = 0$, and it is determined by the matter action: it cannot be chosen freely.
+      - text: '$T$ depends only on $g$, not on $F$'
+        feedback: |
+          $T$ is quadratic in $F$: $T_{00} = \tfrac12(e^2+b^2)$.
+      - text: '$F$ is determined by $T$ alone'
+        feedback: |
+          Many $F$ give the same $T$ up to sign flips (for example $F\to-F$ gives the same $T$), so $F$ is not determined by $T$.
+    explanation: |
+      The unknowns $(g,\mathsf{A})$ obey a coupled system: Einstein with source $T[g,F]$, and Maxwell on the background $g$.
+
+  - type: mcq
+    id: trap-volume
+    title: "Trap: forgetting the volume term"
+    prompt: |
+      A student computes $T$ for $\mathcal{L}_M = -\lambda$ by saying: "$\mathcal{L}_M$ does not depend on $g$, so the response to $g$ is zero, $T=0$." What is missing?
+    options:
+      - text: 'The volume density $\sqrt{-\det g}$ varies with $g$: $\hat T^{ij} = -\mathcal{L}_M(g^{-1})^{ij} = \lambda(g^{-1})^{ij}\neq0$'
+        correct: true
+      - text: 'Nothing: a constant has no energy'
+        feedback: |
+          Vacuum energy is real: $T_{00} = \lambda$, and it affects the geometry (it is the cosmological constant).
+      - text: 'The variation of $\lambda$'
+        feedback: |
+          $\lambda$ is a constant parameter, not a field, and is not varied.
+      - text: 'An integration by parts'
+        feedback: |
+          No integration by parts is needed here: there are no derivatives.
+    explanation: |
+      The action is an integral over a region whose volume depends on $g$. Even a constant Lagrangian responds to $g$ through $\sqrt{-\det g}$.
+
+  - type: mcq
+    id: trap-dust
+    title: "Trap: all matter is a field Lagrangian of this type"
+    prompt: |
+      Earlier we used dust, $T_{ab} = \rho\,u_au_b$ with $u$ the 4-velocity, which gave $\mathrm{Ric}_{00} = 4\pi G_N\rho$. How is dust related to this lesson?
+    options:
+      - text: 'It is obtained from the same definition, the response of the dust action to $g$; it just uses a different matter action (a fluid or point particles) than the fields treated here'
+        correct: true
+      - text: 'Dust is not described by any action, so it cannot be coupled'
+        feedback: |
+          Dust and fluids do have actions (for dust, the total proper time of the particles with their masses), whose response to $g$ is $\rho\,u_au_b$.
+      - text: 'Dust has $T=\lambda g$, like the constant term'
+        feedback: |
+          That has $p=-\rho$. Dust has $p=0$: $T = \mathrm{diag}(\rho,0,0,0)$ at rest.
+      - text: 'Dust satisfies $\operatorname{div}T=0$ automatically'
+        feedback: |
+          Only if the particles follow geodesics and the mass is conserved: these are the matter equations of dust.
+    explanation: |
+      The recipe is universal ("$T$ is the response to $g$"); the formula $\hat T = -2\Theta - \mathcal{L}(g^{-1})$ is the particular shortcut for Lagrangians without derivatives of $g$.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** the Einstein equations are now complete: $G = 8\pi G_N T$, with $T$ computed from the matter action and conserved by the matter equations. Their simplest consequence is the vacuum case $\mathrm{Ric}=0$. In the next lesson (a guided problem) you will check, step by step, that the Schwarzschild metric (the metric outside a point mass, whose tides you computed in Level 9) really satisfies $\mathrm{Ric}=0$.
