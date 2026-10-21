@@ -554,3 +554,20 @@ polyline.w-level { fill: none; }
 .ts-ker { stroke: var(--ink); stroke-width: 2.5px; stroke-linecap: round; vector-effect: non-scaling-stroke; }
 .ts-stack { stroke-opacity: .9; stroke-width: 2px; }
 .ts-zero { fill: none; stroke: var(--ink); stroke-width: 2px; vector-effect: non-scaling-stroke; }
+
+/* ---------- rotating-grid ---------- */
+.rg-panels .rg-panel { min-width: 0; }
+.rg-cap { text-align: center; color: var(--muted); font-size: 14px; margin-top: 2px; }
+.w-lattice.rg-axis { stroke-opacity: .6; stroke-width: 1.6px; }
+.rg-trace { fill: none; stroke: var(--ink); stroke-width: 2.5px; stroke-opacity: .85; vector-effect: non-scaling-stroke; }
+.rg-trace.ghost { stroke-opacity: .2; stroke-dasharray: 5 4; }
+.rg-dot { fill: var(--ink); }
+.rg-vel { stroke: var(--vec); fill: var(--vec); stroke-width: 2.5px; vector-effect: non-scaling-stroke; }
+.rg-cor { stroke: var(--gold); fill: var(--gold); stroke-width: 2.5px; vector-effect: non-scaling-stroke; }
+.rg-cf { stroke: var(--good); fill: var(--good); stroke-width: 2.5px; vector-effect: non-scaling-stroke; }
+.rg-sum { stroke: var(--ink); fill: var(--ink); stroke-width: 5px; stroke-opacity: .55; fill-opacity: .55; vector-effect: non-scaling-stroke; }
+.w-label.rg-vel, .w-label.rg-cor, .w-label.rg-cf, .w-label.rg-sum { stroke: var(--surface); stroke-width: 0.08px; stroke-opacity: 1; fill-opacity: 1; }
+.widget .readout .rg-cor { color: var(--gold); }
+.widget .readout .rg-cf { color: var(--good); }
+.w-handle.rg-h { fill-opacity: .1; }
+.w-handle.rg-h:not(.vec) { fill: var(--ink); stroke: var(--ink); stroke-opacity: .6; }
