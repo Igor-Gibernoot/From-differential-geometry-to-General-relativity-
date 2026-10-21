@@ -419,7 +419,11 @@ levels:
         kind: concept
         file: ch09/newton-axioms.yaml
         summary: "Tangent vectors sorted by time content (future directed, spatial, past directed), worldlines that always move forward in absolute time, Newton I as the rule by which free particles define the connection (gravity is not a force), Newton II with spatial forces, and why it forces absolute time as the parameter: the time content of the acceleration is the second derivative of t along the worldline."
-      - { id: ch09-stratified, title: Stratified Atlases, kind: concept }
+      - id: ch09-stratified
+        title: Stratified Atlases
+        kind: concept
+        file: ch09/stratified.yaml
+        summary: "Charts whose time coordinate is absolute time: why they exist around every event, the frozen time row of their Jacobians (grids may move but clocks agree), uniform flow as the vanishing of every Γ with upper time index (30 of 40 coefficients survive), and pseudo-forces: Γ-terms of Newton II that a change of grid creates or removes."
       - { id: ch09-pseudo-forces, title: Inertial Charts and Pseudo-Forces, kind: concept }
       - { id: ch09-gravity-connection, title: Gravity in the Connection, kind: concept }
       - { id: ch09-tidal, title: Tidal Acceleration, kind: concept }
