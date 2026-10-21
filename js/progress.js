@@ -101,8 +101,9 @@ export const progress = {
     return p && p.at > 0 ? p : undefined;
   },
 
-  savePartial(id, at, n) {
-    state.partial[id] = { at, n, t: Date.now() };
+  // `extra` ({ stats, combo, answered }) lets a resumed lesson show earlier answers and keep its score.
+  savePartial(id, at, n, extra) {
+    state.partial[id] = { at, n, ...extra, t: Date.now() };
     save();
   },
 

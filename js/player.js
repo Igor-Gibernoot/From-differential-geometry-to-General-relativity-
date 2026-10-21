@@ -12,12 +12,13 @@ import { progress } from './progress.js';
 import { sounds, soundOn, setSound } from './sound.js';
 import { themeButton } from './theme.js';
 
-export function runSession(root, { items, mode, startAt = 0, readOnly = false, onProgress, onFinish, onExit }) {
-  const stats = { questions: 0, firstTry: 0 };
+export function runSession(root, { items, mode, startAt = 0, readOnly = false, resume, onProgress, onFinish, onExit }) {
+  const stats = { questions: 0, firstTry: 0, ...resume?.stats };
   const requeued = new Set();
-  const answered = new Map(); // item index -> { firstTry }; set once solved or revealed; revisits (Back) show the answer
+  // item index -> { firstTry, head }; set once solved or revealed; revisits (Back) show the answer
+  const answered = new Map(Object.entries(resume?.answered ?? {}).map(([k, v]) => [+k, v]));
   let i = startAt;
-  let combo = 0; // first-try correct answers in a row
+  let combo = resume?.combo ?? 0; // first-try correct answers in a row
   let footButtons = [];
 
   const fill = h('div');
@@ -108,7 +109,7 @@ export function runSession(root, { items, mode, startAt = 0, readOnly = false, o
 
   function show() {
     const item = items[i];
-    if (!readOnly) onProgress?.(i, items.length);
+    if (!readOnly) onProgress?.(i, items.length, { stats: { ...stats }, combo, answered: Object.fromEntries(answered) });
     fill.style.width = `${((i + 1) / items.length) * 100}%`;
     counter.textContent = `${i + 1}/${items.length}`;
     stage.replaceChildren();

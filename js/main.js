@@ -50,12 +50,14 @@ async function route() {
 async function playLesson(id, startAt, readOnly = false) {
   const { meta, data } = await getLesson(id);
   if (!data) { location.hash = '#/'; return; }
+  const saved = progress.partial(id);
   runSession(root, {
     items: lessonItems(id, data),
     mode: 'lesson',
     readOnly,
     startAt: Math.max(0, Math.min(startAt || 0, data.cards.length - 1)),
-    onProgress: (at, n) => { if (at > 0 || progress.partial(id)) progress.savePartial(id, at, n); },
+    resume: !readOnly && startAt > 0 && saved?.n === data.cards.length ? saved : undefined,
+    onProgress: (at, n, extra) => { if (at > 0 || progress.partial(id)) progress.savePartial(id, at, n, extra); },
     onExit: () => { location.hash = '#/'; },
     onFinish: async stats => {
       if (readOnly) { location.hash = '#/'; return; }
