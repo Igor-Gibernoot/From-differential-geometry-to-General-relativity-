@@ -15,7 +15,11 @@ context stays small. Igor reviews the level on the live site at the end.
   without `cd … &&` prefixes. At the end, validate, run shots, update
   docs/STATUS.md, commit and push, then reply with a report of at most 15
   lines (what was built, checks output, conventions fixed, doubts) followed
-  by the next unit's prompt."
+  by the next unit's prompt. When writing that prompt, decide explicitly
+  whether a new widget would build intuition (CLAUDE.md: add a widget
+  wherever manipulating something builds intuition); if yes, the next unit
+  is that widget session and the lesson follows it. Never write 'No new
+  widget' without a one-line reason."
 - Between units the coordinator only reads that report: it checks that
   validate and shots were clean and the commit was pushed (`git log -1
   --oneline`), and passes the agent's next-unit prompt on, adding any
