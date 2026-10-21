@@ -59,6 +59,11 @@ levels:
         kind: guided
         file: ch02/dual-basis-law.yaml
         summary: When the basis changes by $J$, how does the dual basis change? Derive it by evaluating on basis vectors, and recover the covector law.
+      - id: ch02-intuition-transformations
+        title: "Intuition: Which Law Gets J, Which Gets J⁻¹?"
+        kind: intuition
+        file: ch02/intuition-transformations.yaml
+        summary: Four transformation laws, one anchor. Two quick checks (a scaling test and index balance) to rebuild any of them in seconds.
       - id: ch02-tensors
         title: Tensors as Multilinear Maps
         kind: concept

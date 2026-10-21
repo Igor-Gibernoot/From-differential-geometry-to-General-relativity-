@@ -15,7 +15,7 @@ import { themeButton } from './theme.js';
 // [{ id, title, own, keys, due }], due = the keys still new or due today.
 export async function recapCards(levelId) {
   const entries = (await allLessons()).filter(({ level, meta }) =>
-    meta.kind === 'concept' && meta.file && progress.lesson(meta.id)?.done && (!levelId || level.id === levelId));
+    ['concept', 'intuition'].includes(meta.kind) && meta.file && progress.lesson(meta.id)?.done && (!levelId || level.id === levelId));
   const cards = await Promise.all(entries.map(async ({ meta }) => {
     try {
       const { data } = await getLesson(meta.id);

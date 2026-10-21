@@ -46,13 +46,14 @@ Static web app on GitHub Pages (laptop and phone). Deploy = commit + push to
    (grep `DLC: PROOF`) and the Appendix B proofs.
 3. **Traps** (`kind: traps`): fast questions, each built on a common
    misconception.
-4. **End of every level:** **content map** (`kind: map`, rebuild the
+4. **Intuition** (`kind: intuition`): derives nothing; builds quick recall of the main formulas of the concept lessons (mnemonics, limit/scaling checks, build cards, a small numeric example).
+5. **End of every level:** **content map** (`kind: map`, rebuild the
    chapter's concept map box by box among decoys; start from the old TeX
    map and check it against the book), **level review** (`kind: review`,
    automatic), **level challenge** (`kind: challenge`, harder problems
    combining the level's concepts; built last).
    **Summaries show the math:** each `own:` bullet restates its main formulas (displayed, phone-safe), never only prose.
-5. **Review** is automatic: every question enters a spaced-repetition deck,
+6. **Review** is automatic: every question enters a spaced-repetition deck,
    so prompts, hints and feedback must be **self-contained**.
 
 ### How to teach a topic

@@ -24,7 +24,7 @@ levels:
     lessons:
       - id: ch02-change-of-basis        # must equal the lesson file's id
         title: Same Arrow, Different Numbers
-        kind: concept                   # concept | guided | traps | map | review | challenge
+        kind: concept                   # concept | intuition | guided | traps | map | review | challenge
         file: ch02/change-of-basis.yaml # omit → shown as a planned node
         summary: One or two sentences shown before starting.
   - { id: ch06, number: 6, title: Covariant Derivative, status: unwritten }

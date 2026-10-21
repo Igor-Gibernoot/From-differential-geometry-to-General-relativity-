@@ -4,6 +4,7 @@ const svg = body => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" 
 export const icons = {
   concept: svg('<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>'),
   guided: svg('<circle cx="5" cy="18" r="2"/><circle cx="19" cy="6" r="2"/><path d="M7 18h6a3 3 0 0 0 0-6h-2a3 3 0 0 1 0-6h6"/>'),
+  intuition: svg('<path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/>'),
   traps: svg('<path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17.5v.01"/>'),
   check: svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>'),
   cross: svg('<path d="M6 6l12 12M18 6 6 18"/>'),
@@ -27,6 +28,7 @@ export const icons = {
 
 export const KIND_LABEL = {
   concept: 'Concept lesson',
+  intuition: 'Intuition lesson',
   guided: 'Guided problem',
   traps: 'Trap round',
   map: 'Content map',

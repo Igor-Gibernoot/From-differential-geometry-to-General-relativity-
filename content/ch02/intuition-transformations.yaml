@@ -1,0 +1,293 @@
+id: ch02-intuition-transformations
+title: "Intuition: Which Law Gets J, Which Gets J⁻¹?"
+kind: intuition
+own: |
+  - **One anchor**, the dictionary old in terms of new:
+    {{ $$\hat{x}_i = \sum_j J_i^j\,\hat{y}_j .$$ }}
+    In $J_i^j$ the lower index is **old**, the upper index is **new**. In $(J^{-1})_k^m$ it is the other way round.
+  - **Lower-index objects follow the basis** (basis vectors, covector components):
+    {{ $$\hat{y}_k = \sum_m (J^{-1})_k^m\,\hat{x}_m$$ }}
+    {{ $$\mathtt{y}_k = \sum_m (J^{-1})_k^m\,\mathtt{x}_m$$ }}
+  - **Upper-index objects go against it** (vector components, dual basis):
+    {{ $$y^j = \sum_i J_i^j\,x^i$$ }}
+    {{ $$\hat{\mathfrak{y}}^j = \sum_i J_i^j\,\hat{\mathfrak{x}}^i$$ }}
+  - **Two checks**: the scaling test ($J = 2$ is a basis that halves: components double, covector components halve), and the index balance (a repeated index sits once up and once down, free indices keep their height).
+
+cards:
+  - type: text
+    id: hook
+    title: Four laws, one habit
+    body: |
+      By now you have met four transformation laws. Two bases are related by
+      $$\hat{x}_i = \sum_j J_i^j\,\hat{y}_j ,$$
+      and each of these objects changes with it:
+
+      - the **basis vectors** $\hat{y}_k$,
+      - the **dual basis** covectors $\hat{\mathfrak{y}}^j$,
+      - the **vector components** $y^j$,
+      - the **covector components** $\mathtt{y}_j$.
+
+      Some use $J$, some use $J^{-1}$, and re-deriving each one every time is slow. This lesson derives nothing. It gives you two quick checks that **rebuild any law in seconds** from the one line above.
+
+      Here $J$ is the dictionary that writes the **old** basis in terms of the **new** one. Remember that sentence: everything else follows from it.
+
+  - type: widget
+    id: playground
+    title: Feel it first
+    widget: basis-playground
+    config:
+      vector: [3, 2]
+      covector: [1, 4]
+      dual: 1
+      basis: [[1, 0], [0, 1]]
+      snap: 0.5
+      presets:
+        - { label: 'Half-size basis', basis: [[0.5, 0], [0, 0.5]] }
+        - { label: 'Shear', basis: [[1, 0], [-1, 1]] }
+    body: |
+      The fixed vector $\mathcal{X}$ and the fixed covector $\mathsf{X}$ (its orange level lines) never move. Drag the new basis, or press **Half-size basis**, and watch two groups of numbers.
+
+      The new basis **shrinks**. Which numbers grow, which shrink? Try the **Shear** too.
+
+  - type: mcq
+    id: scaling-vector
+    prompt: |
+      Take a one-dimensional space. The old basis vector is $\hat{x}_1$ and the new one is half as long, $\hat{y}_1 = \tfrac12\hat{x}_1$, so
+      $$\hat{x}_1 = 2\,\hat{y}_1 \quad\Rightarrow\quad J = 2 .$$
+      A vector has $x^1 = 6$ in the old basis. What is $y^1$?
+    options:
+      - text: '$y^1 = 12$'
+        correct: true
+      - text: '$y^1 = 3$'
+        feedback: |
+          Tempting: "the basis halved, so the number halves". But the arrow is fixed. Shorter rulers need **more** steps to cover the same length: $6\,\hat{x}_1 = 12\,\hat{y}_1$.
+      - text: '$y^1 = 6$'
+        feedback: |
+          Then $y^1\hat{y}_1 = 3\,\hat{x}_1 \ne 6\,\hat{x}_1$, so it would be a different arrow. The components must compensate for the basis.
+    explanation: |
+      $$\mathcal{X} = 6\,\hat{x}_1 = 6\cdot 2\,\hat{y}_1 = 12\,\hat{y}_1 .$$
+      **Scaling test, rule 1:** when the basis shrinks, vector components **grow**. Here $y^1 = J\,x^1$.
+
+  - type: numeric
+    id: scaling-covector
+    prompt: |
+      Same one-dimensional setup: $\hat{x}_1 = 2\,\hat{y}_1$ (the new basis vector is half as long). A covector $\mathsf{X}$ has component $\mathtt{x}_1 = \mathsf{X}(\hat{x}_1) = 3$. What is $\mathtt{y}_1 = \mathsf{X}(\hat{y}_1)$?
+    answer: 1.5
+    answerText: '1.5'
+    wrong:
+      - { value: 6, feedback: 'That is $J\,\mathtt{x}_1$, the vector-component law. A covector component is the value on a basis vector, and the new basis vector is **shorter**, so the value is smaller.' }
+      - { value: 3, feedback: 'The covector is fixed, but its component is its value on $\hat{y}_1$, and $\hat{y}_1 \neq \hat{x}_1$.' }
+    hint: '$\hat{y}_1 = \tfrac12\hat{x}_1$ and $\mathsf{X}$ is linear.'
+    explanation: |
+      $$\mathtt{y}_1 = \mathsf{X}(\tfrac12\hat{x}_1) = \tfrac12\cdot 3 = 1.5 .$$
+      **Scaling test, rule 2:** when the basis shrinks, covector components **shrink with it**. Here $\mathtt{y}_1 = J^{-1}\,\mathtt{x}_1$.
+
+  - type: numeric
+    id: scaling-dual
+    prompt: |
+      Same setup: $\hat{x}_1 = 2\,\hat{y}_1$. The dual basis covectors satisfy $\hat{\mathfrak{x}}^1(\hat{x}_1) = 1$ and $\hat{\mathfrak{y}}^1(\hat{y}_1) = 1$. Write $\hat{\mathfrak{y}}^1 = c\,\hat{\mathfrak{x}}^1$. What is $c$?
+    answer: 2
+    answerText: '2'
+    wrong:
+      - { value: 0.5, feedback: 'That would make $\hat{\mathfrak{y}}^1(\hat{y}_1) = \tfrac12\hat{\mathfrak{x}}^1(\tfrac12\hat{x}_1) = \tfrac14$, not $1$.' }
+    hint: 'Demand $\hat{\mathfrak{y}}^1(\hat{y}_1) = 1$ with $\hat{y}_1 = \tfrac12\hat{x}_1$.'
+    explanation: |
+      $c\,\hat{\mathfrak{x}}^1(\tfrac12\hat{x}_1) = \tfrac{c}{2} = 1$, so $c = 2$.
+      **Scaling test, rule 3:** when the basis shrinks, the dual basis **grows**. Here $\hat{\mathfrak{y}}^1 = J\,\hat{\mathfrak{x}}^1$.
+
+  - type: text
+    id: two-families
+    title: Two families
+    body: |
+      Put the four results side by side. Take $J = 2$ (new basis half as long), written *new from old*:
+
+      | object | index | new from old |
+      |---|---|---|
+      | basis vectors $\hat{y}_k$ | lower | shrink: $\times J^{-1}$ |
+      | covector components $\mathtt{y}_k$ | lower | shrink: $\times J^{-1}$ |
+      | vector components $y^j$ | upper | grow: $\times J$ |
+      | dual basis $\hat{\mathfrak{y}}^j$ | upper | grow: $\times J$ |
+
+      So there are **two families**:
+      - **Lower index: follows the basis.** Covector components are values $\mathsf{X}(\hat{x}_k)$ on the basis vectors, so they inherit the basis law.
+      - **Upper index: goes against the basis.** Vector components and the dual basis *undo* the basis change.
+
+      The index height is your memory aid: **lower follows, upper opposes.**
+
+  - type: mcq
+    id: why-opposite
+    prompt: |
+      Why must vector components and covector components transform with **opposite** matrices? Think of the number $\mathsf{X}(\mathcal{X}) = \sum_i \mathtt{x}_i\,x^i$, which is a physical measurement.
+    options:
+      - text: 'The number $\sum_i \mathtt{x}_i x^i$ must not depend on the basis, so one factor must cancel the other'
+        correct: true
+      - text: 'Because covectors live in $V^*$, which is a smaller space'
+        feedback: |
+          $V^*$ has the same dimension as $V$. The reason is about invariance, not size.
+      - text: 'Because $J$ is not invertible'
+        feedback: |
+          $J$ is always invertible for two bases of the same space. And it is the inverse that does the cancelling.
+    explanation: |
+      Check with $J = 2$ in one dimension, $x^1 = 6$, $\mathtt{x}_1 = 3$: the product is $18$. In the new basis $y^1 = 12$ and $\mathtt{y}_1 = 1.5$, and again $12\cdot 1.5 = 18$. If both had doubled, the product would be $72$, so a measurement would depend on the observer.
+
+  - type: mcq
+    id: sort-objects
+    prompt: |
+      A basis of $V$ is rescaled by a factor so that $J = 5$ (the old basis vectors are five times as long as the new ones). Select **all** objects whose components or members get **multiplied by 5** when passing from old to new.
+    multiple: true
+    options:
+      - text: 'the components $y^j$ of a fixed vector'
+        correct: true
+      - text: 'the dual basis covectors $\hat{\mathfrak{y}}^j$'
+        correct: true
+      - text: 'the components $\mathtt{y}_j$ of a fixed covector'
+        feedback: |
+          Covector components follow the **basis**, and the new basis vectors are five times shorter: they get divided by 5.
+      - text: 'the basis vectors $\hat{y}_j$'
+        feedback: |
+          The new basis vectors are $\tfrac15$ of the old ones. They shrink, they do not grow.
+    explanation: |
+      Upper-index objects ($y^j$, $\hat{\mathfrak{y}}^j$) take $J$ going to the new basis. Lower-index objects ($\hat{y}_j$, $\mathtt{y}_j$) take $J^{-1}$.
+
+  - type: text
+    id: index-balance
+    title: Second check, with symbols
+    body: |
+      Scaling only works for a pure rescaling. For a general $J$, let the **indices** decide.
+
+      In $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$, the index $i$ names an **old** basis vector and $j$ a **new** one. So in $J_i^j$:
+      $$\text{lower index} = \text{old},\qquad \text{upper index} = \text{new}.$$
+      For the inverse matrix it flips: in $(J^{-1})_k^m$ the lower index $k$ is **new** and the upper index $m$ is **old**.
+
+      Now a law writes itself. Take the covector components $\mathtt{y}_j$ (new, lower $j$) in terms of $\mathtt{x}_l$ (old, lower $l$). Two rules:
+      - the repeated (summed) index appears once up, once down;
+      - the free index $j$ keeps its height.
+
+      The summed index $l$ sits **down** on $\mathtt{x}_l$, so on the matrix it must be **up**, and it must be an old index. The matrix needs "upper = old, lower = new", which is $(J^{-1})_j^l$:
+      $$\mathtt{y}_j = \sum_l (J^{-1})_j^l\,\mathtt{x}_l .$$
+
+  - type: mcq
+    id: which-matrix
+    prompt: |
+      We write a **vector component** law, new from old: $y^j = \sum_i M_i^j\,x^i$, where the matrix $M$ is either $J$ or $J^{-1}$. In $J_i^j$ the lower index is old and the upper is new; in $(J^{-1})_i^j$ it is the other way round. Here $i$ is summed with $x^i$ (an **old** component) and $j$ is the **new** index. Which matrix fits?
+    options:
+      - text: '$M = J$: its lower index $i$ is old and its upper index $j$ is new'
+        correct: true
+      - text: '$M = J^{-1}$'
+        feedback: |
+          For $J^{-1}$ the lower index would be **new**, but here the lower index $i$ is contracted with the old component $x^i$.
+    explanation: |
+      $$y^j = \sum_i J_i^j\,x^i .$$
+      The same answer as the scaling test gave: vector components take $J$.
+
+  - type: build
+    id: build-vec
+    prompt: 'Build the law for **vector components**, new from old. Let the indices decide.'
+    prefix: 'y^j ='
+    tiles: ['\sum_i', 'J_i^j', '(J^{-1})_j^i', 'x^i', '\mathtt{x}_i']
+    answers:
+      - ['\sum_i', 'J_i^j', 'x^i']
+      - ['\sum_i', 'x^i', 'J_i^j']
+    wrong:
+      - answer: ['\sum_i', '(J^{-1})_j^i', 'x^i']
+        feedback: |
+          Scaling test: the new basis shrinks ($J = 2$), so components must grow. $J^{-1}$ would make them shrink.
+    hint: 'Scaling test: if the basis halves, do components double or halve?'
+    explanation: |
+      $$y^j = \sum_i J_i^j\,x^i .$$
+
+  - type: build
+    id: build-cov
+    prompt: 'Build the law for **covector components**, new from old.'
+    prefix: '\mathtt{y}_j ='
+    tiles: ['\sum_l', '(J^{-1})_j^l', 'J_l^j', '\mathtt{x}_l', 'x^l']
+    answers:
+      - ['\sum_l', '(J^{-1})_j^l', '\mathtt{x}_l']
+      - ['\sum_l', '\mathtt{x}_l', '(J^{-1})_j^l']
+    wrong:
+      - answer: ['\sum_l', 'J_l^j', '\mathtt{x}_l']
+        feedback: |
+          Scaling test: with $J = 2$ the covector component must **halve** (the value on a shorter vector). This law doubles it, as for vector components.
+    hint: 'Lower index follows the basis: the new basis is $J^{-1}$ times the old one.'
+    explanation: |
+      $$\mathtt{y}_j = \sum_l (J^{-1})_j^l\,\mathtt{x}_l .$$
+      The same matrix as for the basis vectors, $\hat{y}_j = \sum_l (J^{-1})_j^l\,\hat{x}_l$.
+
+  - type: build
+    id: build-dual
+    prompt: 'Build the **dual basis** covector $\hat{\mathfrak{y}}^j$ in terms of the old dual basis.'
+    prefix: '\hat{\mathfrak{y}}^j ='
+    tiles: ['\sum_i', 'J_i^j', '(J^{-1})_j^i', '\hat{\mathfrak{x}}^i', '\hat{x}_i']
+    answers:
+      - ['\sum_i', 'J_i^j', '\hat{\mathfrak{x}}^i']
+      - ['\sum_i', '\hat{\mathfrak{x}}^i', 'J_i^j']
+    wrong:
+      - answer: ['\sum_i', '(J^{-1})_j^i', '\hat{\mathfrak{x}}^i']
+        feedback: |
+          Upper index: goes **against** the basis. With $J = 2$ the dual covector must double, which needs $J$.
+    hint: 'Upper-index objects take $J$ going to the new basis.'
+    explanation: |
+      $$\hat{\mathfrak{y}}^j = \sum_i J_i^j\,\hat{\mathfrak{x}}^i .$$
+      Same matrix as for vector components: the dual basis is what **extracts** components.
+
+  - type: mcq
+    id: catch-error
+    prompt: |
+      A classmate writes the covector law as $\mathtt{y}_j = \sum_l J_l^j\,\mathtt{x}_l$. Which check shows fastest that it is wrong?
+    options:
+      - text: 'Scaling test with $J = 2$: a covector component should halve, but this law doubles it'
+        correct: true
+      - text: 'Compute $\det J$'
+        feedback: |
+          $\det J$ is one number about the whole change of basis. It cannot tell whether a given law uses $J$ or $J^{-1}$.
+      - text: 'Transpose the matrix'
+        feedback: |
+          Transposing swaps the roles of the indices, but the scaling test (a $1\times1$ matrix, where transposing does nothing) already shows the error.
+    explanation: |
+      Also the index check: the summed index $l$ is lower on $\mathtt{x}_l$, so it must be upper on the matrix. $J_l^j$ has it lower. Two independent checks reject it.
+
+  - type: numeric
+    id: shear-vec
+    prompt: |
+      A shear: the bases are related by
+      $$\hat{x}_1 = \hat{y}_1,\qquad \hat{x}_2 = \hat{y}_1 + \hat{y}_2 .$$
+      So $J_1^1 = 1$, $J_1^2 = 0$, $J_2^1 = 1$, $J_2^2 = 1$. A vector has old components $(x^1, x^2) = (3, 2)$. Use $y^j = \sum_i J_i^j\,x^i$ to find $y^1$.
+    answer: 5
+    answerText: '5'
+    wrong:
+      - { value: 3, feedback: 'You dropped the term $J_2^1\,x^2 = 1\cdot 2$. Both old components contribute to $y^1$.' }
+    hint: '$y^1 = J_1^1\,x^1 + J_2^1\,x^2$.'
+    explanation: |
+      $$y^1 = 1\cdot 3 + 1\cdot 2 = 5 .$$
+      Likewise $y^2 = 0\cdot 3 + 1\cdot 2 = 2$.
+      Direct check: $3\hat{x}_1 + 2\hat{x}_2 = 3\hat{y}_1 + 2(\hat{y}_1 + \hat{y}_2) = 5\hat{y}_1 + 2\hat{y}_2$.
+
+  - type: numeric
+    id: shear-cov
+    prompt: |
+      Same shear: $\hat{y}_1 = \hat{x}_1$ and $\hat{y}_2 = \hat{x}_2 - \hat{x}_1$. A covector has old components $(\mathtt{x}_1, \mathtt{x}_2) = (1, 4)$. Using $\mathtt{y}_j = \mathsf{X}(\hat{y}_j)$ and linearity, find $\mathtt{y}_2$.
+    answer: 3
+    answerText: '3'
+    wrong:
+      - { value: 5, feedback: 'You added $\mathtt{x}_1$ instead of subtracting: $\hat{y}_2 = \hat{x}_2 - \hat{x}_1$.' }
+    hint: '$\mathsf{X}(\hat{x}_2 - \hat{x}_1) = \mathtt{x}_2 - \mathtt{x}_1$.'
+    explanation: |
+      $$\mathtt{y}_2 = \mathtt{x}_2 - \mathtt{x}_1 = 4 - 1 = 3,\qquad \mathtt{y}_1 = \mathtt{x}_1 = 1 .$$
+      This is $\mathtt{y}_j = \sum_l (J^{-1})_j^l\,\mathtt{x}_l$ with $\hat{y}_2 = -\hat{x}_1 + \hat{x}_2$.
+
+  - type: numeric
+    id: shear-pairing
+    prompt: |
+      In the same shear the vector has new components $(y^1, y^2) = (5, 2)$ and the covector has new components $(\mathtt{y}_1, \mathtt{y}_2) = (1, 3)$. Compute the measurement
+      $$\mathsf{X}(\mathcal{X}) = \mathtt{y}_1\,y^1 + \mathtt{y}_2\,y^2 .$$
+    answer: 11
+    answerText: '11'
+    hint: 'Compare with the old basis: $1\cdot 3 + 4\cdot 2$.'
+    explanation: |
+      $$1\cdot 5 + 3\cdot 2 = 11 = 1\cdot 3 + 4\cdot 2 .$$
+      Same number in both bases: the $J$ and $J^{-1}$ cancel inside the pairing, which is exactly why the two families go in opposite directions.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** tensors. A tensor with several indices collects **one factor per index**, a $J$ for each upper index and a $J^{-1}$ for each lower one, and you now know which is which.

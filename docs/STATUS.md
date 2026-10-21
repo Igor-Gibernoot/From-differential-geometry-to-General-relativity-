@@ -7,6 +7,7 @@ append a short entry at the end of **Log** (a few lines, ending with
 
 ## Current (2026-10-21, Chapter 10 started: widgets `light-cones`, `worldline-clock`, `observer-frame`, `ch10-spacetime`, `ch10-worldlines`, `ch10-observers`; widget `area-cell` built and used in `ch08-metric-volume`; next: `ch10-lorentz`)
 
+- **Intuition lessons (`kind: intuition`)**: a new lesson class that derives nothing; it builds quick recall of the main expressions of the concept lessons (a mnemonic, scaling/limit checks, build cards, one small numeric example), with `own:` summary and Recap like a concept lesson. First one: `ch02-intuition-transformations` (J vs J⁻¹: anchor $hat{x}_i = sum_j J_i^jhat{y}_j$; lower index follows the basis, upper goes against; scaling test and index balance). Add more later for other chapters' formulas.
 - **Summary rule (`own:`):** the final "what you now own" card restates the lesson's main formulas as math (displayed `$$...$$`, phone-safe, long ones split), not prose. Fixed 2026-10-21 in ch02 tensors/change-of-basis, ch03 homeomorphisms/hausdorff/charts/standard-topology, ch04 tangent-space/tensor-space, ch05 tensor-fields.
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -472,6 +473,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-21 — new lesson kind `intuition`, first lesson `ch02-intuition-transformations` (18 cards)
+- Engine: kind registered in validate (own: allowed), icons/KIND_LABEL (lightning icon, "Intuition lesson"), recap includes it. Placed in ch02 before `ch02-tensors`.
+- Conventions fixed here: new-from-old, upper-index objects ($y^j$, $hat{mathfrak{y}}^j$) take $J$, lower-index ($hat{y}_j$, $mathtt{y}_j$) take $J^{-1}$; in $J_i^j$ lower = old, upper = new.
+
 ### 2026-10-21 — `area-cell` cards in `ch08-metric-volume` (22 → 31 cards)
 - Added: `hook-widget` (sphere, no parallelogram/exact rows: drag $p$ to the pole) + MCQ `pole-cell` (cell at $\vartheta = 0.3$ is about $0.3\Delta^2$); after `polar-density`: `polar-widget` (presets far out $r = 2.5$, near origin $r = 0.4$; ring sector $= r\Delta^2$ derived), numeric `polar-cell` ($r = 2.5$, $\Delta = 0.2$: $0.1$), text `gram` (area$^2 = |u|^2|w|^2 - g(u,w)^2 = \det g\,\Delta^4$, Riemannian), `sheared-widget` ($\Delta = 0.75$), MCQ `side-product` (equal iff $g_{12} = 0$; rhombus $g_{12} = \tfrac12$ gives $0.87$); after `sphere`: numeric `sphere-ratio` (prediction $\sin(\pi/3) = 0.866$) then `sphere-widget` (presets Equator, Near the pole, Δ small). New `own:` bullet "What the root measures" (no blanks; existing blanks untouched).
 - Validate 0/0, shots 0 problems; all four widget configs viewed.

@@ -45,7 +45,7 @@ function checkText(where, text) {
 // Self-contained check: review shows a question alone, weeks later.
 const BACKREF = /\b(previous|last) (card|step|lesson|question)|\bin the (last|previous) lesson|\bas (shown|seen) above/i;
 
-const KINDS = ['concept', 'guided', 'traps', 'map', 'review', 'challenge'];
+const KINDS = ['concept', 'intuition', 'guided', 'traps', 'map', 'review', 'challenge'];
 const course = yaml.load(readFileSync(join(root, 'content/course.yaml'), 'utf8'));
 const lessonIds = new Set();
 let built = 0, cardsTotal = 0;
@@ -110,7 +110,7 @@ function checkMap(file, m) {
 function checkOwn(file, lesson) {
   const w = `${file} own`;
   if (typeof lesson.own !== 'string') return err(w, 'own must be a Markdown string (use a | block)');
-  if (lesson.kind !== 'concept') warn(w, 'own: is meant for concept lessons');
+  if (!['concept', 'intuition'].includes(lesson.kind)) warn(w, 'own: is meant for concept and intuition lessons');
   checkText(w, lesson.own);
   const { parts, errors } = ownParts(lesson.own);
   for (const e of errors) err(w, e);
