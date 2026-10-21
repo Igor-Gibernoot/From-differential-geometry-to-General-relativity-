@@ -1,0 +1,387 @@
+id: ch08-map
+title: "Content Map: Integrals"
+kind: map
+name: Chapter 8, Integrals
+
+intro: |
+  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition. An arrow goes from a concept to a concept built on it, and its label says how; read it as a sentence, for example "scalar density *change chart* density law", "partition of unity *glue pieces* integral over the manifold" or "determinant of the metric *square root* metric volume form".
+
+  You will rebuild the Chapter 8 map one box at a time, starting from the problem that opens the level: on a manifold $\mathcal{M}$, integrating the chart representative of a function gives a different number in every chart. For each glowing box, pick the card that belongs there. The other cards look alike but each hides a classic mistake of this level, so read the details.
+
+  Tap a finished box at any time to reread its card.
+
+cols: 3
+nodes:
+  - id: problem
+    title: "Integrals depend on the chart"
+    row: 1
+    col: 1
+    body: |
+      Integrating a chart representative is not a property of the region. The unit disc in the plane, cartesian coordinates $(a,b)$:
+      $$\iint da\,db = \pi.$$
+      The same disc in polar coordinates $(r,\theta)$, $0<r<1$, $-\pi<\theta<\pi$:
+      $$\iint dr\,d\theta = 2\pi.$$
+      Same region, same function $1$, two answers.
+    decoys:
+      - body: |
+          Integrating a chart representative is a property of the region. The unit disc in the plane, cartesian coordinates $(a,b)$:
+          $$\iint da\,db = \pi.$$
+          The same disc in polar coordinates $(r,\theta)$, $0<r<1$, $-\pi<\theta<\pi$, gives $\iint dr\,d\theta = \pi$ too: the integral of $1$ is the area, in every chart.
+        feedback: |
+          Compute it: $\int_0^1dr = 1$ and $\int_{-\pi}^{\pi}d\theta = 2\pi$, so $\iint dr\,d\theta = 2\pi$. The coordinate rectangle $(0,1)\times(-\pi,\pi)$ has area $2\pi$, not the disc's $\pi$. The integral of a representative measures the region **in the chart's coordinates**, and that depends on the chart.
+      - body: |
+          Integrating a chart representative seems to depend on the chart: the unit disc has $\iint da\,db = \pi$ in cartesian coordinates but $\iint dr\,d\theta = 2\pi$ in polar coordinates. The difference comes from the cut $\{b = 0, a\le0\}$, which the polar chart leaves out; including it would restore $\pi$.
+        feedback: |
+          The cut is a segment: it has zero area and changes no integral. The real cause is that a small polar patch $\Delta r\,\Delta\theta$ is an actual region of area about $r\,\Delta r\,\Delta\theta$: the Jacobian determinant $r$ is missing from $\iint dr\,d\theta$.
+    explanation: |
+      The problem that opens the level. The arrow reads "explained by": the change of variables theorem says exactly which factor is missing.
+
+  - id: cov
+    title: "Change of variables"
+    row: 2
+    col: 2
+    body: |
+      Going from coordinates $\beta$ of $\mathscr{Y}$ to coordinates $\alpha$ of $\mathscr{X}$, with $d^d\alpha := d\alpha^1\cdots d\alpha^d$,
+      $$d^d\alpha = d^d\beta\,\big|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}(\beta)\big|,$$
+      where $(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j = \partial\mathscr{X}^i/\partial\mathscr{Y}^j$, the Jacobian of $\mathscr{X}\circ\mathscr{Y}^{-1}$. Polar: $\det = r$, and $\iint r\,dr\,d\theta = \pi$.
+    decoys:
+      - body: |
+          Going from coordinates $\beta$ of $\mathscr{Y}$ to coordinates $\alpha$ of $\mathscr{X}$, with $d^d\alpha := d\alpha^1\cdots d\alpha^d$,
+          $$d^d\alpha = d^d\beta\,\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}(\beta),$$
+          where $(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j = \partial\mathscr{X}^i/\partial\mathscr{Y}^j$, the Jacobian of $\mathscr{X}\circ\mathscr{Y}^{-1}$. Polar: $\det = r$, and $\iint r\,dr\,d\theta = \pi$.
+        feedback: |
+          Ordinary integrals of positive functions are positive, so the factor is the **absolute value**. Take the linear chart $a = s+2t$, $b = 3s+t$: its Jacobian determinant is $1\cdot1-2\cdot3 = -5$, yet the unit square in $(s,t)$ is a parallelogram of area $5$, not $-5$. The sign of the determinant is exactly what orientation will take care of.
+      - body: |
+          Going from coordinates $\beta$ of $\mathscr{Y}$ to coordinates $\alpha$ of $\mathscr{X}$, with $d^d\alpha := d\alpha^1\cdots d\alpha^d$,
+          $$d^d\alpha = d^d\beta\,\big|\det\text{ᛞ}_{\mathcal{V}\mathcal{U}}\big|,$$
+          where $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j = \partial\mathscr{Y}^i/\partial\mathscr{X}^j$, the Jacobian of $\mathscr{Y}\circ\mathscr{X}^{-1}$.
+        feedback: |
+          That is the Jacobian in the wrong direction. Rewriting $d^d\alpha$ needs the derivatives of the **old** coordinates with respect to the **new** ones, $\partial\mathscr{X}^i/\partial\mathscr{Y}^j$. In polar, $\partial(r,\theta)/\partial(a,b)$ has determinant $1/r$, which would give $\iint\tfrac1r\,dr\,d\theta$ for the unit disc: divergent, not $\pi$.
+    explanation: |
+      The tool behind the problem. Its factor $|\det|$ must be cancelled by something that changes with the chart in the opposite way: a volume form.
+
+  - id: volume
+    title: 'Volume form $\Omega$'
+    row: 3
+    col: 3
+    body: |
+      A $(0,d)$-tensor field $\Omega$ on a $d$-dimensional manifold with
+      1. **nowhere zero**: $\Omega_p\neq0$ for every $p$;
+      2. **totally antisymmetric**: exchanging any two arguments flips the sign.
+
+      So $\Omega(\mathcal{X},\mathcal{X},\dots) = 0$: a signed volume of the parallelepiped spanned by the inputs. **No metric is needed.** Example: $\Omega_{\mathrm{E}} := dx^1\otimes dx^2 - dx^2\otimes dx^1$ on the plane.
+    decoys:
+      - body: |
+          A $(0,d)$-tensor field $\Omega$ on a $d$-dimensional manifold with
+          1. **nowhere zero**: $\Omega_p\neq0$ for every $p$;
+          2. **totally symmetric**: exchanging any two arguments leaves the value unchanged.
+
+          So $\Omega(\mathcal{X},\mathcal{Y},\dots)$ is the volume of the parallelepiped spanned by the inputs. No metric is needed. Example: $dx^1\otimes dx^2 + dx^2\otimes dx^1$ on the plane.
+        feedback: |
+          A volume must vanish when two edges coincide: a parallelogram with both sides equal to $\mathcal{X}$ is flat. Antisymmetry gives $\Omega(\mathcal{X},\mathcal{X}) = -\Omega(\mathcal{X},\mathcal{X}) = 0$; symmetry does not. The symmetric example even gives $\Omega(\partial x_1,\partial x_1) = 0$ but $\Omega(\partial x_1+\partial x_2,\partial x_1+\partial x_2) = 2$.
+      - body: |
+          A $(0,d)$-tensor field $\Omega$ on a $d$-dimensional **metric** manifold, defined from the metric $g$:
+          1. **nowhere zero**: $\Omega_p\neq0$ for every $p$;
+          2. **totally antisymmetric**: exchanging any two arguments flips the sign.
+
+          Without a metric there are no volumes, so no volume form. Example: $\Omega_{\mathrm{E}}$, built from the Euclidean metric.
+        feedback: |
+          Both conditions only use tensors and their antisymmetry: no lengths or angles appear. $\Omega_{\mathrm{E}} := dx^1\otimes dx^2 - dx^2\otimes dx^1$ is written with the cobasis alone, and $2\Omega_{\mathrm{E}}$ is just as good a volume form. A metric only **picks one** volume form among many, at the end of the level.
+    explanation: |
+      The object that will carry the determinant. In a chart its components have a rigid pattern, described by the Levi-Civita symbol.
+
+  - id: eps
+    title: 'Levi-Civita symbol $\varepsilon$'
+    row: 3
+    col: 1
+    body: |
+      The array $\varepsilon_{i_1\dots i_d} = \varepsilon^{i_1\dots i_d}$ with $\varepsilon_{1\dots d} = 1$, totally antisymmetric: $0$ on a repeated index, else the sign of the permutation. The **same array in every chart**: a symbol, not a tensor. Determinant (row $i$, column $j$):
+      $$\det(T^i_j) = \varepsilon_{i_1\dots i_d}T^{i_1}_1\cdots T^{i_d}_d$$
+      Check: $\det\begin{pmatrix}2&1\\3&4\end{pmatrix} = 8-3 = 5$.
+    decoys:
+      - body: |
+          The array $\varepsilon_{i_1\dots i_d} = \varepsilon^{i_1\dots i_d}$ with $\varepsilon_{1\dots d} = 1$, totally antisymmetric: $0$ on a repeated index, else the sign of the permutation. It is a **$(0,d)$-tensor field**, whose components are $\varepsilon$ in every chart. Determinant (row $i$, column $j$):
+          $$\det(T^i_j) = \varepsilon_{i_1\dots i_d}T^{i_1}_1\cdots T^{i_d}_d$$
+        feedback: |
+          No tensor field can have components $\varepsilon$ in every chart. Take the one with components $\varepsilon$ in the cartesian chart of the plane and pass to the scaled chart $\mathscr{S}(a,b) = (3a,3b)$: its components become $\det(\partial\mathscr{X}^i/\partial\mathscr{S}^j)\,\varepsilon = \tfrac19\varepsilon$. $\varepsilon$ is a fixed array of numbers, the same in every chart, which is why it is a symbol.
+      - body: |
+          The array $\varepsilon_{i_1\dots i_d} = \varepsilon^{i_1\dots i_d}$, the same in every chart: $0$ on a repeated index, else $1$. Determinant (row $i$, column $j$):
+          $$\det(T^i_j) = \varepsilon_{i_1\dots i_d}T^{i_1}_1\cdots T^{i_d}_d$$
+          Check: $\det\begin{pmatrix}2&1\\3&4\end{pmatrix} = 5$.
+        feedback: |
+          Without the signs the formula gives a permanent, not a determinant. For $\begin{pmatrix}2&1\\3&4\end{pmatrix}$ it would be $\varepsilon_{12}T^1_1T^2_2+\varepsilon_{21}T^2_1T^1_2 = 8+3 = 11$, not $5$. The symbol is **totally antisymmetric**, $\varepsilon_{21} = -1$: odd permutations count with a minus sign.
+    explanation: |
+      A tool (dashed arrow): it fixes the pattern of a volume form's components and turns the transformation of those components into a determinant.
+
+  - id: components
+    title: 'Scalar density $\omega_\mathscr{X}$'
+    row: 4
+    col: 2
+    body: |
+      In a chart $(\mathcal{U},\mathscr{X})$ the components of $\Omega$ are a totally antisymmetric array, so
+      $$(\Omega_\mathscr{X})_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X},$$
+      with the **scalar density** $\omega_\mathscr{X} := \Omega(\partial x_1,\dots,\partial x_d)$. Every component is $\pm\omega_\mathscr{X}$ or $0$, so $\Omega_p\neq0$ means $\omega_\mathscr{X}(p)\neq0$. $\Omega_{\mathrm{E}}$: $\omega_\mathscr{X} = 1$.
+    decoys:
+      - body: |
+          In a chart $(\mathcal{U},\mathscr{X})$ the components of $\Omega$ are all equal,
+          $$(\Omega_\mathscr{X})_{i_1\dots i_d} = \omega_\mathscr{X},$$
+          with the **scalar density** $\omega_\mathscr{X} := \Omega(\partial x_1,\dots,\partial x_d)$, so $\Omega_p\neq0$ means $\omega_\mathscr{X}(p)\neq0$. $\Omega_{\mathrm{E}}$: $\omega_\mathscr{X} = 1$.
+        feedback: |
+          Antisymmetry forbids equal components: exchanging two indices flips the sign, and a repeated index gives $0$. For $\Omega_{\mathrm{E}}$, $(\Omega_{\mathrm{E}})_{12} = 1$, $(\Omega_{\mathrm{E}})_{21} = -1$, $(\Omega_{\mathrm{E}})_{11} = 0$: the pattern of $\varepsilon$ times one number.
+      - body: |
+          In a chart $(\mathcal{U},\mathscr{X})$ the components of $\Omega$ are a totally antisymmetric array, so
+          $$(\Omega_\mathscr{X})_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X},$$
+          with the **scalar density** $\omega_\mathscr{X} := \Omega(\partial x_1,\dots,\partial x_d)$, which may vanish at some points of $\mathcal{U}$ as long as another component of $\Omega$ is nonzero there.
+        feedback: |
+          There is no other component to rescue it: every component is $\varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X}$, that is $\pm\omega_\mathscr{X}$ or $0$. Where $\omega_\mathscr{X}(p) = 0$ all components vanish and $\Omega_p = 0$, which a volume form forbids. So $\omega_\mathscr{X}$ is nonzero on all of $\mathcal{U}$.
+    explanation: |
+      One function per chart carries the whole volume form. The next question is how that function changes from chart to chart.
+
+  - id: law
+    title: "Density law"
+    row: 5
+    col: 3
+    body: |
+      On an overlap, by the determinant formula of $\varepsilon$,
+      $$\omega_\mathscr{Y} = \det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)\,\omega_\mathscr{X}.$$
+      So $\omega_\mathscr{X}$ is **not a scalar field**: $\Omega_{\mathrm{E}}$ has $\omega = 1$ in cartesian, $r$ in polar. Against $d^d\alpha$ it leaves only $|\det|/\det = \pm1$, the resolution of the disc ($\iint r\,dr\,d\theta = \pi$).
+    decoys:
+      - body: |
+          On an overlap the scalar density is a **scalar field**, the same value at a point in every chart:
+          $$\omega_\mathscr{Y} = \omega_\mathscr{X}.$$
+          $\Omega_{\mathrm{E}}$ has $\omega = 1$ in cartesian and in polar coordinates.
+        feedback: |
+          Compute it: in polar, $\omega_\mathscr{Y} = \Omega_{\mathrm{E}}(\partial r,\partial\theta)$, and with $\partial r = (\cos\theta,\sin\theta)$, $\partial\theta = (-r\sin\theta,r\cos\theta)$ in cartesian components this is $r\cos^2\theta+r\sin^2\theta = r$, not $1$. The name "scalar density" says it: one function per chart, changing by a Jacobian determinant.
+      - body: |
+          On an overlap, by the determinant formula of $\varepsilon$,
+          $$\omega_\mathscr{Y} = \Big|\det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)\Big|\,\omega_\mathscr{X}.$$
+          So $\omega_\mathscr{X}$ is not a scalar field: $\Omega_{\mathrm{E}}$ has $\omega = 1$ in cartesian, $r$ in polar, and $1$ in the mirror chart $\mathscr{Z}(a,b) = (a,-b)$.
+        feedback: |
+          Components of a tensor are linear in each basis vector, so no absolute value can appear. In the mirror chart $\partial z_2 = -\partial x_2$, so $\omega_\mathscr{Z} = \Omega_{\mathrm{E}}(\partial x_1,-\partial x_2) = -1$, matching $\det = -1$. This sign is what orientation controls.
+    explanation: |
+      The heart of the level: the density changes by $\det$, the integral by $|\det|$. They cancel exactly when the determinant is positive.
+
+  - id: oriented
+    title: 'Oriented atlas $\mathcal{A}^\uparrow$'
+    row: 6
+    col: 2
+    body: |
+      Charts covering $\mathcal{M}$ with, on every overlap and at every point,
+      $$\det\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big) > 0$$
+      (symmetric: the two determinants multiply to $1$). **Orientable** = admits one; $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow)$ is an oriented manifold. A volume form orients: the charts with $\omega_\mathscr{X}>0$ form an oriented atlas. $\{\mathscr{X}\}$ and $\{\mathscr{Z}\}$ are oriented, $\{\mathscr{X},\mathscr{Z}\}$ is not.
+    decoys:
+      - body: |
+          Charts covering $\mathcal{M}$ with, on every overlap and at every point,
+          $$\det\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)\neq0.$$
+          **Orientable** = admits one; $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow)$ is an oriented manifold. $\{\mathscr{X}\}$, $\{\mathscr{Z}\}$ and $\{\mathscr{X},\mathscr{Z}\}$ are all oriented.
+        feedback: |
+          A nonzero determinant holds in **every** atlas: transition maps are smooth with smooth inverses, so their Jacobians are invertible. It would make every manifold oriented, Möbius strip included. The cartesian chart $\mathscr{X}$ and the mirror $\mathscr{Z}(a,b) = (a,-b)$ have determinant $-1$ and flip the sign of every integral: they cannot share an oriented atlas.
+      - body: |
+          Charts covering $\mathcal{M}$ with, on every overlap, a positive Jacobian determinant **at one point** of the overlap,
+          $$\det\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)(p_0) > 0,$$
+          since a nonzero continuous determinant cannot change sign. **Orientable** = admits one.
+        feedback: |
+          "Cannot change sign" holds only on a **connected** overlap. On $\mathbb{R}$ take $\mathscr{X} = p$ and a chart $\mathscr{Y}$ with $\mathscr{Y} = p$ on $(1,2)$ but $\mathscr{Y} = -p-10$ on $(-2,-1)$: the overlap has two pieces, with $\det = +1$ on one and $-1$ on the other. The condition must hold at every point.
+    explanation: |
+      The structure that fixes the sign. Inside an oriented atlas $|\det|/\det = +1$, so an integral can be defined in one chart and agree in all of them.
+
+  - id: onechart
+    title: "Integral in one chart"
+    row: 7
+    col: 1
+    body: |
+      Oriented manifold with $\Omega$, $(\mathcal{U},\mathscr{X})\in\mathcal{A}^\uparrow$, $f$ smooth, $\mathcal{D}\subseteq\mathcal{U}$ open with closure $\overline{\mathcal{D}}$ **compact and inside $\mathcal{U}$**:
+      $$\begin{aligned}\int_\mathcal{D}\Omega f :=&\int_{\mathscr{X}(\mathcal{D})}d^d\alpha\,(\omega_\mathscr{X}\circ\mathscr{X}^{-1})\\ &\qquad\cdot(f\circ\mathscr{X}^{-1})\end{aligned}$$
+      The same in every chart of $\mathcal{A}^\uparrow$ containing $\overline{\mathcal{D}}$. Quarter annulus $1<r<2$, $0<\theta<\tfrac\pi2$, $\Omega_{\mathrm{E}}$, $f = 1$: $\tfrac{3\pi}4$.
+    decoys:
+      - body: |
+          Oriented manifold with $\Omega$, $(\mathcal{U},\mathscr{X})\in\mathcal{A}^\uparrow$, $f$ smooth, $\mathcal{D}\subseteq\mathcal{U}$ **any open set**:
+          $$\begin{aligned}\int_\mathcal{D}\Omega f :=&\int_{\mathscr{X}(\mathcal{D})}d^d\alpha\,(\omega_\mathscr{X}\circ\mathscr{X}^{-1})\\ &\qquad\cdot(f\circ\mathscr{X}^{-1})\end{aligned}$$
+          The same in every chart of $\mathcal{A}^\uparrow$ containing $\mathcal{D}$.
+        feedback: |
+          Without the closure condition the integral can diverge. On $\mathbb{R}$ with density $1$ and $f = 1$, the open set $\mathcal{D} = (0,\infty)$ gives $\int_0^\infty d\alpha = \infty$. Asking $\overline{\mathcal{D}}$ to be compact (closed and bounded in $\mathbb{R}^d$) and inside $\mathcal{U}$ makes the integral an ordinary one over a bounded region where the density is smooth.
+      - body: |
+          Smooth manifold with $\Omega$, $(\mathcal{U},\mathscr{X})$ **any chart**, $f$ smooth, $\mathcal{D}\subseteq\mathcal{U}$ open with closure $\overline{\mathcal{D}}$ compact and inside $\mathcal{U}$:
+          $$\begin{aligned}\int_\mathcal{D}\Omega f :=&\int_{\mathscr{X}(\mathcal{D})}d^d\alpha\,(\omega_\mathscr{X}\circ\mathscr{X}^{-1})\\ &\qquad\cdot(f\circ\mathscr{X}^{-1})\end{aligned}$$
+          The same in every chart containing $\overline{\mathcal{D}}$.
+        feedback: |
+          The change of variables brings $|\det|$, the density law brings $\det$; they cancel only when $\det>0$. The quarter annulus with $\Omega_{\mathrm{E}}$ and $f = 1$ gives $\tfrac{3\pi}4$ in the cartesian chart but $-\tfrac{3\pi}4$ in the mirror chart $\mathscr{Z}(a,b) = (a,-b)$, whose density is $-1$. The chart must belong to the oriented atlas.
+    explanation: |
+      The first chart-independent integral. It only reaches functions living inside one chart domain; going further needs supports and partitions of unity.
+
+  - id: support
+    title: 'Support $\mathrm{supp}\,f$'
+    row: 8
+    col: 3
+    body: |
+      The closure of the set where $f$ is nonzero,
+      $$\mathrm{supp}\,f := \overline{\{p\in\mathcal{M}\mid f(p)\neq0\}},$$
+      outside which $f$ vanishes. Vanishing at a point does not keep the point out: $\mathrm{supp}\,a^2 = \mathbb{R}^2$. **Compact support**: $\mathrm{supp}\,f$ compact, so $f$ vanishes outside a closed bounded piece.
+    decoys:
+      - body: |
+          The set where $f$ is nonzero,
+          $$\mathrm{supp}\,f := \{p\in\mathcal{M}\mid f(p)\neq0\},$$
+          outside which $f$ vanishes. So $\mathrm{supp}\,a^2$ is the plane minus the line $a = 0$. **Compact support**: $\mathrm{supp}\,f$ compact.
+        feedback: |
+          The support takes the **closure**. Without it, the set where $f\neq0$ is open, and an open set in $\mathbb{R}^d$ is never compact (unless empty): no function would have compact support. With the closure, $\mathrm{supp}\,a^2 = \mathbb{R}^2$, since every point of the line $a = 0$ is a limit of points where $a^2\neq0$.
+      - body: |
+          The closure of the set where $f$ is nonzero,
+          $$\mathrm{supp}\,f := \overline{\{p\in\mathcal{M}\mid f(p)\neq0\}}.$$
+          **Compact support** means $f$ is noticeably nonzero only on a bounded region: $f = e^{-a^2-b^2}$ on the plane has compact support.
+        feedback: |
+          $e^{-a^2-b^2}$ is small far away but **never zero**, so its support is all of $\mathbb{R}^2$, which is not compact. Compact support asks $f$ to vanish exactly outside a closed bounded set, as a smooth step does.
+    explanation: |
+      Where a function lives. Partitions of unity cut a function into pieces whose supports each fit inside one chart domain.
+
+  - id: partition
+    title: 'Partition of unity $\text{ᚹ}_n$'
+    row: 9
+    col: 2
+    body: |
+      Subordinate to an open cover $\{\mathcal{U}_a\}$: smooth $\text{ᚹ}_n\colon\mathcal{M}\to[0,1]$ with each $\mathrm{supp}\,\text{ᚹ}_n$ inside some $\mathcal{U}_a$, locally finite (every point has a neighbourhood meeting finitely many supports), and
+      $$\textstyle\sum_n\text{ᚹ}_n(p) = 1\ \text{ for all }p.$$
+      It exists on every smooth manifold. Circle: $\text{ᚹ}_1 = h(-q_1)$, $\text{ᚹ}_2 = h(q_1)$ with the smooth step $h$.
+    decoys:
+      - body: |
+          Subordinate to an open cover $\{\mathcal{U}_a\}$: the **indicator functions** of the sets $\mathcal{U}_a$, each $1$ on its set and $0$ outside. Circle with the two angle charts: $\text{ᚹ}_1$ the indicator of $S^1\setminus\{(1,0)\}$, $\text{ᚹ}_2$ that of $S^1\setminus\{(-1,0)\}$.
+        feedback: |
+          Indicators fail all three tests: they are not smooth, the support of each is the whole circle (a closure), and on the overlap they add to $2$, not $1$. That double counting turns the circle's length $2\pi$ into $4\pi$.
+      - body: |
+          Subordinate to an open cover $\{\mathcal{U}_a\}$: smooth $\text{ᚹ}_n\colon\mathcal{M}\to[0,1]$ with
+          $$\textstyle\sum_n\text{ᚹ}_n(p) = 1\ \text{ for all }p,$$
+          each vanishing at the points its set misses. Circle (points $q = (q_1,q_2)$): $\text{ᚹ}_1 = \tfrac12(1-q_1)$, $\text{ᚹ}_2 = \tfrac12(1+q_1)$.
+        feedback: |
+          Vanishing at one point is not enough: the **support** must lie inside the chart domain. $\tfrac12(1-q_1)$ is zero only at $(1,0)$, so its support is the whole circle, not inside $S^1\setminus\{(1,0)\}$. A valid piece vanishes on a whole neighbourhood of the missing point, as $h(-q_1)$ does where $q_1\ge\tfrac12$.
+    explanation: |
+      The cutting tool: multiplying by $1 = \sum_n\text{ᚹ}_n$ splits any function into pieces that each live in one chart.
+
+  - id: whole
+    title: "Integral over the manifold"
+    row: 10
+    col: 1
+    body: |
+      For $f$ with **compact support** and a partition of unity with $\mathrm{supp}\,\text{ᚹ}_n\subseteq\mathcal{U}_n$, $(\mathcal{U}_n,\mathscr{X}_n)\in\mathcal{A}^\uparrow$:
+      $$\int_\mathcal{M}\Omega f := \sum_n\int_{\mathcal{U}_n}\Omega\,\text{ᚹ}_n f$$
+      Finitely many terms are nonzero, and the value **does not depend on the partition**. Circle with density $1$: $\pi+\pi = 2\pi$.
+    decoys:
+      - body: |
+          For $f$ with compact support and a partition of unity with $\mathrm{supp}\,\text{ᚹ}_n\subseteq\mathcal{U}_n$, $(\mathcal{U}_n,\mathscr{X}_n)\in\mathcal{A}^\uparrow$:
+          $$\int_\mathcal{M}\Omega f := \sum_n\int_{\mathcal{U}_n}\Omega\,\text{ᚹ}_n f$$
+          The value depends on the partition, so one is fixed once and for all. Circle with density $1$: $\pi+\pi = 2\pi$.
+        feedback: |
+          Only the individual pieces depend on the partition. On the circle the lopsided partition $h(-q_1-\tfrac14)$, $h(q_1+\tfrac14)$ gives pieces $\approx2.628$ and $\approx3.655$, which still add to $2\pi$. Inserting a second partition $\text{ᚼ}_m$ into the double sum $\sum_{n,m}\int\Omega\,\text{ᚹ}_n\text{ᚼ}_mf$ proves it in general.
+      - body: |
+          For **any smooth** $f$ and a partition of unity with $\mathrm{supp}\,\text{ᚹ}_n\subseteq\mathcal{U}_n$, $(\mathcal{U}_n,\mathscr{X}_n)\in\mathcal{A}^\uparrow$:
+          $$\int_\mathcal{M}\Omega f := \sum_n\int_{\mathcal{U}_n}\Omega\,\text{ᚹ}_n f$$
+          The value does not depend on the partition. Circle with density $1$: $2\pi$.
+        feedback: |
+          On a non-compact manifold the sum can have infinitely many nonzero terms and diverge: $f = 1$ on $\mathbb{R}$ with density $1$ has infinite integral. Compact support guarantees that only finitely many $\text{ᚹ}_n$ meet $\mathrm{supp}\,f$. (On the circle every smooth $f$ has compact support, since $S^1$ itself is compact.)
+    explanation: |
+      Integration on a whole manifold, for any volume form. A metric now picks one volume form and makes integrals into lengths, areas and volumes.
+
+  - id: detg
+    title: 'Determinant $\det g_\mathscr{X}$'
+    row: 10
+    col: 3
+    body: |
+      With a metric $g$, in a chart: $\det g_\mathscr{X} := \det\big((g_\mathscr{X})_{ij}\big)$, a function on $\mathcal{U}$, **not a scalar field**. The congruence $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$, $\mathbf{A} = \text{ᛞ}_{\mathcal{U}\mathcal{V}}$, gives
+      $$\det g_\mathscr{Y} = (\det\mathbf{A})^2\det g_\mathscr{X}.$$
+      Euclidean plane: $1$ cartesian, $r^2$ polar ($25$ vs $1$ at $(3,4)$).
+    decoys:
+      - body: |
+          With a metric $g$: $\det g$, the determinant of the metric, is a **scalar field**, the same at a point in every chart,
+          $$\det g_\mathscr{Y} = \det g_\mathscr{X}.$$
+          Euclidean plane: $\det g = 1$ in cartesian and in polar coordinates.
+        feedback: |
+          The polar components are $\mathrm{diag}(1,r^2)$, with determinant $r^2$: at $(3,4)$ that is $25$, while the cartesian $\delta_{ij}$ gives $1$. A determinant of components depends on the chart; it changes with the square of the Jacobian determinant.
+      - body: |
+          With a metric $g$, in a chart: $\det g_\mathscr{X} := \det\big((g_\mathscr{X})_{ij}\big)$, a function on $\mathcal{U}$. The congruence $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$, $\mathbf{A} = \text{ᛞ}_{\mathcal{U}\mathcal{V}}$, gives the density law
+          $$\det g_\mathscr{Y} = \det\mathbf{A}\,\det g_\mathscr{X},$$
+          so $\det g_\mathscr{X}$ is a scalar density. Euclidean plane: $1$ cartesian, $r$ polar.
+        feedback: |
+          The congruence has **two** factors $\mathbf{A}$: $\det(\mathbf{A}^{\mathsf{T}}\mathbf{G}\mathbf{A}) = (\det\mathbf{A})^2\det\mathbf{G}$, since a transpose has the same determinant. In polar, $\det\mathrm{diag}(1,r^2) = r^2$, not $r$. One factor too many for a density, so a square root will be needed.
+    explanation: |
+      What the metric supplies: a function per chart that changes with $(\det)^2$. Its square root changes with $|\det|$, almost a density.
+
+  - id: metric
+    title: 'Metric volume form $\Omega^g$'
+    row: 11
+    col: 2
+    body: |
+      On an oriented metric manifold $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,g)$, in every chart of $\mathcal{A}^\uparrow$,
+      $$\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}.$$
+      It glues because $|\det\mathbf{A}| = \det\mathbf{A}$ in an oriented atlas. Cartesian $1$, polar $r$, unit sphere $\sin\vartheta$; orthonormal chart basis: $1$, any signature. Then $\int_\mathcal{M}f := \int_\mathcal{M}\Omega^gf$.
+    decoys:
+      - body: |
+          On an oriented metric manifold $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,g)$, in every chart of $\mathcal{A}^\uparrow$,
+          $$\omega^g_\mathscr{X} = |\det g_\mathscr{X}|.$$
+          Cartesian $1$, polar $r^2$. Then $\int_\mathcal{M}f := \int_\mathcal{M}\Omega^gf$.
+        feedback: |
+          $\det g$ changes with $(\det\mathbf{A})^2$, a density with $\det\mathbf{A}$: the chartwise definitions would not glue. And the numbers are wrong: the unit disc would get area $\int_{-\pi}^{\pi}\!\int_0^1r^2\,dr\,d\theta = \tfrac{2\pi}3$ instead of $\pi$. The square root brings the factor down to $|\det\mathbf{A}|$.
+      - body: |
+          On an oriented metric manifold $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,g)$, in every chart of $\mathcal{A}^\uparrow$,
+          $$\omega^g_\mathscr{X} = \sqrt{\det g_\mathscr{X}}.$$
+          Cartesian $1$, polar $r$, unit sphere $\sin\vartheta$. Then $\int_\mathcal{M}f := \int_\mathcal{M}\Omega^gf$.
+        feedback: |
+          In a Lorentzian metric the determinant is negative: Minkowski $\eta = \mathrm{diag}(-1,1)$ has $\det\eta = -1$, and $\sqrt{-1}$ is not a real density. The **absolute value** makes the definition work in any signature ($\sqrt{|\det\eta|} = 1$; in spacetime one often writes $\sqrt{-\det g}$).
+    explanation: |
+      The metric picks one volume form, with no choice left. It needs both the metric (for $\det g$) and the orientation (for the sign).
+
+  - id: results
+    title: "Lengths and areas"
+    row: 12
+    col: 1
+    body: |
+      Circle of radius $R$, angle chart $\alpha$: induced metric $R^2$, density $R$, length
+      $$\int_0^{2\pi}R\,d\alpha = 2\pi R$$
+      (projection chart $u = a$: density $R/\sqrt{R^2-u^2}$, same arcs). Unit sphere, density $\sin\vartheta$:
+      $$\int_0^{2\pi}\!\!\int_0^\pi\sin\vartheta\,d\vartheta\,d\varphi = 4\pi.$$
+    decoys:
+      - body: |
+          Circle of radius $R$, angle chart $\alpha$: induced metric $R^2$, density $R^2$, length
+          $$\int_0^{2\pi}R^2\,d\alpha = 2\pi R^2$$
+          (projection chart $u = a$: density $R^2/(R^2-u^2)$, same arcs). Unit sphere, density $\sin\vartheta$: area $4\pi$.
+        feedback: |
+          The density is the **square root** of $|\det g|$; in one dimension $\det g$ is the single component $R^2$, so the density is $R$. A length $2\pi R^2$ would not even scale like a length: doubling $R$ would quadruple it.
+      - body: |
+          Circle of radius $R$, angle chart $\alpha$: induced metric $R^2$, density $R$, length $2\pi R$. In the projection chart $u = a$ the density is $1$, so the lower half circle has length
+          $$\int_{-R}^{R}du = 2R.$$
+          Unit sphere, density $\sin\vartheta$: area $4\pi$.
+        feedback: |
+          $2R$ is the length of the **shadow** of the half circle on the $a$-axis, not of the half circle. The induced metric in the projection chart is $R^2/(R^2-u^2)$, density $R/\sqrt{R^2-u^2}$, and $\int_{-R}^{R}R\,du/\sqrt{R^2-u^2} = \pi R$, half of $2\pi R$, as it must be.
+    explanation: |
+      The payoff: integrals of $1$ against $\Omega^g$ are the familiar lengths and areas, the same in every chart of the oriented atlas.
+
+edges:
+  - { from: problem, to: cov, label: explained by }
+  - { from: cov, to: volume, label: 'cancel $|\det|$' }
+  - { from: eps, to: components, dashed: true, label: sign pattern }
+  - { from: volume, to: components, label: in a chart }
+  - { from: components, to: law, label: change chart }
+  - { from: law, to: oriented, label: 'keep $\det>0$' }
+  - { from: oriented, to: onechart, label: integrate }
+  - { from: onechart, to: support, label: beyond one chart }
+  - { from: support, to: partition, label: cut up $f$ }
+  - { from: onechart, to: whole, label: each piece }
+  - { from: partition, to: whole, label: glue pieces }
+  - { from: detg, to: metric, label: square root }
+  - { from: metric, to: results, label: measures }
+  - { from: whole, to: results, label: 'with $\Omega^g$' }
+
+outroTitle: Chapter 8 in one picture
+outro: |
+  Read it top to bottom. Integrating a chart representative depends on the chart (the unit disc: $\pi$ or $2\pi$), because the **change of variables** brings
+  $$d^d\alpha = d^d\beta\,\big|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}\big|.$$
+  A **volume form** $\Omega$, nowhere zero and totally antisymmetric, needs no metric; with the **Levi-Civita symbol** $\varepsilon$ its components are
+  $$(\Omega_\mathscr{X})_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X},$$
+  and the **scalar density** obeys
+  $$\omega_\mathscr{Y} = \det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)\,\omega_\mathscr{X}.$$
+  The two determinants cancel up to $|\det|/\det$, which an **oriented atlas** ($\det>0$ on every overlap) makes $+1$. Then the **integral in one chart**, over a region whose closure is compact and inside the chart,
+  $$\int_\mathcal{D}\Omega f := \int_{\mathscr{X}(\mathcal{D})}d^d\alpha\,\omega_\mathscr{X}\,f$$
+  (both functions read through $\mathscr{X}^{-1}$), is the same in every chart of $\mathcal{A}^\uparrow$. A **partition of unity** cuts a function of compact **support** into one-chart pieces:
+  $$\int_\mathcal{M}\Omega f := \sum_n\int_{\mathcal{U}_n}\Omega\,\text{ᚹ}_n f,$$
+  independent of the partition. A metric picks the **metric volume form**, since $\det g$ changes with $(\det)^2$:
+  $$\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|},$$
+  which gives the circle $2\pi R$ and the unit sphere $4\pi$.
+
+  **Next: the Level Challenge.** Harder problems that combine the whole map. Why must the closure of the region be compact and inside the chart: what exactly goes wrong, on the real line, when it is not?

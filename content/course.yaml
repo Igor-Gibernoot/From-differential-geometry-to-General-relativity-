@@ -392,7 +392,11 @@ levels:
         kind: traps
         file: ch08/traps.yaml
         summary: "Fast questions on the classic mistakes of integration on manifolds: the absolute Jacobian determinant, densities that are not scalars, ε as a symbol, mirror charts and oriented atlases, compact closures and supports, partitions of unity, and the square root of |det g|."
-      - { id: ch08-map, title: "Content Map: Integrals", kind: map }
+      - id: ch08-map
+        title: "Content Map: Integrals"
+        kind: map
+        file: ch08/map.yaml
+        summary: "Rebuild the Chapter 8 map box by box: from the chart dependence of naive integrals, through the change of variables, volume forms, the Levi-Civita symbol, scalar densities and oriented atlases, to integrals in one chart and over the whole manifold with partitions of unity, and the metric volume form with its lengths and areas."
       - { id: ch08-review, title: Level Review, kind: review }
       - { id: ch08-challenge, title: Level Challenge, kind: challenge }
 
