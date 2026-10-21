@@ -1,0 +1,549 @@
+id: ch08-circle-length
+title: "Guided Problem: The Length of a Circle, Chart by Chart"
+kind: guided
+
+cards:
+  - type: text
+    id: hook
+    title: Everyone knows the answer
+    body: |
+      Everyone knows that a circle of radius $R$ has length $2\pi R$. The machinery of this level (oriented atlas, metric volume form $\Omega^g$, one-chart integrals, partition of unity) should reproduce it. If it could not, something would be wrong with the machinery.
+
+      The circle is the best test bench because every integral is one-dimensional, so each step can be checked by hand. And it has a trap: a chart in which the circle looks squashed, where the naive computation gives the wrong number.
+
+      This lesson runs the whole construction on the circle, step by step:
+      1. three charts, and a check that they form an oriented atlas;
+      2. the metric and its volume form in each chart;
+      3. the length of an arc, computed in two charts;
+      4. what goes wrong in a chart with the wrong orientation;
+      5. the length of the whole circle, with a partition of unity.
+
+  - type: text
+    id: setup
+    title: The circle and three charts
+    body: |
+      Let $R>0$ and
+      $$\mathcal{M} := \{(a,b)\in\mathbb{R}^2\mid a^2+b^2 = R^2\},$$
+      the circle of radius $R$, with the topology induced from the plane. Each chart is given by its inverse, which is easier to write:
+
+      - **Angle chart** $(\mathcal{U},\mathscr{X})$, $\mathcal{U} := \mathcal{M}\setminus\{(R,0)\}$, coordinate $\alpha\in(0,2\pi)$:
+      $$\mathscr{X}^{-1}(\alpha) = R\,(\cos\alpha,\sin\alpha).$$
+      - **Second angle chart** $(\mathcal{V},\mathscr{Y})$, $\mathcal{V} := \mathcal{M}\setminus\{(-R,0)\}$, coordinate $\beta\in(-\pi,\pi)$:
+      $$\mathscr{Y}^{-1}(\beta) = R\,(\cos\beta,\sin\beta).$$
+      - **Projection chart** $(\mathcal{W},\mathscr{P})$ on the lower half $\mathcal{W} := \{(a,b)\in\mathcal{M}\mid b<0\}$: it keeps only the first coordinate, $\mathscr{P}(a,b) := a$, with coordinate $u\in(-R,R)$:
+      $$\mathscr{P}^{-1}(u) = \big(u,-\sqrt{R^2-u^2}\big).$$
+
+      ($\mathscr{P}$ for "projection": the lower half is projected straight up onto the $a$-axis. The letter $\mathscr{Z}$ stays reserved for the mirror chart $(a,b)\mapsto(a,-b)$ of the plane.)
+
+      Each angle chart misses one point; the projection chart misses the whole upper half. Together they cover $\mathcal{M}$.
+
+  - type: mcq
+    id: direction
+    tag: Step 1 · Transition maps
+    title: Which way does u run?
+    prompt: |
+      Circle $a^2+b^2 = R^2$ with the angle chart $\alpha\in(0,2\pi)$, $\mathscr{X}^{-1}(\alpha) = R(\cos\alpha,\sin\alpha)$, and on the lower half $b<0$ the projection chart $u = a$, $u\in(-R,R)$. The lower half is $\alpha\in(\pi,2\pi)$. As a point moves along the lower half with $\alpha$ increasing from $\pi$ to $2\pi$, what does $u$ do?
+    options:
+      - text: '$u$ increases from $-R$ to $R$'
+        correct: true
+      - text: '$u$ decreases from $R$ to $-R$'
+        feedback: |
+          Check the ends: at $\alpha = \pi$ the point is $(-R,0)$, so $u = -R$; at $\alpha = 2\pi$ it is $(R,0)$, so $u = R$. The intuition "angles run counterclockwise, so leftward" holds on the upper half; on the lower half, counterclockwise motion goes from left to right.
+      - text: '$u$ first decreases, then increases'
+        feedback: |
+          $u = R\cos\alpha$, and $\cos$ is increasing on $(\pi,2\pi)$: its derivative $-\sin\alpha$ is positive there, because $\sin\alpha<0$ on the lower half. No turning point.
+      - text: '$u$ stays constant'
+        feedback: |
+          $u$ is the first coordinate $a = R\cos\alpha$ of the point, which changes as the point moves along the lower half.
+    explanation: |
+      $u = R\cos\alpha$ and $\frac{d}{d\alpha}(R\cos\alpha) = -R\sin\alpha>0$ for $\alpha\in(\pi,2\pi)$. So both coordinates run in the **same direction** on the lower half: from $(-R,0)$ to $(R,0)$, counterclockwise.
+
+  - type: mcq
+    id: transition
+    tag: Step 1 · Transition maps
+    title: The angle from the projection
+    prompt: |
+      Circle $a^2+b^2 = R^2$, angle chart $\alpha\in(0,2\pi)$ with $\mathscr{X}^{-1}(\alpha) = R(\cos\alpha,\sin\alpha)$, projection chart on the lower half $b<0$ with coordinate $u = a\in(-R,R)$. Write $\text{ᛖ}_{\mathcal{W}\mathcal{U}} := \mathscr{X}\circ\mathscr{P}^{-1}$ for the transition map from $u$ to $\alpha$ (first subscript = the chart we start from). Recall that $\arccos$ takes values in $[0,\pi]$. Which formula is $\alpha = \text{ᛖ}_{\mathcal{W}\mathcal{U}}(u)$?
+    options:
+      - text: '$2\pi-\arccos(u/R)$'
+        correct: true
+      - text: '$\arccos(u/R)$'
+        feedback: |
+          $\arccos$ takes values in $[0,\pi]$, which are the angles of the **upper** half. The point $\mathscr{P}^{-1}(u)$ is on the lower half, with $\alpha\in(\pi,2\pi)$: reflecting the upper-half angle gives $2\pi-\arccos(u/R)$.
+      - text: '$\pi+\arccos(u/R)$'
+        feedback: |
+          It lands in $(\pi,2\pi)$, but runs the wrong way: at $u = -R$ it gives $2\pi$, the point $(R,0)$, instead of $\pi$, the point $(-R,0)$. On the lower half $\alpha$ and $u$ increase together.
+      - text: '$-\arccos(u/R)$'
+        feedback: |
+          This is the right point, but in the coordinate $\beta\in(-\pi,\pi)$ of the second angle chart. The chart $\mathscr{X}$ uses $\alpha\in(0,2\pi)$, so add $2\pi$.
+    explanation: |
+      For $u\in(-R,R)$, $\arccos(u/R)\in(0,\pi)$ is the angle of the upper-half point with first coordinate $u$; the lower-half point is its mirror image, at angle $2\pi-\arccos(u/R)$. Ends: $u = -R$ gives $\pi$, $u = R$ gives $2\pi$. (Equivalently $\tfrac{3\pi}2+\arcsin(u/R)$, since $\arcsin+\arccos = \tfrac\pi2$.)
+
+  - type: numeric
+    id: jacobian
+    tag: Step 1 · Transition maps
+    title: The Jacobian at one point
+    prompt: |
+      Circle of radius $R = 2$. On the lower half, the angle coordinate $\alpha\in(\pi,2\pi)$ and the projection coordinate $u = a$ are related by
+      $$\alpha = 2\pi-\arccos(u/R).$$
+      The Jacobian $\text{ᛞ}_{\mathcal{U}\mathcal{W}} := d\alpha/du$ (a $1\times1$ matrix; first subscript = chart of the row index, here $\alpha$). Recall $\frac{d}{dx}\arccos x = -\frac{1}{\sqrt{1-x^2}}$. What is $\text{ᛞ}_{\mathcal{U}\mathcal{W}}$ at $u = 1$? (Decimals are fine.)
+    answer: 0.57735
+    tolerance: 0.001
+    answerText: '$1/\sqrt3\approx0.577$'
+    wrong:
+      - value: -0.57735
+        feedback: |
+          The minus sign of the $\arccos$ derivative is cancelled by the minus in front of $\arccos$: $\frac{d\alpha}{du} = +\frac{1}{\sqrt{R^2-u^2}}$. It must be positive anyway, since $\alpha$ and $u$ increase together on the lower half.
+      - value: 0.33333
+        feedback: |
+          $\frac13 = \frac{1}{R^2-u^2}$ forgets the square root. The chain rule gives $\frac{1}{R}\cdot\frac{1}{\sqrt{1-u^2/R^2}} = \frac{1}{\sqrt{R^2-u^2}}$.
+      - value: 0.28868
+        feedback: |
+          That is $\frac{1}{R\sqrt{R^2-u^2}}$, with one factor $\frac1R$ too many. Inside, $\sqrt{1-u^2/R^2} = \frac{\sqrt{R^2-u^2}}{R}$, and its $R$ cancels the outer $\frac1R$.
+    hint: |
+      Chain rule: $\frac{d}{du}\arccos(u/R) = -\frac{1}{\sqrt{1-(u/R)^2}}\cdot\frac1R$.
+    explanation: |
+      $$\begin{aligned}\text{ᛞ}_{\mathcal{U}\mathcal{W}}(u) &= \frac{1}{R\sqrt{1-u^2/R^2}}\\ &= \frac{1}{\sqrt{R^2-u^2}},\end{aligned}$$
+      so at $R = 2$, $u = 1$: $\frac{1}{\sqrt3}\approx0.577$. It is positive for every $u\in(-R,R)$ and blows up at the ends $u\to\pm R$.
+
+  - type: mcq
+    id: oriented
+    tag: Step 1 · Transition maps
+    title: Is the atlas oriented?
+    multiple: true
+    prompt: |
+      Circle of radius $R$ with three charts: angle $\alpha\in(0,2\pi)$ (domain $\mathcal{U}$, misses $(R,0)$), angle $\beta\in(-\pi,\pi)$ (domain $\mathcal{V}$, misses $(-R,0)$), projection $u = a\in(-R,R)$ on the lower half $\mathcal{W}$. On the overlaps, $\alpha = \beta$ on the upper half, $\alpha = \beta+2\pi$ on the lower half, and $\alpha = 2\pi-\arccos(u/R)$ on $\mathcal{W}$. Recall: an atlas is **oriented** when every Jacobian determinant between two of its charts is positive on the overlap. Select all true statements.
+    options:
+      - text: '$d\alpha/d\beta = 1$ on all of $\mathcal{U}\cap\mathcal{V}$'
+        correct: true
+      - text: '$d\alpha/du = 1/\sqrt{R^2-u^2}>0$ on $\mathcal{U}\cap\mathcal{W}$'
+        correct: true
+      - text: '$d\beta/du = 1/\sqrt{R^2-u^2}>0$ on $\mathcal{V}\cap\mathcal{W}$'
+        correct: true
+      - text: 'The atlas is not oriented, because the transition from $\beta$ to $\alpha$ jumps by $2\pi$'
+        feedback: |
+          The overlap $\mathcal{U}\cap\mathcal{V}$ is the circle minus two points: two separate arcs. The transition map is $\beta$ on one arc and $\beta+2\pi$ on the other; it is smooth on each arc (it never jumps inside one), and its derivative is $1$ on both. Orientation only asks about the sign of the derivative.
+    explanation: |
+      On $\mathcal{V}\cap\mathcal{W}$ (the lower half) $\beta = \alpha-2\pi$, so $d\beta/du = d\alpha/du$. All three Jacobians are positive, so
+      $$\mathcal{A}^\uparrow := \{(\mathcal{U},\mathscr{X}),(\mathcal{V},\mathscr{Y}),(\mathcal{W},\mathscr{P})\}$$
+      is an oriented atlas. Geometrically: all three coordinates increase counterclockwise.
+
+  - type: text
+    id: metric-recall
+    tag: Step 2 · The metric in each chart
+    title: The metric a circle inherits
+    body: |
+      The circle sits in the Euclidean plane, and gets its metric from there. A tangent vector at $p\in\mathcal{M}$ is the velocity of a curve in the circle; seen as a curve in the plane, that curve has an ordinary velocity, an arrow in $\mathbb{R}^2$. The **induced metric** $g$ is the dot product of those arrows.
+
+      In a one-dimensional chart $(\mathcal{U},\mathscr{X})$ there is a single basis vector $\partial/\partial\mathscr{X}$, the velocity of the coordinate curve $\alpha\mapsto\mathscr{X}^{-1}(\alpha)$. So the single metric component is
+      $$(g_\mathscr{X})_{11} = \Big|\frac{d}{d\alpha}\mathscr{X}^{-1}(\alpha)\Big|^2,$$
+      the **squared speed** of the inverse chart, read as a curve in the plane. A chart that runs fast along the circle (covers much length per unit of coordinate) has a large component.
+
+  - type: mcq
+    id: metric-angle
+    tag: Step 2 · The metric in each chart
+    title: The angle chart
+    prompt: |
+      Circle of radius $R$ with its metric induced from the plane. In a one-dimensional chart, the single metric component is the squared speed of the inverse chart, read as a curve in the plane. For the angle chart, $\mathscr{X}^{-1}(\alpha) = R(\cos\alpha,\sin\alpha)$. What is $(g_\mathscr{X})_{11}$?
+    options:
+      - text: '$R^2$'
+        correct: true
+      - text: '$R$'
+        feedback: |
+          $R$ is the **speed** $|\frac{d}{d\alpha}\mathscr{X}^{-1}|$. The metric component is $g(\partial/\partial\mathscr{X},\partial/\partial\mathscr{X})$, the speed squared: $R^2$.
+      - text: '$1$'
+        feedback: |
+          $1$ is the squared speed on the unit circle. Here the velocity is $R(-\sin\alpha,\cos\alpha)$, of squared length $R^2(\sin^2\alpha+\cos^2\alpha) = R^2$.
+      - text: '$R^2\sin^2\alpha$'
+        feedback: |
+          That is only the square of the first component of the velocity $R(-\sin\alpha,\cos\alpha)$. The dot product adds both: $R^2\sin^2\alpha+R^2\cos^2\alpha = R^2$.
+    explanation: |
+      $\frac{d}{d\alpha}\mathscr{X}^{-1}(\alpha) = R(-\sin\alpha,\cos\alpha)$, so
+      $$(g_\mathscr{X})_{11} = R^2(\sin^2\alpha+\cos^2\alpha) = R^2.$$
+      The second angle chart has the same formula, so $(g_\mathscr{Y})_{11} = R^2$ too: constant, the same at every point.
+
+  - type: numeric
+    id: metric-projection
+    tag: Step 2 · The metric in each chart
+    title: The projection chart
+    prompt: |
+      Circle of radius $R$ with its metric induced from the plane; in a one-dimensional chart the single metric component is the squared speed of the inverse chart. On the lower half, the projection chart has $\mathscr{P}^{-1}(u) = (u,-\sqrt{R^2-u^2})$, $u\in(-R,R)$. Its velocity is
+      $$\frac{d}{du}\mathscr{P}^{-1}(u) = \Big(1,\frac{u}{\sqrt{R^2-u^2}}\Big).$$
+      What is $(g_\mathscr{P})_{11}$ at $R = 2$, $u = 1$?
+    answer: 1.33333
+    tolerance: 0.001
+    answerText: '$4/3$'
+    wrong:
+      - value: 1
+        feedback: |
+          $1$ is the square of the horizontal component only, as if the circle were the flat $a$-axis. The point also moves vertically: the second component $\frac{u}{\sqrt{R^2-u^2}} = \frac{1}{\sqrt3}$ adds $\frac13$.
+      - value: 0.75
+        feedback: |
+          $\frac34$ is the inverse of the answer. Squared speed: $1^2+\big(\frac{1}{\sqrt3}\big)^2 = 1+\frac13 = \frac43$.
+      - value: 1.1547
+        feedback: |
+          $\frac{2}{\sqrt3}\approx1.155$ is the speed. The metric component is the squared speed, $\frac43$.
+    hint: |
+      Square both components of the velocity and add them.
+    explanation: |
+      $$\begin{aligned}(g_\mathscr{P})_{11} &= 1+\frac{u^2}{R^2-u^2}\\ &= \frac{R^2}{R^2-u^2},\end{aligned}$$
+      which is $\frac{4}{4-1} = \frac43$ at $R = 2$, $u = 1$. Unlike the angle charts, it depends on the point, and it blows up at the ends $u\to\pm R$, where the circle becomes vertical and a small step in $u$ covers a long piece of circle.
+
+  - type: numeric
+    id: density-projection
+    tag: Step 3 · Densities
+    title: The density in the projection chart
+    prompt: |
+      Recall: in a chart of an oriented atlas, the metric volume form $\Omega^g$ has scalar density
+      $$\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}.$$
+      On a circle of radius $R$ with its induced metric, the projection chart $u = a$ on the lower half (a chart of an oriented atlas) has single metric component $(g_\mathscr{P})_{11} = \frac{R^2}{R^2-u^2}$. What is $\omega^g_\mathscr{P}$ at $R = 2$, $u = 1$? (Decimals are fine.)
+    answer: 1.1547
+    tolerance: 0.001
+    answerText: '$2/\sqrt3\approx1.155$'
+    wrong:
+      - value: 1.33333
+        feedback: |
+          $\frac43$ is $\det g_\mathscr{P}$ itself (for a $1\times1$ matrix the determinant is the entry). The density is its square root, $\frac{2}{\sqrt3}$.
+      - value: 2
+        feedback: |
+          $2 = R$ is the density of the angle charts. In the projection chart the density depends on $u$: $\frac{R}{\sqrt{R^2-u^2}} = \frac{2}{\sqrt3}$.
+    hint: |
+      For a $1\times1$ matrix, the determinant is its only entry.
+    explanation: |
+      $$\omega^g_\mathscr{P} = \frac{R}{\sqrt{R^2-u^2}},$$
+      so $\frac{2}{\sqrt3}\approx1.155$ at $R = 2$, $u = 1$. In the angle charts, $\omega^g_\mathscr{X} = \omega^g_\mathscr{Y} = \sqrt{R^2} = R$. In one dimension the density is just the **speed** of the inverse chart: length per unit of coordinate.
+
+  - type: mcq
+    id: density-law
+    tag: Step 3 · Densities
+    title: Do the densities agree?
+    prompt: |
+      Circle of radius $R$. The metric volume form has density $\omega^g_\mathscr{X} = R$ in the angle chart $\alpha$ and $\omega^g_\mathscr{P} = \frac{R}{\sqrt{R^2-u^2}}$ in the projection chart $u = a$ (lower half). Recall the density law of a volume form, $\omega_\mathscr{Y} = \det\big(\partial\mathscr{X}^i/\partial\mathscr{Y}^j\big)\,\omega_\mathscr{X}$, and the Jacobian $\text{ᛞ}_{\mathcal{U}\mathcal{W}} = \frac{d\alpha}{du} = \frac{1}{\sqrt{R^2-u^2}}$. Is the law satisfied?
+    options:
+      - text: 'Yes: $\omega^g_\mathscr{P} = \text{ᛞ}_{\mathcal{U}\mathcal{W}}\,\omega^g_\mathscr{X}$'
+        correct: true
+      - text: 'Yes, but in the form $\omega^g_\mathscr{X} = \text{ᛞ}_{\mathcal{U}\mathcal{W}}\,\omega^g_\mathscr{P}$'
+        feedback: |
+          That would give $R = \frac{1}{\sqrt{R^2-u^2}}\cdot\frac{R}{\sqrt{R^2-u^2}}$, false. The Jacobian $\frac{d\alpha}{du}$ has the old coordinate on top, so it multiplies the old density $\omega^g_\mathscr{X}$ to give the new one: $\omega^g_\mathscr{P} = \frac{d\alpha}{du}\,\omega^g_\mathscr{X}$.
+      - text: 'No: the densities are different functions, so they describe different volume forms'
+        feedback: |
+          A scalar density is supposed to change from chart to chart; that is what the density law describes. Different functions are fine as long as they are related by the Jacobian, and here they are.
+    explanation: |
+      $$\text{ᛞ}_{\mathcal{U}\mathcal{W}}\,\omega^g_\mathscr{X} = \frac{1}{\sqrt{R^2-u^2}}\cdot R = \omega^g_\mathscr{P}.$$
+      At $R = 2$, $u = 1$: $\frac{1}{\sqrt3}\cdot2 = \frac{2}{\sqrt3}$. This is the general fact that $\sqrt{|\det g|}$ glues into one volume form because the atlas is oriented: $\sqrt{|\det g_\mathscr{P}|} = |\text{ᛞ}_{\mathcal{U}\mathcal{W}}|\,\sqrt{|\det g_\mathscr{X}|}$, and here $|\text{ᛞ}_{\mathcal{U}\mathcal{W}}| = \text{ᛞ}_{\mathcal{U}\mathcal{W}}$.
+
+  - type: text
+    id: arc-setup
+    tag: Step 4 · An arc in the angle chart
+    title: An arc on the lower half
+    body: |
+      Recall the **one-chart integral**: if the closure $\overline{\mathcal{D}}$ (the region plus its boundary points) is compact and contained in the domain of a chart $(\mathcal{U},\mathscr{X})$ of the oriented atlas, then
+      $$\begin{aligned}\int_\mathcal{D}\Omega f :=&\int_{\mathscr{X}(\mathcal{D})}d^d\alpha\,(\omega_\mathscr{X}\circ\mathscr{X}^{-1})\\ &\qquad\cdot(f\circ\mathscr{X}^{-1}),\end{aligned}$$
+      and the result is the same in every chart of the oriented atlas that contains $\overline{\mathcal{D}}$.
+
+      Take the arc $\mathcal{D}$ of points with angle $\alpha\in(\alpha_1,\alpha_2)$, where $\pi<\alpha_1<\alpha_2<2\pi$, and $f = 1$. Its closure adds the two endpoints; it is compact and lies in the lower half, so inside both $\mathcal{U}$ and $\mathcal{W}$: we may compute in the angle chart **and** in the projection chart.
+
+      In one dimension, $\int_\mathcal{D}\Omega^g$ is the integral of the speed of the chart: it is the **length** of the arc, in the sense of Level 7.
+
+  - type: numeric
+    id: arc-angle
+    tag: Step 4 · An arc in the angle chart
+    title: The arc in the angle chart
+    prompt: |
+      Circle of radius $R = 2$, metric volume form $\Omega^g$ with density $\omega^g_\mathscr{X} = R$ in the angle chart $\alpha\in(0,2\pi)$. Let $\mathcal{D}$ be the arc $\alpha\in(\tfrac{4\pi}3,\tfrac{5\pi}3)$ and $f = 1$. Compute the one-chart integral $\int_\mathcal{D}\Omega^g = \int_{4\pi/3}^{5\pi/3}d\alpha\,R$. (Decimals are fine.)
+    answer: 2.0944
+    tolerance: 0.001
+    answerText: '$2\pi/3\approx2.094$'
+    wrong:
+      - value: 1.0472
+        feedback: |
+          $\frac\pi3\approx1.047$ is the length of the coordinate interval, $\alpha_2-\alpha_1$. The integrand is the density $R = 2$, which converts coordinate length into circle length: $2\cdot\frac\pi3$.
+    hint: |
+      The integrand is constant.
+    explanation: |
+      $$\int_{\alpha_1}^{\alpha_2}d\alpha\,R = R\,(\alpha_2-\alpha_1),$$
+      here $2\cdot\frac\pi3 = \frac{2\pi}3\approx2.094$: radius times angle, the familiar arc length.
+
+  - type: mcq
+    id: antiderivative
+    tag: Step 5 · The same arc in the projection chart
+    title: The integral in u
+    prompt: |
+      Circle of radius $R$. In the projection chart $u = a$ on the lower half, the metric volume form has density $\omega^g_\mathscr{P} = \frac{R}{\sqrt{R^2-u^2}}$. To integrate it over an interval $(u_1,u_2)\subset(-R,R)$, which function is an antiderivative of $\frac{R}{\sqrt{R^2-u^2}}$ in $u$?
+    options:
+      - text: '$R\arcsin(u/R)$'
+        correct: true
+      - text: '$R\arccos(u/R)$'
+        feedback: |
+          $\frac{d}{du}\arccos(u/R) = -\frac{1}{\sqrt{R^2-u^2}}$: the sign is wrong. $\arccos$ decreases, while the integrand is positive, so its antiderivative must increase.
+      - text: '$R\sqrt{R^2-u^2}$'
+        feedback: |
+          Its derivative is $-\frac{Ru}{\sqrt{R^2-u^2}}$, with an extra factor $-u$. The square root belongs in the denominator of the derivative, which is the signature of $\arcsin$.
+      - text: '$R\ln(R^2-u^2)$'
+        feedback: |
+          Its derivative is $\frac{-2Ru}{R^2-u^2}$: no square root, and an extra factor $u$.
+    explanation: |
+      $\frac{d}{du}\arcsin(u/R) = \frac1R\cdot\frac{1}{\sqrt{1-u^2/R^2}} = \frac{1}{\sqrt{R^2-u^2}}$, so
+      $$\int_{u_1}^{u_2}\frac{R\,du}{\sqrt{R^2-u^2}} = R\Big[\arcsin\frac uR\Big]_{u_1}^{u_2}.$$
+
+  - type: numeric
+    id: arc-projection
+    tag: Step 5 · The same arc in the projection chart
+    title: The arc in the projection chart
+    prompt: |
+      Circle of radius $R = 2$. The arc $\mathcal{D}$ of angles $\alpha\in(\tfrac{4\pi}3,\tfrac{5\pi}3)$ lies on the lower half; in the projection chart $u = a = R\cos\alpha$ its endpoints are $u_1 = 2\cos\tfrac{4\pi}3 = -1$ and $u_2 = 2\cos\tfrac{5\pi}3 = 1$. The density of $\Omega^g$ there is $\frac{R}{\sqrt{R^2-u^2}}$, with antiderivative $R\arcsin(u/R)$. Compute
+      $$\int_\mathcal{D}\Omega^g = \int_{-1}^{1}\frac{2\,du}{\sqrt{4-u^2}}.$$
+      (Decimals are fine.)
+    answer: 2.0944
+    tolerance: 0.001
+    answerText: '$2\pi/3\approx2.094$'
+    wrong:
+      - value: 2
+        feedback: |
+          $2 = u_2-u_1$ is the length of the projected interval: the shadow of the arc on the $a$-axis, not the arc. The density $\frac{R}{\sqrt{R^2-u^2}}\ge1$ makes up for the tilt of the circle.
+      - value: 1.0472
+        feedback: |
+          $\frac\pi3 = \arcsin\frac12-\arcsin(-\frac12)$ forgets the factor $R = 2$ in front of $\arcsin$.
+    hint: |
+      $\arcsin\tfrac12 = \tfrac\pi6$, and $\arcsin$ is odd.
+    explanation: |
+      $$2\Big[\arcsin\frac u2\Big]_{-1}^{1} = 2\Big(\frac\pi6+\frac\pi6\Big) = \frac{2\pi}3,$$
+      exactly the value of the angle chart. Two different charts, two different integrands, two different intervals, one length.
+
+  - type: mcq
+    id: arcsin-identity
+    tag: Step 5 · The same arc in the projection chart
+    title: Equal for every arc
+    prompt: |
+      Circle of radius $R$, arc $\alpha\in(\alpha_1,\alpha_2)$ with $\pi<\alpha_1<\alpha_2<2\pi$. In the projection chart, with $u_i := R\cos\alpha_i$, its length is
+      $$R\big[\arcsin(u_2/R)-\arcsin(u_1/R)\big],$$
+      a difference of $\arcsin(\cos\alpha_i)$. To show it equals $R(\alpha_2-\alpha_1)$ for every such arc, which identity holds for all $\alpha\in(\pi,2\pi)$?
+    options:
+      - text: '$\arcsin(\cos\alpha) = \alpha-\tfrac{3\pi}2$'
+        correct: true
+      - text: '$\arcsin(\cos\alpha) = \tfrac\pi2-\alpha$'
+        feedback: |
+          This holds on $[0,\pi]$, but on $(\pi,2\pi)$ it gives values below $-\tfrac\pi2$, outside the range $[-\tfrac\pi2,\tfrac\pi2]$ of $\arcsin$. It would also give the length $-R(\alpha_2-\alpha_1)$, negative.
+      - text: '$\arcsin(\cos\alpha) = \alpha-\tfrac\pi2$'
+        feedback: |
+          At $\alpha = \tfrac{3\pi}2$ it gives $\pi$, outside the range $[-\tfrac\pi2,\tfrac\pi2]$ of $\arcsin$. Check the middle of the lower half: $\cos\tfrac{3\pi}2 = 0$ and $\arcsin0 = 0$.
+      - text: '$\arcsin(\cos\alpha) = \tfrac{3\pi}2-\alpha$'
+        feedback: |
+          It decreases in $\alpha$, but $\cos\alpha$ increases on $(\pi,2\pi)$ and $\arcsin$ is increasing, so $\arcsin(\cos\alpha)$ increases. It would give a negative length.
+    explanation: |
+      Check: $\alpha = \pi$ gives $\arcsin(-1) = -\tfrac\pi2$, $\alpha = \tfrac{3\pi}2$ gives $0$, $\alpha = 2\pi$ gives $\tfrac\pi2$; in between, $\sin(\alpha-\tfrac{3\pi}2) = \cos\alpha$ and $\alpha-\tfrac{3\pi}2\in(-\tfrac\pi2,\tfrac\pi2)$. Then
+      $$\begin{aligned}&R\big[\arcsin(\cos\alpha)\big]_{\alpha_1}^{\alpha_2}\\ &= R\big[\alpha-\tfrac{3\pi}2\big]_{\alpha_1}^{\alpha_2}\\ &= R\,(\alpha_2-\alpha_1).\end{aligned}$$
+
+  - type: mcq
+    id: no-density
+    tag: Step 5 · The same arc in the projection chart
+    title: Integrating without the density
+    prompt: |
+      Circle of radius $R = 2$, arc $\mathcal{D}$ of angles $\alpha\in(\tfrac{4\pi}3,\tfrac{5\pi}3)$, which the projection chart $u = a$ maps to $u\in(-1,1)$. Student A integrates $f = 1$ as $\int d\alpha$ over the angle interval and gets $\tfrac\pi3$. Student B integrates $\int du$ over the projected interval and gets $2$. Who has the length of the arc?
+    options:
+      - text: 'Neither: the length is $\tfrac{2\pi}3$; each forgot the density of the chart'
+        correct: true
+      - text: 'Student A: angles measure arcs'
+        feedback: |
+          Angles measure arcs only on the unit circle. Here the density of the angle chart is $R = 2$, so the length is $2\cdot\tfrac\pi3 = \tfrac{2\pi}3$.
+      - text: 'Student B: the projection is an honest measurement on the $a$-axis'
+        feedback: |
+          It measures the shadow of the arc on the $a$-axis, which is shorter than the arc wherever the circle is tilted. The density $\frac{R}{\sqrt{R^2-u^2}}$ corrects for the tilt and gives $\tfrac{2\pi}3$.
+      - text: 'Both: the integral of a function depends on the chart'
+        feedback: |
+          The integral of a function was **designed** to be chart independent, by weighting it with a volume form. Without the density, $\int f$ in a chart is not a property of the circle, and indeed A and B disagree.
+    explanation: |
+      The chart representatives of $f = 1$ alone give $\alpha_2-\alpha_1 = \tfrac\pi3$ and $u_2-u_1 = 2$, which differ from each other and from the length. With the densities, both charts give $\tfrac{2\pi}3\approx2.094$. The density is exactly what makes the answer a property of the arc, not of the chart.
+
+  - type: text
+    id: flipped-setup
+    tag: Step 6 · The wrong orientation
+    title: Projecting the other way
+    body: |
+      Now replace the projection chart by the **flipped projection**
+      $$\mathscr{P}'(a,b) := -a,$$
+      on the same lower half $\mathcal{W}$, with coordinate $u' := -a\in(-R,R)$. It is a perfectly good chart (a homeomorphism onto an open interval, smoothly compatible with the others). But $u'$ runs from right to left along the lower half, while $\alpha$ runs from left to right.
+
+      The metric component is still the squared speed, $(g_{\mathscr{P}'})_{11} = \frac{R^2}{R^2-u'^2}$, because reversing a direction does not change a speed. What happens to the volume form?
+
+  - type: mcq
+    id: flipped-density
+    tag: Step 6 · The wrong orientation
+    title: The density in the flipped chart
+    prompt: |
+      Circle of radius $R$; the metric volume form $\Omega^g$ is defined by the oriented atlas of the two angle charts and the projection chart $u = a$; in the angle chart $\alpha$ it has density $\omega^g_\mathscr{X} = R$. On the lower half, the flipped projection $u' = -a$ gives $\alpha = \pi+\arccos(u'/R)$, so
+      $$\frac{d\alpha}{du'} = -\frac{1}{\sqrt{R^2-u'^2}}.$$
+      Using the density law $\omega_{\mathscr{P}'} = \frac{d\alpha}{du'}\,\omega_\mathscr{X}$, what is the density of $\Omega^g$ in the chart $u'$?
+    options:
+      - text: '$-\dfrac{R}{\sqrt{R^2-u''^2}}$'
+        correct: true
+      - text: '$+\dfrac{R}{\sqrt{R^2-u''^2}}$, since $\omega^g = \sqrt{|\det g|}$'
+        feedback: |
+          The formula $\omega^g = \sqrt{|\det g|}$ holds only in charts **of the oriented atlas** that defines $\Omega^g$, and $\mathscr{P}'$ is not one: its Jacobian with $\mathscr{X}$ is negative. The density of $\Omega^g$ in $\mathscr{P}'$ follows from the density law, which carries the sign of the Jacobian.
+      - text: '$-R$'
+        feedback: |
+          The sign is right, but the factor $\frac{1}{\sqrt{R^2-u'^2}}$ from the Jacobian is missing: the projection still squashes the circle near its ends.
+    explanation: |
+      $$\omega_{\mathscr{P}'} = -\frac{1}{\sqrt{R^2-u'^2}}\cdot R,$$
+      the negative of $\sqrt{|\det g_{\mathscr{P}'}|}$. A volume form's density changes sign under a chart that reverses direction; $\sqrt{|\det g|}$ never does. They agree exactly on the charts of the oriented atlas.
+
+  - type: numeric
+    id: flipped-integral
+    tag: Step 6 · The wrong orientation
+    title: The arc in the flipped chart
+    prompt: |
+      Circle of radius $R = 2$, arc $\mathcal{D}$ of angles $\alpha\in(\tfrac{4\pi}3,\tfrac{5\pi}3)$, length $\tfrac{2\pi}3$. In the flipped projection $u' = -a$ (which reverses direction relative to $\alpha$) the arc becomes $u'\in(-1,1)$, and $\Omega^g$ has density $-\frac{R}{\sqrt{R^2-u'^2}}$. Apply the one-chart recipe blindly in this chart: compute
+      $$\int_{-1}^{1}du'\,\Big(-\frac{2}{\sqrt{4-u'^2}}\Big).$$
+      (Decimals are fine.)
+    answer: -2.0944
+    tolerance: 0.001
+    answerText: '$-2\pi/3\approx-2.094$'
+    wrong:
+      - value: 2.0944
+        feedback: |
+          The integrand is negative on the whole interval, and the interval is run from $-1$ to $1$ (the one-chart integral is over the set $\mathscr{P}'(\mathcal{D})$, with $du'$ positive). The result is $-\tfrac{2\pi}3$.
+    hint: |
+      It is minus the integral of the projection chart: $2[\arcsin(u/2)]_{-1}^{1} = \tfrac{2\pi}3$.
+    explanation: |
+      The result is $-R(\alpha_2-\alpha_1) = -\tfrac{2\pi}3$. That is why the one-chart integral only accepts charts of the oriented atlas: $\mathscr{P}'$ is not in $\mathcal{A}^\uparrow$ (its Jacobian with $\mathscr{X}$ is negative), and in it the recipe produces the opposite sign. Adding $\mathscr{P}'$ to the atlas would destroy the orientation.
+
+  - type: text
+    id: whole-setup
+    tag: Step 7 · The whole circle
+    title: Why one chart is not enough
+    body: |
+      Now the whole circle, $f = 1$ on $\mathcal{M}$. The one-chart integral needs the region (with its closure) inside one chart domain. But $\mathcal{M}$ itself is in none: $\mathcal{U}$ misses $(R,0)$, $\mathcal{V}$ misses $(-R,0)$, $\mathcal{W}$ misses the upper half.
+
+      Recall: a **partition of unity** $\{\text{ᚹ}_n\}$ (rune ᚹ, "wynn") is a family of smooth functions with values in $[0,1]$, each with support (the closure of the set where it is nonzero) inside one chart domain, locally finite, summing to $1$ at every point. Then
+      $$\int_\mathcal{M}\Omega f := \sum_n\int\Omega\,\text{ᚹ}_nf,$$
+      each term computed in the chart that contains the support of $\text{ᚹ}_n$; the result does not depend on the partition.
+
+      Recall the smooth step $h\colon\mathbb{R}\to[0,1]$: $h(s) = 0$ for $s\le-\tfrac12$, $h(s) = 1$ for $s\ge\tfrac12$, and $h(s)+h(-s) = 1$. On the circle of radius $R$, take
+      $$\text{ᚹ}_1(a,b) := h(-a/R),$$
+      and $\text{ᚹ}_2 := 1-\text{ᚹ}_1$, which equals $h(a/R)$ by the symmetry of $h$.
+
+  - type: mcq
+    id: supports
+    tag: Step 7 · The whole circle
+    title: Do the supports fit?
+    multiple: true
+    prompt: |
+      Circle $a^2+b^2 = R^2$; angle chart $\alpha$ on $\mathcal{U}$ (misses $(R,0)$), angle chart $\beta$ on $\mathcal{V}$ (misses $(-R,0)$). Smooth step $h$: $h(s) = 0$ for $s\le-\tfrac12$, $h(s) = 1$ for $s\ge\tfrac12$, $h(s)+h(-s) = 1$. Partition $\text{ᚹ}_1(a,b) := h(-a/R)$ and $\text{ᚹ}_2 := 1-\text{ᚹ}_1 = h(a/R)$. Select all true statements.
+    options:
+      - text: 'The support of $\text{ᚹ}_1$ lies in $\{a\le R/2\}$, so inside $\mathcal{U}$'
+        correct: true
+      - text: 'The support of $\text{ᚹ}_2$ lies in $\{a\ge-R/2\}$, so inside $\mathcal{V}$'
+        correct: true
+      - text: 'Any smooth $\text{ᚹ}_1$ with $\text{ᚹ}_1(R,0) = 0$ would do for the first chart'
+        feedback: |
+          Vanishing at the missing point is not enough. The support is the **closure** of the set where $\text{ᚹ}_1\neq0$; if $\text{ᚹ}_1$ is nonzero at points arbitrarily close to $(R,0)$, the closure contains $(R,0)$, which is not in $\mathcal{U}$. $\text{ᚹ}_1$ must vanish on a whole neighbourhood of $(R,0)$, as $h(-a/R)$ does for $a\ge R/2$.
+      - text: '$\text{ᚹ}_2 := h(-a/R)$ would work just as well'
+        feedback: |
+          Then $\text{ᚹ}_1+\text{ᚹ}_2 = 2h(-a/R)$, which is $0$ near $(R,0)$ and $2$ near $(-R,0)$, not $1$. And its support would contain $(-R,0)$, the point missing from $\mathcal{V}$.
+    explanation: |
+      $h(-a/R)\neq0$ needs $-a/R>-\tfrac12$, that is $a<R/2$; the closure of that set is in $\{a\le R/2\}$, which avoids $(R,0)$. Likewise $h(a/R)\neq0$ needs $a>-R/2$, avoiding $(-R,0)$. So $\{\text{ᚹ}_1,\text{ᚹ}_2\}$ is a partition of unity subordinate to $\{\mathcal{U},\mathcal{V}\}$; the projection chart is not needed.
+
+  - type: build
+    id: first-term
+    tag: Step 7 · The whole circle
+    title: The first term
+    prompt: |
+      Circle of radius $R$, metric volume form with density $R$ in the angle chart $\alpha\in(0,2\pi)$, where $a = R\cos\alpha$. Partition of unity $\text{ᚹ}_1(a,b) := h(-a/R)$, with support inside the angle chart's domain. Build the first term $\int\Omega^g\,\text{ᚹ}_1$ as an integral in the chart $\alpha$.
+    prefix: '\int\Omega^g\,\text{ᚹ}_1 ='
+    tiles: ['\int_0^{2\pi}d\alpha', '\int_{-\pi}^{\pi}d\alpha', 'R', 'R^2', 'h(-\cos\alpha)', 'h(-R\cos\alpha)']
+    answers:
+      - ['\int_0^{2\pi}d\alpha', 'R', 'h(-\cos\alpha)']
+      - ['\int_0^{2\pi}d\alpha', 'h(-\cos\alpha)', 'R']
+    wrong:
+      - answer: ['\int_0^{2\pi}d\alpha', 'R^2', 'h(-\cos\alpha)']
+        feedback: |
+          $R^2$ is the metric component $(g_\mathscr{X})_{11}$. The density of the volume form is its square root, $R$.
+      - answer: ['\int_0^{2\pi}d\alpha', 'R', 'h(-R\cos\alpha)']
+        feedback: |
+          $\text{ᚹ}_1 = h(-a/R)$ and $a = R\cos\alpha$, so $a/R = \cos\alpha$: the $R$ cancels.
+      - answer: ['\int_{-\pi}^{\pi}d\alpha', 'R', 'h(-\cos\alpha)']
+        feedback: |
+          The one-chart integral runs over the chart's image, $\mathscr{X}(\mathcal{U}) = (0,2\pi)$. (Moving to $(-\pi,\pi)$ is possible later, but it is a step that needs a reason.)
+    hint: |
+      Integrand = density times the function in the chart; domain = the chart's interval.
+    explanation: |
+      $$\int\Omega^g\,\text{ᚹ}_1 = \int_0^{2\pi}d\alpha\,R\,h(-\cos\alpha).$$
+      In the same way, in the chart $\beta$,
+      $$\int\Omega^g\,\text{ᚹ}_2 = \int_{-\pi}^{\pi}d\beta\,R\,h(\cos\beta).$$
+
+  - type: mcq
+    id: shift
+    tag: Step 8 · The partition drops out
+    title: Moving the interval
+    prompt: |
+      Circle of radius $R$, smooth step $h$. The length of the circle is the sum
+      $$\int_0^{2\pi}d\alpha\,R\,h(-\cos\alpha)+\int_{-\pi}^{\pi}d\beta\,R\,h(\cos\beta).$$
+      To combine them, one rewrites the first integral over $(-\pi,\pi)$. Why is that allowed?
+    options:
+      - text: 'The integrand is $2\pi$-periodic, and both intervals are one full period'
+        correct: true
+      - text: '$\alpha$ and $\beta$ are the same coordinate'
+        feedback: |
+          They are different coordinates: on the lower half $\alpha = \beta+2\pi$. The move is a statement about a periodic function of one real variable, not about the charts.
+      - text: 'The integrand vanishes near $\alpha = 0$, so the interval does not matter'
+        feedback: |
+          It does vanish near $\alpha = 0$ and $2\pi$ (there $\cos\alpha$ is close to $1$ and $h(-1) = 0$), but not everywhere: changing the interval to, say, $(0,\pi)$ would change the value. What matters is that $(0,2\pi)$ and $(-\pi,\pi)$ are both one full period of a periodic integrand.
+    explanation: |
+      $R\,h(-\cos\alpha)$ is $2\pi$-periodic, and the integral of a periodic function over any interval of one period length is the same: the piece $(\pi,2\pi)$ moves to $(-\pi,0)$. Then
+      $$\begin{aligned}\int_\mathcal{M}\Omega^g &= \int_{-\pi}^{\pi}d\beta\,R\,\big(h(-\cos\beta)\\ &\qquad+h(\cos\beta)\big).\end{aligned}$$
+
+  - type: numeric
+    id: total
+    tag: Step 8 · The partition drops out
+    title: The length of the circle
+    prompt: |
+      Circle of radius $R = 2$, smooth step $h$ with $h(s)+h(-s) = 1$ for all $s$. After moving to a common interval, the length of the circle is
+      $$\int_{-\pi}^{\pi}d\beta\,R\,\big(h(-\cos\beta)+h(\cos\beta)\big).$$
+      What is it? (Decimals are fine.)
+    answer: 12.566
+    tolerance: 0.01
+    answerText: '$4\pi\approx12.566$'
+    wrong:
+      - value: 6.2832
+        feedback: |
+          $2\pi$ forgets the density $R = 2$: that is the length of the unit circle.
+      - value: 25.133
+        feedback: |
+          $8\pi$ counts each term as a full circle. The two terms share the circle: $h(-\cos\beta)+h(\cos\beta) = 1$, so together they give one circle, $2\pi R$.
+    hint: |
+      Use $h(s)+h(-s) = 1$ with $s = \cos\beta$.
+    explanation: |
+      The bracket is $1$ at every $\beta$, so the integral is $2\pi R = 4\pi\approx12.566$. The function $h$, that is the choice of partition of unity, **drops out**: any smooth step would give the same answer, as the general theory promised. (Each term alone is $\pi R$: substituting $\beta\mapsto\pi-\beta$ swaps $h(\cos\beta)$ and $h(-\cos\beta)$.)
+
+  - type: mcq
+    id: one-chart-shortcut
+    tag: Step 8 · The partition drops out
+    title: The shortcut
+    prompt: |
+      Circle of radius $R$, metric volume form with density $R$ in the angle chart $\alpha\in(0,2\pi)$, whose domain misses the single point $(R,0)$. In practice, people compute the length of the circle as $\int_0^{2\pi}d\alpha\,R = 2\pi R$, ignoring the missing point. Which statement is right?
+    options:
+      - text: 'The value is correct, but it is not a one-chart integral: the circle is not inside the chart domain; it is justified because a set of zero length can be dropped'
+        correct: true
+      - text: 'It is a one-chart integral: the region $\mathcal{M}\setminus\{(R,0)\}$ lies in the chart domain'
+        feedback: |
+          The one-chart integral needs the **closure** of the region to be compact and inside the chart domain. The closure of $\mathcal{M}\setminus\{(R,0)\}$ is all of $\mathcal{M}$, which contains $(R,0)$.
+      - text: 'It gives the wrong value: the missing point carries some length'
+        feedback: |
+          A single point has length zero; the partition-of-unity computation, which misses nothing, gives the same $2\pi R$.
+    explanation: |
+      The careful computation with the partition of unity gives $2\pi R$, and so does the shortcut. That they agree is an instance of the fact (stated without proof) that a set of zero volume, here a single point of zero length, can be dropped from a region without changing the integral. The one-chart definition alone does not cover it.
+
+  - type: text
+    id: summary
+    title: Wrap-up
+    body: |
+      **The answer, earned.** The circle has length $2\pi R$, and every step of the construction was needed to get it honestly.
+
+      - **Oriented atlas**: angles $\alpha\in(0,2\pi)$, $\beta\in(-\pi,\pi)$ and the projection $u = a$ on the lower half all increase counterclockwise; Jacobians $\frac{d\alpha}{d\beta} = 1$, $\frac{d\alpha}{du} = \frac{1}{\sqrt{R^2-u^2}}$, all positive.
+      - **Metric**: in one dimension the single component is the squared speed of the inverse chart: $R^2$ in the angle charts, $\frac{R^2}{R^2-u^2}$ in the projection chart.
+      - **Densities** $\omega^g = \sqrt{|\det g|}$, the speed: $R$, $R$, $\frac{R}{\sqrt{R^2-u^2}}$; the density law $\omega^g_\mathscr{P} = \text{ᛞ}_{\mathcal{U}\mathcal{W}}\,\omega^g_\mathscr{X}$ holds.
+      - **Arc** $\pi<\alpha_1<\alpha_2<2\pi$: $R(\alpha_2-\alpha_1)$ in the angle chart and, through $\arcsin(\cos\alpha) = \alpha-\tfrac{3\pi}2$, in the projection chart. Without the density: $\alpha_2-\alpha_1$ and $u_2-u_1$, which differ.
+      - **Orientation**: the flipped projection $u' = -a$ has density $-\frac{R}{\sqrt{R^2-u'^2}}$ and gives $-R(\alpha_2-\alpha_1)$; it is not in the oriented atlas.
+      - **Whole circle**: $\text{ᚹ}_1 = h(-a/R)$, $\text{ᚹ}_2 = h(a/R)$; periodicity and $h(s)+h(-s) = 1$ give $2\pi R$, independent of $h$. The one-chart shortcut agrees, by dropping a point of zero length.
+
+      **Next: "Integration Traps".** Fast questions on the misconceptions of this level: densities that are not scalars, integrals in charts of the wrong orientation, supports that touch the missing point, and the square root that turns a metric into a volume.
