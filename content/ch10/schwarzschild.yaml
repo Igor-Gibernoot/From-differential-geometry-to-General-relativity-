@@ -1,0 +1,603 @@
+id: ch10-schwarzschild
+title: "Guided Problem: Checking the Schwarzschild Metric"
+kind: guided
+
+cards:
+  - type: text
+    id: hook
+    title: A metric for the space outside a star
+    body: |
+      Outside a spherical star there is no matter, so the vacuum Einstein equations should hold:
+      $$G = 0 \iff \mathrm{Ric} = 0.$$
+      Here is a candidate for the metric of that region, in a chart with coordinates $(t, r, \theta, \varphi)$ (time, a radius-like coordinate, and the two angles of a sphere):
+      $$\begin{aligned}g ={}& f\,dt\otimes dt\\ &- \frac{1}{f}\,dr\otimes dr\\ &- r^2\,d\theta\otimes d\theta\\ &- r^2\sin^2\theta\,d\varphi\otimes d\varphi,\end{aligned}$$
+      with $f(r) := 1 - r_S/r$ and $r_S$ a constant. It looks innocent, but it is not obvious that it solves anything. Does it?
+
+      This lesson checks it by hand, with $r_S = 2$ in every number (that is, $G_NM = 1$):
+      1. the metric, its determinant and the volume element;
+      2. the connection coefficients $\Gamma^k_{ji}$, one by one;
+      3. the Ricci tensor, component by component;
+      4. what the constant $r_S$ must be (the Newtonian limit);
+      5. what the coordinate $r$ really measures;
+      6. the tidal tensor of Level 9, recovered from the same $\Gamma$.
+
+      We keep $f$ general for as long as possible, and write $' := d/dr$.
+
+  - type: text
+    id: setup
+    title: The setting
+    body: |
+      Let $r_S := 2G_NM$ with $M > 0$ (a mass), and take the spacetime $\mathcal{M} := \mathbb{R}\times(r_S,\infty)\times S^2$, with $S^2$ the unit sphere. The chart $(\mathcal{U},\mathscr{X})$ has coordinates $(\alpha^0,\alpha^1,\alpha^2,\alpha^3) =: (t, r, \theta, \varphi)$, where $\theta\in(0,\pi)$ is the polar angle and $\varphi\in(0,2\pi)$ the azimuth of the point on the sphere. Only this chart is used, so we drop its label.
+
+      The components of the metric are all zero except the diagonal ones:
+      $$g_{00} = f,\quad g_{11} = -\frac1f,$$
+      $$g_{22} = -r^2,\quad g_{33} = -r^2\sin^2\theta.$$
+      Latin indices run over $0,1,2,3$ and repeated indices are summed. $\partial_i$ means the derivative of a component function with respect to $\alpha^i$, so $\partial_1 = d/dr$, and $g$ depends only on $r$ and $\theta$.
+
+  - type: mcq
+    id: signature
+    tag: Step 1 · The metric
+    title: Which signature?
+    prompt: |
+      The metric has $g_{00} = f$, $g_{11} = -1/f$, $g_{22} = -r^2$, $g_{33} = -r^2\sin^2\theta$, with $f = 1 - r_S/r$, on the region $r > r_S$ and $0<\theta<\pi$. What is its signature?
+    options:
+      - text: '$(+,-,-,-)$: one positive and three negative eigenvalues, Lorentzian'
+        correct: true
+      - text: '$(+,+,+,+)$: Riemannian, as every diagonal metric with non-zero entries'
+        feedback: |
+          Signs of the diagonal entries are what matter, not that they are non-zero. Three of them carry a minus sign.
+      - text: '$(-,+,-,-)$: the $r$ direction is the time direction, because $g_{11}$ blows up near $r_S$'
+        feedback: |
+          For $r > r_S$ we have $f > 0$, so $g_{11} = -1/f < 0$. It is $g_{00} = f > 0$ that is the single positive entry. (Inside, $r<r_S$, the signs of $g_{00}$ and $g_{11}$ would indeed swap, which is one reason this chart stops at $r_S$.)
+      - text: '$(-,-,-,-)$: all four directions are spacelike'
+        feedback: |
+          $f = 1 - r_S/r$ is positive for $r > r_S$, so $g_{00} > 0$: the $t$ direction is timelike (positive means timelike in the signature $(+,-,-,-)$).
+    explanation: |
+      $f > 0$ on $(r_S,\infty)$ gives $g_{00}>0$ and three negative entries: signature $(+,-,-,-)$, with $\partial_t$ timelike. This is why the region is $r>r_S$: there $\mathcal{M}$ is a Lorentzian manifold.
+
+  - type: numeric
+    id: det-value
+    tag: Step 1 · The metric
+    title: The determinant at a point
+    prompt: |
+      Take $r_S = 2$ and the point $r = 4$, $\theta = \pi/2$. The metric is diagonal with $g_{00} = f$, $g_{11} = -1/f$, $g_{22} = -r^2$, $g_{33} = -r^2\sin^2\theta$ and $f = 1 - r_S/r$. What is $\det g$ there?
+    answer: -256
+    wrong:
+      - value: 256
+        feedback: |
+          The sign: three of the four diagonal entries are negative, and an odd number of negative factors makes the product negative. Lorentzian metrics have $\det g<0$.
+      - value: -16
+        feedback: |
+          $16 = r^2\sin\theta$ is $\sqrt{-\det g}$, not $\det g$ itself. Here $\det g = f\cdot(-1/f)\cdot(-r^2)\cdot(-r^2\sin^2\theta)$.
+    hint: |
+      The product $f\cdot(-1/f)$ is $-1$: the factor $f$ cancels.
+    explanation: |
+      $$\begin{aligned}\det g\\ &= f\cdot\Big(-\frac1f\Big)\cdot(-r^2)\cdot(-r^2\sin^2\theta)\\\ &= -r^4\sin^2\theta,\end{aligned}$$
+      which is $-256$ at $r=4$, $\theta=\pi/2$. Note that $f$ dropped out: $\sqrt{-\det g} = r^2\sin\theta$ is independent of $f$ (here $16$).
+
+  - type: mcq
+    id: contracted-gamma
+    tag: Step 1 · The metric
+    title: A shortcut for a contracted Christoffel symbol
+    prompt: |
+      For the Levi-Civita connection of a Lorentzian metric, the contracted coefficients are
+      $$\Gamma^m_{nm} = \partial_n\ln\sqrt{-\det g}.$$
+      Here $\sqrt{-\det g} = r^2\sin\theta$. Which is $\Gamma^m_{1m}$ (sum over $m$)?
+    options:
+      - text: '$2/r$'
+        correct: true
+      - text: '$1/r$'
+        feedback: |
+          $\ln(r^2\sin\theta) = 2\ln r + \ln\sin\theta$, and the derivative of $2\ln r$ with respect to $r$ is $2/r$, not $1/r$. (The $\sin\theta$ does not depend on $r$.)
+      - text: '$2/r + f''/(2f)$'
+        feedback: |
+          $f$ is absent from $\det g$ (it cancels between $g_{00}$ and $g_{11}$), so no $f'$ appears here. The two terms $\Gamma^0_{01}$ and $\Gamma^1_{11}$ inside the sum cancel each other: $\frac{f'}{2f} - \frac{f'}{2f}$.
+      - text: '$\cot\theta$'
+        feedback: |
+          That is $\Gamma^m_{2m} = \partial_\theta\ln(r^2\sin\theta)$, the contraction on the index $n = 2$, not $n=1$.
+    explanation: |
+      $$\Gamma^m_{1m} = \partial_r\big(2\ln r + \ln\sin\theta\big) = \frac2r,$$
+      and likewise $\Gamma^m_{2m} = \cot\theta$, while $\Gamma^m_{0m} = \Gamma^m_{3m} = 0$ (nothing depends on $t$ or $\varphi$). At $r = 4$: $\Gamma^m_{1m} = 0.5$.
+
+  - type: text
+    id: gamma-plan
+    tag: Step 2 · The connection
+    title: One coefficient at a time
+    body: |
+      Because $g$ is **diagonal**, the Levi-Civita formula collapses. With no sum over $k$,
+      $$\Gamma^k_{ji} = \frac12\,(g^{-1})^{kk}\big(\partial_ig_{kj} + \partial_jg_{ki} - \partial_kg_{ij}\big),$$
+      where $(g^{-1})^{kk} = 1/g_{kk}$. Also $\Gamma^k_{ji} = \Gamma^k_{ij}$, and a derivative only matters for $\partial_1$ (that is $d/dr$) and $\partial_2$ (that is $d/d\theta$).
+
+      The inverse metric is the diagonal matrix
+      $$\mathrm{diag}\Big(\frac1f,\ -f,\ -\frac1{r^2},\ -\frac1{r^2\sin^2\theta}\Big).$$
+      We compute the non-zero coefficients in turn.
+
+  - type: build
+    id: build-g001
+    tag: Step 2 · The connection
+    title: The time-radius coefficient
+    prompt: |
+      Take $k = 0$, $j = 0$, $i = 1$ in the diagonal formula. Only $\partial_1g_{00} = f'$ survives (the other two terms involve $\partial_0$ of $g_{01}$ and $\partial_0$ of $g_{10}$, and are zero). With $(g^{-1})^{00} = 1/f$, build $\Gamma^0_{01}$.
+    prefix: '\Gamma^0_{01} ='
+    tiles: ['\dfrac{f''}{2f}', '\dfrac{f f''}{2}', '-\dfrac{f''}{2f}', '\dfrac{f''}{f}']
+    answers:
+      - ['\dfrac{f''}{2f}']
+    wrong:
+      - answer: ['\dfrac{f f''}{2}']
+        feedback: |
+          $\frac{ff'}{2}$ multiplies by $f$ instead of dividing: it is the coefficient $\Gamma^1_{00}$ (with $(g^{-1})^{11} = -f$ and a sign), not $\Gamma^0_{01}$. Here the inverse metric entry is $1/f$.
+      - answer: ['\dfrac{f''}{f}']
+        feedback: |
+          Do not forget the factor $\frac12$ in front of the formula.
+    hint: |
+      $\Gamma^0_{01} = \tfrac12\cdot\tfrac1f\cdot f'$.
+    explanation: |
+      $$\Gamma^0_{01} = \tfrac12\,(g^{-1})^{00}\,\partial_1g_{00} = \frac{f'}{2f}.$$
+      Since $\ln\sqrt{g_{00}}$ has derivative $f'/(2f)$, this is the logarithmic derivative of $\sqrt f$.
+
+  - type: numeric
+    id: g001-value
+    tag: Step 2 · The connection
+    title: Its value at r = 4
+    prompt: |
+      With $r_S = 2$: $f = 1 - 2/r$, so $f' = 2/r^2$. Evaluate $\Gamma^0_{01} = f'/(2f)$ at $r = 4$.
+    answer: 0.125
+    wrong:
+      - value: 0.25
+        feedback: |
+          $0.25 = f'/f$ forgets the $\tfrac12$. At $r=4$: $f = 0.5$, $f' = 0.125$, so $\Gamma^0_{01} = 0.125/(2\cdot0.5)$.
+      - value: 0.0625
+        feedback: |
+          The denominator is $2f = 1$ at $r=4$, and $f' = 2/16 = 0.125$ is the numerator. Do not divide by $r$ or $r^2$ again.
+    explanation: |
+      $f(4) = 0.5$ and $f'(4) = 2/16 = 0.125$, so $\Gamma^0_{01} = 0.125/(2\cdot0.5) = 0.125$.
+
+  - type: build
+    id: build-g100
+    tag: Step 2 · The connection
+    title: The pull on a static observer
+    prompt: |
+      Now $k = 1$, $j = i = 0$. Only the term $-\partial_1g_{00} = -f'$ survives, and $(g^{-1})^{11} = -f$. Build $\Gamma^1_{00}$.
+    prefix: '\Gamma^1_{00} ='
+    tiles: ['\dfrac{f f''}{2}', '-\dfrac{f f''}{2}', '\dfrac{f''}{2f}', '\dfrac{f''}{2}']
+    answers:
+      - ['\dfrac{f f''}{2}']
+    wrong:
+      - answer: ['-\dfrac{f f''}{2}']
+        feedback: |
+          Two minus signs: one from $(g^{-1})^{11} = -f$ and one from $-\partial_1g_{00}$ in the formula. They cancel, leaving a plus.
+      - answer: ['\dfrac{f''}{2f}']
+        feedback: |
+          That is $\Gamma^0_{01}$, where the inverse metric entry is $1/f$. For $k = 1$ it is $(g^{-1})^{11} = -f$.
+    hint: |
+      $\Gamma^1_{00} = \tfrac12\cdot(-f)\cdot(-f')$.
+    explanation: |
+      $$\Gamma^1_{00} = \tfrac12\,(g^{-1})^{11}\big(-\partial_1g_{00}\big) = \frac{ff'}{2}.$$
+
+  - type: numeric
+    id: newton-limit
+    tag: Step 2 · The connection
+    title: Far from the mass, Newton returns
+    prompt: |
+      In the Newtonian chart of a point mass, the acceleration of a body at rest is $-\Gamma^\alpha_{00} = -\partial_\alpha\phi$, of size $G_NM/r^2$. Here take $r_S = 2$ (so $G_NM=1$) and $r = 100$: $f = 0.98$, $f' = 2/r^2 = 2\times10^{-4}$. What is the ratio of $\Gamma^1_{00} = ff'/2$ to Newton's $G_NM/r^2$?
+    answer: 0.98
+    wrong:
+      - value: 1
+        feedback: |
+          Close but not exact: the ratio is $f$ itself, which is $0.98$ at $r=100$. It tends to $1$ only as $r\to\infty$; the difference is the first relativistic correction.
+      - value: 0.5
+        feedback: |
+          $\Gamma^1_{00} = ff'/2 = 0.98\cdot2\times10^{-4}/2 = 0.98\times10^{-4}$, and $G_NM/r^2 = 10^{-4}$.
+    explanation: |
+      $\Gamma^1_{00} = 0.98\times10^{-4}$ and $G_NM/r^2 = 10^{-4}$: ratio $f = 0.98$. For large $r$, $\Gamma^1_{00}\approx r_S/(2r^2) = G_NM/r^2$, the Newtonian pull of Level 9. The coordinate $r$ plays the role of the distance to the mass, and the time-time coefficient is the gravitational field.
+
+  - type: mcq
+    id: g111
+    tag: Step 2 · The connection
+    title: A sign to be careful with
+    prompt: |
+      Compute $\Gamma^1_{11}$ from the diagonal formula: $k = j = i = 1$, with $g_{11} = -1/f$, so that $\partial_1g_{11} = f'/f^2$ and $(g^{-1})^{11} = -f$. Which is it?
+    options:
+      - text: '$-\dfrac{f''}{2f}$'
+        correct: true
+      - text: '$+\dfrac{f''}{2f}$'
+        feedback: |
+          The minus in $(g^{-1})^{11} = -f$ is easy to lose. Equivalently: $\Gamma^1_{11} = \tfrac12\partial_1\ln|g_{11}| = \tfrac12\partial_1\ln(1/f) = -\frac{f'}{2f}$.
+      - text: '$-\dfrac{f f''}{2}$'
+        feedback: |
+          That multiplies by $f$ twice over: $(g^{-1})^{11}\,\partial_1g_{11} = (-f)(f'/f^2) = -f'/f$, and half of it is $-\frac{f'}{2f}$.
+      - text: '$0$'
+        feedback: |
+          $g_{11}$ depends on $r = \alpha^1$, and the formula gives $\Gamma^1_{11} = \tfrac12 (g^{-1})^{11}\partial_1 g_{11}$, which is non-zero whenever $f'\neq0$.
+    explanation: |
+      $$\Gamma^1_{11} = \tfrac12(-f)\cdot\frac{f'}{f^2} = -\frac{f'}{2f}.$$
+      Note the pair: $\Gamma^0_{01} = +\frac{f'}{2f}$ and $\Gamma^1_{11} = -\frac{f'}{2f}$ cancel in $\Gamma^m_{1m}$, which is why the contraction saw only the $2/r$.
+
+  - type: numeric
+    id: g122
+    tag: Step 2 · The connection
+    title: The angular coefficient
+    prompt: |
+      For $k = 1$, $j = i = 2$: the only surviving term is $-\partial_1g_{22} = 2r$, and $(g^{-1})^{11} = -f$. So $\Gamma^1_{22} = \tfrac12(-f)(2r) = -rf$. Evaluate it at $r = 4$ with $r_S = 2$.
+    answer: -2
+    wrong:
+      - value: 2
+        feedback: |
+          Sign: $\Gamma^1_{22} = -rf$ is negative. Check with $g_{22} = -r^2$: $-\partial_1g_{22} = +2r$ and $(g^{-1})^{11} = -f$, a product with a minus.
+      - value: -4
+        feedback: |
+          $-r = -4$ forgets the factor $f = 0.5$. At $r=4$, $f = 1 - 2/4 = 0.5$, so $-rf = -2$.
+    explanation: |
+      $-rf = -4\cdot0.5 = -2$. The same computation with $g_{33} = -r^2\sin^2\theta$ gives $\Gamma^1_{33} = -rf\sin^2\theta$.
+
+  - type: numeric
+    id: g233
+    tag: Step 2 · The connection
+    title: A coefficient with an angle
+    prompt: |
+      The remaining coefficients are those of the round sphere: $\Gamma^2_{12} = \Gamma^3_{13} = 1/r$, $\Gamma^2_{33} = -\sin\theta\cos\theta$ and $\Gamma^3_{23} = \cot\theta$. Evaluate $\Gamma^2_{33}$ at $\theta = \pi/3$ (as a decimal).
+    answer: -0.4330
+    tolerance: 0.001
+    wrong:
+      - value: 0.433
+        feedback: |
+          The sign: $\Gamma^2_{33} = \tfrac12(g^{-1})^{22}(-\partial_2g_{33})$ with $(g^{-1})^{22} = -1/r^2$ and $-\partial_2g_{33} = +2r^2\sin\theta\cos\theta$, which gives $-\sin\theta\cos\theta$.
+      - value: -0.866
+        feedback: |
+          $\sin(\pi/3)=0.866$ alone is not the product: $\sin\theta\cos\theta = 0.866\cdot0.5 = 0.433$.
+    explanation: |
+      $-\sin(\pi/3)\cos(\pi/3) = -\tfrac{\sqrt3}2\cdot\tfrac12 = -\tfrac{\sqrt3}{4}\approx-0.433$. These coefficients do not depend on $f$ or $r_S$: they only encode that the angular part is a sphere of radius $r$.
+
+  - type: mcq
+    id: parity
+    tag: Step 2 · The connection
+    title: Which coefficients can be non-zero?
+    multiple: true
+    prompt: |
+      The non-zero coefficients (up to symmetry in the lower indices) are $\Gamma^0_{01}$, $\Gamma^1_{00}$, $\Gamma^1_{11}$, $\Gamma^1_{22}$, $\Gamma^1_{33}$, $\Gamma^2_{12}$, $\Gamma^3_{13}$, $\Gamma^2_{33}$, $\Gamma^3_{23}$. Which of these coefficients are **zero**? Select all.
+    options:
+      - text: '$\Gamma^0_{11}$'
+        correct: true
+      - text: '$\Gamma^1_{01}$'
+        correct: true
+      - text: '$\Gamma^3_{12}$'
+        correct: true
+      - text: '$\Gamma^0_{00}$'
+        correct: true
+      - text: '$\Gamma^0_{01}$'
+        feedback: |
+          This one is non-zero, it equals $f'/(2f)$. It is the only coefficient of the time component involving $r$.
+      - text: '$\Gamma^1_{00}$'
+        feedback: |
+          Non-zero: $ff'/2$.
+    explanation: |
+      In the diagonal formula, a coefficient needs a metric component to be differentiated: $\Gamma^0_{11}$ would need $\partial_1g_{01}$ or $\partial_0g_{11}$ (zero); $\Gamma^1_{01}$ needs $\partial_0g_{11}$; $\Gamma^3_{12}$ needs a mixed derivative of $g_{33}$ in a direction other than $r$ or $\theta$; $\Gamma^0_{00}$ needs $\partial_0g_{00} = 0$ (the metric does not depend on $t$). A neat pattern: every non-zero coefficient has the index $0$ an even number of times (zero or two), and the same for the index $3$.
+
+  - type: text
+    id: ricci-plan
+    tag: Step 3 · The Ricci tensor
+    title: The formula for Ric
+    body: |
+      The Ricci tensor of a symmetric connection is
+      $$\mathrm{Ric}_{ab} = \partial_m\Gamma^m_{ab} - \partial_b\Gamma^m_{am} + \Gamma^m_{mn}\Gamma^n_{ab} - \Gamma^m_{nb}\Gamma^n_{am}.$$
+      Here $a, b, m, n$ run over $0..3$ and repeated indices are summed (so the dummy index of the second and third terms is $m$, and $r$ stays the name of a coordinate). The contracted coefficients are known from Step 1: $\Gamma^m_{am} = \partial_a\ln(r^2\sin\theta)$.
+
+      Because of the pattern we just found, we can already discard some components. In each product above the index $0$ appears an even number of times in $\Gamma$ symbols (dummy indices count twice), so a component $\mathrm{Ric}_{0b}$ with $b\neq0$ has an odd count and is zero. The same holds for the index $3$. What remains: $\mathrm{Ric}_{12}$ and the diagonal.
+
+  - type: mcq
+    id: ric12
+    tag: Step 3 · The Ricci tensor
+    title: The only off-diagonal component
+    prompt: |
+      The surviving off-diagonal component is
+      $$\mathrm{Ric}_{12} = \Gamma^2_{12}\cot\theta - \Gamma^3_{32}\,\Gamma^3_{13}.$$
+      (the other terms vanish since $\partial_2\Gamma^2_{12}$ and $\partial_2\Gamma^m_{1m}$ are $0$ for $\Gamma^2_{12} = 1/r$ and $\Gamma^m_{1m} = 2/r$). What is its value?
+    options:
+      - text: '$0$: $\dfrac{\cot\theta}{r} - \dfrac{\cot\theta}{r}$'
+        correct: true
+      - text: '$\dfrac{2\cot\theta}{r}$'
+        feedback: |
+          The second term enters with a minus sign, and $\Gamma^3_{32}\Gamma^3_{13} = \cot\theta\cdot\frac1r$ equals the first term. They cancel.
+      - text: '$-\dfrac{\cot\theta}{r}$'
+        feedback: |
+          Both products equal $\cot\theta/r$: $\Gamma^2_{12}\cot\theta = \frac1r\cot\theta$ and $\Gamma^3_{32}\Gamma^3_{13} = \cot\theta\cdot\frac1r$. Their difference is $0$, not $-\cot\theta/r$.
+      - text: '$\cot\theta\; f''/(2f)$'
+        feedback: |
+          No $f$ appears: only the sphere coefficients enter this component.
+    explanation: |
+      $\mathrm{Ric}_{12} = \frac{\cot\theta}{r} - \frac{\cot\theta}{r} = 0$, true for every $f$. Only the four diagonal components remain.
+
+  - type: order
+    id: ric00-order
+    tag: Step 3 · The Ricci tensor
+    title: Computing Ric_00
+    prompt: |
+      Put the computation of $\mathrm{Ric}_{00}$ in order. (Recall $\Gamma^0_{01} = \tfrac{f'}{2f}$, $\Gamma^1_{00} = \tfrac{ff'}{2}$, $\Gamma^m_{1m} = \tfrac2r$, and nothing depends on $t$.)
+    steps:
+      - 'Write the four terms of the formula with $a = b = 0$: only $\partial_1\Gamma^1_{00}$ survives in the first, the second is $\partial_0(\dots) = 0$.'
+      - 'The third term is $\Gamma^m_{m1}\,\Gamma^1_{00} = \frac2r\Gamma^1_{00}$.'
+      - 'The fourth is $-\Gamma^m_{n0}\Gamma^n_{0m} = -2\,\Gamma^0_{10}\,\Gamma^1_{00}$ (the pairs $(m,n) = (0,1)$ and $(1,0)$).'
+      - 'Insert the values and simplify: $\mathrm{Ric}_{00} = \big(\tfrac{ff''}{2}\big)'' + \tfrac{ff''}{r} - \tfrac{f''^2}{2} = \tfrac{f}{2r^2}(r^2f'')''$.'
+    hint: |
+      Count the terms: one from each part of the formula.
+    explanation: |
+      $$\mathrm{Ric}_{00} = \Big(\frac{ff'}{2}\Big)' + \frac{ff'}{r} - \frac{f'^2}{2}.$$
+      Expand $(ff'/2)' = (f'^2 + ff'')/2$: the $f'^2/2$ terms cancel, and
+      $$\mathrm{Ric}_{00} = \frac{ff''}{2} + \frac{ff'}{r} = \frac{f}{2r^2}\,(r^2f')',$$
+      since $(r^2f')' = r^2f'' + 2rf'$.
+
+  - type: mcq
+    id: ric-rel
+    tag: Step 3 · The Ricci tensor
+    title: Two components, one equation
+    prompt: |
+      For a general $f(r)$ the same method gives
+      $$\mathrm{Ric}_{00} = \frac{f}{2r^2}\,(r^2f')',$$
+      $$\mathrm{Ric}_{11} = -\frac{1}{2fr^2}\,(r^2f')'.$$
+      What follows?
+    options:
+      - text: '$\mathrm{Ric}_{11} = -\mathrm{Ric}_{00}/f^2$: both vanish exactly when $r^2f''$ is constant'
+        correct: true
+      - text: '$\mathrm{Ric}_{11} = \mathrm{Ric}_{00}$: they are the same equation'
+        feedback: |
+          They differ by the factor $-1/f^2$, not $1$. The sign matters: in signature $(+,-,-,-)$ the time and radial entries of the metric have opposite signs.
+      - text: '$\mathrm{Ric}_{00}=0$ requires $f = 0$, since $f$ is a factor'
+        feedback: |
+          $f$ is a factor of $\mathrm{Ric}_{00}$, but $f>0$ on $\mathcal{M}$ ($r>r_S$). So $\mathrm{Ric}_{00}$ vanishes only when $(r^2f')' = 0$.
+      - text: '$\mathrm{Ric}_{00}$ and $\mathrm{Ric}_{11}$ are independent: two equations on $f$'
+        feedback: |
+          Their ratio is $-1/f^2$, so one vanishes iff the other does: only the combination $(r^2f')'$ appears. Vacuum does not overdetermine $f$.
+    explanation: |
+      $(r^2f')' = 0$ means $r^2f'$ is a constant. For $f = 1 - r_S/r$, $f' = r_S/r^2$ and $r^2f' = r_S$: constant, so $\mathrm{Ric}_{00} = \mathrm{Ric}_{11} = 0$.
+
+  - type: numeric
+    id: ric-wrong-f
+    tag: Step 3 · The Ricci tensor
+    title: A plausible but wrong candidate
+    prompt: |
+      Try instead $f = 1 - c/r^2$ with $c = 1$ (a correction with a $1/r^2$ potential). Then $f' = 2c/r^3$, so $r^2f' = 2c/r$. Use $\mathrm{Ric}_{00} = \frac{f}{2r^2}(r^2f')'$ to compute $\mathrm{Ric}_{00}$ at $r = 2$.
+    answer: -0.046875
+    tolerance: 0.0001
+    wrong:
+      - value: 0
+        feedback: |
+          $r^2f' = 2c/r$ is not constant, so $(r^2f')' = -2c/r^2 = -0.5$ at $r=2$. Only the $1/r$ potential makes $r^2f'$ constant.
+      - value: -0.5
+        feedback: |
+          $-0.5$ is $(r^2f')'$ only. Multiply by $f/(2r^2)$: with $f(2) = 1 - 1/4 = 0.75$, $f/(2r^2) = 0.75/8$.
+    explanation: |
+      $(r^2f')' = -2c/r^2 = -0.5$, and $f/(2r^2) = 0.75/8 = 0.09375$, so $\mathrm{Ric}_{00} = -0.046875 \neq 0$. A $1/r^2$ correction is not a vacuum solution, much as the Laplacian of a Newtonian potential vanishes away from the mass only for $1/r$ in three space dimensions.
+
+  - type: text
+    id: ricci-angular
+    tag: Step 3 · The Ricci tensor
+    title: The angular components
+    body: |
+      The angular components involve a different combination of $f$. Carrying out the sums (the $\cot^2\theta$ and $1/\sin^2\theta$ terms combine to $1$),
+      $$\mathrm{Ric}_{22} = 1 - (rf)',$$
+      and $\mathrm{Ric}_{33} = \sin^2\theta\,\mathrm{Ric}_{22}$ is the same equation, since $g_{33} = \sin^2\theta\,g_{22}$ and the computation is identical.
+
+      So the whole vacuum problem has been reduced to **two** conditions on $f$:
+      $$(r^2f')' = 0,$$
+      $$(rf)' = 1.$$
+
+  - type: numeric
+    id: ric22-wrong-f
+    tag: Step 3 · The Ricci tensor
+    title: Angular component for the wrong candidate
+    prompt: |
+      Take again $f = 1 - c/r^2$ with $c = 1$, so $rf = r - c/r$. Compute $\mathrm{Ric}_{22} = 1 - (rf)'$ at $r = 2$.
+    answer: -0.25
+    wrong:
+      - value: 0
+        feedback: |
+          $(rf)' = 1 + c/r^2 = 1.25$ at $r=2$, not $1$. Only for $f = 1 - c/r$ is $rf = r - c$ of slope $1$.
+      - value: 0.25
+        feedback: |
+          Sign: $(rf)' = 1.25 > 1$, so $\mathrm{Ric}_{22} = 1 - 1.25 = -0.25$.
+    explanation: |
+      $(rf)' = (r - c/r)' = 1 + c/r^2 = 1.25$, so $\mathrm{Ric}_{22} = -0.25 \neq 0$.
+
+  - type: mcq
+    id: ric-schw
+    tag: Step 4 · The verdict
+    title: Does Schwarzschild solve the vacuum equations?
+    prompt: |
+      Now $f = 1 - r_S/r$. Which statement is correct?
+    options:
+      - text: '$r^2f'' = r_S$ is constant and $rf = r - r_S$ has slope $1$: all components of $\mathrm{Ric}$ vanish, so $G = 0$'
+        correct: true
+      - text: '$\mathrm{Ric} = 0$ only at large $r$, where the correction $r_S/r$ is small'
+        feedback: |
+          The vanishing is exact for every $r>r_S$, not asymptotic: $(r^2f')' = 0$ and $(rf)' = 1$ hold identically.
+      - text: '$\mathrm{Ric}_{00} = 0$ but $\mathrm{Ric}_{22}\neq 0$, since the angular part is a sphere of curvature $1/r^2$'
+        feedback: |
+          The sphere does contribute (the $1$ in $\mathrm{Ric}_{22} = 1 - (rf)'$), and it is cancelled exactly by $(rf)'=1$.
+      - text: '$\mathrm{Ric} = 0$ means the metric is flat'
+        feedback: |
+          Ricci-flat is weaker than flat: Ric is a contraction of Riem. The tidal tensor below is non-zero, so $\mathcal{M}$ is curved.
+    explanation: |
+      $\mathrm{Ric}_{00}=\mathrm{Ric}_{11}=0$ because $r^2f' = r_S$, and $\mathrm{Ric}_{22}=\mathrm{Ric}_{33}=0$ because $rf = r - r_S$. All off-diagonal components vanished already. So $\mathrm{Ric}=0$, hence $G=0$: the Schwarzschild metric solves the vacuum Einstein equations, with $r_S$ free.
+
+  - type: order
+    id: converse
+    tag: Step 4 · The verdict
+    title: Is the form of f forced?
+    prompt: |
+      Among metrics of the form $g = \mathrm{diag}(f,-1/f,-r^2,-r^2\sin^2\theta)$, show that vacuum forces $f = 1 - c/r$ for a constant $c$. Put the argument in order.
+    steps:
+      - 'Vacuum requires $\mathrm{Ric}_{22} = 1 - (rf)'' = 0$.'
+      - 'So $(rf)'' = 1$, and integrating, $rf = r - c$ for a constant $c$.'
+      - 'Divide by $r$: $f = 1 - c/r$.'
+      - 'Check the other equation: $r^2f'' = c$ is constant, so $(r^2f'')'' = 0$ and $\mathrm{Ric}_{00}=\mathrm{Ric}_{11}=0$ follow automatically.'
+    hint: |
+      One equation is enough to determine $f$ up to a constant.
+    explanation: |
+      The angular equation alone fixes $f$ up to one constant $c$, and the other equations are then free consequences. The constant is not fixed by the vacuum equations: it is the one free parameter of the solution.
+
+  - type: numeric
+    id: fix-c
+    tag: Step 4 · The verdict
+    title: What is the constant?
+    prompt: |
+      Far from the mass, a metric describing Newtonian gravity has $g_{00}\approx1+2\phi$, with $\phi = -G_NM/r$. Here $g_{00} = f = 1 - c/r$. Matching the two gives $c = 2G_NM =: r_S$. For a mass with $G_NM = 3$ (so $r_S = 6$), what is $f$ at $r = 12$?
+    answer: 0.5
+    wrong:
+      - value: 0.75
+        feedback: |
+          $0.75 = 1 - 3/12$ uses $c = G_NM$ instead of $2G_NM$. Matching $1 - c/r$ with $1 - 2G_NM/r$ gives $c = 2G_NM = 6$.
+      - value: 0.25
+        feedback: |
+          $f = 1 - 6/12 = 0.5$: do not divide twice.
+    explanation: |
+      $f(12) = 1 - 6/12 = 0.5$. The only free constant of the vacuum solution is the mass seen from far away, $r_S = 2G_NM$.
+
+  - type: numeric
+    id: what-is-r
+    tag: Step 5 · What does r measure?
+    title: Sphere area and radial distance
+    prompt: |
+      On a sphere with $t$ and $r$ constant, the metric is $r^2$ times that of the unit sphere, so its area is $4\pi r^2$: $r$ is the radius defined by the area. Along a radial segment ($t,\theta,\varphi$ fixed) the length element is $dr/\sqrt{f}$. Take $r_S = 4$ and a short segment at $r = 5$. By what factor is its length larger than its coordinate width $\Delta r$ (about $1/\sqrt{f}$)?
+    answer: 2.236
+    tolerance: 0.01
+    wrong:
+      - value: 1
+        feedback: |
+          That would be flat space. Here $f(5) = 1 - 4/5 = 0.2$, so lengths are stretched by $1/\sqrt{0.2}$.
+      - value: 5
+        feedback: |
+          $5 = 1/f$. The length element is $\sqrt{|g_{11}|}\,dr = dr/\sqrt{f}$, with the square root.
+    explanation: |
+      $f(5)=0.2$, so $1/\sqrt{0.2} = \sqrt5\approx2.236$. As $r\to r_S$, $f\to0$ and the factor diverges: spheres at equal radial distances crowd together in $r$ near $r_S$, even though the total radial length from $r_S$ to any $r_2$ stays finite.
+
+  - type: mcq
+    id: r-not-distance
+    tag: Step 5 · What does r measure?
+    title: Is r the distance to the centre?
+    prompt: |
+      For the exterior metric on $\mathcal{M}=\mathbb{R}\times(r_S,\infty)\times S^2$, what is the coordinate $r$?
+    options:
+      - text: 'The radius obtained from the area of the sphere, $4\pi r^2$; there is no centre in $\mathcal{M}$ to measure a distance from'
+        correct: true
+      - text: 'The distance from the centre, because the sphere has radius $r$ and area $4\pi r^2$ as in flat space'
+        feedback: |
+          In flat space the distance and the area radius agree, but here the radial distance between two spheres is $\int dr/\sqrt f > r_2 - r_1$. And the centre is not even a point of $\mathcal{M}$ (the region $r\le r_S$ is not included).
+      - text: 'The proper time of a clock at rest, in units of $r_S$'
+        feedback: |
+          $r$ is a space coordinate. The proper time along $t$ at fixed $r$ is $\sqrt f\,dt$.
+    explanation: |
+      The area radius is meaningful geometrically; the distance to a centre is not, because there is no centre in $\mathcal{M}$.
+
+  - type: text
+    id: tidal-plan
+    tag: Step 6 · Tides
+    title: The same Gamma gives the tidal tensor
+    body: |
+      In the Newtonian theory of a point mass, the tides are
+      $$\mathrm{Riem}^1_{010} = -\frac{2G_NM}{r^3},$$
+      $$\mathrm{Riem}^2_{020} = \mathrm{Riem}^3_{030} = \frac{G_NM}{r^3},$$
+      with trace $\mathrm{Ric}_{00} = 0$. Does Schwarzschild reproduce them? The curvature of a symmetric connection is
+      $$\begin{aligned}\mathrm{Riem}^i_{jkm} ={}& \partial_k\Gamma^i_{jm}\\ &- \partial_m\Gamma^i_{jk}\\ &+ \Gamma^i_{kn}\Gamma^n_{jm}\\ &- \Gamma^i_{mn}\Gamma^n_{jk}.\end{aligned}$$
+      For $\mathrm{Riem}^1_{010}$ ($i=1$, $j=0$, $k=1$, $m=0$) only three terms survive:
+      $$\partial_1\Gamma^1_{00} + \Gamma^1_{11}\Gamma^1_{00} - \Gamma^1_{00}\Gamma^0_{01}.$$
+
+  - type: build
+    id: build-riem1010
+    tag: Step 6 · Tides
+    title: The radial tide
+    prompt: |
+      Insert $\Gamma^1_{00} = ff'/2$, $\Gamma^1_{11} = -f'/(2f)$ and $\Gamma^0_{01} = f'/(2f)$ into $\partial_1\Gamma^1_{00} + \Gamma^1_{11}\Gamma^1_{00} - \Gamma^1_{00}\Gamma^0_{01}$. The last two terms each equal $-f'^2/4$. Build $\mathrm{Riem}^1_{010}$ (here $f''$ is the second derivative of $f$).
+    prefix: '\mathrm{Riem}^1_{010} ='
+    tiles: ['\dfrac{ff''''}{2}', '\dfrac{f''^2}{2}', '-\dfrac{ff''''}{2}', 'f f''''']
+    answers:
+      - ['\dfrac{ff''''}{2}']
+    wrong:
+      - answer: ['\dfrac{f''^2}{2}']
+        feedback: |
+          $f'^2/2$ is what the two product terms contribute with a minus sign; it cancels against the $f'^2/2$ inside $\partial_1(ff'/2) = (f'^2 + ff'')/2$. What is left is $\tfrac12ff''$.
+    hint: |
+      $\partial_1(ff'/2) = (f'^2 + ff'')/2$.
+    explanation: |
+      $$\mathrm{Riem}^1_{010} = \frac{f'^2 + ff''}{2} - \frac{f'^2}{2} = \frac{ff''}{2}.$$
+
+  - type: numeric
+    id: riem1010-value
+    tag: Step 6 · Tides
+    title: Compare with the Newtonian tide
+    prompt: |
+      With $r_S=2$ ($G_NM=1$): $f = 1 - 2/r$, so $f'' = -4/r^3$. Evaluate $\mathrm{Riem}^1_{010} = ff''/2$ at $r=4$. (The Newtonian value is $-2G_NM/r^3 = -0.03125$.)
+    answer: -0.015625
+    tolerance: 0.00001
+    wrong:
+      - value: -0.03125
+        feedback: |
+          That is the Newtonian value. The relativistic one carries the extra factor $f = 0.5$ at $r=4$.
+      - value: 0.015625
+        feedback: |
+          Sign: $f''<0$ because $f'= 2/r^2$ decreases. So the radial tide stretches, as in the Newtonian theory.
+    explanation: |
+      $f(4)=0.5$, $f''(4) = -4/64 = -0.0625$: $\mathrm{Riem}^1_{010} = 0.5\cdot(-0.0625)/2 = -0.015625$. In general $\mathrm{Riem}^1_{010} = -f\,\frac{2G_NM}{r^3}$: the Newtonian value times $f$, which tends to $1$ far from the mass.
+
+  - type: numeric
+    id: riem2020-value
+    tag: Step 6 · Tides
+    title: The sideways tide and the trace
+    prompt: |
+      The same computation gives $\mathrm{Riem}^2_{020} = \mathrm{Riem}^3_{030} = \dfrac{ff'}{2r}$. At $r=4$, $r_S=2$ ($f = 0.5$, $f' = 0.125$), add $\mathrm{Riem}^1_{010} = -0.015625$ and these two. The sum is $\mathrm{Ric}_{00}$ (the contraction $\mathrm{Riem}^m_{0m0}$). What is it?
+    answer: 0
+    tolerance: 0.000001
+    wrong:
+      - value: 0.0078125
+        feedback: |
+          That is a single sideways entry $ff'/(2r) = 0.5\cdot0.125/8$. There are two of them, with the radial entry $-0.015625$: $-0.015625 + 2\cdot0.0078125 = 0$.
+      - value: -0.0078125
+        feedback: |
+          Count both sideways components, $\mathrm{Riem}^2_{020}$ and $\mathrm{Riem}^3_{030}$, each $+0.0078125$.
+    explanation: |
+      $-0.015625 + 2\cdot0.0078125 = 0$: the trace vanishes, as $\mathrm{Ric}_{00}=0$ requires. Each entry is the Newtonian one times $f$ ($-2G_NM/r^3$ and $G_NM/r^3$): stretching along the line to the mass, squeezing across it.
+
+  - type: mcq
+    id: flat-trap
+    tag: Step 6 · Tides
+    title: Ricci-flat, but is it flat?
+    prompt: |
+      The Schwarzschild exterior satisfies $\mathrm{Ric}=0$. A student concludes that $\mathrm{Riem}=0$, i.e. that the spacetime is flat. What is wrong?
+    options:
+      - text: '$\mathrm{Ric}$ is a trace of $\mathrm{Riem}$; entries like $\mathrm{Riem}^1_{010}=-0.015625\neq0$ at $r=4$ show a curved spacetime whose trace cancels'
+        correct: true
+      - text: 'Nothing: $\mathrm{Ric}=0$ implies $\mathrm{Riem}=0$ in four dimensions'
+        feedback: |
+          That implication holds in dimensions 2 and 3, not in 4: the $20$ independent components of $\mathrm{Riem}$ outnumber the $10$ of $\mathrm{Ric}$, and the rest is free in vacuum.
+      - text: 'The tides computed above are coordinate artefacts that vanish in another chart'
+        feedback: |
+          A tensor that is non-zero in one chart is non-zero in every chart: components transform linearly. The tide cannot be transformed away; this is the difference between gravity and a pseudo-force.
+    explanation: |
+      Vacuum gravity is not the absence of curvature but the absence of Ricci curvature: the trace of the tidal tensor vanishes, the tensor itself does not.
+
+  - type: text
+    id: summary
+    title: Wrap-up
+    body: |
+      **Checking Schwarzschild.** With $r_S = 2G_NM$, $f = 1 - r_S/r$:
+
+      - **Metric**: $g = \mathrm{diag}(f,-1/f,-r^2,-r^2\sin^2\theta)$, signature $(+,-,-,-)$ for $r>r_S$. Also $\det g = -r^4\sin^2\theta$, so $\sqrt{-\det g} = r^2\sin\theta$ does not involve $f$ and $\Gamma^m_{1m} = 2/r$.
+      - **Connection**:
+        $$\Gamma^0_{01} = \frac{f'}{2f},\quad \Gamma^1_{00} = \frac{ff'}{2},$$
+        $$\Gamma^1_{11} = -\frac{f'}{2f},\quad \Gamma^1_{22} = -rf,$$
+        $$\Gamma^1_{33} = -rf\sin^2\theta,$$
+        $$\Gamma^2_{12} = \Gamma^3_{13} = \frac1r,$$
+        $$\Gamma^2_{33} = -\sin\theta\cos\theta,\quad\Gamma^3_{23} = \cot\theta,$$
+        and $\Gamma^1_{00}\to G_NM/r^2$ far away (Newton).
+      - **Ricci**: the off-diagonal components vanish, and
+        $$\mathrm{Ric}_{00} = \frac{f}{2r^2}(r^2f')',$$
+        $$\mathrm{Ric}_{11} = -\frac{1}{2fr^2}(r^2f')',$$
+        $$\mathrm{Ric}_{22} = 1 - (rf)',$$
+        $$\mathrm{Ric}_{33} = \sin^2\theta\,\mathrm{Ric}_{22}.$$
+      - **Verdict**: $r^2f' = r_S$ and $(rf)' = 1$ make $\mathrm{Ric}=0$; conversely $\mathrm{Ric}_{22}=0$ forces $f = 1 - c/r$, and the Newtonian limit $g_{00}\approx1+2\phi$ gives $c = r_S = 2G_NM$.
+      - **Meaning of $r$**: the sphere of coordinate $r$ has area $4\pi r^2$, and radial lengths are stretched by $1/\sqrt f$.
+      - **Tides**:
+        $$\mathrm{Riem}^1_{010} = \frac{ff''}{2} = -f\,\frac{2G_NM}{r^3},$$
+        $$\mathrm{Riem}^2_{020}=\mathrm{Riem}^3_{030} = f\,\frac{G_NM}{r^3},$$
+        the Newtonian tides times $f$, with zero trace, yet non-zero curvature.
+
+      **Next: "Relativity Traps".** Fast questions on the misconceptions of this level: signature conventions, what $\mathrm{Ric}=0$ does and does not say, coordinate versus proper quantities, and the signs that slip when coupling to matter.
