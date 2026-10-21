@@ -511,7 +511,11 @@ levels:
         kind: concept
         file: ch10/observers.yaml
         summary: "An observer as a massive worldline with a Lorentz-orthonormal frame whose time axis is its velocity: dual covectors from the metric, components measured on its clock and rods, the 3-velocity, and why every observer measures light at speed 1 and nothing faster."
-      - { id: ch10-lorentz, title: Lorentz Transformations from Observer Frames, kind: concept }
+      - id: ch10-lorentz
+        title: Lorentz Transformations from Observer Frames
+        kind: concept
+        file: ch10/lorentz.yaml
+        summary: "Two observers meeting at an event: the matrix between their frames, the condition that makes it a Lorentz transformation, why only orthochronous ones occur, the 1+1 boosts, and why this is a statement about frames, not coordinates."
       - { id: ch10-einstein-hilbert, title: The Einstein Equations from an Action, kind: concept }
       - { id: ch10-matter, title: Coupling to Matter, kind: concept }
       - { id: ch10-schwarzschild, title: "Guided Problem: Checking the Schwarzschild Metric", kind: guided }

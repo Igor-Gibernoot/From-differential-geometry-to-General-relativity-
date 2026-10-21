@@ -1,0 +1,367 @@
+id: ch10-lorentz
+title: Lorentz Transformations from Observer Frames
+kind: concept
+
+own: |
+  - **Lorentz transformation**: two observers $(\gamma,e)$, $(\tilde\gamma,\tilde e)$ meeting at an event $p$ have frames that are two bases of the one space $T_p\mathcal{M}$, so
+  {{ $$\tilde e_a = \Lambda^b_a\,e_b,\qquad \Lambda^b_a := \epsilon^b(\tilde e_a)$$ }}
+  where $\epsilon^b$ is the dual basis of $e$ and $\Lambda^b_a\in\mathbb{R}$ (column $a$ = components of $\tilde e_a$ in the frame $e$).
+  - **Defining condition**: both frames are Lorentz-orthonormal, so by bilinearity
+  {{ $$\eta_{ab} = \Lambda^m_a\,\Lambda^n_b\,\eta_{mn}$$ }}
+  i.e. $\Lambda^{T}\eta\Lambda = \eta$ with $\eta = \mathrm{diag}(1,-1,-1,-1)$; the set of such matrices is the Lorentz group $O(1,3)$, and $(\det\Lambda)^2 = 1$.
+  - **Orthochronous**: both time axes are future directed, so $\Lambda^0_0 = g(v_\gamma,v_{\tilde\gamma}) > 0$, and the $(0,0)$ entry of the condition gives
+  {{ $$(\Lambda^0_0)^2 = 1 + \sum_\alpha(\Lambda^\alpha_0)^2 \ge 1$$ }}
+  hence $\Lambda^0_0\ge1$: $\Lambda\in O^\uparrow(1,3)$. With positively oriented frames also $\det\Lambda = +1$ ($SO^\uparrow(1,3)$).
+  - **Boost in 1+1**: the observer $\tilde\gamma$ moving at speed $u$ relative to $\gamma$ has
+  {{ $$\Lambda = \gamma_u\begin{pmatrix}1&u\\u&1\end{pmatrix},\qquad \gamma_u = \frac{1}{\sqrt{1-u^2}}$$ }}
+  and $u = \Lambda^1_0/\Lambda^0_0$ (the 3-velocity of $\tilde e_0$ in the frame $e$).
+  - **Frames, not coordinates**: $\Lambda$ acts on the single vector space $T_p\mathcal{M}$. A coordinate change by a Lorentz matrix needs charts with {{ $g_{ij}=\eta_{ij}$ on their whole domain }}, which forces the Christoffel symbols to vanish and the transition map to be affine; this exists only where $\mathrm{Riem}=0$. In a curved spacetime, coordinates change by any transition map, Lorentz matrices only relate frames at an event.
+
+cards:
+  - type: text
+    id: hook
+    title: The twins at the turnaround
+    body: |
+      Flat 1+1 spacetime, chart coordinates $a$ (space) and $\tau$ (time), metric $g = d\tau\otimes d\tau - da\otimes da$, signature $(+,-)$.
+
+      Twin H stays at rest in the chart. Twin T flies away at speed $u = 0.6$ (times the speed of light) and reaches the turnaround event $p$. At $p$ both twins are present, so both have a frame there: H's $(e_0, e_1)$ (clock direction and ruler direction at rest in the chart) and T's $(\tilde e_0, \tilde e_1)$. Both frames are **Lorentz-orthonormal** and live in the **same** two-dimensional space of vectors at $p$.
+
+      A frame is a basis, so $\tilde e_0$ and $\tilde e_1$ can be written in terms of $e_0$ and $e_1$. That is a $2\times2$ matrix, the dictionary from H's frame to T's. Before any theory, guess it.
+
+  - type: mcq
+    id: hook-predict
+    title: Before any theory, predict
+    prompt: |
+      In 1+1 Minkowski spacetime ($g = d\tau\otimes d\tau - da\otimes da$), H is at rest and T moves at $0.6$. Both are observers at the same event $p$ (frames Lorentz-orthonormal, time axis = own velocity). Write $\tilde e_a = \Lambda^b_a\,e_b$, with the $b$-th row and $a$-th column of the matrix $\Lambda$ being $\Lambda^b_a$. Which matrix is $\Lambda$? (Hint: T's clock axis $\tilde e_0$ must stay a unit timelike vector.)
+    options:
+      - text: '$\begin{pmatrix}1.25&0.75\\0.75&1.25\end{pmatrix}$'
+        correct: true
+      - text: '$\begin{pmatrix}1&0.6\\0.6&1\end{pmatrix}$'
+        feedback: |
+          Tempting: "speed $0.6$ goes in the off-diagonal slot". But then $\tilde e_0 = e_0 + 0.6\,e_1$ has $g(\tilde e_0,\tilde e_0) = 1 - 0.36 = 0.64\ne1$: not a unit vector. Both entries must carry the factor $1/\sqrt{1-0.36} = 1.25$.
+      - text: '$\begin{pmatrix}1.25&-0.75\\0.75&1.25\end{pmatrix}$'
+        feedback: |
+          The minus sign would be a rotation-like pattern (Euclidean thinking). Then $g(\tilde e_0,\tilde e_1)$ would not vanish. In Minkowski signature the off-diagonal entries are equal.
+      - text: '$\begin{pmatrix}0.8&0.6\\0.6&0.8\end{pmatrix}$'
+        feedback: |
+          This is the factor $1/1.25 = 0.8$ upside down (a "contraction"), and it makes $g(\tilde e_0,\tilde e_0) = 0.64 - 0.36 = 0.28\ne1$.
+    explanation: |
+      The correct matrix has $\Lambda^0_0 = 1.25$ and $\Lambda^1_0 = 0.75$, the components of T's clock axis in H's frame. The lesson builds this matrix from first principles, learns which matrices are allowed (the **Lorentz group**), and shows what it does **not** mean.
+
+  - type: widget
+    id: frames-widget
+    title: Reading the dictionary off the picture
+    widget: observer-frame
+    config:
+      u: 0.6
+      X: [0, 1]
+      compare: true
+      presets:
+        - { label: 'T at 0.6', u: 0.6, X: [0, 1], compare: true }
+        - { label: 'T at 0.8', u: 0.8, X: [0, 1], compare: true }
+        - { label: 'T at rest', u: 0, X: [0, 1], compare: true }
+    body: |
+      Purple: T's frame $\tilde e_0$, $\tilde e_1$ (slider $u$). Faint purple: H's frame "rest", which is the chart's own frame: $e_0 = (0,1)$, $e_1 = (1,0)$ in the chart order $(a,\tau)$.
+
+      Because H's frame is the chart's, T's chart components are its components in H's frame, with the order swapped: the $\tau$-entry is the $e_0$-coefficient $\Lambda^0_a$, the $a$-entry is the $e_1$-coefficient $\Lambda^1_a$. Read them off the readout for $\tilde e_0$ and $\tilde e_1$ at $u = 0.6$, then try $u = 0.8$. Watch the picture too: the two purple lines close like scissors around the light line.
+
+  - type: numeric
+    id: read-gamma
+    title: From the readout to a matrix entry
+    prompt: |
+      Twin T moves at $u = 0.8$ relative to H in 1+1 Minkowski spacetime. T's clock axis is $\tilde e_0 = \gamma_u(u,1)$ in the chart order $(a,\tau)$, and H's frame is the chart's: $e_0 = (0,1)$, $e_1 = (1,0)$, with $\gamma_u = 1/\sqrt{1-u^2}$. Write $\tilde e_0 = \Lambda^0_0\,e_0 + \Lambda^1_0\,e_1$. What is $\Lambda^0_0$?
+    answer: 1.6666667
+    tolerance: 0.001
+    answerText: '5/3'
+    wrong:
+      - { value: 0.8, feedback: 'That is the speed $u$, which is the ratio $\Lambda^1_0/\Lambda^0_0$, not an entry. $\Lambda^0_0$ is the $\tau$-component of $\tilde e_0$: $\gamma_u\cdot1$.' }
+      - { value: 1.3333333, feedback: 'That is $\gamma_u u = \Lambda^1_0$, the $a$-component. $\Lambda^0_0$ is the $\tau$-component, $\gamma_u = 1/\sqrt{1-0.64}$.' }
+      - { value: 0.6, feedback: 'That is $1/\gamma_u$ (time dilation factor). The entry is $\gamma_u = 1/0.6$.' }
+    hint: '$\gamma_u = 1/\sqrt{1 - 0.8^2}$; the $\tau$-component of $\tilde e_0$ is $\gamma_u\cdot1$.'
+    explanation: |
+      $\gamma_u = 1/\sqrt{0.36} = 5/3$, and $\Lambda^1_0 = \gamma_u u = 4/3$. As a check, $(5/3)^2 - (4/3)^2 = 1$.
+
+  - type: text
+    id: lambda-def
+    title: The definition
+    body: |
+      Setting. Two observers $(\gamma,e)$ and $(\tilde\gamma,\tilde e)$ (massive worldlines with Lorentz-orthonormal frames, time axis $=$ own velocity) meet at an event $p$ of a spacetime of dimension $4$, with signature $(+,-,-,-)$ and $\eta_{ab} = \mathrm{diag}(1,-1,-1,-1)_{ab}$. Drop the parameter values from the notation: $e_a$, $\tilde e_a$ are now vectors in $T_p\mathcal{M}$, $a=0,\dots,3$. Repeated indices, once up and once down, are summed.
+
+      Recall: the dual covectors of the frame $e$ are $\epsilon^0 = \flat(e_0)$, $\epsilon^\alpha = -\flat(e_\alpha)$, with $\epsilon^b(e_c) = \delta^b_c$, and every vector $\mathcal{X}$ satisfies $\mathcal{X} = \epsilon^b(\mathcal{X})\,e_b$.
+
+      Apply this to $\mathcal{X} = \tilde e_a$. The coefficients are just numbers, one for each pair $(b,a)$:
+      $$\tilde e_a = \Lambda^b_a\,e_b,\qquad \Lambda^b_a := \epsilon^b(\tilde e_a)\in\mathbb{R}.$$
+      Upper index $b$ is the **row**, lower index $a$ the **column**: column $a$ of $\Lambda$ lists the components of $\tilde e_a$ in the frame $e$.
+
+  - type: mcq
+    id: lambda-read
+    title: Which slot is which
+    prompt: |
+      Two Lorentz-orthonormal frames $e$ and $\tilde e$ at the same event, with dual covectors $\epsilon^b$ of $e$, and $\tilde e_a = \Lambda^b_a\,e_b$. Which expression gives the number $\Lambda^1_0$?
+    options:
+      - text: '$\epsilon^1(\tilde e_0)$: the $e_1$-component of $\tilde e_0$'
+        correct: true
+      - text: '$\epsilon^0(\tilde e_1)$: the $e_0$-component of $\tilde e_1$'
+        feedback: |
+          This is $\Lambda^0_1$, the transposed entry. The lower index names *which new vector* ($\tilde e_a$) is expanded, the upper index *which old component* ($\epsilon^b$) is read.
+      - text: '$\tilde\epsilon^1(e_0)$: the $\tilde e_1$-component of $e_0$'
+        feedback: |
+          This reads $e_0$ in the new frame, which is the **inverse** dictionary $(\Lambda^{-1})^1_0$. The matrix $\Lambda$ expands the new vectors in the old frame.
+      - text: '$g(e_1,\tilde e_0)$'
+        feedback: |
+          Close, but the sign is off: $\epsilon^1 = -\flat(e_1)$, so $\epsilon^1(\tilde e_0) = -g(e_1,\tilde e_0)$. The metric alone does not undo $\eta_{11} = -1$.
+    explanation: |
+      $\Lambda^b_a = \epsilon^b(\tilde e_a)$: apply the **old** dual covector to the **new** vector. Remember it as "$\tilde e_a$ expanded in $e$".
+
+  - type: text
+    id: derive-intro
+    title: Which matrices can occur?
+    body: |
+      Not every $4\times4$ matrix is a dictionary between two frames: both frames are Lorentz-orthonormal, and that must constrain $\Lambda$. We use only two facts: **bilinearity** of $g$ and Lorentz-orthonormality, $g(e_m,e_n) = \eta_{mn}$ and $g(\tilde e_a,\tilde e_b) = \eta_{ab}$.
+
+  - type: order
+    id: derive-eta
+    title: Derive the condition
+    prompt: Put the derivation of the condition on $\Lambda$ in order.
+    steps:
+      - 'Start from Lorentz-orthonormality of the new frame: $\eta_{ab} = g(\tilde e_a,\tilde e_b)$.'
+      - 'Expand both arguments in the old frame: $g(\tilde e_a,\tilde e_b) = g(\Lambda^m_a e_m,\ \Lambda^n_b e_n)$.'
+      - 'Pull the real numbers out by bilinearity: $= \Lambda^m_a\,\Lambda^n_b\,g(e_m,e_n)$.'
+      - 'Use Lorentz-orthonormality of the old frame, $g(e_m,e_n) = \eta_{mn}$.'
+    hint: Start from the frame whose orthonormality you know in terms of the new vectors, and expand last the metric of the old frame.
+    explanation: |
+      $$\eta_{ab} = \Lambda^m_a\,\Lambda^n_b\,\eta_{mn}.$$
+      Each step has a name: expansion (definition of $\Lambda$), bilinearity of $g$, orthonormality (used twice, once for each frame).
+
+  - type: build
+    id: build-eta
+    title: Write the condition
+    prompt: |
+      Build the right-hand side of the condition that expresses "$\tilde e$ is Lorentz-orthonormal" in terms of $\Lambda$ (indices $m, n$ summed).
+    prefix: '\eta_{ab} ='
+    tiles: ['\Lambda^m_a', '\Lambda^n_b', '\eta_{mn}', '\Lambda^a_m', '\Lambda^b_n']
+    answers:
+      - ['\Lambda^m_a', '\Lambda^n_b', '\eta_{mn}']
+      - ['\Lambda^n_b', '\Lambda^m_a', '\eta_{mn}']
+      - ['\eta_{mn}', '\Lambda^m_a', '\Lambda^n_b']
+    wrong:
+      - answer: ['\Lambda^a_m', '\Lambda^b_n', '\eta_{mn}']
+        feedback: 'The free indices $a, b$ belong in the **lower** (column) slots of $\Lambda$, as in $\tilde e_a = \Lambda^b_a e_b$; the summed indices $m,n$ are the rows.'
+    hint: 'Two copies of $\Lambda$ (one for each argument of $g$), each with a summed upper index, and the metric of the old frame joining them.'
+    explanation: |
+      Matrix form: with $\Lambda$ having row $m$, column $a$, the sum $\Lambda^m_a\eta_{mn}\Lambda^n_b$ is the $(a,b)$ entry of $\Lambda^{T}\eta\,\Lambda$, so
+      $$\Lambda^{T}\eta\,\Lambda = \eta.$$
+
+  - type: numeric
+    id: check-hook
+    title: Test the hook matrix
+    prompt: |
+      In 1+1 dimensions $\eta = \mathrm{diag}(1,-1)$ and the condition is $\eta_{ab} = \Lambda^m_a\Lambda^n_b\eta_{mn}$. For $\Lambda = \begin{pmatrix}1.25&0.75\\0.75&1.25\end{pmatrix}$ (rows $m$, columns $a$), compute the entry $(a,b) = (1,1)$ of the right-hand side, $\Lambda^0_1\Lambda^0_1 - \Lambda^1_1\Lambda^1_1$.
+    answer: -1
+    tolerance: 0.001
+    wrong:
+      - { value: 1, feedback: 'That would be $\eta_{00}$. Column $1$ of $\Lambda$ is $(0.75, 1.25)$, and $\eta_{11}= -1$, so we need $0.75^2 - 1.25^2$.' }
+      - { value: 2.125, feedback: 'That is the Euclidean sum $0.75^2 + 1.25^2$; the Minkowski metric $\eta_{mn}$ puts a minus on the space-space term.' }
+    hint: 'Column $1$ is $(\Lambda^0_1,\Lambda^1_1) = (0.75, 1.25)$; compute $0.75^2 - 1.25^2$.'
+    explanation: |
+      $0.5625 - 1.5625 = -1 = \eta_{11}$. The other entries: $(0,0)$: $1.25^2 - 0.75^2 = 1$; $(0,1)$: $1.25\cdot0.75 - 0.75\cdot1.25 = 0$. So $\Lambda^T\eta\Lambda = \eta$: the guess from the start was right, and the wrong options failed this test.
+
+  - type: text
+    id: lorentz-group
+    title: The Lorentz group
+    body: |
+      The set of all real matrices satisfying the condition is the **Lorentz group**
+      $$O(1,3) := \big\{\Lambda\in\mathbb{R}^{4\times4}\ \big|\ \Lambda^m_a\Lambda^n_b\eta_{mn} = \eta_{ab}\big\}.$$
+      ("$O$" for orthogonal-like: matrices preserving a bilinear form; $(1,3)$ for one $+$ and three $-$ signs; in 1+1 it is $O(1,1)$.) Its elements are **Lorentz transformations**. Compare Euclidean space, where the same condition with $\delta_{ab}$ in place of $\eta_{ab}$ defines rotations and reflections.
+
+      Is the condition enough to be a dictionary between bases? We need $\Lambda$ **invertible**. Take determinants of $\Lambda^T\eta\Lambda = \eta$ on the next card.
+
+  - type: mcq
+    id: det-square
+    title: Invertible, and what else
+    prompt: |
+      From $\Lambda^T\eta\Lambda = \eta$, taking determinants and using $\det(AB) = \det A\det B$, $\det\Lambda^T = \det\Lambda$ and $\det\eta = -1$ (in 3+1 dimensions), what do we learn about $\Lambda$?
+    options:
+      - text: '$(\det\Lambda)^2 = 1$: $\Lambda$ is invertible, with $\det\Lambda = \pm1$'
+        correct: true
+      - text: '$\det\Lambda = 1$ exactly, as for a rotation'
+        feedback: |
+          A square equal to $1$ allows both signs. The sign $-1$ is realized by reflections, e.g. $\mathrm{diag}(1,-1,1,1)$, which satisfies $\Lambda^T\eta\Lambda = \eta$ because it only squares a $\pm1$.
+      - text: '$(\det\Lambda)^2 = -1$, so $\det\Lambda$ is imaginary'
+        feedback: |
+          The $\det\eta = -1$ appears on **both** sides of $(\det\Lambda)^2\det\eta = \det\eta$ and cancels; no minus sign survives.
+      - text: 'Nothing: $\det\eta=-1$ is negative, so $\Lambda$ may be singular'
+        feedback: |
+          The equation is $(\det\Lambda)^2\cdot(-1) = -1$; dividing by $-1$ gives $(\det\Lambda)^2 = 1\ne0$, so $\Lambda$ is invertible whatever the sign of $\det\eta$ (it only needs to be nonzero).
+    explanation: |
+      $(\det\Lambda)^2\det\eta = \det\eta$ gives $(\det\Lambda)^2 = 1$. Two families already: $\det\Lambda = +1$ and $\det\Lambda = -1$ (the latter includes the spatial reflection $\mathrm{diag}(1,-1,1,1)$ and, in 1+1, $\mathrm{diag}(1,-1)$).
+
+  - type: text
+    id: arrow-of-time
+    title: Two observers agree on the future
+    body: |
+      The condition alone also allows $\mathrm{diag}(-1,1)$ in 1+1 dimensions: $\Lambda^T\eta\Lambda = \eta$ holds because only squares appear. But then $\tilde e_0 = -e_0$ points to the **past**. Both observers are massive worldlines with future-directed velocities, so their time axes lie in the same half of the light cone. Make this precise.
+
+      Recall: $\epsilon^0 = \flat(e_0)$, i.e. $\epsilon^0(\mathcal{X}) = g(e_0,\mathcal{X})$. Hence
+      $$\Lambda^0_0 = \epsilon^0(\tilde e_0) = g(e_0,\tilde e_0) = g(v_\gamma,v_{\tilde\gamma}).$$
+      Two future-directed timelike vectors have **positive** $g$ (the observers lesson used this for the 3-velocity: $\epsilon^0(v_\delta) = g(v_\gamma,v_\delta)>0$). So $\Lambda^0_0 > 0$.
+
+  - type: numeric
+    id: lambda00-size
+    title: How big can the time-time entry be?
+    prompt: |
+      The $(a,b) = (0,0)$ entry of $\eta_{ab} = \Lambda^m_a\Lambda^n_b\eta_{mn}$ reads $1 = (\Lambda^0_0)^2 - \sum_{\alpha=1}^3(\Lambda^\alpha_0)^2$. Suppose the spatial components of $\tilde e_0$ in the frame $e$ are $(\Lambda^1_0,\Lambda^2_0,\Lambda^3_0) = (2,2,0)$ and $\Lambda^0_0>0$. What is $\Lambda^0_0$?
+    answer: 3
+    tolerance: 0.001
+    wrong:
+      - { value: 1, feedback: 'That would hold only if all spatial components vanished (T at rest). Here $(\Lambda^0_0)^2 = 1 + 4 + 4$.' }
+      - { value: -3, feedback: 'The equation allows $-3$ too, but the future-directedness of both time axes gives $\Lambda^0_0 = g(v_\gamma,v_{\tilde\gamma}) >0$.' }
+      - { value: 5, feedback: 'You added $1 + 2 + 2$ without squaring: it is $(\Lambda^0_0)^2 = 1 + 2^2 + 2^2 + 0^2 = 9$.' }
+    hint: '$(\Lambda^0_0)^2 = 1 + 4 + 4 + 0$; take the positive root.'
+    explanation: |
+      $(\Lambda^0_0)^2 = 9$, and positivity picks $\Lambda^0_0 = 3$. In general
+      $$(\Lambda^0_0)^2 = 1 + \sum_\alpha(\Lambda^\alpha_0)^2 \ge 1,$$
+      so $|\Lambda^0_0|\ge1$ always, and together with $\Lambda^0_0>0$ we get $\Lambda^0_0\ge1$.
+
+  - type: mcq
+    id: trap-time-reversal
+    title: Which are allowed?
+    prompt: |
+      Which of these 1+1 matrices is the dictionary $\tilde e_a = \Lambda^b_a e_b$ between **future-directed** observers at one event? ($\eta=\mathrm{diag}(1,-1)$.) Select all that apply.
+    multiple: true
+    options:
+      - text: '$\begin{pmatrix}1.25&0.75\\0.75&1.25\end{pmatrix}$'
+        correct: true
+      - text: '$\begin{pmatrix}1&0\\0&-1\end{pmatrix}$ (space reflection: $\tilde e_1=-e_1$)'
+        correct: true
+      - text: '$\begin{pmatrix}-1&0\\0&1\end{pmatrix}$ (time reversal: $\tilde e_0=-e_0$)'
+        feedback: |
+          It satisfies $\Lambda^T\eta\Lambda=\eta$, so it is in $O(1,1)$, but $\Lambda^0_0 = -1 < 1$ makes $\tilde e_0$ past directed; no observer has that. It is not orthochronous.
+      - text: '$\begin{pmatrix}1.25&0.75\\0.6&1\end{pmatrix}$'
+        feedback: |
+          Its first column is fine ($1.25^2-0.75^2=1$), but the second column $(0.75,1)$ gives $g(\tilde e_1,\tilde e_1)= 0.5625-1\ne-1$. Both columns must satisfy the condition, and be $\eta$-orthogonal to each other.
+    explanation: |
+      The reflection has $\Lambda^0_0=1\ge1$: it is a legitimate frame change (T uses a ruler pointing the other way). It has $\det=-1$, which the orientation requirement at the end of this lesson removes. The group of matrices with the condition **and** $\Lambda^0_0\ge1$ is the
+      $$O^\uparrow(1,3) := \big\{\Lambda\in O(1,3)\ \big|\ \Lambda^0_0\ge1\big\},$$
+      the **orthochronous** Lorentz group ("$\uparrow$": preserves the direction of time).
+
+  - type: text
+    id: boosts
+    title: Boosts in 1+1
+    body: |
+      In 1+1 dimensions the picture is the widget. An observer moving at speed $u$ relative to the chart has $\tilde e_0 = \gamma_u\,(e_0 + u\,e_1)$ and $\tilde e_1 = \gamma_u\,(u\,e_0 + e_1)$, with $\gamma_u = 1/\sqrt{1-u^2}$, so
+      $$\Lambda = \gamma_u\begin{pmatrix}1&u\\u&1\end{pmatrix},\qquad \Lambda^0_0 = \gamma_u = \frac{1}{\sqrt{1-u^2}}.$$
+      This is a **boost**. Recall from the observers lesson that the 3-velocity of $\tilde e_0$ in the frame $e$ is $\epsilon^1(\tilde e_0)/\epsilon^0(\tilde e_0)$, i.e. $u = \Lambda^1_0/\Lambda^0_0$: the speed of T is read off the first column.
+
+  - type: mcq
+    id: boost-from-condition
+    title: A boost is allowed for every speed below 1
+    prompt: |
+      Take $\Lambda = \gamma\begin{pmatrix}1&u\\u&1\end{pmatrix}$ with a real $\gamma>0$. For which $\gamma$ is $\Lambda^T\eta\Lambda=\eta$ ($\eta=\mathrm{diag}(1,-1)$)?
+    options:
+      - text: '$\gamma^2(1-u^2) = 1$, so $\gamma = 1/\sqrt{1-u^2}$, requiring $|u|<1$'
+        correct: true
+      - text: '$\gamma^2(1+u^2) = 1$, so $\gamma = 1/\sqrt{1+u^2}$, valid for every $u$'
+        feedback: |
+          The $(0,0)$ entry is $\gamma^2(1\cdot1 - u\cdot u)$: the metric subtracts the space part, giving $1-u^2$, not $1+u^2$ (that would be a rotation-like Euclidean norm).
+      - text: '$\gamma=1$ for every $u$'
+        feedback: |
+          Then $g(\tilde e_0,\tilde e_0) = 1-u^2\neq1$ for $u\ne0$. The factor $\gamma$ is needed to restore unit length.
+      - text: 'Any $\gamma$ works: scaling a Lorentz matrix keeps it Lorentz'
+        feedback: |
+          The condition is quadratic: scaling $\Lambda$ by $c$ scales $\Lambda^T\eta\Lambda$ by $c^2$. Only $c=\pm1$ keeps it.
+    explanation: |
+      The $(0,0)$ entry: $\gamma^2(1-u^2) = 1$. The $(1,1)$ and $(0,1)$ entries give the same relation and $0$. For $|u|\ge1$ no real $\gamma$ exists: no observer moves at or beyond the speed of light, consistent with the speed bound.
+
+  - type: numeric
+    id: compose-boost
+    title: Two boosts in a row
+    prompt: |
+      Observer A moves at $0.6$ relative to H; observer B moves at $0.6$ relative to A (same direction). Frames change by successive dictionaries, so the dictionary from H to B is the product of the two boosts, each $1.25\begin{pmatrix}1&0.6\\0.6&1\end{pmatrix}$. Compute the entry $\Lambda^0_0$ of the product.
+    answer: 2.125
+    tolerance: 0.001
+    answerText: '17/8'
+    wrong:
+      - { value: 1.5625, feedback: 'That is $1.25^2$, the product of the two diagonal entries only. The matrix product also adds the off-diagonal terms: $1.25\cdot1.25 + 0.75\cdot0.75$.' }
+      - { value: 1.25, feedback: 'That is one boost; the product of two boosts has a larger $\gamma$.' }
+      - { value: 1.5, feedback: 'You may have added the speeds ($0.6+0.6 = 1.2>1$ is impossible) or the $\gamma$s; compute the matrix product entry $\Lambda^0_0\Lambda^0_0 + \Lambda^0_1\Lambda^1_0$ with entries $1.25$ and $0.75$.' }
+    hint: 'First row times first column: $1.25\cdot1.25 + 0.75\cdot0.75$.'
+    explanation: |
+      $1.5625 + 0.5625 = 2.125 = 17/8$. The off-diagonal entry is $2\cdot1.25\cdot0.75 = 1.875 = 15/8$, so the speed of B relative to H is
+      $$u = \frac{\Lambda^1_0}{\Lambda^0_0} = \frac{15/8}{17/8} = \frac{15}{17}\approx0.882,$$
+      which is the relativistic velocity addition $(0.6+0.6)/(1+0.36)$, and not the naive $1.2$. Check: $\gamma = 1/\sqrt{1-(15/17)^2} = 17/8$. ✓
+
+  - type: text
+    id: frames-not-coords
+    title: Frames, not coordinates
+    body: |
+      A warning. $\Lambda$ relates two **bases of the single vector space** $T_p\mathcal{M}$. It does not move any point of $\mathcal{M}$, and it is a statement about one event.
+
+      The textbook rule "coordinates transform by a Lorentz matrix, $y^i = \Lambda^i_k x^k + b^i$" is a different statement, about **chart transition maps**. When does it hold? Suppose two charts $\mathscr{X},\mathscr{Y}$ both have metric components exactly $\eta_{ij}$ on their whole overlap. Then each $g_{ij}$ is constant, so $\partial_m g_{ij}=0$, so the Christoffel symbols of the Levi-Civita connection vanish (they are built from $\partial g$), and so does the curvature. The connection transformation law, whose inhomogeneous term is $\partial^2\mathscr{X}^r/\partial\mathscr{Y}^k\partial\mathscr{Y}^j$, then forces
+      $$\frac{\partial^2\mathscr{X}^r}{\partial\mathscr{Y}^k\,\partial\mathscr{Y}^j}=0.$$
+      So the transition map is **affine** (a constant matrix plus a translation) on each connected piece, $\mathscr{X}^r = \Lambda^r_k\mathscr{Y}^k + b^r$, and the transformation law of $g$ gives $\eta_{kl} = \Lambda^i_k\Lambda^j_l\eta_{ij}$: the same condition, so $\Lambda\in O(1,3)$.
+
+  - type: order
+    id: chain-affine
+    title: From flat metric to Lorentz coordinates
+    prompt: Order the chain of consequences when two charts have $g_{ij} = \eta_{ij}$ on their whole domains.
+    steps:
+      - 'The metric components $g_{ij} = \eta_{ij}$ are constant, so $\partial_m g_{ij}=0$.'
+      - 'The Christoffel symbols of the Levi-Civita connection (made of first derivatives of $g$) vanish in both charts.'
+      - 'The transformation law of the connection coefficients reduces to $\partial^2\mathscr{X}^r/\partial\mathscr{Y}^k\partial\mathscr{Y}^j = 0$.'
+      - 'The transition map is affine, $\mathscr{X}^r = \Lambda^r_k\mathscr{Y}^k + b^r$, with constant $\Lambda$ and $b$.'
+      - 'The transformation law of $g$ gives $\eta_{kl} = \Lambda^i_k\Lambda^j_l\eta_{ij}$, i.e. $\Lambda\in O(1,3)$.'
+    hint: 'Each line is the reason for the next: derivative of $g$, then $\Gamma$, then the second derivative of the transition map.'
+    explanation: |
+      The derivation also shows when it can fail to apply: it needs charts with $g=\eta$ on a whole domain, and those exist only where $\mathrm{Riem}=0$.
+
+  - type: mcq
+    id: curved-coords
+    title: Curved spacetime
+    prompt: |
+      Near a star spacetime is curved ($\mathrm{Riem}\ne0$). Two observers meet at an event $p$ there. Which statement is correct?
+    options:
+      - text: 'Their frames are related by a Lorentz matrix $\Lambda\in O^\uparrow(1,3)$ at $p$, but coordinate charts of the atlas are related by general transition maps, not Lorentz matrices'
+        correct: true
+      - text: 'Their frames cannot be related by a Lorentz matrix, because Lorentz transformations belong only to flat spacetime'
+        feedback: |
+          Frame changes at an event use only $g_p$ and bilinearity: the derivation of $\Lambda^T\eta\Lambda=\eta$ never used flatness. It holds in general relativity as in special relativity.
+      - text: 'Every pair of charts of the atlas is related by a Lorentz matrix plus a translation'
+        feedback: |
+          Only if both charts have $g=\eta$ on the whole overlap, which forces $\mathrm{Riem}=0$. A polar-type or Schwarzschild chart, for instance, is related to others by non-affine maps.
+      - text: 'Lorentz matrices change the point $p$ to a nearby point'
+        feedback: |
+          $\Lambda$ does not act on points. It re-expresses the frame of one observer in the frame of the other, at the same event $p$.
+    explanation: |
+      In curved spacetime, Lorentz transformations relate the **frames** of observers at an event, while **coordinates** may be changed by any transition map of the atlas. The two notions coincide only in a flat region with charts adapted to $\eta$.
+
+  - type: text
+    id: orientation
+    title: Rotations and orientation
+    body: |
+      One more restriction. Require all frames to be **positively oriented**: each basis $(e_0,\dots,e_3)$ is related to the orientation of the spacetime's atlas by a positive determinant. Two positively oriented bases are related by a matrix with $\det\Lambda>0$. Combined with $(\det\Lambda)^2=1$, this gives $\det\Lambda=+1$, which removes reflections like $\mathrm{diag}(1,-1,1,1)$ (they reverse the orientation), and leaves the **proper orthochronous Lorentz group** $SO^\uparrow(1,3)$ (the "$S$" for special, $\det=+1$).
+
+  - type: mcq
+    id: orientation-check
+    title: Which sign conditions remove what
+    prompt: |
+      Which pair of conditions cuts $O(1,3)$ down to $SO^\uparrow(1,3)$?
+    options:
+      - text: '$\Lambda^0_0\ge1$ (future-directed time axes) and $\det\Lambda=+1$ (same orientation)'
+        correct: true
+      - text: '$\det\Lambda=+1$ alone'
+        feedback: |
+          $\mathrm{diag}(-1,-1,1,1)$ has $\det=+1$ and is in $O(1,3)$, but reverses time ($\Lambda^0_0=-1$). The sign of $\Lambda^0_0$ is an independent condition.
+      - text: '$\Lambda^0_0\ge1$ alone'
+        feedback: |
+          $\mathrm{diag}(1,-1,1,1)$ has $\Lambda^0_0=1$ but $\det=-1$: a spatial reflection. Orientation is an independent condition.
+      - text: '$(\det\Lambda)^2=1$ and $\Lambda^0_0>0$'
+        feedback: |
+          $(\det\Lambda)^2=1$ already holds for every element of $O(1,3)$, so it removes nothing; the sign of $\det\Lambda$ is what matters.
+    explanation: |
+      Time direction ($\Lambda^0_0\ge1$) and orientation ($\det\Lambda=+1$) are two independent sign conditions on $O(1,3)$.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** the spacetime is now equipped with its observers and their frames, but its metric is still just given. Which metrics are physically allowed? The next lesson derives the Einstein equations from an action principle.
