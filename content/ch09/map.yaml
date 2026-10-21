@@ -1,0 +1,348 @@
+id: ch09-map
+title: "Content Map: Newton-Cartan Theory"
+kind: map
+name: Chapter 9, Newton-Cartan Theory
+
+intro: |
+  A **content map** shows how the ideas of a chapter are built on each other. Each box is one concept with its key definition. An arrow goes from a concept to a concept built on it, and its label says how; read it as a sentence, for example "absolute time *level sets* absolute spaces", "inertial charts *move axes* pseudo-forces" or "curvature *contract* field equation".
+
+  You will rebuild the Chapter 9 map one box at a time, starting from the one assumption Newton makes about time: every event happens at a universal time. From there the map goes to particles and Newton's laws on a manifold, to the charts that read them as ordinary mechanics, and finally to gravity written as a connection, with its curvature, its field equation and its tides. For each glowing box, pick the card that belongs there. The other cards look alike but each hides a classic mistake of this level, so read the details.
+
+  Tap a finished box at any time to reread its card.
+
+cols: 3
+nodes:
+  - id: time
+    title: 'Absolute time $t$'
+    row: 1
+    col: 2
+    body: |
+      On a 4-dimensional smooth manifold $\mathcal{M}$ of events, a smooth scalar field $t\in C^\infty(\mathcal{M})$ with
+      $$(dt)_p\neq0\ \text{ for every } p\in\mathcal{M}.$$
+      It gives every event its universal time, and the condition says time never stands still: at every event some direction increases $t$.
+    decoys:
+      - body: |
+          On a 4-dimensional smooth manifold $\mathcal{M}$ of events, a smooth scalar field $t\in C^\infty(\mathcal{M})$ with
+          $$t(p)\neq0\ \text{ for every } p\in\mathcal{M}.$$
+          It gives every event its universal time, and the condition says time never stands still: no event happens at the instant zero.
+        feedback: |
+          The condition is on the **differential** $(dt)_p$, not on the value $t(p)$. In a chart, $t = x^0$ takes the value $0$ on a whole slice, yet $dt = dx^0$ is never zero: perfectly good time. The other way round, $t = (x^0)^3 + 5$ is never zero, but its differential $3(x^0)^2dx^0$ vanishes on the slice $x^0 = 0$, where time stands still.
+      - body: |
+          On a 4-dimensional smooth manifold $\mathcal{M}$ of events, a smooth scalar field $t\in C^\infty(\mathcal{M})$ with
+          $$(dt)_p\neq0\ \text{ for every } p\in\mathcal{M},$$
+          together with a spatial metric $h$ on $\mathcal{M}$ that measures the distance between any two events, so that speeds can be defined.
+        feedback: |
+          No spatial distance enters the axioms. Speeds are components of velocities in a chart, and everything Newtonian physics needs about free fall, forces and gravity will sit in a connection $\nabla$ together with $t$. A metric is extra structure the theory does without.
+    explanation: |
+      The first assumption: absolute, universal time. Everything else is built from $t$ and a connection.
+
+  - id: spaces
+    title: 'Absolute spaces $\mathcal{S}_\tau$'
+    row: 2
+    col: 1
+    body: |
+      For a value $\tau$ of $t$, the events simultaneous at time $\tau$:
+      $$\mathcal{S}_\tau := \mathrm{preim}_t(\{\tau\}).$$
+      They split $\mathcal{M}$ into disjoint slices; since $(dt)_p\neq0$, each is a 3-dimensional submanifold with
+      $$T_p\mathcal{S}_{t(p)} = \ker(dt)_p,$$
+      of dimension $4-1 = 3$. Simultaneity is the same for everybody.
+    decoys:
+      - body: |
+          For a value $\tau$ of $t$, the events simultaneous at time $\tau$:
+          $$\mathcal{S}_\tau := \mathrm{preim}_t(\{\tau\}).$$
+          They split $\mathcal{M}$ into disjoint slices; since $(dt)_p\neq0$, the tangent space $\ker(dt)_p$ is the single direction in which time stands still, of dimension $1$.
+        feedback: |
+          $(dt)_p$ is a nonzero linear map from the 4-dimensional $T_p\mathcal{M}$ to $\mathbb{R}$; its image is all of $\mathbb{R}$, so by rank–nullity its kernel has dimension $4-1 = 3$. There are three independent directions along which $t$ does not change: the three directions of space.
+      - body: |
+          For a value $\tau$ of $t$, the events that a given observer calls simultaneous at time $\tau$. They split $\mathcal{M}$ into slices with $T_p\mathcal{S}_{t(p)} = \ker(dt)_p$, but an observer moving relative to the first one slices $\mathcal{M}$ differently.
+        feedback: |
+          $\mathcal{S}_\tau$ is defined from the scalar field $t$ alone; no observer or chart enters. Every observer, moving or not, reads the same $t$, so the slices are the same for all: simultaneity is **absolute**. Observer-dependent slicing is the relativistic picture of the last level, not this one.
+    explanation: |
+      Level sets of $t$: "space at an instant". Their tangent spaces decide which vectors are spatial.
+
+  - id: flow
+    title: 'Uniform flow $\nabla dt = 0$'
+    row: 2
+    col: 3
+    body: |
+      Given a connection $\nabla$, time **flows uniformly** if
+      $$\nabla_\mathcal{X}dt = 0\ \text{ for every field } \mathcal{X}.$$
+      In a chart, with $\mathtt{t}_k := \partial x_k\lfloor t\rceil$,
+      $$(\nabla_{\partial x_i}dt)_k = \partial x_i\lfloor\mathtt{t}_k\rceil - \Gamma^j_{ki}\mathtt{t}_j.$$
+      Not automatic: $t = \tau + 0.3\sin a$ with all $\Gamma = 0$ in a chart $(a,\tau)$ gives $(\nabla_{\partial a}dt)_a = -0.3\sin a$.
+    decoys:
+      - body: |
+          Given a connection $\nabla$, time **flows uniformly** as soon as $(dt)_p\neq0$ everywhere: a time that never stands still automatically has
+          $$\nabla_\mathcal{X}dt = 0\ \text{ for every field } \mathcal{X}.$$
+        feedback: |
+          Never zero is not the same as parallel. Take $t = \tau + 0.3\sin a$ in a chart $(a,\tau)$ where all $\Gamma = 0$: $dt = 0.3\cos a\,da + d\tau$ is never zero, but $(\nabla_{\partial a}dt)_a = \partial a\lfloor0.3\cos a\rceil = -0.3\sin a\neq0$. Uniform flow is an extra condition linking $t$ to $\nabla$.
+      - body: |
+          Given a connection $\nabla$, time **flows uniformly** if the components $\mathtt{t}_k := \partial x_k\lfloor t\rceil$ are constant in a chart: then $\nabla_\mathcal{X}dt = 0$ for every field $\mathcal{X}$, since there is nothing left to differentiate.
+        feedback: |
+          The covariant derivative has a connection term too: $(\nabla_{\partial x_i}dt)_k = \partial x_i\lfloor\mathtt{t}_k\rceil - \Gamma^j_{ki}\mathtt{t}_j$. In a chart with $x^0 = t$, so $\mathtt{t}_k = \delta^0_k$ constant, but with $\Gamma^0_{11} = 1$, one gets $(\nabla_{\partial x_1}dt)_1 = -1\neq0$. Constant components are not enough.
+    explanation: |
+      The bridge between $t$ and $\nabla$: free particles will then age at a steady rate of absolute time.
+
+  - id: worldline
+    title: 'Worldlines and forces'
+    row: 3
+    col: 1
+    body: |
+      A vector $\mathcal{X}_p$ is **future directed**, **spatial** or **past directed** as $(dt)_p(\mathcal{X}_p)$ is $>0$, $=0$ or $<0$. A particle of mass $m>0$ has a worldline $\gamma\colon\mathbb{R}\to\mathcal{M}$ with
+      $$(t\circ\gamma)'>0,$$
+      so it crosses each absolute space at most once. A **force** $\mathcal{F}_\gamma$ is a **spatial** vector field along $\gamma$.
+    decoys:
+      - body: |
+          A vector $\mathcal{X}_p$ is **future directed**, **spatial** or **past directed** as $(dt)_p(\mathcal{X}_p)$ is $>0$, $=0$ or $<0$. A particle of mass $m>0$ has a worldline $\gamma\colon\mathbb{R}\to\mathcal{M}$ that crosses each absolute space at most once. A **force** $\mathcal{F}_\gamma$ is a spatial vector field along $\gamma$.
+        feedback: |
+          Crossing each slice once is weaker than $(t\circ\gamma)'>0$. With $t = x^0$, the curve $\gamma(\lambda) = (\lambda^3,0,0,0)$ meets each slice exactly once, yet $(t\circ\gamma)'(0) = 0$: its velocity there is spatial, as if the particle covered a stretch of space in no time. Worldlines must have a future-directed velocity at every instant.
+      - body: |
+          A vector $\mathcal{X}_p$ is **future directed**, **spatial** or **past directed** as $(dt)_p(\mathcal{X}_p)$ is $>0$, $=0$ or $<0$. A particle of mass $m>0$ has a worldline $\gamma\colon\mathbb{R}\to\mathcal{M}$ with $(t\circ\gamma)'>0$. A **force** $\mathcal{F}_\gamma$ is a **future-directed** vector field along $\gamma$, like the velocity it changes.
+        feedback: |
+          Forces push in space, not in time. With $\tau := t\circ\gamma$ and uniform flow, $\tau'' = (dt)(a_\gamma)$, so a force with time content would make the particle's clock run faster or slower than absolute time. Forces are **spatial**: $(dt)(\mathcal{F}_\gamma) = 0$.
+    explanation: |
+      Time content sorts vectors; worldlines must always move forward in absolute time, and forces must be spatial.
+
+  - id: spacetime
+    title: 'Newtonian spacetime'
+    row: 3
+    col: 3
+    body: |
+      The quintuple $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla,t)$: a 4-dimensional **torsion-free** affine manifold with an absolute time $t$ that flows uniformly, $\nabla dt = 0$. No metric, no spatial distance: Newtonian gravity will live in $\nabla$ alone.
+    decoys:
+      - body: |
+          The quintuple $(\mathcal{M},\mathcal{O},\mathcal{A},h,t)$: a 4-dimensional manifold with a spatial metric $h$ and an absolute time $t$ with $(dt)_p\neq0$. The connection is the one built from $h$, and gravity is a force added on top.
+        feedback: |
+          The structure is a connection, not a metric: free particles define $\nabla$, and gravity, which every body feels in the same way, goes into $\nabla$ instead of the forces. No spatial distance enters the axioms, and $t$ must also flow uniformly, $\nabla dt = 0$.
+      - body: |
+          The quintuple $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla,t)$: a 4-dimensional affine manifold with **any** connection, torsion allowed, with an absolute time $t$ that flows uniformly, $\nabla dt = 0$. No metric, no spatial distance.
+        feedback: |
+          The autoparallel equation $\ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j = 0$ only sees the part of $\Gamma$ symmetric in $i,j$: free particles cannot measure torsion. Since free particles are what defines $\nabla$, the axioms fix $\nabla$ to be **torsion-free**.
+    explanation: |
+      The arena: everything Newton needs, written as geometry.
+
+  - id: newton1
+    title: 'Newton I'
+    row: 4
+    col: 2
+    body: |
+      With no force, a worldline is an autoparallel:
+      $$\nabla_{v_\gamma}v_\gamma = 0.$$
+      A measurement rule, not just the zero-force case of Newton II: free particles **define** $\nabla$, what "straight" means. A body in free fall is free: gravity is not a force.
+    decoys:
+      - body: |
+          With no force, a worldline is a straight coordinate line:
+          $$\ddot\gamma^k = 0$$
+          in every chart. A measurement rule: free particles define what "straight" means. A body in free fall is free: gravity is not a force.
+        feedback: |
+          Coordinate accelerations depend on the chart; the acceleration has components $a^k = \ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^i\dot\gamma^j$. On a carousel turning at $\omega = 1$, a puck at rest on the ice at $(1,0)$ has rotating-chart coordinates with $\ddot y(0) = (-1,0)$, yet it is free. Only $\nabla_{v_\gamma}v_\gamma = 0$ is chart independent.
+      - body: |
+          With no force, a worldline is an autoparallel:
+          $$\nabla_{v_\gamma}v_\gamma = 0.$$
+          This is just the case $\mathcal{F}_\gamma = 0$ of Newton II, $a_\gamma = \mathcal{F}_\gamma/m$, and adds nothing to it; $\nabla$ is given in advance and gravity is one of the forces.
+        feedback: |
+          Newton II needs $\nabla$ to define $a_\gamma = \nabla_{v_\gamma}v_\gamma$ in the first place. Newton I is the **measurement prescription** that fixes $\nabla$: whatever free particles do is "unaccelerated", and forces are then measured as deviations from it. Since all bodies fall alike, falling bodies count as free and gravity ends up in $\nabla$.
+    explanation: |
+      Free particles measure the connection. This is the door through which gravity will enter $\nabla$.
+
+  - id: newton2
+    title: 'Newton II'
+    row: 5
+    col: 1
+    body: |
+      With a force, $a_\gamma = \mathcal{F}_\gamma/m$, where $a_\gamma := \nabla_{v_\gamma}v_\gamma$. Forces are spatial, so $(dt)(a_\gamma) = 0$; with $\tau := t\circ\gamma$ and uniform flow,
+      $$\tau'' = (dt)(a_\gamma) = 0,$$
+      so $\tau = c_1\lambda + c_2$, $c_1>0$: the parameter is **absolute time**, $\lambda\equiv t$.
+    decoys:
+      - body: |
+          With a force, $a_\gamma = \mathcal{F}_\gamma/m$, where $a_\gamma := \nabla_{v_\gamma}v_\gamma$. The law holds for any parametrization of the worldline: $\lambda$ is a free label, and reparametrizing changes neither $a_\gamma$ nor the force.
+        feedback: |
+          Reparametrizing changes the acceleration. In a chart with $x^0 = t$ and all $\Gamma = 0$, the same path as $(\lambda,0,0,0)$ but labelled $(\lambda+\lambda^3,0,0,0)$ has $\tau''(2) = 12\neq0$: a non-spatial acceleration, which no spatial force can equal. Newton II forces $\tau'' = 0$, i.e. $\lambda\equiv t$ up to units and origin.
+      - body: |
+          With a force, $a_\gamma = \mathcal{F}_\gamma/m$, where $a_\gamma := \nabla_{v_\gamma}v_\gamma$. Forces are spatial, so $(dt)(a_\gamma) = 0$, and since $(dt)_p\neq0$ alone already gives $\tau'' = (dt)(a_\gamma)$, the parameter is absolute time, for any connection.
+        feedback: |
+          In general $\tau'' = (dt)(a_\gamma) + (\nabla_{v_\gamma}dt)(v_\gamma)$. The second term vanishes only because time **flows uniformly**, $\nabla dt = 0$. Without it, a spatial acceleration would not make $\tau$ linear in $\lambda$.
+    explanation: |
+      Forces as deviations from autoparallels, and the parameter of every worldline fixed to absolute time.
+
+  - id: stratified
+    title: 'Stratified charts'
+    row: 6
+    col: 2
+    body: |
+      Charts with $\mathscr{X}^0 = t|_\mathcal{U}$; they exist around every event. Then $\mathtt{t}_k = \delta^0_k$, so $\nabla dt = 0\iff\Gamma^0_{ki} = 0$: of the 40 coefficients, 30 remain, $\Gamma^\alpha_{\beta\delta}$, $\Gamma^\alpha_{0\beta}$, $\Gamma^\alpha_{00}$. With $\lambda\equiv t$, Newton II reads
+      $$\begin{aligned}m\ddot\gamma^\alpha ={}& f^\alpha_\gamma - m\Gamma^\alpha_{\beta\delta}\dot\gamma^\beta\dot\gamma^\delta\\&-2m\Gamma^\alpha_{0\beta}\dot\gamma^\beta - m\Gamma^\alpha_{00}.\end{aligned}$$
+    decoys:
+      - body: |
+          Charts with $\mathscr{X}^0 = t|_\mathcal{U}$; they exist around every event, and they agree on space too: the transition has $\partial\mathscr{Y}^\alpha/\partial\mathscr{X}^0 = 0$, so their spatial grids never move relative to each other. Then $\nabla dt = 0\iff\Gamma^0_{ki} = 0$.
+        feedback: |
+          Only the **time row** of the Jacobian is fixed, $(1,0,0,0)$. The entries $\partial\mathscr{Y}^\alpha/\partial\mathscr{X}^0$ are minus the velocity of one grid in the other and are arbitrary: $y^1 = x^1 - 4x^0$, $y^0 = x^0$ is stratified, and a particle at rest in $\mathscr{X}$ has $v^1 = -4$ in $\mathscr{Y}$.
+      - body: |
+          Charts with $\mathscr{X}^0 = t|_\mathcal{U}$; they exist around every event. Then $\mathtt{t}_k = \delta^0_k$, and $\nabla dt = 0$ makes **all** coefficients $\Gamma^i_{jk}$ vanish, so Newton II reads $m\ddot\gamma^\alpha = f^\alpha_\gamma$ in every stratified chart.
+        feedback: |
+          Uniform flow only removes the coefficients with an **upper** time index, $\Gamma^0_{ki}$ (10 of 40). In the stratified chart $z^1 = x^1 - (x^0)^2$, $z^0 = x^0$, built from a chart with all $\Gamma = 0$, one finds $\Gamma^1_{00} = 2$: a free particle at rest in the first chart has $\ddot z^1 = -2$.
+    explanation: |
+      The charts in which Newton's axioms look like textbook mechanics: time is $t$, and the leftover coefficients are the "extra terms".
+
+  - id: inertial
+    title: 'Inertial charts'
+    row: 7
+    col: 1
+    body: |
+      A stratified chart with $\Gamma_\mathscr{X} = 0$ on all of $\mathcal{U}$: free particles move with constant velocity, $m\ddot\gamma^\alpha = f^\alpha_\gamma$. Then $\mathrm{Riem} = 0$ in this chart, hence in every chart (a tensor): inertial charts exist only where $\mathrm{Riem} = 0$.
+    decoys:
+      - body: |
+          A stratified chart whose coefficients vanish at one event $p$, $\Gamma_\mathscr{X}(p) = 0$: near $p$ free particles move with constant velocity, $m\ddot\gamma^\alpha = f^\alpha_\gamma$. Such a chart exists around any event of any Newtonian spacetime.
+        feedback: |
+          Vanishing at one event is not vanishing on an open set. With $\phi = 3(x^1-1)^2$, the sources chart has $\Gamma^1_{00} = 6(x^1-1)$, zero at $x^1 = 1$, but $\mathrm{Riem}^1_{010} = 6\neq0$ there, and nearby free particles drift apart. An inertial chart needs $\Gamma = 0$ on all of $\mathcal{U}$.
+      - body: |
+          A stratified chart with $\Gamma_\mathscr{X} = 0$ on all of $\mathcal{U}$: free particles move with constant velocity, $m\ddot\gamma^\alpha = f^\alpha_\gamma$. Every Newtonian spacetime has one around each event; one only has to pick the axes well.
+        feedback: |
+          $\Gamma = 0$ on $\mathcal{U}$ forces $\mathrm{Riem} = 0$ there, and $\mathrm{Riem}$ is a tensor: zero in one chart means zero in every chart. Near a point mass $\mathrm{Riem}^1_{010} = -2G_NM/r^3\neq0$, so no choice of axes or origin gives an inertial chart.
+    explanation: |
+      The charts of Newton's first law in its school form; their existence is a curvature question.
+
+  - id: gravity
+    title: 'Gravity in the connection'
+    row: 7
+    col: 3
+    body: |
+      In the sources chart (stratified, cartesian, non-rotating, at rest relative to the sources) every free body has $\ddot\gamma^\alpha = -\partial_\alpha\phi$, whatever its mass and velocity, with $\Delta\phi = 4\pi G_N\rho$. So
+      $$\Gamma^\alpha_{00} = \partial_\alpha\phi,$$
+      all other $\Gamma = 0$: the slot of the translational pseudo-force. Point mass: $\phi = -G_NM/|x|$.
+    decoys:
+      - body: |
+          In the sources chart (stratified, cartesian, non-rotating, at rest relative to the sources) all $\Gamma = 0$, and gravity is a spatial **force**
+          $$f^\alpha_\gamma = -m\,\partial_\alpha\phi,$$
+          with $\Delta\phi = 4\pi G_N\rho$. Point mass: $\phi = -G_NM/|x|$.
+        feedback: |
+          The acceleration $-\partial_\alpha\phi$ is the same for every mass and every velocity: exactly what free particles do. By Newton I, falling bodies define the autoparallels, so gravity belongs in $\nabla$, not in the forces. A real force, like a spring, gives an acceleration $f/m$ that depends on the mass.
+      - body: |
+          In the sources chart (stratified, cartesian, non-rotating, at rest relative to the sources) every free body has $\ddot\gamma^\alpha = -\partial_\alpha\phi$, with $\Delta\phi = 4\pi G_N\rho$. So
+          $$\Gamma^\alpha_{00} = -\partial_\alpha\phi,$$
+          all other $\Gamma = 0$. Point mass: $\phi = -G_NM/|x|$.
+        feedback: |
+          Read it off a free body at rest: Newton II gives $\ddot\gamma^\alpha + \Gamma^\alpha_{00} = 0$, so $\Gamma^\alpha_{00} = -\ddot\gamma^\alpha = +\partial_\alpha\phi$. With $G_NM = 8$ at $(2,0,0)$: $\Gamma^1_{00} = 2$ and the body accelerates by $-2$, toward the mass. The minus sign would push it away.
+    explanation: |
+      Gravity leaves the forces and enters the connection, in the same slot as a pseudo-force. Is it one?
+
+  - id: pseudo
+    title: 'Pseudo-forces'
+    row: 8
+    col: 1
+    body: |
+      Seen from axes that rotate by $\theta(t)$ with origin at $b(t)$, relative to an inertial chart, free particles get the terms $-2m\Gamma^\alpha_{0\beta}\dot\gamma^\beta$ (**Coriolis**, $\Gamma^1_{02} = -\dot\theta$) and $-m\Gamma^\alpha_{00}$ (**centrifugal, Euler, translational**). A uniform field is one too: a freely falling chart removes it.
+    decoys:
+      - body: |
+          Seen from axes that rotate by $\theta(t)$ with origin at $b(t)$, relative to an inertial chart, free particles get the terms $-2m\Gamma^\alpha_{0\beta}\dot\gamma^\beta$ (Coriolis) and $-m\Gamma^\alpha_{00}$ (centrifugal, Euler, translational), and also the term $r\dot\varphi^2$ of polar coordinates at rest, a centrifugal force.
+        feedback: |
+          Pseudo-forces come from **moving axes**. Polar coordinates at rest have $\Gamma^r_{\varphi\varphi} = -r$, a purely spatial coefficient: a chart effect of a curved grid, not a pseudo-force. The free particle $x = (2,6t)$ has $\ddot r(0) = 18$ in polar coordinates although nothing moves the grid.
+      - body: |
+          Seen from axes that rotate by $\theta(t)$ with origin at $b(t)$, relative to an inertial chart, free particles get the terms $-m\Gamma^\alpha_{0\beta}\dot\gamma^\beta$ (Coriolis, $\Gamma^1_{02} = -\dot\theta$) and $-m\Gamma^\alpha_{00}$ (centrifugal, Euler, translational).
+        feedback: |
+          The Coriolis term has a factor $2$: the sum $\Gamma^\alpha_{ji}\dot\gamma^i\dot\gamma^j$ contains both $(0,\beta)$ and $(\beta,0)$, and $\Gamma^\alpha_{0\beta} = \Gamma^\alpha_{\beta0}$ (torsion-free). At $\omega = 0.5$ with $\dot y^2 = 3$, the Coriolis acceleration is $\ddot y^1 = 3$, not $1.5$.
+    explanation: |
+      The classical "fictitious forces" are connection coefficients of moving charts; uniform gravity joins them.
+
+  - id: curvature
+    title: 'Curvature of gravity'
+    row: 8
+    col: 3
+    body: |
+      In the sources chart the only non-zero components are
+      $$\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi,$$
+      and $\mathrm{Riem}^\alpha_{00\beta} = -\mathrm{Riem}^\alpha_{0\beta0}$; $\mathrm{Riem}^\alpha_{\beta\delta\kappa} = 0$: **spacetime is curved, space is flat**. A uniform field has $\mathrm{Riem} = 0$; a varying one cannot be removed by any chart.
+    decoys:
+      - body: |
+          In the sources chart the components are
+          $$\mathrm{Riem}^\alpha_{\beta\delta\kappa}\neq0,$$
+          built from second derivatives of $\phi$: each absolute space $\mathcal{S}_\tau$ is a curved 3-space, bent by the masses, and its curvature is what we call gravity.
+        feedback: |
+          Every non-zero coefficient $\Gamma^\alpha_{00}$ carries two time indices, and the quadratic terms vanish, so the only surviving components are $\mathrm{Riem}^\alpha_{0\beta0} = -\mathrm{Riem}^\alpha_{00\beta}$, with the time index twice. The spatial part $\mathrm{Riem}^\alpha_{\beta\delta\kappa}$ is zero: absolute space stays flat; only spacetime curves.
+      - body: |
+          In the sources chart the only non-zero components are
+          $$\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi,$$
+          and $\mathrm{Riem}^\alpha_{\beta\delta\kappa} = 0$. Wherever there is a gravitational field, even a uniform one, $\mathrm{Riem}\neq0$, so gravity can never be removed by a chart.
+        feedback: |
+          Curvature sees second derivatives. The uniform field $\phi = 9.8\,x^3$ has $\partial_\beta\partial_\alpha\phi = 0$, so $\mathrm{Riem} = 0$, and the freely falling chart $b^3 = -4.9t^2$ is inertial. Only a **varying** field, $\partial_\beta\partial_\alpha\phi\neq0$, is beyond the reach of every chart.
+    explanation: |
+      Curvature separates real gravity from pseudo-forces, which share its slot $\Gamma^\alpha_{00}$.
+
+  - id: tidal
+    title: 'Tidal equation'
+    row: 9
+    col: 1
+    body: |
+      A **falling chart**, $x^\alpha = y^\alpha + b^\alpha(t)$ with $\ddot b^\alpha = -\partial_\alpha\phi$ at $b$, removes gravity along its origin only. A nearby free particle obeys
+      $$\ddot\gamma^\alpha_\mathcal{V} \approx -\mathrm{Riem}^\alpha_{0\beta0}\gamma^\beta_\mathcal{V}.$$
+      Point mass: stretched along the fall by $2G_NM/r^3$, squeezed across by $G_NM/r^3$; tides fall off like $1/r^3$.
+    decoys:
+      - body: |
+          A **falling chart**, $x^\alpha = y^\alpha + b^\alpha(t)$ with $\ddot b^\alpha = -\partial_\alpha\phi$ at $b$, removes gravity along its origin only. A nearby free particle obeys
+          $$\ddot\gamma^\alpha_\mathcal{V} \approx +\mathrm{Riem}^\alpha_{0\beta0}\gamma^\beta_\mathcal{V}.$$
+          Point mass: squeezed along the fall, stretched across.
+        feedback: |
+          In the falling chart $(\Gamma_\mathscr{Y})^\alpha_{00}\approx\mathrm{Riem}^\alpha_{0\beta0}\gamma^\beta_\mathcal{V}$, and Newton I gives $\ddot\gamma^\alpha_\mathcal{V} = -(\Gamma_\mathscr{Y})^\alpha_{00}$: a minus sign. With $\mathrm{Riem}^1_{010} = -2G_NM/r^3$, a particle farther out along the fall feels a smaller pull and drifts **away**: stretching along, squeezing across.
+      - body: |
+          A **falling chart**, $x^\alpha = y^\alpha + b^\alpha(t)$ with $\ddot b^\alpha = -\partial_\alpha\phi$ at $b$, removes gravity along its origin only. A nearby free particle obeys
+          $$\ddot\gamma^\alpha_\mathcal{V} \approx -\mathrm{Riem}^\alpha_{0\beta0}\gamma^\beta_\mathcal{V}.$$
+          Point mass: tides fall off like $1/r^2$, just as the pull does.
+        feedback: |
+          Tides are the **difference** of the pull across a small cloud, a derivative of $G_NM/r^2$: they go like $G_NM/r^3$. Moving from $r = 2$ to $r = 4$ divides the pull by $4$ but the tides by $8$. That is why the nearby Moon beats the far heavier Sun at raising tides.
+    explanation: |
+      What survives in the best chart: relative acceleration, measured by curvature. Physically, the equivalence principle and the tides.
+
+  - id: field
+    title: 'Field equation'
+    row: 9
+    col: 3
+    body: |
+      With $\mathrm{Ric}_{jm} := \mathrm{Riem}^k_{jkm}$, the only component is
+      $$\mathrm{Ric}_{00} = \Delta\phi = 4\pi G_N\rho,$$
+      chart-free $\mathrm{Ric} = 4\pi G_N\rho\,dt\otimes dt$: Poisson's equation as curvature, the time-time part of the Einstein equations. In vacuum $\mathrm{Ric} = 0$, yet $\mathrm{Riem}$ need not vanish.
+    decoys:
+      - body: |
+          With $\mathrm{Ric}_{jm} := \mathrm{Riem}^k_{jkm}$, the only component is
+          $$\mathrm{Ric}_{00} = \Delta\phi = 4\pi G_N\rho,$$
+          chart-free $\mathrm{Ric} = 4\pi G_N\rho\,dt\otimes dt$. In vacuum $\rho = 0$, so the curvature vanishes there: no tides outside matter.
+        feedback: |
+          $\mathrm{Ric}_{00}$ is only the **trace** $\mathrm{Riem}^\alpha_{0\alpha0}$. Outside a point mass, at $(2,0,0)$ with $G_NM = 8$: $\mathrm{Riem}^\alpha_{0\beta0}$ is diagonal $(-2,1,1)$, trace $0 = \mathrm{Ric}_{00}$, but far from zero. Vacuum fixes the trace, not the tides; the Moon raises tides through empty space.
+      - body: |
+          With $\mathrm{Ric}_{jm} := \mathrm{Riem}^k_{jmk}$, the only component is
+          $$\mathrm{Ric}_{00} = \mathrm{Riem}^\alpha_{00\alpha} = \Delta\phi = 4\pi G_N\rho,$$
+          chart-free $\mathrm{Ric} = 4\pi G_N\rho\,dt\otimes dt$: Poisson's equation as curvature.
+        feedback: |
+          Contracting the last index flips the sign: $\mathrm{Riem}^\alpha_{00\alpha} = -\mathrm{Riem}^\alpha_{0\alpha0} = -\Delta\phi$, which would give $\mathrm{Ric}_{00} = -4\pi G_N\rho$. Ricci contracts the upper index with the **third** slot, $\mathrm{Ric}_{jm} = \mathrm{Riem}^k_{jkm}$.
+    explanation: |
+      Matter fixes the Ricci curvature; curvature fixes free fall. The template for the Einstein equations.
+
+edges:
+  - { from: time, to: spaces, label: level sets }
+  - { from: time, to: flow, label: 'with $\nabla$' }
+  - { from: spaces, to: worldline, label: time content }
+  - { from: flow, to: spacetime, label: torsion-free }
+  - { from: worldline, to: newton1, label: no force }
+  - { from: spacetime, to: newton1, label: autoparallels }
+  - { from: newton1, to: newton2, label: add a force }
+  - { from: newton2, to: stratified, label: 'use $t$ as $x^0$' }
+  - { from: stratified, to: inertial, label: '$\Gamma = 0$' }
+  - { from: stratified, to: gravity, label: add gravity }
+  - { from: inertial, to: pseudo, label: move axes }
+  - { from: gravity, to: pseudo, dashed: true, label: if uniform }
+  - { from: gravity, to: curvature, label: differentiate }
+  - { from: pseudo, to: tidal, dashed: true, label: falling chart }
+  - { from: curvature, to: tidal, label: linearize }
+  - { from: curvature, to: field, label: contract }
+
+outroTitle: Chapter 9 in one picture
+outro: |
+  Read it top to bottom. An **absolute time** $t$ with $(dt)_p\neq0$ slices spacetime into **absolute spaces**
+  $$T_p\mathcal{S}_{t(p)} = \ker(dt)_p,$$
+  and, given a connection, flows **uniformly**, $\nabla dt = 0$: together a torsion-free **Newtonian spacetime** $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla,t)$, with no metric. **Worldlines** move forward in time, $(t\circ\gamma)'>0$, and **forces** are spatial. **Newton I** makes free particles the autoparallels that define $\nabla$; **Newton II**, $a_\gamma = \mathcal{F}_\gamma/m$, then forces $\lambda\equiv t$. In a **stratified chart**, $\mathscr{X}^0 = t$, uniform flow kills $\Gamma^0_{ki}$, and the rest appear as extra terms of Newton II. **Inertial charts** ($\Gamma = 0$) need $\mathrm{Riem} = 0$; moving axes turn their zero coefficients into **pseudo-forces** (Coriolis, centrifugal, Euler, translational). **Gravity** sits in the same slot,
+  $$\Gamma^\alpha_{00} = \partial_\alpha\phi,$$
+  and a uniform field is a pseudo-force, but a varying one leaves **curvature**,
+  $$\mathrm{Riem}^\alpha_{0\beta0} = \partial_\beta\partial_\alpha\phi,$$
+  which no chart removes. Its trace is the **field equation** $\mathrm{Ric}_{00} = 4\pi G_N\rho$, and in a falling chart it is all that remains, as the **tidal equation**
+  $$\ddot\gamma^\alpha_\mathcal{V}\approx-\mathrm{Riem}^\alpha_{0\beta0}\gamma^\beta_\mathcal{V}.$$
+
+  **Next: the Level Challenge.** Harder problems that combine the whole map. A ball whirled on a string and a ball let go at the same instant leave from the same event with the same velocity: how do a fixed chart, a co-rotating chart and, with a mass at the centre, the connection itself tell their stories?

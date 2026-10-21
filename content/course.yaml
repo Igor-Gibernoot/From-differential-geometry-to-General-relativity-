@@ -449,7 +449,11 @@ levels:
         kind: traps
         file: ch09/traps.yaml
         summary: "Fast questions on this level's tempting mistakes: dt never zero, time content outside stratified charts, x⁰ = t exactly, the Newton II parameter, pseudo-forces vs curvilinear grids, Γ = 0 at one event, uniform vs curved fields, signs of Γ, Ric and the tidal equation, vacuum is not flat, and tides as 1/r³."
-      - { id: ch09-map, title: "Content Map: Newton-Cartan Theory", kind: map }
+      - id: ch09-map
+        title: "Content Map: Newton-Cartan Theory"
+        kind: map
+        file: ch09/map.yaml
+        summary: "Rebuild the Chapter 9 map box by box: from absolute time, absolute spaces and uniform flow to Newtonian spacetime, worldlines and Newton's two laws, stratified and inertial charts with their pseudo-forces, and gravity in the connection with its curvature, field equation and tidal equation."
       - { id: ch09-review, title: Level Review, kind: review }
       - { id: ch09-challenge, title: Level Challenge, kind: challenge }
 
