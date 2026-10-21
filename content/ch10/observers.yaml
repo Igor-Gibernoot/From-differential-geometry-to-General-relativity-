@@ -1,0 +1,445 @@
+id: ch10-observers
+title: Observers and What They Measure
+kind: concept
+
+own: |
+  - **Observer**: a pair $(\gamma, e)$ of a massive worldline $\gamma$ and four smooth vector fields $e_a(\lambda)\in T_{\gamma(\lambda)}\mathcal{M}$ along it ($a = 0,1,2,3$) with, for every $\lambda$, {{ $g(e_a,e_b) = \eta_{ab}$ and $e_0 = v_\gamma$ }}, where $\eta_{ab} = \mathrm{diag}(1,-1,-1,-1)_{ab}$. Then $g(v_\gamma,v_\gamma) = 1$, $s_\gamma\equiv1$: an observer is parametrized by its own proper time, $\tau_{[\lambda_1,\lambda_2]}[\gamma] = \lambda_2 - \lambda_1$.
+  - **Dual covectors**: with $\flat(\mathcal{X})(\mathcal{Y}) := g(\mathcal{X},\mathcal{Y})$, set $\epsilon^0 := \flat(e_0)$ and $\epsilon^\alpha := -\flat(e_\alpha)$ ($\alpha = 1,2,3$; the minus undoes $\eta_{\alpha\alpha} = -1$). Then {{ $\epsilon^a(e_b) = \delta^a_b$ }}, so $e$ is a basis and $\epsilon$ its dual basis.
+  - **Measured components**: every vector at $\gamma(\lambda)$ is $\mathcal{X} = \epsilon^a(\mathcal{X})\,e_a$; the time component is read on the observer's clock, {{ $\epsilon^0(\mathcal{X}) = g(v_\gamma,\mathcal{X})$ }}, the spatial ones $\epsilon^\alpha(\mathcal{X}) = -g(e_\alpha,\mathcal{X})$ on its rods.
+  - **3-velocity** of a massive or massless particle $\delta$ through the observer's event, with $\epsilon^0(v_\delta) = g(v_\gamma,v_\delta) > 0$: $u_\delta := u^\alpha e_\alpha$,
+  {{ $$u^\alpha := \frac{\epsilon^\alpha(v_\delta)}{\epsilon^0(v_\delta)}$$ }}
+  unchanged by reparametrizing $\delta$ (a positive factor cancels).
+  - **Speed bound**: expanding $v_\delta$ in the frame,
+  {{ $$\begin{aligned}g(v_\delta,v_\delta) &= \big(\epsilon^0(v_\delta)\big)^2\\ &\quad\cdot\Big(1 - \sum_\alpha(u^\alpha)^2\Big)\end{aligned}$$ }}
+  so $\sum_\alpha(u^\alpha)^2 < 1$ for massive particles and $= 1$ for light, for every observer.
+
+cards:
+  - type: text
+    id: hook
+    title: The twins, again
+    body: |
+      Flat 1+1 spacetime: chart coordinates $a$ (space, across) and $\tau$ (time, up), points written $(a,\tau)$, metric
+      $$g = d\tau\otimes d\tau - da\otimes da,$$
+      signature $(+,-)$, light covering one unit of $a$ per unit of $\tau$.
+
+      Twin H stays at $a = 0$. Twin T leaves the event $(0,0)$ and travels at constant velocity to the event $(3,5)$, where it will turn around. Each twin carries a clock and a ruler.
+
+      Halfway through the outbound leg, T radios H: "I am at rest. You are the one moving." H replies: "Nonsense, I am at rest; you move at $3/5$." Who is right? Before any theory, guess what T's own clock and ruler record for T's own leg.
+
+  - type: mcq
+    id: hook-predict
+    title: Before any theory, predict
+    prompt: |
+      In 1+1 Minkowski spacetime ($g = d\tau\otimes d\tau - da\otimes da$, points $(a,\tau)$), twin T moves at constant velocity from the event $(0,0)$ to the event $(3,5)$. Using T's own clock (time) and a ruler T carries along (distance), what does T record for this displacement?
+    options:
+      - text: 'Time $4$, distance $0$'
+        correct: true
+      - text: 'Time $5$, distance $3$'
+        feedback: |
+          These are the chart components, which is what twin H, at rest in the chart, records. T's clock is carried along the leg and reads its metric length, $\sqrt{25-9} = 4$, not the chart's $5$.
+      - text: 'Time $4$, distance $3$'
+        feedback: |
+          The time is right, but T's ruler travels with T: both events of the leg happen where T is. A ruler carried along records no distance between two events that both happen at the ruler's zero mark.
+      - text: 'Time $5$, distance $0$'
+        feedback: |
+          The distance is right, but $5$ is the chart coordinate $\tau$ of the endpoint, not T's clock. T's clock reads the metric length of the leg, $\sqrt{5^2 - 3^2} = 4$.
+    explanation: |
+      For T the two events happen at the same place, its own position, $4$ clock units apart. H records the same displacement as $5$ units of time and $3$ of distance. Both descriptions are correct; they belong to two different **observers**. This lesson makes "what an observer measures" precise.
+
+  - type: widget
+    id: traveller-widget
+    title: Two frames, one vector
+    widget: observer-frame
+    config:
+      u: 0.6
+      X: [3, 5]
+      compare: true
+      presets:
+        - { label: 'Traveller', u: 0.6, X: [3, 5], compare: true }
+        - { label: 'Rest frame', u: 0, X: [3, 5], compare: true }
+    body: |
+      The purple pair $e_0$, $e_1$ is T's frame at the event $(0,0)$: $e_0$ points along T's worldline, $e_1$ along what T calls space. The slider $u$ is T's speed relative to the chart (here $0.6 = 3/5$). The faint frame "rest" is H's. The blue vector is the displacement $\mathcal{X} = (3,5)$ of T's leg.
+
+      Read T's measured components $X^0$, $X^1$ (frame labels $0, 1$; the chart components carry the coordinate labels $a$, $\tau$), and the rest observer's time and speed. The dashed parallelogram shows $\mathcal{X} = X^0e_0 + X^1e_1$. Move $u$: the purple frame closes like scissors toward the light line, and $X^0$, $X^1$ change, while $g(\mathcal{X},\mathcal{X})$ stays $16$.
+
+  - type: numeric
+    id: home-twin-time
+    title: What T measures for H
+    prompt: |
+      In 1+1 Minkowski spacetime, $g(\mathcal{X},\mathcal{Y}) = X^\tau Y^\tau - X^aY^a$ (components in the order $(a,\tau)$). Twin T, moving at $0.6$, has the frame $e_0 = (0.75, 1.25)$, $e_1 = (1.25, 0.75)$, and measures the time component of a vector as $X^0 = g(e_0,\mathcal{X})$. Twin H's displacement from $\tau = 0$ to $\tau = 5$ is $\mathcal{X} = (0,5)$. What is $X^0$?
+    answer: 6.25
+    tolerance: 0.001
+    wrong:
+      - { value: 5, feedback: 'That is H''s own clock reading (and the chart time). T measures with its own frame: $g(e_0,\mathcal{X}) = 1.25\cdot5 - 0.75\cdot0$.' }
+      - { value: 4, feedback: 'That is T''s clock for T''s own leg $(3,5)$. Here the vector is H''s displacement $(0,5)$: $g(e_0,\mathcal{X}) = 1.25\cdot5 - 0.75\cdot0$.' }
+      - { value: -3.75, feedback: 'That is the space component $X^1 = -g(e_1,\mathcal{X}) = -0.75\cdot5$. The time component pairs with $e_0$: $1.25\cdot5 - 0.75\cdot0$.' }
+    hint: '$g(e_0,\mathcal{X}) = e_0^\tau X^\tau - e_0^aX^a$ with $e_0 = (0.75, 1.25)$ and $\mathcal{X} = (0,5)$.'
+    explanation: |
+      $$X^0 = 1.25\cdot5 - 0.75\cdot0 = 6.25,$$
+      and the space component is $X^1 = -g(e_1,\mathcal{X}) = -(0.75\cdot5 - 1.25\cdot0) = -3.75$. So T measures H moving at $|X^1/X^0| = 3.75/6.25 = 0.6$, in the negative direction: the mirror image of what H measures for T.
+
+  - type: text
+    id: both-right
+    title: Both are right
+    body: |
+      On the outbound leg the situation is symmetric:
+      - H measures T's leg $(3,5)$: time $5$, distance $3$, speed $0.6$; T's clock shows $4 = 0.8\cdot5$.
+      - T measures H's displacement $(0,5)$: time $6.25$, distance $3.75$, speed $0.6$; H's clock shows $5 = 0.8\cdot6.25$.
+
+      Each says "I am at rest, you move at $0.6$, your clock runs slow", and each is right **in its own frame**. "At rest" is not a property of a worldline alone; it is relative to an observer. (The twins' final asymmetry comes from T's turnaround, where T changes frame.)
+
+      To make "measures" precise we need two things: a clock, which is a massive worldline, and a set of rulers, which is a basis of spatial directions. Together they make an observer.
+
+  - type: text
+    id: observer-def
+    title: Observers
+    body: |
+      Spacetime now has 4 dimensions and signature $(+,-,-,-)$. Index conventions: Latin $a, b \in \{0,1,2,3\}$ are **frame labels** (which vector of the frame), Greek $\alpha, \beta \in \{1,2,3\}$ the spatial ones; a repeated index once up and once down is summed. Recall the Sylvester matrix
+      $$\eta_{ab} := \mathrm{diag}(1,-1,-1,-1)_{ab}.$$
+      A **vector field along** a curve $\gamma$ is a smooth choice $\lambda\mapsto e(\lambda)\in T_{\gamma(\lambda)}\mathcal{M}$ (smooth: its chart components are smooth in $\lambda$); the velocity $v_\gamma$ is one.
+
+      An **observer** is a pair $(\gamma, e)$: a massive worldline $\gamma$ and four vector fields $e_0,\dots,e_3$ along it such that, for every $\lambda$,
+      1. *Lorentz-orthonormality:*
+      $$g\big(e_a(\lambda), e_b(\lambda)\big) = \eta_{ab};$$
+      2. *the time axis is the velocity:*
+      $$e_0(\lambda) = v_{\gamma(\lambda)}.$$
+
+      Watch the letter $a$: in the 1+1 pictures, $a$ is also the space coordinate and $X^a$ a chart component. Frame components always carry a number in examples ($X^0$, $X^1$).
+
+  - type: numeric
+    id: check-e1
+    title: A unit ruler
+    prompt: |
+      In 1+1 Minkowski spacetime, $g(\mathcal{X},\mathcal{Y}) = X^\tau Y^\tau - X^aY^a$ (components $(a,\tau)$). An observer moving at $0.6$ has the spatial frame vector $e_1 = (1.25, 0.75)$. Compute $g(e_1,e_1)$.
+    answer: -1
+    tolerance: 0.001
+    wrong:
+      - { value: 2.125, feedback: 'That is the Euclidean $1.25^2 + 0.75^2$. The Minkowski metric subtracts: time part minus space part.' }
+      - { value: 1, feedback: 'Check the order: the $\tau$ component of $e_1$ is $0.75$, the $a$ component $1.25$, so $g = 0.75^2 - 1.25^2$.' }
+    hint: '$g(e_1,e_1) = (e_1^\tau)^2 - (e_1^a)^2$ with $e_1^a = 1.25$, $e_1^\tau = 0.75$.'
+    explanation: |
+      $$g(e_1,e_1) = 0.5625 - 1.5625 = -1 = \eta_{11}.$$
+      Similarly $g(e_0,e_0) = 1.25^2 - 0.75^2 = 1$ and $g(e_0,e_1) = 1.25\cdot0.75 - 0.75\cdot1.25 = 0$: a Lorentz-orthonormal pair. The rulers have "length" $-1$ because spacelike vectors have negative $g$ in this signature.
+
+  - type: text
+    id: unit-speed
+    title: An observer runs on its own clock
+    body: |
+      The two conditions together fix the pace of $\gamma$: condition 2 puts $v_\gamma$ in the slot of $e_0$, and condition 1 gives $e_0$ unit "length". Recall the speed $s_\gamma := \sqrt{g(v_\gamma,v_\gamma)}$ on a massive worldline and the proper time $\tau_{[\lambda_1,\lambda_2]}[\gamma] := \int_{\lambda_1}^{\lambda_2}s_\gamma\,d\lambda$. Build the first step on the next card.
+
+  - type: build
+    id: build-unit-speed
+    title: Build the chain
+    prompt: |
+      An observer $(\gamma,e)$ satisfies $g(e_a,e_b) = \eta_{ab}$ with $\eta = \mathrm{diag}(1,-1,-1,-1)$, and $e_0 = v_\gamma$. Build the chain that computes $g(v_\gamma,v_\gamma)$.
+    prefix: 'g(v_\gamma,v_\gamma) ='
+    tiles: ['g(e_0,e_0)', 'g(e_1,e_1)', '=', '=', '\eta_{00}', '\eta_{11}', '1', '-1']
+    answers:
+      - ['g(e_0,e_0)', '=', '\eta_{00}', '=', '1']
+    wrong:
+      - { answer: ['g(e_1,e_1)', '=', '\eta_{11}', '=', '-1'], feedback: 'The velocity is the time axis, $v_\gamma = e_0$, not a spatial ruler $e_1$. A massive worldline has $g(v_\gamma,v_\gamma) > 0$.' }
+    hint: 'Condition 2 replaces $v_\gamma$ by a frame vector; condition 1 gives its $g$ with itself.'
+    explanation: |
+      $$g(v_\gamma,v_\gamma) = g(e_0,e_0) = \eta_{00} = 1.$$
+      So $s_\gamma\equiv1$, and
+      $$\tau_{[\lambda_1,\lambda_2]}[\gamma] = \int_{\lambda_1}^{\lambda_2}1\,d\lambda = \lambda_2 - \lambda_1:$$
+      an observer is parametrized by its own proper time. The parameter $\lambda$ *is* the observer's clock.
+
+  - type: mcq
+    id: which-parametrization
+    title: Which can be an observer?
+    prompt: |
+      In 1+1 Minkowski spacetime ($g = d\tau\otimes d\tau - da\otimes da$, points $(a,\tau)$), each curve below traces twin T's straight path through $(0,0)$ and $(3,5)$, or the line through $(0,0)$ and $(5,3)$. Which one can be the worldline $\gamma$ of an observer, i.e. has $e_0 = v_\gamma$ with $g(e_0,e_0) = 1$?
+    options:
+      - text: '$\gamma(\lambda) = (0.75\lambda, 1.25\lambda)$'
+        correct: true
+      - text: '$\gamma(\lambda) = (0.6\lambda, \lambda)$'
+        feedback: |
+          Right path, wrong pace: $v_\gamma = (0.6, 1)$ has $g = 1 - 0.36 = 0.64$. Its parameter is the chart time $\tau$, not T's clock, so $v_\gamma$ is not a unit vector.
+      - text: '$\gamma(\lambda) = (3\lambda, 5\lambda)$'
+        feedback: |
+          Right path, wrong pace: $v_\gamma = (3,5)$ has $g = 25 - 9 = 16$. The whole leg takes $\lambda\in[0,1]$, while T's clock advances by $4$.
+      - text: '$\gamma(\lambda) = (1.25\lambda, 0.75\lambda)$'
+        feedback: |
+          $v_\gamma = (1.25, 0.75)$ has $g = 0.5625 - 1.5625 = -1$: spacelike. That is a ruler direction, not a worldline of a massive body.
+    explanation: |
+      $v_\gamma = (0.75, 1.25)$ gives $g = 1.5625 - 0.5625 = 1$, and it is future directed. This curve reaches $(3,5)$ at $\lambda = 4$, which is exactly T's clock reading there: the parameter is the proper time.
+
+  - type: text
+    id: dual-covectors
+    title: Covectors that read the components
+    body: |
+      To measure, the observer needs, for each frame vector, a covector that extracts its component. The metric provides them. Recall the musical map **flat** ($\flat$, from the metric):
+      $$\flat_p(\mathcal{X}_p)(\mathcal{Y}_p) := g_p(\mathcal{X}_p,\mathcal{Y}_p),$$
+      which turns a vector into a covector (orange, as all covectors). Fix $\lambda$, drop it from the notation, and define
+      $$\epsilon^0 := \flat(e_0),$$
+      $$\epsilon^\alpha := -\flat(e_\alpha).$$
+      Then, by the definition of $\flat$ and condition 1,
+      $$\begin{aligned}\epsilon^0(e_b) &= g(e_0,e_b)\\ &= \eta_{0b} = \delta^0_b,\end{aligned}$$
+      $$\begin{aligned}\epsilon^\alpha(e_b) &= -g(e_\alpha,e_b)\\ &= -\eta_{\alpha b} = \delta^\alpha_b.\end{aligned}$$
+      In one line: $\epsilon^a(e_b) = \delta^a_b$, where $\delta^a_b$ is the Kronecker delta ($1$ if $a = b$, else $0$).
+
+  - type: mcq
+    id: why-minus
+    title: Why the minus sign?
+    prompt: |
+      An observer's frame satisfies $g(e_a,e_b) = \eta_{ab}$ with $\eta = \mathrm{diag}(1,-1,-1,-1)$, and $\flat(\mathcal{X})(\mathcal{Y}) := g(\mathcal{X},\mathcal{Y})$. The spatial covectors are defined as $\epsilon^\alpha := -\flat(e_\alpha)$, with a minus sign, while $\epsilon^0 := \flat(e_0)$ has none. Why?
+    options:
+      - text: 'Because $\flat(e_\alpha)(e_\alpha) = g(e_\alpha,e_\alpha) = -1$; the minus makes $\epsilon^\alpha(e_\alpha) = +1$, as a dual basis needs'
+        correct: true
+      - text: 'Because spatial components should come out negative, to match the signature'
+        feedback: |
+          Tempting, since the signature has minus signs in the space slots. But the minus sign does the opposite: it makes $\epsilon^1(e_1) = +1$, so a vector $3e_1$ has measured space component $+3$. Components are read with $\delta^a_b$; the minus signs of $\eta$ show up only in $g$.
+      - text: 'It is a convention with no effect; $\flat(e_\alpha)$ would work equally well'
+        feedback: |
+          Without the minus, $\flat(e_1)(e_1) = g(e_1,e_1) = -1$, so the covector would read $-3$ off the vector $3e_1$. Then $\mathcal{X} = \epsilon^a(\mathcal{X})\,e_a$ fails: the decomposition needs $\epsilon^a(e_b) = \delta^a_b$ exactly.
+      - text: 'Because $e_\alpha$ points to the past'
+        feedback: |
+          Past and future apply to causal vectors only. The $e_\alpha$ are spacelike ($g(e_\alpha,e_\alpha) = -1$) and are neither. The sign is needed because of that $-1$.
+    explanation: |
+      $\epsilon^\alpha(e_\alpha) = -g(e_\alpha,e_\alpha) = -(-1) = 1$, and $\epsilon^\alpha(e_b) = 0$ for $b\neq\alpha$ by orthogonality. With signature $(+,-,-,-)$ only the time slot needs no correction.
+
+  - type: text
+    id: recall-dual
+    title: Recall the dual basis
+    body: |
+      Recall: for a basis $\{\hat{x}_j\}$ of a vector space $V$, the **dual basis** $\{\hat{\mathfrak{x}}^i\}$ of $V^*$ is defined by
+      $$\hat{\mathfrak{x}}^i(\hat{x}_j) := \delta^i_j,$$
+      and each $\hat{\mathfrak{x}}^i$ reads off a component: for $\mathcal{X} = x^j\hat{x}_j$, $\hat{\mathfrak{x}}^i(\mathcal{X}) = x^j\delta^i_j = x^i$.
+
+      The $\epsilon^a$ satisfy the defining relation with the $e_b$. But we have not yet shown that the $e_b$ form a basis: the definition of an observer asked only for orthonormality. The relation $\epsilon^a(e_b) = \delta^a_b$ proves it.
+
+  - type: order
+    id: basis-proof
+    title: The frame is a basis
+    prompt: |
+      An observer's frame $e_0,\dots,e_3$ at $\gamma(\lambda)$ has covectors $\epsilon^a$ with $\epsilon^a(e_b) = \delta^a_b$. Put in order the proof that $\{e_b\}$ is a basis of $T_{\gamma(\lambda)}\mathcal{M}$.
+    steps:
+      - 'Suppose $c^be_b = 0$ for some numbers $c^0,\dots,c^3$.'
+      - 'Apply the covector $\epsilon^a$ to both sides: $\epsilon^a(c^be_b) = 0$.'
+      - 'Linearity of $\epsilon^a$: $c^b\,\epsilon^a(e_b) = 0$.'
+      - 'Duality, $\epsilon^a(e_b) = \delta^a_b$: $c^a = 0$, for every $a$.'
+      - 'So the four $e_b$ are linearly independent; in the 4-dimensional tangent space they form a basis, and $\epsilon$ is its dual basis.'
+    hint: 'Start from a linear relation among the $e_b$ and show all coefficients vanish.'
+    explanation: |
+      Four independent vectors in a 4-dimensional space form a basis. Note the logic: orthonormality for a nondegenerate $g$ already forces independence, no extra assumption needed.
+
+  - type: text
+    id: measured-components
+    title: Measured components
+    body: |
+      Since $\epsilon$ is the dual basis, every $\mathcal{X}\in T_{\gamma(\lambda)}\mathcal{M}$ decomposes as
+      $$\mathcal{X} = \epsilon^a(\mathcal{X})\,e_a.$$
+      The numbers $\epsilon^a(\mathcal{X})$ are the components of $\mathcal{X}$ **measured by the observer**. Why "measured"? By condition 2, the time component is
+      $$\epsilon^0(\mathcal{X}) = g(v_\gamma,\mathcal{X}),$$
+      a number built from the observer's own velocity: it is read on the observer's clock. By condition 1, the $e_\alpha$ have $g(e_\alpha,e_\alpha) = -1$ and $g(v_\gamma,e_\alpha) = 0$: they are unit rulers along the directions the observer regards as purely spatial, and $\epsilon^\alpha(\mathcal{X}) = -g(e_\alpha,\mathcal{X})$ is read on them.
+
+      In the 1+1 widget: $X^0 = \epsilon^0(\mathcal{X})$, $X^1 = \epsilon^1(\mathcal{X})$. For T, $\mathcal{X} = (3,5)$ gave $X^0 = 4$, T's clock, and $X^1 = 0$.
+
+  - type: widget
+    id: light-widget
+    title: Light, measured
+    widget: observer-frame
+    config:
+      u: 0.6
+      X: [1, 1]
+      compare: false
+      view: { x: -3.5, y: -3, w: 7, h: 9 }
+      presets:
+        - { label: 'Light', u: 0.6, X: [1, 1], compare: false }
+        - { label: 'Fast observer', u: 0.9, X: [1, 1], compare: false }
+    body: |
+      Now $\mathcal{X} = (1,1)$ lies on the light cone: a lightlike vector, the velocity of a light ray moving toward positive $a$. The observer moves at $0.6$ in the same direction. Read $X^0$, $X^1$ and the badge. Then move $u$ through its whole range (or try "Fast observer"): the components change, the measured speed $|X^1/X^0|$ does not.
+
+  - type: numeric
+    id: doppler
+    title: Light, met head-on
+    prompt: |
+      In 1+1 Minkowski spacetime, $g(\mathcal{X},\mathcal{Y}) = X^\tau Y^\tau - X^aY^a$ (components $(a,\tau)$). An observer moving at $-0.6$ (toward negative $a$) has $e_0 = (-0.75, 1.25)$. A light ray has velocity $\mathcal{X} = (1,1)$. What time component $X^0 = g(e_0,\mathcal{X})$ does the observer measure?
+    answer: 2
+    tolerance: 0.001
+    wrong:
+      - { value: 0.5, feedback: 'That is what an observer moving at $+0.6$, away from the incoming light, measures. Here $e_0^a = -0.75$: $g(e_0,\mathcal{X}) = 1.25\cdot1 - (-0.75)\cdot1$.' }
+      - { value: 1, feedback: 'That is the rest observer''s $X^\tau$. The moving observer pairs with its own $e_0 = (-0.75,1.25)$: $1.25\cdot1 - (-0.75)\cdot1$.' }
+    hint: '$g(e_0,\mathcal{X}) = e_0^\tau X^\tau - e_0^aX^a$ with $e_0 = (-0.75, 1.25)$, $\mathcal{X} = (1,1)$.'
+    explanation: |
+      $$X^0 = 1.25 + 0.75 = 2.$$
+      With $e_1 = (1.25,-0.75)$, $X^1 = -(-0.75 - 1.25) = 2$: speed $2/2 = 1$ again. Observers moving at $+0.6$ and $-0.6$ measure the same ray with components $(0.5, 0.5)$ and $(2, 2)$: different "frequencies" (the Doppler effect), one speed.
+
+  - type: text
+    id: three-velocity
+    title: The 3-velocity
+    body: |
+      Let $\delta$ be the worldline of a massive or massless particle passing through the observer's event, $p = \gamma(\lambda_1) = \delta(\lambda_2)$, with velocity $v_\delta := v_{\delta(\lambda_2)}$, and take $e_a$, $\epsilon^a$ at $\lambda_1$. Recall $(\dagger)$: two future-directed causal vectors, at least one of them timelike, have positive $g$. Here $v_\gamma$ is timelike, so
+      $$\epsilon^0(v_\delta) = g(v_\gamma, v_\delta) > 0.$$
+      The **3-velocity** of $\delta$, the spatial displacement per unit of the observer's time, is
+      $$u_\delta := u^\alpha\,e_\alpha,$$
+      $$u^\alpha := \frac{\epsilon^\alpha(v_\delta)}{\epsilon^0(v_\delta)}.$$
+      The observer measures itself at rest: for $\delta = \gamma$, $\epsilon^\alpha(e_0) = \delta^\alpha_0 = 0$.
+
+      **Two letters $u$.** The widget's slider $u$ (no index) is the observer's speed relative to the chart. It is itself a 3-velocity: the rest observer measures $e_0 = (u,1)/\sqrt{1-u^2}$ with time $1/\sqrt{1-u^2}$ and space $u/\sqrt{1-u^2}$, ratio $u$. The badge's speed $|X^1/X^0|$ is $|u^1|$ of $\mathcal{X}$ for the purple observer.
+
+  - type: numeric
+    id: measure-velocity
+    title: A particle, seen by T
+    prompt: |
+      In 1+1 Minkowski spacetime, $g(\mathcal{X},\mathcal{Y}) = X^\tau Y^\tau - X^aY^a$ (components $(a,\tau)$). Observer T has $e_0 = (0.75, 1.25)$, $e_1 = (1.25, 0.75)$, and $\epsilon^0 = g(e_0,\cdot)$, $\epsilon^1 = -g(e_1,\cdot)$. A particle passes through T's event with velocity $v_\delta = (1,2)$. What is its 3-velocity component $u^1 = \epsilon^1(v_\delta)/\epsilon^0(v_\delta)$? (Decimal, 3 places.)
+    answer: -0.142857
+    answerText: '-1/7 ≈ -0.143'
+    tolerance: 0.002
+    wrong:
+      - { value: -0.1, feedback: 'That is the Newtonian subtraction $0.5 - 0.6$. Measured components come from $T$''s clock and rods: $\epsilon^0(v_\delta) = 1.75$, $\epsilon^1(v_\delta) = -0.25$.' }
+      - { value: 0.5, feedback: 'That is the chart speed $1/2$, what the rest observer measures. Use T''s covectors: $\epsilon^0(v_\delta) = 1.25\cdot2 - 0.75\cdot1$.' }
+      - { value: -0.25, feedback: 'That is $\epsilon^1(v_\delta)$ alone. The 3-velocity divides by the time component $\epsilon^0(v_\delta) = 1.75$.' }
+    hint: '$\epsilon^0(v_\delta) = 1.25\cdot2 - 0.75\cdot1$ and $\epsilon^1(v_\delta) = -(0.75\cdot2 - 1.25\cdot1)$.'
+    explanation: |
+      $$\epsilon^0(v_\delta) = 2.5 - 0.75 = 1.75,$$
+      $$\epsilon^1(v_\delta) = -(1.5 - 1.25) = -0.25,$$
+      so $u^1 = -0.25/1.75 = -1/7\approx-0.143$, not the Newtonian $0.5 - 0.6 = -0.1$. (It matches the relativistic rule $(0.5-0.6)/(1 - 0.5\cdot0.6)$, which this lesson does not need.)
+
+  - type: mcq
+    id: reparam-velocity
+    title: Run it twice as fast
+    prompt: |
+      Observer T ($e_0 = (0.75,1.25)$, $e_1 = (1.25,0.75)$ in 1+1 Minkowski spacetime, components $(a,\tau)$) measures a particle with velocity $v_\delta = (1,2)$ and finds $u^1 = \epsilon^1(v_\delta)/\epsilon^0(v_\delta) = -1/7$. The same path is reparametrized to run twice as fast, so the velocity at that event becomes $(2,4)$. What 3-velocity does T measure now?
+    options:
+      - text: '$-1/7$: the factor $2$ multiplies numerator and denominator'
+        correct: true
+      - text: '$-2/7$: twice as fast in the parameter means twice the speed'
+        feedback: |
+          The parameter of $\delta$ is not anyone's clock. Both $\epsilon^1(v_\delta)$ and $\epsilon^0(v_\delta)$ are linear in $v_\delta$, so both double and the ratio is unchanged. The 3-velocity is distance per unit of the *observer's* time.
+      - text: '$-1/14$'
+        feedback: |
+          Only the time component doubling would halve the ratio, but $\epsilon^1$ is linear too: $\epsilon^1(2v_\delta) = 2\epsilon^1(v_\delta)$. The factor cancels.
+      - text: 'Undefined: the reparametrized curve is no longer a worldline'
+        feedback: |
+          A reparametrization with positive derivative keeps the velocity timelike and future directed, so the new curve is still a massive worldline, with the same path.
+    explanation: |
+      Reparametrizing by $\text{ᚱ}$ with $\text{ᚱ}' > 0$ multiplies $v_\delta$ by $\text{ᚱ}' > 0$; numerator and denominator of $u^\alpha$ scale alike. The 3-velocity depends only on the path of $\delta$.
+
+  - type: order
+    id: speed-bound
+    title: Nothing outruns light
+    prompt: |
+      An observer has frame $e_a$ with $g(e_a,e_b) = \eta_{ab}$, $\eta = \mathrm{diag}(1,-1,-1,-1)$, dual covectors $\epsilon^a$, and measures a particle velocity $v_\delta$ with $\epsilon^0(v_\delta) > 0$ and $u^\alpha := \epsilon^\alpha(v_\delta)/\epsilon^0(v_\delta)$. Put in order the proof of the speed bound.
+    steps:
+      - 'Expand in the frame: $v_\delta = \epsilon^a(v_\delta)\,e_a$.'
+      - 'Bilinearity of $g$: $g(v_\delta,v_\delta) = \epsilon^a(v_\delta)\,\epsilon^b(v_\delta)\,g(e_a,e_b)$.'
+      - 'Condition 1, $g(e_a,e_b) = \eta_{ab}$: $g(v_\delta,v_\delta) = (\epsilon^0(v_\delta))^2 - \sum_\alpha(\epsilon^\alpha(v_\delta))^2$.'
+      - 'Factor out $(\epsilon^0(v_\delta))^2 > 0$: $g(v_\delta,v_\delta) = (\epsilon^0(v_\delta))^2\,(1 - \sum_\alpha(u^\alpha)^2)$.'
+      - 'Massive, $g(v_\delta,v_\delta) > 0$: $\sum_\alpha(u^\alpha)^2 < 1$. Massless, $g(v_\delta,v_\delta) = 0$: $\sum_\alpha(u^\alpha)^2 = 1$.'
+    hint: 'Start by writing $v_\delta$ in the observer''s basis; the sign of $g(v_\delta,v_\delta)$ comes last.'
+    explanation: |
+      $$\begin{aligned}g(v_\delta,v_\delta) &= \big(\epsilon^0(v_\delta)\big)^2\\ &\quad\cdot\Big(1 - \sum_\alpha(u^\alpha)^2\Big).\end{aligned}$$
+      The left side does not depend on the observer; its sign is fixed by the particle. Check with T and $v_\delta = (1,2)$: $1.75^2\,(1 - 1/49) = 3.0625\cdot48/49 = 3 = 4 - 1$.
+
+  - type: mcq
+    id: bound-consequences
+    title: What the bound says
+    multiple: true
+    prompt: |
+      Signature $(+,-,-,-)$. For every observer and every particle passing through its event, $g(v_\delta,v_\delta) = (\epsilon^0(v_\delta))^2(1 - \sum_\alpha(u^\alpha)^2)$ with $\epsilon^0(v_\delta) > 0$. Which statements follow? Select all that apply.
+    options:
+      - text: 'Every observer measures light at speed exactly $1$'
+        correct: true
+      - text: 'Every observer measures every massive particle at a speed below $1$'
+        correct: true
+      - text: 'A fast enough observer measures a slow massive particle at a speed above $1$'
+        feedback: |
+          The sign of $g(v_\delta,v_\delta) > 0$ belongs to the particle, not to the observer, and it forces $\sum_\alpha(u^\alpha)^2 < 1$ for every observer. In the widget: a timelike $\mathcal{X}$ keeps its speed below $1$ for every slider $u$.
+      - text: 'An observer moving at $0.6$ after a light ray measures it at $1 - 0.6 = 0.4$'
+        feedback: |
+          That is the Newtonian subtraction of velocities. Light has $g(v_\delta,v_\delta) = 0$, so $\sum_\alpha(u^\alpha)^2 = 1$ for every observer. At $0.6$ the measured components were $(0.5, 0.5)$: speed $1$.
+    explanation: |
+      The left side's sign is observer independent: positive for massive particles, zero for light. Since $(\epsilon^0)^2 > 0$, the bracket has the same sign: speed below $1$, or exactly $1$, for everyone.
+
+  - type: widget
+    id: spacelike-widget
+    title: A vector with no speed
+    widget: observer-frame
+    config:
+      u: 0.6
+      X: [2, 1]
+      compare: true
+    body: |
+      $\mathcal{X} = (2,1)$ is spacelike: $g(\mathcal{X},\mathcal{X}) = 1 - 4 = -3$. The rest observer measures time $X^\tau = 1$; the purple observer at $0.6$ measures a negative $X^0$. Move $u$ from $0$ upward and watch $X^0$ change sign: the badge never shows a speed. The bound above was about particle velocities, where $\epsilon^0 > 0$ is guaranteed; here it is not.
+
+  - type: numeric
+    id: simultaneous
+    title: When is the time component zero?
+    prompt: |
+      In 1+1 Minkowski spacetime, $g(\mathcal{X},\mathcal{Y}) = X^\tau Y^\tau - X^aY^a$ (components $(a,\tau)$). An observer with chart speed $u$ has $e_0 = (u,1)/\sqrt{1-u^2}$. For the spacelike vector $\mathcal{X} = (2,1)$, for which $u$ is the measured time component $X^0 = g(e_0,\mathcal{X})$ zero?
+    answer: 0.5
+    tolerance: 0.001
+    wrong:
+      - { value: 2, feedback: 'Solving $u - 2 = 0$ swaps the roles: $g(e_0,\mathcal{X}) \propto 1\cdot X^\tau - u\,X^a = 1 - 2u$.' }
+      - { value: 1, feedback: 'No observer reaches $u = 1$. Solve $1\cdot X^\tau - u\,X^a = 1 - 2u = 0$.' }
+    hint: '$g(e_0,\mathcal{X}) = (1\cdot X^\tau - u\,X^a)/\sqrt{1-u^2}$.'
+    explanation: |
+      $$X^0 = \frac{1 - 2u}{\sqrt{1-u^2}} = 0 \iff u = 0.5.$$
+      That observer sees the two ends of $\mathcal{X}$ as simultaneous ($\mathcal{X}$ lies along its ruler $e_1$); a faster one finds $X^0 < 0$. A spacelike vector has no observer-independent time order, and no measured speed: it is never a particle velocity.
+
+  - type: text
+    id: not-every-frame
+    title: Not every frame is an observer
+    body: |
+      Any basis $e'$ may be chosen along $\gamma$, and the components $\epsilon'^a(\mathcal{X})$ in its dual basis are perfectly good numbers. But if $e'$ breaks a condition, $(\gamma, e')$ is simply **not an observer**: its components are not clock and rod readings. Such bases stay useful (chart-induced bases; lightlike bases in the study of radiation), just not as measurements. Three traps follow.
+
+  - type: mcq
+    id: trap-lightlike-axis
+    title: A tilted ruler
+    prompt: |
+      In 1+1 Minkowski spacetime ($g(\mathcal{X},\mathcal{Y}) = X^\tau Y^\tau - X^aY^a$, components $(a,\tau)$), the rest observer has $e_0 = (0,1)$, $e_1 = (1,0)$. Replace the ruler by $e'_1 := e_1 + e_0 = (1,1)$. In the basis $\{e_0, e'_1\}$ the vector $\mathcal{X} = (1,2)$ is $1\cdot e_0 + 1\cdot e'_1$. Is the coefficient $1$ of $e_0$ a time read on the observer's clock?
+    options:
+      - text: 'No: $g(e''_1,e''_1) = 0\neq-1$, so this is not an observer; that coefficient mixes clock and rod readings'
+        correct: true
+      - text: 'Yes: the time axis is still $e_0 = v_\gamma$, so condition 2 holds'
+        feedback: |
+          Condition 2 alone is not enough. The clock reading is $g(v_\gamma,\mathcal{X}) = 2$, but the dual covector of $e_0$ in this basis is no longer $g(e_0,\cdot)$: it gives $X^\tau - X^a = 1$, contaminated by the space part. Condition 1 fails, since $e'_1$ is lightlike.
+      - text: 'Yes: any basis containing $v_\gamma$ gives measured components'
+        feedback: |
+          Changing the other basis vectors changes every dual covector, including the one paired with $e_0$. Here it reads $1$ instead of the clock's $2$. Only a Lorentz-orthonormal frame turns components into measurements.
+      - text: 'No, because $e''_1$ is not a basis vector at all'
+        feedback: |
+          $\{e_0, e'_1\} = \{(0,1),(1,1)\}$ is a basis: the two vectors are independent. The problem is not independence but orthonormality: $g(e'_1,e'_1) = 1 - 1 = 0$.
+    explanation: |
+      The rest observer measures $\mathcal{X} = (1,2)$ as time $2$ (clock) and distance $1$ (rod). The tilted basis gives $(1, 1)$: its first coefficient is $2 - 1$, a mixture. Rulers must be unit and orthogonal to $v_\gamma$.
+
+  - type: mcq
+    id: trap-other-observer
+    title: The right frame, the wrong observer
+    prompt: |
+      In 1+1 Minkowski spacetime (components $(a,\tau)$), twin H has worldline $\gamma(\lambda) = (0,\lambda)$. At the event $(0,0)$ take the frame $e'_0 = (0.75,1.25)$, $e'_1 = (1.25,0.75)$: Lorentz-orthonormal, with $e'_0$ future directed. Is $(\gamma, e')$ an observer at that event?
+    options:
+      - text: 'No: $e''_0\neq v_\gamma = (0,1)$; $e''$ is the frame of another observer through that event, moving at $0.6$'
+        correct: true
+      - text: 'Yes: the frame is Lorentz-orthonormal, which is what makes components measurements'
+        feedback: |
+          Orthonormality is condition 1. Condition 2 also requires the time axis to be $\gamma$'s velocity, here $(0,1)$. With $e'_0 = (0.75,1.25)$ the time component $g(e'_0,\mathcal{X})$ is read on a clock moving at $0.6$, not on H's clock.
+      - text: 'No: a Lorentz-orthonormal frame must have $e_0 = (0,1)$'
+        feedback: |
+          Every observer has its own Lorentz-orthonormal frames; $e'$ is the frame of twin T. What fails is the pairing with H's worldline, not the frame.
+    explanation: |
+      Lorentz-orthonormal frames with future-directed time axis are exactly the frames of observers through the event, one for each velocity $e'_0$. The frame $e'$ belongs to T, whose clock reads $X^0 = 4$ for $(3,5)$; H's clock reads $5$.
+
+  - type: mcq
+    id: trap-chart-speed
+    title: Light at speed 2?
+    prompt: |
+      In 1+1 Minkowski spacetime ($g = d\tau\otimes d\tau - da\otimes da$, points $(a,\tau)$), use the new chart coordinates $a$ and $t := \tau/2$. The light ray $(\lambda,\lambda)$ has $a = 2t$, so it covers $2$ units of $a$ per unit of $t$. Does this contradict the speed bound?
+    options:
+      - text: 'No: $da/dt$ is a chart speed, not a 3-velocity; every observer still measures $1$'
+        correct: true
+      - text: 'Yes: light moves faster than $1$ in this chart, so the bound fails'
+        feedback: |
+          The bound is about $u^\alpha = \epsilon^\alpha(v_\delta)/\epsilon^0(v_\delta)$, built from an observer's clock and rods. A chart coordinate is a label: in the chart $(a,t)$ the metric reads $4\,dt\otimes dt - da\otimes da$, and the ray is still lightlike, $4 - 4 = 0$.
+      - text: 'No, because $t := \tau/2$ is not a valid chart'
+        feedback: |
+          It is a perfectly good chart: a smooth invertible change of coordinates. Charts may label events as they like; that is why their speeds measure nothing.
+    explanation: |
+      Measured quantities come from an observer's frame, never from coordinate labels. The rest observer measures the ray as $(X^0,X^1) = (1,1)$, speed $1$, whatever chart is used. Only in the original chart, for the observer at rest in it, do chart speed and 3-velocity coincide (the widget's slider $u$).
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** two observers at the same event. Their frames $e$ and $\tilde{e}$ are both bases of $T_p\mathcal{M}$, so $\tilde{e}_a = \Lambda^b_a\,e_b$ with $\Lambda^b_a := \epsilon^b(\tilde{e}_a)$. Both are Lorentz-orthonormal: what does that force on the matrix $\Lambda$? The answer is the **Lorentz transformations**, and with them time dilation and length contraction as one-line consequences.

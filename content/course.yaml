@@ -476,7 +476,11 @@ levels:
         kind: concept
         file: ch10/worldlines.yaml
         summary: "Massive and massless worldlines as postulates on the velocity, proper time as the metric length of a worldline (the time on a clock it carries), why it ignores the parametrization, and why the straight worldline carries the most time: the twins, computed."
-      - { id: ch10-observers, title: Observers and What They Measure, kind: concept }
+      - id: ch10-observers
+        title: Observers and What They Measure
+        kind: concept
+        file: ch10/observers.yaml
+        summary: "An observer as a massive worldline with a Lorentz-orthonormal frame whose time axis is its velocity: dual covectors from the metric, components measured on its clock and rods, the 3-velocity, and why every observer measures light at speed 1 and nothing faster."
       - { id: ch10-lorentz, title: Lorentz Transformations from Observer Frames, kind: concept }
       - { id: ch10-einstein-hilbert, title: The Einstein Equations from an Action, kind: concept }
       - { id: ch10-matter, title: Coupling to Matter, kind: concept }
