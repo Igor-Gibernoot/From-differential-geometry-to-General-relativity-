@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, `ch07-traps`, `ch07-map` built; next: `ch07-challenge` part 1)
+## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, `ch07-traps`, `ch07-map`, `ch07-challenge` part 1 built; next: `ch07-challenge` part 2)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -31,7 +31,7 @@ append a short entry at the end of **Log** (a few lines, ending with
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, `ch07-traps` (24 cards) done; next
-  `ch07-map` (14 boxes) done; next `ch07-challenge` (two sessions);
+  `ch07-map` (14 boxes) done; `ch07-challenge` part 1 (problems 1–3, 39 cards) done; next `ch07-challenge` part 2 (problems 4–5, extend the intro list, wrap-up);
   then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
   B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -385,6 +385,17 @@ append a short entry at the end of **Log** (a few lines, ending with
   (G) any speed / constant components (circle); Γ a tensor / no $g^{-1}$ ($\Gamma^2_{12} = r$); compatible alone (∇ᵂ) / torsion free alone (∇ᴾ); Γ(p)=0 ⇒ flat / 256 components;
   diagonal sum of Ric ($-8.5$ vs $R = -1$ for $\mathrm{diag}(1,r^4)$ at $r = 2$) / Ric = 0 ⇒ flat; $\mathrm{Ric} - Rg$ / Ric divergence free; identity components / $R = 0$.
   Outro teaser for the challenge: contracted Christoffel symbols $\Gamma^k_{ki}$ from $\det g$.
+  Conventions fixed here (`ch07-challenge` part 1): intro lists problems 1–3 only (part 2 appends 4–5); tags "Problem 1 · Contracted Christoffel symbols",
+  "Problem 2 · A light ray in a medium", "Problem 3 · Lowering through ∇, energy vs length". P1: $\det g := \det(g_{ij})$, $\partial_c(g^{-1})^{ab} = -(g^{-1})^{ar}(g^{-1})^{bs}\partial_cg_{rs}$
+  (indices $a,b,c,r,s$ as the book), $\mathbf{C} := \mathbf{A}^{-1}\mathbf{B}$, $\det(\mathbf{I}+t\mathbf{C}) = 1+t\,\mathrm{tr}\,\mathbf{C}+O(t^2)$, Jacobi's formula named, $\Gamma^m_{mk} = \partial_k\ln\sqrt{|\det g|}$,
+  divergence $(1/\sqrt{|\det g|})\partial_k(\sqrt{|\det g|}y^k)$; numbers: polar $\tfrac14$ at $r=4$, $\partial_r(g^{-1})^{22} = -\tfrac14$ at $r=2$, Jacobi $\begin{pmatrix}2+t&1\\1&1+3t\end{pmatrix}$ → $7$,
+  sphere $\cot(\pi/3)$, bowl (height $r^2/4$) $\mathrm{diag}(1+r^2/4,r^2)$ → $\tfrac34$ at $r=2$ ($W := 1+r^2/4$ as the book); "not a covector" via shift $\ln|\det\mathbf{A}|$.
+  P2: upper half-plane $\mathbb{H}$, points $(u,w)$ (not $(a,b)$), $g_{ij} = \delta_{ij}/w^2$ as optical metric $n = 1/w$ (Fermat); path $(\lambda,1)$ on $[-1,1]$, $E = (0,-1)$, $P = (1,0)$;
+  shapes $(0,1-\lambda^2)$ → $-\tfrac43$ (direct and via residual), $(0,\cos\tfrac{\pi\lambda}2)$ → $-\tfrac4\pi$, endpoint slide $(\tfrac{\lambda+1}2,0)$ → $1$ (boundary term), lift $(0,\tfrac{\lambda+1}2)$ → $-1$;
+  first variation with free ends $[P_m\text{ᛉ}^m] + \int E_m\text{ᛉ}^m$ (Einstein sum), $P_m = g_{mj}\dot\gamma^j/s_\gamma$; "hyperbolic half-plane" named. Half-plane Γ: $\Gamma^2_{11} = \tfrac1w$, $\Gamma^2_{22} = -\tfrac1w$, $\Gamma^1_{12} = -\tfrac1w$.
+  P3: $(\nabla_{\partial x_k}\flat\mathcal{Y})_i - g_{im}(\nabla_{\partial x_k}\mathcal{Y})^m = (\nabla_{\partial x_k}g)_{im}y^m$; ∇ᴱ, ∇ᵂ commute, ∇ᴾ not ($6$ vs $0$ at $r=3$, $\mathcal{Y} = \partial y_2$), LC both sides $3$;
+  Euler's rule for homogeneous functions named; energy $\mathcal{E}$ constant on solutions (order card), length argument a tautology; curve $u=0$, $w=\lambda$ on $[1,2]$: (G) residual $-\tfrac12$ at $\lambda=2$,
+  passes (S), $\mathcal{E} = 1/(2\lambda^2)$; reparametrized $w = e^\mu$ passes (G). No widget.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -398,6 +409,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch07-challenge part 1 (problems 1–3, 39 cards)
+- Built `content/ch07/challenge.yaml` (intro with toolkit and problems 1–3; P1 contracted Christoffel symbols from B.18.1–B.18.2; P2 a variation by hand on the
+  optical half-plane $\delta_{ij}/w^2$ with moving endpoints (fresh numbers, C.6 structure only); P3 B.18.4 for $\mathcal{Y}$ plus B.18.11 items 2–3); registered in
+  `course.yaml` with `file:` and summary. Choices: intro lists only 1–3 (part 2 extends it); half-plane points named $(u,w)$ to avoid the $[a,b]$ clash; B.15 not used;
+  energy E-L = (G) only recalled (already in `ch07-geodesic-equation`), the new content is the constant-speed theorem and the degree-1 tautology. 39 cards (plan said ~35).
+  validate 0/0, shots 0 problems after one `aligned` fix (p3-shows).
+- Conventions fixed here: see Current, "Chapter 7 conventions so far" (`ch07-challenge` part 1).
 ### 2026-10-20 — ch07-map (map, 14 boxes, 12 rows)
 - Built `content/ch07/map.yaml` from the book's 7.x headings and intro paragraphs plus the lessons' `own:` summaries (no Chapter 7 TeX file); registered in
   `course.yaml` with `file:` and summary. Choices: one concept per row along the chain length→variations→E-L→(G)→Christoffel→LC→Riem, so 12 rows (taller than

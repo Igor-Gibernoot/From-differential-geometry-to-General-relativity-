@@ -356,7 +356,11 @@ levels:
         file: ch07/map.yaml
         summary: Rebuild the chapter box by box, from a tangent space without lengths through the metric, its signature, length and geodesics, to the Levi-Civita connection and the curvatures it hands to Einstein's equations.
       - { id: ch07-review, title: Level Review, kind: review }
-      - { id: ch07-challenge, title: Level Challenge, kind: challenge }
+      - id: ch07-challenge
+        title: Level Challenge
+        kind: challenge
+        file: ch07/challenge.yaml
+        summary: "Harder problems that combine the level: contracted Christoffel symbols from the determinant of the metric (Jacobi's formula), a light ray in a medium bent by hand with a moving endpoint, and lowering an index through ∇ together with why the energy Lagrangian fixes the speed while the length does not."
 
   - id: ch08
     number: 8
