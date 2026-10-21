@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 8 in progress; next: `ch08-metric-volume`)
+## Current (2026-10-20, Chapter 8 in progress; next: `ch08-circle-length`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -31,8 +31,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Chapter 8 in progress:** `ch08-volume-forms` (concept, 33 cards), `ch08-integration` (concept, 25 cards).
-- **Queue (one unit each):** Chapter 8 (Integrals) in `course.yaml` order: `ch08-metric-volume`,
+- **Chapter 8 in progress:** `ch08-volume-forms` (concept, 33 cards), `ch08-integration` (concept, 25 cards), `ch08-metric-volume` (concept, 22 cards).
+- **Queue (one unit each):** Chapter 8 (Integrals) in `course.yaml` order:
   `ch08-circle-length` (guided), `ch08-traps`, `ch08-map`, `ch08-challenge` (two sessions); then Chapters 9–10 (each with map and challenge).
   `archive/tex_exercises/` has no Chapter 8 file: the book (8.1–8.3, B.19–B.20, C.7) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -422,6 +422,11 @@ append a short entry at the end of **Log** (a few lines, ending with
   partition of unity rune $\text{ᚹ}$ (wynn), four listed properties (values in $[0,1]$, subordinate, locally finite, sums to one), existence stated (Hausdorff + second countable); smooth step $h$ ($0$ for $s\le-\frac12$, $1$ for $s\ge\frac12$, $h(s)+h(-s)=1$,
   built from $g(t) = e^{-1/t}$), $\text{ᚹ}_1 = h(-q_1)$ (supp $\frac\pi3\le\theta\le\frac{5\pi}3$), $\text{ᚹ}_2 = h(q_1)$ (supp $|\varphi|\le\frac{2\pi}3$), each piece $\pi$ by the shift $\theta\mapsto\theta+\pi$, total $2\pi$; trap $\frac12(1-q_1)$ has support $S^1$;
   second partition rune $\text{ᚼ}$ (hagall, only in the independence argument), independence of the partition proved via the double sum $\sum_{n,m}\int\Omega\,\text{ᚹ}_n\text{ᚼ}_mf$. Widget: `circle-charts` with the `ch03-atlases` preset (no new preset).
+  Conventions fixed here (`ch08-metric-volume`): oriented metric manifold $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,g)$; $\det g_\mathscr{X} := \det((g_\mathscr{X})_{ij})$ ("a function of the chart, not a scalar field": $25$ vs $1$ at $(3,4)$);
+  Jacobian written $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$, and $\mathbf{A}$ in matrix formulas (ch07 congruence $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$), law $\det g_\mathscr{Y} = (\det\mathbf{A})^2\det g_\mathscr{X}$; $\Omega^g$, $\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}$ (book); polar $\omega^g = r$ ("$\Omega_{\mathrm{E}}$ is the metric volume form");
+  two proofs: density-law route (build $|\det\mathbf{A}|\sqrt{|\det g_\mathscr{X}|}$) and component route (order card, shorthand $\text{ᛞ}$); mirror trap with $\mathscr{Z}$ (opposite orientation gives $-\Omega_{\mathrm{E}}$); orthonormal $\Rightarrow\omega^g = 1$, converse false (light-cone matrix $\begin{pmatrix}0&1\\1&0\end{pmatrix}$);
+  Minkowski $\mathscr{Y} = (2t,2a)$: $\omega^g = \tfrac14$, region $0<t<1$, $0<a<3$ volume $3$ ($\tfrac14\cdot12$); GR form $\sqrt{-\det g}$ named once; sphere $(\vartheta,\varphi)$ oriented so it is positive, $\omega^g = \sin\vartheta$, patch $\tfrac\pi3<\vartheta<\tfrac{2\pi}3$, $0<\varphi<\tfrac\pi2$ area $\tfrac\pi2$;
+  full sphere $4\pi$ via "a set of zero area can be dropped" (stated without proof) after naming the two-chart + partition route; plausibility $\epsilon$-regions area $2\cos\epsilon(2\pi-2\epsilon)$; $\int_\mathcal{M}f := \int_\mathcal{M}\Omega^gf$ in a three-line `aligned`. No widget.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -435,6 +440,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch08-metric-volume (concept, 22 cards)
+- Built `content/ch08/metric-volume.yaml` (hook: who chose $\Omega_{\mathrm{E}}$, sphere density guess; recall of the metric law, $\det g$ at $(3,4)$, determinant law, why the square root,
+  definition, polar check, build of the density law, orientation MCQ, component-proof order card, mirror trap, orthonormal unit volume, Minkowski rescaled chart, light-cone converse trap,
+  sphere density, patch $\tfrac\pi2$, poles and cut, total $4\pi$, integral formula, spacetime volume $3$); registered with summary.
+  Choices: no widget (optional in the plan); sphere total justified by the zero-area fact "stated here without proof", after naming the partition-of-unity route, plus an $\epsilon$-exhaustion check; both derivations of the gluing given.
+  validate 0/0, shots 0 problems.
+- Conventions fixed here: see Current, "Chapter 8 conventions so far" (`ch08-metric-volume`).
 ### 2026-10-20 — ch08-integration (concept, 25 cards)
 - Built `content/ch08/integration.yaml` (hook: length of $S^1$ without one chart, `circle-charts` cover widget, recipe guess, density on $S^1$, one-chart definition,
   compactness and its two failures, allowed arcs, quarter annulus in polar, disc-in-polar trap, chart-independence proof as text + build + sign MCQ, mirror trap,
