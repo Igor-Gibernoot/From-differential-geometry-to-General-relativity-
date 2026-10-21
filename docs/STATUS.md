@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-21, Chapter 8 complete; next: `ch09-newtonian-spacetime`)
+## Current (2026-10-21, Chapter 8 complete, widget `time-slices` built; next: `ch09-newtonian-spacetime`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -32,6 +32,9 @@ append a short entry at the end of **Log** (a few lines, ending with
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
 - **Chapter 8 complete** (lessons, traps, map, challenge): `ch08-volume-forms` (concept, 33 cards), `ch08-integration` (concept, 25 cards), `ch08-metric-volume` (concept, 22 cards), `ch08-circle-length` (guided, 27 cards), `ch08-traps` (21 cards), `ch08-map` (14 boxes, 12 rows), `ch08-challenge` (59 cards, five problems: compact closure, partition of unity by hand, torus area, causal diamond volume, rescaling and the Möbius strip).
+- **Chapter 9 so far:** widget `time-slices` built (no lesson yet).
+- **Chapter 9 conventions so far:**
+  Conventions fixed here (widget `time-slices`): spacetime picture with horizontal $a$ (space) and vertical chart coordinate $\tau$; slices written $\mathcal{S}_c = \mathrm{preim}_t(\{c\})$ in the widget (the book writes $\mathcal{S}_\tau$ with $\tau$ a value of $t$: in lessons say "the slice $\mathcal{S}_c$" when the widget's $\tau$ axis is on screen); time functions flat $\tau$, wavy $\tau + 0.3\sin a$, squared $\tau^2$, boosted $(\tau - 0.5a)/\sqrt{0.75}$; $(dt)_p = \dots\,da + \dots\,d\tau$, kernel vector $v = ((\partial t/\partial\tau)_p, -(\partial t/\partial a)_p)$; covector drawn as its level lines $(dt)_p(w) = \pm1$ (orange), kernel line ink, gold slice; badge "Absolute time?". Widget readouts can now show `\sqrt` (CSS fix: `.widget .katex svg`).
 - **Queue (one unit each):** Chapter 9 (Newton-Cartan Theory) in `course.yaml` order: `ch09-newtonian-spacetime`, `ch09-newton-axioms`, `ch09-stratified`, `ch09-pseudo-forces`, `ch09-gravity-connection`, `ch09-tidal`, `ch09-point-mass` (guided), `ch09-traps`, `ch09-map`, `ch09-challenge`; then Chapter 10 (with map and challenge).
   Check `archive/tex_exercises/` for a Chapter 9 file; the book (9.1–9.5, plus any Appendix B/C items on Chapter 9) is the reference. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -446,6 +449,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-21 — widget time-slices (widget session, no lesson)
+- New widget `time-slices` (`js/widgets.js`, CSS `.ts-*`, documented in `docs/LESSON_FORMAT.md` and QUICKREF): 1+1 picture, slices of $t$, gold slice on a
+  $c$ slider, draggable $p$ with $\ker(dt)_p$ and the orange level lines $(dt)_p = \pm1$, readout with $(dt)_p(v) = 0$ in numbers, "Absolute time?" badge.
+  Tested with a throwaway lesson (5 cards: flat, wavy with all four buttons, squared, squared at $\tau = 0$ with empty $\mathcal{S}_{-1}$, boosted; removed);
+  images viewed at phone and desktop. Choices: covector shown as level lines rather than an arrow (an arrow would need a metric); `squared` slider
+  extends to $c = -1$ to show an empty slice; zero of `squared` reported below/above $p$. Fix: KaTeX `\sqrt` was invisible in all widget readouts
+  and buttons (`.widget svg` sizing hit KaTeX's glyph svgs); `.widget .katex svg` override added. Doubt: the widget's vertical axis is called
+  $\tau$ while the book uses $\tau$ for values of $t$ ($\mathcal{S}_\tau$); harmless for `flat` ($t = \tau$), worth one sentence in the lesson.
+- Conventions fixed here (widget `time-slices`): spacetime picture with horizontal $a$ (space) and vertical chart coordinate $\tau$; slices written $\mathcal{S}_c = \mathrm{preim}_t(\{c\})$ in the widget (the book writes $\mathcal{S}_\tau$ with $\tau$ a value of $t$: in lessons say "the slice $\mathcal{S}_c$" when the widget's $\tau$ axis is on screen); time functions flat $\tau$, wavy $\tau + 0.3\sin a$, squared $\tau^2$, boosted $(\tau - 0.5a)/\sqrt{0.75}$; $(dt)_p = \dots\,da + \dots\,d\tau$, kernel vector $v = ((\partial t/\partial\tau)_p, -(\partial t/\partial a)_p)$; covector drawn as its level lines $(dt)_p(w) = \pm1$ (orange), kernel line ink, gold slice; badge "Absolute time?". Widget readouts can now show `\sqrt` (CSS fix: `.widget .katex svg`).
 ### 2026-10-21 — ch08-challenge part 2 (challenge, 26 new cards, 59 total)
 - Appended Problem 4 (13 cards), Problem 5 (12 cards) and `wrap-up` to `content/ch08/challenge.yaml`; intro items 4–5, intro title now "Five problems on integrals"; `course.yaml` summary extended. Validate clean; shots 0 problems; part 1's pmatrix option (p3-metric) viewed at 390 px: fits, unchanged. Chapter 8 complete.
 - Choices: P5 rescaling letter $\psi$ ($\varphi$ is the torus angle); half-plane keeps ch07's $(u,w)$ although P4 uses $u$ for a light-cone coordinate (each card restates its setup); Möbius: no volume form proved with the sign-flip function $F$ and the intermediate value theorem (non-orientability then from the earlier converse, stated without proof); unsigned $|\det|$ densities named only. Also fixed a false aside in `ch08-metric-volume` (`unit-volume-converse` explanation): the light-cone chart with components $\begin{pmatrix}0&1\\1&0\end{pmatrix}$ is $((a+t)/\sqrt2,(a-t)/\sqrt2)$, Jacobian det $+1$, not "a $45°$ rotation".

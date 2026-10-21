@@ -280,6 +280,7 @@ a { color: var(--accent); }
 /* widget */
 .widget { margin-top: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; box-shadow: var(--shadow); }
 .widget svg { width: 100%; height: auto; max-height: min(60vh, 460px); display: block; touch-action: none; user-select: none; -webkit-user-select: none; }
+.widget .katex svg { height: inherit; max-height: none; display: block; } /* KaTeX glyph svgs (sqrt) in readouts and buttons */
 .widget .readout { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 4px 16px; padding: 8px 6px 4px; font-size: 17px; }
 .widget .readout .wide { grid-column: 1 / -1; }
 .widget .readout .warn { color: var(--bad); font-weight: 650; }
@@ -546,3 +547,10 @@ polyline.w-level { fill: none; }
 .recap-text .blank.knew { box-shadow: inset 0 -2px 0 var(--good); background: var(--good-soft); }
 .recap-text .blank.missed { box-shadow: inset 0 -2px 0 var(--bad); background: var(--bad-soft); }
 .recap-count { font-weight: 650; }
+
+/* ---------- time-slices ---------- */
+.ts-slice { fill: none; stroke: var(--ink); stroke-opacity: .35; stroke-width: 1.3px; vector-effect: non-scaling-stroke; }
+.ts-slice.gold { stroke: var(--gold); stroke-opacity: 1; stroke-width: 3.5px; }
+.ts-ker { stroke: var(--ink); stroke-width: 2.5px; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.ts-stack { stroke-opacity: .9; stroke-width: 2px; }
+.ts-zero { fill: none; stroke: var(--ink); stroke-width: 2px; vector-effect: non-scaling-stroke; }
