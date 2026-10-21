@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, `ch07-traps`, `ch07-map`, `ch07-challenge` part 1 built; next: `ch07-challenge` part 2)
+## Current (2026-10-20, Chapter 7 complete; next: `ch08-volume-forms`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -25,15 +25,15 @@ append a short entry at the end of **Log** (a few lines, ending with
   widget `chart-basis` built.
 - **Chapter 5 complete** (lessons, traps, map, challenge): `ch05-vector-fields` (concept, 29 cards), `ch05-covector-fields` (concept, 25 cards), `ch05-module` (concept, 27 cards), `ch05-tensor-fields` (concept, 25 cards), `ch05-differentials` (guided, 28 cards), `ch05-traps` (24 cards), `ch05-map` (14 boxes, 7 rows), `ch05-challenge` (38 cards, five problems: rotation field, unit radial field and coframe, ring and zero divisors, closed vs exact, Minkowski boost).
 - **Chapter 6 complete** (lessons, traps, map, challenge): `ch06-connections` (concept, 28 cards), `ch06-christoffel` (concept, 28 cards), `ch06-parallel-transport` (concept, 31 cards), `ch06-torsion-curvature` (concept, 35 cards), `ch06-torsion-tensor` (guided, 19 cards), `ch06-three-connections` (guided C.5, 32 cards), `ch06-traps` (21 cards), `ch06-map` (14 boxes, 8 rows); widget `parallel-transport` built and extended (∇ᵂ, ∇^κ, `rectangle` loop with holonomy, `compareE`, `torsion`). `ch06-challenge` (49 cards, five problems: ∇ᵂ straightest curves, fourth box ∇ᶠ, sheared chart, difference of connections $\mathcal{Q}$, normal coordinates for ∇^κ).
+- **Chapter 7 complete** (lessons, traps, map, challenge): `ch07-metric` (concept, 30 cards), `ch07-signature` (concept, 27 cards), `ch07-length` (concept, 28 cards), `ch07-euler-lagrange` (concept, 31 cards), `ch07-geodesic-equation` (guided, 29 cards), `ch07-levi-civita` (concept, 31 cards), `ch07-curvature` (concept, 30 cards), `ch07-sphere` (guided, 30 cards), `ch07-traps` (24 cards), `ch07-map` (14 boxes, 12 rows); no new widget. `ch07-challenge` (61 cards, five problems: contracted Christoffel symbols from $\det g$, light ray in the half-plane with a moving endpoint, lowering through ∇ and energy vs length, second variation and the conjugate point, Einstein curvature in two dimensions).
 - **Summary rule:** every "What you now own" card states the lesson's main definitions, rules and laws as formulas (e.g. the eight vector-space rules, the three topology rules), not only names them.
 - **Recap (`own:`) rule:** every concept lesson carries `own:` (its "what you now own" summary with 3–6 `{{ }}` blanks on the main
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation`, `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, `ch07-traps` (24 cards) done; next
-  `ch07-map` (14 boxes) done; `ch07-challenge` part 1 (problems 1–3, 39 cards) done; next `ch07-challenge` part 2 (problems 4–5, extend the intro list, wrap-up);
-  then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
-  B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
+- **Queue (one unit each):** Chapter 8 (Integrals) in `course.yaml` order: `ch08-volume-forms`, `ch08-integration`, `ch08-metric-volume`,
+  `ch08-circle-length` (guided), `ch08-traps`, `ch08-map`, `ch08-challenge` (two sessions); then Chapters 9–10 (each with map and challenge).
+  `archive/tex_exercises/` has no Chapter 8 file: the book (8.1–8.3, B.19–B.20, C.7) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
   chart $(\mathcal{V}, \mathcal{Y})$, transition $\mathcal{Y}\circ\mathcal{X}^{-1}$;
   on $S^1$: $\theta \in (0,2\pi)$ on $S^1\setminus\{(1,0)\}$, $\varphi \in (-\pi,\pi)$
@@ -396,6 +396,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   P3: $(\nabla_{\partial x_k}\flat\mathcal{Y})_i - g_{im}(\nabla_{\partial x_k}\mathcal{Y})^m = (\nabla_{\partial x_k}g)_{im}y^m$; ∇ᴱ, ∇ᵂ commute, ∇ᴾ not ($6$ vs $0$ at $r=3$, $\mathcal{Y} = \partial y_2$), LC both sides $3$;
   Euler's rule for homogeneous functions named; energy $\mathcal{E}$ constant on solutions (order card), length argument a tautology; curve $u=0$, $w=\lambda$ on $[1,2]$: (G) residual $-\tfrac12$ at $\lambda=2$,
   passes (S), $\mathcal{E} = 1/(2\lambda^2)$; reparametrized $w = e^\mu$ passes (G). No widget.
+  Conventions fixed here (`ch07-challenge` part 2): tags "Problem 4 · Minimum or saddle", "Problem 5 · Einstein curvature in two dimensions"; expansion $L[\gamma_{\text{ᛊ}}] = L[\gamma] + C\text{ᛊ}^2 + \dots$
+  ($C$ = half the second variation, my name); bump function named $h$ (not the book's φ, which clashes with the sphere longitude). P4: half-plane geodesic $u=0$, $w=e^\mu$, $\mu\in[0,1]$,
+  sideways $u = \text{ᛊ}h$: $g(v,v) = 1+\text{ᛊ}^2h'^2e^{-2\mu}$, $C = \tfrac12\int h'^2e^{-2\mu}$, $h = \mu(1-\mu)e^\mu$ → $\tfrac{11}{60}$ (exact minimum for all sideways shapes); Minkowski clock $(\lambda,\text{ᛊ}\lambda(1-\lambda))$
+  → $C = -\tfrac16$ (maximum, twin paradox); sphere equator tilt $\vartheta = \tfrac\pi2+\text{ᛊ}h$: $g(v,v) = 1+\text{ᛊ}^2(h'^2-h^2)$, $C(\ell) = \tfrac\ell4(\pi^2/\ell^2-1)$ for $h = \sin(\pi\lambda/\ell)$: $\tfrac{3\pi}8$ at $\ell=\tfrac\pi2$,
+  $-\tfrac{5\pi}{24}$ at $\tfrac{3\pi}2$ (arc $\varphi = -\tfrac{3\pi}4+\lambda$, inside the chart), sign flip at $\ell = \pi$ = antipode = first **conjugate point** (named); three bumps give $C>0$ (saddle).
+  P5: $G_{ab} = c\frac{\rho}{\det g}g_{ab}$, $c = 0$; $\mathrm{diag}(1,r^4)$ at $r=2$: $G_{22} = -8+8 = 0$; sphere $(\mathrm{Riem}^\flat)_{1212} = \tfrac R2\det g = \tfrac14$ at $\vartheta = \tfrac\pi6$; 2D Einstein equations force $T=0$;
+  divergence $(\operatorname{div}S)_n := (g^{-1})^{kl}(\nabla_{\partial x_k}S)_{ln}$, $\operatorname{div}\mathrm{Ric} = \tfrac12dR$ stated, $\operatorname{div}(\mathrm{Ric}+cRg) = (\tfrac12+c)\partial_nR$ → $c = -\tfrac12$ (decoy $-1$).
+  Wrap-up teaser: unit disc area $\pi$ cartesian vs $\int\!\!\int dr\,d\theta = 2\pi$ polar; cure $\sqrt{|\det g|} = r$, the metric volume form. No widget.
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -409,6 +417,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch07-challenge part 2 (problems 4–5 and wrap-up, 22 cards; 61 in total)
+- Appended to `content/ch07/challenge.yaml`: intro items 4–5, P4 second variation (half-plane sideways push, Minkowski clock, sphere equator arcs and the
+  conjugate point), P5 Einstein curvature in 2D and the divergence-free combination, `wrap-up` with the Level 8 teaser (disc area chart by chart); `course.yaml`
+  summary extended. Choices: the book's sideways meridian family (bowl, Wirtinger bound) replaced by the half-plane $\delta_{ij}/w^2$, where the $\text{ᛊ}^2$ coefficient
+  is visibly positive and the bound is exact; the sphere trap derived by hand ($C = \tfrac12\int(h'^2-h^2)$) instead of only stated; the conjugate point is the antipode
+  itself; the change-of-chart covector law of the E-L residual was not used (already shown to first order in `ch07-euler-lagrange`). 22 cards (plan ~25).
+  validate 0/0, shots 0 problems.
+- Conventions fixed here: see Current, "Chapter 7 conventions so far" (`ch07-challenge` part 2).
 ### 2026-10-20 — ch07-challenge part 1 (problems 1–3, 39 cards)
 - Built `content/ch07/challenge.yaml` (intro with toolkit and problems 1–3; P1 contracted Christoffel symbols from B.18.1–B.18.2; P2 a variation by hand on the
   optical half-plane $\delta_{ij}/w^2$ with moving endpoints (fresh numbers, C.6 structure only); P3 B.18.4 for $\mathcal{Y}$ plus B.18.11 items 2–3); registered in

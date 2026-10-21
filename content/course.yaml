@@ -360,7 +360,7 @@ levels:
         title: Level Challenge
         kind: challenge
         file: ch07/challenge.yaml
-        summary: "Harder problems that combine the level: contracted Christoffel symbols from the determinant of the metric (Jacobi's formula), a light ray in a medium bent by hand with a moving endpoint, and lowering an index through ∇ together with why the energy Lagrangian fixes the speed while the length does not."
+        summary: "Harder problems that combine the level: contracted Christoffel symbols from the determinant of the metric (Jacobi's formula), a light ray in a medium bent by hand with a moving endpoint, lowering an index through ∇ together with why the energy Lagrangian fixes the speed while the length does not, the second variation (minimum, maximum or saddle), and why the Einstein curvature vanishes in two dimensions."
 
   - id: ch08
     number: 8
