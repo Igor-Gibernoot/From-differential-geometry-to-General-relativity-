@@ -471,7 +471,11 @@ levels:
         kind: concept
         file: ch10/spacetime.yaml
         summary: "The sign of a Lorentzian metric sorts tangent vectors into timelike, lightlike and spacelike: the light cone at each point, a time orientation that picks its future half, and spacetime defined as a sextuple."
-      - { id: ch10-worldlines, title: Worldlines and Proper Time, kind: concept }
+      - id: ch10-worldlines
+        title: Worldlines and Proper Time
+        kind: concept
+        file: ch10/worldlines.yaml
+        summary: "Massive and massless worldlines as postulates on the velocity, proper time as the metric length of a worldline (the time on a clock it carries), why it ignores the parametrization, and why the straight worldline carries the most time: the twins, computed."
       - { id: ch10-observers, title: Observers and What They Measure, kind: concept }
       - { id: ch10-lorentz, title: Lorentz Transformations from Observer Frames, kind: concept }
       - { id: ch10-einstein-hilbert, title: The Einstein Equations from an Action, kind: concept }

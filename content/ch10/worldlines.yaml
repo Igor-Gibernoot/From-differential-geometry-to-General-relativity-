@@ -1,0 +1,448 @@
+id: ch10-worldlines
+title: Worldlines and Proper Time
+kind: concept
+
+own: |
+  - **Massive worldline**: a smooth curve $\gamma$ whose velocity is timelike and future directed for every $\lambda$, i.e. {{ $\text{ᛇ}_\gamma \equiv +1$ and $g(\text{ᛏ},v_\gamma) > 0$ }}. Here $\text{ᛇ}_\gamma(\lambda) := \mathrm{sgn}\,g(v_\gamma,v_\gamma)$, with the signature $(+,-,-,-)$.
+  - **Massless worldline**: lightlike and future directed for every $\lambda$, i.e. {{ $\text{ᛇ}_\gamma \equiv 0$, $v_\gamma \neq 0$ and $g(\text{ᛏ},v_\gamma) > 0$ }}. The zero vector is not lightlike: a curve that stands still is neither.
+  - **Proper time** along a massive worldline between $\gamma(\lambda_1)$ and $\gamma(\lambda_2)$, $\lambda_1 < \lambda_2$: its length with $\text{ᛇ}_\gamma \equiv +1$,
+  {{ $$\tau_{[\lambda_1,\lambda_2]}[\gamma] := \int_{\lambda_1}^{\lambda_2}\sqrt{g(v_\gamma,v_\gamma)}\,d\lambda$$ }}
+  the time read on a clock carried along $\gamma$; not the chart coordinate $\tau$ of the events.
+  - **Parametrization does not matter**: for $\delta := \gamma\circ\text{ᚱ}$ with $\text{ᚱ}' > 0$ and $\text{ᚱ}(\mu_i) = \lambda_i$, {{ $s_\delta = \text{ᚱ}'\,(s_\gamma\circ\text{ᚱ})$, so $\tau_{[\mu_1,\mu_2]}[\delta] = \tau_{[\lambda_1,\lambda_2]}[\gamma]$ }} (substitution $\lambda = \text{ᚱ}(\mu)$). Proper time belongs to the path.
+  - **The straight worldline is the longest** (Minkowski, timelike paths between the same events): for future-directed timelike $\mathcal{X}$, $\mathcal{Y}$ and $\mathcal{Z} := \mathcal{X}+\mathcal{Y}$, the reverse triangle inequality
+  {{ $$\begin{aligned}\sqrt{g(\mathcal{Z},\mathcal{Z})}&\geq\sqrt{g(\mathcal{X},\mathcal{X})}\ &\quad+ \sqrt{g(\mathcal{Y},\mathcal{Y})}\end{aligned}$$ }}
+  Twin: $4 + 4 = 8 < 10$. Zigzags close to light make it as small as you like. On a massless worldline $s_\gamma \equiv 0$: light carries no clock.
+
+cards:
+  - type: text
+    id: hook
+    title: Two twins
+    body: |
+      Take the flat 1+1 spacetime of the last lesson: chart coordinates $a$ (space, across) and $\tau$ (time, up), points written in the order $(a,\tau)$, units where light covers one unit of $a$ per unit of $\tau$.
+
+      Two twins start together at the event $A = (0,0)$. One stays home, at $a = 0$. The other travels at constant velocity out to the event $(3,5)$, turns around, and comes back at constant velocity to meet the first twin at $B = (0,10)$. Each carries a good clock, set to $0$ at $A$.
+
+  - type: mcq
+    id: hook-predict
+    title: Before any theory, predict
+    prompt: |
+      In flat 1+1 spacetime (points $(a,\tau)$, speed of light $1$), twin H stays at $a = 0$ from $A = (0,0)$ to $B = (0,10)$. Twin T travels at constant velocity from $A$ to $(3,5)$, then at constant velocity back to $B$. Each carries a clock set to $0$ at $A$. What do the clocks say when the twins meet at $B$?
+    options:
+      - text: 'H''s clock is ahead: H has aged more, by $2$'
+        correct: true
+      - text: 'Both read $10$: they meet at the same event, at chart time $\tau = 10$'
+        feedback: |
+          Tempting: in Newtonian spacetime there is one absolute time, and every clock agrees with it. Here a clock measures something attached to its own path, and the two paths differ. The chart coordinate $\tau = 10$ labels the meeting event; it is not what either clock has to read.
+      - text: 'T''s clock is ahead: T''s path is longer in the picture'
+        feedback: |
+          The picture's Euclidean length ($2\sqrt{34}\approx11.66$ for T) means nothing in spacetime. The metric subtracts the space part, and that makes the bent path the one with less time on it.
+      - text: 'Neither: each twin sees the other moving, so the situation is symmetric'
+        feedback: |
+          The situation is not symmetric. H's worldline is straight; T's has a corner at $(3,5)$, where T turns around. The two worldlines are different paths between the same two events, and nothing forces them to carry the same time.
+    explanation: |
+      H's clock reads $10$, T's reads $8$. By the end of this lesson this is a computation: the time on a clock is the length of its worldline measured by the metric, and the straight worldline is the longest one.
+
+  - type: widget
+    id: twin-widget
+    title: Two clocks, two paths
+    widget: worldline-clock
+    config:
+      metric: minkowski
+      shape: kinks
+      kinks: [[3, 5]]
+      compare: true
+      lambda: 0
+      presets:
+        - { label: 'Halfway', shape: kinks, kinks: [[3, 5]], lambda: 1 }
+        - { label: 'At B', shape: kinks, kinks: [[3, 5]], lambda: 2 }
+    body: |
+      Minkowski metric $g = d\tau\otimes d\tau - da\otimes da$. The solid worldline is twin T: from $A = (0,0)$ to the corner $K_1 = (3,5)$ and back to $B = (0,10)$. The dashed one is twin H, straight up. Press Play (or move the $\lambda$ slider) and watch both clocks. Try "Halfway": both dots are at chart time $\tau = 5$; do the clocks agree? Then drag $K_1$ sideways and watch T's final reading.
+
+  - type: numeric
+    id: twin-reading
+    title: Read the clock at B
+    prompt: |
+      In 1+1 Minkowski spacetime, $g = d\tau\otimes d\tau - da\otimes da$ (points $(a,\tau)$), a traveller goes straight from $A = (0,0)$ to $(3,5)$, then straight back to $B = (0,10)$. What does the traveller's clock read at $B$ (set to $0$ at $A$)?
+    answer: 8
+    wrong:
+      - { value: 10, feedback: 'That is the chart coordinate $\tau$ of $B$, and the reading of the clock that stayed home. The traveller''s path is different and carries less time.' }
+      - { value: 11.66, feedback: 'That is the Euclidean length $2\sqrt{9 + 25}$ of the drawn path. The metric subtracts the space part: each leg has $\sqrt{25 - 9} = 4$.' }
+      - { value: 4, feedback: 'That is one leg. The trip has two legs, each with $\sqrt{25 - 9} = 4$.' }
+    tolerance: 0.01
+    hint: 'Each leg has displacement $(\pm3, 5)$; the clock time of a straight leg is $\sqrt{g}$ of its displacement, $\sqrt{(X^\tau)^2 - (X^a)^2}$.'
+    explanation: |
+      Each leg:
+      $$\sqrt{5^2 - 3^2} = 4,$$
+      two legs give $8$, against $10$ for the twin at home. The rest of the lesson explains why "the clock time is the metric length" and why the straight path wins.
+
+  - type: text
+    id: massive
+    title: Massive worldlines
+    body: |
+      Recall: a smooth curve $\gamma\colon\mathbb{R}\to\mathcal{M}$ has at each parameter value $\lambda$ a velocity $v_{\gamma(\lambda)}\in T_{\gamma(\lambda)}\mathcal{M}$, written $v_\gamma$ for short; the time orientation $\text{ᛏ}$ picks the future half of every light cone, and a causal vector is future directed when $g(\text{ᛏ},\mathcal{X}) > 0$ (all evaluated at the same point $\gamma(\lambda)$).
+
+      A body with mass never reaches the speed of light and never turns back in time. So $\gamma$ is the **worldline of a massive particle** if $v_\gamma$ is **timelike and future directed for every** $\lambda$:
+      $$g(v_\gamma,v_\gamma) > 0,$$
+      $$g(\text{ᛏ},v_\gamma) > 0.$$
+      These are postulates: they say which curves can carry a body with mass.
+
+  - type: mcq
+    id: classify-curves
+    title: Which are massive?
+    multiple: true
+    prompt: |
+      In 1+1 Minkowski spacetime, $g = d\tau\otimes d\tau - da\otimes da$, time orientation $\text{ᛏ} = (0,1)$, points $(a,\tau)$. Which curves, with $\lambda\in\mathbb{R}$, are worldlines of massive particles? Select all that apply.
+    options:
+      - text: '$\gamma(\lambda) = (\lambda, 2\lambda)$'
+        correct: true
+      - text: '$\gamma(\lambda) = (\sin\lambda, 2\lambda)$'
+        correct: true
+      - text: '$\gamma(\lambda) = (2\lambda, \lambda)$'
+        feedback: |
+          $v_\gamma = (2,1)$ gives $g = 1 - 4 = -3 < 0$: spacelike. It moves two units of space per unit of time, faster than light.
+      - text: '$\gamma(\lambda) = (0, -\lambda)$'
+        feedback: |
+          $v_\gamma = (0,-1)$ is timelike ($g = 1$), which is tempting, but $g(\text{ᛏ},v_\gamma) = -1 < 0$: it points to the past. The same path run the other way, $(0,\lambda)$, is massive.
+      - text: '$\gamma(\lambda) = (0, \lambda^3)$'
+        feedback: |
+          The path is the vertical axis, fine, but $v_\gamma = (0, 3\lambda^2)$ vanishes at $\lambda = 0$. The zero vector is not timelike; the condition must hold for every $\lambda$.
+    explanation: |
+      $(\lambda,2\lambda)$: $v = (1,2)$, $g = 3$, $g(\text{ᛏ},v) = 2$. $(\sin\lambda,2\lambda)$: $v = (\cos\lambda,2)$, $g = 4 - \cos^2\lambda \geq 3$, $g(\text{ᛏ},v) = 2$. Both hold for every $\lambda$; the second wiggles but never reaches light speed.
+
+  - type: widget
+    id: bad-widget
+    title: A worldline that breaks the rule
+    widget: worldline-clock
+    config:
+      metric: minkowski
+      shape: kinks
+      kinks: [[0, 2], [5, 6]]
+      lambda: 0
+      presets:
+        - { label: 'Fast leg', shape: kinks, kinks: [[0, 2], [5, 6]], lambda: 1.5 }
+        - { label: 'Massive', shape: kinks, kinks: [[0, 2], [2, 6]], lambda: 0 }
+    body: |
+      Minkowski metric, worldline from $A = (0,0)$ through $K_1 = (0,2)$ and $K_2 = (5,6)$ to $B = (0,10)$, one unit of $\lambda$ per straight piece, so on each piece $v_\gamma$ is the piece's displacement. Read the badge "Massive worldline?" and play through "Fast leg": what are $v_\gamma$ and $g(v_\gamma,v_\gamma)$ there, and what happens to the clock? Then drag $K_2$ until the badge says Yes.
+
+  - type: mcq
+    id: past-piece
+    title: Timelike is not enough
+    prompt: |
+      In 1+1 Minkowski spacetime ($g = d\tau\otimes d\tau - da\otimes da$, $\text{ᛏ} = (0,1)$, points $(a,\tau)$) a worldline runs straight from $(0,0)$ to $(1,6)$, then to $(0,4)$, then to $(0,10)$, each piece at constant velocity equal to its displacement. Is it the worldline of a massive particle?
+    options:
+      - text: 'No: the middle piece points to the past'
+        correct: true
+      - text: 'Yes: every piece is timelike'
+        feedback: |
+          Every piece is timelike indeed: $(1,6)$ gives $35$, $(-1,-2)$ gives $4 - 1 = 3$, $(0,6)$ gives $36$. But massive also needs future directed, and $g(\text{ᛏ},(-1,-2)) = -2 < 0$.
+      - text: 'No: the middle piece is spacelike'
+        feedback: |
+          The middle piece $(-1,-2)$ has $g = (-2)^2 - (-1)^2 = 3 > 0$: timelike. Squares hide the sign of the components; the problem is elsewhere.
+      - text: 'Yes: it ends later than it starts, at $\tau = 10$'
+        feedback: |
+          Overall progress is not enough: the condition is for every $\lambda$. On the middle piece the chart time drops from $6$ to $4$, a trip into the past.
+    explanation: |
+      The middle piece has $v_\gamma = (-1,-2)$:
+      $$g(v_\gamma,v_\gamma) = 3 > 0,$$
+      $$g(\text{ᛏ},v_\gamma) = -2 < 0.$$
+      Timelike but past directed: no massive particle can follow it.
+
+  - type: text
+    id: massless
+    title: Massless worldlines
+    body: |
+      Light, and any particle without mass, moves along the light cone. So $\gamma$ is the **worldline of a massless particle** if $v_\gamma$ is **lightlike and future directed for every** $\lambda$:
+      $$g(v_\gamma,v_\gamma) = 0,$$
+      $$v_\gamma \neq 0,$$
+      $$g(\text{ᛏ},v_\gamma) > 0.$$
+      The condition $v_\gamma\neq0$ is needed because the zero vector also has $g = 0$, but it is not lightlike: it gets no class at all.
+
+  - type: widget
+    id: massless-widget
+    title: Light bouncing between mirrors
+    widget: worldline-clock
+    config:
+      metric: minkowski
+      shape: kinks
+      kinks: [[5, 5]]
+      massless: true
+      lambda: 0
+      presets:
+        - { label: 'One bounce', shape: kinks, kinks: [[5, 5]], lambda: 1 }
+        - { label: 'Two bounces', shape: kinks, kinks: [[2, 2], [0, 0]], lambda: 0 }
+    body: |
+      Minkowski metric. The worldline is forced onto the light lines: a flash from $A = (0,0)$ to a mirror and back to $B = (0,10)$. Drag the kink (it slides along the light lines), try "Two bounces", and read $g(v_\gamma,v_\gamma)$, $g(\text{ᛏ},v_\gamma)$ and the badge. Watch the clock too.
+
+  - type: mcq
+    id: zero-velocity
+    title: Standing still
+    prompt: |
+      In 1+1 Minkowski spacetime ($g = d\tau\otimes d\tau - da\otimes da$), the constant curve $\gamma(\lambda) = (0,0)$ for every $\lambda$ has $g(v_\gamma,v_\gamma) = 0$ for every $\lambda$. Is it the worldline of a massless particle?
+    options:
+      - text: 'No: $v_\gamma = 0$ is not lightlike, and not future directed'
+        correct: true
+      - text: 'Yes: $g(v_\gamma,v_\gamma) = 0$, which is the lightlike condition'
+        feedback: |
+          $g = 0$ is necessary but not sufficient: lightlike vectors are non-zero by definition. The zero vector gets no class.
+      - text: 'No: it is the worldline of a massive particle at rest'
+        feedback: |
+          A particle at rest still moves forward in time: its worldline is $(0,\lambda)$ with $v = (0,1)$. The constant curve does not even move in time; it is a single event.
+    explanation: |
+      $v_\gamma = 0$ fails $v_\gamma\neq0$, and $g(\text{ᛏ},0) = 0$ is not $> 0$. A single event repeated is no particle at all.
+
+  - type: text
+    id: recall-length
+    title: 'Recall: length with a sign'
+    body: |
+      Recall from the metric (Level 7): for a curve $\gamma$ the **sign rune** (read "sign") and the **speed** are
+      $$\text{ᛇ}_\gamma(\lambda) := \mathrm{sgn}\,g(v_\gamma,v_\gamma),$$
+      $$s_\gamma := \sqrt{\text{ᛇ}_\gamma\,g(v_\gamma,v_\gamma)},$$
+      so $s_\gamma\geq0$ whatever the sign, and the **length** is $L_{[\lambda_1,\lambda_2]}[\gamma] := \int_{\lambda_1}^{\lambda_2}s_\gamma\,d\lambda$ (square brackets: the curve is the argument).
+
+      With the signature $(+,-,-,-)$ used here, timelike means $g > 0$, so a massive worldline has $\text{ᛇ}_\gamma\equiv+1$ and a massless one $\text{ᛇ}_\gamma\equiv0$. (Level 7's twin example used the opposite convention, where timelike is negative; the lengths come out the same.)
+
+  - type: text
+    id: proper-time
+    title: Proper time
+    body: |
+      The **proper time** along a massive worldline $\gamma$, between the events $\gamma(\lambda_1)$ and $\gamma(\lambda_2)$ with $\lambda_1 < \lambda_2$, is its length with $\text{ᛇ}_\gamma\equiv+1$:
+      $$\tau_{[\lambda_1,\lambda_2]}[\gamma] := \int_{\lambda_1}^{\lambda_2}s_\gamma\,d\lambda,$$
+      that is
+      $$\tau_{[\lambda_1,\lambda_2]}[\gamma] = \int_{\lambda_1}^{\lambda_2}\sqrt{g(v_\gamma,v_\gamma)}\,d\lambda.$$
+      The physical postulate: **this is the time elapsed on a clock carried along $\gamma$**. A clock does not read a universal time; it measures the length of its own worldline.
+
+  - type: build
+    id: build-proper-time
+    title: Build the definition
+    prompt: |
+      Signature $(+,-,-,-)$, so on a massive worldline $\gamma$ the velocity $v_\gamma$ has $g(v_\gamma,v_\gamma) > 0$. Build the proper time between $\gamma(\lambda_1)$ and $\gamma(\lambda_2)$, $\lambda_1 < \lambda_2$.
+    prefix: '\tau_{[\lambda_1,\lambda_2]}[\gamma] ='
+    tiles: ['\int_{\lambda_1}^{\lambda_2}', '\sqrt{g(v_\gamma,v_\gamma)}', 'g(v_\gamma,v_\gamma)', '\sqrt{-g(v_\gamma,v_\gamma)}', 'd\lambda']
+    answers:
+      - ['\int_{\lambda_1}^{\lambda_2}', '\sqrt{g(v_\gamma,v_\gamma)}', 'd\lambda']
+    wrong:
+      - { answer: ['\int_{\lambda_1}^{\lambda_2}', 'g(v_\gamma,v_\gamma)', 'd\lambda'], feedback: 'Without the square root the integral is an "energy", not a length: it changes when the curve is run faster. The clock time is $\int s_\gamma\,d\lambda$ with $s_\gamma = \sqrt{g(v_\gamma,v_\gamma)}$.' }
+      - { answer: ['\int_{\lambda_1}^{\lambda_2}', '\sqrt{-g(v_\gamma,v_\gamma)}', 'd\lambda'], feedback: 'That is the formula for the convention $(-,+,+,+)$, where timelike is negative. Here timelike means $g > 0$, so $\text{ᛇ}_\gamma = +1$ and no minus sign is needed.' }
+    hint: 'Proper time is the length $\int s_\gamma\,d\lambda$ with $s_\gamma = \sqrt{\text{ᛇ}_\gamma\,g(v_\gamma,v_\gamma)}$ and $\text{ᛇ}_\gamma = +1$.'
+    explanation: |
+      $$\tau_{[\lambda_1,\lambda_2]}[\gamma] = \int_{\lambda_1}^{\lambda_2}\sqrt{g(v_\gamma,v_\gamma)}\,d\lambda.$$
+
+  - type: text
+    id: two-taus
+    title: Two different τ's
+    body: |
+      Careful with the letter $\tau$. In the pictures, $\tau$ is also a **chart coordinate**: a label on events, the height in the picture. The **proper time** $\tau_{[\lambda_1,\lambda_2]}[\gamma]$ (with the interval and the curve attached) is a number computed from one worldline.
+
+      They agree only in special cases: on the worldline at rest $(0,\lambda)$ in Minkowski, $v = (0,1)$, $s = 1$, and the clock reads exactly the chart time. In the twin widget, at "Halfway" both dots sit at chart coordinate $\tau = 5$, but the clocks read $5$ (home) and $4$ (traveller). Chart coordinates label events; only proper time is read on a clock.
+
+  - type: numeric
+    id: halfway
+    title: Halfway
+    prompt: |
+      In 1+1 Minkowski spacetime ($g = d\tau\otimes d\tau - da\otimes da$, points $(a,\tau)$), a traveller goes straight from $(0,0)$ to $(3,5)$ with $\lambda\in[0,1]$ and $v_\gamma = (3,5)$, clock set to $0$ at $(0,0)$. On arrival the event has chart coordinate $\tau = 5$. What does the traveller's clock read there?
+    answer: 4
+    wrong:
+      - { value: 5, feedback: '$5$ is the chart coordinate $\tau$ of the event, a label. The clock reads the proper time $\int_0^1\sqrt{g(v_\gamma,v_\gamma)}\,d\lambda$.' }
+      - { value: 5.831, feedback: 'That is the Euclidean length $\sqrt{9 + 25}$. In $g$ the space part enters with a minus sign.' }
+      - { value: 16, feedback: 'That is $g(v_\gamma,v_\gamma)$; the speed is its square root.' }
+    tolerance: 0.01
+    hint: '$s_\gamma = \sqrt{(v^\tau)^2 - (v^a)^2}$ is constant on the piece, and $\lambda$ runs over an interval of length $1$.'
+    explanation: |
+      $$s_\gamma = \sqrt{25 - 9} = 4,$$
+      constant on $[0,1]$, so
+      $$\tau_{[0,1]}[\gamma] = \int_0^1 4\,d\lambda = 4.$$
+
+  - type: numeric
+    id: further-out
+    title: Travel further
+    prompt: |
+      In 1+1 Minkowski spacetime ($g = d\tau\otimes d\tau - da\otimes da$, points $(a,\tau)$), a traveller goes straight from $A = (0,0)$ to $(4,5)$, then straight back to $B = (0,10)$. What is the proper time from $A$ to $B$ along this worldline?
+    answer: 6
+    wrong:
+      - { value: 8, feedback: 'That is the trip with the turning point $(3,5)$. Here each leg has displacement $(\pm4,5)$, so $\sqrt{25 - 16} = 3$.' }
+      - { value: 3, feedback: 'That is one leg; there are two.' }
+      - { value: 10, feedback: 'That is the chart coordinate $\tau$ of $B$, which the twin at home reads. The traveller''s clock reads less.' }
+    tolerance: 0.01
+    hint: 'Each leg is straight, so its proper time is $\sqrt{g}$ of its displacement $(\pm4,5)$.'
+    explanation: |
+      $$2\sqrt{5^2 - 4^2} = 2\cdot3 = 6.$$
+      Going further out (faster) costs more time: $10$ at home, $8$ for $(3,5)$, $6$ for $(4,5)$.
+
+  - type: text
+    id: reparam
+    title: Any parametrization gives the same time
+    body: |
+      The widget runs one unit of $\lambda$ per piece. Is the clock reading an artefact of that choice? Recall the **reparametrization rune** $\text{ᚱ}\colon\mathbb{R}\to\mathbb{R}$, a smooth map from a new parameter $\mu$ to $\lambda = \text{ᚱ}(\mu)$, and the new curve $\delta := \gamma\circ\text{ᚱ}$: same path, run at another pace. Take $\text{ᚱ}' > 0$, so $\delta$ is still future directed, and $\text{ᚱ}(\mu_1) = \lambda_1$, $\text{ᚱ}(\mu_2) = \lambda_2$.
+
+      By the chain rule $v_\delta(\mu) = \text{ᚱ}'(\mu)\,v_\gamma(\text{ᚱ}(\mu))$, and $g$ is bilinear, so
+      $$s_\delta(\mu) = \text{ᚱ}'(\mu)\,s_\gamma(\text{ᚱ}(\mu)).$$
+      Substituting $\lambda = \text{ᚱ}(\mu)$, $d\lambda = \text{ᚱ}'(\mu)\,d\mu$:
+      $$\int_{\mu_1}^{\mu_2}s_\delta\,d\mu = \int_{\lambda_1}^{\lambda_2}s_\gamma\,d\lambda.$$
+      A faster run has a larger speed over a shorter parameter interval: the two effects cancel. Proper time is a property of the **path** in $\mathcal{M}$.
+
+  - type: order
+    id: reparam-order
+    title: The argument, in order
+    prompt: |
+      A massive worldline $\gamma$ is reparametrized as $\delta := \gamma\circ\text{ᚱ}$ with $\text{ᚱ}' > 0$, $\text{ᚱ}(\mu_1) = \lambda_1$, $\text{ᚱ}(\mu_2) = \lambda_2$. Put the steps showing $\tau_{[\mu_1,\mu_2]}[\delta] = \tau_{[\lambda_1,\lambda_2]}[\gamma]$ in order.
+    steps:
+      - 'Chain rule: $v_\delta(\mu) = \text{ᚱ}''(\mu)\,v_\gamma(\text{ᚱ}(\mu))$.'
+      - 'Bilinearity of $g$: $g(v_\delta,v_\delta) = \text{ᚱ}''(\mu)^2\,g(v_\gamma,v_\gamma)$.'
+      - 'Square root, using $\text{ᚱ}'' > 0$: $s_\delta(\mu) = \text{ᚱ}''(\mu)\,s_\gamma(\text{ᚱ}(\mu))$.'
+      - 'Substitute $\lambda = \text{ᚱ}(\mu)$, so $d\lambda = \text{ᚱ}''(\mu)\,d\mu$.'
+      - 'The limits $\mu_1,\mu_2$ become $\lambda_1,\lambda_2$: the two integrals agree.'
+    hint: 'Start from velocities, then speeds, then integrals.'
+    explanation: |
+      Velocity scales by $\text{ᚱ}'$, so $g$ scales by $(\text{ᚱ}')^2$ and the speed by $\text{ᚱ}'$; the substitution absorbs that factor into $d\lambda$.
+
+  - type: numeric
+    id: rescaled
+    title: Run it twice as fast
+    prompt: |
+      In 1+1 Minkowski spacetime ($g = d\tau\otimes d\tau - da\otimes da$, points $(a,\tau)$), the twin traveller's worldline $\gamma$, with $\lambda\in[0,2]$, has $v_\gamma = (3,5)$ for $\lambda\in[0,1]$ and $(-3,5)$ for $\lambda\in[1,2]$. Reparametrize with $\text{ᚱ}(\mu) = 2\mu$, $\mu\in[0,1]$, and let $\delta := \gamma\circ\text{ᚱ}$. What is the speed $s_\delta$ for $\mu\in[0,\tfrac12]$?
+    answer: 8
+    wrong:
+      - { value: 4, feedback: 'That is $s_\gamma$. The new velocity is $v_\delta = \text{ᚱ}''\,v_\gamma = 2\,(3,5) = (6,10)$, so the speed doubles.' }
+      - { value: 16, feedback: 'The speed scales by $\text{ᚱ}'' = 2$, not by $(\text{ᚱ}'')^2$: the square appears in $g(v_\delta,v_\delta) = 64$, and the speed is its square root.' }
+      - { value: 64, feedback: 'That is $g(v_\delta,v_\delta)$; the speed is its square root.' }
+    tolerance: 0.01
+    hint: '$v_\delta(\mu) = \text{ᚱ}''(\mu)\,v_\gamma(\text{ᚱ}(\mu))$ with $\text{ᚱ}'' = 2$.'
+    explanation: |
+      $$v_\delta = 2\,(3,5) = (6,10),$$
+      $$s_\delta = \sqrt{100 - 36} = 8.$$
+      Each leg now lasts half a unit of $\mu$, so the proper time is $8\cdot\tfrac12 + 8\cdot\tfrac12 = 8$, as before.
+
+  - type: mcq
+    id: why-positive
+    title: Why ᚱ′ > 0?
+    prompt: |
+      For a massive worldline $\gamma$, a reparametrization $\delta := \gamma\circ\text{ᚱ}$ is taken with $\text{ᚱ}' > 0$. What goes wrong if $\text{ᚱ}' < 0$ everywhere?
+    options:
+      - text: '$\delta$ runs the path backwards: $v_\delta$ is past directed, so $\delta$ is not a massive worldline'
+        correct: true
+      - text: 'The speed $s_\delta$ becomes negative'
+        feedback: |
+          The speed is a square root, never negative: $s_\delta = |\text{ᚱ}'|\,s_\gamma\circ\text{ᚱ}$ in general. The problem is the direction of $v_\delta = \text{ᚱ}'\,v_\gamma$, not its size.
+      - text: '$\delta$ becomes spacelike'
+        feedback: |
+          $g(v_\delta,v_\delta) = (\text{ᚱ}')^2\,g(v_\gamma,v_\gamma) > 0$: still timelike. A negative factor flips the vector to the other half of the cone, which is a past-directed timelike vector.
+    explanation: |
+      $g(\text{ᛏ},v_\delta) = \text{ᚱ}'\,g(\text{ᛏ},v_\gamma) < 0$ when $\text{ᚱ}' < 0$. The path is the same, but run from future to past it fails the definition. The number $\int|\text{ᚱ}'|\,s_\gamma\circ\text{ᚱ}\,d\mu$ would still be the same.
+
+  - type: widget
+    id: bend-widget
+    title: Bend the path smoothly
+    widget: worldline-clock
+    config:
+      metric: minkowski
+      shape: bend
+      bend: [4, 5]
+      compare: true
+      lambda: 0
+      presets:
+        - { label: 'Start', shape: bend, bend: [4, 5], lambda: 0 }
+        - { label: 'At B', shape: bend, bend: [4, 5], lambda: 2 }
+    body: |
+      Minkowski metric. Now the worldline from $A = (0,0)$ to $B = (0,10)$ is a smooth curve pulled sideways by the control point $C = (4,5)$ (dashed control lines); the dashed straight worldline is there to compare. Play to $B$ and compare the two clocks. Then drag $C$ toward the axis $a = 0$, and away from it, watching the proper time at $B$.
+
+  - type: numeric
+    id: bend-value
+    title: The smooth detour
+    prompt: |
+      In 1+1 Minkowski spacetime ($g = d\tau\otimes d\tau - da\otimes da$, points $(a,\tau)$), the worldline $\gamma(\lambda) = (8u(1-u), 10u)$ with $u := \lambda/2$, $\lambda\in[0,2]$, runs from $(0,0)$ to $(0,10)$ with $v_\gamma = (4 - 8u, 5)$. Its proper time is
+      $$\tfrac14\int_{-4}^{4}\sqrt{25 - w^2}\,dw = 3 + 6.25\arcsin0.8.$$
+      Give its value to two decimals (the widget computes it too).
+    answer: 8.796
+    tolerance: 0.01
+    wrong:
+      - { value: 10, feedback: '$10$ belongs to the straight worldline. The bent one moves through space, and every bit of space motion costs time.' }
+    hint: '$\arcsin0.8\approx0.9273$ (radians).'
+    explanation: |
+      $$3 + 6.25\cdot0.9273\approx8.796.$$
+      Less than $10$, more than the corner path's $8$: a gentler detour costs less.
+
+  - type: mcq
+    id: toward-axis
+    title: Straighten the path
+    prompt: |
+      In 1+1 Minkowski spacetime, a timelike worldline from $A = (0,0)$ to $B = (0,10)$ is bent sideways by a control point $C$; with $C = (4,5)$ its proper time is about $8.80$. As $C$ is moved toward $(0,5)$, so the worldline straightens onto $a = 0$, what happens to the proper time from $A$ to $B$?
+    options:
+      - text: 'It grows, reaching $10$ when the worldline is straight'
+        correct: true
+      - text: 'It shrinks, since the path gets shorter in the picture'
+        feedback: |
+          That is Euclidean intuition: the drawn curve does get shorter. But the metric subtracts the space part, so less sideways motion means more proper time.
+      - text: 'It stays $8.80$: proper time does not depend on how the path is drawn'
+        feedback: |
+          Proper time does not depend on the parametrization (how fast the same path is run). Moving $C$ changes the path itself, and the proper time with it.
+      - text: 'It grows without bound'
+        feedback: |
+          At each $\lambda$, $\sqrt{(v^\tau)^2 - (v^a)^2}\leq v^\tau$, so the proper time is at most the chart time elapsed, $10$. The bound is reached by the straight worldline.
+    explanation: |
+      At every $\lambda$:
+      $$s_\gamma = \sqrt{(v^\tau)^2 - (v^a)^2}\leq v^\tau,$$
+      and $\int v^\tau\,d\lambda = 10$ for every worldline from $A$ to $B$. Equality needs $v^a = 0$ throughout: the straight worldline.
+
+  - type: text
+    id: reverse-triangle
+    title: Why the straight line wins
+    body: |
+      Take two future-directed timelike vectors $\mathcal{X}$, $\mathcal{Y}$ in 1+1 Minkowski. Expanding,
+      $$\begin{aligned}(X^\tau Y^\tau - X^aY^a)^2 &- g(\mathcal{X},\mathcal{X})\,g(\mathcal{Y},\mathcal{Y})\\ &= (X^\tau Y^a - X^aY^\tau)^2\geq0,\end{aligned}$$
+      and $g(\mathcal{X},\mathcal{Y}) > 0$ (two future-directed causal vectors, one timelike). So
+      $$g(\mathcal{X},\mathcal{Y})\geq\sqrt{g(\mathcal{X},\mathcal{X})}\sqrt{g(\mathcal{Y},\mathcal{Y})},$$
+      the **reversed** Cauchy–Schwarz inequality. With $\mathcal{Z} := \mathcal{X}+\mathcal{Y}$, $g(\mathcal{Z},\mathcal{Z}) = g(\mathcal{X},\mathcal{X}) + 2g(\mathcal{X},\mathcal{Y}) + g(\mathcal{Y},\mathcal{Y})$; use the inequality on the middle term and take roots:
+      $$\begin{aligned}\sqrt{g(\mathcal{Z},\mathcal{Z})}&\geq\sqrt{g(\mathcal{X},\mathcal{X})}\ &\quad+ \sqrt{g(\mathcal{Y},\mathcal{Y})}.\end{aligned}$$
+      Twin: $\mathcal{X} = (3,5)$, $\mathcal{Y} = (-3,5)$, $\mathcal{X}+\mathcal{Y} = (0,10)$: $10\geq4 + 4$. Chaining many small pieces gives the same for any timelike path: among timelike worldlines between two events, the straight one has the **most** proper time. (The same inequality holds in four dimensions; in curved spacetime it holds for short pieces, and the worldlines that make proper time stationary are the geodesics of Level 7.)
+
+  - type: mcq
+    id: no-minimum
+    title: Longest, not shortest
+    prompt: |
+      In the Euclidean plane the straight segment is the shortest curve between two points. In 1+1 Minkowski spacetime, consider all massive worldlines from $A = (0,0)$ to $B = (0,10)$, for example out to a turning point $(x,5)$ and back. Which statement is true?
+    options:
+      - text: 'The straight one has the most proper time ($10$); there is no least, turning points near $(5,5)$ give proper time close to $0$'
+        correct: true
+      - text: 'The straight one has the least proper time, as in Euclidean geometry'
+        feedback: |
+          The minus sign in $g$ reverses the triangle inequality: $\sqrt{g(\mathcal{X}+\mathcal{Y},\mathcal{X}+\mathcal{Y})}\geq\sqrt{g(\mathcal{X},\mathcal{X})}+\sqrt{g(\mathcal{Y},\mathcal{Y})}$ for future timelike vectors. The twin trip gives $8 < 10$.
+      - text: 'The straight one has the most, and the least is $6$, at the turning point $(4,5)$'
+        feedback: |
+          $(4,5)$ gives $6$, but $(4.5,5)$ gives $2\sqrt{25 - 20.25}\approx4.36$, and the closer to $(5,5)$ the smaller. At $(5,5)$ the legs are lightlike: the worldline is no longer massive, and its $\int s_\gamma$ is $0$.
+    explanation: |
+      Turning point $(x,5)$: proper time $2\sqrt{25 - x^2}$, from $10$ at $x = 0$ down toward $0$ as $x\to5$. A maximum, no minimum.
+
+  - type: text
+    id: massless-zero
+    title: Light carries no clock
+    body: |
+      On a massless worldline $g(v_\gamma,v_\gamma)\equiv0$, so the speed is
+      $$s_\gamma\equiv0,$$
+      whatever the parametrization ($s_\delta = |\text{ᚱ}'|\cdot0$), and $\int s_\gamma\,d\lambda = 0$ for every piece. That number carries no information, and proper time is **defined only for massive worldlines**: no clock can ride a light ray. This is why the widget greys the clock out on the light-ray worldline and writes "not a proper time" instead of a number.
+
+      What remains is the limit: massive worldlines that hug the light cone, like the turning point $(x,5)$ with $x\to5$, have proper time $2\sqrt{25 - x^2}\to0$.
+
+  - type: mcq
+    id: massless-clock
+    title: A clock on a light ray?
+    prompt: |
+      A massless worldline $\gamma$ (lightlike and future directed for every $\lambda$) runs from one event to another. Which statement is right?
+    options:
+      - text: '$s_\gamma\equiv0$ in every parametrization; proper time is defined only for massive worldlines, so light carries no clock'
+        correct: true
+      - text: 'Its proper time equals the chart time $\tau$ elapsed, as for light at speed $1$'
+        feedback: |
+          The chart coordinate $\tau$ labels events; it is not read on any clock. Along a lightlike $v_\gamma$, $\sqrt{g(v_\gamma,v_\gamma)} = 0$, nothing like the chart time.
+      - text: 'A clever parametrization makes $\int s_\gamma\,d\lambda$ positive'
+        feedback: |
+          Reparametrizing multiplies the speed by $|\text{ᚱ}'|$: $s_\delta = |\text{ᚱ}'|\cdot0 = 0$. No pace makes a lightlike velocity have positive $g$.
+      - text: 'It is a massive worldline with proper time $0$'
+        feedback: |
+          Massive needs $g(v_\gamma,v_\gamma) > 0$; here it is $0$. Massive and massless are exclusive.
+    explanation: |
+      $g(v_\gamma,v_\gamma) = 0$ gives $\text{ᛇ}_\gamma\equiv0$ and $s_\gamma\equiv0$. The speed is defined; the clock reading is not.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** observers. A massive worldline is a clock; add three spatial rulers, a frame $e_0 = v_\gamma$ (run at unit speed), $e_1$, $e_2$, $e_3$ orthonormal for $g$, and you get an observer, who turns tangent vectors into measured times, distances and velocities. Every observer will find light at speed $1$.
