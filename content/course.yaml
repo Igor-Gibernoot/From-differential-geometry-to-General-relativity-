@@ -531,7 +531,11 @@ levels:
         kind: guided
         file: ch10/schwarzschild.yaml
         summary: "Check by hand that the Schwarzschild metric is Ricci-flat: the connection coefficients one by one, the Ricci components (two conditions on f), why f = 1 - r_S/r and the Newtonian limit fix r_S, what the coordinate r measures, and the tidal tensor of Level 9 recovered."
-      - { id: ch10-traps, title: Relativity Traps, kind: traps }
+      - id: ch10-traps
+        title: Relativity Traps
+        kind: traps
+        file: ch10/traps.yaml
+        summary: "Fast questions on this level's tempting mistakes: signs of timelike and spacelike, the cone is not a subspace, proper time vs coordinate time, the straight worldline is the longest, Lorentz matrices and speeds, Ricci-flat is not flat, the volume density, signs and sizes of T, and Schwarzschild's r, clocks and tides."
       - { id: ch10-map, title: "Content Map: General Relativity", kind: map }
       - { id: ch10-review, title: Level Review, kind: review }
       - { id: ch10-challenge, title: Level Challenge, kind: challenge }
