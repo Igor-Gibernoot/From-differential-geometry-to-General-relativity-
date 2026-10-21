@@ -1,0 +1,529 @@
+id: ch09-pseudo-forces
+title: Inertial Charts and Pseudo-Forces
+kind: concept
+
+own: |
+  - **Inertial chart**: a stratified chart $(\mathcal{U},\mathscr{X})$ with {{ $\Gamma_\mathscr{X} = 0$ }}. Without gravity, free particles of every velocity move straight in it ($\ddot\gamma^\alpha = 0$), which forces every coefficient to vanish; then $\mathrm{Riem} = 0$, a tensor statement valid in every chart.
+  - **From an inertial chart** to any stratified chart $(\mathcal{V},\mathscr{Y})$ only the inhomogeneous term survives:
+  {{ $$(\Gamma_\mathscr{Y})^i_{jk} = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}$$ }}
+  so every coefficient is made by the second derivatives of $\text{ᛖ}_{\mathcal{V}\mathcal{U}} = \mathscr{X}\circ\mathscr{Y}^{-1}$.
+  - **Rigidly moving axes** (angle $\theta(t)$ about the third axis, origin $b^\alpha(t)$): the only nonzero coefficients are
+  {{ $$\begin{gathered}\Gamma^1_{02} = \Gamma^1_{20} = -\dot\theta\\ \Gamma^2_{01} = \Gamma^2_{10} = \dot\theta\end{gathered}$$ }}
+  and $\Gamma^\alpha_{00}$ (with $\Gamma^1_{00} = -\dot\theta^2\gamma^1 - \ddot\theta\,\gamma^2 + \cos\theta\,\ddot b^1 + \sin\theta\,\ddot b^2$); $\Gamma^\alpha_{\beta\delta} = 0$ because the change is linear in space.
+  - **The four pseudo-forces** (Coriolis, centrifugal, Euler, translational), with $\gamma^\alpha$ the particle's coordinates in $\mathscr{Y}$:
+  {{ $$\begin{aligned}m\ddot\gamma^1 = f^1_\gamma &+ 2m\dot\theta\,\dot\gamma^2 + m\dot\theta^2\gamma^1\\ &+ m\ddot\theta\,\gamma^2\\ &- m(\cos\theta\,\ddot b^1 + \sin\theta\,\ddot b^2)\end{aligned}$$ }}
+  Coriolis comes from $\Gamma^\alpha_{0\beta}$, its factor $2$ from the two equal terms $\Gamma^\alpha_{0\beta} = \Gamma^\alpha_{\beta0}$; the other three come from $\Gamma^\alpha_{00}$. Terms $\Gamma^\alpha_{\beta\delta}$ (curvilinear grids at rest, such as $\ddot r - r\dot\varphi^2$) are not counted as pseudo-forces, and non-rigid charts produce other chart effects.
+
+cards:
+  - type: text
+    id: hook
+    title: A puck under a carousel
+    body: |
+      A puck rests on frictionless ice, at distance $1$ from a vertical axis. Just above the ice a large transparent disk, a carousel floor, turns about that axis counterclockwise at angular speed $\omega = 1$ (one turn every $2\pi$ time units). Nothing touches the puck: no force acts on it.
+
+      Moment by moment, the disk gets a mark on the spot right above the puck. Over one turn, these marks draw the puck's path **on the carousel floor**, i.e. in coordinates that turn with the disk.
+
+  - type: mcq
+    id: hook-predict
+    title: Before any theory, predict
+    prompt: |
+      A puck rests on frictionless ice at distance $1$ from a vertical axis, and no force acts on it. A transparent carousel floor turns above it about that axis, counterclockwise, at angular speed $\omega = 1$. What path does the puck trace on the carousel floor (in coordinates turning with the disk) during one turn?
+    options:
+      - text: 'A circle of radius $1$ about the axis, run clockwise'
+        correct: true
+      - text: 'A single dot: the puck is at rest, so it stays at its mark'
+        feedback: |
+          The puck is at rest relative to the ice, not to the floor. The floor slides under it, so its position in the floor's coordinates keeps changing.
+      - text: 'A straight line running outward: the centrifugal force flings it away'
+        feedback: |
+          Tempting, since a rider on a carousel feels pushed outward. But the puck stays at distance $1$ from the axis forever (it does not move at all), so its distance from the floor's center never changes.
+      - text: 'A circle of radius $1$, run counterclockwise with the disk'
+        feedback: |
+          The disk turns counterclockwise under a puck that stays put, so relative to the disk the puck drifts the other way: clockwise.
+    explanation: |
+      The puck stays at distance $1$ from the axis while the floor turns counterclockwise beneath it, so on the floor it runs a clockwise circle of radius $1$. In the floor's coordinates this force-free puck **accelerates** toward the center. The lesson finds which connection coefficients say so, and names them.
+
+  - type: widget
+    id: widget-carousel
+    title: The puck in two charts
+    widget: rotating-grid
+    config:
+      omega: 1
+      x0: [1, 0]
+      v: [0, 0]
+      view: both
+      presets:
+        - { label: At rest, v: [0, 0] }
+        - { label: Cancel, v: [0, 0.5] }
+        - { label: Co-moving, v: [0, 1] }
+    body: |
+      Left (or top on a phone): the ice, with coordinates $(x^1, x^2)$; the puck starts at $x_0 = (1, 0)$ with velocity $v$ (here $v = 0$). Right: the carousel floor, with coordinates $(y^1, y^2)$ that turn at $\omega = 1$. Press **Play** and watch the trace in each panel. The thick translucent arrow labelled ÿ is the second time derivative of the puck's floor coordinates; ignore the other arrows' names for now. Try the presets: **Cancel** gives the puck a small push, **Co-moving** makes it start moving with the floor.
+
+  - type: numeric
+    id: yddot-rest
+    title: Acceleration on the floor
+    prompt: |
+      A force-free puck stays at $x = (1, 0)$ on the ice. In coordinates turning counterclockwise at $\omega = 1$, its position is
+      $$\begin{gathered}y^1(t) = \cos t\\ y^2(t) = -\sin t.\end{gathered}$$
+      What is $\ddot y^1$ at $t = 0$?
+    answer: -1
+    wrong:
+      - value: 0
+        feedback: |
+          "No force, so no acceleration" holds in the ice's coordinates. Here differentiate $y^1 = \cos t$ twice: $\ddot y^1 = -\cos t$, which is $-1$ at $t = 0$.
+      - value: 1
+        feedback: |
+          The intuition "flung outward" gives $+1$, but $\ddot y^1 = -\cos t = -1$ at $t = 0$: toward the center, as for any motion on a circle.
+    hint: |
+      Differentiate $\cos t$ twice.
+    explanation: |
+      $\ddot y = (-\cos t, \sin t) = -y$, so at $t = 0$, $\ddot y = (-1, 0)$: toward the floor's center (centripetal), with no force acting. In the floor's coordinates something other than a force must account for it.
+
+  - type: text
+    id: free-straight
+    title: Straight lines without gravity
+    body: |
+      Recall: in a stratified chart $(\mathcal{U},\mathscr{X})$ (zeroth coordinate $x^0 = t$, the absolute time), a free particle parametrized by absolute time satisfies Newton II with $f_\gamma = 0$,
+      $$\ddot\gamma^k + \Gamma^k_{ji}\dot\gamma^j\dot\gamma^i = 0,$$
+      with $\dot\gamma^0 = 1$ and spatial velocity $\dot\gamma^\beta$ ($\beta\in\{1,2,3\}$). The time component is automatic once $\Gamma^0_{ji} = 0$ (uniform flow of time).
+
+      **Without gravity**, observation (Newton's first law in its classical form) says more: there is a stratified chart in which every free particle moves on a straight line at constant velocity, $\ddot\gamma^\alpha = 0$. Through each event pass free particles of **every** velocity, so
+      $$\Gamma^\alpha_{jk}\dot\gamma^j\dot\gamma^k = 0$$
+      for every choice of $(\dot\gamma^1, \dot\gamma^2, \dot\gamma^3)$, with $\dot\gamma^0 = 1$.
+
+  - type: mcq
+    id: rest-forces
+    title: The particle at rest
+    prompt: |
+      In a stratified chart with $\dot\gamma^0 = 1$ (time parametrization), suppose $\Gamma^\alpha_{jk}\dot\gamma^j\dot\gamma^k = 0$ holds for every spatial velocity $(\dot\gamma^1,\dot\gamma^2,\dot\gamma^3)$. Insert a particle at rest, $\dot\gamma^\beta = 0$. Which coefficients does this alone force to vanish?
+    options:
+      - text: '$\Gamma^\alpha_{00}$'
+        correct: true
+      - text: '$\Gamma^\alpha_{0\beta}$'
+        feedback: |
+          $\Gamma^\alpha_{0\beta}$ multiplies $\dot\gamma^0\dot\gamma^\beta$, which is $0$ for a particle at rest: the rest particle says nothing about it. Comparing velocities $v$ and $-v$ isolates it.
+      - text: 'All of them: one free particle is enough'
+        feedback: |
+          At rest only $(j,k) = (0,0)$ contributes, since every other product contains a spatial velocity component $\dot\gamma^\beta = 0$. The other coefficients need moving particles.
+    explanation: |
+      At rest the sum reduces to $\Gamma^\alpha_{00}(\dot\gamma^0)^2 = \Gamma^\alpha_{00} = 0$. Then velocities $v$ and $-v$: the terms linear in $v$ flip sign, the quadratic ones do not, so $\Gamma^\alpha_{0\beta} = 0$ and the quadratic form $\Gamma^\alpha_{\beta\delta}v^\beta v^\delta$ vanishes for all $v$, which with the symmetry $\Gamma^\alpha_{\beta\delta} = \Gamma^\alpha_{\delta\beta}$ (torsion free) gives $\Gamma^\alpha_{\beta\delta} = 0$.
+
+  - type: text
+    id: def-inertial
+    title: Inertial charts
+    body: |
+      Collecting: free particles at rest give $\Gamma^\alpha_{00} = 0$; velocities $v$ and $-v$ give $\Gamma^\alpha_{0\beta} = 0$; the remaining quadratic part gives $\Gamma^\alpha_{\beta\delta} = 0$; uniform flow already gave $\Gamma^0_{jk} = 0$. So every connection coefficient vanishes in this chart.
+
+      A stratified chart $(\mathcal{U},\mathscr{X})$ with
+      $$\Gamma_\mathscr{X} = 0$$
+      (all coefficients $(\Gamma_\mathscr{X})^i_{jk}$ zero on $\mathcal{U}$) is called **inertial**. The ice in the hook carries an inertial chart: the puck, free, sits still, and a pushed puck would glide straight.
+
+  - type: mcq
+    id: riem-zero
+    title: Curvature of an inertial chart
+    prompt: |
+      A stratified chart $(\mathcal{U},\mathscr{X})$ is inertial: all its connection coefficients vanish on $\mathcal{U}$. Recall that $\mathrm{Riem}^i_{jkm}$ is built from the coefficients and their first derivatives. What can you conclude about the curvature $\mathrm{Riem}$ on $\mathcal{U}$?
+    options:
+      - text: '$\mathrm{Riem} = 0$, in every chart, because it is a tensor whose components vanish in one chart'
+        correct: true
+      - text: '$\mathrm{Riem} = 0$ only in the inertial chart; in a rotating chart it can be nonzero'
+        feedback: |
+          That would be true of the coefficients $\Gamma$, which are not tensor components. $\mathrm{Riem}$ is a tensor: its components in another chart are Jacobian factors times the components here, and those are all zero.
+      - text: 'Nothing: zero coefficients do not imply zero derivatives of the coefficients'
+        feedback: |
+          A function that is zero on the whole open set $\mathcal{U}$ has zero derivatives there too. So every term $\partial\Gamma$ and $\Gamma\Gamma$ in $\mathrm{Riem}$ vanishes.
+      - text: 'Nothing: curvature needs a metric, and Newtonian spacetime has none'
+        feedback: |
+          $\mathrm{Riem}$ is defined by the connection alone, $\mathrm{Riem}^i_{jkm} = \partial_k\Gamma^i_{jm} - \partial_m\Gamma^i_{jk} + \Gamma\Gamma - \Gamma\Gamma$; no metric enters.
+    explanation: |
+      Every term of $\mathrm{Riem}^i_{jkm}$ is a derivative of a coefficient or a product of two coefficients, all zero on $\mathcal{U}$. Since $\mathrm{Riem}$ is a tensor, its components vanish in every chart on $\mathcal{U}$: a spacetime without gravity is flat. A rotating chart sees nonzero $\Gamma$'s but still $\mathrm{Riem} = 0$.
+
+  - type: text
+    id: other-charts
+    title: Every coefficient made by the chart
+    body: |
+      Now take any other stratified chart $(\mathcal{V},\mathscr{Y})$, such as the carousel's. Recall the transformation law of the coefficients from $\mathscr{X}$ to $\mathscr{Y}$: a **homogeneous** part, three Jacobian factors times $\Gamma_\mathscr{X}$, plus an **inhomogeneous** part, one Jacobian factor times a second derivative of the transition.
+
+      The second derivatives are those of
+      $$\text{ᛖ}_{\mathcal{V}\mathcal{U}} := \mathscr{X}\circ\mathscr{Y}^{-1},$$
+      the transition map that takes $\mathscr{Y}$-coordinates to $\mathscr{X}$-coordinates (subscripts read "from $\mathcal{V}$ to $\mathcal{U}$"). Its components are the functions $\mathscr{X}^s$ written in terms of $y^0,\dots,y^3$, so its second derivatives are $\partial^2\mathscr{X}^s/\partial\mathscr{Y}^k\partial\mathscr{Y}^j$.
+
+      In an inertial chart $\Gamma_\mathscr{X} = 0$, so the homogeneous part dies.
+
+  - type: build
+    id: build-inhom
+    title: What survives
+    prompt: |
+      $(\mathcal{U},\mathscr{X})$ is an inertial chart ($\Gamma_\mathscr{X} = 0$) and $(\mathcal{V},\mathscr{Y})$ another stratified chart. The transformation law is a homogeneous part (Jacobian factors times $\Gamma_\mathscr{X}$) plus an inhomogeneous part (a Jacobian factor times a second derivative of $\text{ᛖ}_{\mathcal{V}\mathcal{U}} = \mathscr{X}\circ\mathscr{Y}^{-1}$). Build $(\Gamma_\mathscr{Y})^i_{jk}$ (sum over $s$ implied).
+    prefix: '(\Gamma_\mathscr{Y})^i_{jk} ='
+    tiles:
+      - '\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}'
+      - '\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}'
+      - '\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^s}'
+      - '\frac{\partial^2\mathscr{Y}^s}{\partial\mathscr{X}^k\partial\mathscr{X}^j}'
+      - '(\Gamma_\mathscr{X})^s_{jk}'
+    answers:
+      - ['\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}', '\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}']
+      - ['\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}', '\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}']
+    wrong:
+      - answer: ['\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^s}', '\frac{\partial^2\mathscr{Y}^s}{\partial\mathscr{X}^k\partial\mathscr{X}^j}']
+        feedback: |
+          The free indices $j,k$ are lower indices of the new chart, so they must sit in the denominators as $\mathscr{Y}^j$, $\mathscr{Y}^k$; and the upper $i$ belongs to $\mathscr{Y}^i$ in a numerator. Your choice has $i$ on $\mathscr{X}$ and $j,k$ on $\mathscr{X}$.
+      - answer: ['\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}', '(\Gamma_\mathscr{X})^s_{jk}']
+        feedback: |
+          That is a piece of the homogeneous part, and it is zero in an inertial chart. What survives is the second-derivative term.
+    hint: |
+      Index check: upper $i$ belongs to the new chart $\mathscr{Y}$; the lower $j,k$ are derivatives with respect to the new coordinates.
+    explanation: |
+      $$(\Gamma_\mathscr{Y})^i_{jk} = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}.$$
+      Every coefficient in $\mathscr{Y}$ is produced by the change of chart alone, and which ones appear depends on which second derivatives of $\text{ᛖ}_{\mathcal{V}\mathcal{U}}$ are nonzero.
+
+  - type: text
+    id: rigid-axes
+    title: Rigidly moving axes
+    body: |
+      Let the axes of $\mathscr{Y}$ **rotate** by an angle $\theta(t)$ about the third axis, with their **origin** at the point $b^\alpha(t)$ of the inertial chart. Both charts are stratified, so they share $x^0 = y^0 = t$. The transition $\text{ᛖ}_{\mathcal{V}\mathcal{U}}$ sends $(t, y^1, y^2, y^3)$ to $(t, x^1, x^2, x^3)$ with
+      $$\begin{aligned}x^1 &= y^1\cos\theta - y^2\sin\theta + b^1\\ x^2 &= y^1\sin\theta + y^2\cos\theta + b^2\\ x^3 &= y^3 + b^3,\end{aligned}$$
+      where $\theta = \theta(t)$ and $b^\alpha = b^\alpha(t)$. Its inverse $\text{ᛖ}_{\mathcal{U}\mathcal{V}}$ rotates back:
+      $$\begin{aligned}y^1 &= (x^1 - b^1)\cos\theta\\ &\quad + (x^2 - b^2)\sin\theta.\end{aligned}$$
+
+      The carousel is the case $\theta = \omega t$, $b = 0$.
+
+  - type: mcq
+    id: which-second
+    title: Which second derivatives survive?
+    multiple: true
+    prompt: |
+      Rigid axes: the inertial coordinates in terms of the moving ones are $x^0 = y^0 = t$,
+      $$\begin{aligned}x^1 &= y^1\cos\theta - y^2\sin\theta + b^1\\ x^2 &= y^1\sin\theta + y^2\cos\theta + b^2\\ x^3 &= y^3 + b^3,\end{aligned}$$
+      with $\theta$ and $b^\alpha$ functions of $t = y^0$ only. Which second derivatives can be nonzero?
+    options:
+      - text: '$\partial^2\mathscr{X}^1/\partial\mathscr{Y}^0\partial\mathscr{Y}^2$'
+        correct: true
+      - text: '$\partial^2\mathscr{X}^1/\partial\mathscr{Y}^0\partial\mathscr{Y}^0$'
+        correct: true
+      - text: '$\partial^2\mathscr{X}^1/\partial\mathscr{Y}^1\partial\mathscr{Y}^2$'
+        feedback: |
+          At fixed time $x^1$ is linear in $y^1, y^2$: the first derivatives $\cos\theta$ and $-\sin\theta$ do not depend on any $y^\beta$, so a second spatial derivative is $0$.
+      - text: '$\partial^2\mathscr{X}^0/\partial\mathscr{Y}^0\partial\mathscr{Y}^0$'
+        feedback: |
+          $x^0 = y^0$ is linear: both charts read the same absolute time, so every second derivative of $\mathscr{X}^0$ vanishes.
+      - text: '$\partial^2\mathscr{X}^3/\partial\mathscr{Y}^0\partial\mathscr{Y}^1$'
+        feedback: |
+          $x^3 = y^3 + b^3(t)$ does not contain $y^1$ at all, so its derivative along $y^1$ is already $0$.
+    explanation: |
+      Time-row and space–space second derivatives vanish. What survives mixes time with space ($\partial_{y^0}$ of the rotation entries, e.g. $\partial(-\sin\theta)/\partial y^0 = -\dot\theta\cos\theta$) or is twice in time (from $\ddot\theta$, $\dot\theta^2$ and $\ddot b^\alpha$).
+
+  - type: text
+    id: ingredients
+    title: The ingredients
+    body: |
+      Write $c := \cos\theta$, $s := \sin\theta$. Since $\partial^2\mathscr{X}^0/\cdots = 0$, the $s$-sum in $(\Gamma_\mathscr{Y})^i_{jk}$ runs over spatial $\sigma\in\{1,2,3\}$ only, and then $(\Gamma_\mathscr{Y})^0_{jk} = 0$ because $\partial\mathscr{Y}^0/\partial\mathscr{X}^\sigma = 0$. The column $\partial\mathscr{Y}^\alpha/\partial\mathscr{X}^0$, though nonzero, never enters. The Jacobian factors needed are the rotation block
+      $$\begin{gathered}\frac{\partial\mathscr{Y}^1}{\partial\mathscr{X}^1} = c,\quad \frac{\partial\mathscr{Y}^1}{\partial\mathscr{X}^2} = s\\ \frac{\partial\mathscr{Y}^2}{\partial\mathscr{X}^1} = -s,\quad \frac{\partial\mathscr{Y}^2}{\partial\mathscr{X}^2} = c.\end{gathered}$$
+      Differentiating the rotation entries in time ($\dot c = -\dot\theta s$, $\dot s = \dot\theta c$):
+      $$\begin{gathered}\frac{\partial^2\mathscr{X}^1}{\partial\mathscr{Y}^0\partial\mathscr{Y}^1} = -\dot\theta s,\quad \frac{\partial^2\mathscr{X}^1}{\partial\mathscr{Y}^0\partial\mathscr{Y}^2} = -\dot\theta c\\ \frac{\partial^2\mathscr{X}^2}{\partial\mathscr{Y}^0\partial\mathscr{Y}^1} = \dot\theta c,\quad \frac{\partial^2\mathscr{X}^2}{\partial\mathscr{Y}^0\partial\mathscr{Y}^2} = -\dot\theta s.\end{gathered}$$
+
+  - type: build
+    id: build-g102
+    title: Assemble $\Gamma^1_{02}$
+    prompt: |
+      Rigid axes rotating by $\theta(t)$; write $c = \cos\theta$, $s = \sin\theta$. From an inertial chart,
+      $$(\Gamma_\mathscr{Y})^1_{02} = \sum_{\sigma}\frac{\partial\mathscr{Y}^1}{\partial\mathscr{X}^\sigma}\frac{\partial^2\mathscr{X}^\sigma}{\partial\mathscr{Y}^2\partial\mathscr{Y}^0},$$
+      with $\partial\mathscr{Y}^1/\partial\mathscr{X}^1 = c$, $\partial\mathscr{Y}^1/\partial\mathscr{X}^2 = s$, and
+      $$\begin{gathered}\partial^2\mathscr{X}^1/\partial\mathscr{Y}^0\partial\mathscr{Y}^1 = -\dot\theta s\\ \partial^2\mathscr{X}^1/\partial\mathscr{Y}^0\partial\mathscr{Y}^2 = -\dot\theta c\\ \partial^2\mathscr{X}^2/\partial\mathscr{Y}^0\partial\mathscr{Y}^1 = \dot\theta c\\ \partial^2\mathscr{X}^2/\partial\mathscr{Y}^0\partial\mathscr{Y}^2 = -\dot\theta s.\end{gathered}$$
+      Build the sum ($\sigma = 3$ contributes $0$).
+    prefix: '\Gamma^1_{02} ='
+    tiles:
+      - 'c\,(-\dot\theta c)'
+      - '+\,s\,(-\dot\theta s)'
+      - 'c\,(-\dot\theta s)'
+      - '+\,s\,(\dot\theta c)'
+    answers:
+      - ['c\,(-\dot\theta c)', '+\,s\,(-\dot\theta s)']
+    wrong:
+      - answer: ['c\,(-\dot\theta s)', '+\,s\,(\dot\theta c)']
+        feedback: |
+          Those second derivatives are along $y^0$ and $y^1$: you built $\Gamma^1_{01}$. For $\Gamma^1_{02}$ take the ones along $y^0$ and $y^2$: $-\dot\theta c$ and $-\dot\theta s$.
+    hint: |
+      $\sigma = 1$: $c$ times $\partial^2\mathscr{X}^1/\partial\mathscr{Y}^0\partial\mathscr{Y}^2$. $\sigma = 2$: $s$ times $\partial^2\mathscr{X}^2/\partial\mathscr{Y}^0\partial\mathscr{Y}^2$.
+    explanation: |
+      $$\Gamma^1_{02} = c(-\dot\theta c) + s(-\dot\theta s) = -\dot\theta(c^2 + s^2) = -\dot\theta.$$
+
+  - type: numeric
+    id: g102-value
+    title: Its value
+    prompt: |
+      For axes rotating by $\theta(t)$ relative to an inertial chart, with $c = \cos\theta$, $s = \sin\theta$:
+      $$\Gamma^1_{02} = c\,(-\dot\theta c) + s\,(-\dot\theta s).$$
+      Evaluate it at an instant where $\theta = 0.4$ and $\dot\theta = 2$.
+    answer: -2
+    wrong:
+      - value: -1.3934
+        feedback: |
+          That is $-2(c^2 - s^2) = -2\cos0.8$: a sign slipped on the second product. Both products are negative: $-\dot\theta c^2 - \dot\theta s^2$.
+      - value: 2
+        feedback: |
+          Both products carry the factor $-\dot\theta$: the sum is $-\dot\theta(c^2 + s^2)$.
+    hint: |
+      Factor out $-\dot\theta$ and use $c^2 + s^2 = 1$.
+    explanation: |
+      $-\dot\theta(\cos^2\theta + \sin^2\theta) = -\dot\theta = -2$, whatever $\theta$ is: the coefficient depends only on the angular velocity.
+
+  - type: numeric
+    id: g201-value
+    title: The partner coefficient
+    prompt: |
+      Axes rotating by $\theta(t)$ relative to an inertial chart; $c = \cos\theta$, $s = \sin\theta$. With $\partial\mathscr{Y}^2/\partial\mathscr{X}^1 = -s$, $\partial\mathscr{Y}^2/\partial\mathscr{X}^2 = c$, $\partial^2\mathscr{X}^1/\partial\mathscr{Y}^0\partial\mathscr{Y}^1 = -\dot\theta s$ and $\partial^2\mathscr{X}^2/\partial\mathscr{Y}^0\partial\mathscr{Y}^1 = \dot\theta c$,
+      $$\Gamma^2_{01} = (-s)(-\dot\theta s) + c\,(\dot\theta c).$$
+      What is $\Gamma^2_{01}$ when $\dot\theta = 3$?
+    answer: 3
+    wrong:
+      - value: -3
+        feedback: |
+          $(-s)(-\dot\theta s) = +\dot\theta s^2$: two minus signs. The sum is $\dot\theta(s^2 + c^2) = +\dot\theta$.
+    explanation: |
+      $\Gamma^2_{01} = \dot\theta(s^2 + c^2) = \dot\theta = 3$: the opposite sign of $\Gamma^1_{02} = -\dot\theta$, the pattern of an infinitesimal rotation.
+
+  - type: mcq
+    id: g101-trap
+    title: The diagonal ones
+    prompt: |
+      Axes rotating by $\theta(t)$ relative to an inertial chart; $c = \cos\theta$, $s = \sin\theta$. With $\partial^2\mathscr{X}^1/\partial\mathscr{Y}^0\partial\mathscr{Y}^1 = -\dot\theta s$ and $\partial^2\mathscr{X}^2/\partial\mathscr{Y}^0\partial\mathscr{Y}^1 = \dot\theta c$,
+      $$\Gamma^1_{01} = c\,(-\dot\theta s) + s\,(\dot\theta c).$$
+      What is $\Gamma^1_{01}$?
+    options:
+      - text: '$0$'
+        correct: true
+      - text: '$-\dot\theta$, like $\Gamma^1_{02}$'
+        feedback: |
+          The pattern does not copy over: here the two products are $-\dot\theta cs$ and $+\dot\theta sc$, which cancel instead of adding up to $c^2 + s^2$.
+      - text: '$-\dot\theta\sin\theta\cos\theta$'
+        feedback: |
+          That is the first product only. The second, $s\cdot\dot\theta c$, is equal and opposite.
+    explanation: |
+      $\Gamma^1_{01} = -\dot\theta cs + \dot\theta sc = 0$, and likewise $\Gamma^2_{02} = 0$. A rotation does not stretch the axis it moves along; it only turns $y^1$ into $y^2$ and back: $\Gamma^1_{02} = -\dot\theta$, $\Gamma^2_{01} = \dot\theta$.
+
+  - type: text
+    id: gamma00
+    title: Twice in time
+    body: |
+      What remains is $\Gamma^\alpha_{00}$, built from second time derivatives at fixed $y^\beta$. Differentiating $x^1 = y^1c - y^2s + b^1$ twice in $t$:
+      $$\begin{aligned}\frac{\partial^2\mathscr{X}^1}{\partial\mathscr{Y}^0\partial\mathscr{Y}^0} &= -\ddot\theta(y^1s + y^2c)\\ &\quad - \dot\theta^2(y^1c - y^2s) + \ddot b^1,\end{aligned}$$
+      and for $x^2 = y^1s + y^2c + b^2$:
+      $$\begin{aligned}\frac{\partial^2\mathscr{X}^2}{\partial\mathscr{Y}^0\partial\mathscr{Y}^0} &= \ddot\theta(y^1c - y^2s)\\ &\quad - \dot\theta^2(y^1s + y^2c) + \ddot b^2.\end{aligned}$$
+      Then $\Gamma^1_{00} = c\,(\cdots)_1 + s\,(\cdots)_2$ and $\Gamma^2_{00} = -s\,(\cdots)_1 + c\,(\cdots)_2$, where $(\cdots)_\sigma$ is the line for $x^\sigma$. The $\ddot\theta$- and $\dot\theta^2$-terms combine through $c^2 + s^2 = 1$.
+
+  - type: mcq
+    id: thetadot-sq
+    title: The $\dot\theta^2$ part
+    prompt: |
+      Axes rotating by $\theta(t)$; $c = \cos\theta$, $s = \sin\theta$. The $\dot\theta^2$-terms of $\partial^2\mathscr{X}^1/\partial\mathscr{Y}^0\partial\mathscr{Y}^0$ and $\partial^2\mathscr{X}^2/\partial\mathscr{Y}^0\partial\mathscr{Y}^0$ are
+      $$\begin{gathered}-\dot\theta^2(y^1c - y^2s)\\ -\dot\theta^2(y^1s + y^2c).\end{gathered}$$
+      $\Gamma^1_{00}$ takes $c$ times the first plus $s$ times the second. What is the $\dot\theta^2$ part of $\Gamma^1_{00}$?
+    options:
+      - text: '$-\dot\theta^2y^1$'
+        correct: true
+      - text: '$-\dot\theta^2(y^1c - y^2s)$'
+        feedback: |
+          That is the second derivative of $x^1$ alone, still written with the inertial axes. Multiplying by the rotation row $(c, s)$ turns it back to the moving axes: the $y^2$-terms cancel ($+y^2sc - y^2sc$) and the $y^1$-terms give $y^1(c^2 + s^2)$.
+      - text: '$-\dot\theta^2(y^1 + y^2)$'
+        feedback: |
+          The $y^2$-terms are $c\cdot(+\dot\theta^2y^2s)$ and $s\cdot(-\dot\theta^2y^2c)$: they cancel. Only $y^1$ survives.
+      - text: '$+\dot\theta^2y^1$'
+        feedback: |
+          Both pieces carry $-\dot\theta^2$; the sign flips only later, when $\Gamma^\alpha_{00}$ is moved to the force side of Newton II.
+    explanation: |
+      $$\begin{aligned}&-\dot\theta^2\big[c(y^1c - y^2s) + s(y^1s + y^2c)\big]\\ &= -\dot\theta^2y^1(c^2 + s^2) = -\dot\theta^2y^1.\end{aligned}$$
+      For the carousel ($\dot\theta = \omega$) this is $\Gamma^1_{00} = -\omega^2y^1$.
+
+  - type: text
+    id: full-list
+    title: All the coefficients
+    body: |
+      Collecting the $\ddot\theta$-, $\dot\theta^2$- and $\ddot b$-terms in the same way, the only nonzero coefficients of rigidly moving axes are
+      $$\begin{gathered}\Gamma^1_{02} = \Gamma^1_{20} = -\dot\theta\\ \Gamma^2_{01} = \Gamma^2_{10} = \dot\theta\end{gathered}$$
+      and
+      $$\begin{aligned}\Gamma^1_{00} &= -\dot\theta^2y^1 - \ddot\theta\,y^2\\ &\quad + c\,\ddot b^1 + s\,\ddot b^2\\ \Gamma^2_{00} &= -\dot\theta^2y^2 + \ddot\theta\,y^1\\ &\quad - s\,\ddot b^1 + c\,\ddot b^2\\ \Gamma^3_{00} &= \ddot b^3.\end{aligned}$$
+      All $\Gamma^\alpha_{\beta\delta}$ vanish: the change is linear in space.
+
+  - type: numeric
+    id: translational-c
+    title: An accelerating origin
+    prompt: |
+      Rigid axes that do not rotate ($\theta = 0$) but whose origin sits at $b(t) = (t^2, 0, 0)$ in an inertial chart. For rigid axes,
+      $$\Gamma^1_{00} = -\dot\theta^2y^1 - \ddot\theta\,y^2 + \cos\theta\,\ddot b^1 + \sin\theta\,\ddot b^2.$$
+      What is $\Gamma^1_{00}$?
+    answer: 2
+    wrong:
+      - value: 0
+        feedback: |
+          Without rotation the $\dot\theta$- and $\ddot\theta$-terms vanish, but $\cos0\cdot\ddot b^1$ remains, and $\ddot b^1 = 2$ for $b^1 = t^2$.
+      - value: 1
+        feedback: |
+          $\ddot b^1$ is the second derivative of $t^2$, which is $2$, not $1$.
+    explanation: |
+      $\theta = 0$ leaves $\Gamma^\alpha_{00} = \ddot b^\alpha$, so $\Gamma^1_{00} = 2$. This is the grid $y^1 = x^1 - t^2$ of an observer whose origin accelerates: every body feels the uniform pseudo-force $-2m$, as in an accelerating vehicle.
+
+  - type: text
+    id: split
+    title: Splitting the $\Gamma$-term
+    body: |
+      Along a worldline parametrized by absolute time write $\gamma^\alpha := \mathscr{Y}^\alpha\circ\gamma$ for its coordinates in the moving chart (the widget's $y^\alpha$), so $\dot\gamma^0 = 1$. Spatial Newton II reads
+      $$\ddot\gamma^\alpha + \Gamma^\alpha_{jk}\dot\gamma^j\dot\gamma^k = \frac{f^\alpha_\gamma}{m}.$$
+      Split the double sum by how many of $j, k$ are $0$:
+      $$\begin{aligned}\Gamma^\alpha_{jk}\dot\gamma^j\dot\gamma^k &= \Gamma^\alpha_{00}\\ &\quad + (\Gamma^\alpha_{0\beta} + \Gamma^\alpha_{\beta0})\dot\gamma^\beta\\ &\quad + \Gamma^\alpha_{\beta\delta}\dot\gamma^\beta\dot\gamma^\delta.\end{aligned}$$
+      For rigid axes the last line is $0$.
+
+  - type: mcq
+    id: factor-two
+    title: Where the 2 comes from
+    prompt: |
+      In a stratified chart with $\dot\gamma^0 = 1$, the terms of $\Gamma^\alpha_{jk}\dot\gamma^j\dot\gamma^k$ with exactly one time index sum to $2\Gamma^\alpha_{0\beta}\dot\gamma^\beta$. Where does the factor $2$ come from?
+    options:
+      - text: 'From the two index pairs $(j,k) = (0,\beta)$ and $(\beta,0)$, equal because the connection is torsion free'
+        correct: true
+      - text: 'From differentiating $(\dot\gamma^\beta)^2$, as in the power rule'
+        feedback: |
+          Nothing is differentiated here: the sum over $j$ and $k$ is just expanded. The $2$ counts terms, it is not an exponent brought down.
+      - text: 'From the two rotating axes $y^1$ and $y^2$'
+        feedback: |
+          The factor $2$ appears for any stratified chart, rotating or not, and even in three rotating dimensions it stays $2$: it counts the slots where the time index can sit.
+      - text: 'From the $\tfrac12$ in the formula for the coefficients'
+        feedback: |
+          There is no metric formula here: Newton-Cartan coefficients are not computed from a metric. The $2$ comes from the symmetry $\Gamma^\alpha_{0\beta} = \Gamma^\alpha_{\beta0}$.
+    explanation: |
+      $(\Gamma^\alpha_{0\beta} + \Gamma^\alpha_{\beta0})\dot\gamma^\beta = 2\Gamma^\alpha_{0\beta}\dot\gamma^\beta$ since the torsion-free connection has symmetric lower indices. This $2$ is the famous $2$ of the Coriolis force $2m\dot\theta\,\dot\gamma$.
+
+  - type: text
+    id: four-forces
+    title: The four pseudo-forces
+    body: |
+      Insert the coefficients and move every $\Gamma$-term to the right. With $c = \cos\theta$, $s = \sin\theta$:
+      $$\begin{aligned}m\ddot\gamma^1 = f^1_\gamma &+ 2m\dot\theta\,\dot\gamma^2 + m\dot\theta^2\gamma^1\\ &+ m\ddot\theta\,\gamma^2 - m(c\,\ddot b^1 + s\,\ddot b^2)\end{aligned}$$
+      $$\begin{aligned}m\ddot\gamma^2 = f^2_\gamma &- 2m\dot\theta\,\dot\gamma^1 + m\dot\theta^2\gamma^2\\ &- m\ddot\theta\,\gamma^1 - m(-s\,\ddot b^1 + c\,\ddot b^2)\end{aligned}$$
+      $$m\ddot\gamma^3 = f^3_\gamma - m\ddot b^3.$$
+      Term by term, the pseudo-forces of classical mechanics:
+      - **Coriolis** $\pm2m\dot\theta\,\dot\gamma$: from $\Gamma^\alpha_{0\beta}$; needs a velocity in the moving chart.
+      - **centrifugal** $m\dot\theta^2\gamma$: from $\Gamma^\alpha_{00}$; points away from the rotation axis.
+      - **Euler** $\pm m\ddot\theta\,\gamma$: from $\Gamma^\alpha_{00}$; only while the spin rate changes.
+      - **translational** $-m\ddot b$ (in the moving axes): from $\Gamma^\alpha_{00}$; the same for every particle, the push felt in an accelerating vehicle.
+
+  - type: mcq
+    id: which-forces-rest
+    title: Sitting on the carousel
+    prompt: |
+      A chart rotates relative to an inertial chart at constant angular speed ($\dot\theta = \omega\neq0$, $\ddot\theta = 0$) with fixed origin ($b = 0$). A particle is momentarily at rest in the rotating chart ($\dot\gamma^\alpha = 0$), away from the axis. In
+      $$\begin{aligned}m\ddot\gamma^1 = f^1_\gamma &+ 2m\dot\theta\,\dot\gamma^2 + m\dot\theta^2\gamma^1\\ &+ m\ddot\theta\,\gamma^2 - m(c\,\ddot b^1 + s\,\ddot b^2),\end{aligned}$$
+      which pseudo-forces (Coriolis, centrifugal, Euler, translational) are nonzero?
+    options:
+      - text: 'Only the centrifugal force'
+        correct: true
+      - text: 'Centrifugal and Coriolis'
+        feedback: |
+          Coriolis is $2m\dot\theta\,\dot\gamma$: it needs a velocity in the rotating chart, and here $\dot\gamma = 0$.
+      - text: 'Centrifugal and Euler'
+        feedback: |
+          Euler is $m\ddot\theta\,\gamma$: it needs the spin rate to change. At constant $\omega$, $\ddot\theta = 0$.
+      - text: 'All four: rotation produces all of them'
+        feedback: |
+          Each has its own trigger: Coriolis needs $\dot\gamma\neq0$, Euler needs $\ddot\theta\neq0$, translational needs $\ddot b\neq0$. Here only $\dot\theta^2\gamma\neq0$.
+    explanation: |
+      With $\dot\gamma = 0$, $\ddot\theta = 0$, $\ddot b = 0$ only $m\omega^2\gamma$ survives: the outward push a rider feels. The **Co-moving** preset of the widget shows it: the sum arrow equals the centrifugal one.
+
+  - type: numeric
+    id: hook-coriolis
+    title: The puck, resolved
+    prompt: |
+      A force-free puck stays at $x = (1,0)$ on the ice; a chart rotates counterclockwise at $\dot\theta = 1$ ($\ddot\theta = 0$, $b = 0$). At $t = 0$ the puck has rotating coordinates $\gamma = (1, 0)$ and rotating velocity $\dot\gamma = (0, -1)$. Per unit mass the first components of the pseudo-forces are Coriolis $2\dot\theta\,\dot\gamma^2$ and centrifugal $\dot\theta^2\gamma^1$. What is the Coriolis component?
+    answer: -2
+    wrong:
+      - value: 0
+        feedback: |
+          The puck is at rest on the ice but **moving** in the rotating chart, $\dot\gamma^2 = -1$, so the Coriolis term $2\cdot1\cdot(-1)$ does not vanish.
+      - value: -1
+        feedback: |
+          $-1$ is the total $\ddot\gamma^1$. The Coriolis term alone is $2\dot\theta\,\dot\gamma^2 = 2\cdot1\cdot(-1)$.
+    explanation: |
+      Coriolis $-2$ (inward), centrifugal $+1$ (outward): the sum is $\ddot\gamma^1 = -1$, exactly the centripetal acceleration of the clockwise circle. The puck is pushed by nothing; the floor's chart books its circle as Coriolis beating centrifugal.
+
+  - type: widget
+    id: widget-cancel
+    title: When the two cancel
+    widget: rotating-grid
+    config:
+      omega: 1
+      x0: [1, 0]
+      v: [0, 0.5]
+      view: rotating
+      ghost: true
+      presets:
+        - { label: At rest, v: [0, 0] }
+        - { label: Cancel, v: [0, 0.5] }
+        - { label: Co-moving, v: [0, 1] }
+    body: |
+      The rotating chart only, at $\omega = 1$. The puck starts at $x_0 = (1,0)$ with inertial velocity $v = (0, 0.5)$ (preset **Cancel**); the faint dashed curve is its whole path in the rotating chart. At $t = 0$ read the gold Coriolis arrow, the green centrifugal arrow and their sum ÿ in the readout. Then drag $t$ forward.
+
+  - type: numeric
+    id: cancel-coriolis
+    title: Coriolis at the start
+    prompt: |
+      A free particle starts at $x_0 = (1, 0)$ of an inertial chart with velocity $v = (0, 0.5)$; a chart rotates at $\dot\theta = \omega = 1$. At $t = 0$ (where the charts agree) its rotating velocity is $\dot\gamma = (0, -0.5)$. What is the first component of the Coriolis term per unit mass, $2\dot\theta\,\dot\gamma^2$?
+    answer: -1
+    wrong:
+      - value: 1
+        feedback: |
+          $\dot\gamma^2 = -0.5$ is negative: the floor runs ahead of the particle. $2\cdot1\cdot(-0.5) = -1$.
+      - value: -0.5
+        feedback: |
+          The Coriolis term has the factor $2$: $2\cdot1\cdot(-0.5)$.
+    explanation: |
+      Coriolis $(-1, 0)$ and centrifugal $\omega^2\gamma = (1, 0)$ cancel: $\ddot\gamma = 0$ at $t = 0$.
+
+  - type: mcq
+    id: cancel-straight
+    title: Does it go straight?
+    prompt: |
+      A free particle seen in a chart rotating at $\omega = 1$ has, at $t = 0$, Coriolis $(-1, 0)$ and centrifugal $(1, 0)$ per unit mass, so its rotating acceleration is $\ddot\gamma = 0$ at that instant. Does it move on a straight line in the rotating chart?
+    options:
+      - text: 'No: the forces cancel only at that instant; its path in the rotating chart still curls'
+        correct: true
+      - text: 'Yes: zero acceleration means a straight line at constant velocity'
+        feedback: |
+          Zero acceleration at one instant is not zero acceleration for all time. As the particle moves, $\gamma$ and $\dot\gamma$ change, the two terms stop balancing, and the path bends (the dashed curve in the widget).
+      - text: 'Yes, because the particle is free and free particles move straight'
+        feedback: |
+          Free particles move straight in the **inertial** chart. In the rotating chart their coordinates obey Newton II with the $\Gamma$-terms, which bend the coordinate path.
+    explanation: |
+      For $v = (0, 0.5)$, $\gamma^1 = \cos t + 0.5t\sin t$, $\gamma^2 = -\sin t + 0.5t\cos t$: $\ddot\gamma(0) = 0$, but at $t = 4$ the Coriolis term is about $(3.68, 1.86)$. Cancellation is a momentary balance, not inertial motion.
+
+  - type: text
+    id: polar-footnote
+    title: What is not a pseudo-force
+    body: |
+      $\Gamma^\alpha_{\beta\delta}$ involves only the spatial second derivatives $\partial^2\mathscr{X}^\sigma/\partial\mathscr{Y}^\delta\partial\mathscr{Y}^\beta$, so it vanishes for every change **linear in the spatial coordinates**. It appears when the spatial grid is curvilinear, even at rest. Polar coordinates $(r, \varphi)$ in an inertial plane have $\Gamma^r_{\varphi\varphi} = -r$, and a free particle obeys
+      $$\ddot r - r\dot\varphi^2 = 0.$$
+      The term $-r\dot\varphi^2$ is part of the curvilinear expression of the acceleration, not counted as a pseudo-force: no axes move.
+
+      Rigid motions are the most general changes from an inertial chart to cartesian axes moving with respect to it. Nothing forbids more exotic stratified charts, related by non-rigid changes (a grid that stretches or shears in time), whose $\Gamma$-terms take other forms. The four classical pseudo-forces are the small subset of chart effects produced by rigidly moving axes.
+
+  - type: mcq
+    id: polar-which
+    title: Where $-r\dot\varphi^2$ lives
+    prompt: |
+      In an inertial plane, switch the spatial grid to polar coordinates $(r,\varphi)$, at rest (not rotating, not moving). A free particle obeys $\ddot r - r\dot\varphi^2 = 0$. Which kind of coefficient produces the term $-r\dot\varphi^2$?
+    options:
+      - text: '$\Gamma^\alpha_{\beta\delta}$ (both lower indices spatial): $\Gamma^r_{\varphi\varphi} = -r$, from a curvilinear grid at rest'
+        correct: true
+      - text: '$\Gamma^\alpha_{00}$: it is the centrifugal force $m\dot\theta^2r$'
+        feedback: |
+          It looks like centrifugal, but the grid does not rotate: $\dot\theta = 0$, so $\Gamma^\alpha_{00} = 0$. Here $\dot\varphi$ is the particle's own angular velocity, multiplied twice, the signature of a $\Gamma^\alpha_{\beta\delta}\dot\gamma^\beta\dot\gamma^\delta$ term.
+      - text: '$\Gamma^\alpha_{0\beta}$: it is a Coriolis force'
+        feedback: |
+          Coriolis terms are linear in the velocity and need a moving grid. $-r\dot\varphi^2$ is quadratic in velocity and arises for a grid at rest.
+    explanation: |
+      The polar grid at rest is a change nonlinear in space, so $\Gamma^r_{\varphi\varphi} = -r$ appears in the $\Gamma^\alpha_{\beta\delta}$ slot. Classical mechanics keeps the name pseudo-force for the terms made by moving axes, $\Gamma^\alpha_{0\beta}$ and $\Gamma^\alpha_{00}$.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** switch gravity back on. Then no stratified chart makes every free fall straight everywhere, and the Newtonian potential enters the very same slot as the centrifugal and translational forces, $\Gamma^\alpha_{00}$: gravity in the connection.
