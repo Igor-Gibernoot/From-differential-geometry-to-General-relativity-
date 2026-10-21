@@ -1,0 +1,405 @@
+id: ch08-integration
+title: Integration on Manifolds
+kind: concept
+
+own: |
+  - **Setting**: an oriented manifold $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow)$ with a volume form $\Omega$, a chart $(\mathcal{U},\mathscr{X})\in\mathcal{A}^\uparrow$ with coordinates $\alpha$ and scalar density $\omega_\mathscr{X}$, a smooth function $f$, and an open region $\mathcal{D}\subseteq\mathcal{U}$ whose closure $\overline{\mathcal{D}}$ (the region plus its boundary points) is compact and contained in $\mathcal{U}$.
+  - **Integral over a region**: an ordinary integral over the bounded set $\mathscr{X}(\mathcal{D})\subseteq\mathbb{R}^d$,
+  {{ $$\begin{aligned}\int_\mathcal{D}\Omega f :=&\int_{\mathscr{X}(\mathcal{D})}d^d\alpha\,(\omega_\mathscr{X}\circ\mathscr{X}^{-1})\\ &\qquad\cdot(f\circ\mathscr{X}^{-1})\end{aligned}$$ }}
+  Example: the quarter annulus $1<r<2$, $0<\theta<\tfrac\pi2$ with $\Omega_{\mathrm{E}}$ and $f = 1$ gives $\tfrac{3\pi}4$ in the cartesian and in the polar chart.
+  - **Chart independence**: in a second chart $(\mathcal{V},\mathscr{Y})\in\mathcal{A}^\uparrow$ the change of variables brings $|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}|$, the density law $\omega_\mathscr{Y} = \det(\text{ᛞ}_{\mathcal{U}\mathcal{V}})\,\omega_\mathscr{X}$ brings $\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}$, and in an oriented atlas {{ $|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}|/\det\text{ᛞ}_{\mathcal{U}\mathcal{V}} = +1$ }}. A chart of the opposite orientation flips the sign of every integral (mirror chart: $-\tfrac{3\pi}4$).
+  - **Support**: {{ $\mathrm{supp}\,f := \overline{\{p\in\mathcal{M}\mid f(p)\neq0\}}$ }}, the closure of where $f$ is nonzero; vanishing at one point does not keep that point out of the support.
+  - **Partition of unity** subordinate to an open cover $\{\mathcal{U}_a\}$: smooth $\text{ᚹ}_n\colon\mathcal{M}\to[0,1]$, each $\mathrm{supp}\,\text{ᚹ}_n$ inside some $\mathcal{U}_a$, locally finite (every point has a neighbourhood meeting finitely many supports), and {{ $\sum_n\text{ᚹ}_n(p) = 1$ }} for every $p$. It exists on every smooth manifold (Hausdorff and second countable).
+  - **Integral over the manifold**, for $f$ with compact support and $\mathrm{supp}\,\text{ᚹ}_n\subseteq\mathcal{U}_n$, $(\mathcal{U}_n,\mathscr{X}_n)\in\mathcal{A}^\uparrow$:
+  {{ $$\int_\mathcal{M}\Omega f := \sum_n\int_{\mathcal{U}_n}\Omega\,\text{ᚹ}_n f$$ }}
+  Finitely many terms are nonzero, and the value does not depend on the partition. Circle with $\omega_\theta = 1$: two pieces of $\pi$ each, total $2\pi$.
+
+cards:
+  - type: text
+    id: hook
+    title: The length of a circle, without one chart
+    body: |
+      Physics is full of integrals over space or spacetime: total charge, total mass, and the action, whose extremum gives the field equations. On a manifold we can only compute in charts. Recall the object that makes this possible, a **volume form** $\Omega$ (a nowhere-zero, totally antisymmetric $(0,d)$-tensor field), with one function per chart, the **scalar density** $\omega_\mathscr{X}$.
+
+      Take the simplest closed manifold, the circle $S^1$, with its two angle charts: $\theta\in(0,2\pi)$ on $\mathcal{U} = S^1\setminus\{(1,0)\}$ and $\varphi\in(-\pi,\pi)$ on $\mathcal{V} = S^1\setminus\{(-1,0)\}$. Its length should be $2\pi$, the integral of the constant function $1$.
+
+      But **no chart holds the whole circle**: each misses a point. Here dropping one point looks harmless. On a general manifold, which sets may you drop, and in which chart? We need a recipe that never asks.
+
+  - type: widget
+    id: cover-widget
+    title: Two charts, one circle
+    widget: circle-charts
+    config:
+      angle: 60
+      show: both
+      snap: 15
+      presets:
+        - { label: Upper piece, show: both, angle: 60 }
+        - { label: Lower piece, show: both, angle: 300 }
+        - { label: Point (−1, 0), show: both, angle: 180 }
+    body: |
+      Chart A (outer ring) is $\theta\in(0,2\pi)$, missing $(1,0)$; chart B (inner ring) is $\varphi\in(-\pi,\pi)$, missing $(-1,0)$. The gold arcs are the overlap $\mathcal{U}\cap\mathcal{V}$, in two pieces.
+
+      Drag $p$ all the way round. Every point is in at least one chart, and most points are in both.
+
+  - type: mcq
+    id: hook-guess
+    title: Guess a recipe
+    prompt: |
+      Before any theory, guess. The circle $S^1$ is covered by the angle charts $\theta\in(0,2\pi)$ (missing $(1,0)$) and $\varphi\in(-\pi,\pi)$ (missing $(-1,0)$), which overlap on the circle minus those two points. Which recipe for integrating a function over $S^1$ could work on any manifold?
+    options:
+      - text: 'Split the function into pieces, each vanishing outside a region well inside one chart; integrate each piece in its chart and add'
+        correct: true
+      - text: 'Integrate over the whole domain of each chart and add the results'
+        feedback: |
+          For the constant $1$ that gives $2\pi + 2\pi = 4\pi$: every point of the overlap is counted twice. Adding chart integrals only works if the pieces do not overlap.
+      - text: 'Use the chart that covers the most and ignore the points it misses'
+        feedback: |
+          On the circle the missing point has zero length, so it works there. In general a chart can miss a lot (a half-circle chart misses half the circle), and the recipe has to decide which leftovers are negligible: exactly what we wanted to avoid.
+      - text: 'Average the integrals of the different charts'
+        feedback: |
+          Averaging $2\pi$ over $\mathcal{U}$ and $2\pi$ over $\mathcal{V}$ happens to give $2\pi$, but with a third chart, say a half-circle, the average changes. A definition must not depend on which charts you happen to list.
+    explanation: |
+      Cut the function into pieces that each live inside one chart. The tool that does the cutting smoothly is a **partition of unity**, the second half of this lesson. First: the integral of a piece that lives inside one chart.
+
+  - type: numeric
+    id: circle-density
+    title: A volume form on the circle
+    prompt: |
+      In dimension $d = 1$ a volume form is a nowhere-zero covector field (antisymmetry says nothing with one slot). On the circle take $\Omega$ with scalar density $\omega_\theta = 1$ in the angle chart $\theta\in(0,2\pi)$. Under a change of chart the density obeys $\omega_\varphi = \frac{d\theta}{d\varphi}\,\omega_\theta$. On the lower piece of the overlap the second angle chart is $\varphi = \theta - 2\pi$. What is $\omega_\varphi$ there?
+    answer: 1
+    answerText: '1'
+    wrong:
+      - value: -1
+        feedback: |
+          The jump of $2\pi$ between the two pieces is a shift, not a reflection: $\theta = \varphi + 2\pi$, so $d\theta/d\varphi = 1$, and the sign stays.
+      - value: 0
+        feedback: |
+          A shift by a constant has derivative $1$, not $0$: $\theta = \varphi + 2\pi$ gives $d\theta/d\varphi = 1$. (And a volume form is never zero.)
+    hint: |
+      Write $\theta$ in terms of $\varphi$ and differentiate.
+    explanation: |
+      $\theta = \varphi + 2\pi$, so $d\theta/d\varphi = 1$ and $\omega_\varphi = 1$; on the upper piece $\varphi = \theta$ gives the same. Both Jacobians are $+1 > 0$, so $\{\theta,\varphi\}$ is an **oriented atlas** of $S^1$, and $\Omega$ is the volume form that measures length along the circle.
+
+  - type: text
+    id: definition
+    title: The integral inside one chart
+    body: |
+      Let $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow)$ be an oriented manifold ($\mathcal{O}$ its topology, $\mathcal{A}^\uparrow$ an oriented atlas) with a volume form $\Omega$. Take a chart $(\mathcal{U},\mathscr{X})\in\mathcal{A}^\uparrow$, coordinates $\alpha = \mathscr{X}(p)$, a smooth function $f$, and an open region $\mathcal{D}\subseteq\mathcal{U}$. The **integral of $f$ over $\mathcal{D}$** is
+      $$\begin{aligned}\int_\mathcal{D}\Omega f :=&\int_{\mathscr{X}(\mathcal{D})}d^d\alpha\,(\omega_\mathscr{X}\circ\mathscr{X}^{-1})(\alpha)\\ &\qquad\cdot(f\circ\mathscr{X}^{-1})(\alpha).\end{aligned}$$
+      Read it from right to left: the chart representative of $f$, times the scalar density written in coordinates, integrated over the image $\mathscr{X}(\mathcal{D})\subseteq\mathbb{R}^d$ as in calculus.
+
+      Equivalently, integrate over the whole $\mathscr{X}(\mathcal{U})$ after cutting $f$ off with the **indicator function** $\iota$ of $\mathcal{D}$ ($1$ on $\mathcal{D}$, $0$ elsewhere): $\iota f$ equals $f$ on $\mathcal{D}$ and vanishes outside it, so $\iota\circ\mathscr{X}^{-1}$ is $1$ on $\mathscr{X}(\mathcal{D})$ and $0$ elsewhere.
+
+  - type: text
+    id: compact
+    title: Keep away from the edge
+    body: |
+      One condition remains: the **closure** $\overline{\mathcal{D}}$, the region together with its boundary points, must be **compact** and contained in $\mathcal{U}$. In $\mathbb{R}^d$ the compact sets are the closed and bounded ones; in general, a set is compact if from any family of open sets covering it, finitely many already cover it (stated here as the definition, without more theory).
+
+      Each half of the condition blocks a failure. On the real line with the identity chart and $\omega = 1$, so that the integral of $f = 1$ is a length:
+      - **Escape to infinity.** $\mathcal{D} = (0,\infty)$ has closure $[0,\infty)$, closed but unbounded: $\int_0^\infty d\alpha = \infty$.
+      - **Reaching the chart's edge.** $\mathcal{D} = (0,1)$ is the whole domain of the chart $\mathscr{Y}(p) = \tan(\pi(p-\tfrac12))$. Its closure $[0,1]$ is compact, but the endpoints are not in the domain. The density law gives $\omega_\mathscr{Y} = 1/(\pi(1+\beta^2))$, and $\mathscr{Y}(\mathcal{D}) = \mathbb{R}$:
+      $$\int_{-\infty}^{\infty}\frac{d\beta}{\pi(1+\beta^2)} = 1.$$
+      Right answer, but only as an improper integral.
+
+      With the condition, $\mathscr{X}(\mathcal{D})$ is bounded and the integrand is bounded on it, so the integral is an ordinary, finite one.
+
+  - type: mcq
+    id: allowed-regions
+    title: Which regions fit?
+    multiple: true
+    prompt: |
+      On the circle $S^1$, use the angle chart $\theta\in(0,2\pi)$, defined on $\mathcal{U} = S^1\setminus\{(1,0)\}$. A region $\mathcal{D}$ may be integrated over in this chart only if its closure $\overline{\mathcal{D}}$ (region plus boundary points) is compact and contained in $\mathcal{U}$. Which arcs qualify? Select all that apply.
+    options:
+      - text: 'The arc $\tfrac\pi4<\theta<\tfrac{7\pi}4$'
+        correct: true
+      - text: 'The arc $\tfrac\pi2<\theta<\pi$'
+        correct: true
+      - text: 'The arc $0<\theta<\pi$ (the upper half-circle)'
+        feedback: |
+          Its closure adds the endpoints $\theta\to0$ and $\theta = \pi$, and the first is the point $(1,0)$, which is not in $\mathcal{U}$. The region touches the chart's edge.
+      - text: 'The whole chart domain $\mathcal{U}$'
+        feedback: |
+          The closure of $\mathcal{U}$ in $S^1$ is all of $S^1$, which contains $(1,0)\notin\mathcal{U}$. A chart's own domain never qualifies when the chart misses something nearby.
+    explanation: |
+      Closures: $[\tfrac\pi4,\tfrac{7\pi}4]$ and $[\tfrac\pi2,\pi]$ stay inside $\mathcal{U}$ (closed arcs of a circle are compact). The upper half-circle and $\mathcal{U}$ itself reach $(1,0)$. So the whole circle can never be done in this chart: it needs the gluing that comes next.
+
+  - type: numeric
+    id: annulus-polar
+    title: A quarter annulus in polar coordinates
+    prompt: |
+      Plane with points $(a,b)$, Euclidean area form $\Omega_{\mathrm{E}}$, whose scalar density is $\omega_\mathscr{X} = 1$ in the cartesian chart and $\omega_\mathscr{Y} = r$ in the polar chart $\mathscr{Y} = (r,\theta)$, $\theta\in(-\pi,\pi)$, defined off the cut $\{b = 0,\ a\le0\}$. The region $\mathcal{D}$ is the quarter annulus $1<r<2$, $0<\theta<\tfrac\pi2$; its closure stays away from the cut. Compute $\int_\mathcal{D}\Omega_{\mathrm{E}}\,1$ in the polar chart (decimals are fine).
+    answer: 2.35619449
+    tolerance: 0.001
+    answerText: '$\tfrac{3\pi}4\approx2.356$'
+    wrong:
+      - value: 1.5708
+        feedback: |
+          That is $\int_1^2\int_0^{\pi/2}d\theta\,dr = \tfrac\pi2$: the scalar density $\omega_\mathscr{Y} = r$ is missing. The definition multiplies the chart representative of $f$ by the density in coordinates.
+      - value: 4.712389
+        feedback: |
+          $\int_1^2 r\,dr = \tfrac{4-1}2 = \tfrac32$, then times $\tfrac\pi2$. It looks like the factor $\tfrac12$ of $\tfrac{r^2}2$ was dropped.
+    hint: |
+      The integrand is $\omega_\mathscr{Y}\cdot1 = r$ over the rectangle $1<r<2$, $0<\theta<\tfrac\pi2$ of chart values.
+    explanation: |
+      $$\int_1^2\!\!\int_0^{\pi/2}r\,d\theta\,dr = \frac32\cdot\frac\pi2 = \frac{3\pi}4.$$
+      In the cartesian chart, with $\omega_\mathscr{X} = 1$, the integral is the plain area of the quarter annulus, $\tfrac14(\pi\cdot2^2-\pi\cdot1^2) = \tfrac{3\pi}4$. Same number in both charts.
+
+  - type: mcq
+    id: disc-polar
+    title: The whole disc in polar coordinates?
+    prompt: |
+      Plane with points $(a,b)$, polar chart $\mathscr{Y} = (r,\theta)$, $\theta\in(-\pi,\pi)$, defined off the cut $\{b = 0,\ a\le0\}$ (which includes the origin). Can the integral over the unit disc $a^2+b^2<1$ be computed by the one-chart definition in this chart, which needs the closure of the region compact and inside the chart domain?
+    options:
+      - text: 'No: the closed disc contains points of the cut, including the origin, where the polar chart is not defined'
+        correct: true
+      - text: 'Yes: the cut is a segment of zero area, so it does not matter'
+        feedback: |
+          Zero area is why the hook's polar computation $\iint r\,dr\,d\theta = \pi$ gave the right number. But the definition asks for the closure inside the chart domain, so that no "negligible" set has to be dropped by hand.
+      - text: 'Yes, because the closed unit disc is compact'
+        feedback: |
+          Compact is half the condition. The other half, closure inside the chart domain, fails: the closed disc meets the cut.
+    explanation: |
+      The disc is fine in the cartesian chart. In the polar chart it has to be cut into pieces away from the cut, exactly the gluing problem of the circle.
+
+  - type: text
+    id: independence-setup
+    title: Is it the same in every chart?
+    body: |
+      Take a second chart $(\mathcal{V},\mathscr{Y})\in\mathcal{A}^\uparrow$ with coordinates $\beta$ and $\overline{\mathcal{D}}\subseteq\mathcal{U}\cap\mathcal{V}$, so both charts can compute $\int_\mathcal{D}\Omega f$. Recall the transition map $\text{ᛖ}_{\mathcal{V}\mathcal{U}} := \mathscr{X}\circ\mathscr{Y}^{-1}$, $\alpha = \text{ᛖ}_{\mathcal{V}\mathcal{U}}(\beta)$, and its Jacobian
+      $$(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j = \frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}.$$
+      It maps $\mathscr{Y}(\mathcal{D})$ onto $\mathscr{X}(\mathcal{D})$. The change of variables $d^d\alpha = d^d\beta\,|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}(\beta)|$, together with $\mathscr{X}^{-1}\circ\text{ᛖ}_{\mathcal{V}\mathcal{U}} = \mathscr{Y}^{-1}$, turns the definition in $\mathscr{X}$ into
+      $$\begin{aligned}\int_\mathcal{D}\Omega f =&\int_{\mathscr{Y}(\mathcal{D})}d^d\beta\,\big|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}\big|\\ &\qquad\cdot\omega_\mathscr{X}\,f,\end{aligned}$$
+      with $\omega_\mathscr{X}$ and $f$ evaluated at $p = \mathscr{Y}^{-1}(\beta)$. The function has simply become its representative in the new chart; the density is still the one of the old chart.
+
+  - type: build
+    id: independence-build
+    title: Swap the density
+    prompt: |
+      Two charts $\mathscr{X}$, $\mathscr{Y}$ of an oriented atlas, coordinates $\beta$ of $\mathscr{Y}$, and $\text{ᛞ} := \text{ᛞ}_{\mathcal{U}\mathcal{V}}$ with entries $\partial\mathscr{X}^i/\partial\mathscr{Y}^j$. After the change of variables, an integral of $f$ against a volume form reads $\int d^d\beta\,|\det\text{ᛞ}|\,\omega_\mathscr{X}f$. Use the density law $\omega_\mathscr{Y} = \det(\text{ᛞ})\,\omega_\mathscr{X}$ to remove $\omega_\mathscr{X}$, and build the new integrand.
+    prefix: '\int d^d\beta'
+    tiles: ['\frac{|\det\text{ᛞ}|}{\det\text{ᛞ}}', '|\det\text{ᛞ}|\det\text{ᛞ}', '\omega_\mathscr{Y}', '\omega_\mathscr{X}', 'f']
+    answers:
+      - ['\frac{|\det\text{ᛞ}|}{\det\text{ᛞ}}', '\omega_\mathscr{Y}', 'f']
+      - ['\frac{|\det\text{ᛞ}|}{\det\text{ᛞ}}', 'f', '\omega_\mathscr{Y}']
+      - ['\omega_\mathscr{Y}', '\frac{|\det\text{ᛞ}|}{\det\text{ᛞ}}', 'f']
+      - ['\omega_\mathscr{Y}', 'f', '\frac{|\det\text{ᛞ}|}{\det\text{ᛞ}}']
+      - ['f', '\frac{|\det\text{ᛞ}|}{\det\text{ᛞ}}', '\omega_\mathscr{Y}']
+      - ['f', '\omega_\mathscr{Y}', '\frac{|\det\text{ᛞ}|}{\det\text{ᛞ}}']
+    wrong:
+      - answer: ['|\det\text{ᛞ}|\det\text{ᛞ}', '\omega_\mathscr{Y}', 'f']
+        feedback: |
+          Solve the law for the old density: $\omega_\mathscr{X} = \omega_\mathscr{Y}/\det\text{ᛞ}$. The determinant goes into the denominator, not next to $|\det\text{ᛞ}|$.
+      - answer: ['|\det\text{ᛞ}|\det\text{ᛞ}', '\omega_\mathscr{X}', 'f']
+        feedback: |
+          The goal is to remove $\omega_\mathscr{X}$, replacing it by $\omega_\mathscr{Y}/\det\text{ᛞ}$ from the law $\omega_\mathscr{Y} = \det(\text{ᛞ})\,\omega_\mathscr{X}$.
+    hint: |
+      From the law, $\omega_\mathscr{X} = \omega_\mathscr{Y}/\det\text{ᛞ}$.
+    explanation: |
+      $$|\det\text{ᛞ}|\,\omega_\mathscr{X} = \frac{|\det\text{ᛞ}|}{\det\text{ᛞ}}\,\omega_\mathscr{Y}.$$
+      The integrand is now the one of the definition in $\mathscr{Y}$, except for the ratio $|\det\text{ᛞ}|/\det\text{ᛞ}$, which is $\pm1$.
+
+  - type: mcq
+    id: independence-sign
+    title: The last factor
+    prompt: |
+      Computing $\int_\mathcal{D}\Omega f$ in a chart $\mathscr{X}$ and changing variables to a chart $\mathscr{Y}$ (coordinates $\beta$) gives the definition in $\mathscr{Y}$ times the factor $|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}|/\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}$, where $(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j = \partial\mathscr{X}^i/\partial\mathscr{Y}^j$. Why is this factor $+1$?
+    options:
+      - text: 'Both charts belong to an oriented atlas, so $\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}>0$ on the overlap'
+        correct: true
+      - text: 'A Jacobian determinant of a change of chart is never zero'
+        feedback: |
+          Never zero makes the ratio defined, $+1$ or $-1$. Which one depends on the sign: the mirror chart $(a,-b)$ against the cartesian chart has determinant $-1$, and the ratio is $-1$.
+      - text: 'The absolute value and the determinant are equal for every matrix'
+        feedback: |
+          $|\det|$ and $\det$ differ in sign whenever the determinant is negative, e.g. for the reflection $\begin{pmatrix}1&0\\0&-1\end{pmatrix}$, determinant $-1$.
+    explanation: |
+      In an oriented atlas every transition has $\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}>0$, so the ratio is $+1$ and
+      $$\begin{aligned}\int_\mathcal{D}\Omega f =&\int_{\mathscr{Y}(\mathcal{D})}d^d\beta\,(\omega_\mathscr{Y}\circ\mathscr{Y}^{-1})\\ &\qquad\cdot(f\circ\mathscr{Y}^{-1}),\end{aligned}$$
+      the definition in $\mathscr{Y}$. The change of variables brings $|\det|$, the density brings $\det$: they cancel up to a sign, and the orientation fixes the sign.
+
+  - type: numeric
+    id: mirror-trap
+    title: The mirror chart
+    prompt: |
+      Plane with points $(a,b)$, Euclidean area form $\Omega_{\mathrm{E}}$ ($\omega = 1$ in the cartesian chart). The mirror chart $\mathscr{Z}(a,b) = (a,-b)$, coordinates $\zeta$, has $\det(\partial\mathscr{X}^i/\partial\mathscr{Z}^j) = -1$ against the cartesian chart $\mathscr{X}$, hence scalar density $\omega_\mathscr{Z} = -1$. Apply the one-chart formula in $\mathscr{Z}$ to $f = 1$ on the quarter annulus $1<a^2+b^2<4$, $a>0$, $b>0$: compute $\int_{\mathscr{Z}(\mathcal{D})}d^2\zeta\,\omega_\mathscr{Z}$.
+    answer: -2.35619449
+    tolerance: 0.001
+    answerText: '$-\tfrac{3\pi}4\approx-2.356$'
+    wrong:
+      - value: 2.35619449
+        feedback: |
+          The region $\mathscr{Z}(\mathcal{D})$ (the reflected quarter annulus) has area $\tfrac{3\pi}4$, but the integrand is $\omega_\mathscr{Z} = -1$, not $1$. The density carries the sign of the determinant; the change of variables only carries its absolute value.
+    hint: |
+      $\mathscr{Z}(\mathcal{D})$ is the quarter annulus reflected below the horizontal axis, area $\tfrac{3\pi}4$; the integrand is the constant $-1$.
+    explanation: |
+      $(-1)\cdot\tfrac{3\pi}4 = -\tfrac{3\pi}4$. The mirror chart is not in the oriented atlas $\{\mathscr{X},\mathscr{Y}\}$ (its determinant against $\mathscr{X}$ is $-1$); it belongs to the **opposite** orientation, and there every integral flips sign. That is why integration is defined on an oriented manifold, using charts of one oriented atlas only.
+
+  - type: text
+    id: support
+    title: Where a function lives
+    body: |
+      Back to the circle. To split a function into pieces that each live inside one chart, we need to say where a function "lives". The **support** of $f$ is the closure of the set where it is nonzero:
+      $$\mathrm{supp}\,f := \overline{\{p\in\mathcal{M}\mid f(p)\neq0\}}.$$
+      Outside $\mathrm{supp}\,f$, $f$ vanishes, and on a whole open neighbourhood of each such point. A function has **compact support** when $\mathrm{supp}\,f$ is compact: on a circle, every function; on the plane, a function that vanishes outside some disc.
+
+      The closure matters: a function that vanishes at a single point $p$ but nowhere near it still has $p$ in its support.
+
+  - type: mcq
+    id: support-trap
+    title: Vanishing is not enough
+    prompt: |
+      On the circle $S^1$ (points $q = (q_1,q_2)$), the function $\text{ᚹ}(q) := \tfrac12(1-q_1)$ is zero exactly at $(1,0)$, the point missed by the angle chart $\theta\in(0,2\pi)$ on $\mathcal{U} = S^1\setminus\{(1,0)\}$. Is $\mathrm{supp}\,\text{ᚹ}$, the closure of $\{\text{ᚹ}\neq0\}$, contained in $\mathcal{U}$?
+    options:
+      - text: 'No: $\{\text{ᚹ}\neq0\}$ is the circle minus one point, whose closure is the whole circle'
+        correct: true
+      - text: 'Yes: $\text{ᚹ}$ vanishes at the only point outside $\mathcal{U}$'
+        feedback: |
+          Tempting, but the support is a closure: points arbitrarily close to $(1,0)$ have $\text{ᚹ}\neq0$, so $(1,0)$ is a boundary point of $\{\text{ᚹ}\neq0\}$ and belongs to the support.
+      - text: 'It depends on the chart used to compute it'
+        feedback: |
+          The support is defined from the values of the function and the topology of $S^1$ alone; no chart enters.
+    explanation: |
+      $\mathrm{supp}\,\text{ᚹ} = S^1\not\subseteq\mathcal{U}$. To live inside $\mathcal{U}$, a function must vanish on a whole **neighbourhood** of $(1,0)$, not just at it. Polynomials in $q_1,q_2$ cannot do that; smooth functions can.
+
+  - type: text
+    id: partition
+    title: Partitions of unity
+    body: |
+      Let $\{\mathcal{U}_a\}$ be an open cover of $\mathcal{M}$ (open sets whose union is $\mathcal{M}$). A **partition of unity** subordinate to it is a family of smooth functions, written with the rune $\text{ᚹ}$ (wynn), $\text{ᚹ}_n\colon\mathcal{M}\to[0,1]$, with:
+      1. **values in $[0,1]$** (already in the codomain);
+      2. **subordinate**: each $\mathrm{supp}\,\text{ᚹ}_n$ is contained in some $\mathcal{U}_a$;
+      3. **locally finite**: every point has a neighbourhood that meets only finitely many of the supports;
+      4. **sums to one**: $\sum_n\text{ᚹ}_n(p) = 1$ for every $p$, a finite sum at each point by 3.
+
+      Multiplying by $1 = \sum_n\text{ᚹ}_n$ splits any function: $f = \sum_n\text{ᚹ}_nf$, and each piece $\text{ᚹ}_nf$ vanishes outside one $\mathcal{U}_a$.
+
+      Such partitions exist for every open cover of a smooth manifold (stated here without proof). The proof uses exactly two properties required of a manifold from the start, **Hausdorff** and **second countable**; this is one of the reasons they were required.
+
+  - type: text
+    id: circle-partition
+    title: A partition of unity on the circle
+    body: |
+      A **smooth step** $h\colon\mathbb{R}\to[0,1]$: $h(s) = 0$ for $s\le-\tfrac12$, $h(s) = 1$ for $s\ge\tfrac12$, and $h(s)+h(-s) = 1$. One exists: with $g(t) := e^{-1/t}$ for $t>0$, $g(t) := 0$ for $t\le0$ (smooth, all derivatives $0$ at $t = 0$),
+      $$h(s) := \frac{g(\tfrac12+s)}{g(\tfrac12+s)+g(\tfrac12-s)}.$$
+      On the circle (points $q = (q_1,q_2)$) set
+      $$\text{ᚹ}_1(q) := h(-q_1),\quad\text{ᚹ}_2(q) := h(q_1).$$
+      $\text{ᚹ}_1$ vanishes wherever $q_1\ge\tfrac12$, a whole neighbourhood of $(1,0)$: its support is the closed arc $\tfrac\pi3\le\theta\le\tfrac{5\pi}3$, inside the domain of $\theta$. Likewise $\mathrm{supp}\,\text{ᚹ}_2$ is the arc $-\tfrac{2\pi}3\le\varphi\le\tfrac{2\pi}3$, inside the domain of $\varphi$. And $\text{ᚹ}_1+\text{ᚹ}_2 = h(-q_1)+h(q_1) = 1$.
+
+  - type: numeric
+    id: partition-value
+    title: Halfway round
+    prompt: |
+      On the circle, $\text{ᚹ}_1(q) := h(-q_1)$ and $\text{ᚹ}_2(q) := h(q_1)$, where $h$ is a smooth step: $h(s) = 0$ for $s\le-\tfrac12$, $h(s) = 1$ for $s\ge\tfrac12$, and $h(s)+h(-s) = 1$ for all $s$. What is $\text{ᚹ}_1$ at the top point $(0,1)$?
+    answer: 0.5
+    answerText: '$\tfrac12$'
+    wrong:
+      - value: 1
+        feedback: |
+          At $(0,1)$, $q_1 = 0$ lies between $-\tfrac12$ and $\tfrac12$, where $h$ is in transition. The symmetry with $s = 0$ gives $2h(0) = 1$.
+      - value: 0
+        feedback: |
+          $\text{ᚹ}_1$ vanishes only where $q_1\ge\tfrac12$. At $(0,1)$, $q_1 = 0$, and the symmetry $h(s)+h(-s) = 1$ at $s = 0$ gives $h(0) = \tfrac12$.
+    hint: |
+      Put $s = 0$ in $h(s)+h(-s) = 1$.
+    explanation: |
+      $\text{ᚹ}_1(0,1) = h(0) = \tfrac12$, and so is $\text{ᚹ}_2(0,1)$. The two functions share the top and bottom of the circle half and half; near $(1,0)$ only $\text{ᚹ}_2$ is nonzero (it equals $1$), near $(-1,0)$ only $\text{ᚹ}_1$.
+
+  - type: text
+    id: global-definition
+    title: The integral over the whole manifold
+    body: |
+      Let $f$ be smooth with **compact support**, and $\{\text{ᚹ}_n\}$ a partition of unity subordinate to the cover of $\mathcal{M}$ by the chart domains of $\mathcal{A}^\uparrow$, with $\mathrm{supp}\,\text{ᚹ}_n\subseteq\mathcal{U}_n$ for a chart $(\mathcal{U}_n,\mathscr{X}_n)\in\mathcal{A}^\uparrow$. The **integral of $f$ over $\mathcal{M}$** is
+      $$\int_\mathcal{M}\Omega f := \sum_n\int_{\mathcal{U}_n}\Omega\,\text{ᚹ}_nf.$$
+      Each term is the one-chart integral in $\mathscr{X}_n$, over any open $\mathcal{D}$ containing $\mathrm{supp}\,\text{ᚹ}_n\cap\mathrm{supp}\,f$ with closure compact and inside $\mathcal{U}_n$. Such $\mathcal{D}$ exist ($\mathrm{supp}\,\text{ᚹ}_n\cap\mathrm{supp}\,f$ is a closed part of a compact set, hence compact), and since $\text{ᚹ}_nf$ vanishes outside it, every choice gives the same value.
+
+  - type: numeric
+    id: circle-piece
+    title: One piece of the circle
+    prompt: |
+      Circle with the volume form $\Omega$ of density $\omega_\theta = 1$ in the angle chart $\theta\in(0,2\pi)$, and $\text{ᚹ}_1(q) := h(-q_1)$, with $h$ a smooth step ($h(s) = 0$ for $s\le-\tfrac12$, $h(s) = 1$ for $s\ge\tfrac12$, $h(s)+h(-s) = 1$). In the chart, $q_1 = \cos\theta$, so
+      $$\int_\mathcal{U}\Omega\,\text{ᚹ}_1 = \int_0^{2\pi}h(-\cos\theta)\,d\theta.$$
+      Find its value without knowing $h$ further (decimals are fine).
+    answer: 3.14159265
+    tolerance: 0.001
+    answerText: '$\pi\approx3.1416$'
+    wrong:
+      - value: 6.28319
+        feedback: |
+          $2\pi$ would need $\text{ᚹ}_1 = 1$ everywhere. It is $0$ near $\theta = 0$ and $\theta = 2\pi$ and only $\tfrac12$ at $\theta = \tfrac\pi2$. Compare with $\int_0^{2\pi}h(\cos\theta)\,d\theta$: shift $\theta$ by $\pi$.
+      - value: 4.18879
+        feedback: |
+          $\tfrac{4\pi}3$ is the length of the arc $\tfrac\pi3<\theta<\tfrac{5\pi}3$ where $\text{ᚹ}_1\neq0$; but $\text{ᚹ}_1<1$ on much of it. Use the symmetry: shifting $\theta$ by $\pi$ turns $h(-\cos\theta)$ into $h(\cos\theta)$, and the two add to $1$.
+    hint: |
+      Call the integral $I$. Shifting $\theta\mapsto\theta+\pi$ (over a full period) shows $I = \int_0^{2\pi}h(\cos\theta)\,d\theta$. Now add the two forms of $I$.
+    explanation: |
+      $\cos(\theta+\pi) = -\cos\theta$, so over a full period $I = \int_0^{2\pi}h(\cos\theta)\,d\theta$, and
+      $$2I = \int_0^{2\pi}\big(h(-\cos\theta)+h(\cos\theta)\big)d\theta = 2\pi.$$
+      So $I = \pi$. (The integrand vanishes near $\theta = 0$ and $2\pi$, so integrating over a region with closure inside $\mathcal{U}$, such as $\tfrac\pi4<\theta<\tfrac{7\pi}4$, gives the same.)
+
+  - type: mcq
+    id: circle-total
+    title: The whole circle
+    prompt: |
+      Circle with the volume form $\Omega$ of density $1$ in both angle charts ($\theta\in(0,2\pi)$ and $\varphi\in(-\pi,\pi)$), partition of unity $\text{ᚹ}_1(q) = h(-q_1)$ (support inside the $\theta$ chart) and $\text{ᚹ}_2(q) = h(q_1)$ (support inside the $\varphi$ chart), $h$ a smooth step with $h(s)+h(-s) = 1$. The first piece is $\int\Omega\,\text{ᚹ}_1 = \int_0^{2\pi}h(-\cos\theta)\,d\theta = \pi$. What is $\int_{S^1}\Omega\,1 = \int\Omega\,\text{ᚹ}_1+\int\Omega\,\text{ᚹ}_2$?
+    options:
+      - text: '$2\pi$'
+        correct: true
+      - text: '$4\pi$'
+        feedback: |
+          That is the sum of the two chart domains' lengths, overlap counted twice. The partition of unity prevents it: on the overlap the weights $\text{ᚹ}_1$ and $\text{ᚹ}_2$ add to $1$, so each point is counted once in total.
+      - text: '$\pi$'
+        feedback: |
+          That is one piece. The second, $\int_{-\pi}^{\pi}h(\cos\varphi)\,d\varphi$ in the $\varphi$ chart, is also $\pi$ (the same symmetry argument), and the definition adds the pieces.
+    explanation: |
+      The second piece, in the $\varphi$ chart, is $\int_{-\pi}^{\pi}h(\cos\varphi)\,d\varphi = \pi$ (a full period of the same function). Total $\pi+\pi = 2\pi$, the length of the circle, and no point was dropped or counted twice.
+
+  - type: mcq
+    id: finitely-many
+    title: Why the sum is finite
+    prompt: |
+      $\int_\mathcal{M}\Omega f := \sum_n\int_{\mathcal{U}_n}\Omega\,\text{ᚹ}_nf$, for $f$ with compact support and $\{\text{ᚹ}_n\}$ a partition of unity (possibly infinitely many functions), locally finite: every point has a neighbourhood meeting only finitely many $\mathrm{supp}\,\text{ᚹ}_n$. Why are only finitely many terms nonzero?
+    options:
+      - text: 'Finitely many of those neighbourhoods cover the compact $\mathrm{supp}\,f$, and together they meet only finitely many supports'
+        correct: true
+      - text: 'Every partition of unity has finitely many functions'
+        feedback: |
+          Not in general: a partition of unity of the plane subordinate to a cover by discs of radius $1$ needs infinitely many functions, since each support lies in one disc and finitely many discs cannot cover the plane. Finiteness comes from $f$, not from the partition.
+      - text: 'Because each integral $\int\Omega\,\text{ᚹ}_nf$ is finite'
+        feedback: |
+          Finite terms can still form an infinite, divergent sum: take $f = 1$ on the real line, cut into pieces of length $1$. What saves us is that almost all terms are exactly $0$.
+    explanation: |
+      Each point of $\mathrm{supp}\,f$ has a neighbourhood meeting finitely many supports; by compactness finitely many such neighbourhoods cover $\mathrm{supp}\,f$. Only the $\text{ᚹ}_n$ whose supports meet one of them can have $\text{ᚹ}_nf\neq0$. Without compact support (say $f = 1$ on the plane) the sum can diverge.
+
+  - type: text
+    id: partition-independence
+    title: Why the partition does not matter
+    body: |
+      A different partition $\{\text{ᚼ}_m\}$, subordinate to the same atlas with $\mathrm{supp}\,\text{ᚼ}_m\subseteq\mathcal{U}'_m$, gives the same total. Insert $1 = \sum_m\text{ᚼ}_m$ into each term (a finite sum on $\mathrm{supp}\,f$; the one-chart integral is linear in $f$):
+      $$\int_{\mathcal{U}_n}\Omega\,\text{ᚹ}_nf = \sum_m\int\Omega\,\text{ᚹ}_n\text{ᚼ}_mf.$$
+      The piece $\text{ᚹ}_n\text{ᚼ}_mf$ vanishes outside $\mathcal{U}_n\cap\mathcal{U}'_m$, so it can be integrated in the chart $\mathscr{X}_n$ or in the chart $\mathscr{X}'_m$: **chart independence** says the two agree. Both totals are therefore the same double sum $\sum_{n,m}\int\Omega\,\text{ᚹ}_n\text{ᚼ}_mf$.
+
+      (Here $\text{ᚼ}$ (hagall) names the second partition only for this argument.)
+
+  - type: mcq
+    id: independence-ingredient
+    title: The key ingredient
+    prompt: |
+      Two partitions of unity $\{\text{ᚹ}_n\}$ (supports in charts $\mathscr{X}_n$) and $\{\text{ᚼ}_m\}$ (supports in charts $\mathscr{X}'_m$) of an oriented atlas give the same $\int_\mathcal{M}\Omega f$, because both totals equal $\sum_{n,m}\int\Omega\,\text{ᚹ}_n\text{ᚼ}_mf$. Which fact lets each term be computed in either $\mathscr{X}_n$ or $\mathscr{X}'_m$ with the same result?
+    options:
+      - text: 'Chart independence of the one-chart integral, which needs the charts in one oriented atlas'
+        correct: true
+      - text: '$\text{ᚹ}_n\text{ᚼ}_m$ is a partition of unity'
+        feedback: |
+          The products do add to $1$, but that is not the point here: the question is whether two charts give the same value for one term. That is chart independence.
+      - text: 'The supports of $\text{ᚹ}_n$ and $\text{ᚼ}_m$ are disjoint'
+        feedback: |
+          They generally overlap; if they were disjoint the term would simply be $0$. Where they overlap, the term lives in $\mathcal{U}_n\cap\mathcal{U}'_m$, and chart independence compares the two charts.
+    explanation: |
+      Chart independence, which rests on $|\det|/\det = +1$: the orientation is used once more. With charts of both orientations, the two partitions could give results differing in sign on some pieces.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** "The Metric Volume Form". Everything here works for any volume form. A metric singles out one, with scalar density $\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}$ in every chart of an oriented atlas: the one that gives the unit square area $1$ and, on spacetime, the volume element of general relativity.

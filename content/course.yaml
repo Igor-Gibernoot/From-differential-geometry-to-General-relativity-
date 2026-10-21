@@ -372,7 +372,11 @@ levels:
         kind: concept
         file: ch08/volume-forms.yaml
         summary: "Why integrating a chart representative depends on the chart (the unit disc has area π, but 2π in polar coordinates), volume forms and their scalar densities with the Levi-Civita symbol, the determinant law under a change of chart, and oriented atlases."
-      - { id: ch08-integration, title: Integration on Manifolds, kind: concept }
+      - id: ch08-integration
+        title: Integration on Manifolds
+        kind: concept
+        file: ch08/integration.yaml
+        summary: "The integral of a function against a volume form inside one chart, why it is the same in every chart of an oriented atlas (and flips sign with the orientation), supports and partitions of unity, and the integral over a whole manifold, with the length of a circle glued from two angle charts."
       - { id: ch08-metric-volume, title: The Metric Volume Form, kind: concept }
       - { id: ch08-circle-length, title: "Guided Problem: The Length of a Circle, Chart by Chart", kind: guided }
       - { id: ch08-traps, title: Integration Traps, kind: traps }

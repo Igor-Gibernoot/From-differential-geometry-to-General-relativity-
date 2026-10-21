@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 8 in progress; next: `ch08-integration`)
+## Current (2026-10-20, Chapter 8 in progress; next: `ch08-metric-volume`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -31,8 +31,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Chapter 8 in progress:** `ch08-volume-forms` (concept, 33 cards).
-- **Queue (one unit each):** Chapter 8 (Integrals) in `course.yaml` order: `ch08-integration`, `ch08-metric-volume`,
+- **Chapter 8 in progress:** `ch08-volume-forms` (concept, 33 cards), `ch08-integration` (concept, 25 cards).
+- **Queue (one unit each):** Chapter 8 (Integrals) in `course.yaml` order: `ch08-metric-volume`,
   `ch08-circle-length` (guided), `ch08-traps`, `ch08-map`, `ch08-challenge` (two sessions); then Chapters 9–10 (each with map and challenge).
   `archive/tex_exercises/` has no Chapter 8 file: the book (8.1–8.3, B.19–B.20, C.7) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -416,6 +416,12 @@ append a short entry at the end of **Log** (a few lines, ending with
   flipped chart $\mathscr{X}' := (-\mathscr{X}^1,\mathscr{X}^2,\dots)$; oriented atlas $\mathcal{A}^\uparrow$, oriented manifold $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow)$; "positive charts" ($\omega_\mathscr{X}>0$, connected domains) form an oriented atlas,
   so a volume form orients ($-\Omega$ the opposite one); converse and Möbius stated without proof; "densities of weight $w$" named once. Widget preset new: `chart-basis` single
   polar chart (`cut: left`), `basisOnly: true`, $p = (1,2)$, view `{x: -4, y: -1.5, w: 8, h: 8}`, presets $(1,0)$, $(2,0)$, $(0,3)$ (patch area $r\,\Delta r\,\Delta\theta$).
+  Conventions fixed here (`ch08-integration`): setting $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow)$ + $\Omega$; one-chart integral $\int_\mathcal{D}\Omega f$ (book 8.3, `aligned` on two lines for phones), indicator $\iota$ as the equivalent form; closure "region plus boundary points",
+  compact = "closed and bounded in $\mathbb{R}^d$; finite subcover" (stated); failures on $\mathbb{R}$: $(0,\infty)$ and the chart $\tan(\pi(p-\frac12))$ with $\omega = 1/(\pi(1+\beta^2))$; plane check region = quarter annulus $1<r<2$, $0<\theta<\frac\pi2$, $f = 1$, value $\frac{3\pi}4$ (whole disc not allowed in polar: meets the cut);
+  mirror chart $\mathscr{Z}$ coordinates $\zeta$, value $-\frac{3\pi}4$; proof shorthand $\text{ᛞ} := \text{ᛞ}_{\mathcal{U}\mathcal{V}}$; circle $S^1$ with $\theta,\varphi$ angle charts and $\Omega$ of density $\omega_\theta = \omega_\varphi = 1$ (d = 1: nowhere-zero covector field);
+  partition of unity rune $\text{ᚹ}$ (wynn), four listed properties (values in $[0,1]$, subordinate, locally finite, sums to one), existence stated (Hausdorff + second countable); smooth step $h$ ($0$ for $s\le-\frac12$, $1$ for $s\ge\frac12$, $h(s)+h(-s)=1$,
+  built from $g(t) = e^{-1/t}$), $\text{ᚹ}_1 = h(-q_1)$ (supp $\frac\pi3\le\theta\le\frac{5\pi}3$), $\text{ᚹ}_2 = h(q_1)$ (supp $|\varphi|\le\frac{2\pi}3$), each piece $\pi$ by the shift $\theta\mapsto\theta+\pi$, total $2\pi$; trap $\frac12(1-q_1)$ has support $S^1$;
+  second partition rune $\text{ᚼ}$ (hagall, only in the independence argument), independence of the partition proved via the double sum $\sum_{n,m}\int\Omega\,\text{ᚹ}_n\text{ᚼ}_mf$. Widget: `circle-charts` with the `ch03-atlases` preset (no new preset).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -429,6 +435,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch08-integration (concept, 25 cards)
+- Built `content/ch08/integration.yaml` (hook: length of $S^1$ without one chart, `circle-charts` cover widget, recipe guess, density on $S^1$, one-chart definition,
+  compactness and its two failures, allowed arcs, quarter annulus in polar, disc-in-polar trap, chart-independence proof as text + build + sign MCQ, mirror trap,
+  support, support trap, partition of unity, explicit circle partition, piece $=\pi$, total $2\pi$, finiteness, independence of the partition proved); registered with summary.
+  Choices: the plan's "unit disc in both charts" replaced by a quarter annulus (the closed disc meets the polar cut, so the strict definition forbids it; made into a trap);
+  partition built from an explicit smooth step so the pieces are computable by symmetry; independence of the partition proved (the book only states it).
+  validate 0/0, shots 0 problems (one summary overflow fixed with `aligned`).
+- Conventions fixed here: see Current, "Chapter 8 conventions so far" (`ch08-integration`).
 ### 2026-10-20 — ch08-volume-forms (concept, 33 cards)
 - Built `content/ch08/volume-forms.yaml` (hook disc $\pi$ vs $2\pi$, `chart-basis` polar patch widget, change of variables, volume form, $arepsilon$ and det,
   scalar density law, disc resolved, not-a-scalar trap, oriented atlas with mirror chart, orientability, volume form orients); registered with summary.
