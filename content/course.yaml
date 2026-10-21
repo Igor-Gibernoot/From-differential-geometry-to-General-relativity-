@@ -325,7 +325,11 @@ levels:
         kind: concept
         file: ch07/euler-lagrange.yaml
         summary: Bend a curve in a chart with a knob ᛊ and a shape ᛉ that keeps the endpoints fixed, ask that the length not change to first order, and integration by parts turns this into differential equations at every point, the Euler-Lagrange equations.
-      - { id: ch07-geodesic-equation, title: "Guided Problem: Deriving the Geodesic Equation", kind: guided }
+      - id: ch07-geodesic-equation
+        title: "Guided Problem: Deriving the Geodesic Equation"
+        kind: guided
+        file: ch07/geodesic-equation.yaml
+        summary: Feed the metric's Lagrangian to the Euler-Lagrange equations, run the curve at constant speed, symmetrize and raise an index; out comes the geodesic equation, whose polar coefficients rebuild the flat connection.
       - { id: ch07-levi-civita, title: The Levi-Civita Connection, kind: concept }
       - { id: ch07-curvature, title: Curvature of the Metric, kind: concept }
       - { id: ch07-sphere, title: "Guided Problem: Meridians and Parallels of the Sphere", kind: guided }

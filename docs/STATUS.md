@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange` built; next: `ch07-geodesic-equation`)
+## Current (2026-10-20, Chapter 7: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation` built; next: `ch07-levi-civita`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -30,8 +30,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange` done; next
-  `ch07-geodesic-equation`, then `ch07-levi-civita`, `ch07-curvature`, `ch07-sphere`, traps, map, challenge (two sessions);
+- **Queue (one unit each):** Chapter 7 (Metric) in `course.yaml` order: `ch07-metric`, `ch07-signature`, `ch07-length`, `ch07-euler-lagrange`, `ch07-geodesic-equation` done; next
+  `ch07-levi-civita`, then `ch07-curvature`, `ch07-sphere`, traps, map, challenge (two sessions);
   then Chapters 8–10 (each with map and challenge). Check `archive/tex_exercises/` for a Chapter 7 file; else the book (7.1–7.4 and its
   B/C entries) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -337,6 +337,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   shape $(0,\sin\pi\lambda)$; plane points not named $(a,b)$ in this lesson (clash with $[a,b]$). Polar $\mathcal{L}_\mathscr{Y} = \sqrt{(\beta^1)^2+r^2(\beta^2)^2}$, $\partial_r\mathcal{L}_\mathscr{Y} = 1$ at $(2,0;0,1)$.
   Energy Lagrangian $\mathcal{E}_\mathscr{X} := \tfrac12((\beta^1)^2+(\beta^2)^2)$ (letter $\mathcal{E}$, not a subscript on $\mathcal{L}$); test curve $(\lambda^2,0)$ on $[1,2]$ (length E-L: $0$, energy: $2$).
   Chart independence shown by first order: $\mathscr{X}\circ\gamma_{\text{ᛊ}} = \gamma_\mathcal{U}+\text{ᛊ}\tilde{\text{ᛉ}}+O(\text{ᛊ}^2)$, $\tilde{\text{ᛉ}}^i = (\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j\text{ᛉ}_\mathscr{Y}^j$. Fundamental lemma named. No widget.
+  Conventions fixed here (`ch07-geodesic-equation`): velocity components $\dot\gamma^i$ (book's $\dot\gamma^i_\mathcal{U}$, label dropped as in ch07-length), metric components at $\gamma(\lambda)$ left implicit;
+  $\partial_{d+m}\mathcal{L}_\mathscr{X} = \text{ᛇ}_\gamma g_{mj}\beta^j/\mathcal{L}_\mathscr{X}$, $\partial_m\mathcal{L}_\mathscr{X} = \text{ᛇ}_\gamma(\partial_mg_{ij})\beta^i\beta^j/(2\mathcal{L}_\mathscr{X})$; lowered combination named
+  $\Gamma_{mij} := \tfrac12(\partial_ig_{mj}+\partial_jg_{mi}-\partial_mg_{ij})$ (my name; the book has none), $\Gamma^k_{ij} := (g^{-1})^{km}\Gamma_{mij}$ (called "Christoffel symbols" only from `ch07-levi-civita`);
+  geodesic equation labelled (G) (`\tag{G}`), any-speed form (S) $\ddot\gamma^k+\Gamma^k_{ij}\dot\gamma^i\dot\gamma^j = (\dot s_\gamma/s_\gamma)\dot\gamma^k$; reparametrization rune ᚱ (book's σ in B.16 not used),
+  arc length $\mu = \text{ᚱ}^{-1}(\lambda) := L_{[a,\lambda]}[\gamma]$. Polar checks: $(\Gamma_\mathscr{Y})^1_{22} = -r$, $(\Gamma_\mathscr{Y})^2_{12} = 1/r$ ($-5$, $0.2$ at $r = 5$, = ∇ᴱ of ch06); polar (G):
+  $\ddot r - r\dot\theta^2 = 0$, $\ddot\theta + \tfrac2r\dot r\dot\theta = 0$; hook curves $r = \lambda$ (pass), circle $r = 1,\theta = \lambda$ (fail, $-1$), $r = \lambda^2$ on $[1,2]$ (fails (G) with $2$, passes (S));
+  horizontal line $(\lambda,1)$: $\ddot r = r\dot\theta^2 = (1+\lambda^2)^{-3/2}$. Energy Lagrangian generalized to $\mathcal{E}_\mathscr{X} := \tfrac12g_{ij}\beta^i\beta^j$ (gives (G) at any speed). No widget, no `own:` (guided).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -350,6 +357,14 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch07-geodesic-equation (guided, 29 cards)
+- Built `content/ch07/geodesic-equation.yaml` (hook: polar equations tested on radial line, circle, $r = \lambda^2$; Step 1 velocity-slot mcq, position-slot
+  build, polar numeric; Step 2 insert the curve, "why multiply by ᛇs" mcq; Step 3 constant-speed mcq, chain-rule build, product rule; Step 4 swap mcq,
+  order card, lowered form; Step 5 raise build; (G) and comparison with (A); properties mcq; polar $\Gamma^1_{22}$, $\Gamma^2_{12}$ numerics, all six, factor-2 mcq,
+  horizontal line numeric; hook resolved; trap $r = \lambda^2$, (S), RHS numeric, arc-length mcq, energy shortcut mcq; summary). Registered in `course.yaml`.
+  Choices: named the lowered combination $\Gamma_{mij}$ to keep build tiles phone-sized; kept ᚱ instead of B.16's σ; energy-Lagrangian card added
+  (not in the plan) since ch07-euler-lagrange introduced it; constant-speed result of the energy E-L stated, not proved. validate 0/0, shots 0 problems.
+- Conventions fixed here: see Current, "Chapter 7 conventions so far" (`ch07-geodesic-equation`).
 ### 2026-10-20 — ch07-euler-lagrange (concept, 31 cards)
 - Built `content/ch07/euler-lagrange.yaml` (hook: arch family $(\lambda,\text{ᛊ}\sin\pi\lambda)$, guess $c_1$, compute $c_2 = \pi^2/4$; variation and shape; why $\text{ᛇ}\neq0$;
   precise geodesic definition; Lagrangian and bundle-chart slots, "not a covector" mcq, build card for the velocity slots; polar position slot (numeric);
