@@ -613,3 +613,12 @@ polyline.w-level { fill: none; }
 .of-axis { stroke: var(--basis); stroke-opacity: .35; stroke-width: 1.3px; vector-effect: non-scaling-stroke; }
 .w-basis.of-faint { opacity: .35; }
 .w-label.of-faint-l { fill-opacity: .6; }
+
+/* ---------- area-cell ---------- */
+.ac-dom { fill: var(--surface-2); stroke: none; }
+.ac-cut { fill: none; stroke: var(--muted); stroke-width: 1.5px; stroke-dasharray: 3 4; vector-effect: non-scaling-stroke; }
+.ac-lat { fill: none; }
+.ac-outline { fill: var(--surface-2); stroke: var(--ink); stroke-opacity: .45; stroke-width: 1.5px; vector-effect: non-scaling-stroke; }
+.ac-cell { fill: var(--gold); fill-opacity: .25; stroke: var(--gold); stroke-width: 2px; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.ac-par { fill: var(--basis); fill-opacity: .18; stroke: var(--basis); stroke-width: 1.5px; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }
+.widget .ac-gold { color: var(--gold); }
