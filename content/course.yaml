@@ -459,7 +459,7 @@ levels:
         title: Level Challenge
         kind: challenge
         file: ch09/challenge.yaml
-        summary: "Harder problems combining the level: a ball whirled on a string and released, seen from the ground and from a carousel; a chart with bent clocks, where chart time and absolute time part ways; every chart inertial along with a given one, and a shearing grid that is not; a tunnel through a uniform planet; and a carousel told apart from gravity by curvature."
+        summary: "Harder problems combining the level: a ball whirled on a string and released, seen from the ground and from a carousel; a chart with bent clocks, where chart time and absolute time part ways; every chart inertial along with a given one, and a shearing grid that is not; a tunnel through a uniform planet, where every fall takes the same time and tides are exact; and a merry-go-round told apart from gravity by curvature."
 
   - id: ch10
     number: 10
