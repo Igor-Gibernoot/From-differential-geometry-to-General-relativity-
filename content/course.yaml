@@ -466,7 +466,11 @@ levels:
     title: General Relativity
     blurb: Spacetime, observers and proper time, and the Einstein equations from an action.
     lessons:
-      - { id: ch10-spacetime, title: Spacetime and Time Orientation, kind: concept }
+      - id: ch10-spacetime
+        title: Spacetime and Time Orientation
+        kind: concept
+        file: ch10/spacetime.yaml
+        summary: "The sign of a Lorentzian metric sorts tangent vectors into timelike, lightlike and spacelike: the light cone at each point, a time orientation that picks its future half, and spacetime defined as a sextuple."
       - { id: ch10-worldlines, title: Worldlines and Proper Time, kind: concept }
       - { id: ch10-observers, title: Observers and What They Measure, kind: concept }
       - { id: ch10-lorentz, title: Lorentz Transformations from Observer Frames, kind: concept }

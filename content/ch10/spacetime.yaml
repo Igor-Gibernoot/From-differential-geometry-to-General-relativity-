@@ -1,0 +1,544 @@
+id: ch10-spacetime
+title: Spacetime and Time Orientation
+kind: concept
+
+own: |
+  - **Signature** $(n_+,n_-) = (1,3)$, i.e. $(+,-,-,-)$: at each $p$ some basis gives $g_p = \mathrm{diag}(1,-1,-1,-1)$. (The other convention, $(-,+,+,+)$, flips the sign of every inequality below.)
+  - **Classes** of a non-zero $\mathcal{X}_p\in T_p\mathcal{M}$: **timelike** if {{ $g_p(\mathcal{X}_p,\mathcal{X}_p) > 0$ }}, **lightlike** (null) if $= 0$, **spacelike** if $< 0$; **causal** = timelike or lightlike. The lightlike vectors form the **light cone** at $p$, a cone (closed under non-zero scaling) but not a subspace, living in $T_p\mathcal{M}$. The picture's Euclidean lengths and angles mean nothing: $(3,3)$ has $g = 0$.
+  - **Time orientation**: a smooth vector field $\text{ᛏ}$ with {{ $g_p(\text{ᛏ}(p),\text{ᛏ}(p)) > 0$ for every $p\in\mathcal{M}$ }} (so nowhere zero). By continuity it picks the same half of the cone everywhere it can be followed; $g$ alone cannot, since $g_p(-\mathcal{X}_p,-\mathcal{X}_p) = g_p(\mathcal{X}_p,\mathcal{X}_p)$.
+  - **Future and past**: a causal $\mathcal{X}_p$ is **future directed** if {{ $g_p(\text{ᛏ}(p),\mathcal{X}_p) > 0$ }}, past directed if $< 0$; spacelike vectors are neither. Two future-directed causal vectors, at least one timelike, satisfy
+  {{ $$g_p(\mathcal{X}_p,\mathcal{Y}_p) > 0$$ }}
+  - **Spacetime**: the sextuple
+  {{ $$(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,\nabla^{\mathrm{LC}},g,\text{ᛏ})_4$$ }}
+  a 4-dimensional oriented manifold with a Lorentzian metric $g$, its Levi-Civita connection $\nabla^{\mathrm{LC}}$ (fixed by $g$) and a time orientation $\text{ᛏ}$.
+
+cards:
+  - type: text
+    id: hook
+    title: Two flashes and a ball
+    body: |
+      In an empty laboratory, use a space coordinate $a$ along a line and a time coordinate $\tau$, in units where light covers one unit of $a$ per unit of $\tau$ (the speed of light is $1$).
+
+      At one event, $a = 0$ and $\tau = 0$, a lamp fires two flashes, one running to the left and one to the right. At that same event a ball is thrown to the right, as hard as you like. Nothing pushes the ball afterwards.
+
+  - type: mcq
+    id: hook-predict
+    title: Before any theory, predict
+    prompt: |
+      At one event a lamp fires two light flashes, one to the left and one to the right, and a ball is thrown to the right from the same event, as hard as you like (in units where light covers one unit of distance per unit of time). Can the ball ever catch either flash?
+    options:
+      - text: 'No: neither flash, however hard the ball is thrown'
+        correct: true
+      - text: 'Yes, the right flash, if the ball is thrown faster than light'
+        feedback: |
+          That assumes a ball can be thrown faster than light. Every attempt fails: a body with mass always moves slower than light, however much energy goes in. This lesson shows the geometric statement behind it: the ball's direction in spacetime is of a different kind than the flash's.
+      - text: 'Yes, the left flash, since the ball moves away from it more slowly'
+        feedback: |
+          The ball moves to the right, the left flash to the left: their distance only grows. Catching the left flash would need the ball to turn around and outrun light.
+      - text: 'It depends on who watches: some observers see the ball win'
+        feedback: |
+          Whether two things meet is an event or no event: every observer agrees on it. Observers disagree on times and distances, not on whether two worldlines cross.
+    explanation: |
+      Neither flash can be caught. By the end of this lesson the reason is a sign: the flash's direction in spacetime has $g = 0$, the ball's has $g > 0$, and a direction with $g > 0$ stays strictly inside the cone that the flashes trace.
+
+  - type: text
+    id: stage
+    title: A Lorentzian metric, with signs (+, −)
+    body: |
+      Recall: a **metric** $g$ gives, at each point $p$ of a manifold $\mathcal{M}$, a symmetric non-degenerate bilinear map $g_p$ on the tangent space $T_p\mathcal{M}$. Its **signature** $(n_+,n_-)$ counts the positive and negative entries of the diagonal form it takes in a suitable basis, the same counts in every basis (Sylvester). A metric is **Lorentzian** when exactly one sign is in the minority.
+
+      Spacetime is 4-dimensional and from now on we take
+      $$(n_+,n_-) = (1,3),$$
+      that is $(+,-,-,-)$: at every $p$ some basis of $T_p\mathcal{M}$ gives
+      $$g_p = \mathrm{diag}(1,-1,-1,-1).$$
+      The positive direction is time, the three negative ones are space.
+
+  - type: text
+    id: plane
+    title: The picture in 1+1 dimensions
+    body: |
+      To draw, keep one space dimension: a 2-dimensional spacetime with chart coordinates $a$ (space, across) and $\tau$ (time, up), signature $(+,-)$. The flat example is the **Minkowski** metric
+      $$g = d\tau\otimes d\tau - da\otimes da.$$
+      A tangent vector $\mathcal{X}_p$ at $p$ has components written in the order
+      $$\mathcal{X}_p = (X^a, X^\tau),$$
+      space first, as the pictures read left to right. (In four dimensions the time coordinate usually comes first, as $x^0$.) The upper indices are labels, not powers; $(X^\tau)^2$ is the component $X^\tau$ squared. So
+      $$g_p(\mathcal{X}_p,\mathcal{X}_p) = (X^\tau)^2 - (X^a)^2.$$
+
+  - type: widget
+    id: cone-widget
+    title: The sign of g
+    widget: light-cones
+    config:
+      metric: minkowski
+      views: [minkowski]
+      p: [0, 0]
+      X: [1, 2]
+      orientation: false
+      presets:
+        - { label: 'Up', metric: minkowski, p: [0, 0], X: [1, 2] }
+        - { label: 'Diagonal', metric: minkowski, p: [0, 0], X: [1, 1] }
+        - { label: 'Sideways', metric: minkowski, p: [0, 0], X: [2, 1] }
+    body: |
+      Minkowski metric $g = d\tau\otimes d\tau - da\otimes da$, base point $p = (0,0)$. The blue arrow is a vector $\mathcal{X}_p = (X^a, X^\tau)$; drag its tip and watch the sign of $g_p(\mathcal{X}_p,\mathcal{X}_p)$. Find where it is positive, where negative, and where it is zero (the two ink lines through $p$).
+
+  - type: numeric
+    id: g-of-12
+    title: One number
+    prompt: |
+      In the Minkowski metric $g = d\tau\otimes d\tau - da\otimes da$, with components ordered $(X^a, X^\tau)$, take $\mathcal{X}_p = (1, 2)$. Compute $g_p(\mathcal{X}_p,\mathcal{X}_p)$.
+    answer: 3
+    wrong:
+      - { value: 5, feedback: 'That is the Euclidean squared length $1^2 + 2^2$. The metric subtracts the space part: $(X^\tau)^2 - (X^a)^2$.' }
+      - { value: -3, feedback: 'That is $(X^a)^2 - (X^\tau)^2$, the opposite sign convention. Here $g = d\tau\otimes d\tau - da\otimes da$: the time part enters with $+$.' }
+      - { value: 1, feedback: 'That is $X^\tau - X^a$, without squaring. Each component enters squared: $(X^\tau)^2 - (X^a)^2$.' }
+    hint: '$g_p(\mathcal{X}_p,\mathcal{X}_p) = (X^\tau)^2 - (X^a)^2$ with $X^a = 1$, $X^\tau = 2$.'
+    explanation: |
+      $$g_p(\mathcal{X}_p,\mathcal{X}_p) = 2^2 - 1^2 = 3.$$
+      Positive: the time part wins.
+
+  - type: build
+    id: build-bilinear
+    title: Two different vectors
+    prompt: |
+      In the Minkowski metric $g = d\tau\otimes d\tau - da\otimes da$, with components ordered $(X^a, X^\tau)$ and $(Y^a, Y^\tau)$, build $g_p(\mathcal{X}_p,\mathcal{Y}_p)$.
+    prefix: 'g_p(\mathcal{X}_p,\mathcal{Y}_p) ='
+    tiles: ['X^\tau Y^\tau', '-', 'X^a Y^a', '+', 'X^a Y^\tau', 'X^\tau Y^a']
+    answers:
+      - ['X^\tau Y^\tau', '-', 'X^a Y^a']
+    wrong:
+      - { answer: ['X^\tau Y^\tau', '+', 'X^a Y^a'], feedback: 'That is the Euclidean dot product. The term $-\,da\otimes da$ gives the space part a minus sign.' }
+      - { answer: ['X^a Y^\tau', '-', 'X^\tau Y^a'], feedback: '$d\tau\otimes d\tau$ eats the $\tau$ components of both vectors: $d\tau(\mathcal{X}_p)\,d\tau(\mathcal{Y}_p) = X^\tau Y^\tau$. Mixed terms would need $d\tau\otimes da$, which this metric does not contain.' }
+    hint: '$(d\tau\otimes d\tau)(\mathcal{X}_p,\mathcal{Y}_p) = d\tau(\mathcal{X}_p)\,d\tau(\mathcal{Y}_p)$, and $d\tau(\mathcal{X}_p) = X^\tau$.'
+    explanation: |
+      $$g_p(\mathcal{X}_p,\mathcal{Y}_p) = X^\tau Y^\tau - X^aY^a.$$
+      With $\mathcal{Y}_p = \mathcal{X}_p$ it gives back $(X^\tau)^2 - (X^a)^2$.
+
+  - type: text
+    id: classes
+    title: Timelike, lightlike, spacelike
+    body: |
+      The sign of $g_p(\mathcal{X}_p,\mathcal{X}_p)$ sorts the non-zero vectors of $T_p\mathcal{M}$ into three kinds. A non-zero $\mathcal{X}_p$ is
+      - **timelike** if $g_p(\mathcal{X}_p,\mathcal{X}_p) > 0$,
+      - **lightlike** (or **null**) if $g_p(\mathcal{X}_p,\mathcal{X}_p) = 0$,
+      - **spacelike** if $g_p(\mathcal{X}_p,\mathcal{X}_p) < 0$,
+
+      and **causal** if it is timelike or lightlike. The zero vector gets no class.
+
+      In Minkowski: $(1,2)$ is timelike ($3$), $(1,1)$ lightlike ($0$), $(2,1)$ spacelike ($1 - 4 = -3$). A flash of light moves along a lightlike direction; the next lesson makes this, and the role of timelike directions, a postulate.
+
+  - type: mcq
+    id: classify-21
+    title: Which kind?
+    prompt: |
+      In the Minkowski metric $g = d\tau\otimes d\tau - da\otimes da$, with components ordered $(X^a, X^\tau)$, classify $\mathcal{X}_p = (3, -2)$.
+    options:
+      - text: 'Spacelike: $g_p(\mathcal{X}_p,\mathcal{X}_p) = 4 - 9 = -5$'
+        correct: true
+      - text: 'Timelike: $g_p(\mathcal{X}_p,\mathcal{X}_p) = 9 - 4 = 5$'
+        feedback: |
+          That squares the components in the wrong slots: $X^a = 3$ is the space component, which enters with the minus sign. $g_p = (X^\tau)^2 - (X^a)^2 = 4 - 9$.
+      - text: 'Neither: the minus sign in $X^\tau = -2$ makes it a past vector, which has no class'
+        feedback: |
+          Every non-zero vector has a class, and the class depends only on the sign of $g_p(\mathcal{X}_p,\mathcal{X}_p)$, where $X^\tau$ appears squared. Pointing down in time does not exclude a vector.
+      - text: 'Lightlike: its components have the same size up to sign'
+        feedback: |
+          $|X^a| = 3$ and $|X^\tau| = 2$ differ. Lightlike in Minkowski means $|X^a| = |X^\tau|$, the diagonals.
+    explanation: |
+      $$g_p(\mathcal{X}_p,\mathcal{X}_p) = (-2)^2 - 3^2 = -5 < 0.$$
+      It points more sideways than in time: spacelike.
+
+  - type: mcq
+    id: which-null
+    title: Find the null vectors
+    multiple: true
+    prompt: |
+      In the Minkowski metric $g = d\tau\otimes d\tau - da\otimes da$, with components ordered $(X^a, X^\tau)$, which vectors are lightlike? Select all that apply.
+    options:
+      - text: '$(-3, 3)$'
+        correct: true
+      - text: '$(2, -2)$'
+        correct: true
+      - text: '$(0, 0)$'
+        feedback: |
+          $g_p(0,0) = 0$, but the classes are for non-zero vectors only: the zero vector is not lightlike. The light cone is made of non-zero vectors.
+      - text: '$(1, 2)$'
+        feedback: |
+          $g_p = 4 - 1 = 3 > 0$: timelike.
+    explanation: |
+      Lightlike in Minkowski means $(X^\tau)^2 = (X^a)^2$ with $\mathcal{X}_p\neq0$: the two diagonals, in either direction. $(2,-2)$ points down and to the right, still lightlike.
+
+  - type: text
+    id: other-convention
+    title: The other sign convention
+    body: |
+      Earlier, we met Minkowski as $\mathrm{diag}(-1,1)$, and spacetime as $\mathrm{diag}(-1,1,1,1)$: the convention $(-,+,+,+)$, signature $(3,1)$. Both conventions are in common use. Switching multiplies $g$ by $-1$, so every inequality involving $g$ flips:
+      - timelike: $g_p(\mathcal{X}_p,\mathcal{X}_p) < 0$,
+      - spacelike: $g_p(\mathcal{X}_p,\mathcal{X}_p) > 0$,
+      - lightlike: still $= 0$.
+
+      The physics is the same; only the bookkeeping of signs changes. From now on we use $(+,-,-,-)$: **timelike is positive**, which will make a clock's time the plain square root $\sqrt{g(v,v)}$.
+
+  - type: mcq
+    id: convention-switch
+    title: Same vector, other convention
+    prompt: |
+      In the convention $(-,+,+,+)$ the 1+1 Minkowski metric is $g' = -d\tau\otimes d\tau + da\otimes da$. With components ordered $(X^a, X^\tau)$, what is $g'_p(\mathcal{X}_p,\mathcal{X}_p)$ for $\mathcal{X}_p = (1,2)$, and what kind of vector is it?
+    options:
+      - text: '$-3$, timelike'
+        correct: true
+      - text: '$-3$, spacelike'
+        feedback: |
+          The number is right, but in the convention $(-,+,+,+)$ negative means timelike. The kind of a vector is physics, so it cannot change with the convention: $(1,2)$ points more in time than in space either way.
+      - text: '$3$, timelike'
+        feedback: |
+          That is the value in $(+,-,-,-)$. Switching conventions multiplies $g$ by $-1$: $g' = -4 + 1 = -3$.
+      - text: '$5$, timelike'
+        feedback: |
+          That is the Euclidean squared length $1 + 4$; the two terms have opposite signs in any Lorentzian convention.
+    explanation: |
+      $$g'_p(\mathcal{X}_p,\mathcal{X}_p) = -2^2 + 1^2 = -3.$$
+      The number flips sign, the class does not: timelike is $< 0$ in $(-,+,+,+)$ and $> 0$ in $(+,-,-,-)$.
+
+  - type: text
+    id: light-cone
+    title: The light cone
+    body: |
+      The lightlike vectors of $T_p\mathcal{M}$ form the **light cone** at $p$:
+      $$\{\mathcal{X}_p\neq0 : g_p(\mathcal{X}_p,\mathcal{X}_p) = 0\}.$$
+      It is a **cone**: scaling by any $\lambda\neq0$ multiplies $g_p(\mathcal{X}_p,\mathcal{X}_p)$ by $\lambda^2$, so lightlike stays lightlike. In 1+1 Minkowski it is the two diagonals; in four dimensions, with $g_p = \mathrm{diag}(1,-1,-1,-1)$ in a suitable basis, it is
+      $$(X^0)^2 = (X^1)^2 + (X^2)^2 + (X^3)^2,$$
+      a real double cone around the time axis. Timelike vectors fill its inside, spacelike vectors its outside.
+
+  - type: mcq
+    id: cone-not-subspace
+    title: Is the cone a subspace?
+    prompt: |
+      In 1+1 Minkowski, $g = d\tau\otimes d\tau - da\otimes da$, components ordered $(X^a, X^\tau)$, both $(1,1)$ and $(-1,1)$ are lightlike. Is the light cone at $p$ (the lightlike vectors of $T_p\mathcal{M}$) a vector subspace?
+    options:
+      - text: 'No: $(1,1) + (-1,1) = (0,2)$ has $g = 4$, timelike'
+        correct: true
+      - text: 'Yes: it is closed under scaling, so it is a subspace'
+        feedback: |
+          A subspace must also be closed under addition (and contain $0$). Scaling keeps a vector on its line; adding two null vectors from different lines leaves the cone.
+      - text: 'Yes: $g$ is bilinear, so the vectors with $g = 0$ form a kernel'
+        feedback: |
+          The condition $g_p(\mathcal{X}_p,\mathcal{X}_p) = 0$ is quadratic in $\mathcal{X}_p$, not linear: $g_p(\mathcal{X}+\mathcal{Y},\mathcal{X}+\mathcal{Y})$ picks up the cross term $2g_p(\mathcal{X},\mathcal{Y})$. A kernel would come from a linear condition.
+      - text: 'No, because the zero vector is timelike'
+        feedback: |
+          The zero vector has no class at all (it is excluded by definition), but that alone is not the main failure: the sum of two lightlike vectors can be timelike.
+    explanation: |
+      $$g_p\big((0,2),(0,2)\big) = 4 - 0 = 4 > 0.$$
+      The cross term $2g_p\big((1,1),(-1,1)\big) = 2(1 + 1) = 4$ is what the sum gains.
+
+  - type: widget
+    id: tilted-widget
+    title: A cone at every point
+    widget: light-cones
+    config:
+      metric: tilted
+      views: [minkowski, tilted]
+      p: [2, 0]
+      X: [1, 1]
+      field: true
+      badge: false
+      orientation: false
+      view: { x: -1.5, y: -2.5, w: 6, h: 5 }
+    body: |
+      A curved-looking metric: with $s := a/4$ and $\sigma := da - s\,d\tau$,
+      $$g = d\tau\otimes d\tau - \sigma\otimes\sigma,$$
+      so $g_p(\mathcal{X}_p,\mathcal{X}_p) = (X^\tau)^2 - (X^a - sX^\tau)^2$. Small cones are drawn at many points: they lean right where $a > 0$, left where $a < 0$. Each one is drawn at its base point but lives in the tangent space there. Now only numbers show: drag $p$ and $\mathcal{X}_p$ and read $g_p(\mathcal{X}_p,\mathcal{X}_p)$ off the readout.
+
+  - type: numeric
+    id: tilted-value
+    title: The diagonal is not null here
+    prompt: |
+      Metric $g = d\tau\otimes d\tau - \sigma\otimes\sigma$ with $\sigma := da - s\,d\tau$ and $s := a/4$, so $g_p(\mathcal{X}_p,\mathcal{X}_p) = (X^\tau)^2 - (X^a - sX^\tau)^2$ with components ordered $(X^a, X^\tau)$. At $p = (2, 0)$ (so $a = 2$), compute $g_p(\mathcal{X}_p,\mathcal{X}_p)$ for $\mathcal{X}_p = (1, 1)$.
+    answer: 0.75
+    wrong:
+      - { value: 0, feedback: 'That is the Minkowski habit: "the 45° diagonal is null". Here $s = 2/4 = 0.5$, so $X^a - sX^\tau = 0.5$, not $1$.' }
+      - { value: -1.25, feedback: 'That uses $X^a + sX^\tau = 1.5$. The metric has $\sigma = da - s\,d\tau$: $X^a - sX^\tau = 1 - 0.5$.' }
+    hint: 'At $a = 2$, $s = 0.5$. Compute $X^a - sX^\tau$ first, then square it.'
+    explanation: |
+      $$\begin{aligned}g_p(\mathcal{X}_p,\mathcal{X}_p) &= 1^2 - (1 - 0.5)^2\\ &= 0.75.\end{aligned}$$
+      Timelike: at this point the cone leans right, and the diagonal $(1,1)$ falls inside it.
+
+  - type: mcq
+    id: tilted-null
+    title: Where are the null lines?
+    prompt: |
+      Metric $g_p(\mathcal{X}_p,\mathcal{X}_p) = (X^\tau)^2 - (X^a - sX^\tau)^2$ with $s := a/4$, components ordered $(X^a, X^\tau)$. At $p = (2,0)$, which two directions are lightlike?
+    options:
+      - text: '$(1.5, 1)$ and $(-0.5, 1)$'
+        correct: true
+      - text: '$(1, 1)$ and $(-1, 1)$'
+        feedback: |
+          Those are Minkowski's diagonals. Here $s = 0.5$, and $(1,1)$ gives $1 - 0.25 = 0.75 \neq 0$.
+      - text: '$(2.5, 1)$ and $(1.5, 1)$'
+        feedback: |
+          Lightlike needs $X^a - sX^\tau = \pm X^\tau$, i.e. $X^a = (0.5 \pm 1)X^\tau$. $(2.5,1)$ gives $(1)^2 - (2)^2 = -3$: spacelike.
+      - text: '$(0.5, 1)$ and $(-0.5, 1)$'
+        feedback: |
+          $(0.5,1)$ gives $X^a - sX^\tau = 0$, so $g = 1$: it is the most timelike direction, the axis of the cone, not an edge.
+    explanation: |
+      $X^a - 0.5X^\tau = \pm X^\tau$ gives $X^a = 1.5X^\tau$ or $X^a = -0.5X^\tau$. Check $(1.5,1)$:
+      $$1^2 - (1.5 - 0.5)^2 = 0.$$
+      The cone at $(2,0)$ is the Minkowski cone sheared to the right by $s = 0.5$.
+
+  - type: text
+    id: own-tangent-space
+    title: Each cone in its own tangent space
+    body: |
+      The light cone at $p$ is a subset of $T_p\mathcal{M}$, not of $\mathcal{M}$: drawing it at $p$ is a convenience. Cones at different points live in different vector spaces, so "the cone at $q$ leans more than the cone at $p$" is a statement about the chart's components, not a comparison inside one space.
+
+      And at each single point, a basis exists where $g_p = \mathrm{diag}(1,-1)$ (in four dimensions $\mathrm{diag}(1,-1,-1,-1)$): in that basis every cone looks like Minkowski's. At $p = (2,0)$ above, the basis $(0.5,1)$, $(1,0)$ does it. What varies from point to point is how the cones fit together, and that is where curvature will live.
+
+  - type: mcq
+    id: euclid-trap
+    title: The longest arrow
+    prompt: |
+      In 1+1 Minkowski, $g = d\tau\otimes d\tau - da\otimes da$, components ordered $(X^a, X^\tau)$, three vectors are drawn from one point: $\mathcal{X} = (0,2)$, $\mathcal{Y} = (2.5, 3)$ and $\mathcal{Z} = (3, 3)$. Which has the largest $g_p(\cdot,\cdot)$ with itself?
+    options:
+      - text: '$\mathcal{X} = (0,2)$, the shortest arrow in the drawing: $g = 4$'
+        correct: true
+      - text: '$\mathcal{Z} = (3,3)$, the longest arrow in the drawing'
+        feedback: |
+          $\mathcal{Z}$ is lightlike: $g = 9 - 9 = 0$. It is non-zero and drawn about $4.2$ long, but its $g$ vanishes. The drawing shows Euclidean lengths, which the metric ignores.
+      - text: '$\mathcal{Y} = (2.5,3)$: it is longer and still timelike'
+        feedback: |
+          $g = 9 - 6.25 = 2.75 < 4$. Tilting a timelike vector toward the cone lowers its $g$, even as the arrow gets longer on paper.
+      - text: 'All three are equal: they all reach about the same height'
+        feedback: |
+          The height is $X^\tau$ alone; the sideways part enters with a minus sign: $4$, $2.75$ and $0$.
+    explanation: |
+      $$\begin{aligned}g(\mathcal{X},\mathcal{X}) &= 4 - 0 = 4,\\ g(\mathcal{Y},\mathcal{Y}) &= 9 - 6.25 = 2.75,\\ g(\mathcal{Z},\mathcal{Z}) &= 9 - 9 = 0.\end{aligned}$$
+      Euclidean lengths and angles of the picture mean nothing in spacetime: only $g$ measures.
+
+  - type: text
+    id: why-orientation
+    title: Which half is the future?
+    body: |
+      The timelike vectors at $p$ fall into two halves of the cone (in 1+1: an upper and a lower wedge). Physics needs to know which half is the **future**. Can $g$ tell? No:
+      $$g_p(-\mathcal{X}_p,-\mathcal{X}_p) = g_p(\mathcal{X}_p,\mathcal{X}_p),$$
+      so $\mathcal{X}_p$ and $-\mathcal{X}_p$ always have the same class. The choice is extra data, a **time orientation**: a smooth vector field $\text{ᛏ}$ (the rune is read "tiwaz", as in "time") with
+      $$g_p\big(\text{ᛏ}(p),\text{ᛏ}(p)\big) > 0$$
+      for every $p\in\mathcal{M}$: timelike everywhere, hence nowhere zero.
+
+  - type: text
+    id: future-past
+    title: Future directed, past directed
+    body: |
+      With $\text{ᛏ}$ chosen, a **causal** vector $\mathcal{X}_p$ is
+      - **future directed** if $g_p\big(\text{ᛏ}(p),\mathcal{X}_p\big) > 0$,
+      - **past directed** if $g_p\big(\text{ᛏ}(p),\mathcal{X}_p\big) < 0$.
+
+      $\text{ᛏ}(p)$ declares which half of the cone is the future: the half containing it. Spacelike vectors get no direction in time: they are **neither**.
+
+      In 1+1 Minkowski with $\text{ᛏ} = (0,1)$, the rule reads $g_p(\text{ᛏ},\mathcal{X}_p) = X^\tau$: a causal vector is future directed exactly when it points up.
+
+  - type: widget
+    id: flip-widget
+    title: Flip the arrow of time
+    widget: light-cones
+    config:
+      metric: minkowski
+      views: [minkowski]
+      p: [0, 0]
+      X: [1, 2]
+      flip: true
+      presets:
+        - { label: 'Future', metric: minkowski, p: [0, 0], X: [1, 2], orientation: true }
+        - { label: 'Down', metric: minkowski, p: [0, 0], X: [1, -2], orientation: true }
+        - { label: 'Sideways', metric: minkowski, p: [0, 0], X: [2, 1], orientation: true }
+    body: |
+      Minkowski metric, with the time orientation $\text{ᛏ}(p)$ in green and the future half of the cone shaded. Press **Flip ᛏ**: $g_p(\mathcal{X}_p,\mathcal{X}_p)$ does not move, but future and past swap. Then drag $\mathcal{X}_p$ outside the cone and read the badge.
+
+  - type: numeric
+    id: past-number
+    title: Up or down?
+    prompt: |
+      In 1+1 Minkowski, $g = d\tau\otimes d\tau - da\otimes da$, components ordered $(X^a, X^\tau)$, the time orientation is $\text{ᛏ}(p) = (0,1)$. Compute $g_p\big(\text{ᛏ}(p),\mathcal{X}_p\big)$ for the timelike vector $\mathcal{X}_p = (1, -2)$.
+    answer: -2
+    wrong:
+      - { value: 2, feedback: 'The sign matters: $g_p(\text{ᛏ},\mathcal{X}_p) = \text{ᛏ}^\tau X^\tau - \text{ᛏ}^aX^a = 1\cdot(-2) - 0$.' }
+      - { value: -1, feedback: 'The $a$ components do not contribute here, because $\text{ᛏ}^a = 0$: only $1\cdot(-2)$ remains.' }
+    hint: '$g_p(\mathcal{X}_p,\mathcal{Y}_p) = X^\tau Y^\tau - X^aY^a$.'
+    explanation: |
+      $$g_p(\text{ᛏ},\mathcal{X}_p) = 1\cdot(-2) - 0\cdot1 = -2 < 0.$$
+      $\mathcal{X}_p$ is timelike and past directed.
+
+  - type: mcq
+    id: spacelike-neither
+    title: Sideways
+    prompt: |
+      In 1+1 Minkowski, $g = d\tau\otimes d\tau - da\otimes da$, components ordered $(X^a, X^\tau)$, with time orientation $\text{ᛏ}(p) = (0,1)$, take $\mathcal{X}_p = (2,1)$. Then $g_p(\text{ᛏ}(p),\mathcal{X}_p) = 1 > 0$. Is $\mathcal{X}_p$ future directed?
+    options:
+      - text: 'No: it is spacelike, and spacelike vectors are neither future nor past directed'
+        correct: true
+      - text: 'Yes: $g_p(\text{ᛏ}(p),\mathcal{X}_p) > 0$ is the definition'
+        feedback: |
+          The definition applies to causal vectors only. $g_p(\mathcal{X}_p,\mathcal{X}_p) = 1 - 4 = -3$: spacelike. For spacelike vectors the sign of $g_p(\text{ᛏ},\mathcal{X}_p)$ depends on which timelike $\text{ᛏ}$ is chosen in the same half: with $\text{ᛏ} = (0.9,1)$ it is $1 - 1.8 = -0.8$. So it carries no physical "earlier/later".
+      - text: 'No: it is past directed, because it points mostly sideways'
+        feedback: |
+          Past directed also needs a causal vector, and with $g_p(\text{ᛏ},\mathcal{X}_p) < 0$. This one is spacelike: neither.
+    explanation: |
+      $g_p(\mathcal{X}_p,\mathcal{X}_p) = 1 - 4 = -3 < 0$. Future and past are defined for causal vectors only; a spacelike vector points "elsewhere".
+
+  - type: mcq
+    id: why-timelike
+    title: Why must ᛏ be timelike?
+    prompt: |
+      In 1+1 Minkowski, $g = d\tau\otimes d\tau - da\otimes da$, components ordered $(X^a, X^\tau)$, suppose we tried a spacelike "time orientation" $\text{ᛏ}(p) = (1, 0)$, so $g_p(\text{ᛏ},\mathcal{X}_p) = -X^a$. What goes wrong with the upward light rays $(1,1)$ and $(-1,1)$?
+    options:
+      - text: 'One comes out future, the other past: the rule cuts the upper half of the cone in two'
+        correct: true
+      - text: 'Nothing: both come out future directed'
+        feedback: |
+          $g_p\big((1,0),(1,1)\big) = -1 < 0$ but $g_p\big((1,0),(-1,1)\big) = +1 > 0$: opposite verdicts for two rays that both point up in time.
+      - text: 'Both come out with $g_p(\text{ᛏ},\mathcal{X}_p) = 0$, so neither is classified'
+        feedback: |
+          $g_p(\text{ᛏ},\mathcal{X}_p) = -X^a$ is $-1$ and $+1$ for these rays, not $0$. The trouble is that they get opposite signs.
+    explanation: |
+      Only a timelike $\text{ᛏ}(p)$ gives the same sign to every causal vector in one half of the cone (a consequence of the fact $(\dagger)$ met later in this lesson). A spacelike or lightlike $\text{ᛏ}(p)$ would split a half; the zero vector would decide nothing.
+
+  - type: order
+    id: no-flip
+    title: ᛏ cannot jump between halves
+    prompt: |
+      In 1+1 Minkowski, $g = d\tau\otimes d\tau - da\otimes da$, components ordered $(\text{ᛏ}^a, \text{ᛏ}^\tau)$, a time orientation has $\text{ᛏ}(0,0) = (0,1)$. Show that $\text{ᛏ}$ cannot point into the lower half at $(0,2)$. Put the argument in order.
+    steps:
+      - 'Suppose $\text{ᛏ}^\tau(0,2) < 0$, while $\text{ᛏ}^\tau(0,0) = 1 > 0$.'
+      - 'Along the segment from $(0,0)$ to $(0,2)$, the component $\text{ᛏ}^\tau$ is continuous, since $\text{ᛏ}$ is a smooth vector field.'
+      - 'By the intermediate value theorem, $\text{ᛏ}^\tau(q) = 0$ at some point $q$ of the segment.'
+      - 'At $q$: $g_q(\text{ᛏ},\text{ᛏ}) = 0 - (\text{ᛏ}^a(q))^2 \le 0$.'
+      - 'This contradicts $g_q(\text{ᛏ}(q),\text{ᛏ}(q)) > 0$, so $\text{ᛏ}^\tau > 0$ on the whole segment.'
+    hint: 'Follow the sign of $\text{ᛏ}^\tau$ along the segment: what would $g(\text{ᛏ},\text{ᛏ})$ be where it changes sign?'
+    explanation: |
+      To change halves, $\text{ᛏ}$ would have to cross the light cone or pass through $0$, and $g(\text{ᛏ},\text{ᛏ}) > 0$ forbids both. So on a connected spacetime one choice at one point fixes the future everywhere. (Some Lorentzian manifolds admit no such field at all; a spacetime is required to have one.)
+
+  - type: widget
+    id: tilted-orientation
+    title: Orientation on leaning cones
+    widget: light-cones
+    config:
+      metric: tilted
+      views: [tilted]
+      p: [2, 0]
+      X: [1.5, 1]
+      field: true
+      orientation: down
+      flip: true
+      view: { x: -1.5, y: -2.5, w: 6, h: 5 }
+    body: |
+      The leaning metric $g_p(\mathcal{X}_p,\mathcal{X}_p) = (X^\tau)^2 - (X^a - sX^\tau)^2$, $s := a/4$, with the time orientation chosen **downward**: $\text{ᛏ}(p) = -(s, 1)$. It is timelike everywhere ($g = 1$), so it is a legitimate choice. Every small cone shades its lower half as the future. Drag $p$ and watch $\text{ᛏ}(p)$ lean with the cones; press **Flip ᛏ** to see the other choice.
+
+  - type: numeric
+    id: down-number
+    title: A null ray, with ᛏ downward
+    prompt: |
+      Metric $g_p(\mathcal{X}_p,\mathcal{Y}_p) = X^\tau Y^\tau - (X^a - sX^\tau)(Y^a - sY^\tau)$ with $s := a/4$, components ordered $(X^a, X^\tau)$. At $p = (2,0)$ the time orientation is $\text{ᛏ}(p) = (-0.5, -1)$. Compute $g_p\big(\text{ᛏ}(p),\mathcal{X}_p\big)$ for the lightlike $\mathcal{X}_p = (1.5, 1)$.
+    answer: -1
+    wrong:
+      - { value: 1, feedback: 'That would be $\text{ᛏ}(p) = (0.5, 1)$, the upward choice. Here $\text{ᛏ}^\tau = -1$.' }
+      - { value: -0.25, feedback: 'That is the Minkowski formula $X^\tau Y^\tau - X^aY^a = -1 + 0.75$. This metric uses $X^a - sX^\tau$: for $\text{ᛏ}$ it is $-0.5 + 0.5 = 0$.' }
+    hint: 'At $a = 2$, $s = 0.5$. For $\text{ᛏ}$: $\text{ᛏ}^a - s\,\text{ᛏ}^\tau = -0.5 - 0.5\cdot(-1)$.'
+    explanation: |
+      $$\begin{aligned}g_p(\text{ᛏ},\mathcal{X}_p) &= (-1)(1) - (0)(1)\\ &= -1 < 0.\end{aligned}$$
+      With the downward orientation, the upward null ray $(1.5,1)$ is past directed.
+
+  - type: text
+    id: dagger
+    title: Two future vectors always pair positively
+    body: |
+      A fact we will use often, call it $(\dagger)$: if $\mathcal{X}_p$, $\mathcal{Y}_p$ are future-directed causal vectors, at least one of them timelike, then
+      $$g_p(\mathcal{X}_p,\mathcal{Y}_p) > 0.$$
+      Proof in 1+1 Minkowski with $\text{ᛏ} = (0,1)$: let $\mathcal{X}_p$ be timelike and future, so $X^\tau > |X^a|$; let $\mathcal{Y}_p$ be causal and future, so $Y^\tau \geq |Y^a|$ and $Y^\tau > 0$. Then
+      $$\begin{aligned}g_p(\mathcal{X}_p,\mathcal{Y}_p) &= X^\tau Y^\tau - X^aY^a\\ &\geq X^\tau Y^\tau - |X^a|\,|Y^a|\\ &> |X^a|\,Y^\tau - |X^a|\,|Y^a|\\ &\geq 0.\end{aligned}$$
+      In four dimensions the same steps work with $|X^a|$ replaced by the length of the space part, using Cauchy–Schwarz on $X^1Y^1 + X^2Y^2 + X^3Y^3$.
+
+  - type: numeric
+    id: dagger-check
+    title: Check (†) on numbers
+    prompt: |
+      In 1+1 Minkowski, $g = d\tau\otimes d\tau - da\otimes da$, components ordered $(X^a, X^\tau)$, with $\text{ᛏ} = (0,1)$, take the timelike future $\mathcal{X}_p = (1,2)$ and the lightlike future $\mathcal{Y}_p = (-1,1)$. Compute $g_p(\mathcal{X}_p,\mathcal{Y}_p)$.
+    answer: 3
+    wrong:
+      - { value: 1, feedback: 'That is $X^\tau Y^\tau + X^aY^a = 2 - 1$. The space part enters with a minus: $2 - (1)(-1) = 3$.' }
+      - { value: 0, feedback: '$\mathcal{Y}_p$ is lightlike, so $g_p(\mathcal{Y}_p,\mathcal{Y}_p) = 0$; but its pairing with a different vector need not vanish: $2\cdot1 - 1\cdot(-1) = 3$.' }
+    hint: '$g_p(\mathcal{X}_p,\mathcal{Y}_p) = X^\tau Y^\tau - X^aY^a$.'
+    explanation: |
+      $$g_p(\mathcal{X}_p,\mathcal{Y}_p) = 2\cdot1 - 1\cdot(-1) = 3 > 0,$$
+      as $(\dagger)$ promises.
+
+  - type: mcq
+    id: dagger-why-timelike
+    title: Why one timelike?
+    prompt: |
+      The fact $(\dagger)$ says: two future-directed causal vectors, at least one timelike, have $g_p(\mathcal{X}_p,\mathcal{Y}_p) > 0$. In 1+1 Minkowski, $g = d\tau\otimes d\tau - da\otimes da$, components ordered $(X^a, X^\tau)$, why is "at least one timelike" needed?
+    options:
+      - text: 'Two future lightlike vectors along one ray, such as $(1,1)$ and $(3,3)$, give $g = 3 - 3 = 0$'
+        correct: true
+      - text: 'It is not needed: any two future causal vectors give $g > 0$'
+        feedback: |
+          $(1,1)$ and $(3,3)$ are both lightlike and future directed, and $g_p = 1\cdot3 - 1\cdot3 = 0$. The strict inequality fails for parallel null vectors.
+      - text: 'Two future lightlike vectors always give $g < 0$'
+        feedback: |
+          $(1,1)$ and $(-1,1)$ give $1 + 1 = 2 > 0$; parallel ones give $0$. Never negative: the inequality $\geq 0$ survives, only the strict one fails.
+    explanation: |
+      For lightlike $\mathcal{X}_p$, $\mathcal{Y}_p$ the proof's strict step $X^\tau > |X^a|$ becomes an equality, and $0$ is reached when they lie on the same ray.
+
+  - type: text
+    id: sextuple
+    title: The definition of spacetime
+    body: |
+      Everything is now in place. A **spacetime** is the sextuple
+      $$(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,\nabla^{\mathrm{LC}},g,\text{ᛏ})_4,$$
+      where the subscript $4$ is the dimension and
+      - $\mathcal{M}$: the set of events; $\mathcal{O}$: its topology;
+      - $\mathcal{A}^\uparrow$: an oriented smooth atlas (all transitions with positive Jacobian determinant);
+      - $g$: a Lorentzian metric of signature $(1,3)$;
+      - $\nabla^{\mathrm{LC}}$: its Levi-Civita connection, the only torsion-free connection compatible with $g$;
+      - $\text{ᛏ}$: a time orientation.
+
+      Newtonian spacetime had an absolute time $t$ and a connection, but no metric. Here a single $g$ fixes both how clocks tick and how free bodies fall.
+
+  - type: mcq
+    id: redundant-slot
+    title: Which slot adds nothing?
+    prompt: |
+      A spacetime is the sextuple $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,\nabla^{\mathrm{LC}},g,\text{ᛏ})_4$. Once $\mathcal{M}$, $\mathcal{O}$, $\mathcal{A}^\uparrow$ and $g$ are given, which remaining slot carries no new information?
+    options:
+      - text: '$\nabla^{\mathrm{LC}}$: it is the only torsion-free connection compatible with $g$'
+        correct: true
+      - text: '$\text{ᛏ}$: the metric already says which half of the cone is the future'
+        feedback: |
+          $g_p(-\mathcal{X}_p,-\mathcal{X}_p) = g_p(\mathcal{X}_p,\mathcal{X}_p)$: the metric treats both halves alike. $\text{ᛏ}$ and $-\text{ᛏ}$ are both valid time orientations for the same $g$.
+      - text: 'Neither: both $\nabla^{\mathrm{LC}}$ and $\text{ᛏ}$ are free choices'
+        feedback: |
+          A connection in general is a free choice, but the Levi-Civita theorem fixes it once $g$ is known and we demand no torsion and compatibility: its coefficients are the Christoffel symbols built from $g$.
+    explanation: |
+      $\nabla^{\mathrm{LC}}$ is written in the sextuple to name the connection in use, but it is determined by $g$. $\text{ᛏ}$ is genuine extra data: on a connected spacetime there are exactly two choices up to deformation, $\text{ᛏ}$ and $-\text{ᛏ}$.
+
+  - type: mcq
+    id: hook-resolve
+    title: The ball and the flashes, resolved
+    prompt: |
+      In 1+1 Minkowski, $g = d\tau\otimes d\tau - da\otimes da$, components ordered $(X^a, X^\tau)$, a ball and two flashes leave the event $(0,0)$. The right flash moves along the lightlike $(1,1)$; the ball moves freely along a straight line in a timelike, future direction $(V^a, V^\tau)$. Why can the ball never catch the right flash?
+    options:
+      - text: 'Timelike means $|V^a| < V^\tau$: per unit of $\tau$ the ball gains less than one unit of $a$, the flash exactly one'
+        correct: true
+      - text: 'Because its arrow is shorter than the flash''s in the drawing'
+        feedback: |
+          Drawn lengths are Euclidean and mean nothing: the ball's arrow $(0.9, 1)$ can be drawn longer than the flash's $(0.5,0.5)$. What matters is the slope, fixed by the sign of $g$.
+      - text: 'Because the flash is past directed'
+        feedback: |
+          With $\text{ᛏ} = (0,1)$, $g_p(\text{ᛏ},(1,1)) = 1 > 0$: the flash is future directed, like the ball. Both move forward in time; the ball simply falls behind.
+      - text: 'It can: thrown along $(2,1)$ the ball would overtake it'
+        feedback: |
+          $(2,1)$ has $g = 1 - 4 = -3$: spacelike. A body with mass moves along timelike, future-directed directions only (the next lesson makes this a postulate), so $(2,1)$ is not available to a ball.
+    explanation: |
+      The ball is at $a = (V^a/V^\tau)\,\tau$ with $|V^a/V^\tau| < 1$, the right flash at $a = \tau$, the left one at $a = -\tau$. For $\tau > 0$ the ball is strictly between them: inside the future light cone of the launch. With $(0.6, 1)$, at $\tau = 5$ the ball is at $a = 3$, the flashes at $\pm5$.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** a ball, a clock, a photon: each traces a curve in spacetime, its **worldline**. Which curves are allowed for a massive particle and which for light, and what time does a clock carried along a worldline actually show? The length of the curve, measured with $g$: **proper time**, and the twin paradox becomes a computation.
