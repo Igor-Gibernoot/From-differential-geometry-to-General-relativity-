@@ -1,9 +1,6 @@
 # Status
 
 Read only **Current** at the start of a session (`sed -n '/^## Current/,/^## Log/p' docs/STATUS.md`).
-
-### 2026-10-21 Level challenge ch10-challenge, part 2
-Added P4 (plane EM wave: T=rho k k, traceless, conservation forces speed of light, Doppler Ric(u,u), no rest frame), P5 (static clocks and redshift, modified f with Ric_00=f/r^4 as electric-field energy) and the wrap-up; intro lists real titles; course.yaml summary updated. 49 cards, validate 0/0, shots clean. Chapter 10 complete. Conventions fixed here: EM momentum direction from T^{01}>0; k_a=(1,-1,0,0) for a beam along +x^1; Ric_00=f(r^2f')'/(2r^2).
 At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
@@ -487,6 +484,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+
+### 2026-10-21 — level challenge `ch10-challenge`, part 2 (49 cards)
+
+Added P4 (plane EM wave: T=rho k k, traceless, conservation forces speed of light, Doppler Ric(u,u), no rest frame), P5 (static clocks and redshift, modified f with Ric_00=f/r^4 as electric-field energy) and the wrap-up; intro lists real titles; course.yaml summary updated. Validate 0/0, shots clean. Chapter 10 complete. Conventions fixed here: EM momentum direction from T^{01}>0; k_a=(1,-1,0,0) for a beam along +x^1; Ric_00=f(r^2f')'/(2r^2).
 
 ### 2026-10-21 — guided `ch10-schwarzschild` (32 cards)
 
