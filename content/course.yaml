@@ -305,7 +305,11 @@ levels:
     title: Metric
     blurb: Lengths, angles and geodesics, and the one connection the metric singles out.
     lessons:
-      - { id: ch07-metric, title: The Metric and the Musical Maps, kind: concept }
+      - id: ch07-metric
+        title: The Metric and the Musical Maps
+        kind: concept
+        file: ch07/metric.yaml
+        summary: Components alone cannot give a length. A metric is a symmetric (0,2)-tensor field whose musical map is invertible; it lowers and raises indices, and need not be positive (Minkowski).
       - { id: ch07-signature, title: Signature, kind: concept }
       - { id: ch07-length, title: Length and Geodesics, kind: concept }
       - { id: ch07-euler-lagrange, title: Variations and the Euler-Lagrange Equations, kind: concept }
