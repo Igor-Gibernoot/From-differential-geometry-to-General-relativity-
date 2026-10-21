@@ -402,7 +402,7 @@ levels:
         title: Level Challenge
         kind: challenge
         file: ch08/challenge.yaml
-        summary: "Harder problems combining the level: why the closure of a region must be compact and inside the chart (an interval as a manifold, a chart whose density blows up at its edge), a partition of unity built by hand on the line with the roles of Hausdorff and second countability, and the area of a torus over several charts."
+        summary: "Harder problems combining the level: why the closure of a region must be compact and inside the chart (an interval as a manifold, a chart whose density blows up at its edge), a partition of unity built by hand on the line with the roles of Hausdorff and second countability, the area of a torus over several charts, the spacetime volume of a causal diamond, and what rescaling the metric and the Möbius strip do to volume forms."
 
   - id: ch09
     number: 9

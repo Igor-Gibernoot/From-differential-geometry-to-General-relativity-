@@ -292,7 +292,7 @@ cards:
         feedback: |
           Orthonormal implies $\omega^g = 1$, not conversely: here $g_{11} = g_{22} = 0$, not $\pm1$, yet $|\det g| = 1$.
     explanation: |
-      $\det\begin{pmatrix}0&1\\1&0\end{pmatrix} = -1$, so $\omega^g = 1$. Unit volume needs only $|\det g| = 1$; orthonormality is one way to get it. (Check: this chart is reached from the inertial one by a rotation by $45°$ in the $(t,a)$ plane, Jacobian determinant $1$.)
+      $\det\begin{pmatrix}0&1\\1&0\end{pmatrix} = -1$, so $\omega^g = 1$. Unit volume needs only $|\det g| = 1$; orthonormality is one way to get it. (Check: one such chart is $((a+t)/\sqrt2,\,(a-t)/\sqrt2)$, whose Jacobian with respect to the inertial chart $(t,a)$ has determinant $+1$.)
 
   - type: text
     id: sphere
