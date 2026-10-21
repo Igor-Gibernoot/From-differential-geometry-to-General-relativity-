@@ -1,0 +1,312 @@
+id: ch06-intuition-curvature
+title: "Intuition: Slots of Torsion, Curvature and Ricci"
+kind: intuition
+own: |
+  - **Commutator** (components of $[\mathcal{X},\mathcal{Y}]$, with $x^i$ for $\mathcal{X}$ and $\tilde x^i$ for $\mathcal{Y}$): differentiate each field's components along the other,
+    {{ $$[\mathcal{X},\mathcal{Y}]^i = \mathcal{X}\lfloor\tilde x^i\rceil - \mathcal{Y}\lfloor x^i\rceil$$ }}
+  - **Torsion**, slots (output, direction of the first term, direction of the second), antisymmetric in the last two:
+    {{ $$\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}$$ }}
+    (the direction is the **last** lower index of $\Gamma$, so the first lower index of $\mathtt{T}$ is the last of its first term).
+  - **Riemann**, slots (output, carried vector, the two loop directions), antisymmetric in the last two:
+    {{ $$\begin{aligned}\mathrm{Riem}^i_{jkm} &= \partial x_k\lfloor\Gamma^i_{jm}\rceil - \partial x_m\lfloor\Gamma^i_{jk}\rceil\\ &\quad + \Gamma^i_{nk}\Gamma^n_{jm} - \Gamma^i_{nm}\Gamma^n_{jk}\end{aligned}$$ }}
+    {{ $$\mathrm{Riem}^i_{jkm} = -\mathrm{Riem}^i_{jmk}$$ }}
+  - **Ricci**: contract the output with the **first** loop direction, the carried index and the second direction remain:
+    {{ $$\mathrm{Ric}_{ab} = \mathrm{Riem}^m_{amb}$$ }}
+  - **Checks**: the slots balance (one Jacobian per index, so $\mathrm{Riem}^1_{212}$ scales by $2\cdot(\tfrac12)^3$ under $\mathscr{Y} = 2\mathscr{X}$); if all $\Gamma$ vanish in one chart, then $\mathtt{T}$, $\mathrm{Riem}$ and $\mathrm{Ric}$ vanish in every chart, but $\Gamma$ itself does not.
+
+cards:
+  - type: text
+    id: hook
+    title: Four index questions
+    body: |
+      Torsion, Riemann and Ricci curvature are tensors built from a connection $\nabla$, and in components they all look like $\mathtt{T}^i_{jk}$, $\mathrm{Riem}^i_{jkm}$, $\mathrm{Ric}_{ab}$: a few indices that are easy to scramble. Each time you meet them you must decide:
+
+      1. **Riemann slots**: which index is the output, which the vector being carried, which two span the loop?
+      2. **Antisymmetry**: which pair of indices flips sign when swapped?
+      3. **Torsion**: which way round is $\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk}$, and what does the commutator $[\mathcal{X},\mathcal{Y}]$ contribute?
+      4. **Ricci**: which index is contracted?
+
+      This lesson derives nothing. It gives one picture for the slots and a quick check for each answer. As in the previous intuition lesson, repeated indices are summed, $\Gamma^i_{jk}$ are the connection coefficient functions of a chart (last lower index = direction), $\partial x_k := \partial/\partial\mathscr{X}^k$ and $\mathcal{X}\lfloor f\rceil$ is the derivative of $f$ along $\mathcal{X}$.
+
+  - type: widget
+    id: loop
+    title: What goes round, what spans the loop
+    widget: parallel-transport
+    config:
+      curve: { type: rectangle, x0: 1, x1: 2, b0: 0, b1: 1 }
+      connection: kappa
+      connections: [kappa, E]
+      kappa: 1
+      z0: [0, 1]
+      holonomy: false
+      showAcceleration: false
+      view: { x: -1.6, y: -0.9, w: 4.6, h: 4.6 }
+    body: |
+      The gold point runs counterclockwise around a rectangle, and the blue vector $\mathcal{Z}$ is carried along by parallel transport. The two sides leaving the start corner point along the two chart directions, call them $\mathcal{X}$ (horizontal) and $\mathcal{Y}$ (vertical).
+
+      Play the loop under $\nabla^{\kappa}$ (curved) and under $\nabla^{\mathrm{E}}$ (flat). Three roles appear: the vector that is **carried** ($\mathcal{Z}$), the two directions that **span the loop** ($\mathcal{X}$, $\mathcal{Y}$), and what **comes out** (the change of $\mathcal{Z}$, read in some component). Curvature is the machine that takes these three and returns the change.
+
+  - type: text
+    id: riem-slots
+    title: Riemann has one slot for each role
+    body: |
+      The Riemann curvature is
+      $$\begin{aligned}&\mathrm{Riem}(\mathsf{X},\mathcal{Z},\mathcal{X},\mathcal{Y})\\ &:= \mathsf{X}\lceil\nabla_\mathcal{X}\nabla_\mathcal{Y}\mathcal{Z} - \nabla_\mathcal{Y}\nabla_\mathcal{X}\mathcal{Z}\\ &\qquad - \nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}\rfloor,\end{aligned}$$
+      and its components are $\mathrm{Riem}^i_{jkm} := \mathrm{Riem}(dx^i,\partial x_j,\partial x_k,\partial x_m)$. Read the four slots in order as a sentence:
+
+      - **$i$ (upper)**: the covector $dx^i$ that reads the output, a vector, so upper;
+      - **$j$**: the vector $\mathcal{Z} = \partial x_j$ that is carried;
+      - **$k$, $m$**: the two loop directions $\mathcal{X} = \partial x_k$, $\mathcal{Y} = \partial x_m$.
+
+      Anchor: the first term of the component formula is $\partial x_k\lfloor\Gamma^i_{jm}\rceil$, which has exactly the same four indices in the same positions: $\Gamma^i_{jm}$ is "differentiate $\partial x_j$ along $\partial x_m$, read along $i$", and $\partial x_k$ then differentiates along $k$.
+
+  - type: mcq
+    id: read-slots
+    prompt: |
+      In a 4-dimensional manifold, a component $\mathrm{Riem}^3_{124}$ is read from
+      $$\mathrm{Riem}^i_{jkm} = \mathrm{Riem}(dx^i,\partial x_j,\partial x_k,\partial x_m).$$
+      Which sentence is correct?
+    options:
+      - text: 'Carry $\partial x_1$ around the loop spanned by $\partial x_2$ and $\partial x_4$, and read the change along $\partial x_3$.'
+        correct: true
+      - text: 'Carry $\partial x_3$ around the loop spanned by $\partial x_1$ and $\partial x_2$, and read the change along $\partial x_4$.'
+        feedback: |
+          That mixes up the roles: the **output** is the upper index $i=3$ (not the carried vector), the **carried** vector is the first lower index $j=1$, and the loop directions are the last two, $2$ and $4$.
+      - text: 'Carry $\partial x_2$ around the loop spanned by $\partial x_1$ and $\partial x_4$, and read the change along $\partial x_3$.'
+        feedback: |
+          The output $3$ is right, but the carried vector is the first lower index, $j = 1$, and the loop uses the last two, $2$ and $4$. Index $1$ is not a loop direction.
+      - text: 'Carry $\partial x_1$ around the loop spanned by $\partial x_3$ and $\partial x_4$, and read the change along $\partial x_2$.'
+        feedback: |
+          The upper index is the **output** ($i=3$), not a loop direction, and $2$ is a loop direction, not the output.
+    explanation: |
+      Upper $i=3$: output; $j=1$: carried; $k=2$, $m=4$: loop directions.
+
+  - type: build
+    id: build-riem
+    prompt: 'Build the components of the Riemann curvature $\mathrm{Riem}^i_{jkm}$ (carried $j$, loop directions $k$ then $m$, summed index $n$).'
+    prefix: '\mathrm{Riem}^i_{jkm} ='
+    tiles:
+      - '\partial x_k\lfloor\Gamma^i_{jm}\rceil'
+      - '-\partial x_m\lfloor\Gamma^i_{jk}\rceil'
+      - '+\Gamma^i_{nk}\Gamma^n_{jm}'
+      - '-\Gamma^i_{nm}\Gamma^n_{jk}'
+      - '+\Gamma^i_{nm}\Gamma^n_{jk}'
+    answers:
+      - ['\partial x_k\lfloor\Gamma^i_{jm}\rceil', '-\partial x_m\lfloor\Gamma^i_{jk}\rceil', '+\Gamma^i_{nk}\Gamma^n_{jm}', '-\Gamma^i_{nm}\Gamma^n_{jk}']
+      - ['\partial x_k\lfloor\Gamma^i_{jm}\rceil', '+\Gamma^i_{nk}\Gamma^n_{jm}', '-\partial x_m\lfloor\Gamma^i_{jk}\rceil', '-\Gamma^i_{nm}\Gamma^n_{jk}']
+      - ['\partial x_k\lfloor\Gamma^i_{jm}\rceil', '-\partial x_m\lfloor\Gamma^i_{jk}\rceil', '-\Gamma^i_{nm}\Gamma^n_{jk}', '+\Gamma^i_{nk}\Gamma^n_{jm}']
+    wrong:
+      - answer: ['\partial x_k\lfloor\Gamma^i_{jm}\rceil', '-\partial x_m\lfloor\Gamma^i_{jk}\rceil', '+\Gamma^i_{nk}\Gamma^n_{jm}', '+\Gamma^i_{nm}\Gamma^n_{jk}']
+        feedback: |
+          Swapping $k\leftrightarrow m$ must flip the whole expression (the loop is run the other way). In your version the derivative terms flip but the product terms do not. In $\Gamma^i_{nk}\Gamma^n_{jm}-\Gamma^i_{nm}\Gamma^n_{jk}$ the swap exchanges the two terms, so a minus is needed between them.
+    hint: 'Antisymmetry in $k,m$: each term must have a partner with $k$ and $m$ exchanged and the opposite sign. Pair the $\partial\Gamma$ terms and the $\Gamma\Gamma$ terms.'
+    explanation: |
+      $$\begin{aligned}\mathrm{Riem}^i_{jkm} &= \partial x_k\lfloor\Gamma^i_{jm}\rceil - \partial x_m\lfloor\Gamma^i_{jk}\rceil\\ &\quad + \Gamma^i_{nk}\Gamma^n_{jm} - \Gamma^i_{nm}\Gamma^n_{jk}.\end{aligned}$$
+      Each $\Gamma$ keeps the pattern "output up, field next, direction last": in $\Gamma^i_{nk}\Gamma^n_{jm}$ the inner $\Gamma^n_{jm}$ differentiates $\partial x_j$ along $m$, giving a vector along $n$, which the outer $\Gamma^i_{nk}$ differentiates along $k$.
+
+  - type: numeric
+    id: riem-component
+    prompt: |
+      A connection on a 2-dimensional chart has a single nonzero coefficient function, $\Gamma^2_{11} = 3\,x^2$ (here $x^2$ is the second coordinate). Find $\mathrm{Riem}^2_{121}$.
+    answer: 3
+    answerText: '3'
+    wrong:
+      - { value: -3, feedback: 'That is $\mathrm{Riem}^2_{112}$, the loop run the other way. In $\mathrm{Riem}^2_{121}$ we have $k = 2$, $m = 1$, so the first term is $\partial x_2\lfloor\Gamma^2_{11}\rceil = +3$.' }
+      - { value: 0, feedback: 'The derivative term does not vanish: $k=2$ differentiates $\Gamma^2_{jm}=\Gamma^2_{11}$, which depends on $x^2$. The product terms vanish, but this term gives $3$.' }
+    hint: 'Here $i=2$, $j=1$, $k=2$, $m=1$. Product terms need two nonzero coefficients; only one exists.'
+    explanation: |
+      $$\mathrm{Riem}^2_{121} = \partial x_2\lfloor\Gamma^2_{11}\rceil - \partial x_1\lfloor\Gamma^2_{12}\rceil + 0 - 0 = 3 .$$
+      The product terms are zero because $\Gamma^2_{n2}$ and $\Gamma^n_{12}$ vanish for every $n$. Compare the earlier plane example $\Gamma^1_{22} = \kappa a$, where the same computation gives $\mathrm{Riem}^1_{212}=\kappa$: here the roles of the indices $1$ and $2$ are exchanged.
+
+  - type: mcq
+    id: antisym
+    prompt: |
+      Select every statement that holds for the torsion and Riemann curvature of **every** connection (no metric, no extra assumption).
+    multiple: true
+    options:
+      - text: '$\mathrm{Riem}^i_{jkm} = -\mathrm{Riem}^i_{jmk}$'
+        correct: true
+      - text: '$\mathtt{T}^i_{jk} = -\mathtt{T}^i_{kj}$'
+        correct: true
+      - text: '$\mathrm{Riem}^i_{jkk} = 0$'
+        correct: true
+      - text: '$\mathrm{Riem}^i_{jkm} = -\mathrm{Riem}^j_{ikm}$'
+        feedback: |
+          Tempting, since it is an antisymmetry of the first pair. But $i$ is an **upper** slot and $j$ a lower one: they are different kinds of slot (output versus carried), so swapping them does not even make sense without a metric. With a metric (Level 7) the first two slots become comparable after lowering $i$, and for the Levi-Civita connection they do flip sign.
+      - text: '$\mathrm{Riem}^i_{jkm} = -\mathrm{Riem}^i_{kjm}$'
+        feedback: |
+          The carried slot $j$ and a loop direction $k$ play different roles (vector versus direction), so there is no such symmetry. The antisymmetric pair is the pair of **directions**, the two slots that took $\mathcal{X}$ and $\mathcal{Y}$.
+      - text: '$\Gamma^i_{jk} = -\Gamma^i_{kj}$'
+        feedback: |
+          $\Gamma$ is not a tensor and has no such symmetry. In fact for a torsion-free connection it is **symmetric**: $\Gamma^i_{jk}=\Gamma^i_{kj}$. Only the difference, $\mathtt{T}^i_{jk}=\Gamma^i_{kj}-\Gamma^i_{jk}$, is antisymmetric.
+    explanation: |
+      Rule: the antisymmetric pair is always the pair of slots that took the two directions $\mathcal{X},\mathcal{Y}$, because both objects are defined by "swap $\mathcal{X}$ and $\mathcal{Y}$ and subtract". Torsion: $(j,k)$. Riemann: $(k,m)$.
+
+  - type: numeric
+    id: count-torsion
+    prompt: |
+      In a 4-dimensional manifold, how many independent components does the torsion $\mathtt{T}^i_{jk}$ have, using only its antisymmetry $\mathtt{T}^i_{jk} = -\mathtt{T}^i_{kj}$?
+    answer: 24
+    answerText: '$4\cdot 6 = 24$'
+    wrong:
+      - { value: 64, feedback: 'That is $4^3$, every index free. The pair $(j,k)$ is antisymmetric: only the 6 pairs $j<k$ are free, and $j=k$ gives $0$.' }
+      - { value: 6, feedback: 'Six counts the pairs $j<k$, but the upper index $i$ takes 4 values independently of the pair.' }
+      - { value: 40, feedback: 'That is the count for a symmetric pair $(j,k)$ (10 pairs times 4), as for a torsion-free $\Gamma$. An antisymmetric pair has only 6 independent entries.' }
+    hint: 'Free upper index times the number of unordered pairs $j<k$ out of 4.'
+    explanation: |
+      $$d\cdot\frac{d(d-1)}{2} = 4\cdot 6 = 24 .$$
+
+  - type: text
+    id: commutator
+    title: The commutator in components
+    body: |
+      The torsion needs the **commutator** of two vector fields, defined by its action on a function $f$:
+      $$[\mathcal{X},\mathcal{Y}]\lfloor f\rceil := \mathcal{X}\big\lfloor\mathcal{Y}\lfloor f\rceil\big\rceil - \mathcal{Y}\big\lfloor\mathcal{X}\lfloor f\rceil\big\rceil .$$
+      Take components $x^i$ for $\mathcal{X}$ and $\tilde x^i$ for $\mathcal{Y}$. Expanding, the second derivatives of $f$ appear twice with opposite signs and cancel, leaving
+      $$[\mathcal{X},\mathcal{Y}]^i = \mathcal{X}\lfloor\tilde x^i\rceil - \mathcal{Y}\lfloor x^i\rceil .$$
+      Mnemonic: *differentiate the components of the second field along the first, minus the reverse.* It is the same object as the Lie derivative $\mathcal{L}_\mathcal{X}\mathcal{Y}$ from Level 5. Check: the coordinate fields commute, $[\partial x_j,\partial x_k] = 0$, because their components are constants. That is why the torsion components need no commutator term.
+
+  - type: numeric
+    id: commutator-number
+    prompt: |
+      In a chart with coordinates $(x^1,x^2)$, let $\mathcal{X} = \partial x_1$ and $\mathcal{Y} = (x^1)^2\,\partial x_2$. At the point where $x^1 = 3$, the commutator is $[\mathcal{X},\mathcal{Y}] = c\,\partial x_2$. Find $c$.
+    answer: 6
+    answerText: '$6 = 2x^1$'
+    wrong:
+      - { value: -6, feedback: 'That is $[\mathcal{Y},\mathcal{X}]$: the commutator is antisymmetric, and the order matters. For $[\mathcal{X},\mathcal{Y}]$ you differentiate the components of $\mathcal{Y}$ along $\mathcal{X}$.' }
+      - { value: 9, feedback: 'That is the component $\tilde x^2 = (x^1)^2$ of $\mathcal{Y}$ itself. The commutator involves its **derivative** along $\mathcal{X}$.' }
+      - { value: 0, feedback: 'The coordinate fields commute, but $\mathcal{Y}$ has a non-constant component, so it does not commute with $\partial x_1$.' }
+    hint: 'Components of $\mathcal{X}$: $(1,0)$. Components of $\mathcal{Y}$: $(0,(x^1)^2)$. Differentiate each field''s components along the other.'
+    explanation: |
+      $$\begin{aligned}[\mathcal{X},\mathcal{Y}]^2 &= \mathcal{X}\lfloor(x^1)^2\rceil - \mathcal{Y}\lfloor 0\rceil\\ &= 2x^1 = 6 .\end{aligned}$$
+
+  - type: text
+    id: torsion-slots
+    title: 'Torsion: which way round?'
+    body: |
+      The torsion is
+      $$\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) := \mathsf{X}\lceil\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]\rfloor .$$
+      Slots: the covector $\mathsf{X}$ reads the output; $\mathcal{X},\mathcal{Y}$ are the two directions. In a chart the commutator drops out:
+      $$\mathtt{T}^i_{jk} = dx^i\lceil\nabla_{\partial x_j}\partial x_k - \nabla_{\partial x_k}\partial x_j\rfloor .$$
+      Now the trap. In $\Gamma^i_{kj}$ the **last** lower index is the direction. The first term moves along $j$ and differentiates $\partial x_k$, which is $\Gamma^i_{kj}$, with $j$ **last**:
+      $$\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk} .$$
+      Mnemonic: the letters of $\mathtt{T}^i_{jk}$ are in the order $j,k$, but the first $\Gamma$ appears with them reversed, $k,j$. Sanity check: swapping $j\leftrightarrow k$ flips the sign, as antisymmetry demands, and $\mathtt{T}=0$ exactly when $\Gamma^i_{jk}=\Gamma^i_{kj}$.
+
+  - type: build
+    id: build-torsion-def
+    prompt: 'Build the argument of $\mathsf{X}\lceil\ \cdot\ \rfloor$ in the torsion $\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y})$.'
+    prefix: '\mathsf{X}\lceil'
+    suffix: '\rfloor'
+    tiles: ['\nabla_\mathcal{X}\mathcal{Y}', '-\nabla_\mathcal{Y}\mathcal{X}', '-[\mathcal{X},\mathcal{Y}]', '+[\mathcal{X},\mathcal{Y}]']
+    answers:
+      - ['\nabla_\mathcal{X}\mathcal{Y}', '-\nabla_\mathcal{Y}\mathcal{X}', '-[\mathcal{X},\mathcal{Y}]']
+      - ['\nabla_\mathcal{X}\mathcal{Y}', '-[\mathcal{X},\mathcal{Y}]', '-\nabla_\mathcal{Y}\mathcal{X}']
+    wrong:
+      - answer: ['\nabla_\mathcal{X}\mathcal{Y}', '-\nabla_\mathcal{Y}\mathcal{X}', '+[\mathcal{X},\mathcal{Y}]']
+        feedback: |
+          The commutator must be **subtracted**. Check with the flat plane in cartesian coordinates ($\Gamma=0$), $\mathcal{X}=\partial x_1$, $\mathcal{Y}=x^1\partial x_2$: $\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} = \partial x_2$ and $[\mathcal{X},\mathcal{Y}] = \partial x_2$, so only the minus gives $0$, as it should for a connection that is flat in these coordinates.
+    hint: 'Torsion-free means $\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} = [\mathcal{X},\mathcal{Y}]$.'
+    explanation: |
+      $$\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) = \mathsf{X}\lceil\nabla_\mathcal{X}\mathcal{Y} - \nabla_\mathcal{Y}\mathcal{X} - [\mathcal{X},\mathcal{Y}]\rfloor .$$
+      The commutator is there so that the result is a tensor: it cancels the non-tensorial terms of the first two.
+
+  - type: build
+    id: build-torsion-comp
+    prompt: 'Build the torsion components in terms of connection coefficient functions.'
+    prefix: '\mathtt{T}^i_{jk} ='
+    tiles: ['\Gamma^i_{kj}', '-\Gamma^i_{jk}', '\Gamma^i_{jk}', '-\Gamma^i_{kj}']
+    answers:
+      - ['\Gamma^i_{kj}', '-\Gamma^i_{jk}']
+      - ['-\Gamma^i_{jk}', '\Gamma^i_{kj}']
+    wrong:
+      - answer: ['\Gamma^i_{jk}', '-\Gamma^i_{kj}']
+        feedback: |
+          The overall sign is reversed. The first term of the torsion moves along $j$ and differentiates $\partial x_k$, and the direction is the **last** lower index of $\Gamma$: $\Gamma^i_{kj}$.
+    hint: 'First term of the torsion: direction $j$, field $\partial x_k$.'
+    explanation: |
+      $$\mathtt{T}^i_{jk} = \Gamma^i_{kj} - \Gamma^i_{jk} .$$
+
+  - type: numeric
+    id: torsion-number
+    prompt: |
+      In a 2-dimensional chart, a connection has $\Gamma^1_{12} = 3$ and $\Gamma^1_{21} = 1$ at a point $p$. Find $\mathtt{T}^1_{12}$ there.
+    answer: -2
+    answerText: '$\Gamma^1_{21} - \Gamma^1_{12} = -2$'
+    wrong:
+      - { value: 2, feedback: 'That is $\mathtt{T}^1_{21} = \Gamma^1_{12} - \Gamma^1_{21}$. For $\mathtt{T}^1_{12}$ the first term is $\Gamma^1_{21}$ (indices reversed).' }
+      - { value: 4, feedback: 'You added the two. The torsion is the **difference**: it is the antisymmetric part, and the sum would be (twice) the symmetric part.' }
+      - { value: 3, feedback: 'You read off $\Gamma^1_{12}$ directly. The torsion needs both: $\Gamma^1_{21}-\Gamma^1_{12}$.' }
+    hint: 'Here $i=1$, $j=1$, $k=2$. Which of the two coefficients is the first term, the one moving along $j$?'
+    explanation: |
+      $$\mathtt{T}^1_{12} = \Gamma^1_{21} - \Gamma^1_{12} = 1 - 3 = -2,$$
+      and $\mathtt{T}^1_{21} = +2$, as antisymmetry requires.
+
+  - type: text
+    id: ricci-slot
+    title: 'Ricci: which index is contracted?'
+    body: |
+      To get a $(0,2)$-tensor from $\mathrm{Riem}^i_{jkm}$, contract the **upper** index with one lower one. Three choices exist:
+      - with $j$ (the carried slot): $\mathrm{Riem}^m_{mkb}$, a different object, not Ricci;
+      - with $k$ (the **first** loop direction): $\mathrm{Riem}^m_{amb}$, the **Ricci curvature**;
+      - with $m$ (the second loop direction): $\mathrm{Riem}^m_{abm} = -\mathrm{Riem}^m_{amb}$ by antisymmetry, so it is just $-\mathrm{Ric}_{ab}$.
+
+      $$\mathrm{Ric}_{ab} := \mathrm{Riem}^m_{amb}.$$
+      Read it as: *the carried vector is $\partial x_a$, one loop direction is the summed $\partial x_m$ (traced against the output), and the other loop direction is $\partial x_b$.* So $a$ is the carried slot and $b$ the free loop direction. Because the contraction pairs one upper with one lower index, the Jacobian factors cancel in pairs and the rest is a $(0,2)$-tensor: $\mathrm{Riem}^1_{212}$ and $\mathrm{Ric}_{22}$ scale alike.
+
+  - type: numeric
+    id: ricci-number
+    prompt: |
+      In a 2-dimensional chart a connection has the Riemann components $\mathrm{Riem}^2_{121} = 3$ and $\mathrm{Riem}^2_{112} = -3$, and all other components vanish. Find the Ricci component $\mathrm{Ric}_{11}$.
+    answer: 3
+    answerText: '$\mathrm{Riem}^1_{111}+\mathrm{Riem}^2_{121} = 3$'
+    wrong:
+      - { value: -3, feedback: 'That contracts the output with the **last** index, $\mathrm{Riem}^m_{11m}$, which picks $\mathrm{Riem}^2_{112}=-3$. Ricci contracts with the **third** slot (first loop direction).' }
+      - { value: 0, feedback: 'The sum over $m$ has two terms, $m=1$ and $m=2$. For $m=2$ the term $\mathrm{Riem}^2_{121}=3$ appears.' }
+    hint: 'Which index of Riemann is traced against the output? Sum over its two values.'
+    explanation: |
+      $$\begin{aligned}\mathrm{Ric}_{11} &= \mathrm{Riem}^1_{111} + \mathrm{Riem}^2_{121}\\ &= 0 + 3 = 3 .\end{aligned}$$
+      Also $\mathrm{Ric}_{22} = \mathrm{Riem}^1_{212} + \mathrm{Riem}^2_{222} = 0$, and $\mathrm{Ric}_{12} = \mathrm{Riem}^1_{112}+\mathrm{Riem}^2_{122} = 0$, so $\mathrm{Ric} = 3\,dx^1\otimes dx^1$.
+
+  - type: numeric
+    id: riem-scaling
+    prompt: |
+      A 2-dimensional manifold has two charts related by $\mathscr{Y}^1 = 2\mathscr{X}^1$ and $\mathscr{Y}^2 = 2\mathscr{X}^2$ (so $\partial\mathscr{Y}/\partial\mathscr{X} = 2$ and $\partial\mathscr{X}/\partial\mathscr{Y} = \tfrac12$ in each direction). In chart $\mathscr{X}$ a connection has $\mathrm{Riem}^1_{212} = 8$ at $p$. Find $\mathrm{Riem}^1_{212}$ in chart $\mathscr{Y}$.
+    answer: 2
+    answerText: '$8\cdot 2\cdot(\tfrac12)^3 = 2$'
+    wrong:
+      - { value: 8, feedback: 'That treats $\mathrm{Riem}$ as a scalar. It has four indices and takes one Jacobian per index.' }
+      - { value: 32, feedback: 'The Jacobians are the wrong way round: the upper index takes $\partial\mathscr{Y}/\partial\mathscr{X} = 2$ once, and each of the three lower indices takes $\partial\mathscr{X}/\partial\mathscr{Y} = \tfrac12$.' }
+      - { value: 4, feedback: 'You counted only two lower indices. Riemann has three: $j$, $k$, $m$.' }
+    hint: 'One factor $2$ for the upper index, one factor $\tfrac12$ for each of the three lower ones. No extra term: $\mathrm{Riem}$ is a tensor.'
+    explanation: |
+      $$\mathrm{Riem}^1_{212}\big|_\mathscr{Y} = 2\cdot\tfrac12\cdot\tfrac12\cdot\tfrac12\cdot 8 = 2 .$$
+      Unlike $\Gamma$, there is no inhomogeneous second-derivative term: it cancels against the $\nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}$ term. The same factor $\tfrac14$ applies to $\mathrm{Ric}_{22}$, whose remaining two lower indices give $(\tfrac12)^2$.
+
+  - type: mcq
+    id: tensor-vanish
+    prompt: |
+      A connection has **all** coefficient functions equal to zero in some chart $\mathscr{X}$ (the Euclidean connection in cartesian coordinates is an example). Which quantities then vanish in **every** chart? Select all.
+    multiple: true
+    options:
+      - text: 'The torsion $\mathtt{T}^i_{jk}$'
+        correct: true
+      - text: 'The Riemann curvature $\mathrm{Riem}^i_{jkm}$'
+        correct: true
+      - text: 'The Ricci curvature $\mathrm{Ric}_{ab}$'
+        correct: true
+      - text: 'The coefficients $\Gamma^i_{jk}$ themselves'
+        feedback: |
+          $\Gamma$ is not a tensor. Polar coordinates on the plane give $\Gamma^1_{22} = -r$ and $\Gamma^2_{12}=1/r$ for the same connection.
+    explanation: |
+      $\mathtt{T}$, $\mathrm{Riem}$ and $\mathrm{Ric}$ are tensors: the transformation law is homogeneous (one Jacobian per index), so zero in one chart means zero in all. $\Gamma$ has the extra term and can appear in another chart.
+
+  - type: text
+    id: summary
+    body: |
+      | Object | Slots | Flips sign |
+      |---|---|---|
+      | $\mathtt{T}^i_{jk}$ | out, dir, dir | $j,k$ |
+      | $\mathrm{Riem}^i_{jkm}$ | out, carried, dir, dir | $k,m$ |
+      | $\mathrm{Ric}_{ab}$ | carried, dir | none |
+
+      **Next:** connection traps. Fast questions on the classic mistakes, many of which are exactly the swapped slots and signs you just rebuilt.

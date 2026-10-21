@@ -1,6 +1,7 @@
 # Status
 
 Read only **Current** at the start of a session (`sed -n '/^## Current/,/^## Log/p' docs/STATUS.md`).
+- **Intuition lesson `ch06-intuition-curvature`** (before `ch06-traps`): Riem^i_{jkm} slots (output i, carried j, loop directions k,m; anchor: first term ∂_kΓ^i_{jm}), antisymmetric pair = the two direction slots (T: j,k; Riem: k,m), commutator [X,Y]^i = X⌊x̃^i⌉ − Y⌊x^i⌉, T^i_{jk} = Γ^i_{kj} − Γ^i_{jk} (direction is the LAST lower index of Γ), Ric_ab = Riem^m_{amb} (output contracted with the first loop direction).
 At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
@@ -475,6 +476,10 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+
+### 2026-10-21 — intuition lesson `ch06-intuition-curvature` (19 cards)
+
+Slots of torsion, Riemann and Ricci; commutator in components; numeric cards give data, not the law. Conventions fixed here: Riem slots = (output, carried, direction, direction); antisymmetric pair = the two direction slots; Ric contracts the upper index with the third slot.
 
 - Intuition lesson revision: shear cards no longer state the law to apply (learner recalls it); house table style added in css/app.css (.prose table), applies to every Markdown table (incl. dual-basis-law). Conventions fixed here: intuition application cards give data, never the formula; tables are plain Markdown.
 ### 2026-10-21 — intuition lessons `ch04-intuition-jacobian` (16 cards) and `ch06-intuition-christoffel` (18 cards)

@@ -303,6 +303,11 @@ levels:
         kind: guided
         file: ch06/three-connections.yaml
         summary: Compute torsion and curvature of three connections on the plane by hand (Euclidean, frame, curved), sort them into flat/curved and torsion/no torsion, solve the sinusoidal straightest curves and predict a loop's mismatch.
+      - id: ch06-intuition-curvature
+        title: "Intuition: Slots of Torsion, Curvature and Ricci"
+        kind: intuition
+        file: ch06/intuition-curvature.yaml
+        summary: Which Riemann index is the output, the carried vector and the loop pair, which pairs are antisymmetric, the torsion sign with the commutator, and which index Ricci contracts.
       - id: ch06-traps
         title: Connection Traps
         kind: traps
