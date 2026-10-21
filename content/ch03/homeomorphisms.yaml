@@ -2,9 +2,10 @@ id: ch03-homeomorphisms
 title: Continuity and Homeomorphisms
 kind: concept
 own: |
-  - The **preimage** {{ $\text{preim}_\phi(\mathcal{V}) = \{p \mid \phi(p)\in\mathcal{V}\}$ }}, defined for every map. A map is **continuous** when {{ preimages of open sets are open }}. Tears show up as preimage points with no room (the jump $H$). Continuity says nothing about images, and depends on both topologies.
+  - The **preimage** {{ $\text{preim}_\phi(\mathcal{V}) = \{p \mid \phi(p)\in\mathcal{V}\}$ }}, defined for every map. A map $\phi\colon\mathcal{M}\to\mathcal{N}$ is **continuous** when preimages of open sets are open:
+    {{ $$\mathcal{V}\in\mathcal{O}_\mathcal{N}\ \Rightarrow\ \text{preim}_\phi(\mathcal{V})\in\mathcal{O}_\mathcal{M} .$$ }} Tears show up as preimage points with no room (the jump $H$). Continuity says nothing about images, and depends on both topologies.
   - For the standard topologies it agrees with the calculus $\varepsilon$-$\delta$ definition, and composites of continuous maps are continuous.
-  - A **homeomorphism** is a bijection, {{ continuous in both directions }}: it matches the open sets of two spaces. $x\mapsto 2x + 1$ is one; the wrap $[0, 2\pi)\to S^1$ is a continuous bijection whose inverse tears the circle at $(1, 0)$.
+  - A **homeomorphism** is a bijection, {{ $\phi$ and $\phi^{-1}$ both continuous }}: it matches the open sets of two spaces. $x\mapsto 2x + 1$ is one; the wrap $[0, 2\pi)\to S^1$ is a continuous bijection whose inverse tears the circle at $(1, 0)$.
 
 cards:
   - type: text

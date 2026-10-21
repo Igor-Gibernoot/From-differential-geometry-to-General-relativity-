@@ -7,7 +7,10 @@ own: |
     a linear map $C^\infty(\mathcal{M})\to\mathbb{R}$. It uses only curves and scalar fields, so it works on any manifold, with no surrounding space.
   - Two velocities are equal when they agree on **every** field; agreeing on one is not enough. Different curves (one bent, one straight) can share one velocity.
   - In $\mathbb{R}^d$: {{ $(f\circ\gamma)'(0) = \sum_{i=1}^d v^i\,\partial_i f(p)$ }}, and the coordinate functions read out the components $v^i$.
-  - The **tangent space** $T_p\mathcal{M}$: {{ all velocities at $p$ }}, with $\oplus_T$ and $\odot_T$ defined {{ field by field }}. Twice as fast gives $2\odot_T v$. The four-velocity of a worldline lives here.
+  - The **tangent space** $T_p\mathcal{M}$: {{ all velocities at $p$ }}, with $\oplus_T$ and $\odot_T$ defined {{ field by field }}:
+    $$(v\oplus_T w)(f) := v(f) + w(f),$$
+    $$(\alpha\odot_T v)(f) := \alpha\,v(f).$$
+    Twice as fast gives $2\odot_T v$. The four-velocity of a worldline lives here.
 
 cards:
   - type: text

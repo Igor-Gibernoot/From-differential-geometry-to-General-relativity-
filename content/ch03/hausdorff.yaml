@@ -2,7 +2,9 @@ id: ch03-hausdorff
 title: Hausdorff and Second Countable
 kind: concept
 own: |
-  - **Convergence** with open sets: $p_n\to p$ when {{ every open neighbourhood of $p$ traps the whole tail }}. In the indiscrete topology, every sequence converges to every point.
+  - **Convergence** with open sets: $p_n\to p$ when {{ every open neighbourhood of $p$ traps the whole tail }}:
+    $$\mathcal{U}\ni p\ \text{open}\ \Rightarrow\ \exists N:\ n\ge N\ \Rightarrow\ p_n\in\mathcal{U} .$$
+    In the indiscrete topology, every sequence converges to every point.
   - **Hausdorff**: for all $p\neq q$ there are open sets with
     {{ $$p\in\mathcal{U},\qquad q\in\mathcal{V},\qquad \mathcal{U}\cap\mathcal{V} = \emptyset .$$ }}
     Then limits are unique. $\mathbb{R}^d$ is Hausdorff (balls of radius half the distance), and so is every subset. The line with two origins looks like $\mathbb{R}$ everywhere and is not Hausdorff.

@@ -2,7 +2,10 @@ id: ch03-charts
 title: Charts and Transition Maps
 kind: concept
 own: |
-  - A **chart** $(\mathcal{U}, \mathscr{X})$: an open domain $\mathcal{U}$ and {{ a homeomorphism $\mathscr{X}$ onto an **open** set of $\mathbb{R}^d$ }}. Its values are **coordinates**. Openness leaves room for derivatives and pins down $d$.
+  - A **chart** $(\mathcal{U}, \mathscr{X})$: an open domain $\mathcal{U}$ and {{ a homeomorphism $\mathscr{X}$ onto an **open** set of $\mathbb{R}^d$ }}:
+    $$\mathscr{X}\colon\mathcal{U}\to\mathscr{X}(\mathcal{U})\subseteq\mathbb{R}^d,$$
+    $$p\mapsto\big(\mathscr{X}^1(p),\dots,\mathscr{X}^d(p)\big).$$
+    Its values are **coordinates**. Openness leaves room for derivatives and pins down $d$.
   - Charts are local: the angle $\theta\in(0, 2\pi)$ misses $(1, 0)$, and no single chart covers $S^1$.
   - The **transition map** {{ $\mathscr{Y}\circ\mathscr{X}^{-1}$ }} translates coordinates on the overlap, numbers to numbers. For the two angle charts it is $\theta$ or $\theta - 2\pi$; for the stereographic chart, $\cos\theta/(1 - \sin\theta)$. Jumps between pieces of its domain are harmless.
   - A **topological manifold** of dimension $d$: {{ Hausdorff, second countable }}, and every point in a chart into $\mathbb{R}^d$. $S^1$ is one, with $d = 1$.

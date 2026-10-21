@@ -2,8 +2,9 @@ id: ch02-change-of-basis
 title: Same Arrow, Different Numbers
 kind: concept
 own: |
-  - A change of basis leaves the vector alone and changes only its components.
-  - The dictionary {{ $\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$ }} writes old in terms of new. It exists and is invertible because **both** sets are bases of the same finite-dimensional $V$.
+  - A change of basis leaves the vector alone and changes only its components:
+    {{ $$\mathcal{X} = \sum_i x^i\,\hat{x}_i = \sum_j y^j\,\hat{y}_j .$$ }}
+  - The dictionary {{ $\hat{x}_i = \sum_j J_i^j\cdot\hat{y}_j$ }} writes old in terms of new; new in terms of old is {{ $\hat{y}_i = \sum_j (J^{-1})_i^j\,\hat{x}_j$ }}. It exists and is invertible because **both** sets are bases of the same finite-dimensional $V$.
   - Components transform the opposite way, {{ $y^j = \sum_i J_i^j\, x^i$ }}: they are {{ **contravariant** }}.
   - A component is not "how much along that basis vector"; it depends on the whole basis.
 
