@@ -5,7 +5,7 @@ At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
 
-## Current (2026-10-20, Chapter 7 complete; next: `ch08-volume-forms`)
+## Current (2026-10-20, Chapter 8 in progress; next: `ch08-integration`)
 
 - **Chapter 2 complete** (lessons, traps, map, challenge).
 - **Chapter 3 complete** (lessons, traps, map, challenge): `ch03-open-sets`,
@@ -31,7 +31,8 @@ append a short entry at the end of **Log** (a few lines, ending with
   results; marking rules in `docs/QUICKREF.md`); the last card is a `text` card whose `body` holds only the teaser. New concept lessons
   write it from the start. **Backfill:** backfill complete (Chapters 2-6). Never edit a blank's text without need: its progress is keyed by its hash.
 - **Index notation rule:** the first lesson using raised labels ($x^1$, $x^2$) is `ch02-axioms`, which has a "labels, not powers" card; any new lesson that introduces a raised label before its predecessors do must say it is a label, not a power.
-- **Queue (one unit each):** Chapter 8 (Integrals) in `course.yaml` order: `ch08-volume-forms`, `ch08-integration`, `ch08-metric-volume`,
+- **Chapter 8 in progress:** `ch08-volume-forms` (concept, 33 cards).
+- **Queue (one unit each):** Chapter 8 (Integrals) in `course.yaml` order: `ch08-integration`, `ch08-metric-volume`,
   `ch08-circle-length` (guided), `ch08-traps`, `ch08-map`, `ch08-challenge` (two sessions); then Chapters 9–10 (each with map and challenge).
   `archive/tex_exercises/` has no Chapter 8 file: the book (8.1–8.3, B.19–B.20, C.7) is the only source. Each planned node in `course.yaml` is one lesson.
 - **Chapter 3 conventions to reuse:** chart $(\mathcal{U}, \mathcal{X})$, second
@@ -404,6 +405,17 @@ append a short entry at the end of **Log** (a few lines, ending with
   P5: $G_{ab} = c\frac{\rho}{\det g}g_{ab}$, $c = 0$; $\mathrm{diag}(1,r^4)$ at $r=2$: $G_{22} = -8+8 = 0$; sphere $(\mathrm{Riem}^\flat)_{1212} = \tfrac R2\det g = \tfrac14$ at $\vartheta = \tfrac\pi6$; 2D Einstein equations force $T=0$;
   divergence $(\operatorname{div}S)_n := (g^{-1})^{kl}(\nabla_{\partial x_k}S)_{ln}$, $\operatorname{div}\mathrm{Ric} = \tfrac12dR$ stated, $\operatorname{div}(\mathrm{Ric}+cRg) = (\tfrac12+c)\partial_nR$ → $c = -\tfrac12$ (decoy $-1$).
   Wrap-up teaser: unit disc area $\pi$ cartesian vs $\int\!\!\int dr\,d\theta = 2\pi$ polar; cure $\sqrt{|\det g|} = r$, the metric volume form. No widget.
+- **Chapter 8 conventions so far:**
+  Conventions fixed here (`ch08-volume-forms`): plane $(a,b)$, cartesian $\mathscr{X}$, polar $\mathscr{Y} = (r,\theta)$, $\theta\in(-\pi,\pi)$, cut $\{b=0,a\le0\}$ (as ch07); coordinates $\alpha$ of $\mathscr{X}$, $\beta$ of $\mathscr{Y}$,
+  $d^d\alpha := d\alpha^1\cdots d\alpha^d$, change of variables $d^d\alpha = d^d\beta\,|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}(\beta)|$ with $(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j = \partial\mathscr{X}^i/\partial\mathscr{Y}^j$ (Jacobian of $\text{ᛖ}_{\mathcal{V}\mathcal{U}} = \mathscr{X}\circ\mathscr{Y}^{-1}$), indicator $\iota$
+  of $\mathcal{D}$ mentioned once; hook unit disc $\pi$ vs $\iint dr\,d\theta = 2\pi$, polar Jacobian $\begin{pmatrix}\cos\theta&-r\sin\theta\\sin\theta&r\cos\theta\end{pmatrix}$, det $r$; volume form $\Omega$, $\Omega_p\neq0$, total antisymmetry
+  (picture: signed volume, no metric); Levi-Civita symbol $\varepsilon_{i_1\dots i_d} = \varepsilon^{i_1\dots i_d}$ ("a symbol, not a tensor"), facts (a) $T_{i\dots} = \varepsilon_{i\dots}T_{1\dots d}$, $\det(T^i_j) = \varepsilon_{i_1\dots}T^{i_1}_1\cdots$
+  (row $i$, column $j$), (b) column-reordered $= \det\,\varepsilon_{j\dots}$ (the book's (c), relabelled (b) in the lesson); example matrix $\begin{pmatrix}2&1\3&4\end{pmatrix}$ (det 5, swapped $-5$); components
+  $(\Omega_\mathscr{X})_{i\dots} = \varepsilon_{i\dots}\omega_\mathscr{X}$, **scalar density** $\omega_\mathscr{X}$, law $\omega_\mathscr{Y} = \det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)\omega_\mathscr{X}$; Euclidean area form $\Omega_{\mathrm{E}} := dx^1\otimes dx^2 - dx^2\otimes dx^1$
+  (no wedge yet), $\omega_\mathscr{X} = 1$, $\omega_\mathscr{Y} = r$; $J := \det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)$ and $|J|/J$ in the resolution card; mirror chart $\mathscr{Z}(a,b) = (a,-b)$ (det $-1$ vs $\mathscr{X}$, $-r$ vs $\mathscr{Y}$),
+  flipped chart $\mathscr{X}' := (-\mathscr{X}^1,\mathscr{X}^2,\dots)$; oriented atlas $\mathcal{A}^\uparrow$, oriented manifold $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow)$; "positive charts" ($\omega_\mathscr{X}>0$, connected domains) form an oriented atlas,
+  so a volume form orients ($-\Omega$ the opposite one); converse and Möbius stated without proof; "densities of weight $w$" named once. Widget preset new: `chart-basis` single
+  polar chart (`cut: left`), `basisOnly: true`, $p = (1,2)$, view `{x: -4, y: -1.5, w: 8, h: 8}`, presets $(1,0)$, $(2,0)$, $(0,3)$ (patch area $r\,\Delta r\,\Delta\theta$).
 - **Tooling:** `tools/shots.mjs` (`playwright-core` in `tools/node_modules`,
   cached Chromium in `~/Library/Caches/ms-playwright/chromium-1248` on the Mac; on Windows it uses the installed Chrome or Edge,
   `CHROME=<path>` overrides; the Windows laptop has no Node installed: a portable `node.exe` in the session scratchpad works) renders
@@ -417,6 +429,13 @@ append a short entry at the end of **Log** (a few lines, ending with
   enough not to touch); used in `ch02-map`, `ch03-map`, `ch04-map`.
 
 ## Log
+### 2026-10-20 — ch08-volume-forms (concept, 33 cards)
+- Built `content/ch08/volume-forms.yaml` (hook disc $\pi$ vs $2\pi$, `chart-basis` polar patch widget, change of variables, volume form, $arepsilon$ and det,
+  scalar density law, disc resolved, not-a-scalar trap, oriented atlas with mirror chart, orientability, volume form orients); registered with summary.
+  Choices: the book's facts (a)-(c) shown as (a) plus the det formula plus "(b)" = book's (c); "a volume form fixes an orientation" proved (positive charts,
+  flip $-\mathscr{X}^1$ on connected pieces), not in the book's 8.1 text; widget kept to the polar chart alone (cartesian arrows overlapped the polar ones at $p$).
+  validate 0/0, shots 0 problems.
+- Conventions fixed here: see Current, "Chapter 8 conventions so far" (`ch08-volume-forms`).
 ### 2026-10-20 — ch07-challenge part 2 (problems 4–5 and wrap-up, 22 cards; 61 in total)
 - Appended to `content/ch07/challenge.yaml`: intro items 4–5, P4 second variation (half-plane sideways push, Minkowski clock, sphere equator arcs and the
   conjugate point), P5 Einstein curvature in 2D and the divergence-free combination, `wrap-up` with the Level 8 teaser (disc area chart by chart); `course.yaml`

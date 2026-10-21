@@ -367,7 +367,11 @@ levels:
     title: Integrals
     blurb: Integration that does not depend on the chart, with volume forms and orientation.
     lessons:
-      - { id: ch08-volume-forms, title: Volume Forms and Orientation, kind: concept }
+      - id: ch08-volume-forms
+        title: Volume Forms and Orientation
+        kind: concept
+        file: ch08/volume-forms.yaml
+        summary: "Why integrating a chart representative depends on the chart (the unit disc has area π, but 2π in polar coordinates), volume forms and their scalar densities with the Levi-Civita symbol, the determinant law under a change of chart, and oriented atlases."
       - { id: ch08-integration, title: Integration on Manifolds, kind: concept }
       - { id: ch08-metric-volume, title: The Metric Volume Form, kind: concept }
       - { id: ch08-circle-length, title: "Guided Problem: The Length of a Circle, Chart by Chart", kind: guided }

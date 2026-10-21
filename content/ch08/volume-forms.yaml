@@ -1,0 +1,511 @@
+id: ch08-volume-forms
+title: Volume Forms and Orientation
+kind: concept
+
+own: |
+  - **The problem**: integrating chart representatives depends on the chart. Going from coordinates $\alpha$ of $\mathscr{X}$ to coordinates $\beta$ of $\mathscr{Y}$, the change of variables theorem gives
+  {{ $$d^d\alpha = d^d\beta\,\big|\det(\text{ᛞ}_{\mathcal{U}\mathcal{V}})(\beta)\big|$$ }}
+  with $(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j = \partial\mathscr{X}^i/\partial\mathscr{Y}^j$. Unit disc: $\iint da\,db = \pi$, but $\iint dr\,d\theta = 2\pi$; polar Jacobian determinant $r$.
+  - **Volume form** $\Omega$: a $(0,d)$-tensor field, nowhere zero ($\Omega_p\neq0$) and totally antisymmetric (exchanging two arguments flips the sign). Hence $\Omega(\mathcal{X},\mathcal{X},\dots) = 0$, and linearly dependent inputs give $0$.
+  - **Levi-Civita symbol** $\varepsilon_{i_1\dots i_d} = \varepsilon^{i_1\dots i_d}$: $\varepsilon_{1\dots d} = 1$, totally antisymmetric, the same array in every chart (a symbol, not a tensor). Every totally antisymmetric array is $T_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}T_{1\dots d}$, and
+  {{ $$\det(T^i_j) = \varepsilon_{i_1\dots i_d}T^{i_1}_1\cdots T^{i_d}_d$$ }}
+  - **Components**: with the **scalar density** $\omega_\mathscr{X} := \Omega(\partial x_1,\dots,\partial x_d)$, nonzero on $\mathcal{U}$,
+  {{ $$(\Omega_\mathscr{X})_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X}$$ }}
+  and under a change of chart
+  {{ $$\omega_\mathscr{Y} = \det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)\,\omega_\mathscr{X}$$ }}
+  so $\omega_\mathscr{X}$ is not a scalar field. Euclidean area form $\Omega_{\mathrm{E}} = dx^1\otimes dx^2 - dx^2\otimes dx^1$: $\omega_\mathscr{X} = 1$, $\omega_{\text{polar}} = r$.
+  - **Oriented atlas**: charts covering $\mathcal{M}$ with, on every overlap,
+  {{ $$\det\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big) > 0$$ }}
+  (symmetric: the two determinants multiply to $1$). **Orientable** = admits one. A volume form picks an orientation: the charts with $\omega_\mathscr{X} > 0$ form an oriented atlas.
+
+cards:
+  - type: text
+    id: hook
+    title: One disc, two areas
+    body: |
+      The unit disc in the plane (points $(a,b)$, $a^2+b^2<1$) has area $\pi$. In the cartesian chart $\mathscr{X}(a,b) = (a,b)$ that is the ordinary double integral of the constant function $1$:
+      $$\iint_{a^2+b^2<1} da\,db = \pi.$$
+      Now use the polar chart $\mathscr{Y} = (r,\theta)$, $\theta\in(-\pi,\pi)$, defined off the cut $\{b = 0,\ a\le0\}$. The disc (minus the cut, a segment of zero area) becomes the rectangle $(0,1)\times(-\pi,\pi)$ of chart values, and the chart representative of the function $1$ is still $1$. Integrate it there:
+      $$\int_0^1\!\!\int_{-\pi}^{\pi} d\theta\,dr = 1\cdot2\pi = 2\pi.$$
+      Same function, same region, two different answers. On a manifold, where charts are all we have, which one is "the" integral?
+
+  - type: mcq
+    id: hook-guess
+    title: Guess the fix
+    prompt: |
+      Before any theory, guess. The unit disc has area $\pi$, yet in the polar chart $(r,\theta)$ the integral $\int_0^1\int_{-\pi}^{\pi}d\theta\,dr$ gives $2\pi$. Which factor, put into the polar integrand, gives the right area for **every** disc $r<R$ around the origin?
+    options:
+      - text: '$r$'
+        correct: true
+      - text: '$\tfrac12$'
+        feedback: |
+          It happens to work for $R = 1$, but not in general: for the disc of radius $2$ (area $4\pi$) it gives $\tfrac12\cdot2\cdot2\pi = 2\pi$. The correction must depend on where you are, not be one constant.
+      - text: '$\tfrac1r$'
+        feedback: |
+          Then $\int_0^1 dr/r$ diverges at the origin: the integral would be infinite. The correction should shrink near the origin, where the polar chart crowds many values of $\theta$ into a tiny region, not blow up.
+      - text: '$r^2$'
+        feedback: |
+          That gives $\int_0^1 r^2\,dr\cdot2\pi = \tfrac{2\pi}3$. Too small: area grows like $R^2$, so the integrand in $r$ must grow like $r$, not $r^2$ (whose integral grows like $R^3$).
+    explanation: |
+      The factor $r$: $\int_0^R\int_{-\pi}^{\pi}r\,d\theta\,dr = \pi R^2$. This lesson finds where it comes from, and builds an object that supplies such factors automatically in every chart.
+
+  - type: widget
+    id: patch-widget
+    title: How big is a chart rectangle?
+    widget: chart-basis
+    config:
+      charts:
+        - { chart: polar, name: '\mathscr{Y}', cut: left }
+      p: [1, 2]
+      v: [1, 0]
+      basisOnly: true
+      view: { x: -4, y: -1.5, w: 8, h: 8 }
+      presets:
+        - { label: 'p = (1, 0)', p: [1, 0], v: [1, 0] }
+        - { label: 'p = (2, 0)', p: [2, 0], v: [1, 0] }
+        - { label: 'p = (0, 3)', p: [0, 3], v: [1, 0] }
+    body: |
+      The lines are those of the polar chart $\mathscr{Y} = (r,\theta)$, $\theta\in(-\pi,\pi)$ (circles $r$ = const, rays $\theta$ = const, the cut dotted), with its basis vectors $(\partial/\partial r)_p$ and $(\partial/\partial\theta)_p$ in purple at the point $p$.
+
+      Drag $p$ away from the origin and back. A small rectangle of chart values, $\Delta r$ by $\Delta\theta$, is a small patch of the plane with sides about $\Delta r\,(\partial/\partial r)_p$ and $\Delta\theta\,(\partial/\partial\theta)_p$. Watch the second side: $(\partial/\partial\theta)_p$ has length $r$, so the same $\Delta\theta$ covers more plane far from the origin.
+
+  - type: numeric
+    id: patch-area
+    title: Area of a polar patch
+    prompt: |
+      In the plane (points $(a,b)$) with the polar chart $(r,\theta)$, at $p = (0,3)$ the chart basis vectors are, in standard components, $(\partial/\partial r)_p = (0,1)$ and $(\partial/\partial\theta)_p = (-3,0)$. What is the area of the parallelogram they span? (A chart rectangle $\Delta r\times\Delta\theta$ at $p$ then covers a patch of area about this number times $\Delta r\,\Delta\theta$.)
+    answer: 3
+    answerText: '3'
+    wrong:
+      - { value: 1, feedback: 'That would be true for the two cartesian basis vectors. Here the second vector, $(-3,0)$, has length $3$, and it is perpendicular to $(0,1)$: the area is $1\cdot3$.' }
+    hint: |
+      The two vectors are perpendicular, so the parallelogram is a rectangle: multiply their lengths.
+    explanation: |
+      Area $= 1\cdot3 = 3 = r_p$. In general $(\partial/\partial r)_p$ has length $1$ and $(\partial/\partial\theta)_p$ length $r$, perpendicular, so a polar rectangle $\Delta r\times\Delta\theta$ covers about $r\,\Delta r\,\Delta\theta$ of plane. That is the missing factor $r$ of the disc.
+
+  - type: text
+    id: change-variables
+    title: What a change of chart does to an integral
+    body: |
+      In general, let $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ be charts of a $d$-dimensional manifold, with coordinates $\alpha = \mathscr{X}(p)$ and $\beta = \mathscr{Y}(p)$, a region $\mathcal{D}\subseteq\mathcal{U}\cap\mathcal{V}$, and $f$ a function. Write $d^d\alpha := d\alpha^1\cdots d\alpha^d$ for the volume element of $\mathbb{R}^d$.
+
+      Recall the Jacobian $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ of the transition map $\text{ᛖ}_{\mathcal{V}\mathcal{U}} = \mathscr{X}\circ\mathscr{Y}^{-1}$ (new coordinates $\beta$ to old $\alpha$), with entries
+      $$(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j(\beta) = \frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}.$$
+      The change of variables theorem of calculus says $d^d\alpha = d^d\beta\,|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}(\beta)|$: a small box of $\beta$-values is sent to a parallelepiped of $\alpha$-values spanned by the columns of the Jacobian, whose volume is $|\det|$ times the box's. Hence
+      $$\begin{aligned}&\int_{\mathscr{X}(\mathcal{D})}d^d\alpha\,(f\circ\mathscr{X}^{-1})(\alpha)\\ &= \int_{\mathscr{Y}(\mathcal{D})}d^d\beta\,\big|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}(\beta)\big|\\ &\qquad\cdot(f\circ\mathscr{Y}^{-1})(\beta).\end{aligned}$$
+      (To apply the theorem on all of $\mathbb{R}^d$, multiply $f$ by the **indicator function** $\iota$ of $\mathcal{D}$, $1$ on $\mathcal{D}$ and $0$ elsewhere.) The function only changes into its other chart representative; the volume element picks up $|\det|$. So the integral of a chart representative depends on the chart.
+
+  - type: numeric
+    id: polar-det
+    title: The polar determinant
+    prompt: |
+      Cartesian chart $\mathscr{X}$, polar chart $\mathscr{Y} = (r,\theta)$ on the plane. The transition map is $\mathscr{X}\circ\mathscr{Y}^{-1}(r,\theta) = (r\cos\theta, r\sin\theta)$, so its Jacobian, entries $\partial\mathscr{X}^i/\partial\mathscr{Y}^j$ (row $i$, column $j$), is
+      $$\begin{pmatrix}\cos\theta&-r\sin\theta\\ \sin\theta&r\cos\theta\end{pmatrix}.$$
+      Compute its determinant at $r = 2$, $\theta = \pi/3$.
+    answer: 2
+    answerText: '2'
+    wrong:
+      - { value: -1, feedback: 'You subtracted where the minus sign of $-r\sin\theta$ should turn the second product into a plus: $\det = r\cos^2\theta - (-r\sin\theta)\sin\theta = r(\cos^2\theta + \sin^2\theta)$. Not $r\cos2\theta$.' }
+      - { value: 1, feedback: 'The second column carries the factor $r$: $\det = r\cos^2\theta + r\sin^2\theta = r$, which is $2$ here.' }
+    hint: |
+      $\det\begin{pmatrix}A&B\\C&D\end{pmatrix} = AD - BC$, and $\cos^2 + \sin^2 = 1$.
+    explanation: |
+      $$\begin{aligned}\det &= r\cos^2\theta - (-r\sin\theta)\sin\theta\\ &= r.\end{aligned}$$
+      At every point the determinant is $r$, here $2$. This is exactly the factor of the disc: $\iint da\,db = \iint r\,dr\,d\theta$.
+
+  - type: text
+    id: goal
+    title: The goal
+    body: |
+      We want an integral on a manifold that does not depend on the chart. The idea: integrate not the bare chart representative of $f$, but that times a factor attached to the chart, a factor that itself picks up a Jacobian determinant under a change of chart and so cancels the $|\det|$ from the volume element.
+
+      Two structures do it:
+      - a **volume form**, whose chart description picks up $\det$ (with its sign);
+      - an **orientation**, which makes all these determinants positive, so that $|\det|/\det = 1$ and the cancellation is exact.
+
+      Physics needs this from Level 10 on: total charge, energy and the action of a field are integrals over space or spacetime, and they cannot depend on which coordinates the physicist chose.
+
+  - type: text
+    id: definition
+    title: Volume form
+    body: |
+      Recall: a $(0,d)$-tensor field eats $d$ vector fields and returns a function, $C^\infty(\mathcal{M})$-linear in each slot; $\Omega_p$ denotes the tensor it gives at the point $p$.
+
+      On a $d$-dimensional smooth manifold $\mathcal{M}$, a **volume form** is a $(0,d)$-tensor field $\Omega$ with:
+      1. *Non-vanishing:* $\Omega_p\neq0$ for every $p\in\mathcal{M}$ (at no point is it the zero tensor);
+      2. *Total antisymmetry:* exchanging any two arguments flips the sign. In $d = 2$:
+      $$\Omega(\mathcal{X},\mathcal{Y}) = -\Omega(\mathcal{Y},\mathcal{X}).$$
+
+      Picture: $\Omega_p$ takes $d$ vectors at $p$ and returns the **signed volume** of the parallelepiped they span (an area for $d = 2$), in units that $\Omega$ itself fixes. No lengths or angles are involved: no metric is needed.
+
+  - type: mcq
+    id: repeated
+    title: The same vector twice
+    prompt: |
+      $\Omega$ is a volume form on a two-dimensional manifold: a $(0,2)$-tensor field, nowhere zero, with $\Omega(\mathcal{X},\mathcal{Y}) = -\Omega(\mathcal{Y},\mathcal{X})$ for all vector fields. What is $\Omega(\mathcal{X},\mathcal{X})$?
+    options:
+      - text: '$0$, for every vector field $\mathcal{X}$'
+        correct: true
+      - text: 'A positive function, like the squared length of $\mathcal{X}$'
+        feedback: |
+          That is the metric's job: $g(\mathcal{X},\mathcal{X})$ is symmetric and measures length. $\Omega$ is antisymmetric: swapping the two equal arguments gives $\Omega(\mathcal{X},\mathcal{X}) = -\Omega(\mathcal{X},\mathcal{X})$.
+      - text: 'Nonzero, because a volume form is nowhere zero'
+        feedback: |
+          "Nowhere zero" says $\Omega_p$ is not the zero tensor: **some** pair of vectors at $p$ gets a nonzero value. It does not say every pair does. Antisymmetry forces $\Omega(\mathcal{X},\mathcal{X}) = -\Omega(\mathcal{X},\mathcal{X})$, hence $0$.
+      - text: 'It depends on $\mathcal{X}$'
+        feedback: |
+          Antisymmetry decides it for all $\mathcal{X}$ at once: exchanging the two arguments changes nothing, yet must flip the sign, so the value equals its own negative.
+    explanation: |
+      $\Omega(\mathcal{X},\mathcal{X}) = -\Omega(\mathcal{X},\mathcal{X})$, so $2\,\Omega(\mathcal{X},\mathcal{X}) = 0$. Geometrically: two equal edges span a flat parallelogram, of area $0$. With linearity, any linearly dependent inputs give $0$, e.g. $\Omega(\mathcal{X},f\mathcal{X}) = f\,\Omega(\mathcal{X},\mathcal{X}) = 0$.
+
+  - type: numeric
+    id: shear
+    title: Shearing does not change the area
+    prompt: |
+      On a two-dimensional manifold, $\Omega$ is a volume form ($\Omega(\mathcal{X},\mathcal{Y}) = -\Omega(\mathcal{Y},\mathcal{X})$, linear in each slot). At a point $p$, $\Omega_p(u,w) = 5$ for two vectors $u,w$. Compute $\Omega_p(w + 3u,\ u)$.
+    answer: -5
+    answerText: '-5'
+    wrong:
+      - { value: 5, feedback: 'The order of the slots matters: $\Omega_p(w,u) = -\Omega_p(u,w) = -5$. The added $3u$ contributes nothing.' }
+      - { value: 10, feedback: 'You gave $\Omega_p(u,u)$ a nonzero value. Antisymmetry forces $\Omega_p(u,u) = -\Omega_p(u,u) = 0$, so the term $3\,\Omega_p(u,u)$ vanishes.' }
+    hint: |
+      Split by linearity in the first slot: $\Omega_p(w,u) + 3\,\Omega_p(u,u)$.
+    explanation: |
+      $$\begin{aligned}\Omega_p(w+3u,u) &= \Omega_p(w,u) + 3\,\Omega_p(u,u)\\ &= -5 + 0 = -5.\end{aligned}$$
+      Sliding one edge of a parallelogram along the other (a shear) keeps its area; swapping the edges flips the sign.
+
+  - type: text
+    id: levi-civita
+    title: The Levi-Civita symbol
+    body: |
+      To write the components of $\Omega$ we need a bookkeeping device. The $d$-dimensional **Levi-Civita symbol** is the array $\varepsilon_{i_1\dots i_d} = \varepsilon^{i_1\dots i_d}$, indices in $\{1,\dots,d\}$, fixed by
+      $$\varepsilon_{1\dots d} = 1$$
+      and total antisymmetry (exchanging two indices flips the sign). So it is $0$ when two indices coincide (exchanging them gives $\varepsilon = -\varepsilon$), and otherwise $+1$ or $-1$ according to whether an even or odd number of exchanges turns $(i_1,\dots,i_d)$ into $(1,\dots,d)$.
+      - $d = 2$: $\varepsilon_{12} = 1$, $\varepsilon_{21} = -1$, $\varepsilon_{11} = \varepsilon_{22} = 0$.
+      - $d = 3$: $\varepsilon_{123} = 1$, $\varepsilon_{213} = -1$, $\varepsilon_{231} = +1$ (two exchanges).
+
+      **A symbol, not a tensor:** $\varepsilon$ is the same array in every chart, by definition; it is not the components of any tensor field. Its upper and lower versions have equal entries; the index position only lets it enter Einstein summation.
+
+  - type: mcq
+    id: eps-signs
+    title: Which are minus one?
+    multiple: true
+    prompt: |
+      The three-dimensional Levi-Civita symbol has $\varepsilon_{123} = 1$, flips sign under any exchange of two indices, and vanishes when two indices coincide. Which entries equal $-1$? Select all that apply.
+    options:
+      - text: '$\varepsilon_{132}$'
+        correct: true
+      - text: '$\varepsilon_{213}$'
+        correct: true
+      - text: '$\varepsilon_{321}$'
+        correct: true
+      - text: '$\varepsilon_{231}$'
+        feedback: |
+          Count exchanges: $231\to213$ (swap the last two) $\to123$ (swap the first two). Two exchanges, so $\varepsilon_{231} = +1$. Cyclic shifts of $123$ are even.
+      - text: '$\varepsilon_{122}$'
+        feedback: |
+          A repeated index makes it $0$: exchanging the two equal indices leaves the symbol unchanged yet must flip its sign.
+    explanation: |
+      One exchange from $123$: $\varepsilon_{132}$, $\varepsilon_{213}$, $\varepsilon_{321}$ (swap the outer two) are $-1$. The cyclic ones $\varepsilon_{231}$, $\varepsilon_{312}$ are $+1$; entries with a repeated index are $0$. Of the $27$ entries, $3$ are $+1$, $3$ are $-1$.
+
+  - type: text
+    id: det-eps
+    title: Determinants with ε
+    body: |
+      For a $d\times d$ matrix with entries $T^i_j$ (row $i$, column $j$), the determinant is a sum over row indices, one from each column, signed by $\varepsilon$ (Einstein summation over $i_1,\dots,i_d$):
+      $$\det(T^i_j) = \varepsilon_{i_1\dots i_d}\,T^{i_1}_1\cdots T^{i_d}_d.$$
+      Terms with a repeated row index drop out ($\varepsilon = 0$); what remains is one product for each way of reordering the rows, with the sign of that reordering: the familiar formula. In $d = 2$ the sum over $i_1,i_2\in\{1,2\}$ has four terms, two of them zero.
+
+  - type: build
+    id: det-build
+    title: Two by two
+    prompt: |
+      For a $2\times2$ matrix with entries $T^i_j$ (row $i$, column $j$), expand $\det(T^i_j) = \varepsilon_{i_1i_2}T^{i_1}_1T^{i_2}_2$ (sum over $i_1,i_2\in\{1,2\}$), using $\varepsilon_{12} = 1$, $\varepsilon_{21} = -1$, $\varepsilon_{11} = \varepsilon_{22} = 0$.
+    prefix: '\det(T^i_j) ='
+    tiles: ['T^1_1T^2_2', 'T^2_1T^1_2', 'T^1_1T^1_2', '-', '+']
+    answers:
+      - ['T^1_1T^2_2', '-', 'T^2_1T^1_2']
+      - ['-', 'T^2_1T^1_2', '+', 'T^1_1T^2_2']
+    wrong:
+      - { answer: ['T^1_1T^2_2', '+', 'T^2_1T^1_2'], feedback: 'The term with $(i_1,i_2) = (2,1)$ carries $\varepsilon_{21} = -1$: it enters with a minus sign.' }
+      - { answer: ['T^1_1T^2_2', '-', 'T^1_1T^1_2'], feedback: '$T^1_1T^1_2$ takes row $1$ twice, the term $(i_1,i_2) = (1,1)$, which $\varepsilon_{11} = 0$ removes. The surviving second term is $(2,1)$: $T^2_1T^1_2$.' }
+    hint: |
+      Only $(i_1,i_2) = (1,2)$ and $(2,1)$ survive. Write out both terms with their $\varepsilon$.
+    explanation: |
+      $$\begin{aligned}\det(T^i_j) &= \varepsilon_{12}T^1_1T^2_2 + \varepsilon_{21}T^2_1T^1_2\\ &= T^1_1T^2_2 - T^2_1T^1_2,\end{aligned}$$
+      the "diagonal minus antidiagonal" rule.
+
+  - type: numeric
+    id: det-number
+    title: A number
+    prompt: |
+      Using $\det(T^i_j) = \varepsilon_{i_1i_2}T^{i_1}_1T^{i_2}_2$ (row $i$, column $j$; $\varepsilon_{12} = 1$, $\varepsilon_{21} = -1$, $\varepsilon_{11} = \varepsilon_{22} = 0$), compute the determinant of
+      $$\begin{pmatrix}2&1\\3&4\end{pmatrix}.$$
+    answer: 5
+    answerText: '5'
+    wrong:
+      - { value: 11, feedback: 'The term $(i_1,i_2) = (2,1)$ has $\varepsilon_{21} = -1$: subtract $T^2_1T^1_2 = 3\cdot1$, do not add it.' }
+      - { value: -5, feedback: 'The positive term is the diagonal one, $\varepsilon_{12}T^1_1T^2_2 = 2\cdot4 = 8$; then subtract $3$.' }
+    explanation: |
+      $\varepsilon_{12}\cdot2\cdot4 + \varepsilon_{21}\cdot3\cdot1 = 8 - 3 = 5$.
+
+  - type: text
+    id: eps-props
+    title: Two more facts about ε
+    body: |
+      Two facts we will need:
+
+      **(a)** A totally antisymmetric array $T_{i_1\dots i_d}$ is fixed by one number: each exchange of indices flips its sign and repeated indices give $0$, exactly as for $\varepsilon$, so
+      $$T_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}\,T_{1\dots d}.$$
+      **(b)** Feeding the columns in another order: for any $j_1,\dots,j_d$,
+      $$\begin{aligned}&\varepsilon_{i_1\dots i_d}T^{i_1}_{j_1}\cdots T^{i_d}_{j_d}\\ &= \det(T^i_j)\,\varepsilon_{j_1\dots j_d}.\end{aligned}$$
+      Why: exchanging two $j$'s and relabelling the summed $i$'s to match shows the left side is totally antisymmetric in $j_1,\dots,j_d$; by (a) it is $\varepsilon_{j_1\dots j_d}$ times its value at $(1,\dots,d)$, which is $\det(T^i_j)$.
+
+  - type: numeric
+    id: eps-c-check
+    title: Columns swapped
+    prompt: |
+      For the matrix $T^i_j$ with $T^1_1 = 2$, $T^1_2 = 1$, $T^2_1 = 3$, $T^2_2 = 4$ (row $i$, column $j$; determinant $5$), compute
+      $$\varepsilon_{i_1i_2}\,T^{i_1}_2\,T^{i_2}_1$$
+      (sum over $i_1,i_2\in\{1,2\}$; $\varepsilon_{12} = 1$, $\varepsilon_{21} = -1$, $\varepsilon_{11} = \varepsilon_{22} = 0$).
+    answer: -5
+    answerText: '-5'
+    wrong:
+      - { value: 5, feedback: 'Write it out: $\varepsilon_{12}T^1_2T^2_1 + \varepsilon_{21}T^2_2T^1_1 = 3 - 8$. Swapping the columns flips the sign of the determinant.' }
+    hint: |
+      The surviving terms are $(i_1,i_2) = (1,2)$: $T^1_2T^2_1$, and $(2,1)$: $-T^2_2T^1_1$.
+    explanation: |
+      $$\begin{aligned}\varepsilon_{i_1i_2}T^{i_1}_2T^{i_2}_1 &= 1\cdot3 - 4\cdot2\\ &= -5 = \det(T)\,\varepsilon_{21}.\end{aligned}$$
+      Exactly the rule $\varepsilon_{i_1i_2}T^{i_1}_{j_1}T^{i_2}_{j_2} = \det(T^i_j)\,\varepsilon_{j_1j_2}$ with $(j_1,j_2) = (2,1)$.
+
+  - type: text
+    id: components
+    title: Components of a volume form
+    body: |
+      In a chart $(\mathcal{U},\mathscr{X})$ with basis fields $\partial x_i$, the components of $\Omega$ are functions on $\mathcal{U}$:
+      $$(\Omega_\mathscr{X})_{i_1\dots i_d} := \Omega(\partial x_{i_1},\dots,\partial x_{i_d}).$$
+      They form a totally antisymmetric array, so by fact (a) a single function decides them all:
+      $$(\Omega_\mathscr{X})_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X},$$
+      $$\omega_\mathscr{X} := \Omega(\partial x_1,\dots,\partial x_d).$$
+      $\omega_\mathscr{X}$ is the **scalar density** of $\Omega$ with respect to the chart. Every component is $\pm\omega_\mathscr{X}$ or $0$, so non-vanishing reads: $\omega_\mathscr{X}(p)\neq0$ for every $p\in\mathcal{U}$.
+
+      **Example**, the Euclidean area form on the plane, with cartesian chart $\mathscr{X}$:
+      $$\Omega_{\mathrm{E}} := dx^1\otimes dx^2 - dx^2\otimes dx^1.$$
+      Feeding basis fields: $(\Omega_\mathscr{X})_{12} = 1$, $(\Omega_\mathscr{X})_{21} = -1$, the diagonal is $0$; so $\omega_\mathscr{X} = 1$. On two vectors with cartesian components $(u^1,u^2)$, $(w^1,w^2)$ it gives $u^1w^2 - u^2w^1$, the signed area of their parallelogram.
+
+  - type: numeric
+    id: count-3
+    title: How many survive?
+    prompt: |
+      On a three-dimensional manifold, a volume form has components $(\Omega_\mathscr{X})_{ijk} = \varepsilon_{ijk}\,\omega_\mathscr{X}$ in a chart, with $\omega_\mathscr{X}\neq0$ and $\varepsilon$ the Levi-Civita symbol. Of the $3^3 = 27$ components, how many are nonzero?
+    answer: 6
+    answerText: '6'
+    wrong:
+      - { value: 27, feedback: 'Any component with a repeated index, such as $(\Omega_\mathscr{X})_{112}$, vanishes: $\varepsilon_{112} = 0$.' }
+      - { value: 1, feedback: 'Only one is **independent**, $\omega_\mathscr{X}$, but every reordering of $(1,2,3)$ gives a nonzero component, $\pm\omega_\mathscr{X}$.' }
+      - { value: 3, feedback: 'That counts only the $+\omega_\mathscr{X}$ ones (the cyclic orders). The odd orders, such as $(2,1,3)$, give $-\omega_\mathscr{X}$, also nonzero.' }
+    explanation: |
+      The nonzero ones have $(i,j,k)$ a reordering of $(1,2,3)$: $3! = 6$ components, three equal to $+\omega_\mathscr{X}$ and three to $-\omega_\mathscr{X}$. One function carries everything; in dimension $d$, $d!$ nonzero components, all $\pm\omega_\mathscr{X}$.
+
+  - type: build
+    id: law-build
+    title: Change of chart
+    prompt: |
+      A volume form $\Omega$ on a $d$-dimensional manifold has scalar densities $\omega_\mathscr{X} := \Omega(\partial x_1,\dots,\partial x_d)$ and $\omega_\mathscr{Y} := \Omega(\partial y_1,\dots,\partial y_d)$ in two overlapping charts, and components $(\Omega_\mathscr{X})_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X}$. Insert the basis law $\partial y_j = \frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\,\partial x_i$ in each slot, pull the factors out by linearity, and use $\varepsilon_{i_1\dots i_d}T^{i_1}_{j_1}\cdots T^{i_d}_{j_d} = \det(T^i_j)\,\varepsilon_{j_1\dots j_d}$. Build $\omega_\mathscr{Y}$.
+    prefix: '\omega_\mathscr{Y} ='
+    tiles: ['\det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)', '\det\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)', '\Big|\det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)\Big|', '\omega_\mathscr{X}']
+    answers:
+      - ['\det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)', '\omega_\mathscr{X}']
+      - ['\omega_\mathscr{X}', '\det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)']
+    wrong:
+      - { answer: ['\det\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)', '\omega_\mathscr{X}'], feedback: 'The basis law writes the **new** basis $\partial y_j$ in terms of the old: $\partial y_j = \frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\partial x_i$. Those factors, old by new, are what come out. Lower-index objects transform covariantly, like covector components.' }
+      - { answer: ['\Big|\det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)\Big|', '\omega_\mathscr{X}'], feedback: 'Nothing in the algebra takes an absolute value: linearity and the $\varepsilon$ rule give the determinant with its sign. The absolute value belongs to the volume element $d^d\alpha$, and the mismatch between the two is exactly what an orientation will fix.' }
+    hint: |
+      After inserting the basis law, $\omega_\mathscr{Y} = \frac{\partial\mathscr{X}^{i_1}}{\partial\mathscr{Y}^1}\cdots\frac{\partial\mathscr{X}^{i_d}}{\partial\mathscr{Y}^d}\,\varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X}$. Which matrix is $T^i_j$ here?
+    explanation: |
+      $$\begin{aligned}\omega_\mathscr{Y} &= \frac{\partial\mathscr{X}^{i_1}}{\partial\mathscr{Y}^1}\cdots\frac{\partial\mathscr{X}^{i_d}}{\partial\mathscr{Y}^d}\,\Omega(\partial x_{i_1},\dots)\\ &= \frac{\partial\mathscr{X}^{i_1}}{\partial\mathscr{Y}^1}\cdots\frac{\partial\mathscr{X}^{i_d}}{\partial\mathscr{Y}^d}\,\varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X}\\ &= \det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)\,\omega_\mathscr{X},\end{aligned}$$
+      the last step being the $\varepsilon$ rule with $T^i_j = \partial\mathscr{X}^i/\partial\mathscr{Y}^j$ and $(j_1,\dots,j_d) = (1,\dots,d)$. The scalar density picks up a Jacobian determinant: the very matrix whose $|\det|$ the volume element picks up.
+
+  - type: numeric
+    id: omega-polar
+    title: The area form in polar
+    prompt: |
+      On the plane, the Euclidean area form $\Omega_{\mathrm{E}} = dx^1\otimes dx^2 - dx^2\otimes dx^1$ has scalar density $\omega_\mathscr{X} = 1$ in the cartesian chart $\mathscr{X}$. The polar chart $\mathscr{Y} = (r,\theta)$ has $\det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j) = r$, and scalar densities change by $\omega_\mathscr{Y} = \det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)\,\omega_\mathscr{X}$. What is $\omega_\mathscr{Y}$ at a point with $r = 3$?
+    answer: 3
+    answerText: '3'
+    wrong:
+      - { value: 1, feedback: 'The scalar density is not the same in every chart: it picks up the determinant $r$, so it is $3$ here.' }
+      - { value: 0.3333, feedback: 'That uses the inverse Jacobian, $\det(\partial\mathscr{Y}^i/\partial\mathscr{X}^j) = 1/r$. The law multiplies by $\det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j) = r$, old coordinates differentiated by new ones.' }
+    explanation: |
+      $\omega_\mathscr{Y} = r\cdot1 = 3$. Check by feeding directly: $\partial y_1 = \partial r$ and $\partial y_2 = \partial\theta$ have cartesian components $(\cos\theta,\sin\theta)$ and $(-r\sin\theta,r\cos\theta)$, so
+      $$\begin{aligned}\Omega_{\mathrm{E}}(\partial r,\partial\theta) &= \cos\theta\cdot r\cos\theta\\ &\quad - \sin\theta\cdot(-r\sin\theta) = r.\end{aligned}$$
+      The area of the patch spanned by the polar basis vectors, as the widget showed.
+
+  - type: text
+    id: resolve
+    title: The disc, resolved
+    body: |
+      Integrate the chart representative **times the scalar density**. For the disc and $\Omega_{\mathrm{E}}$:
+      - cartesian: $\iint 1\cdot1\,da\,db = \pi$;
+      - polar: $\int_0^1\int_{-\pi}^{\pi}r\cdot1\,d\theta\,dr = \pi$.
+
+      The missing $r$ was $\omega_\mathscr{Y}$. In general, with coordinates $\alpha$ of $\mathscr{X}$, $\beta$ of $\mathscr{Y}$, $F := f\circ\mathscr{X}^{-1}$, and $J := \det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)$:
+      $$\begin{aligned}&\int d^d\alpha\,\omega_\mathscr{X}\,F\\ &= \int d^d\beta\,|J|\,\omega_\mathscr{X}\,F\\ &= \int d^d\beta\,\frac{|J|}{J}\,\omega_\mathscr{Y}\,F,\end{aligned}$$
+      with every function on the right read at the point with coordinates $\beta$ ($F$ becomes $f\circ\mathscr{Y}^{-1}$). The two chart integrals agree exactly when $|J|/J = 1$, that is when $J > 0$. Next comes the structure that guarantees it.
+
+  - type: numeric
+    id: disc-two
+    title: A bigger disc
+    prompt: |
+      The disc of radius $2$ around the origin of the plane, with the Euclidean area form, whose polar scalar density is $\omega_\mathscr{Y} = r$. Compute
+      $$\int_0^2\!\!\int_{-\pi}^{\pi} r\,d\theta\,dr$$
+      (a decimal is fine).
+    answer: 12.566
+    tolerance: 0.01
+    answerText: '$4\pi\approx12.566$'
+    wrong:
+      - { value: 25.133, feedback: 'You dropped the $\tfrac12$ of $\int_0^2r\,dr = \tfrac12\cdot2^2 = 2$. Times $2\pi$ gives $4\pi$.' }
+      - { value: 6.283, feedback: 'That is $\int_0^1r\,dr\cdot4\pi$ or $\int_0^1\int d\theta\,dr$: check the limits. Here $\int_0^2r\,dr = \tfrac12\cdot2^2 = 2$, and times $2\pi$ gives $4\pi$.' }
+    explanation: |
+      $\int_0^2r\,dr\cdot2\pi = 2\cdot2\pi = 4\pi$, the area $\pi R^2$ for $R = 2$, as the cartesian integral gives.
+
+  - type: mcq
+    id: not-scalar
+    title: Two values at one point?
+    prompt: |
+      On the plane, the Euclidean area form $\Omega_{\mathrm{E}}$ has scalar density $\omega_\mathscr{X} = 1$ in the cartesian chart and $\omega_\mathscr{Y} = r$ in the polar chart. At the point $p = (0,2)$ this gives $\omega_\mathscr{X}(p) = 1$ but $\omega_\mathscr{Y}(p) = 2$. What does this show?
+    options:
+      - text: 'The scalar density is attached to a chart, like a component; it is not a scalar field on the manifold. $\Omega_{\mathrm{E}}$ itself is one well-defined tensor field.'
+        correct: true
+      - text: '$\Omega_{\mathrm{E}}$ is not well defined at $p$, since it has two values there'
+        feedback: |
+          $\Omega_{\mathrm{E}}$ has no single "value" to disagree: at $p$ it is a map eating two vectors. The numbers $1$ and $2$ are what it returns on two **different** pairs, $(\partial x_1,\partial x_2)$ and $(\partial r,\partial\theta)$. Different inputs, different outputs.
+      - text: 'One of the two computations is wrong: a function must give one number at a point'
+        feedback: |
+          Both are right. A scalar field $f$ does give one number, $(f\circ\mathscr{X}^{-1})(\mathscr{X}(p)) = f(p) = (f\circ\mathscr{Y}^{-1})(\mathscr{Y}(p))$. The scalar density is not such a field: it obeys $\omega_\mathscr{Y} = \det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)\,\omega_\mathscr{X}$, and here the determinant is $r = 2$.
+      - text: 'Only the cartesian value is the true one; the polar chart distorts'
+        feedback: |
+          No chart is privileged on a manifold. The polar basis vectors at $p$ span a parallelogram of area $2$ (lengths $1$ and $r = 2$), so $\Omega_{\mathrm{E}}(\partial r,\partial\theta) = 2$ is just as true as $\Omega_{\mathrm{E}}(\partial x_1,\partial x_2) = 1$.
+    explanation: |
+      $\omega_\mathscr{X}$ is one function on $\mathcal{U}$ per chart, like the components $x^i$ of a vector field: its value at a point depends on the chart, and the law $\omega_\mathscr{Y} = \det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)\,\omega_\mathscr{X}$ links the charts. (Quantities that pick up a power $\det^w$ are often called densities of weight $w$.)
+
+  - type: text
+    id: oriented-atlas
+    title: Oriented atlas
+    body: |
+      An **oriented atlas** is a set of charts of $\mathcal{M}$ whose domains cover $\mathcal{M}$ and whose Jacobian determinants are all positive: for every two of its charts $(\mathcal{U},\mathscr{X})$, $(\mathcal{V},\mathscr{Y})$ and every $p\in\mathcal{U}\cap\mathcal{V}$,
+      $$\det\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big)(p) > 0.$$
+      It does not matter which chart is called new: the two Jacobians are inverse matrices, so
+      $$\begin{aligned}&\det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)\det\Big(\frac{\partial\mathscr{Y}^j}{\partial\mathscr{X}^k}\Big)\\ &= \det(\delta^i_k) = 1,\end{aligned}$$
+      and one determinant is positive exactly when the other is.
+
+      Geometrically: in $d = 2$, a positive determinant means both charts agree on which way is "counterclockwise" (turning from the first basis vector to the second).
+
+  - type: numeric
+    id: det-yx
+    title: Polar the other way
+    prompt: |
+      On the plane, the cartesian chart $\mathscr{X}$ and the polar chart $\mathscr{Y} = (r,\theta)$ have $\det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j) = r$ on their overlap. What is $\det(\partial\mathscr{Y}^i/\partial\mathscr{X}^j)$ at a point with $r = 4$?
+    answer: 0.25
+    answerText: '$\tfrac14$'
+    wrong:
+      - { value: 4, feedback: 'That is the other Jacobian. The two Jacobians are inverse matrices, so their determinants multiply to $1$: $\det(\partial\mathscr{Y}^i/\partial\mathscr{X}^j) = 1/r$.' }
+      - { value: -4, feedback: 'The determinants multiply to $\det(\delta^i_k) = 1$, so the inverse one is $1/r$, positive like $r$.' }
+    explanation: |
+      $1/r = \tfrac14$. Positive at every point of the overlap (where $r > 0$), so $\{\mathscr{X},\mathscr{Y}\}$ passes the orientation test, whichever chart is called new.
+
+  - type: numeric
+    id: det-zy
+    title: A mirror chart
+    prompt: |
+      On the plane (points $(a,b)$), the mirror chart $\mathscr{Z}(a,b) = (a,-b)$ has $\det(\partial\mathscr{Z}^i/\partial\mathscr{X}^j) = -1$ against the cartesian chart $\mathscr{X}$, and the polar chart $\mathscr{Y} = (r,\theta)$ has $\det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j) = r$. Compute $\det(\partial\mathscr{Z}^i/\partial\mathscr{Y}^j)$ at a point with $r = 2$.
+    answer: -2
+    answerText: '-2'
+    wrong:
+      - { value: 2, feedback: 'The mirror contributes its $-1$: by the chain rule the Jacobian of $\mathscr{Z}$ by $\mathscr{Y}$ is the product of the two Jacobians, and the determinant of a product is the product, $(-1)\cdot r$.' }
+      - { value: -0.5, feedback: 'Use $\det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j) = r$, not its inverse: $\frac{\partial\mathscr{Z}^i}{\partial\mathscr{Y}^j} = \frac{\partial\mathscr{Z}^i}{\partial\mathscr{X}^k}\frac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^j}$.' }
+    hint: |
+      Chain rule: $\frac{\partial\mathscr{Z}^i}{\partial\mathscr{Y}^j} = \frac{\partial\mathscr{Z}^i}{\partial\mathscr{X}^k}\frac{\partial\mathscr{X}^k}{\partial\mathscr{Y}^j}$, and $\det$ of a product is the product of the $\det$'s.
+    explanation: |
+      $(-1)\cdot r = -2$. Directly: $\mathscr{Z}\circ\mathscr{Y}^{-1}(r,\theta) = (r\cos\theta,-r\sin\theta)$, Jacobian $\begin{pmatrix}\cos\theta&-r\sin\theta\\-\sin\theta&-r\cos\theta\end{pmatrix}$, determinant $-r\cos^2\theta - r\sin^2\theta = -r$.
+
+  - type: mcq
+    id: which-oriented
+    title: Which atlases are oriented?
+    multiple: true
+    prompt: |
+      On the plane (points $(a,b)$): the cartesian chart $\mathscr{X}$ (whole plane), the mirror chart $\mathscr{Z}(a,b) = (a,-b)$ (whole plane), and the polar chart $\mathscr{Y} = (r,\theta)$ (plane minus the cut $\{b=0,\ a\le0\}$). Determinants: $\det(\partial\mathscr{Y}^i/\partial\mathscr{X}^j) = 1/r$, $\det(\partial\mathscr{Z}^i/\partial\mathscr{X}^j) = -1$, $\det(\partial\mathscr{Z}^i/\partial\mathscr{Y}^j) = -r$. Which of these sets are oriented atlases of the plane? Select all that apply.
+    options:
+      - text: '$\{\mathscr{X}\}$'
+        correct: true
+      - text: '$\{\mathscr{Z}\}$'
+        correct: true
+      - text: '$\{\mathscr{X},\mathscr{Y}\}$'
+        correct: true
+      - text: '$\{\mathscr{X},\mathscr{Z}\}$'
+        feedback: |
+          Their overlap is the whole plane, where $\det(\partial\mathscr{Z}^i/\partial\mathscr{X}^j) = -1 < 0$. Each chart alone is fine; together they disagree about orientation.
+      - text: '$\{\mathscr{Y},\mathscr{Z}\}$'
+        feedback: |
+          On their overlap $\det(\partial\mathscr{Z}^i/\partial\mathscr{Y}^j) = -r < 0$: the mirror reverses the turning direction of the polar chart too.
+      - text: '$\{\mathscr{Y}\}$'
+        feedback: |
+          No determinant fails, but it is not an atlas of the plane: the polar chart misses the origin and the cut. An atlas must cover the whole manifold.
+    explanation: |
+      A single chart covering everything is trivially an oriented atlas (no pairs to compare; a chart with itself has Jacobian $\delta^i_j$). $\{\mathscr{X},\mathscr{Y}\}$ has $1/r > 0$ on the overlap. Any set containing both $\mathscr{Z}$ and $\mathscr{X}$ or $\mathscr{Y}$ fails. $\{\mathscr{X},\mathscr{Y}\}$ and $\{\mathscr{Z}\}$ are oriented atlases with **opposite** orientations.
+
+  - type: text
+    id: orientable
+    title: Orientable manifolds
+    body: |
+      A smooth manifold is **orientable** if it admits an oriented atlas; with a chosen one, $\mathcal{A}^\uparrow$, the triple $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow)$ ($\mathcal{O}$ its topology) is an **oriented manifold**.
+
+      Orientability is a global property. Every chart domain with its single chart is oriented; the question is whether charts can be chosen to agree **everywhere** they overlap. The standard example of a manifold where this fails is the Möbius strip (stated here without proof): carry a small "counterclockwise" turn once around the strip and it comes back clockwise.
+
+      And the volume form? It picks an orientation for us.
+
+  - type: mcq
+    id: omega-orients
+    title: A volume form orients
+    prompt: |
+      $\Omega$ is a volume form on $\mathcal{M}$. Take all charts whose scalar density is positive, $\omega_\mathscr{X} > 0$ on the chart domain. For two such charts, why is $\det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j) > 0$ on the overlap?
+    options:
+      - text: 'Because $\omega_\mathscr{Y} = \det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)\,\omega_\mathscr{X}$ with both densities positive'
+        correct: true
+      - text: 'Because Jacobian determinants of charts are always positive'
+        feedback: |
+          They are never zero (a transition map is invertible), but they can be negative: the mirror chart $(a,-b)$ against the cartesian chart has determinant $-1$.
+      - text: 'Because $\Omega$ is nowhere zero, which makes every determinant nonzero'
+        feedback: |
+          Nonzero is not positive. Non-vanishing of $\Omega$ makes each $\omega_\mathscr{X}$ nonzero; it is the choice of **positive** densities, fed into the law $\omega_\mathscr{Y} = \det(\dots)\,\omega_\mathscr{X}$, that fixes the sign.
+    explanation: |
+      $\det(\partial\mathscr{X}^i/\partial\mathscr{Y}^j) = \omega_\mathscr{Y}/\omega_\mathscr{X}$, a ratio of two positive functions. So the positive charts pass the orientation test. It remains to see that they cover $\mathcal{M}$.
+
+  - type: numeric
+    id: flip
+    title: Flipping a chart
+    prompt: |
+      On the plane, the Euclidean area form $\Omega_{\mathrm{E}}$ has $\omega_\mathscr{X} = 1$ in the cartesian chart $\mathscr{X} = (\mathscr{X}^1,\mathscr{X}^2)$. Define the flipped chart $\mathscr{X}' := (-\mathscr{X}^1,\mathscr{X}^2)$, whose Jacobian against $\mathscr{X}$ has $\det(\partial\mathscr{X}^i/\partial\mathscr{X}'^j) = -1$. What is $\omega_{\mathscr{X}'}$?
+    answer: -1
+    answerText: '-1'
+    wrong:
+      - { value: 1, feedback: 'The law $\omega_{\mathscr{X}''} = \det(\partial\mathscr{X}^i/\partial\mathscr{X}''^j)\,\omega_\mathscr{X}$ multiplies by $-1$. Directly: $\partial x''_1 = -\partial x_1$, so $\Omega_{\mathrm{E}}(\partial x''_1,\partial x''_2) = -\Omega_{\mathrm{E}}(\partial x_1,\partial x_2)$.' }
+    explanation: |
+      $\omega_{\mathscr{X}'} = (-1)\cdot1 = -1$. Flipping one coordinate flips the sign of the scalar density: any chart with negative density becomes a positive one.
+
+  - type: text
+    id: orients-proof
+    title: Why the positive charts cover everything
+    body: |
+      Take any chart $(\mathcal{U},\mathscr{X})$, and restrict it to a **connected** piece of $\mathcal{U}$ (one that does not split into two disjoint open parts; a restriction of a chart is again a chart). There $\omega_\mathscr{X}$ is smooth and never zero, so it cannot change sign (it would have to pass through $0$ in between). If it is negative, flip the first coordinate, $\mathscr{X}' := (-\mathscr{X}^1,\mathscr{X}^2,\dots)$: then $\omega_{\mathscr{X}'} = -\omega_\mathscr{X} > 0$.
+
+      So every point lies in a positive chart, and the positive charts form an oriented atlas:
+      - **a manifold with a volume form is orientable**;
+      - $\Omega$ and $-\Omega$ select opposite orientations.
+
+      The converse, every orientable manifold has a volume form, also holds (stated here without proof). From now on we integrate on an oriented manifold with a volume form, using charts of the oriented atlas.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** "Integration on Manifolds". With a volume form and an oriented atlas you will define the integral $\int_\mathcal{D}\Omega f$ in one chart, prove it is the same in every chart of the atlas, and glue charts together with a **partition of unity** when no single chart holds the whole region.
