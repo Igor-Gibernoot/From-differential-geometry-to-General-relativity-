@@ -455,7 +455,11 @@ levels:
         file: ch09/map.yaml
         summary: "Rebuild the Chapter 9 map box by box: from absolute time, absolute spaces and uniform flow to Newtonian spacetime, worldlines and Newton's two laws, stratified and inertial charts with their pseudo-forces, and gravity in the connection with its curvature, field equation and tidal equation."
       - { id: ch09-review, title: Level Review, kind: review }
-      - { id: ch09-challenge, title: Level Challenge, kind: challenge }
+      - id: ch09-challenge
+        title: Level Challenge
+        kind: challenge
+        file: ch09/challenge.yaml
+        summary: "Harder problems combining the level: a ball whirled on a string and released, seen from the ground and from a carousel; a chart with bent clocks, where chart time and absolute time part ways; every chart inertial along with a given one, and a shearing grid that is not; a tunnel through a uniform planet; and a carousel told apart from gravity by curvature."
 
   - id: ch10
     number: 10
