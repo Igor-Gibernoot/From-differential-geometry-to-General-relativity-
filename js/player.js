@@ -135,7 +135,7 @@ export function runSession(root, { items, mode, startAt = 0, readOnly = false, r
       ctl.reveal();
       showFeedback(before.head
         ? feedbackBox('good', before.head, explanation ?? '')
-        : feedbackBox('neutral', 'Answer', explanation ?? ''));
+        : feedbackBox(readOnly ? 'good' : 'neutral', 'Answer', explanation ?? ''));
       setFoot([continueBtn()]);
       return;
     }

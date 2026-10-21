@@ -186,7 +186,7 @@ function accountPanel() {
   return panel;
 }
 
-const BUILD = '2026-10-20.1 (recap)';
+const BUILD = '2026-10-21.1 (review boxes)';
 
 function settings() {
   const code = h('textarea', { readonly: true, 'aria-label': 'Your progress code' });
