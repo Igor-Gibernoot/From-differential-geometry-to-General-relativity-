@@ -5,6 +5,7 @@
 
 import { h } from './dom.js';
 import { tex, mdInline } from './render.js';
+import { torusFigure } from './torus.js';
 
 const WIDGETS = {
   'basis-playground': basisPlayground,
@@ -23,6 +24,7 @@ const WIDGETS = {
   'worldline-clock': worldlineClock,
   'observer-frame': observerFrame,
   'area-cell': areaCell,
+  torus: torusFigure,
 };
 
 export function mountWidget(name, el, config) {

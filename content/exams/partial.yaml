@@ -41,6 +41,11 @@ cards:
   - type: text
     id: setting
     title: The setting, a torus
+    figure:
+      widget: torus
+      config:
+        view: [domain, transition]
+        labels: { domain: 'Figure 1 · chart domain', transition: 'Figure 2 · domain V and transition' }
     body: |
       The **torus** is the set of points $p = (a,b,c)\in\mathbb{R}^3$ at distance $1$ from the circle of radius $2$ around the vertical axis:
       $$\mathcal{M} := \Big\{p \;\Big|\; \big(\sqrt{a^2+b^2}-2\big)^2 + c^2 = 1\Big\}.$$
@@ -220,6 +225,9 @@ cards:
     points: 0.5
     tag: Question 2 · Curves and velocities
     title: The curves in ambient coordinates
+    figure:
+      widget: torus
+      config: { view: curves }
     prompt: |
       Take the curves $\gamma(\lambda) := \Phi\big(\lambda,\tfrac\pi2\big)$ and $\delta(\lambda) := \Phi(0,\lambda)$ on the torus, $\lambda\in(-\pi,\pi)$, with $\Phi(\theta,\varphi) = \big((2+\cos\varphi)\cos\theta,\ (2+\cos\varphi)\sin\theta,\ \sin\varphi\big)$. They pass through $p_0 = (2,0,1)$ at $\lambda_0 = 0$ and $\lambda_0 = \tfrac\pi2$ respectively. Which pair is $\gamma$ and $\delta$ in ambient coordinates $(a,b,c)$?
     hint: 'Substitute $\cos\tfrac\pi2 = 0$ and $\sin\tfrac\pi2 = 1$.'
@@ -312,6 +320,9 @@ cards:
     points: 0.5
     tag: Question 3 · The scalar field and its differential
     title: The chart representative of f
+    figure:
+      widget: torus
+      config: { view: scalar }
     prompt: |
       On the torus, $f(a,b,c) := a$, and the angle chart has inverse $\mathscr{X}^{-1}(\theta,\varphi) = \Phi(\theta,\varphi) = \big((2+\cos\varphi)\cos\theta,\ (2+\cos\varphi)\sin\theta,\ \sin\varphi\big)$. What is the chart representative $f\circ\mathscr{X}^{-1}$?
     options:
@@ -389,6 +400,11 @@ cards:
     points: 1
     tag: Question 4 · Vector fields
     title: (a) The field ∂x₁ in the projection chart
+    figure:
+      widget: torus
+      config:
+        view: [fields, actions]
+        labels: { fields: 'Figure 5 · the fields', actions: 'Figure 6 · acting on f' }
     prompt: |
       In the angle chart of the torus, the chart-induced basis field $\mathcal{X} := \partial x_1 = \partial/\partial\theta$ has component functions $(x^1,x^2) = (1,0)$. With $\text{ᛞ}_{\mathcal{V}\mathcal{U}} = \begin{pmatrix}-(2+\cos\varphi)\sin\theta & -\sin\varphi\cos\theta\\(2+\cos\varphi)\cos\theta & -\sin\varphi\sin\theta\end{pmatrix}$ and $a = (2+\cos\varphi)\cos\theta$, $b = (2+\cos\varphi)\sin\theta$, which are the component functions $(y^1,y^2)$ of $\mathcal{X}$ in the projection chart?
     options:

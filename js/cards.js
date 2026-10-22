@@ -27,6 +27,15 @@ const RENDERERS = { text, widget, mcq, numeric, build, order, mapstep, mapview }
 
 function header(card, el) {
   if (card.title) el.append(h('div', { class: 'prose' }, h('h2', { html: mdInline(card.title) })));
+  if (card.type !== 'text') figure(card, el);
+}
+
+// `figure: { widget, config }` on any card: a display-only widget above the prompt (below the body on text cards)
+function figure(card, el) {
+  if (!card.figure) return;
+  const box = h('div', { class: 'widget' });
+  el.append(box);
+  mountWidget(card.figure.widget, box, card.figure.config ?? {});
 }
 
 function emitter() {
@@ -38,6 +47,7 @@ function emitter() {
 function text(card, el) {
   header(card, el);
   el.append(h('div', { class: 'prose', html: md(card.body) }));
+  figure(card, el);
   return { kind: 'info' };
 }
 

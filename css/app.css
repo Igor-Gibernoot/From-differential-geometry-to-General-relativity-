@@ -665,3 +665,15 @@ polyline.w-level { fill: none; }
 .exam-results .exam-debrief { text-align: left; margin-top: 28px; }
 .exam-results .exam-debrief p { color: var(--text); font-size: inherit; }
 .exam-results { padding-top: 6vh; }
+
+/* ---------- torus (exam figures) ---------- */
+.widget .tor-3d { display: block; width: 100%; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; border-radius: 10px; }
+.widget .tor-3d:active { cursor: grabbing; }
+.widget .tor-legend { padding: 6px 6px 2px; font-size: 14.5px; color: var(--muted); }
+.widget .tor-panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 270px), 1fr)); gap: 8px 14px; padding-top: 6px; }
+.widget .tor-panels.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 560px) { .widget .tor-panels.four { grid-template-columns: minmax(0, 1fr); } }
+.widget .tor-fig { margin: 0 auto; min-width: 0; width: 100%; max-width: 440px; }
+.widget .tor-fig canvas { display: block; width: 100%; }
+.widget .tor-fig figcaption { text-align: center; font-size: 14px; color: var(--muted); padding: 2px 4px 6px; }
+.widget .tor-tabs .btn.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }

@@ -2,6 +2,10 @@
 
 Read only **Current** at the start of a session (`sed -n '/^## Current/,/^## Log/p' docs/STATUS.md`).
 
+### 2026-10-22 — exam figures as widgets
+Built `torus` (canvas, six views), `figure:` on cards, placed on four cards of `exam-partial`; validate clean, headless exam flow (intro, answer, submit, review) clean at phone and desktop width. Conventions fixed here: exam figures are display-only widgets, blue = $\partial_\theta$/$\gamma$, purple = $\partial_\varphi$/$\delta$, normalized arrows, no numeric component labels.
+- **Exam figures** (2026-10-22): widget `torus` (`js/torus.js`; views domain, transition, curves, scalar, fields, actions; doc in `LESSON_FORMAT.md`) and the card field `figure: {widget, config}` (any card, shown above the prompt). `exam-partial` uses it on the setting card (Figs 1-2 as tabs), `q2-curves` (Fig 3), `q3-rep` (Fig 4), `q4a` (Figs 5-6 as tabs). Fig 6 shows the colour maps of Q4(b,c) as the paper exam did. Conventions fixed here: exam figures are display-only widgets, blue = $\partial_\theta$/$\gamma$, purple = $\partial_\varphi$/$\delta$, normalized arrows, no numeric component labels.
+
 ### 2026-10-22 — Level 1 split into three lessons
 
 New level `ch01` (Introduction), first built as one 41-card lesson, split into `ch01-gravity`, `ch01-curvature`, `ch01-spacetime` (card cap added to CLAUDE.md): nine guided puzzles that motivate each phrase of the opening sentence, with decode and order cards, the course structure table and a myth round. Reuses `falling-cloud` (falling view) and `rotating-grid` (no forces). Validate 0/0, shots clean. Conventions fixed here: none new.
