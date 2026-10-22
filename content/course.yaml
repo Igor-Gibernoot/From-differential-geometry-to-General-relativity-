@@ -580,3 +580,15 @@ levels:
         kind: challenge
         file: ch10/challenge.yaml
         summary: "Harder problems combining the level: twins with two different speeds, the Lorentz matrix at the turnaround and what the home clock reads in between; a chart of accelerated observers, flat but with nonzero Christoffel symbols, where rapidities add; and which sources gravitate, from dust and light to vacuum energy and a scalar field that repels; the energy-momentum tensor of a plane light wave; and static clocks outside a star, with a modified metric whose Ricci tensor is that of an electric field."
+
+  - id: exam-final
+    eyebrow: Final exam
+    hue: 3
+    title: "Final Exam: Connection, Metric and Integration"
+    blurb: A timed three-hour exam on Levels 6 to 10, on the unit sphere. No feedback until you submit, then your score and a review of every answer.
+    lessons:
+      - id: exam-final
+        title: Final Exam
+        kind: exam
+        file: exams/final.yaml
+        summary: Three hours, ten points, three questions on the unit sphere. A connection defined by one chart and its curves, the induced metric with its Levi-Civita connection and geodesics, and the volume form with integrals in two charts. Answers are checked only when you submit.
