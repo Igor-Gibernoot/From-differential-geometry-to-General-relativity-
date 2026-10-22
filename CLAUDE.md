@@ -66,6 +66,36 @@ Static web app on GitHub Pages (laptop and phone). Deploy = commit + push to
 
 7. **Review** is automatic: every question enters a spaced-repetition deck,
    so prompts, hints and feedback must be **self-contained**.
+8. **Intro level (Level 1, and any future preview lesson)** is a *light*
+   tour for a reader who may know no relativity and no tensor notation.
+   Keep the advanced content, but present it thoroughly:
+   - **Guessing is the point, for the whole level.** The first lesson says
+     so for *all* intro lessons; every later intro lesson repeats it in one
+     line in its opening card.
+   - **Gloss every technical word at first use**, in one plain sentence,
+     even if a later Level formalizes it: event, worldline, proper time,
+     timelike, geodesic, chart, basis, tangent plane, tensor, covector,
+     great circle, horizon, orientable, energy–momentum tensor, … Never a
+     bare name plus "(Level N)".
+   - **Warn about notation**: a raised index is a label, not a power
+     ($x^i$, $x^2$ = "second component"); a dot is a time derivative;
+     units $c = 1$ (speeds as fractions of light speed). Avoid index-heavy
+     formulas (Riem, $\Gamma$, $\partial_r$) in cards and `own:`; if one
+     appears (e.g. a widget readout), say "the symbols come later, watch
+     the shape".
+   - **Outside knowledge (special relativity, Newton) is explained where
+     used**: if a question needs e.g. the slow-clock factor
+     $\sqrt{1-v^2}$, the hint gives it and the explanation derives or
+     motivates it (light clock), so a reader who never met it learns it.
+   - **Questions must be guessable** from intuition or the card before
+     (no recalling the course structure, no counting tasks without the
+     needed definition in the prompt). Explanations show the reasoning,
+     not only the arithmetic ("$4 + 4\cdot3/2$" → say what each term counts).
+   - **Geometric puzzles get a picture** (a widget preset, before the
+     question, not revealing its answer) and concrete wording.
+   - **No meta or list cards** ("questions to carry", "order the course"):
+     each puzzle card states its own question, and the closing table maps
+     puzzles to Levels.
 
 ### How to teach a topic
 

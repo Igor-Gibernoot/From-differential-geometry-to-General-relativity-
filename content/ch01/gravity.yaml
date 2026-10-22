@@ -2,10 +2,14 @@ id: ch01-gravity
 title: Is Gravity a Force?
 kind: concept
 own: |
-  - **Free fall removes gravity at a point, not between points.** What survives is the {{ **tidal** }} effect: two nearby free particles with separation $\eta$ accelerate relative to each other through a curvature tensor $\mathrm{Riem}$:
-    {{ $$\ddot\eta^\alpha = -\mathrm{Riem}^\alpha{}_{0\beta0}\,\eta^\beta .$$ }}
-  - **Gravity is not a force on free particles.** In a freely falling elevator a released ball has relative acceleration {{ $\ddot x_{\text{rel}} = 0$ }}; free particles follow the straightest paths of a curved spacetime, and empty space can still be curved.
-  - **Coordinates are labels.** A chart can fail (the pole, a horizon) or invent forces (centrifugal, Coriolis) without any physics failing; "straight" must be defined without a chart.
+  - **Gravity is not a force on free particles.** In a freely falling elevator a released ball has relative acceleration
+    {{ $$a_{\text{rel}} = 0 :$$ }}
+    free particles follow the straightest paths of a curved spacetime.
+  - **Free fall removes gravity at a point, not between points.** What survives is the {{ **tidal** }} effect: a falling ring of particles becomes an egg, because nearby free paths drift apart. That drift is **curvature**, and empty space can still be curved.
+  - **Coordinates are labels.** A chart can fail without any physics failing: longitude jumps by $180^\circ$ at the pole, and a black-hole formula
+    {{ $$\frac{1}{1 - 2G_NM/r}$$ }}
+    blows up at the horizon, where a falling astronaut notices {{ nothing special }}.
+  - Rotating labels invent forces (centrifugal, Coriolis), so "straight" must be defined without a chart.
 
 cards:
   - type: text
@@ -18,7 +22,9 @@ cards:
 
       Today it is a wall of jargon. By the end of this course every phrase will be a picture you can draw and a calculation you can do.
 
-      This lesson is a **preview in questions**. We will meet the puzzles that force each phrase to exist, one at a time. Do not worry about getting them right: **guessing first is the point**. Each puzzle names the Level that solves it.
+      This lesson and the two after it form **Level 1, a preview in questions**. Across the three lessons we meet nine puzzles that force each phrase to exist, one at a time, and each names the Level that solves it.
+
+      **In all three intro lessons, getting answers wrong is expected and fine.** You are not supposed to know this yet: guessing first is the point, and every answer comes with an explanation. New words are explained in plain language when they first appear.
 
   - type: text
     id: q1-intro
@@ -45,7 +51,7 @@ cards:
         feedback: |
           Gravity is not weaker inside the elevator. It is just that everything inside accelerates equally, so the *relative* motion vanishes.
     explanation: |
-      Inside the freely falling elevator, gravity is **undetectable**: you and the ball float. Einstein called this the happiest thought of his life. If falling erases gravity, then maybe gravity is not a force at all, but a property of the **paths** that free objects follow.
+      Inside the freely falling elevator, gravity is **undetectable**: you and the ball float. Einstein called this the happiest thought of his life. If falling erases gravity, then maybe gravity is not a force at all, but a property of the **paths** that free objects follow (*free* means: nothing pushes or holds them, only gravity acts).
 
       But erasing is only exact at one point. The elevator is a little large: let us see what survives.
 
@@ -69,6 +75,8 @@ cards:
 
       Press **Play** and watch the ring. Then press **Sources** to see the real picture, and drag the grey handle farther from $M$ to repeat.
 
+      The readout uses symbols we build much later (a raised index such as $x^1$ is a *label*, "coordinate number 1", not a power). For now, just watch the **shape** of the ring.
+
   - type: mcq
     id: tides-meaning
     prompt: |
@@ -86,7 +94,7 @@ cards:
         feedback: |
           It attracts all of them. The point is that it attracts them *differently* (different strength and different direction).
     explanation: |
-      This leftover, **how nearby free paths drift apart**, cannot be removed by any choice of falling frame. It is the physical signature of **curvature**. Einstein's idea: gravity *is* curvature of spacetime, and free particles follow the "straightest" paths in it, like two travellers walking due north from the equator, who start parallel and still meet at the pole.
+      This leftover, **how nearby free paths drift apart**, cannot be removed by any choice of falling frame. It is the physical signature of **curvature**. Einstein's idea: gravity *is* curvature of **spacetime** (space and time together, the four-dimensional arena whose points are *events*: a place at an instant), and free particles follow the "straightest" paths in it, like two travellers walking due north from the equator, who start parallel and still meet at the pole.
 
       To make this a theory we need to answer, precisely: *what is curved? what does "straightest" mean? how do we measure curvature?* These are the questions of the whole course.
 
@@ -158,7 +166,9 @@ cards:
   - type: mcq
     id: horizon
     prompt: |
-      The standard formulas for a black hole of mass $M$ have terms like $1/(1 - 2G_NM/r)$ (with $c = 1$) that blow up at $r = 2G_NM$, the horizon. A very large black hole's horizon is crossed by a freely falling astronaut. What does the astronaut notice locally at the crossing?
+      A black hole of mass $M$ is surrounded by a **horizon**, a surface from which nothing, not even light, can get back out. The standard formulas for it, in units where the speed of light is $c = 1$ and with $G_N$ Newton's constant, contain terms like
+      $$\frac{1}{1 - 2G_NM/r}$$
+      that blow up at the horizon, $r = 2G_NM$ ($r$ is a distance-like coordinate from the center). A freely falling astronaut crosses the horizon of a very large black hole. What does the astronaut notice locally at the crossing?
     options:
       - text: Nothing special; the blow-up belongs to the coordinates, not to the spacetime
         correct: true
@@ -167,12 +177,12 @@ cards:
           The tides at the horizon are finite, and for a supermassive black hole they are tiny. The infinite tidal forces are at the central singularity $r = 0$, where the curvature really diverges.
       - text: Time stops for the astronaut, who freezes at the horizon
         feedback: |
-          Time slows down for a *distant* observer watching, in their coordinates. The astronaut's own clock ticks normally and crosses the horizon in finite proper time.
+          The astronaut only *appears* to slow down and freeze to a distant observer watching, described in the distant observer's coordinates. The astronaut's own wristwatch (the time it records is called **proper time**) ticks normally and shows a finite reading at the crossing.
       - text: The astronaut bounces back, since nothing can cross
         feedback: |
           Nothing can cross *outward*. Inward crossing is a perfectly ordinary event for the infalling observer.
     explanation: |
-      **An infinity in a formula is not an infinity in nature.** To tell the two apart you need quantities that do not depend on the chart: **tensors**. Making this precise is the main job of the early levels.
+      **An infinity in a formula is not an infinity in nature.** To tell the two apart you need quantities that do not depend on the chart: **tensors** (vectors and their relatives, objects that exist on their own while their numbers change with the labels; next lesson). Making this precise is the main job of the early levels.
 
   - type: mcq
     id: myth-force
@@ -198,9 +208,9 @@ cards:
         correct: true
       - text: True; curvature is caused by matter, so none means none
         feedback: |
-          Matter at *other* places can curve the surrounding empty region. The tides near a mass (Puzzle 1) occur in empty space, and the Schwarzschild solution is a vacuum spacetime that is curved everywhere.
+          Matter at *other* places can curve the surrounding empty region. The tides near a mass (Puzzle 1) occur in empty space, where the ring of particles fell.
     explanation: |
-      In the Einstein equation, empty space means $T_{ab} = 0$, which gives $G_{ab} = 0$, not "flat". Flat space is one solution; Schwarzschild (Level 10) is another.
+      The tidal stretching of Puzzle 1 happens in empty space around the mass, and tides are curvature. Einstein's law (the last puzzle of Level 1) says how matter curves spacetime; with no matter it still allows curved solutions. The spacetime outside a star or a black hole, called the **Schwarzschild** spacetime (Level 10), is empty and curved.
 
   - type: text
     id: summary

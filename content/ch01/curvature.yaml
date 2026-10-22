@@ -2,9 +2,9 @@ id: ch01-curvature
 title: Vectors, Derivatives and Curvature
 kind: concept
 own: |
-  - **Objects are not lists of numbers.** Doubling the basis halves a vector's components:
+  - **Objects are not lists of numbers.** Doubling the basis halves a vector's components $x^i$ (the raised $i$ is a label, not a power):
     {{ $$x'^i = \tfrac12\,x^i ,$$ }}
-    but doubles a gradient's:
+    but doubles the components $\mathtt{x}_i$ of a gradient (a covector):
     {{ $$\mathtt{x}'_i = 2\,\mathtt{x}_i .$$ }}
   - **Tensor equations hold in every chart** once they hold in one.
   - **Differentiating vectors needs a connection**, since arrows at different points live in different tangent planes; differentiating components alone adds spurious basis terms.
@@ -17,9 +17,11 @@ cards:
     id: q3-intro
     title: "Puzzle 3: what is a vector?"
     body: |
-      Recall: gravity is curvature, and coordinates are only labels.
+      Recall: gravity is curvature, and coordinates are only labels. As in the first intro lesson, **guess freely**: wrong answers are expected here, and each one is explained.
 
-      If the labels are arbitrary, the laws of physics must be written with objects that do not depend on them. The first such objects are **vectors** and **covectors**, and it is worth asking what we mean, since "a list of numbers" will turn out to be a trap.
+      If the labels are arbitrary, the laws of physics must be written with objects that do not depend on them. The first such objects are **vectors** (arrows) and **covectors** (met below), and it is worth asking what we mean, since "a list of numbers" will turn out to be a trap.
+
+      To turn an arrow into numbers we pick a **basis**: a set of reference arrows, like rulers, here $\hat{e}_1$ and $\hat{e}_2$. Every arrow is a combination of them, and the coefficients are its **components**.
 
   - type: numeric
     id: vector-doubling
@@ -39,6 +41,8 @@ cards:
     explanation: |
       $3\hat{e}_1 = 1.5\,(2\hat{e}_1)$ and $4\hat{e}_2 = 2\,(2\hat{e}_2)$, so B writes $(1.5, 2)$. The arrow is the same; its numbers changed **against** the basis. A vector is not its list of numbers.
 
+      **Notation you will see everywhere:** components are written $x^1, x^2$, or $x^i$ for "component number $i$". The raised $i$ is a **label, not a power**: $x^2$ means the second component, not $x$ squared. Here A has $x^1 = 3$, $x^2 = 4$.
+
   - type: numeric
     id: gradient-doubling
     prompt: |
@@ -52,12 +56,12 @@ cards:
     hint: |
       A longer step covers more ground, so the temperature changes by more.
     explanation: |
-      The components of a gradient rescale **with** the basis ($6 \to 12$), those of a vector **against** it ($3 \to 1.5$). They look like triples of numbers but live in different spaces: vectors, and their duals, **covectors**. Mixing them up is the commonest source of confusion in tensor calculus (Level 2, and Level 4 for curved space).
+      The components of a gradient rescale **with** the basis ($6 \to 12$), those of a vector **against** it ($3 \to 1.5$). They look like pairs of numbers but are different kinds of object. A gradient is a **covector**: a machine that eats an arrow (a step) and returns a number (the change of $T$ along it). Its components are written with a *lower* label in typewriter letters, $\mathtt{x}_i$, to tell them apart from a vector's $x^i$. Mixing the two up is the commonest source of confusion in tensor calculus (Level 2, and Level 4 for curved space).
 
   - type: mcq
     id: why-tensors
     prompt: |
-      Two physical quantities are written as tensors, and in one chart all their components agree. What can we conclude in any other chart?
+      **Tensors** are vectors, covectors and the objects built from them: each exists on its own, and its components change by a fixed linear rule when the basis or the chart (the coordinate labels) changes, as the vector's $3 \to 1.5$ and the gradient's $6 \to 12$ did. Two physical quantities are written as tensors, and in one chart all their components agree. What can we conclude in any other chart?
     options:
       - text: They still agree, because tensor components transform by the same linear rule in both
         correct: true
@@ -81,7 +85,7 @@ cards:
   - type: mcq
     id: subtract
     prompt: |
-      On a sphere, $V(p)$ is an arrow tangent to the surface at $p$, and $V(p+h)$ is a tangent arrow at a nearby point. Why can we not simply subtract them to get a derivative?
+      On a sphere, an arrow at a point $p$ lies in the **tangent plane** at $p$: the flat plane that touches the sphere only at $p$. Let $V(p)$ be such an arrow, and $V(p+h)$ a tangent arrow at a nearby point. Why can we not simply subtract them to get a derivative?
     options:
       - text: They live in different tangent planes, so their difference is not defined without extra structure
         correct: true
@@ -95,12 +99,14 @@ cards:
         feedback: |
           Subtracting components gives a number that depends on the chart; two observers would disagree on the "derivative". We need a rule for carrying an arrow from $p+h$ back to $p$ first.
     explanation: |
-      A rule for carrying arrows from point to point is exactly what a **connection** provides (Level 6). The derivative it defines is the **covariant derivative**, and it gives meaning to "straightest curve" (an *autoparallel*). Different connections give different derivatives, so which one physics uses must be decided by the theory.
+      A rule for carrying arrows from point to point is exactly what a **connection** provides (Level 6). The derivative it defines is the **covariant derivative**, and it gives meaning to "straightest curve" (an *autoparallel*: a curve whose own direction, carried along it by the rule, never turns). Different connections give different derivatives, so which one physics uses must be decided by the theory.
 
   - type: mcq
     id: polar-constant
     prompt: |
-      In the flat plane, the constant vector field "one unit to the right" has, in polar coordinates, components $(\cos\theta,\ -\sin\theta/r)$ in the basis $(\partial_r, \partial_\theta)$. These components vary from point to point. Does that mean the field changes?
+      In the flat plane, put the same arrow "one unit to the right" at every point (a constant field). Describe it in polar coordinates $(r, \theta)$, using at each point two reference arrows: one of length $1$ pointing straight away from the origin, and one of length $r$ pointing around the circle through that point (counterclockwise). Both reference arrows turn as you move around. The arrow's components in them come out as
+      $$\left(\cos\theta,\ -\frac{\sin\theta}{r}\right),$$
+      which vary from point to point. Does that mean the field changes?
     options:
       - text: No; the polar basis itself turns from point to point, so the components must change to keep the arrow fixed
         correct: true
@@ -111,7 +117,7 @@ cards:
         feedback: |
           Whether the field is constant is a fact about the arrows themselves. Only the numbers depend on the chart.
     explanation: |
-      Differentiating components is not differentiating the vector: the extra terms from the changing basis are the **connection coefficients** (the Christoffel symbols). Chapter after chapter, this same pattern returns: components are shadows, and the true object is the geometry.
+      Differentiating components is not differentiating the vector: the extra terms that account for the turning basis are the **connection coefficients** (also called Christoffel symbols, Level 6). Chapter after chapter, this same pattern returns: components are shadows, and the true object is the geometry.
 
   - type: text
     id: q5-intro
@@ -124,7 +130,7 @@ cards:
   - type: numeric
     id: triangle
     prompt: |
-      On a sphere, a triangle has one vertex at the North Pole and two vertices on the equator, a quarter of the way around from each other. Its sides are straight (great-circle) arcs. All three corners are right angles. What is the sum of its three angles, in degrees?
+      On a sphere, the straightest lines are **great circles**: circles whose center is the center of the sphere, like the equator or a meridian. A triangle has one vertex at the North Pole and two vertices on the equator, a quarter of the way around from each other. Its sides are great-circle arcs. All three corners are right angles. What is the sum of its three angles, in degrees?
     answer: 270
     answerText: '270'
     wrong:
