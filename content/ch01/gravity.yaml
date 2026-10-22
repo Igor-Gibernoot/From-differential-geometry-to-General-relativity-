@@ -1,0 +1,208 @@
+id: ch01-gravity
+title: Is Gravity a Force?
+kind: concept
+own: |
+  - **Free fall removes gravity at a point, not between points.** What survives is the {{ **tidal** }} effect: two nearby free particles with separation $\eta$ accelerate relative to each other through a curvature tensor $\mathrm{Riem}$:
+    {{ $$\ddot\eta^\alpha = -\mathrm{Riem}^\alpha{}_{0\beta0}\,\eta^\beta .$$ }}
+  - **Gravity is not a force on free particles.** In a freely falling elevator a released ball has relative acceleration {{ $\ddot x_{\text{rel}} = 0$ }}; free particles follow the straightest paths of a curved spacetime, and empty space can still be curved.
+  - **Coordinates are labels.** A chart can fail (the pole, a horizon) or invent forces (centrifugal, Coriolis) without any physics failing; "straight" must be defined without a chart.
+
+cards:
+  - type: text
+    id: hook
+    title: A sentence you cannot yet read
+    body: |
+      General relativity, the theory of gravity, can be summed up in one sentence:
+
+      > *Spacetime is a four-dimensional topological manifold with a smooth orientable atlas, carrying a torsion-free connection compatible with a Lorentzian metric and a time orientation, satisfying the Einstein equations.*
+
+      Today it is a wall of jargon. By the end of this course every phrase will be a picture you can draw and a calculation you can do.
+
+      This lesson is a **preview in questions**. We will meet the puzzles that force each phrase to exist, one at a time. Do not worry about getting them right: **guessing first is the point**. Each puzzle names the Level that solves it.
+
+  - type: text
+    id: q1-intro
+    title: "Puzzle 1: what is gravity?"
+    body: |
+      Newton said gravity is a **force**: the Sun pulls the Earth, the Earth pulls an apple. It works beautifully. But there is a strange coincidence hiding in it: every object, heavy or light, falls with the **same** acceleration. A hammer and a feather fall together on the Moon.
+
+      Einstein asked what that coincidence means. Let us run his thought experiment.
+
+  - type: mcq
+    id: elevator
+    prompt: |
+      You are in a closed elevator whose cable has just been cut, so it falls freely toward the ground (ignore air). Inside, you let go of a ball held at chest height. What do you see?
+    options:
+      - text: The ball stays beside you, floating
+        correct: true
+      - text: The ball drops to the floor
+        feedback: |
+          The ball falls, yes, but so do you, the elevator and the floor, all with the same acceleration. The floor never catches up with the ball.
+      - text: The ball rises to the ceiling
+        feedback: |
+          Nothing pushes the ball up. Relative to the falling elevator it has no acceleration at all, so it neither rises nor sinks.
+      - text: The ball drops, but slower than it would in a still elevator
+        feedback: |
+          Gravity is not weaker inside the elevator. It is just that everything inside accelerates equally, so the *relative* motion vanishes.
+    explanation: |
+      Inside the freely falling elevator, gravity is **undetectable**: you and the ball float. Einstein called this the happiest thought of his life. If falling erases gravity, then maybe gravity is not a force at all, but a property of the **paths** that free objects follow.
+
+      But erasing is only exact at one point. The elevator is a little large: let us see what survives.
+
+  - type: widget
+    id: tides
+    title: What falling cannot erase
+    widget: falling-cloud
+    config:
+      GM: 8
+      c0: [2, 0]
+      r0: 0.2
+      N: 12
+      zoom: 5
+      view: falling
+      views: [sources, falling, both]
+      arrows: true
+      linear: false
+      linearToggle: false
+    body: |
+      A ring of small free particles falls toward a heavy mass $M$. The panel follows the **center** of the ring as it falls (magnified ×5), so the center itself feels no gravity at all.
+
+      Press **Play** and watch the ring. Then press **Sources** to see the real picture, and drag the grey handle farther from $M$ to repeat.
+
+  - type: mcq
+    id: tides-meaning
+    prompt: |
+      A ring of free particles falls toward a heavy mass. Seen from its own falling center (which feels no gravity), the ring is stretched toward the mass and squeezed sideways, into an egg. What does this tell us about gravity?
+    options:
+      - text: Falling removes gravity at one point, but not the *differences* between nearby points; those are what gravity leaves behind
+        correct: true
+      - text: There is a leftover force that falling can never cancel
+        feedback: |
+          Tempting, because we say "tidal force". But no particle is pushed by anything extra: each simply follows its own free path. The egg appears because those paths *drift apart*, since the pull is stronger on the near side than on the far side.
+      - text: Falling removes gravity everywhere in the ring, so the ring stays a circle
+        feedback: |
+          That is true only for an infinitesimal ring. For any finite ring, the pull differs from place to place, and the circle distorts.
+      - text: The mass attracts only the particles nearest to it
+        feedback: |
+          It attracts all of them. The point is that it attracts them *differently* (different strength and different direction).
+    explanation: |
+      This leftover, **how nearby free paths drift apart**, cannot be removed by any choice of falling frame. It is the physical signature of **curvature**. Einstein's idea: gravity *is* curvature of spacetime, and free particles follow the "straightest" paths in it, like two travellers walking due north from the equator, who start parallel and still meet at the pole.
+
+      To make this a theory we need to answer, precisely: *what is curved? what does "straightest" mean? how do we measure curvature?* These are the questions of the whole course.
+
+  - type: text
+    id: q2-intro
+    title: "Puzzle 2: what is real, and what is a label?"
+    body: |
+      To describe curved space we need coordinates. But coordinates on a curved surface always misbehave somewhere, and a good theory must not confuse **misbehaving labels** with **misbehaving physics**.
+
+  - type: mcq
+    id: pole
+    prompt: |
+      A traveller flies in a straight line over the geographic North Pole. Her longitude reads $10^\circ$ W just before the pole and $170^\circ$ E just after: it jumps by $180^\circ$ in an instant. What happened physically at the pole?
+    options:
+      - text: Nothing special; the longitude label simply fails to be defined at the pole
+        correct: true
+      - text: She made a sudden turn at the pole
+        feedback: |
+          A great-circle flight over the pole is as straight as any other. The jump is in the *number* we use, not in her motion.
+      - text: The pole is a singular point of the Earth's surface
+        feedback: |
+          The surface of the Earth is perfectly smooth at the pole, as at any other point. Only the chart (latitude and longitude) breaks down there.
+      - text: Longitude is not a real quantity, so no experiment can use it
+        feedback: |
+          Longitude is perfectly useful almost everywhere. The lesson is subtler: it is a **label** that works on *part* of the Earth, and we must not mistake its failures for features of the Earth.
+    explanation: |
+      Latitude and longitude are a **chart**: a way to label points by numbers on part of a surface. No single chart covers a sphere without a defect. This is why a "space that looks like flat $\mathbb{R}^d$ only locally" needs a careful definition, the **manifold** (Level 3). The same trap awaits at the horizon of a black hole, as we will see.
+
+  - type: widget
+    id: spin
+    title: Straight, or curved?
+    widget: rotating-grid
+    config:
+      omega: 1
+      x0: [1, 0]
+      v: [0, 0.5]
+      t: 0
+      tmax: 6.28
+      view: both
+      views: [inertial, rotating, both]
+      forces: false
+      forcesToggle: false
+      velocity: false
+      ghost: true
+    body: |
+      A particle with nothing pushing it moves in a straight line (left panel). The right panel describes the **same motion** using a coordinate grid that rotates, like the one fixed to a merry-go-round.
+
+      Press **Play**, and also drag the starting point and the velocity handle. What does the path look like in each panel?
+
+  - type: mcq
+    id: which-real
+    prompt: |
+      A particle with no forces on it moves in a straight line in an inertial chart. In a chart that rotates, the same motion looks like a curling spiral. Which description is the "real" one?
+    options:
+      - text: Both are the same physical motion; "straight" must be defined without reference to any chart
+        correct: true
+      - text: The inertial one is real; the spiral is an illusion of the rotating observer
+        feedback: |
+          The rotating observer is not deceived; their numbers are correct for their labels. What the example shows is that "looks straight in my coordinates" depends on the labels, so it cannot be the definition of straight.
+      - text: The spiral is real, because the rotating observer feels centrifugal and Coriolis forces
+        feedback: |
+          Those "forces" are a bookkeeping effect of the labels: they appear in the rotating chart and vanish in the inertial one. A force that disappears when you relabel is not physics.
+      - text: 'Neither: with no forces, motion has no definite path'
+        feedback: |
+          The path is perfectly definite as a set of events. Only its *description* by numbers changes.
+    explanation: |
+      We need a chart-independent meaning of "straight line". It will come from a new structure, the **connection** (Level 6), and the "forces" of rotating frames will turn out to be its coefficients in a bad chart. Gravity itself will be revealed to live in the same object.
+
+  - type: mcq
+    id: horizon
+    prompt: |
+      The standard formulas for a black hole of mass $M$ have terms like $1/(1 - 2G_NM/r)$ (with $c = 1$) that blow up at $r = 2G_NM$, the horizon. A very large black hole's horizon is crossed by a freely falling astronaut. What does the astronaut notice locally at the crossing?
+    options:
+      - text: Nothing special; the blow-up belongs to the coordinates, not to the spacetime
+        correct: true
+      - text: Infinite tidal forces tear the astronaut apart at the horizon
+        feedback: |
+          The tides at the horizon are finite, and for a supermassive black hole they are tiny. The infinite tidal forces are at the central singularity $r = 0$, where the curvature really diverges.
+      - text: Time stops for the astronaut, who freezes at the horizon
+        feedback: |
+          Time slows down for a *distant* observer watching, in their coordinates. The astronaut's own clock ticks normally and crosses the horizon in finite proper time.
+      - text: The astronaut bounces back, since nothing can cross
+        feedback: |
+          Nothing can cross *outward*. Inward crossing is a perfectly ordinary event for the infalling observer.
+    explanation: |
+      **An infinity in a formula is not an infinity in nature.** To tell the two apart you need quantities that do not depend on the chart: **tensors**. Making this precise is the main job of the early levels.
+
+  - type: mcq
+    id: myth-force
+    prompt: |
+      True or false: in general relativity, gravity is a force that pulls freely falling particles off their straight paths.
+    shuffle: false
+    options:
+      - text: False; free particles follow the straightest paths of the curved spacetime, and no force acts on them
+        correct: true
+      - text: True; it is just a different formula for the same Newtonian force
+        feedback: |
+          A freely falling particle feels nothing (the elevator!). What looks like a deflection to a distant observer is straightness in a curved geometry.
+    explanation: |
+      Only **non-free** objects (those held up, pushed or accelerated) feel forces. A person standing on the ground feels the floor pushing up: that is the real force, which prevents her from following her natural path.
+
+  - type: mcq
+    id: myth-vacuum
+    prompt: |
+      True or false: where there is no matter at all (empty space), spacetime is flat.
+    shuffle: false
+    options:
+      - text: False; empty space can be curved, as around a star outside its surface
+        correct: true
+      - text: True; curvature is caused by matter, so none means none
+        feedback: |
+          Matter at *other* places can curve the surrounding empty region. The tides near a mass (Puzzle 1) occur in empty space, and the Schwarzschild solution is a vacuum spacetime that is curved everywhere.
+    explanation: |
+      In the Einstein equation, empty space means $T_{ab} = 0$, which gives $G_{ab} = 0$, not "flat". Flat space is one solution; Schwarzschild (Level 10) is another.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** gravity as curvature needs objects that do not depend on labels. The next lesson asks what a vector really is, how to differentiate on a curved space, and how to see curvature from inside.

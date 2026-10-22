@@ -1,0 +1,176 @@
+id: ch01-curvature
+title: Vectors, Derivatives and Curvature
+kind: concept
+own: |
+  - **Objects are not lists of numbers.** Doubling the basis halves a vector's components:
+    {{ $$x'^i = \tfrac12\,x^i ,$$ }}
+    but doubles a gradient's:
+    {{ $$\mathtt{x}'_i = 2\,\mathtt{x}_i .$$ }}
+  - **Tensor equations hold in every chart** once they hold in one.
+  - **Differentiating vectors needs a connection**, since arrows at different points live in different tangent planes; differentiating components alone adds spurious basis terms.
+  - **Curvature is visible from inside.** On a sphere of radius $R$, a triangle of area $A$ has angle sum
+    {{ $$\text{sum of angles} - \pi = \frac{A}{R^2} ,$$ }}
+    and a carried arrow comes back turned by that excess.
+
+cards:
+  - type: text
+    id: q3-intro
+    title: "Puzzle 3: what is a vector?"
+    body: |
+      Recall: gravity is curvature, and coordinates are only labels.
+
+      If the labels are arbitrary, the laws of physics must be written with objects that do not depend on them. The first such objects are **vectors** and **covectors**, and it is worth asking what we mean, since "a list of numbers" will turn out to be a trap.
+
+  - type: numeric
+    id: vector-doubling
+    prompt: |
+      Observer A uses a basis $(\hat{e}_1, \hat{e}_2)$ and writes the arrow $\mathcal{X} = 3\,\hat{e}_1 + 4\,\hat{e}_2$, so its components are $(3, 4)$. Observer B uses the basis $(2\hat{e}_1, 2\hat{e}_2)$, with arrows twice as long. What is the first component of the **same** arrow for B?
+    answer: 1.5
+    answerText: '1.5'
+    wrong:
+      - value: 6
+        feedback: |
+          Doubling the basis vectors does not double the numbers. Each of B's rulers is twice as long, so B needs *fewer* of them to reach the same tip.
+      - value: 3
+        feedback: |
+          The arrow is the same, but B's basis is not, so the numbers must change. Check: $3\cdot 2\hat{e}_1$ is twice the arrow.
+    hint: |
+      Write the arrow as a multiple of $2\hat{e}_1$: how many of those fit in $3\hat{e}_1$?
+    explanation: |
+      $3\hat{e}_1 = 1.5\,(2\hat{e}_1)$ and $4\hat{e}_2 = 2\,(2\hat{e}_2)$, so B writes $(1.5, 2)$. The arrow is the same; its numbers changed **against** the basis. A vector is not its list of numbers.
+
+  - type: numeric
+    id: gradient-doubling
+    prompt: |
+      A temperature field $T$ increases by $6$ degrees for each unit step along $\hat{e}_1$ (observer A's first basis vector). Observer B's first basis vector is $2\hat{e}_1$. By how many degrees does $T$ increase per **B-step**?
+    answer: 12
+    answerText: '12'
+    wrong:
+      - value: 3
+        feedback: |
+          That would be the rule for a vector's components (they shrink when the basis grows). Here the quantity is *change per step*: a longer step gives a bigger change.
+    hint: |
+      A longer step covers more ground, so the temperature changes by more.
+    explanation: |
+      The components of a gradient rescale **with** the basis ($6 \to 12$), those of a vector **against** it ($3 \to 1.5$). They look like triples of numbers but live in different spaces: vectors, and their duals, **covectors**. Mixing them up is the commonest source of confusion in tensor calculus (Level 2, and Level 4 for curved space).
+
+  - type: mcq
+    id: why-tensors
+    prompt: |
+      Two physical quantities are written as tensors, and in one chart all their components agree. What can we conclude in any other chart?
+    options:
+      - text: They still agree, because tensor components transform by the same linear rule in both
+        correct: true
+      - text: Nothing; the components may differ in another chart
+        feedback: |
+          For arbitrary lists of numbers, yes. For tensors the components change by one common rule, so equal tensors stay equal.
+      - text: They agree only if the new chart is a rotation of the old one
+        feedback: |
+          Any smooth change of chart works; rotations are just a special case.
+    explanation: |
+      This is **why** physics is written with tensors: an equation $A = B$ between tensors true in one chart is true in every chart. A law that is not a tensor equation would depend on the observer's labels.
+
+  - type: text
+    id: q4-intro
+    title: "Puzzle 4: how do you differentiate on a curved space?"
+    body: |
+      Almost every law of physics involves a rate of change: velocity, acceleration, field gradients. All of them are limits of differences like
+      $$\frac{V(p+h) - V(p)}{h} .$$
+      On a flat table this is routine. What can go wrong on a sphere?
+
+  - type: mcq
+    id: subtract
+    prompt: |
+      On a sphere, $V(p)$ is an arrow tangent to the surface at $p$, and $V(p+h)$ is a tangent arrow at a nearby point. Why can we not simply subtract them to get a derivative?
+    options:
+      - text: They live in different tangent planes, so their difference is not defined without extra structure
+        correct: true
+      - text: The sphere has no derivatives
+        feedback: |
+          The sphere is perfectly smooth. Functions on it can be differentiated, and we will define derivatives of vectors too. The difficulty is specifically in comparing *vectors at different points*.
+      - text: The difference is always zero on a sphere
+        feedback: |
+          Not at all. The issue is that the subtraction is not even defined, since the two arrows are in different spaces.
+      - text: 'We can: just subtract the components in latitude and longitude'
+        feedback: |
+          Subtracting components gives a number that depends on the chart; two observers would disagree on the "derivative". We need a rule for carrying an arrow from $p+h$ back to $p$ first.
+    explanation: |
+      A rule for carrying arrows from point to point is exactly what a **connection** provides (Level 6). The derivative it defines is the **covariant derivative**, and it gives meaning to "straightest curve" (an *autoparallel*). Different connections give different derivatives, so which one physics uses must be decided by the theory.
+
+  - type: mcq
+    id: polar-constant
+    prompt: |
+      In the flat plane, the constant vector field "one unit to the right" has, in polar coordinates, components $(\cos\theta,\ -\sin\theta/r)$ in the basis $(\partial_r, \partial_\theta)$. These components vary from point to point. Does that mean the field changes?
+    options:
+      - text: No; the polar basis itself turns from point to point, so the components must change to keep the arrow fixed
+        correct: true
+      - text: Yes; non-constant components mean a non-constant field
+        feedback: |
+          This works in Cartesian coordinates, where the basis is the same everywhere. In polar coordinates the basis rotates from point to point, and the components compensate.
+      - text: It depends on which observer measures it
+        feedback: |
+          Whether the field is constant is a fact about the arrows themselves. Only the numbers depend on the chart.
+    explanation: |
+      Differentiating components is not differentiating the vector: the extra terms from the changing basis are the **connection coefficients** (the Christoffel symbols). Chapter after chapter, this same pattern returns: components are shadows, and the true object is the geometry.
+
+  - type: text
+    id: q5-intro
+    title: "Puzzle 5: can curvature be seen from inside?"
+    body: |
+      We said gravity is curvature. A bug living on a surface cannot see the room it sits in. Can it still tell that its world is curved?
+
+      Take the sphere. Start at the North Pole and walk straight down a meridian to the equator. Turn left by $90^\circ$ and walk straight along the equator for a quarter of the way around the globe. Turn left by $90^\circ$ again and walk straight back to the pole.
+
+  - type: numeric
+    id: triangle
+    prompt: |
+      On a sphere, a triangle has one vertex at the North Pole and two vertices on the equator, a quarter of the way around from each other. Its sides are straight (great-circle) arcs. All three corners are right angles. What is the sum of its three angles, in degrees?
+    answer: 270
+    answerText: '270'
+    wrong:
+      - value: 180
+        feedback: |
+          $180^\circ$ is the answer on a flat plane, which is exactly the property that fails on a curved surface.
+    hint: |
+      Check each corner: the two meridians meet the equator at right angles, and meet each other at the pole at an angle equal to the quarter of the way around.
+    explanation: |
+      $90^\circ + 90^\circ + 90^\circ = 270^\circ$. A bug measuring angles on its own surface finds more than $180^\circ$, so it **knows** its world is curved, without ever leaving it. For a triangle of area $A$ on a sphere of radius $R$ the excess is $A/R^2$ (here $A = \pi R^2/2$, an eighth of the sphere, giving $\pi/2 = 90^\circ$).
+
+  - type: numeric
+    id: transport
+    prompt: |
+      Walk the triangle above (pole, down a meridian, a quarter of the equator, back up to the pole) carrying an arrow, never turning it relative to the path any more than the surface forces. You start with the arrow pointing along your path. Back at the start, by how many degrees is the arrow rotated compared to its starting direction?
+    answer: 90
+    answerText: '90'
+    wrong:
+      - value: 0
+        feedback: |
+          On a flat plane that is right: carrying an arrow around a closed loop returns it unchanged. On a curved surface it does not, and this is the very effect that measures curvature.
+      - value: 270
+        feedback: |
+          $270^\circ$ is the angle sum, not the rotation. The arrow turns by the **excess** over the flat value $180^\circ$.
+    hint: |
+      Compare the sum of the angles with $180^\circ$.
+    explanation: |
+      The arrow comes back rotated by $270^\circ - 180^\circ = 90^\circ$: the angle excess. This **holonomy** around a loop is exactly what the curvature tensor measures (Level 6), and the same object governs the tides of Puzzle 1.
+
+  - type: mcq
+    id: embedding
+    prompt: |
+      We described the sphere's curvature using only angles and paths on the surface. Does a curved space have to bend inside a higher-dimensional space to be curved?
+    options:
+      - text: No; curvature is intrinsic and can be defined and measured entirely from inside
+        correct: true
+      - text: Yes; curvature is how a space bends in an extra dimension
+        feedback: |
+          That is how we visualize a sphere, because we happen to see it in 3D. But the angle sum, the rotation of carried arrows and the tides are all measured from inside. Spacetime is not bending into anything.
+      - text: Only two-dimensional spaces can be intrinsically curved
+        feedback: |
+          Curvature exists in any dimension. Spacetime has four, and its curvature is what we call gravity.
+    explanation: |
+      This is why we study **manifolds** abstractly, with no reference to an ambient space: a four-dimensional spacetime is not embedded in anything. All we need are intrinsic structures, defined from within.
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** curvature needs a ruler and a clock. The last preview lesson adds the metric, integration, Newton's geometric gravity and the Einstein equations, then decodes the opening sentence.

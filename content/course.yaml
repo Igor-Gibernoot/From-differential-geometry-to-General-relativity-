@@ -14,11 +14,21 @@ levels:
     title: Introduction
     blurb: Why this course exists, the big questions it answers, and a preview of the road from vector spaces to Einstein's equations.
     lessons:
-      - id: ch01-overview
-        title: Why This Course? The Big Questions
+      - id: ch01-gravity
+        title: Is Gravity a Force?
         kind: concept
-        file: ch01/overview.yaml
-        summary: If free fall feels like nothing, what is gravity? Nine puzzles, each forcing one phrase of general relativity's defining sentence into existence.
+        file: ch01/gravity.yaml
+        summary: If free fall feels like nothing, what is gravity? Tides, and why coordinates are labels, not physics.
+      - id: ch01-curvature
+        title: Vectors, Derivatives and Curvature
+        kind: concept
+        file: ch01/curvature.yaml
+        summary: Why a vector is not a list of numbers, why differentiating on a sphere needs a connection, and how a bug can detect curvature from inside.
+      - id: ch01-spacetime
+        title: "Measuring, Adding Up and Einstein's Law"
+        kind: concept
+        file: ch01/spacetime.yaml
+        summary: Twins, areas, Newton as geometry and the Einstein equations; then decode the sentence that defines general relativity.
 
   - id: ch02
     number: 2

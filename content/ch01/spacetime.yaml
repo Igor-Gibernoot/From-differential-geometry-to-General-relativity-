@@ -1,0 +1,254 @@
+id: ch01-spacetime
+title: Measuring, Adding Up and Einstein's Law
+kind: concept
+own: |
+  - **Time is geometry.** A clock moving at speed $v$ (with $c = 1$) for coordinate time $T$ records
+    {{ $$\tau = T\sqrt{1-v^2} ,$$ }}
+    so the straight worldline between two meetings has the *longest* proper time.
+  - **Lengths and areas need a metric $g$.** A coordinate cell of side $\Delta$ has true area
+    {{ $$\sqrt{\det g}\,\Delta^2 ,$$ }}
+    not $\Delta^2$.
+  - **Matter tells spacetime how to curve:**
+    {{ $$G_{ab} = 8\pi G_N\,T_{ab} .$$ }}
+    Geometry on the left, matter on the right: 10 component equations in 4 dimensions.
+  - Newtonian gravity can also be geometric (gravity in the connection); what is new is a dynamical Lorentzian metric.
+
+cards:
+  - type: text
+    id: q6-intro
+    title: "Puzzle 6: how do you measure?"
+    body: |
+      Recall: gravity is curvature, seen through tides and the failure of straightness-in-coordinates. Charts and connections give a notion of "straight", but nothing yet about **how long** a path is, **how much time** passes along it, or **which events can influence which**. These need the **metric**, a rule $g$ that turns two vectors into a number (their length-squared, or angle).
+
+      In spacetime, the metric has a twist: time and space enter with opposite signs, which is what makes it *Lorentzian*. That sign changes everything about "the shortest path".
+
+  - type: numeric
+    id: twins
+    prompt: |
+      Twin A stays at rest for 10 years. Twin B leaves at speed $0.6$ (in units of the speed of light), turns around after 5 years of A's time, and comes back at the same speed, meeting A again at the end of A's 10 years. How many years pass on B's own clock?
+    answer: 8
+    answerText: '8'
+    wrong:
+      - value: 10
+        feedback: |
+          That would mean motion has no effect on elapsed time. Moving clocks run slow, and B moves relative to A for the entire trip.
+      - value: 12.5
+        feedback: |
+          Moving clocks run *slow*, not fast: B's clock must record **less** than A's.
+    hint: |
+      A clock moving at speed $v$ ticks slow by the factor $\sqrt{1 - v^2}$. Here $v = 0.6$.
+    explanation: |
+      $\sqrt{1 - 0.36} = 0.8$, so B records $0.8\times 10 = 8$ years. Both twins travel between the same two events (the departure and the meeting), but the elapsed time depends on the **path**, and it is given by the metric.
+
+  - type: mcq
+    id: longest
+    prompt: |
+      In the twin example, A's straight path between the two meeting events records 10 years. B's detour records 8. In flat spacetime, among all timelike paths between the same two events, which one records the **most** time?
+    options:
+      - text: The straight one
+        correct: true
+      - text: The straight one records the least, as for ordinary distances
+        feedback: |
+          In Euclidean geometry the straight line is the *shortest* path. With the opposite sign for time, the straight worldline becomes the *longest*, since any detour must move faster and hence runs slower.
+      - text: All of them record the same time
+        feedback: |
+          The twins show otherwise: the detour records 8 years.
+    explanation: |
+      Free particles follow the **geodesics** of the metric, curves of extremal proper time. Combined with a connection, this single principle replaces Newton's "force law" for gravity. Metric and connection are, a priori, independent: they become linked when we require the connection to be torsion-free and compatible with the metric, which singles out exactly one (the **Levi-Civita** connection). That is the "compatible" in the opening sentence.
+
+  - type: text
+    id: q7-intro
+    title: "Puzzle 7: how do you add things up?"
+    body: |
+      Physics also needs totals: energy in a region, charge in a volume, the action of a field. These are integrals. But a coordinate box is not a unit of volume once the coordinates are only labels.
+
+  - type: numeric
+    id: area-ratio
+    prompt: |
+      On a globe, consider two small boxes, each spanning $1^\circ$ of latitude and $1^\circ$ of longitude: one on the equator and one at latitude $60^\circ$. What is the ratio (area of the box at $60^\circ$) / (area of the box at the equator)?
+    answer: 0.5
+    tolerance: 0.005
+    answerText: '0.5'
+    wrong:
+      - value: 1
+        feedback: |
+          The boxes are "the same" in coordinates, but not on the globe: meridians come closer together toward the pole.
+    hint: |
+      Both boxes have the same height. How wide, in true distance, is $1^\circ$ of longitude at latitude $60^\circ$, compared to the equator?
+    explanation: |
+      The width shrinks by the factor $\cos 60^\circ = 0.5$ while the height is unchanged. The true area of a small coordinate cell of side $\Delta$ is $\sqrt{\det g}\,\Delta^2$, not $\Delta^2$: the metric supplies the conversion. Integration that does not depend on the chart is built from **volume forms** and requires the manifold to be **orientable** (Level 8).
+
+  - type: text
+    id: q8-intro
+    title: "Puzzle 8: was Newton wrong?"
+    body: |
+      If gravity is curvature, then Newton's theory, which works so well for planets and projectiles, must be a limiting case of something geometric. It is, and seeing it is the bridge between what you know and what is new.
+
+  - type: mcq
+    id: newton-geometric
+    prompt: |
+      Is "gravity as geometry" an idea that exists only in Einstein's general relativity?
+    options:
+      - text: No; Newtonian gravity can also be written geometrically, with gravity stored in the connection of a spacetime whose time stays absolute
+        correct: true
+      - text: Yes; Newtonian gravity is intrinsically a force and cannot be geometric
+        feedback: |
+          It can. Newton–Cartan theory writes Newtonian gravity as a connection on a 4-dimensional manifold, with free fall as "straight" motion and tides as curvature.
+      - text: No; but then the two theories are identical
+        feedback: |
+          They differ in a key way. Newtonian time is absolute and space stays flat; in general relativity the **metric** of spacetime itself responds to matter and mixes time with space.
+    explanation: |
+      The geometric version of Newton's gravity (Level 9) shows what carries over to Einstein's theory (a connection encoding free fall) and what is genuinely new (a dynamical, Lorentzian metric whose curvature is sourced by all forms of energy).
+
+  - type: text
+    id: q9-intro
+    title: "Puzzle 9: what makes spacetime curve?"
+    body: |
+      The last piece is the law of motion for the geometry itself. Free particles follow geodesics; but what decides the curvature?
+
+      Einstein's answer, **matter and energy**, is a single tensor equation:
+      $$G_{ab} = 8\pi G_N\,T_{ab} .$$
+      Here $G_N$ is Newton's constant, $T_{ab}$ is the **energy–momentum tensor** of matter, and $G_{ab}$ is the **Einstein tensor**, built from the curvature of the metric. Level 10 derives it from an action principle, as we will have done for geodesics in Level 7.
+
+  - type: mcq
+    id: einstein-meaning
+    prompt: |
+      In words, what does $G_{ab} = 8\pi G_N\,T_{ab}$ say?
+    options:
+      - text: Curvature of spacetime on the left is sourced by matter and energy on the right
+        correct: true
+      - text: The gravitational force between two masses is proportional to the product of their masses
+        feedback: |
+          That is Newton's law, which turns up as a low-speed, weak-field limit. The Einstein equation is a statement about the *geometry*, not about a force.
+      - text: Matter moves along geodesics of a fixed, unchanging spacetime
+        feedback: |
+          Geodesic motion is true for free particles, but the equation says more: the spacetime is **not** fixed, it responds to the matter in it.
+    explanation: |
+      John Wheeler's summary: *spacetime tells matter how to move; matter tells spacetime how to curve.* Geodesics give the first half, the Einstein equation the second.
+
+  - type: numeric
+    id: count
+    prompt: |
+      In four dimensions, $G_{ab}$ and $T_{ab}$ are symmetric: $G_{ab} = G_{ba}$. How many independent components does a symmetric $4\times 4$ array have? (So how many equations does $G_{ab} = 8\pi G_N T_{ab}$ contain?)
+    answer: 10
+    answerText: '10'
+    wrong:
+      - value: 16
+        feedback: |
+          $16$ counts all entries, but symmetry makes $G_{ab}$ and $G_{ba}$ the same equation.
+      - value: 6
+        feedback: |
+          $6$ counts only the off-diagonal pairs. Add the $4$ diagonal entries.
+    hint: |
+      Diagonal entries, plus one for each pair of different indices.
+    explanation: |
+      $4 + \tfrac{4\cdot 3}{2} = 10$ equations, for the 10 independent components of the metric. (Four identities, tied to energy–momentum conservation, make only 6 of them independent.) Ten coupled nonlinear equations: this is why solutions like the Schwarzschild black hole are rare and precious.
+
+  - type: text
+    id: sentence-recall
+    title: The sentence, decoded
+    body: |
+      Each puzzle forced one phrase of the opening sentence into existence:
+
+      | Phrase | The puzzle it solves |
+      |---|---|
+      | topological manifold | a space that is only *locally* flat, with charts as labels |
+      | smooth atlas | doing calculus when charts overlap |
+      | connection (torsion-free) | differentiating vectors; "straight" without coordinates |
+      | Lorentzian metric | lengths, durations, light cones |
+      | Einstein equations | what makes spacetime curve |
+
+  - type: mcq
+    id: which-calculus
+    prompt: |
+      In "a topological manifold with a smooth atlas carrying a connection compatible with a metric", which ingredient is the one that lets us differentiate **functions** on the space in a chart-independent way?
+    options:
+      - text: The smooth atlas
+        correct: true
+      - text: The metric
+        feedback: |
+          The metric measures lengths and durations. Differentiating a function needs only that overlapping charts are smoothly related.
+      - text: The Einstein equations
+        feedback: |
+          They govern how matter curves spacetime, and come at the very end.
+      - text: The topology alone
+        feedback: |
+          Topology gives continuity, a vague notion of "nearby", but not derivatives. Smoothness of the chart changes is what makes calculus consistent.
+    explanation: |
+      Levels 3 and 4: a topology gives continuity, a smooth atlas gives differentiability, and the tangent spaces give vectors as derivatives of functions along curves.
+
+  - type: mcq
+    id: which-clocks
+    prompt: |
+      Which ingredient of the opening sentence tells us how much time a clock records along a worldline?
+    options:
+      - text: The Lorentzian metric
+        correct: true
+      - text: The connection
+        feedback: |
+          A connection tells you what "straight" means and how to differentiate, but not how long a path is. Metric and connection are *a priori* independent structures.
+      - text: The smooth atlas
+        feedback: |
+          The atlas lets us do calculus. It does not give any notion of length or duration.
+      - text: The orientation
+        feedback: |
+          Orientation (and time orientation) distinguishes directions but gives no measure of length or duration.
+    explanation: |
+      The metric (Level 7) gives lengths, angles, durations and the light-cone structure, and its Levi-Civita connection links geodesics of "straight" and "extremal proper time".
+
+  - type: order
+    id: build-order
+    prompt: Put the building blocks of the course in the order in which each one is built on the previous ones.
+    steps:
+      - 'Sets, maps, vector spaces, covectors and tensors'
+      - 'Topological and smooth manifolds: charts and atlases'
+      - 'Tangent and cotangent spaces at each point'
+      - 'Vector, covector and tensor fields'
+      - 'A connection: covariant derivative, torsion, curvature'
+      - 'A metric: lengths, geodesics, the Levi-Civita connection'
+      - 'Volume forms and integration'
+      - 'Gravity as geometry in Newtonian spacetime'
+      - 'Spacetime and the Einstein equations'
+    hint: |
+      Each step uses only what was built before it. Curvature needs a connection, which needs fields to differentiate.
+    explanation: |
+      That is the course, Level by Level: **2** vector spaces, **3** manifolds, **4** tangent spaces, **5** fields, **6** the covariant derivative, **7** the metric, **8** integrals, **9** Newton–Cartan theory, **10** general relativity. Each Level starts from a puzzle like today's and ends with tools you can compute with.
+
+  - type: text
+    id: how-it-works
+    title: How the course works
+    body: |
+      Every Level (one per chapter) follows the same pattern:
+
+      | Lesson | What you do |
+      |---|---|
+      | **Concept** | start from a problem you cannot yet solve, build the idea, return to solve it |
+      | **Guided problem** | one substantial result, derived step by step |
+      | **Traps** | quick questions, each built on a common misconception |
+      | **Intuition** | recall the main formulas through mnemonics and small checks |
+      | **Content map** | rebuild the chapter's concept map among decoys |
+      | **Review** | spaced repetition of every question you have answered |
+      | **Challenge** | harder problems combining the whole Level |
+
+      Wrong answers are not failures: each one encodes a real misconception, and the feedback explains why it is tempting. Questions you miss come back in the review.
+
+  - type: text
+    id: questions
+    title: Questions to carry with you
+    body: |
+      Keep these in mind as you go. Each Level will answer some of them:
+
+      1. *If free fall feels like nothing, what is gravity?* (6, 7, 10)
+      2. *What is a coordinate, and what is physical?* (3, 4)
+      3. *What is a vector, really, and why do covectors exist?* (2, 4)
+      4. *How do you differentiate where there is no flat grid?* (6)
+      5. *How do you detect curvature from inside?* (6)
+      6. *What does "straight" mean, and what is the longest path?* (6, 7)
+      7. *How do you integrate without a preferred coordinate system?* (8)
+      8. *What of Newton survives, and what is new?* (9)
+      9. *What decides how spacetime curves?* (10)
+
+  - type: text
+    id: summary
+    body: |
+      **Next:** Level 2 begins at the algebraic root of everything: sets, maps and vector spaces. The first question is humble and will turn out to be deep: *when can a change of description be undone?*

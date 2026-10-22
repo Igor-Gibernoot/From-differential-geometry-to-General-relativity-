@@ -2,10 +2,10 @@
 
 Read only **Current** at the start of a session (`sed -n '/^## Current/,/^## Log/p' docs/STATUS.md`).
 
-### 2026-10-22 — Level 1 `ch01-overview` (41 cards)
+### 2026-10-22 — Level 1 split into three lessons
 
-New level `ch01` (Introduction) with one overview lesson: nine guided puzzles that motivate each phrase of the opening sentence, with decode and order cards, the course structure table and a myth round. Reuses `falling-cloud` (falling view) and `rotating-grid` (no forces). Validate 0/0, shots clean. Conventions fixed here: none new.
-- **Level 1 `ch01-overview`** (41 cards, concept, widgets `falling-cloud` and `rotating-grid` reused): preview in 9 puzzles (free fall and tides, charts vs physics, vectors vs covectors, differentiating, curvature from inside, twins, area, Newton-Cartan, Einstein equations), the opening sentence decoded, build-order card, course structure, three myth cards. Numbers: components 1.5, gradient 12, triangle 270, holonomy 90, twins 8, area ratio 0.5, symmetric 4x4 = 10. Conventions fixed here: none new. Only lesson of Level 1 (no traps/map/challenge planned).
+New level `ch01` (Introduction), first built as one 41-card lesson, split into `ch01-gravity`, `ch01-curvature`, `ch01-spacetime` (card cap added to CLAUDE.md): nine guided puzzles that motivate each phrase of the opening sentence, with decode and order cards, the course structure table and a myth round. Reuses `falling-cloud` (falling view) and `rotating-grid` (no forces). Validate 0/0, shots clean. Conventions fixed here: none new.
+- **Level 1** (3 concept lessons, 12/12/17 cards): `ch01-gravity` (free fall, tides, charts vs physics; widgets `falling-cloud`, `rotating-grid`), `ch01-curvature` (vectors vs covectors, connection, curvature from inside), `ch01-spacetime` (twins, area, Newton-Cartan, Einstein equations, sentence decoded, build order, course structure). Numbers: components 1.5, gradient 12, triangle 270, holonomy 90, twins 8, area ratio 0.5, symmetric 4x4 = 10. Conventions fixed here: lessons stay under 25 cards, ideally under 20 (CLAUDE.md).
 At the end of a session: update **Current** (built list, queue, conventions) and
 append a short entry at the end of **Log** (a few lines, ending with
 "Conventions fixed here: …").
