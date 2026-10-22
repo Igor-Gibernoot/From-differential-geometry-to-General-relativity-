@@ -122,7 +122,9 @@ and put the weight on understanding and on the physics.
     can revisit it to probe limits.
     **Lesson length:** never more than 25 cards, ideally under 20. A topic
     that needs more is split into two or three lessons, each with its own
-    hook or recall opening, `own:` summary and teaser.
+    hook or recall opening, `own:` summary and teaser. **This limit applies
+    only to lessons, not to exams** (`kind: exam`): an exam has as many
+    cards as the original has sub-questions (the final exam has 39).
 12. **Displayed math.** A standalone equation, definition or chain goes on
     its own `$$...$$` line, phone-safe (`docs/QUICKREF.md`).
 13. **Theme-neutral wording.** Never "the black arrow": name things by label
