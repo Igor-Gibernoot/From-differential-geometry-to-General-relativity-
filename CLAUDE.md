@@ -54,7 +54,17 @@ Static web app on GitHub Pages (laptop and phone). Deploy = commit + push to
    automatic), **level challenge** (`kind: challenge`, harder problems
    combining the level's concepts; built last).
    **Summaries show the math:** each `own:` bullet restates its main formulas (displayed, phone-safe), never only prose.
-6. **Review** is automatic: every question enters a spaced-repetition deck,
+6. **Exam** (`kind: exam`, own level, played by `js/exam.js`; format in `docs/LESSON_FORMAT.md`). Built from the professor's exam in `partial_exam/` or `final_exam/`; one session per exam (widgets for its figures first, in their own session). Rules for building one:
+   - **Faithful**: same questions, same point weights (`points:` per card, total = original total), same numbers. Adapt only the format (below).
+   - **Own level** between chapters (`eyebrow`, `hue`), never inside a chapter. The final exam is `exam-final` after Level 10.
+   - **Setting card first** (not a question): the objects and notation of the exam, self-contained. Then one card per sub-question, tagged `Question N · …`, ids `qN-…`.
+   - **Written answers become gradable cards**: mcq (also multi-select), numeric, build, order. Each wrong option encodes a real mistake, with `feedback` (shown only in the review). Every card has an `explanation`; the debrief lists the skills tested.
+   - **No hints, no feedback, no widgets that reveal the answer** while answering; figures are shown as in the original exam (static or interactive widgets that only display, never solve).
+   - **`rules:` written for the app** (timer, no feedback until submit, can go back, empty counts as wrong, no notes), not copied from the paper exam. `minutes:` = the original time.
+   - Verify every number twice; the review must show the right answer for every card.
+   - Check: validate, shots, and a headless run of intro, answering, submit, time-up, results, review, exit.
+
+7. **Review** is automatic: every question enters a spaced-repetition deck,
    so prompts, hints and feedback must be **self-contained**.
 
 ### How to teach a topic
