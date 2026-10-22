@@ -235,6 +235,11 @@ a { color: var(--accent); }
   font: inherit; font-size: 20px; padding: 11px 14px; width: 180px; border-radius: 12px;
   border: 2px solid var(--line); background: var(--surface); color: var(--text); outline: none;
 }
+.numeric-keys { display: flex; gap: 10px; margin-top: 10px; }
+.numeric-key {
+  font: inherit; font-size: 22px; min-width: 56px; padding: 8px 14px; border-radius: 12px;
+  border: 2px solid var(--line); background: var(--surface); color: var(--text); cursor: pointer;
+}
 .numeric-row input:focus { border-color: var(--accent); }
 .numeric-row input.correct { border-color: var(--good); background: var(--good-soft); }
 .numeric-row input.wrong { border-color: var(--bad); background: var(--bad-soft); }

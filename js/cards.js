@@ -141,7 +141,20 @@ function numeric(card, el) {
     card.label ? h('span', { html: mdInline(card.label) }) : null,
     input,
     card.unit ? h('span', { html: mdInline(card.unit) }) : null);
-  el.append(row, h('div', { class: 'hint-line' }, 'Fractions like 1/2 are fine.'));
+  // Phone decimal keypads have no minus or slash key: provide them.
+  const keys = h('div', { class: 'numeric-keys' },
+    ...[['−', 'minus sign'], ['/', 'fraction slash']].map(([ch, label]) => h('button', {
+      type: 'button', class: 'numeric-key', 'aria-label': label,
+      onmousedown: e => e.preventDefault(),
+      onclick: () => {
+        if (input.disabled) return;
+        const a = input.selectionStart ?? input.value.length, b = input.selectionEnd ?? a;
+        input.setRangeText(ch, a, b, 'end');
+        input.dispatchEvent(new Event('input'));
+        input.focus({ preventScroll: true });
+      },
+    }, ch)));
+  el.append(row, keys, h('div', { class: 'hint-line' }, 'Fractions like 1/2 are fine.'));
   setTimeout(() => input.focus({ preventScroll: true }), 50);
 
   const tol = card.tolerance ?? 1e-6 * Math.max(1, Math.abs(card.answer));
