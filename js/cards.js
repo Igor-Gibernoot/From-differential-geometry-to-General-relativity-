@@ -7,6 +7,8 @@
 //                     check(),       -> { correct, feedback }  (feedback: Markdown)
 //                     retry(),       -> re-open input after a wrong attempt
 //                     reveal(),      -> show the right answer in place
+//                     correctMd(),   -> the right answer as Markdown (exam review)
+//                     showCorrect?(),-> mark the right options, keeping the reader's picks
 //                     select?(k) }   -> keyboard shortcut for option k
 //
 // The player locks input between check() and retry()/reveal().
@@ -98,6 +100,8 @@ function mcq(card, el) {
       if (!correct && missed.length && !notes.length) notes.push('You missed at least one correct option.');
       return { correct, feedback: correct ? opts.filter(o => o.correct && o.feedback).map(o => o.feedback).join('\n\n') : notes.join('\n\n') };
     },
+    correctMd: () => opts.filter(o => o.correct).map(o => `- ${o.text}`).join('\n'),
+    showCorrect() { btns.forEach((b, k) => { if (opts[k].correct) b.classList.add('correct'); }); },
     retry() {
       btns.forEach((b, k) => {
         if (b.classList.contains('wrong') && !multi) { b.disabled = true; b.classList.add('struck'); }
@@ -175,6 +179,7 @@ function numeric(card, el) {
       const match = (card.wrong ?? []).find(w => near(v, w.value, wrongTol(w)));
       return { correct, feedback: correct ? '' : match?.feedback ?? card.hint ?? '' };
     },
+    correctMd: () => `$${card.answerText ?? card.answer}$`,
     retry() { input.disabled = false; input.select(); ev.fire(); },
     reveal() {
       input.disabled = true;
@@ -240,6 +245,7 @@ function build(card, el) {
       const match = (card.wrong ?? []).find(w => sameSeq(w.answer, got));
       return { correct, feedback: correct ? '' : match?.feedback ?? card.hint ?? '' };
     },
+    correctMd: () => `$$${[card.prefix, ...card.answers[0], card.suffix].filter(Boolean).join(' ')}$$`,
     retry() { locked = false; line.classList.remove('wrong'); },
     reveal() {
       const used = new Set();
@@ -307,6 +313,7 @@ function order(card, el) {
       const correct = firstWrong === -1;
       return { correct, feedback: correct ? '' : `Step ${firstWrong + 1} is out of place.${card.hint ? '\n\n' + card.hint : ''}` };
     },
+    correctMd: () => card.steps.map((s, i) => `${i + 1}. ${s}`).join('\n'),
     retry() {
       // Keep the correct prefix, send the rest back to the pool.
       locked = false;

@@ -15,6 +15,7 @@ import { getCourse, getLesson, nextLessonAfter, isQuestion } from './content.js'
 import { progress } from './progress.js';
 import { renderTrail } from './trail.js';
 import { runSession, lessonItems } from './player.js';
+import { runExam } from './exam.js';
 import { recapCards, runRecap } from './recap.js';
 import { sounds, soundOn, setSound } from './sound.js';
 import { initTheme, themeButton } from './theme.js';
@@ -50,6 +51,14 @@ async function route() {
 async function playLesson(id, startAt, readOnly = false) {
   const { meta, data } = await getLesson(id);
   if (!data) { location.hash = '#/'; return; }
+  if (meta.kind === 'exam' && !readOnly) {
+    runExam(root, {
+      id, title: meta.title, data,
+      onExit: () => { location.hash = '#/'; },
+      onFinish: stats => progress.completeLesson(id, stats),
+    });
+    return;
+  }
   const saved = progress.partial(id);
   runSession(root, {
     items: lessonItems(id, data),

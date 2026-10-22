@@ -1,0 +1,458 @@
+id: exam-partial
+title: Partial Exam
+kind: exam
+
+# Exam lesson (js/exam.js): `minutes`, `rules` (intro screen), `debrief`
+# (results screen), cards with `points`. First card = setting, then one block
+# per question (tag "Question N · …", ids qN-…). No hints beyond the exam's own.
+
+minutes: 60
+
+rules: |
+  This is the **partial exam** on manifolds (Levels 2 to 5), in the format of a quiz exam.
+
+  - **One hour**, **10 points**, 4 questions. The bar at the top counts the time down; when it ends, the exam is submitted for you.
+  - **No feedback while you work.** Pick or type an answer and press *Next*. You can go back and change any answer until you submit.
+  - Questions are not equally weighted: the points are shown on each card.
+  - At the end, a submit slide shows which questions are still empty. Unanswered questions count as wrong.
+  - After submitting you get your score, and a **review** with your answer, the correct one and the explanation for each question.
+  - Work on **paper first**, and do not open your notes. The computations are short: what counts is the correct use of the concepts.
+
+  The setting (a torus, two charts, a special point and a scalar field) is the first card. Every question restates what it needs.
+
+debrief: |
+    Use the review to see where points went. The skills behind the four questions (2.5 points each):
+
+    - **Charts** (Q1): a chart is a homeomorphism onto an open set; the transition map and its Jacobian, row $i$ output and column $j$ input,
+      $$(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i{}_j = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j},$$
+      $$\text{ᛞ}_{\mathcal{U}\mathcal{V}} = \text{ᛞ}_{\mathcal{V}\mathcal{U}}^{-1},$$
+      and a zero determinant is where compatibility and the component laws break.
+    - **Velocities** (Q2): components from chart representatives, $x^i = (\mathscr{X}^i\circ\gamma)'(\lambda_0)$, and the contravariant law
+      $$y^i = (\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i{}_j\,x^j.$$
+    - **Differentials** (Q3): components from the chart representative, and the action as a contraction,
+      $$\mathtt{x}_i = \partial_i(f\circ\mathscr{X}^{-1}),$$
+      $$v(f) = x^i\,\mathtt{x}_i = (f\circ\gamma)'(\lambda_0).$$
+    - **Vector fields** (Q4): component *functions* transform with the Jacobian *functions*, and a field acts on scalars by
+      $$\mathcal{X}\lfloor f\rceil = x^i\,\partial_i(f\circ\mathscr{X}^{-1}).$$
+
+    **Next:** Level 6 begins with the question this exam avoided: how to differentiate a vector field, where plain derivatives of components depend on the chart.
+
+cards:
+  - type: text
+    id: setting
+    title: The setting, a torus
+    body: |
+      The **torus** is the set of points $p = (a,b,c)\in\mathbb{R}^3$ at distance $1$ from the circle of radius $2$ around the vertical axis:
+      $$\mathcal{M} := \Big\{p \;\Big|\; \big(\sqrt{a^2+b^2}-2\big)^2 + c^2 = 1\Big\}.$$
+      Two angles parametrize it, $\theta$ around the vertical axis and $\varphi$ around the tube:
+      $$a = (2+\cos\varphi)\cos\theta,$$
+      $$b = (2+\cos\varphi)\sin\theta,$$
+      $$c = \sin\varphi.$$
+      Write $\Phi(\theta,\varphi) := (a,b,c)$ for this map. The topology is the one induced from $\mathbb{R}^3$. Two charts are used:
+
+      | Angle chart $(\mathcal{U},\mathscr{X})$ | Projection chart $(\mathcal{V},\mathscr{Y})$ |
+      |---|---|
+      | $\mathscr{X}(p) = (\theta,\varphi)$ | $\mathscr{Y}(p) = (a,b)$ |
+      | $\theta,\varphi\in(-\pi,\pi)$ | $\mathcal{V} = \{c>0\}$ |
+      | $\mathscr{X}^{-1} = \Phi$ | image: $1<a^2+b^2<9$ |
+
+      In $\mathcal{U}$ the torus loses the circle $\theta = \pi$ and the inner equator $\varphi = \pi$. We write $\mathscr{X}^1 = \theta$, $\mathscr{X}^2 = \varphi$, $\mathscr{Y}^1 = a$, $\mathscr{Y}^2 = b$.
+
+      The transition map is $\text{ᛖ}_{\mathcal{V}\mathcal{U}} := \mathscr{Y}\circ\mathscr{X}^{-1}$ and its Jacobian is $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i{}_j := \partial\mathscr{Y}^i/\partial\mathscr{X}^j$ (row $i$, column $j$), with $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ its inverse. The special point is
+      $$p_0 := \Phi\big(0,\tfrac{\pi}{2}\big) = (2,0,1),$$
+      with $\mathscr{X}(p_0) = (0,\tfrac\pi2)$ and $\mathscr{Y}(p_0) = (2,0)$, and the scalar field is $f(a,b,c) := a$.
+
+  # ------------------------------------------------------------- Question 1
+  - type: mcq
+    id: q1a
+    points: 0.5
+    tag: Question 1 · Charts and transition maps
+    title: (a) Why restrict to c > 0?
+    prompt: |
+      On the torus $\mathcal{M}$ the projection $p = (a,b,c)\mapsto(a,b)$ is not a chart map on the whole of $\mathcal{M}$, but its restriction to $\mathcal{V} = \{c>0\}$ is a chart, with image the open annulus $1<a^2+b^2<9$.
+    multiple: true
+    options:
+      - text: 'On all of $\mathcal{M}$ it is not injective: $(a,b,c)$ and $(a,b,-c)$ have the same image'
+        correct: true
+      - text: 'On $\mathcal{V}$ the sign of $c$ is fixed, so it is injective, its inverse $(a,b)\mapsto(a,b,\sqrt{1-(\sqrt{a^2+b^2}-2)^2})$ is continuous, and the image is open: a homeomorphism onto an open set'
+        correct: true
+      - text: 'On all of $\mathcal{M}$ it fails to be continuous at the points with $c=0$'
+        feedback: |
+          Projection onto the first two coordinates is continuous everywhere (it is a restriction of a linear map of $\mathbb{R}^3$). What fails at $c=0$ is **injectivity** of every neighbourhood: the upper and lower halves meet there and fold onto each other.
+      - text: 'The torus is two-dimensional but $(a,b,c)$ has three coordinates, so any map to $\mathbb{R}^2$ loses information'
+        feedback: |
+          Dimension is no obstacle: the charts of a $2$-dimensional manifold map to $\mathbb{R}^2$ by design, and the angle chart $\mathscr{X}$ does it. The projection loses information only because it identifies **specific** pairs of points.
+      - text: 'Points with $c=0$ may be kept in $\mathcal{V}$: the projection is still injective near them'
+        feedback: |
+          Near an equator point the torus bends back: points slightly above and slightly below $c=0$ project to nearly the same $(a,b)$, so no neighbourhood of such a point projects injectively. That is why $c=0$ must be excluded.
+    explanation: |
+      A chart is a homeomorphism from an open subset of $\mathcal{M}$ onto an open subset of $\mathbb{R}^2$. The sign of $c$ cures non-injectivity, and the explicit continuous inverse gives the homeomorphism.
+
+  - type: mcq
+    id: q1b-map
+    points: 0.25
+    tag: Question 1 · Charts and transition maps
+    title: (b) The transition map
+    prompt: |
+      On $\mathcal{U}\cap\mathcal{V}$, where $\varphi\in(0,\pi)$, the transition map is $\text{ᛖ}_{\mathcal{V}\mathcal{U}} = \mathscr{Y}\circ\mathscr{X}^{-1}$, with $\mathscr{X}^{-1}(\theta,\varphi) = \Phi(\theta,\varphi)$ and $\mathscr{Y}(a,b,c) = (a,b)$. What is $\text{ᛖ}_{\mathcal{V}\mathcal{U}}(\theta,\varphi)$?
+    options:
+      - text: '$\big((2+\cos\varphi)\cos\theta,\ (2+\cos\varphi)\sin\theta\big)$'
+        correct: true
+      - text: '$\big((2+\cos\varphi)\cos\theta,\ \sin\varphi\big)$'
+        feedback: |
+          That keeps $a$ and $c$. The chart $\mathscr{Y}$ keeps the first **two** ambient coordinates $(a,b)$, and $c = \sin\varphi$ is dropped.
+      - text: '$\big(\theta,\ \varphi\big)$'
+        feedback: |
+          That would be $\mathscr{X}\circ\mathscr{X}^{-1} = \mathrm{id}$. The transition map first returns to the torus with $\mathscr{X}^{-1} = \Phi$ and **then** applies $\mathscr{Y}$.
+      - text: '$\big(\operatorname{atan2}(b,a),\ \operatorname{atan2}(c,\sqrt{a^2+b^2}-2)\big)$'
+        feedback: |
+          That is $\mathscr{X}\circ\mathscr{Y}^{-1}$, the transition map in the **other** direction ($\text{ᛖ}_{\mathcal{U}\mathcal{V}}$), written in terms of $a,b,c$.
+    explanation: |
+      $$\begin{aligned}\text{ᛖ}_{\mathcal{V}\mathcal{U}}(\theta,\varphi) = \big(&(2+\cos\varphi)\cos\theta,\\&(2+\cos\varphi)\sin\theta\big).\end{aligned}$$
+
+  - type: mcq
+    id: q1b-jac
+    points: 0.5
+    tag: Question 1 · Charts and transition maps
+    title: (b) The Jacobian at p₀
+    prompt: |
+      The transition map is $\text{ᛖ}_{\mathcal{V}\mathcal{U}}(\theta,\varphi) = \big((2+\cos\varphi)\cos\theta,\ (2+\cos\varphi)\sin\theta\big)$, and its Jacobian is $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i{}_j = \partial\mathscr{Y}^i/\partial\mathscr{X}^j$, with $i$ labelling rows and $j$ columns. Which matrix is $\text{ᛞ}_{\mathcal{V}\mathcal{U}}$ at $p_0$, where $(\theta,\varphi) = (0,\tfrac\pi2)$?
+    options:
+      - text: '$\begin{pmatrix}0&-1\\2&0\end{pmatrix}$'
+        correct: true
+      - text: '$\begin{pmatrix}0&2\\-1&0\end{pmatrix}$'
+        feedback: |
+          That is the **transpose**: rows and columns swapped. Row $i$ is the output $\mathscr{Y}^i$, column $j$ is the input $\mathscr{X}^j$. Here $\partial\mathscr{Y}^2/\partial\mathscr{X}^1 = \partial_\theta[(2+\cos\varphi)\sin\theta] = 2$ belongs in row $2$, column $1$.
+      - text: '$\begin{pmatrix}0&\tfrac12\\-1&0\end{pmatrix}$'
+        feedback: |
+          That is the **inverse**, $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$, the Jacobian of the transition in the other direction.
+      - text: '$\begin{pmatrix}0&1\\2&0\end{pmatrix}$'
+        feedback: |
+          Sign slip: $\partial\mathscr{Y}^1/\partial\mathscr{X}^2 = \partial_\varphi[(2+\cos\varphi)\cos\theta] = -\sin\varphi\cos\theta = -1$ at $p_0$.
+    explanation: |
+      In general
+      $$\text{ᛞ}_{\mathcal{V}\mathcal{U}} = \begin{pmatrix}-(2+\cos\varphi)\sin\theta & -\sin\varphi\cos\theta\\(2+\cos\varphi)\cos\theta & -\sin\varphi\sin\theta\end{pmatrix},$$
+      and at $(0,\tfrac\pi2)$ this is $\begin{pmatrix}0&-1\\2&0\end{pmatrix}$.
+
+  - type: numeric
+    id: q1b-inv
+    points: 0.25
+    tag: Question 1 · Charts and transition maps
+    title: (b) The inverse Jacobian
+    prompt: |
+      At $p_0$ the Jacobian of the transition from the angle chart to the projection chart is $\text{ᛞ}_{\mathcal{V}\mathcal{U}} = \begin{pmatrix}0&-1\\2&0\end{pmatrix}$ (row $i$, column $j$). Its inverse is $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$. What is the entry of $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ in **row $1$, column $2$**?
+    answer: 0.5
+    answerText: '1/2'
+    wrong:
+      - { value: 2, feedback: 'That is the entry $2$ of $\text{ᛞ}_{\mathcal{V}\mathcal{U}}$ copied over. The inverse of a matrix is not found entry by entry: check your candidate with $\text{ᛞ}_{\mathcal{U}\mathcal{V}}\,\text{ᛞ}_{\mathcal{V}\mathcal{U}} = I$.' }
+      - { value: -1, feedback: 'That is the entry in row $2$, column $1$ of the inverse. Check which entry the question asks for.' }
+      - { value: -0.5, feedback: 'Sign slip: $\begin{pmatrix}0&\tfrac12\\-1&0\end{pmatrix}\begin{pmatrix}0&-1\\2&0\end{pmatrix} = I$ needs $+\tfrac12$ in row $1$, column $2$.' }
+    explanation: |
+      $$\text{ᛞ}_{\mathcal{U}\mathcal{V}}(p_0) = \begin{pmatrix}0&\tfrac12\\-1&0\end{pmatrix},$$
+      and indeed
+      $$\begin{pmatrix}0&\tfrac12\\-1&0\end{pmatrix}\begin{pmatrix}0&-1\\2&0\end{pmatrix} = I.$$
+
+  - type: build
+    id: q1c-det
+    points: 0.4
+    tag: Question 1 · Charts and transition maps
+    title: (c) The determinant
+    prompt: |
+      The Jacobian of the transition is $\text{ᛞ}_{\mathcal{V}\mathcal{U}} = \begin{pmatrix}-(2+\cos\varphi)\sin\theta & -\sin\varphi\cos\theta\\(2+\cos\varphi)\cos\theta & -\sin\varphi\sin\theta\end{pmatrix}$. Build $\det\text{ᛞ}_{\mathcal{V}\mathcal{U}}$.
+    prefix: '\det ='
+    tiles: ['(2+\cos\varphi)', '\sin\varphi', '\sin\theta', '\cos\theta', '(2+\sin\varphi)']
+    answers:
+      - ['(2+\cos\varphi)', '\sin\varphi']
+      - ['\sin\varphi', '(2+\cos\varphi)']
+    wrong:
+      - { answer: ['(2+\cos\varphi)', '\sin\varphi', '\sin\theta'], feedback: 'The $\theta$-dependence cancels: the two products are $(2+\cos\varphi)\sin\varphi\sin^2\theta$ and $(2+\cos\varphi)\sin\varphi\cos^2\theta$, which add up to $(2+\cos\varphi)\sin\varphi\,(\sin^2\theta+\cos^2\theta)$.' }
+    explanation: |
+      $$\begin{aligned}\det\text{ᛞ}_{\mathcal{V}\mathcal{U}} &= (2+\cos\varphi)\sin\varphi\,(\sin^2\theta+\cos^2\theta)\\&= (2+\cos\varphi)\sin\varphi,\end{aligned}$$
+      which is $>0$ for $\varphi\in(0,\pi)$ because $2+\cos\varphi\geq1$.
+
+  - type: mcq
+    id: q1c-fail
+    points: 0.4
+    tag: Question 1 · Charts and transition maps
+    title: (c) What a zero determinant breaks
+    prompt: |
+      Two charts overlap, with Jacobian $\text{ᛞ}_{\mathcal{V}\mathcal{U}}(p)$ at a point $p$ of the overlap. Suppose $\det\text{ᛞ}_{\mathcal{V}\mathcal{U}}(p) = 0$. What fails?
+    multiple: true
+    options:
+      - text: 'The chain rule $\text{ᛞ}_{\mathcal{U}\mathcal{V}}\,\text{ᛞ}_{\mathcal{V}\mathcal{U}} = I$ is impossible, so the inverse transition map is not differentiable at $\mathscr{Y}(p)$: the charts are not $C^\infty$-compatible'
+        correct: true
+      - text: 'The coordinate vectors $(\partial_{y_i})_p$ do not form a basis of $T_p\mathcal{M}$, and the components $x^i = (\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i{}_j\,y^j$ cannot be recovered from the $y^j$'
+        correct: true
+      - text: 'Nothing: the transition map is still a homeomorphism, and that is all compatibility asks'
+        feedback: |
+          $C^\infty$-compatibility asks for **smooth** transition maps in both directions, with smooth inverse. A homeomorphism whose inverse is not differentiable (such as $t\mapsto t^3$ at $0$) is not enough, and its zero Jacobian is the symptom.
+      - text: 'The tangent space $T_p\mathcal{M}$ drops to dimension $1$ in one of the charts'
+        feedback: |
+          The tangent space is attached to $p$ and has dimension $2$ whatever the chart. What breaks is the **correspondence of components** between charts: a non-zero vector would have all $\mathscr{Y}$-components equal to zero.
+    explanation: |
+      Vanishing determinant means a singular matrix, so no inverse. At the level of points, the inverse transition map is not differentiable; at the level of tangent vectors, the transformation law $y^i = (\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i{}_j\,x^j$ cannot be undone.
+
+  - type: mcq
+    id: q1c-where
+    points: 0.2
+    tag: Question 1 · Charts and transition maps
+    title: (c) Where it vanishes
+    prompt: |
+      On the torus, $\det\text{ᛞ}_{\mathcal{V}\mathcal{U}} = (2+\cos\varphi)\sin\varphi$ as an expression in $\varphi$. Where on $\mathcal{M}$ does this expression vanish?
+    options:
+      - text: 'At $\varphi = 0$ and $\varphi = \pi$: the outer and inner equators ($c=0$), exactly the points excluded from $\mathcal{V}$'
+        correct: true
+      - text: 'At $\theta = 0$ and $\theta = \pi$: the circles that $\mathscr{X}$ cuts out of the torus'
+        feedback: |
+          The expression does not depend on $\theta$ at all: the dependence cancelled in the determinant.
+      - text: 'At $\varphi = \pm\tfrac\pi2$: the top and bottom circles'
+        feedback: |
+          There $\sin\varphi = \pm1$ and $2+\cos\varphi = 2$, so the determinant is $\pm2$. At $p_0$ (top circle) it is $2$, matching $\det\begin{pmatrix}0&-1\\2&0\end{pmatrix}$.
+      - text: 'Nowhere on $\mathcal{M}$: $2+\cos\varphi\geq1$ never vanishes'
+        feedback: |
+          Only the **first** factor never vanishes. The factor $\sin\varphi$ is zero at $\varphi = 0,\pi$.
+    explanation: |
+      $\sin\varphi = 0$ at the outer ($\varphi = 0$) and inner ($\varphi = \pi$) equators, where the projection folds the torus onto itself. That is why $\mathcal{V}$ must stop at $c=0$.
+
+  # ------------------------------------------------------------- Question 2
+  - type: mcq
+    id: q2-curves
+    points: 0.5
+    tag: Question 2 · Curves and velocities
+    title: The curves in ambient coordinates
+    prompt: |
+      Take the curves $\gamma(\lambda) := \Phi\big(\lambda,\tfrac\pi2\big)$ and $\delta(\lambda) := \Phi(0,\lambda)$ on the torus, $\lambda\in(-\pi,\pi)$, with $\Phi(\theta,\varphi) = \big((2+\cos\varphi)\cos\theta,\ (2+\cos\varphi)\sin\theta,\ \sin\varphi\big)$. They pass through $p_0 = (2,0,1)$ at $\lambda_0 = 0$ and $\lambda_0 = \tfrac\pi2$ respectively. Which pair is $\gamma$ and $\delta$ in ambient coordinates $(a,b,c)$?
+    hint: 'Substitute $\cos\tfrac\pi2 = 0$ and $\sin\tfrac\pi2 = 1$.'
+    options:
+      - text: '$\gamma = (2\cos\lambda,\ 2\sin\lambda,\ 1)$ and $\delta = (2+\cos\lambda,\ 0,\ \sin\lambda)$'
+        correct: true
+      - text: '$\gamma = (\cos\lambda,\ \sin\lambda,\ 1)$ and $\delta = (2+\cos\lambda,\ 0,\ \sin\lambda)$'
+        feedback: |
+          The radius of $\gamma$ is $2+\cos\tfrac\pi2 = 2$, not $1$: $\gamma$ goes around the vertical axis along the top of the tube.
+      - text: '$\gamma = (2+\cos\lambda,\ 0,\ \sin\lambda)$ and $\delta = (2\cos\lambda,\ 2\sin\lambda,\ 1)$'
+        feedback: |
+          The two are swapped. $\gamma$ varies $\theta$ (around the vertical axis, $\varphi$ frozen at $\tfrac\pi2$); $\delta$ varies $\varphi$ (around the tube, $\theta$ frozen at $0$).
+      - text: '$\gamma = (2\cos\lambda,\ 2\sin\lambda,\ \sin\lambda)$ and $\delta = (2+\cos\lambda,\ 0,\ 1)$'
+        feedback: |
+          $c = \sin\varphi$: it is constant ($=1$) for $\gamma$ because $\varphi$ is frozen, and it varies as $\sin\lambda$ for $\delta$.
+    explanation: |
+      Indeed $\gamma(0) = (2,0,1) = \delta(\tfrac\pi2) = p_0$.
+
+  - type: mcq
+    id: q2-x-gamma
+    points: 0.5
+    tag: Question 2 · Curves and velocities
+    title: Components of γ's velocity in the angle chart
+    prompt: |
+      On the torus, the curve $\gamma(\lambda) = (2\cos\lambda,\ 2\sin\lambda,\ 1)$ passes through $p_0$ at $\lambda_0 = 0$. Its velocity there is $\mathcal{X}_{p_0} := v_{\gamma,p_0}$, with components $x^i_{p_0} := (\mathscr{X}^i\circ\gamma)'(0)$ in the angle chart $\mathscr{X} = (\theta,\varphi)$, $\theta = \operatorname{atan2}(b,a)$, $\varphi = \operatorname{atan2}(c,\sqrt{a^2+b^2}-2)$. What is $(x^1_{p_0},x^2_{p_0})$?
+    hint: 'For $r>0$, $\operatorname{atan2}(r\sin\alpha, r\cos\alpha) = \alpha$; and $\operatorname{atan2}(1,0) = \tfrac\pi2$.'
+    options:
+      - text: '$(1,\,0)$'
+        correct: true
+      - text: '$(0,\,2)$'
+        feedback: |
+          Those are the components in the **projection** chart, $(\mathscr{Y}\circ\gamma)'(0) = (-2\sin\lambda,\ 2\cos\lambda)|_0$. The question asks for the angle chart.
+      - text: '$(2,\,0)$'
+        feedback: |
+          The factor $2$ is the radius of the circle $\gamma$ in space, which appears in the $\mathscr{Y}$ chart; the angle $\theta$ grows at unit rate, $\theta(\gamma(\lambda)) = \lambda$.
+      - text: '$(0,\,1)$'
+        feedback: |
+          That is the velocity of $\delta$ (varying $\varphi$). Along $\gamma$ the angle $\varphi$ stays at $\tfrac\pi2$, so $x^2 = 0$.
+    explanation: |
+      $(\mathscr{X}\circ\gamma)(\lambda) = (\lambda,\tfrac\pi2)$, so $(x^1_{p_0},x^2_{p_0}) = (1,0)$.
+
+  - type: mcq
+    id: q2-x-delta
+    points: 0.75
+    tag: Question 2 · Curves and velocities
+    title: Components of δ's velocity, and both charts
+    prompt: |
+      On the torus, the curve $\delta(\lambda) = (2+\cos\lambda,\ 0,\ \sin\lambda)$ passes through $p_0$ at $\lambda_0 = \tfrac\pi2$. Its velocity there is $\mathcal{Y}_{p_0} := v_{\delta,p_0}$. Which pair gives its components $(\tilde x^1,\tilde x^2)$ in the angle chart $\mathscr{X} = (\theta,\varphi)$ and $(\tilde y^1,\tilde y^2)$ in the projection chart $\mathscr{Y} = (a,b)$, both at $p_0$? (For $\lambda$ near $\tfrac\pi2$, $\delta$ lies in $\mathcal{V}=\{c>0\}$.)
+    hint: '$\operatorname{atan2}(0,x) = 0$ for $x>0$, and $\operatorname{atan2}(r\sin\alpha,r\cos\alpha) = \alpha$ for $r>0$.'
+    options:
+      - text: '$(\tilde x^1,\tilde x^2) = (0,1)$ and $(\tilde y^1,\tilde y^2) = (-1,0)$'
+        correct: true
+      - text: '$(\tilde x^1,\tilde x^2) = (0,1)$ and $(\tilde y^1,\tilde y^2) = (0,0)$'
+        feedback: |
+          You evaluated $(\mathscr{Y}\circ\delta)'(\lambda) = (-\sin\lambda,0)$ at $\lambda = 0$. The curve passes through $p_0$ at $\lambda_0 = \tfrac\pi2$, where $-\sin\tfrac\pi2 = -1$.
+      - text: '$(\tilde x^1,\tilde x^2) = (0,1)$ and $(\tilde y^1,\tilde y^2) = (1,0)$'
+        feedback: |
+          Sign: $\mathscr{Y}\circ\delta = (2+\cos\lambda,\,0)$ has derivative $-\sin\lambda = -1$ at $\tfrac\pi2$. Moving around the tube from the top moves **inwards**, toward smaller $a$.
+      - text: '$(\tilde x^1,\tilde x^2) = (-1,0)$ and $(\tilde y^1,\tilde y^2) = (0,1)$'
+        feedback: |
+          The two charts are swapped. In the angle chart $\delta$ is simply $(\theta,\varphi) = (0,\lambda)$, with components $(0,1)$.
+    explanation: |
+      $(\mathscr{X}\circ\delta)(\lambda) = (0,\lambda)$ gives $(0,1)$; $(\mathscr{Y}\circ\delta)(\lambda) = (2+\cos\lambda,0)$ gives $(-\sin\tfrac\pi2,0) = (-1,0)$.
+
+  - type: mcq
+    id: q2-transform
+    points: 0.75
+    tag: Question 2 · Curves and velocities
+    title: Transform and check
+    prompt: |
+      At $p_0$ the velocity $\mathcal{X}_{p_0}$ of $\gamma$ has angle-chart components $(x^1,x^2) = (1,0)$ and projection-chart components $(y^1,y^2) = (0,2)$, computed directly from the curve. With $\text{ᛞ}_{\mathcal{V}\mathcal{U}}(p_0) = \begin{pmatrix}0&-1\\2&0\end{pmatrix}$ and $\text{ᛞ}_{\mathcal{U}\mathcal{V}}(p_0) = \begin{pmatrix}0&\tfrac12\\-1&0\end{pmatrix}$, which transformation law reproduces $(y^1,y^2)$ from $(x^1,x^2)$?
+    options:
+      - text: '$y^i = (\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i{}_j\,x^j$, which gives $(0,2)$ ✓'
+        correct: true
+      - text: '$y^i = (\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i{}_j\,x^j$, which gives $(0,-1)$'
+        feedback: |
+          That uses the Jacobian pointing the **wrong way**: to go from $\mathscr{X}$-components to $\mathscr{Y}$-components we need $\partial\mathscr{Y}^i/\partial\mathscr{X}^j = \text{ᛞ}_{\mathcal{V}\mathcal{U}}$. The inverse $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ goes from $\mathscr{Y}$ to $\mathscr{X}$.
+      - text: '$y^j = (\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i{}_j\,x^i$ (the vector contracted with the **rows**), which gives $(0,-1)$'
+        feedback: |
+          Contracted over the wrong index. The vector index $j$ sits in the **column**: $y^i$ is row $i$ of the matrix times $x$. The matrix is not symmetric, so rows versus columns changes the answer.
+      - text: '$\mathtt{y}_i = (\text{ᛞ}_{\mathcal{U}\mathcal{V}})^j{}_i\,\mathtt{x}_j$, which gives $(-1,0)$'
+        feedback: |
+          That is the **covector** law, for components $\mathtt{x}_j$ of a covector. The velocity is a vector: its components transform contravariantly, with $\text{ᛞ}_{\mathcal{V}\mathcal{U}}$ itself.
+    explanation: |
+      $y^1 = 0\cdot x^1 + (-1)\,x^2 = -x^2$ and $y^2 = 2\,x^1 + 0\cdot x^2$. So $(1,0)\mapsto(0,2)$ for $\mathcal{X}_{p_0}$, and $(0,1)\mapsto(-1,0)$ for $\mathcal{Y}_{p_0}$: both agree with the direct computation. In words, $\mathcal{X}_{p_0} = 2\,(\partial y_2)_{p_0}$ and $\mathcal{Y}_{p_0} = -(\partial y_1)_{p_0}$.
+
+  # ------------------------------------------------------------- Question 3
+  - type: mcq
+    id: q3-rep
+    points: 0.5
+    tag: Question 3 · The scalar field and its differential
+    title: The chart representative of f
+    prompt: |
+      On the torus, $f(a,b,c) := a$, and the angle chart has inverse $\mathscr{X}^{-1}(\theta,\varphi) = \Phi(\theta,\varphi) = \big((2+\cos\varphi)\cos\theta,\ (2+\cos\varphi)\sin\theta,\ \sin\varphi\big)$. What is the chart representative $f\circ\mathscr{X}^{-1}$?
+    options:
+      - text: '$(2+\cos\varphi)\cos\theta$'
+        correct: true
+      - text: '$(2+\cos\varphi)\sin\theta$'
+        feedback: |
+          That is the function $b$. The field $f$ picks the **first** ambient coordinate, $a$.
+      - text: '$\cos\theta$'
+        feedback: |
+          You dropped the factor $2+\cos\varphi$, the distance from the vertical axis to the point. The angle $\theta$ only gives the direction.
+      - text: '$\theta$'
+        feedback: |
+          $\theta$ is a coordinate of the chart, not the value of $f$. Here $f(p) = a$ is the ambient coordinate, expressed through $\theta,\varphi$.
+    explanation: |
+      $$\begin{aligned}(f\circ\mathscr{X}^{-1})(\theta,\varphi) &= f\big(\Phi(\theta,\varphi)\big)\\&= (2+\cos\varphi)\cos\theta.\end{aligned}$$
+
+  - type: numeric
+    id: q3-comp
+    points: 0.75
+    tag: Question 3 · The scalar field and its differential
+    title: A component of (df) at p₀
+    prompt: |
+      The components of the covector $(df)_{p_0}$ in the angle chart are $\mathtt{x}_i = \partial_i(f\circ\mathscr{X}^{-1})$ evaluated at $\mathscr{X}(p_0) = (0,\tfrac\pi2)$, with $f\circ\mathscr{X}^{-1} = (2+\cos\varphi)\cos\theta$ and $\partial_1 = \partial/\partial\theta$, $\partial_2 = \partial/\partial\varphi$. Compute the component $\mathtt{x}_2$.
+    answer: -1
+    wrong:
+      - { value: 0, feedback: 'That is $\mathtt{x}_1 = -(2+\cos\varphi)\sin\theta = 0$ at $\theta = 0$. The question asks for $\mathtt{x}_2 = \partial_\varphi$.' }
+      - { value: 1, feedback: 'Sign: $\partial_\varphi(2+\cos\varphi) = -\sin\varphi$, so $\mathtt{x}_2 = -\sin\varphi\cos\theta = -1$ at $(0,\tfrac\pi2)$.' }
+      - { value: -2, feedback: 'The factor $2+\cos\varphi = 2$ multiplies $\cos\theta$ only inside the function; differentiating in $\varphi$ gives $-\sin\varphi$ for that factor, with no leftover $2$.' }
+    explanation: |
+      $$\mathtt{x}_i = \big(-(2+\cos\varphi)\sin\theta,\ -\sin\varphi\cos\theta\big)$$
+      evaluated at $(0,\tfrac\pi2)$:
+      $$\mathtt{x}_i = (0,-1).$$
+
+  - type: numeric
+    id: q3-action
+    points: 0.75
+    tag: Question 3 · The scalar field and its differential
+    title: The action on f
+    prompt: |
+      At $p_0$ the covector $(df)_{p_0}$ has angle-chart components $\mathtt{x}_i = (0,-1)$. The velocity $\mathcal{Y}_{p_0}$ of the curve $\delta(\lambda) = \Phi(0,\lambda)$ has angle-chart components $\tilde x^i = (0,1)$. Compute $\mathcal{Y}_{p_0}(f) = (df)_{p_0}(\mathcal{Y}_{p_0})$ in the chart.
+    answer: -1
+    wrong:
+      - { value: 0, feedback: 'That is $\mathcal{X}_{p_0}(f)$, the action of the velocity $(1,0)$ of $\gamma$. For $\mathcal{Y}_{p_0}$, components $(0,1)$, the second slot of $\mathtt{x}$ is used.' }
+      - { value: 1, feedback: 'Sign: $\tilde x^i\,\mathtt{x}_i = 0\cdot0 + 1\cdot(-1) = -1$. Check against the chart-free value $(f\circ\delta)''(\tfrac\pi2)$, $f\circ\delta = 2+\cos\lambda$.' }
+    explanation: |
+      $$\mathcal{Y}_{p_0}(f) = \tilde x^i\,\mathtt{x}_i = 0\cdot0 + 1\cdot(-1) = -1,$$
+      and $\mathcal{X}_{p_0}(f) = 1\cdot0 + 0\cdot(-1) = 0$. The chart-free check: $(f\circ\gamma)(\lambda) = 2\cos\lambda$ has derivative $0$ at $0$, and $(f\circ\delta)(\lambda) = 2+\cos\lambda$ has derivative $-\sin\tfrac\pi2 = -1$ at $\tfrac\pi2$. ✓
+
+  - type: mcq
+    id: q3-geo
+    points: 0.5
+    tag: Question 3 · The scalar field and its differential
+    title: Reading the numbers geometrically
+    prompt: |
+      On the torus, with $f(a,b,c) = a$, at $p_0 = (2,0,1)$ (the top of the tube) the curve $\gamma$ (around the vertical axis) has $\mathcal{X}_{p_0}(f) = 0$ and the curve $\delta$ (around the tube) has $\mathcal{Y}_{p_0}(f) = -1$. What do these numbers say?
+    options:
+      - text: 'At $p_0$, $\gamma$ moves in the $b$ direction, along which $a$ does not change; $\delta$ moves inwards, decreasing $a$ at unit rate'
+        correct: true
+      - text: '$\gamma$ is constant, so its velocity is zero'
+        feedback: |
+          The curve $\gamma$ is not constant: it has velocity $(0,2,0)$ in $\mathbb{R}^3$ at $p_0$. Only the **rate of change of $a$** vanishes there.
+      - text: '$\delta$ is moving outwards, since the value $-1$ is negative and points to the outside'
+        feedback: |
+          $-1$ is the rate of change of $a$ along $\delta$: negative means $a$ **decreases**, so $\delta$ moves toward the vertical axis, inwards.
+      - text: 'Both curves leave $f$ unchanged, because $f$ is a function on the torus, not on the curves'
+        feedback: |
+          The derivative of $f$ along a curve, $(f\circ\gamma)'(\lambda_0)$, measures how $f$ changes at the point where the curve goes: it can be zero or not depending on the **direction**.
+    explanation: |
+      The differential $(df)_{p_0}$ is the covector that gives, for each velocity at $p_0$, the rate of change of $f$ along it.
+
+  # ------------------------------------------------------------- Question 4
+  - type: mcq
+    id: q4a
+    points: 1
+    tag: Question 4 · Vector fields
+    title: (a) The field ∂x₁ in the projection chart
+    prompt: |
+      In the angle chart of the torus, the chart-induced basis field $\mathcal{X} := \partial x_1 = \partial/\partial\theta$ has component functions $(x^1,x^2) = (1,0)$. With $\text{ᛞ}_{\mathcal{V}\mathcal{U}} = \begin{pmatrix}-(2+\cos\varphi)\sin\theta & -\sin\varphi\cos\theta\\(2+\cos\varphi)\cos\theta & -\sin\varphi\sin\theta\end{pmatrix}$ and $a = (2+\cos\varphi)\cos\theta$, $b = (2+\cos\varphi)\sin\theta$, which are the component functions $(y^1,y^2)$ of $\mathcal{X}$ in the projection chart?
+    options:
+      - text: '$(y^1,y^2) = (-b,\ a)$'
+        correct: true
+      - text: '$(y^1,y^2) = (-\sin\varphi\cos\theta,\ -\sin\varphi\sin\theta)$'
+        feedback: |
+          That is the **second column** of the Jacobian, which belongs to $\partial x_2 = \partial/\partial\varphi$, with components $(0,1)$. The vector $(1,0)$ picks the first column.
+      - text: '$(y^1,y^2) = (b,\ -a)$'
+        feedback: |
+          Overall sign slip. $\partial_\theta(a) = -b$ and $\partial_\theta(b) = a$: as $\theta$ grows, the point turns counterclockwise.
+      - text: '$(y^1,y^2) = (a,\ b)$'
+        feedback: |
+          That would be the radial field (growing $r$ at fixed angle). Growing the angle $\theta$ is a **rotation**, not a stretch.
+    explanation: |
+      $y^i = (\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i{}_j\,x^j$ picks the first column, so $\mathcal{X}|_{\mathcal{U}\cap\mathcal{V}} = -b\,\partial y_1 + a\,\partial y_2$: the rotation field around the vertical axis. At $p_0$ it gives $(0,2)$, as in Question 2.
+
+  - type: numeric
+    id: q4b-x
+    points: 0.5
+    tag: Question 4 · Vector fields
+    title: (b) 𝒳 acting on f
+    prompt: |
+      On the torus, with $f = a$ and $f\circ\mathscr{X}^{-1} = (2+\cos\varphi)\cos\theta$, the field $\mathcal{X} = \partial x_1$ acts as $\mathcal{X}\lfloor f\rceil = \partial_\theta(f\circ\mathscr{X}^{-1})$. Evaluate the function $\mathcal{X}\lfloor f\rceil$ at the point with $(\theta,\varphi) = (\tfrac\pi3,\tfrac\pi2)$. Give a decimal.
+    answer: -1.7320508
+    tolerance: 0.001
+    answerText: '-√3'
+    wrong:
+      - { value: -0.5, feedback: 'That is $\mathcal{Y}\lfloor f\rceil = -\sin\varphi\cos\theta$ at this point, the action of $\partial x_2$. The field $\mathcal{X}$ differentiates in $\theta$.' }
+      - { value: 1.7320508, feedback: 'Sign slip: $\partial_\theta\cos\theta = -\sin\theta$.' }
+      - { value: -0.866, feedback: 'You dropped the factor $2+\cos\varphi = 2$: $\mathcal{X}\lfloor f\rceil = -(2+\cos\varphi)\sin\theta = -b$, and $b = 2\sin\tfrac\pi3$.' }
+    explanation: |
+      $\mathcal{X}\lfloor f\rceil = -(2+\cos\varphi)\sin\theta = -b = -2\sin\tfrac\pi3 = -\sqrt3$. The same value in the projection chart: $f\circ\mathscr{Y}^{-1}(\beta_1,\beta_2) = \beta_1$ has partials $(1,0)$, so $\mathcal{X}\lfloor f\rceil = y^1\cdot1 + y^2\cdot0 = -b$. ✓
+
+  - type: numeric
+    id: q4b-y
+    points: 0.5
+    tag: Question 4 · Vector fields
+    title: (b) 𝒴 acting on f
+    prompt: |
+      On the torus, with $f\circ\mathscr{X}^{-1} = (2+\cos\varphi)\cos\theta$, the field $\mathcal{Y} = \partial x_2 = \partial/\partial\varphi$ acts as $\mathcal{Y}\lfloor f\rceil = \partial_\varphi(f\circ\mathscr{X}^{-1})$. Evaluate the function $\mathcal{Y}\lfloor f\rceil$ at the point with $(\theta,\varphi) = (\tfrac\pi3,\tfrac\pi2)$.
+    answer: -0.5
+    answerText: '-1/2'
+    wrong:
+      - { value: -0.866, feedback: 'You used $\sin\theta$ instead of $\cos\theta$: $\mathcal{Y}\lfloor f\rceil = -\sin\varphi\cos\theta$, and $\cos\tfrac\pi3 = \tfrac12$.' }
+      - { value: -1.7320508, feedback: 'That is $\mathcal{X}\lfloor f\rceil = -b$ at this point, the action of $\partial x_1$.' }
+      - { value: 0.5, feedback: 'Sign slip: $\partial_\varphi\cos\varphi = -\sin\varphi$.' }
+    explanation: |
+      $\mathcal{Y}\lfloor f\rceil = -\sin\varphi\cos\theta = -1\cdot\tfrac12$. At $p_0$ ($\theta = 0$, $\varphi = \tfrac\pi2$) it gives $-1$, matching $\mathcal{Y}_{p_0}(f)$ of Question 3.
+
+  - type: numeric
+    id: q4c
+    points: 0.5
+    tag: Question 4 · Vector fields
+    title: (c) The sum of two fields
+    prompt: |
+      On the torus, in the angle chart, $\mathcal{X} = \partial x_1$ and $\mathcal{Y} = \partial x_2$. The sum $\mathcal{X}\oplus_\Gamma\mathcal{Y}$ is the vector field whose component functions are the sums of the component functions, and its action on scalars is the sum of the two actions, $(\mathcal{X}\oplus_\Gamma\mathcal{Y})\lfloor f\rceil = \mathcal{X}\lfloor f\rceil + \mathcal{Y}\lfloor f\rceil$. Evaluate $(\mathcal{X}\oplus_\Gamma\mathcal{Y})\lfloor f\rceil$ at the point with $(\theta,\varphi) = (\tfrac\pi3,\tfrac\pi2)$, where $\mathcal{X}\lfloor f\rceil = -\sqrt3$ and $\mathcal{Y}\lfloor f\rceil = -\tfrac12$.
+    answer: -2.2320508
+    tolerance: 0.001
+    answerText: '-√3 - 1/2'
+    wrong:
+      - { value: 0.866, feedback: 'You multiplied the two actions, $\sqrt3\cdot\tfrac12$. Vector fields add component by component, so their actions on $f$ **add**.' }
+      - { value: -1, feedback: 'That is the value at $p_0$ ($0+(-1)$). Here the point is $(\tfrac\pi3,\tfrac\pi2)$.' }
+    explanation: |
+      $(\mathcal{X}\oplus_\Gamma\mathcal{Y})|_\mathcal{U} = \partial x_1 + \partial x_2$, and
+      $$\begin{aligned}(\mathcal{X}\oplus_\Gamma\mathcal{Y})\lfloor f\rceil = &-(2+\cos\varphi)\sin\theta\\&- \sin\varphi\cos\theta,\end{aligned}$$
+      which is $-\sqrt3-\tfrac12\approx-2.232$ at this point and $-1$ at $p_0$.

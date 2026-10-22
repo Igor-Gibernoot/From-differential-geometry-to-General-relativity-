@@ -43,6 +43,32 @@ Every level ends with three special nodes, in this order:
   that the reader has already met, due and weak ones first (route `#/review/<levelId>`).
 - **challenge**: an ordinary lesson file (any card types) with harder problems
   that **combine** several concepts of the level. Build it last.
+- **exam** (`kind: exam`): a timed exam with **no feedback**, played by `js/exam.js`
+  (not the lesson player). It sits in its **own level** (no chapter number):
+  `{ id: exam-partial, eyebrow: Partial exam, hue: 3, title: …, lessons: [ … ] }`
+  (`eyebrow` replaces "Level N", `hue` keeps the other levels' colours). The file:
+
+  ```yaml
+  id: exam-partial
+  kind: exam
+  minutes: 60            # time limit; a bar and clock count down, auto-submit at 0
+  rules: |               # Markdown on the intro screen
+  debrief: |             # Markdown on the results screen
+  cards:                 # first card = setting (text); then questions
+    - type: mcq          # any question type; `points: 0.5` weights it (score out of the sum)
+      id: q1a
+      tag: Question 1 · …
+  ```
+
+  Flow: intro -> run (answers kept, Back allowed, no Check, no feedback) -> submit
+  slide (numbered chips, empty ones dashed) -> results (score, accuracy, **Exit exam**,
+  debrief) -> review (each question in its checked state, correct answer, the
+  misconception feedback and explanation). Unanswered questions, and everything left at
+  time-up, count as wrong and show the correct answer. On submit the lesson is completed
+  (accuracy = questions right / total) and every question enters the review deck.
+  Not saved mid-exam: leaving loses the attempt. Question cards need no hints beyond
+  the original exam's; cards may use `explanation` and wrong-option `feedback` as usual
+  (they only appear in the review). Final exam: same layout, a new level after the last chapter.
 
 ## Lesson file
 

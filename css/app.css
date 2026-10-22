@@ -650,3 +650,18 @@ polyline.w-level { fill: none; }
 .prose tbody tr:nth-child(even) td { background: var(--surface-2); }
 .prose td:first-child { font-weight: 600; }
 @media (max-width: 520px) { .prose th, .prose td { padding: 7px 8px; } }
+
+/* ---------- Exam mode ---------- */
+.bar.timer > div { background: var(--gold); transition: width .3s linear; width: 100%; }
+.bar.timer.low > div { background: var(--bad); }
+.exam-clock { font-variant-numeric: tabular-nums; font-weight: 800; min-width: 44px; text-align: right; }
+.exam-title { flex: 1; font-weight: 800; }
+.exam-facts { display: flex; gap: 12px; margin: 10px 0 18px; }
+.exam-facts .stat { min-width: 0; flex: 1; text-align: center; }
+.q-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); gap: 10px; }
+.q-chip { appearance: none; cursor: pointer; height: 48px; border-radius: 12px; font: inherit; font-weight: 800; color: var(--text);
+  background: var(--surface); border: 2px dashed var(--line); }
+.q-chip.done { border-style: solid; border-color: var(--good); background: var(--good-soft); }
+.exam-results .exam-debrief { text-align: left; margin-top: 28px; }
+.exam-results .exam-debrief p { color: var(--text); font-size: inherit; }
+.exam-results { padding-top: 6vh; }

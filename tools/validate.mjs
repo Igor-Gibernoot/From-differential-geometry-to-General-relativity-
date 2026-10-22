@@ -45,14 +45,14 @@ function checkText(where, text) {
 // Self-contained check: review shows a question alone, weeks later.
 const BACKREF = /\b(previous|last) (card|step|lesson|question)|\bin the (last|previous) lesson|\bas (shown|seen) above/i;
 
-const KINDS = ['concept', 'intuition', 'guided', 'traps', 'map', 'review', 'challenge'];
+const KINDS = ['concept', 'intuition', 'guided', 'traps', 'map', 'review', 'challenge', 'exam'];
 const course = yaml.load(readFileSync(join(root, 'content/course.yaml'), 'utf8'));
 const lessonIds = new Set();
 let built = 0, cardsTotal = 0;
 
 for (const level of course.levels ?? []) {
   const lw = `course.yaml level ${level.id}`;
-  if (!level.id || !level.title || level.number == null) err(lw, 'needs id, number, title');
+  if (!level.id || !level.title || (level.number == null && !level.eyebrow)) err(lw, 'needs id, title and number (or eyebrow)');
   checkText(lw, level.blurb);
   for (const meta of level.lessons ?? []) {
     const w = `course.yaml lesson ${meta.id}`;

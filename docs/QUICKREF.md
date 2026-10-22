@@ -9,7 +9,7 @@ doc is the source of truth; open it only for a widget's own subsection
 ```yaml
       - id: ch03-circle               # must equal the lesson file's id
         title: "Guided Problem: …"
-        kind: guided                  # concept | guided | traps | map | review | challenge
+        kind: guided                  # concept | guided | traps | map | review | challenge | exam
         file: ch03/circle.yaml        # omit → planned node
         summary: One or two sentences shown before starting.
 ```

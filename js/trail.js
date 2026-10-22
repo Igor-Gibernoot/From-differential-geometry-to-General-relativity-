@@ -36,7 +36,9 @@ export async function renderTrail(root) {
       themeButton(h),
       h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Progress & settings', 'data-tip': 'Settings & account', html: icons.settings, onclick: () => { location.hash = '#/settings'; } })));
 
-  const levels = course.levels.map((level, li) => {
+  // Exam levels carry their own hue, so inserting one never recolours the chapters after it.
+  const hueOf = new Map(course.levels.filter(l => l.hue == null).map((l, n) => [l.id, n % 6]));
+  const levels = course.levels.map((level) => {
     const lessons = level.lessons ?? [];
     const counted = lessons.filter(m => m.kind !== 'review');
     const done = counted.filter(m => m.file && progress.lesson(m.id)?.done).length;
@@ -46,7 +48,7 @@ export async function renderTrail(root) {
     const levelDue = deck.filter(k => dueSet.has(k)).length;
 
     const head = h('div', { class: 'level-head' },
-      h('div', { class: 'eyebrow' }, `Level ${level.number}${unwritten ? ' · not in the book yet' : ''}`),
+      h('div', { class: 'eyebrow' }, `${level.eyebrow ?? `Level ${level.number}`}${unwritten ? ' · not in the book yet' : ''}`),
       h('h2', {}, level.title),
       level.blurb ? h('p', { html: mdInline(level.blurb) }) : null,
       counted.length ? h('div', { class: 'meter', title: `${done}/${counted.length} lessons done` },
@@ -74,7 +76,7 @@ export async function renderTrail(root) {
         h('div', { class: `node-label${state === 'planned' ? ' planned' : ''}`, html: mdInline(meta.title) }));
     }));
 
-    return h('section', { class: `level${unwritten ? ' unwritten' : ''}`, id: level.id, 'data-hue': li % 6 }, head, lessons.length ? path : null);
+    return h('section', { class: `level${unwritten ? ' unwritten' : ''}`, id: level.id, 'data-hue': level.hue ?? hueOf.get(level.id) }, head, lessons.length ? path : null);
   });
 
   root.replaceChildren(h('div', { class: 'trail' }, top, levels));
@@ -103,8 +105,8 @@ function followLevelHue(targets, sections) {
   update();
 }
 
-const SPECIAL = ['map', 'review', 'challenge'];
-const ICON = { ...icons, map: icons.map, review: icons.levelReview, challenge: icons.challenge };
+const SPECIAL = ['map', 'review', 'challenge', 'exam'];
+const ICON = { ...icons, map: icons.map, review: icons.levelReview, challenge: icons.challenge, exam: icons.exam };
 const pct = x => `${Math.round(x * 100)}%`;
 
 function openSheet(meta, state, { level, deck, due }) {
