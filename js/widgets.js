@@ -6,6 +6,7 @@
 import { h } from './dom.js';
 import { tex, mdInline } from './render.js';
 import { torusFigure } from './torus.js';
+import { sphereFigure } from './sphere.js';
 
 const WIDGETS = {
   'basis-playground': basisPlayground,
@@ -25,6 +26,7 @@ const WIDGETS = {
   'observer-frame': observerFrame,
   'area-cell': areaCell,
   torus: torusFigure,
+  sphere: sphereFigure,
 };
 
 export function mountWidget(name, el, config) {

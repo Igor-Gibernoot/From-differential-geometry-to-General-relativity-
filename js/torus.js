@@ -57,7 +57,7 @@ const toRGB = c => {
   const v = probe.fillStyle;
   return v[0] === '#' ? [1, 3, 5].map(i => parseInt(v.slice(i, i + 2), 16)) : (v.match(/[\d.]+/g) ?? [0, 0, 0]).slice(0, 3).map(Number);
 };
-function palette() {
+export function palette() {
   const cs = getComputedStyle(document.documentElement), g = n => toRGB(cs.getPropertyValue(n).trim() || '#888');
   const surface = g('--surface'), dark = surface[0] + surface[1] + surface[2] < 384;
   return { dark, surface, ink: g('--ink'), muted: g('--muted'), line: g('--line'), vec: g('--vec'), basis: g('--basis'),
@@ -65,11 +65,11 @@ function palette() {
     pink: dark ? [242, 122, 174] : [214, 66, 124], base: dark ? [120, 124, 142] : [226, 227, 232],
     mid: dark ? [46, 47, 56] : [248, 248, 248], pos: dark ? [106, 168, 255] : [31, 104, 178], neg: dark ? [255, 140, 100] : [196, 52, 40] };
 }
-const css = (c, a = 1) => `rgba(${c.map(Math.round).join(',')},${a})`;
-const mixc = (a, b, t) => a.map((x, i) => x + (b[i] - x) * t);
+export const css = (c, a = 1) => `rgba(${c.map(Math.round).join(',')},${a})`;
+export const mixc = (a, b, t) => a.map((x, i) => x + (b[i] - x) * t);
 const cmap = (P, t) => { t = Math.max(-1, Math.min(1, t)); return mixc(P.mid, t >= 0 ? P.pos : P.neg, Math.abs(t) ** 0.8); };
 
-function arrowHead(ctx, [x1, y1], [x2, y2], color, w, head = 8) {
+export function arrowHead(ctx, [x1, y1], [x2, y2], color, w, head = 8) {
   const a = Math.atan2(y2 - y1, x2 - x1);
   ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = w; ctx.lineCap = 'round';
   ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2 - Math.cos(a) * head * 0.6, y2 - Math.sin(a) * head * 0.6); ctx.stroke();
@@ -77,7 +77,7 @@ function arrowHead(ctx, [x1, y1], [x2, y2], color, w, head = 8) {
   ctx.lineTo(x2 - head * Math.cos(a - 0.42), y2 - head * Math.sin(a - 0.42));
   ctx.lineTo(x2 - head * Math.cos(a + 0.42), y2 - head * Math.sin(a + 0.42)); ctx.closePath(); ctx.fill();
 }
-function haloText(ctx, P, text, x, y, color, size = 15) {
+export function haloText(ctx, P, text, x, y, color, size = 15) {
   ctx.font = `italic 600 ${size}px ${P.font}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
   ctx.lineJoin = 'round'; ctx.lineWidth = 4; ctx.strokeStyle = css(P.surface, 0.9); ctx.strokeText(text, x, y);
   ctx.fillStyle = color; ctx.fillText(text, x, y);
@@ -177,13 +177,13 @@ function render3d(ctx, W, H, top, view, sc, P) {
 }
 
 // ----------------------------------------------------------------- 2D panels
-function panelGeometry(W, bar) {
+export function panelGeometry(W, bar) {
   const l = 30, r = 8, t = bar ? 42 : 8, b = 22, side = W - l - r;
   return { l, r, t, b, side, H: t + side + b };
 }
 
 // a panel's coordinate frame: D.px(x, y) maps chart coordinates to canvas pixels
-function frame(ctx, g, dom) {
+export function frame(ctx, g, dom) {
   const [x0, x1, y0, y1] = dom;
   const px = (x, y) => [g.l + (x - x0) / (x1 - x0) * g.side, g.t + (y1 - y) / (y1 - y0) * g.side];
   const D = {

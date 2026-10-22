@@ -1,6 +1,11 @@
 # Status
 
-Read only **Current** at the start of a session (`sed -n '/^## Current/,/^## Log/p' docs/STATUS.md`).
+Read only **Current** at the start of a session (`sed -n '/^## Current/,/^## Log/
+### 2026-10-22 — widget `sphere` (final-exam figures)
+
+Built `js/sphere.js` (canvas, painter-free: tinted quads, hidden lines dashed) with views domain, curves, geodesics, region (+ optional densities), tabs, drag rotation like `torus`; registered in `js/widgets.js`; documented in `docs/LESSON_FORMAT.md`. `js/torus.js` now exports palette, css, mixc, arrowHead, haloText, panelGeometry, frame (no behavior change). Tested with a throwaway preset lesson (deleted) at phone and desktop width: 0 problems; viewed the four views. Choices: grid of parallels every π/12 (equator apart), meridians every π/6; hidden axis parts are not removed; the density labels appear only with `densities: true`. Conventions fixed here: see Current (sphere widget).
+p' docs/STATUS.md`).
+- **`sphere` widget** (2026-10-22): `js/sphere.js`, for the final-exam figures (views `domain`, `curves`, `geodesics`, `region`; `region` has `densities: true`, default false; `alpha0`, `alpha1bar`; format in `docs/LESSON_FORMAT.md`, `sphere`). Display only; usable as `figure: {widget: sphere, config}` on exam cards. No lesson uses it yet; the final exam (`exam-final`) will. Conventions fixed here: chart axes of the sphere named α₁, α₂ (angle chart) and β₁, β₂ (projection chart) in the panels; γ drawn at α₂=+0.07 and δ at -0.07 for readability; without `densities` the rectangle shows only the π/2 tick, never the bounds π/6, π/3.
 
 ### 2026-10-22 — exam figures as widgets
 Built `torus` (canvas, six views), `figure:` on cards, placed on four cards of `exam-partial`; validate clean, headless exam flow (intro, answer, submit, review) clean at phone and desktop width. Conventions fixed here: exam figures are display-only widgets, blue = $\partial_\theta$/$\gamma$, purple = $\partial_\varphi$/$\delta$, normalized arrows, no numeric component labels.
