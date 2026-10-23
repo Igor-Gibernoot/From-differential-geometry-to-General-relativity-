@@ -27,7 +27,9 @@ cards:
       No, and the reason is an old idea from electromagnetism. A **charge current** $J$ is not put in by hand: it is the **response of the action to the potential**. If the matter action changes by $\delta S$ when the potential changes by $\delta A$, then $J$ is the coefficient of that change.
 
       Gravity has exactly the same structure, with the metric playing the role of the potential:
-      $$\text{current } J \leftrightarrow \text{response to } A,\qquad T\leftrightarrow\text{response to } g.$$
+      $$\text{current } J \leftrightarrow \text{response to } A$$
+
+      $$T\leftrightarrow\text{response to } g.$$
       So once we know the **action of a kind of matter**, its $T$ follows. In this lesson we compute it for a constant term, a scalar field and the electromagnetic field, and we ask why energy and momentum come out conserved.
 
   - type: mcq
@@ -75,7 +77,7 @@ cards:
       where $\Theta^{ij}$ is a symmetric array computed from $\Phi$ and $g$ (the coefficient of $\text{ᛉ}_{ij}$).
 
       Now apply the product rule to the integrand $\sqrt{-\det g}\,\mathcal{L}_M$:
-      $$\delta\big(\sqrt{-\det g}\,\mathcal{L}_M\big) = \sqrt{-\det g}\,\Big(\tfrac12(g^{-1})^{ij}\mathcal{L}_M + \Theta^{ij}\Big)\text{ᛉ}_{ij}.$$
+      $$\begin{aligned}\delta\big(\sqrt{-\det g}\,\mathcal{L}_M\big) = \sqrt{-\det g}\,\Big(&\tfrac12(g^{-1})^{ij}\mathcal{L}_M\\&+ \Theta^{ij}\Big)\text{ᛉ}_{ij}.\end{aligned}$$
       Compare with $-\frac12\sqrt{-\det g}\,\hat T^{ij}\,\text{ᛉ}_{ij}$. Both coefficients of $\text{ᛉ}_{ij}$ are symmetric, so they must be equal, and $\hat T^{ij}$ can be read off.
 
   - type: build
@@ -124,7 +126,9 @@ cards:
     title: "Check 1: a constant Lagrangian"
     body: |
       Take the simplest matter action: $\mathcal{L}_M = -\lambda$ with $\lambda$ a constant. It has no field and does not depend on $g$ (apart from the volume element), so $\Theta^{ij} = 0$ and
-      $$\hat T^{ij} = -\mathcal{L}_M\,(g^{-1})^{ij} = \lambda\,(g^{-1})^{ij}\quad\Longrightarrow\quad T_{ab} = \lambda\,g_{ab}.$$
+      $$\hat T^{ij} = -\mathcal{L}_M\,(g^{-1})^{ij} = \lambda\,(g^{-1})^{ij}$$
+
+      $$\Longrightarrow\quad T_{ab} = \lambda\,g_{ab}.$$
       At a point where $g = \eta = \mathrm{diag}(1,-1,-1,-1)$, write $T_{ab} = \mathrm{diag}(\rho,p,p,p)$: $\rho$ is the **energy density** and $p$ the **pressure**. Here the energy density is $\rho = T_{00} = \lambda$.
 
   - type: numeric
@@ -276,9 +280,9 @@ cards:
     title: Its energy-momentum tensor
     body: |
       Since $F_{ab}$ does not depend on $g$ (only on derivatives of the potential), the variation acts on the two inverse metrics of $\hat F^{ab}$, which are equal by symmetry:
-      $$\delta\mathcal{L}_\mathrm{EM} = -\tfrac14F_{ab}\cdot2\,\delta(g^{-1})^{ar}(g^{-1})^{bs}F_{rs} = \tfrac12\,(g^{-1})^{ai}(g^{-1})^{rj}(g^{-1})^{bs}F_{ab}F_{rs}\,\text{ᛉ}_{ij}.$$
+      $$\begin{aligned}\delta\mathcal{L}_\mathrm{EM} &= -\tfrac14F_{ab}\cdot2\,\delta(g^{-1})^{ar}(g^{-1})^{bs}F_{rs}\\&= \tfrac12\,(g^{-1})^{ai}(g^{-1})^{rj}(g^{-1})^{bs}\\&\qquad\cdot F_{ab}F_{rs}\,\text{ᛉ}_{ij}.\end{aligned}$$
       That is $\Theta^{ij}$. Then $\hat T^{ij} = -2\Theta^{ij} - \mathcal{L}_\mathrm{EM}(g^{-1})^{ij}$ and, lowering both indices,
-      $$T_{mn} = -(g^{-1})^{bd}\,F_{mb}\,F_{nd} + \tfrac14\,g_{mn}\,F_{ab}\hat F^{ab}.$$
+      $$\begin{aligned}T_{mn} = &-(g^{-1})^{bd}\,F_{mb}\,F_{nd}\\&+ \tfrac14\,g_{mn}\,F_{ab}\hat F^{ab}.\end{aligned}$$
       Test it with the data $F_{01} = 3$, $F_{12} = 4$ at $g = \eta$, where $F_{ab}\hat F^{ab} = 14$.
 
   - type: numeric
@@ -342,7 +346,7 @@ cards:
       $$\nabla_a\hat F^{ab} = 0\qquad\text{(Maxwell)}.$$
 
       **Vary the metric** ($\mathtt{a}$ fixed): $G = 8\pi G_N\,T$ with the $T$ above:
-      $$G_{mn} = 8\pi G_N\Big(-(g^{-1})^{bd}F_{mb}F_{nd} + \tfrac14g_{mn}F_{ab}\hat F^{ab}\Big).$$
+      $$\begin{aligned}G_{mn} = 8\pi G_N\Big(&-(g^{-1})^{bd}F_{mb}F_{nd}\\&+ \tfrac14g_{mn}F_{ab}\hat F^{ab}\Big).\end{aligned}$$
       Together they are the **Einstein–Maxwell equations**: the field curves spacetime, and spacetime enters Maxwell's equation through $g$.
 
   - type: mcq
