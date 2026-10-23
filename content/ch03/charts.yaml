@@ -6,9 +6,9 @@ own: |
     $$\mathscr{X}\colon\mathcal{U}\to\mathscr{X}(\mathcal{U})\subseteq\mathbb{R}^d,$$
     $$p\mapsto\big(\mathscr{X}^1(p),\dots,\mathscr{X}^d(p)\big).$$
     Its values are **coordinates**. Openness leaves room for derivatives and pins down $d$.
-  - Charts are local: the angle $\theta\in(0, 2\pi)$ misses $(1, 0)$, and no single chart covers $S^1$.
-  - The **transition map** {{ $\mathscr{Y}\circ\mathscr{X}^{-1}$ }} translates coordinates on the overlap, numbers to numbers. For the two angle charts it is $\theta$ or $\theta - 2\pi$; for the stereographic chart, $\cos\theta/(1 - \sin\theta)$. Jumps between pieces of its domain are harmless.
-  - A **topological manifold** of dimension $d$: {{ Hausdorff, second countable }}, and every point in a chart into $\mathbb{R}^d$. $S^1$ is one, with $d = 1$.
+  - Charts are local: on the unit circle $S^1 = \{(a, b)\in\mathbb{R}^2 \mid a^2 + b^2 = 1\}$, the angle chart $\theta\in(0, 2\pi)$ (the point $(\cos\theta, \sin\theta)$) misses $(1, 0)$, and no single chart covers $S^1$.
+  - The **transition map** {{ $\mathscr{Y}\circ\mathscr{X}^{-1}$ }} translates coordinates on the overlap, numbers to numbers. For the two angle charts it is $\theta$ or $\theta - 2\pi$; from the angle chart to the stereographic chart $\sigma(a, b) = a/(1 - b)$ (defined on $S^1$ minus the point $(0, 1)$) it is $\cos\theta/(1 - \sin\theta)$. Jumps between pieces of its domain are harmless.
+  - A **topological manifold** of dimension $d$: {{ Hausdorff, second countable }}, and every point in a chart into $\mathbb{R}^d$. The unit circle $S^1$ is one, with $d = 1$.
 
 cards:
   - type: text
