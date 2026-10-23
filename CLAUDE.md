@@ -54,6 +54,7 @@ Static web app on GitHub Pages (laptop and phone). Deploy = commit + push to
    automatic), **level challenge** (`kind: challenge`, harder problems
    combining the level's concepts; built last).
    **Summaries show the math:** each `own:` bullet restates its main formulas (displayed, phone-safe), never only prose.
+   **Summaries are self-contained:** the recap is read alone, weeks later, and in Recap with blanks. Every symbol, chart, map, connection, space and running example an `own:` bullet uses is defined in that bullet or in the lines just above it ("on the plane $\mathbb{R}^2$ with cartesian chart $(x,y)$ and polar chart $(r,\theta)$, ..."), never assumed from the lesson. Re-state the setup of any example you recall; never "the book" or its labels.
 6. **Exam** (`kind: exam`, own level, played by `js/exam.js`; format in `docs/LESSON_FORMAT.md`). Built from the professor's exam in `partial_exam/` or `final_exam/`; one session per exam (widgets for its figures first, in their own session). Rules for building one:
    - **Faithful**: same questions, same point weights (`points:` per card, total = original total), same numbers. Adapt only the format (below).
    - **Own level** between chapters (`eyebrow`, `hue`), never inside a chapter. The final exam is `exam-final` after Level 10.

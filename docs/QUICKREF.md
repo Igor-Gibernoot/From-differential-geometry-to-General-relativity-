@@ -39,6 +39,9 @@ cards:
       **Next:** …
 ```
 
+**Self-contained rule:** a summary is read alone (and as Recap blanks), so define in it every symbol, chart, map,
+connection and example it recalls, with its type ("$\nabla^P$ = the polar-chart connection on $\mathbb{R}^2$"). State the setup before the formula that uses it. Check each bullet: could someone who skipped the lesson read it?
+
 The Recap button hides some `{{ … }}` spans and asks the learner to recall
 them; only marked spans are ever hidden. Each blank is a spaced-repetition
 item keyed by a hash of its text: **editing a blank resets its progress**,

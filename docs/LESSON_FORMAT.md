@@ -1094,6 +1094,8 @@ own" summary (Markdown with math), with its key expressions marked
    summary with some blanks replaced by tappable placeholders; the learner
    recalls each, taps to reveal it, and rates "Knew it" / "Missed".
 
+**Self-contained:** every symbol, chart, map and example the summary recalls must be defined in it (with its type), since it is read alone and as Recap blanks. Restate the setup of any example before its formula.
+
 ```yaml
 id: ch06-christoffel
 kind: concept
