@@ -2,14 +2,14 @@ id: ch08-intuition-metric
 title: "Intuition: Raising, Lowering and the Square Root of det g"
 kind: intuition
 own: |
-  - **Lowering** with $g$ (components $x^j$ of $\mathcal{X}$): the summed index sits next to $g$, one up and one down,
+  - **Lowering** with the metric $g$ (components $g_{ij}$; $\flat$ turns a vector $\mathcal{X}$ with components $x^j$ into a covector): the summed index sits next to $g$, one up and one down,
     {{ $$\flat(\mathcal{X})_i = x^j\,g_{ji}$$ }}
-  - **Raising** with the inverse metric (components $\mathtt{x}_j$ of $\mathsf{X}$), the matrix inverse of $g$, not the entries' reciprocals:
+  - **Raising** with the inverse metric $g^{-1}$ ($\flat^{-1}$ turns a covector $\mathsf{X}$ with components $\mathtt{x}_j$ into a vector), the matrix inverse of $g$, not the entries' reciprocals:
     {{ $$\flat^{-1}(\mathsf{X})^i = \mathtt{x}_j\,(g^{-1})^{ji}$$ }}
     {{ $$g_{ij}\,(g^{-1})^{jk} = \delta_i^k$$ }}
-  - **Scaling test**, $g\to\lambda^2 g$ in dimension $d$: $\flat(\mathcal{X})_i$ grows by $\lambda^2$, $\flat^{-1}(\mathsf{X})^i$ shrinks by $\lambda^{-2}$, and
+  - **Scaling test**, $g\to\lambda^2 g$ with $\lambda>0$ in dimension $d$: $\flat(\mathcal{X})_i$ grows by $\lambda^2$, $\flat^{-1}(\mathsf{X})^i$ shrinks by $\lambda^{-2}$, and
     {{ $$\sqrt{|\det g|}\ \to\ \lambda^{d}\sqrt{|\det g|}$$ }}
-  - **Density between charts** ($\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ is the Jacobian $\partial\mathscr{X}/\partial\mathscr{Y}$, old chart in terms of new): $\det g$ picks up the determinant twice, so
+  - **Density between charts** ($\mathscr{X}$, $\mathscr{Y}$ two charts, $g_\mathscr{X}$, $g_\mathscr{Y}$ the metric components in them, $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ the Jacobian $\partial\mathscr{X}/\partial\mathscr{Y}$, old chart in terms of new): $\det g$ picks up the determinant twice, so
     {{ $$\sqrt{|\det g_\mathscr{Y}|} = \big|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}\big|\,\sqrt{|\det g_\mathscr{X}|}$$ }}
 
 cards:

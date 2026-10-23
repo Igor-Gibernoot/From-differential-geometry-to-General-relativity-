@@ -2,6 +2,7 @@ id: ch07-signature
 title: Signature
 kind: concept
 own: |
+  - **Setting**: $g$ a metric on a manifold $\mathcal{M}$ of dimension $\dim\mathcal{M}$, $\mathscr{X},\mathscr{Y}$ two charts around $p$, $g_{ij}$ the components of $g$ in $\mathscr{X}$ and $\mathbf{G}_\mathscr{X}$, $\mathbf{G}_\mathscr{Y}$ their matrices, $x^i$ the components of a vector $\mathcal{X}$, $T^i_j$ those of a $(1,1)$-tensor with matrices $\mathbf{T}_\mathscr{X}$, $\mathbf{T}_\mathscr{Y}$, and $\flat(\mathcal{X})\lceil\mathcal{Y}\rfloor := g(\mathcal{X},\mathcal{Y})$.
   - **No eigenvalues**: for a $(1,1)$-tensor, $T^i_j\,x^j = \lambda\,x^i$ compares the components of two vectors, so $\lambda$ is the same in every chart. For a metric, $g_{ij}\,x^j = \lambda\,x^i$ compares the covector $\flat(\mathcal{X})$ with the vector $\lambda\mathcal{X}$, and $\lambda$ changes with the chart. With $A^i{}_k := \partial\mathscr{X}^i/\partial\mathscr{Y}^k$, a $(1,1)$-matrix changes by similarity, $\mathbf{T}_\mathscr{Y} = \mathbf{A}^{-1}\mathbf{T}_\mathscr{X}\mathbf{A}$, but the metric's matrix by congruence:
   {{ $$\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\,\mathbf{G}_\mathscr{X}\,\mathbf{A}$$ }}
   - **Sylvester's law of inertia**: at every $p$ some chart around $p$ has

@@ -512,8 +512,9 @@ cards:
     id: summary
     title: What you now own
     body: |
-      **The puzzle, resolved.** The polar equations $\ddot r - r\dot\theta^2 = 0$, $\ddot\theta + \tfrac2r\dot r\dot\theta = 0$ are the geodesic equation of the Euclidean plane. The circle fails because it bends; $r = \lambda^2$ fails only because its speed changes.
+      **The puzzle, resolved.** The polar equations of the Euclidean plane in the chart $(r,\theta)$, $\ddot r - r\dot\theta^2 = 0$, $\ddot\theta + \tfrac2r\dot r\dot\theta = 0$ are the geodesic equation of the Euclidean plane. The circle fails because it bends; $r = \lambda^2$ fails only because its speed changes.
 
+      - **Setting**: $(\mathcal{M},g)$ a metric manifold of dimension $d$ with a chart, $g_{ij}$ the components of $g$, $(g^{-1})^{km}$ the inverse matrix, $\partial_m$ the derivative with respect to the $m$-th slot of $\mathcal{L}_\mathscr{X}(\alpha;\beta)$ (position slots $\alpha$, velocity slots $\beta$, $\partial_{d+m}$ for the velocity ones), $\gamma$ a curve with components $\dot\gamma^i$ of its velocity, sign $\text{ᛇ}_\gamma := \mathrm{sgn}\,g(v_\gamma,v_\gamma)$, speed $s_\gamma := \sqrt{\text{ᛇ}_\gamma\,g(v_\gamma,v_\gamma)}$.
       - **Slot derivatives** of $\mathcal{L}_\mathscr{X} = \sqrt{\text{ᛇ}_\gamma\,g_{ij}\beta^i\beta^j}$:
       $$\partial_{d+m}\mathcal{L}_\mathscr{X} = \frac{\text{ᛇ}_\gamma\,g_{mj}\,\beta^j}{\mathcal{L}_\mathscr{X}}$$
       $$\partial_m\mathcal{L}_\mathscr{X} = \frac{\text{ᛇ}_\gamma\,(\partial_mg_{ij})\,\beta^i\beta^j}{2\mathcal{L}_\mathscr{X}}$$
@@ -524,7 +525,7 @@ cards:
       $$\ddot\gamma^k + \Gamma^k_{ij}\,\dot\gamma^i\dot\gamma^j = 0\tag{G}$$
       - **Any speed**:
       $$\ddot\gamma^k + \Gamma^k_{ij}\,\dot\gamma^i\dot\gamma^j = \frac{\dot s_\gamma}{s_\gamma}\,\dot\gamma^k\tag{S}$$
-      and the arc length $\mu = L_{[a,\lambda]}[\gamma]$ always gives speed $1$.
-      - **Polar check**: $\Gamma^1_{22} = -r$, $\Gamma^2_{12} = \Gamma^2_{21} = \tfrac1r$, exactly the Euclidean connection $\nabla^{\mathrm{E}}$ in polar components.
+      and the arc length $\mu := \int_a^\lambda s_\gamma\,d\lambda'$ as parameter always gives speed $1$.
+      - **Polar check**: $\Gamma^1_{22} = -r$, $\Gamma^2_{12} = \Gamma^2_{21} = \tfrac1r$, exactly the coefficients of the Euclidean connection $\nabla^{\mathrm{E}}$ (cartesian components constant) written in polar components, for the metric $g_{ij} = \mathrm{diag}(1,r^2)$.
 
       **Next: "The Levi-Civita Connection".** (G) has the shape of the autoparallel equation of a connection. Is there a connection whose coefficients are exactly these $\Gamma^k_{ij}$, so that geodesics (stationary length) and autoparallels (straightest curves) coincide? Yes, exactly one that is torsion free and respects the metric: the Levi-Civita connection.

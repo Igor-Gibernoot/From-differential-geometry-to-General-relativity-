@@ -1109,20 +1109,22 @@ cards:
     body: |
       Five problems, one level. The formulas to keep:
 
-      **1. Contracted Christoffel symbols** from one determinant:
+      Setting: a metric $g$ with chart components $g_{ij}$, $\det g$ the determinant of the matrix $(g_{ij})$, $\Gamma^k_{ij}$ its Christoffel symbols (repeated indices summed), $\flat(\mathcal{X})\lceil\mathcal{Y}\rfloor := g(\mathcal{X},\mathcal{Y})$, $\nabla$ a connection, $\text{ᛊ}$ the deformation parameter and $\text{ᛉ}$ the shape of a deformation $\gamma_\text{ᛊ}$ of a curve $\gamma$, $L$ the length.
+
+      **1. Contracted Christoffel symbols** (sum over $m$) from one determinant, and the divergence of a vector field $\mathcal{Y}$ with components $y^k$:
       $$\Gamma^m_{mk} = \partial_k\ln\sqrt{|\det g|},$$
       and the divergence of a vector field
       $$\frac{1}{\sqrt{|\det g|}}\,\partial_k\big(\sqrt{|\det g|}\,y^k\big).$$
-      **2. A light ray in a medium** (half-plane, $n = 1/w$): with free ends the first variation is
+      **2. A light ray in a medium**, the upper half-plane $\{(u,w)\in\mathbb{R}^2\mid w>0\}$ with $g_{ij} = \delta_{ij}/w^2$ (refractive index $n = 1/w$): with $P_m := \partial_{2+m}\mathcal{L}_\mathscr{X}$ and $E_m := \partial_m\mathcal{L}_\mathscr{X} - \dot P_m$ along $\gamma$ ($\mathcal{L}_\mathscr{X}$ the length Lagrangian), the first variation for free ends is
       $$\big[P_m\text{ᛉ}^m\big] + \int E_m\text{ᛉ}^m\,d\lambda.$$
       **3. Lowering through $\nabla$**:
       $$\begin{aligned}&\big(\nabla_{\partial x_k}\flat(\mathcal{Y})\big)_i - g_{im}(\nabla_{\partial x_k}\mathcal{Y})^m\\ &\quad= (\nabla_{\partial x_k}g)_{im}\,y^m,\end{aligned}$$
       zero for metric-compatible connections; the energy fixes the speed, the length does not.
 
-      **4. Minimum or saddle**: on the sphere
+      **4. Minimum or saddle**: on the unit sphere, an equator arc of length $\ell$ tilted to $\vartheta = \tfrac\pi2 + \text{ᛊ}h(\lambda)$ ($\lambda\in[0,\ell]$, $h(0) = h(\ell) = 0$, $\vartheta$ the polar angle) has length $\ell + C\,\text{ᛊ}^2 + O(\text{ᛊ}^4)$ with
       $$C = \tfrac12\int_0^\ell(h'^2 - h^2)\,d\lambda,$$
       a minimum before the first conjugate point (the antipode), a saddle after; in Minkowski, a maximum of proper time.
 
-      **5. Two dimensions**: $\mathrm{Ric} = \tfrac R2g$, so $G = 0$; $G$ is the divergence-free combination,
+      **5. Two dimensions**: with $\mathrm{Ric}$ the Ricci curvature, $R$ the Ricci scalar and $G := \mathrm{Ric} - \tfrac12Rg$ the Einstein curvature, $\mathrm{Ric} = \tfrac R2g$, so $G = 0$; and in any dimension $G$ is the divergence-free combination,
       $$\operatorname{div}\big(\mathrm{Ric} - \tfrac12Rg\big) = 0.$$
       **Next, Level 8: integrals.** The unit disc has area $\pi$. In cartesian coordinates, $\int\!\!\int da\,db = \pi$. In the polar chart, the same set is $r\in(0,1)$, $\theta\in(-\pi,\pi)$, and $\int\!\!\int dr\,d\theta = 2\pi$. Which one is the area? Integrating chart representatives depends on the chart. The cure is the factor $\sqrt{|\det g|}$ from Problem 1 ($= r$ in polar), which returns as the **metric volume form**.

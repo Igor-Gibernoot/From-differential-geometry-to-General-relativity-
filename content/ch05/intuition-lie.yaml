@@ -2,6 +2,7 @@ id: ch05-intuition-lie
 title: "Intuition: Signs and Slots of the Lie Derivative"
 kind: intuition
 own: |
+  - **Setting**: in a chart with coordinates $x^1,\dots,x^d$, write $\partial_i := \partial/\partial x^i$, a vector field $\mathcal{X}$ has component functions $x^i$ and another $\mathcal{Y}$ has $\tilde x^i$, a function is $f$, a covector field $\mathsf{A}$ has components $\mathtt{a}_i$, and $T^i_j$ are the components of a $(1,1)$ tensor field $T$ (indices are labels, summed when repeated). The symbol $\Gamma$ below is the connection coefficient, recalled only for comparison.
   - **Function and vector**: the Lie derivative along $\mathcal{X}$ of a function is the directional derivative, and of a vector field it is the commutator, whose components are
     {{ $$(\mathcal{L}_\mathcal{X}f) = \mathcal{X}\lfloor f\rceil,\qquad \mathcal{L}_\mathcal{X}\mathcal{Y} = [\mathcal{X},\mathcal{Y}]$$ }}
     {{ $$[\mathcal{X},\mathcal{Y}]^k = x^i\,\partial_i\tilde x^k - \tilde x^i\,\partial_i x^k$$ }}
@@ -10,7 +11,7 @@ own: |
   - **Sign rule**: start from $x^m\partial_m$ of the components, then add one term per index, each with a derivative of the components of $\mathcal{X}$: {{ **$-$ for each upper index, $+$ for each lower index** }}. A tensor of type $(1,1)$:
     $$(\mathcal{L}_\mathcal{X}T)^i_j = x^m\partial_mT^i_j - T^m_j\,\partial_mx^i + T^i_m\,\partial_jx^m.$$
   - **Compared with $\Gamma$**: the same shape of formula, but the signs are reversed ($\Gamma$: $+$ upper, $-$ lower), and the correction needs no connection, only the derivatives $\partial_jx^i$ of $\mathcal{X}$.
-  - **Checks**: in one dimension a $(1,1)$ tensor gets only {{ $x\,t'$ }} (its two corrections cancel); every term has exactly one derivative and one component of $\mathcal{X}$.
+  - **Checks**: in one dimension, if $t$ is the single component of $T$ and $x$ that of $\mathcal{X}$, a $(1,1)$ tensor gets only {{ $x\,t'$ }} (its two corrections cancel); every term has exactly one derivative and one component of $\mathcal{X}$.
 
 cards:
   - type: text

@@ -2,6 +2,7 @@ id: ch04-intuition-jacobian
 title: "Intuition: Which Jacobian, ∂Y/∂X or ∂X/∂Y?"
 kind: intuition
 own: |
+  - **Setting:** two charts $\mathscr{X},\mathscr{Y}$ around a point $p$ of a manifold; $v^i_\mathscr{X}$, $v^i_\mathscr{Y}$ are the components of a velocity $v$ at $p$; $\mathtt{x}_j$, $\mathtt{y}_i$ those of a covector; $d\mathscr{X}^i$ the differential of the $i$-th coordinate function; $\delta^i_j$ is $1$ if $i=j$, else $0$; repeated indices are summed.
   - **One mnemonic: the chain rule.** Write every law as a sum over a repeated chart index and **cancel** it like a fraction. Notation: $(\text{ᛞ}_{\mathscr{Y}\mathscr{X}})^i_j = \partial\mathscr{Y}^i/\partial\mathscr{X}^j$ (row = target chart, column = source chart).
   - **Lower-index objects follow the basis** (basis vectors, covector components), with $\partial\mathscr{X}/\partial\mathscr{Y}$ going to the new chart $\mathscr{Y}$:
     {{ $$\frac{\partial}{\partial\mathscr{Y}^i} = \frac{\partial\mathscr{X}^j}{\partial\mathscr{Y}^i}\,\frac{\partial}{\partial\mathscr{X}^j}$$ }}

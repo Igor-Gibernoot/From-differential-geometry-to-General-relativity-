@@ -1008,6 +1008,8 @@ cards:
     body: |
       Five problems, one level. The formulas to keep:
 
+      Notation: $t$ is the absolute time; charts have coordinates $x^i$ (inertial or sources chart) or $y^i$ (the other chart), with $x^0=y^0=t$ and $\alpha,\beta,\delta\in\{1,2,3\}$. $\Gamma^i_{jk}$ are the coefficients of the connection $\nabla$ and $\mathrm{Riem}$, $\mathrm{Ric}$ its curvature and Ricci tensor. $\omega$ is a chart's angular velocity, $\phi$ the gravitational potential, $\rho$ the mass density, $G_N$ Newton's constant, $\delta_{\alpha\beta}$ the Kronecker delta ($1$ if $\alpha=\beta$, else $0$), $k>0$ a constant, and dots are $d/dt$.
+
       **1. Whirl and release**: in a chart rotating at $\omega$, a free ball feels the Coriolis term $-2\Gamma^\alpha_{0\beta}\dot y^\beta$ and the centrifugal term $-\Gamma^\alpha_{00} = \omega^2y^\alpha$; a string's tension balances them only for the ball that turns with the chart.
 
       **2. Bent clocks**: a time coordinate that is not $t$, $y^0 = x^0 + \tfrac12(x^2)^2$, gives

@@ -3,8 +3,11 @@ title: Curvature of the Metric
 kind: concept
 
 own: |
-  - **From now on** $\mathrm{Riem}$ and $\mathrm{Ric}$ are the curvatures of $\nabla^{\mathrm{LC}}$, so the metric alone decides them: $g\to\nabla^{\mathrm{LC}}\to\mathrm{Riem}\to\mathrm{Ric}$, with up to second derivatives of $g$. Nonzero Christoffel symbols mean nothing (polar chart of the flat plane); $\mathrm{Riem}$, a tensor field, is the test.
-  - For polar-type components $\mathrm{diag}(1,f(r)^2)$: $\Gamma^1_{22} = -ff'$, $\Gamma^2_{12} = \Gamma^2_{21} = f'/f$ and
+  - **Setting**: $(\mathcal{M},g)$ a metric manifold of dimension $d$, $(\mathcal{U},\mathscr{X})$ a chart, $g_{ij}$ the components of $g$, $(g^{-1})^{ij}$ the entries of the inverse matrix, $\flat(\mathcal{X})\lceil\mathcal{Y}\rfloor := g(\mathcal{X},\mathcal{Y})$ the musical map, $\nabla^{\mathrm{LC}}$ the Levi-Civita connection (torsion free, keeps $g$ constant under transport) with Christoffel symbols $\Gamma^k_{ij}$, and $\mathrm{Riem}$ its curvature, the $(1,3)$-tensor field
+  {{ $$\begin{aligned}&\mathrm{Riem}(\mathsf{W},\mathcal{Z},\mathcal{X},\mathcal{Y})\\ &:= \mathsf{W}\lceil\nabla_\mathcal{X}\nabla_\mathcal{Y}\mathcal{Z} - \nabla_\mathcal{Y}\nabla_\mathcal{X}\mathcal{Z}\\ &\qquad - \nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}\rfloor\end{aligned}$$ }}
+  with components $\mathrm{Riem}^l_{jkm}$ (vector fields $\mathcal{X},\mathcal{Y},\mathcal{Z}$, covector $\mathsf{W}$). A **normal chart at $p$** is one with $\Gamma(p) = 0$.
+  - **From now on** $\mathrm{Riem}$ and $\mathrm{Ric}$ are the curvatures of $\nabla^{\mathrm{LC}}$, so the metric alone decides them: $g\to\nabla^{\mathrm{LC}}\to\mathrm{Riem}\to\mathrm{Ric}$, with up to second derivatives of $g$. Nonzero Christoffel symbols mean nothing (polar chart $(r,\theta)$ of the flat Euclidean plane); $\mathrm{Riem}$, a tensor field, is the test.
+  - For a chart $(r,\theta)$ with $f\colon(0,\infty)\to(0,\infty)$ smooth and polar-type components $g_{ij} = \mathrm{diag}(1,f(r)^2)$ (the Euclidean plane for $f = r$): $\Gamma^1_{22} = -ff'$, $\Gamma^2_{12} = \Gamma^2_{21} = f'/f$ and
   {{ $$\mathrm{Riem}^1_{212} = -f\,f''$$ }}
   so $f = r$ (and $f = 2r$) is flat, $f = r^2$ is curved: $\mathrm{Riem}^1_{212} = -2r^2$.
   - **Riemann–Christoffel curvature**, a $(0,4)$-tensor field: $\mathrm{Riem}^\flat(\mathcal{W},\mathcal{Z},\mathcal{X},\mathcal{Y}) := \mathrm{Riem}(\flat(\mathcal{W}),\mathcal{Z},\mathcal{X},\mathcal{Y})$, components

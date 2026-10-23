@@ -3,6 +3,7 @@ title: Gravity in the Connection
 kind: concept
 
 own: |
+  - **Setting and symbols**: Stratified charts $(\mathcal{U},\mathscr{X})$ have coordinates $x^i$ with $x^0=t$ (absolute time), $\alpha,\beta\in\{1,2,3\}$, and $\Gamma^i_{jk}$ are the coefficients of the connection $\nabla$. $\phi$ is the gravitational potential (a scalar field), $\partial_\alpha\phi := \partial\phi/\partial x^\alpha$, $\Delta\phi := \sum_\alpha\partial_\alpha\partial_\alpha\phi$, $\rho$ the mass density, $G_N$ Newton's constant, and $M$ the mass of a point source at the origin, $|x| := \sqrt{\sum_\alpha(x^\alpha)^2}$. $\gamma_\mathcal{U}^\alpha := \mathscr{X}^\alpha\circ\gamma$ are the coordinates of a particle $\gamma$ of mass $m$ under a force $f_\gamma$ (dot $= d/dt$). $\mathrm{Riem}$ is the curvature of $\nabla$, $\mathrm{Ric}_{ik} := \sum_s\mathrm{Riem}^s_{isk}$ its Ricci tensor. The **sources chart** is a stratified chart with cartesian, non-rotating axes at rest relative to the sources; $\mathscr{Y}$ is a second stratified chart, with coordinates $y^i$.
   - **Gravity in the connection**: in a stratified chart with cartesian, non-rotating axes at rest relative to the sources, every free fall obeys $\ddot\gamma^\alpha_\mathcal{U} = -\partial_\alpha\phi$, whatever its mass and velocity, so
   {{ $$\Gamma^\alpha_{00} = \partial_\alpha\phi$$ }}
   and all other coefficients vanish. Newton II keeps only the true forces: $m\ddot\gamma^\alpha_\mathcal{U} = f^\alpha_\gamma - m\,\partial_\alpha\phi$. For a point mass, $\phi = -G_NM/|x|$ gives Newton's law of gravitation.

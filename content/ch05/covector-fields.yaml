@@ -2,11 +2,11 @@ id: ch05-covector-fields
 title: Covector Fields and the Cotangent Bundle
 kind: concept
 own: |
-  - The **cotangent bundle** $T^*\mathcal{M} = \dot\bigcup_p T_p^*\mathcal{M}$, projection $\pi^*(\mathsf{X}_p) = p$, bundle charts {{ $\xi^*_{\mathscr{X}}(\mathsf{X}_p) = (\mathscr{X}(p)\,;\,\mathtt{x}^p_i)$ }}; fibre coordinates change with the inverse Jacobian $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$; a smooth manifold of dimension $2d$.
-  - A **smooth covector field** is a smooth section $\mathsf{X}\colon\mathcal{M}\to T^*\mathcal{M}$, {{ $\pi^*\circ\mathsf{X} = \mathrm{id}_\mathcal{M}$ }}; they form $\Gamma T^*\mathcal{M}$.
+  - Let $\mathcal{M}$ be a smooth manifold of dimension $d$, $\mathscr{X}\colon\mathcal{U}\to\mathbb{R}^d$ and $\mathscr{Y}\colon\mathcal{V}\to\mathbb{R}^d$ charts with coordinates $x^i$, $y^i$. The **cotangent bundle** $T^*\mathcal{M} = \dot\bigcup_p T_p^*\mathcal{M}$ (disjoint union of the spaces of covectors $\mathsf{X}_p$ at each $p\in\mathcal{M}$), projection $\pi^*(\mathsf{X}_p) = p$, bundle charts {{ $\xi^*_{\mathscr{X}}(\mathsf{X}_p) = (\mathscr{X}(p)\,;\,\mathtt{x}^p_i)$ }} with $\mathtt{x}^p_i$ the components of $\mathsf{X}_p$ in the cobasis of $\mathscr{X}$; fibre coordinates change with the inverse of the Jacobian $\text{ᛞ}_{\mathcal{V}\mathcal{U}}$, $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$; a smooth manifold of dimension $2d$.
+  - A **smooth covector field** is a smooth section $\mathsf{X}\colon\mathcal{M}\to T^*\mathcal{M}$, {{ $\pi^*\circ\mathsf{X} = \mathrm{id}_\mathcal{M}$ }}; they form the set $\Gamma T^*\mathcal{M}$. A vector field is $\mathcal{X}$, with components $x^i$, and $f$ is a smooth function.
   - On a chart, $\mathsf{X}|_\mathcal{U} = \mathtt{x}_i\,dx^i$; smooth means smooth component functions, and the law {{ $\mathtt{y}_i = (\partial\mathscr{X}^j/\partial\mathscr{Y}^i)\,\mathtt{x}_j$ }} makes that chart independent.
   - A covector field eats vector fields: {{ $\mathsf{X}\lceil\mathcal{X}\rfloor(p) = \mathsf{X}_p(\mathcal{X}(p)) = \mathtt{x}_i(p)\,x^i(p)$ }}, and functions pull out of the slot. For the differential, {{ $df\lceil\mathcal{X}\rfloor = \mathcal{X}\lfloor f\rceil$ }}.
-  - **Exact** fields $df$ are special: $-b\,dx^1 + a\,dx^2$ is not one. Draw covector fields as level lines, never as arrows.
+  - **Exact** fields $df$ are special: on $\mathbb{R}^2$ with coordinates $(a,b)$ (so $x^1=a$, $x^2=b$), $-b\,dx^1 + a\,dx^2$ is not one. Draw covector fields as level lines, never as arrows.
 
 cards:
   - type: text

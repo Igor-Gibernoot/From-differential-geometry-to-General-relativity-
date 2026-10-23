@@ -3,9 +3,12 @@ title: The Einstein Equations from an Action
 kind: concept
 
 own: |
+  - **Setting**: $g$ is a Lorentzian metric on the spacetime $\mathcal{M}$, $(g^{-1})^{ab}$ its inverse matrix in a chart with coordinates $x$, $\Gamma^k_{ab}$ the Christoffel symbols and $\nabla$ the Levi-Civita connection of $g$, $\mathrm{Ric}_{ab}$ the Ricci tensor and
+  $$R := (g^{-1})^{ab}\,\mathrm{Ric}_{ab}$$
+  the scalar curvature; $G_N$ is Newton's constant, and a hat means all indices raised with $g^{-1}$ (as in $\hat G^{ij}$).
   - **Action**: the metric is the unknown, and the Einstein–Hilbert action of a region $\mathcal{D}$ (compact closure in a chart) is
   {{ $$S_\mathcal{D}[g] = \kappa\int_{\mathcal{D}}\sqrt{-\det g}\;R\;d^4x$$ }}
-  with $\kappa = -1/(16\pi G_N)$, variations $g_{\text{ᛊ}} = g + \text{ᛊ}\,\text{ᛉ}$, $\text{ᛉ}$ symmetric, $\text{ᛉ}$ and $\partial\text{ᛉ}$ zero on $\partial\mathcal{D}$, and $\delta F := \frac{d}{d\text{ᛊ}}F_\text{ᛊ}\big|_0$.
+  with $\kappa = -1/(16\pi G_N)$, variations $g_{\text{ᛊ}} = g + \text{ᛊ}\,\text{ᛉ}$, $\text{ᛊ}\in\mathbb{R}$ small, $\text{ᛉ}$ a symmetric $(0,2)$ tensor field, $\text{ᛉ}$ and $\partial\text{ᛉ}$ zero on $\partial\mathcal{D}$, and $\delta F := \frac{d}{d\text{ᛊ}}F_\text{ᛊ}\big|_0$.
   - **Three variations**: with $(g^{-1})^{ab}$ the inverse metric,
   {{ $$\delta (g^{-1})^{ab} = -(g^{-1})^{ar}(g^{-1})^{bs}\,\text{ᛉ}_{rs}$$ }}
   {{ $$\delta\sqrt{-\det g} = \tfrac12\sqrt{-\det g}\;(g^{-1})^{ij}\,\text{ᛉ}_{ij}$$ }}
@@ -15,7 +18,7 @@ own: |
   - **Result**: what is left is
   {{ $$\delta S_\mathcal{D} = -\kappa\int_{\mathcal{D}}\sqrt{-\det g}\;\hat G^{ij}\,\text{ᛉ}_{ij}\,d^4x$$ }}
   with $G = \mathrm{Ric}-\tfrac12R\,g$, so the metric is critical for every admissible $\text{ᛉ}$ iff $G = 0$ (vacuum; in 4D this is $\mathrm{Ric}=0$, not $\mathrm{Riem}=0$).
-  - **Matter**: defining $T$ by $\delta S_M = -\tfrac12\int\sqrt{-\det g}\,\hat T^{ij}\,\text{ᛉ}_{ij}\,d^4x$, the total action is critical iff
+  - **Matter**: for a matter action $S_M$ (its fields and Lagrangian density $\mathcal{L}_M$ are defined in the next lesson), defining the symmetric tensor $T$ by $\delta S_M = -\tfrac12\int\sqrt{-\det g}\,\hat T^{ij}\,\text{ᛉ}_{ij}\,d^4x$, the total action is critical iff
   {{ $$G_{ab} = 8\pi G_N\,T_{ab}$$ }}
 
 cards:

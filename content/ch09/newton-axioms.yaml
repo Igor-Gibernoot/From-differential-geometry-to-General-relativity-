@@ -3,6 +3,7 @@ title: Newton's Axioms on a Manifold
 kind: concept
 
 own: |
+  - **Setting and symbols**: $\mathcal{M}$ is the 4-dimensional manifold of events and $t\in C^\infty(\mathcal{M})$ the absolute time, with $(dt)_p\neq0$ at every $p$. $\mathcal{S}_\tau := \mathrm{preim}_t(\{\tau\})$ is the absolute space at time $\tau$. $\nabla$ is the torsion-free connection on $\mathcal{M}$, with coefficients $\Gamma^i_{jk}$ in a chart $(\mathcal{U},\mathscr{X})$ (coordinates $x^i=\mathscr{X}^i$). For a worldline $\gamma\colon\mathbb{R}\to\mathcal{M}$: $v_\gamma := \gamma'$ is its velocity, $a_\gamma := \nabla_{v_\gamma}v_\gamma$ its acceleration, $\mathcal{F}_\gamma$ the force on it, $\gamma^i := \mathscr{X}^i\circ\gamma$, and a dot is $d/d\lambda$.
   - **Time content of a vector** $\mathcal{X}_p\in T_p\mathcal{M}$: future directed if $(dt)_p(\mathcal{X}_p)>0$, past directed if $<0$, and **spatial** if {{ $(dt)_p(\mathcal{X}_p) = 0$, that is $\mathcal{X}_p\in T_p\mathcal{S}_{t(p)}$ }}. Forces are spatial vector fields along the worldline.
   - **Worldline** of a particle of mass $m>0$: a smooth curve $\gamma\colon\mathbb{R}\to\mathcal{M}$ with {{ $(t\circ\gamma)'(\lambda) > 0$ for every $\lambda$ }} (future-directed velocity). It crosses each absolute space at most once; $\tau = \lambda^3$ fails at $\lambda = 0$ although it crosses each slice once.
   - **Newton I**: with no force, {{ $\nabla_{v_\gamma}v_\gamma = 0$ }}. A measurement rule: free particles fix $\nabla$, and gravity lives in $\nabla$, not among the forces.

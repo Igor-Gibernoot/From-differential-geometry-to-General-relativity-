@@ -2,14 +2,15 @@ id: ch06-intuition-christoffel
 title: "Intuition: Reading, Signing and Changing Γ"
 kind: intuition
 own: |
+  - **Notation**: $\nabla$ is a connection on a manifold; $\mathscr{X}$, $\mathscr{Y}$ are charts with coordinates $\mathscr{X}^i$, $\mathscr{Y}^i$ and basis fields $\partial\mathscr{X}_i$; $\mathcal{X},\mathcal{Y}$ are vector fields with components $x^i$, $\tilde x^i$ in $\mathscr{X}$, $\mathsf{X}$ is a covector field with components $\mathtt{x}_i$, and $\mathcal{X}\lfloor g\rceil$ is the derivative of a function $g$ along $\mathcal{X}$; repeated indices are summed.
   - **Reading Γ**: the lower indices are the field then the direction, the upper index is the output:
     {{ $$\nabla_{\partial\mathscr{X}_k}\partial\mathscr{X}_j = \Gamma^i_{jk}\,\partial\mathscr{X}_i$$ }}
-    (last lower index = direction). Polar, Euclidean connection: {{ $\Gamma^1_{22} = -r$ }} and {{ $\Gamma^2_{12} = \Gamma^2_{21} = 1/r$ }}.
+    (last lower index = direction). Polar chart $\mathscr{Y} = (r,\theta)$ of the plane (points $(a,b)$, $r = \sqrt{a^2+b^2}$, $\theta = \operatorname{atan2}(b,a)$), Euclidean connection (the one differentiating cartesian components): {{ $\Gamma^1_{22} = -r$ }} and {{ $\Gamma^2_{12} = \Gamma^2_{21} = 1/r$ }}.
   - **Signs**: each upper index of the differentiated tensor gets $+\Gamma$, each lower index gets $-\Gamma$:
     {{ $$\begin{gathered}(\nabla_\mathcal{X}\mathcal{Y})^k = \mathcal{X}\lfloor\tilde x^k\rceil + \Gamma^k_{ji}\,\tilde x^jx^i\\ (\nabla_\mathcal{X}\mathsf{X})_k = \mathcal{X}\lfloor\mathtt{x}_k\rceil - \Gamma^j_{ki}\,\mathtt{x}_jx^i\end{gathered}$$ }}
   - **Changing chart** = tensor part (one Jacobian per index) + an extra term with a second derivative of the old coordinates:
     {{ $$\begin{aligned}(\Gamma_\mathscr{Y})^i_{jk} &= \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}\\ &\quad + \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^l}\frac{\partial\mathscr{X}^s}{\partial\mathscr{Y}^j}\frac{\partial\mathscr{X}^m}{\partial\mathscr{Y}^k}(\Gamma_\mathscr{X})^l_{sm}\end{aligned}$$ }}
-  - **Checks**: for a linear chart change the extra term is $0$ (in one dimension, $\mathscr{Y} = 2\mathscr{X}$ gives $\Gamma_\mathscr{Y} = \Gamma_\mathscr{X}/2$); if $\Gamma_\mathscr{X} = 0$ only the extra term survives. It is the same for every connection and symmetric in $j,k$, so {{ $\Gamma^i_{jk} - \Gamma^i_{kj}$ }} is a tensor and $\Gamma$ itself is not.
+  - **Checks**: for a linear chart change the extra term is $0$ (in one dimension, the chart change $\mathscr{Y} = 2\mathscr{X}$ gives $\Gamma_\mathscr{Y} = \Gamma_\mathscr{X}/2$); if $\Gamma_\mathscr{X} = 0$ only the extra term survives. It is the same for every connection and symmetric in $j,k$, so {{ $\Gamma^i_{jk} - \Gamma^i_{kj}$ }} is a tensor and $\Gamma$ itself is not.
 
 cards:
   - type: text

@@ -315,6 +315,8 @@ cards:
     id: summary
     title: What you now own
     body: |
+      **Setting.** $\nabla$ is a connection on a manifold $\mathcal{M}$; $\mathcal{X},\mathcal{Y},\mathcal{Z}$ are vector fields, $\mathsf{X}$ a covector field, $g$ a smooth function ($g\in C^\infty(\mathcal{M})$), $\mathcal{Y}\lfloor g\rceil$ the derivative of $g$ along $\mathcal{Y}$, $\mathsf{X}\lceil\mathcal{V}\rfloor$ the covector evaluated on the vector $\mathcal{V}$, and $[\mathcal{X},\mathcal{Y}]$ the commutator, the vector field with $[\mathcal{X},\mathcal{Y}]\lfloor f\rceil = \mathcal{X}\lfloor\mathcal{Y}\lfloor f\rceil\rceil - \mathcal{Y}\lfloor\mathcal{X}\lfloor f\rceil\rceil$.
+
       **The hook, resolved.** Neither $\nabla_\mathcal{X}\mathcal{Y}$ nor $[\mathcal{X},\mathcal{Y}]$ is tensorial, but each produces the same defect $\mathcal{Y}\lfloor g\rceil\,\mathcal{X}$ with opposite signs in the torsion, so the torsion is a $(1,2)$-tensor field.
 
       - **Torsion** and its vector field:
@@ -329,6 +331,6 @@ cards:
       $$\mathcal{V}(g\mathcal{X}+\mathcal{Z},\mathcal{Y}) = g\,\mathcal{V}(\mathcal{X},\mathcal{Y}) + \mathcal{V}(\mathcal{Z},\mathcal{Y})$$
       - **Three slots**: the covector slot only evaluates; the second by the cancellation; the third by antisymmetry,
       $$\mathtt{T}(\mathsf{X},\mathcal{X},\mathcal{Y}) = -\mathtt{T}(\mathsf{X},\mathcal{Y},\mathcal{X}).$$
-      - **Check**: under $\nabla^{\mathrm{E}}$, $S(ab\,\partial x_2,\partial x_1) = -b\,\partial x_2 \neq 0$ without the commutator; the Riemann curvature is rescued the same way, by $-\nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}$.
+      - **Check**: on the plane (points $(a,b)$, cartesian basis fields $\partial x_1,\partial x_2$), let $\nabla^{\mathrm{E}}$ differentiate cartesian components and $S(\mathcal{X},\mathcal{Y}) := \nabla^{\mathrm{E}}_\mathcal{X}\mathcal{Y} - \nabla^{\mathrm{E}}_\mathcal{Y}\mathcal{X}$ (no commutator term); then $S(ab\,\partial x_2,\partial x_1) = -b\,\partial x_2 \neq 0$ without the commutator; the Riemann curvature is rescued the same way, by $-\nabla_{[\mathcal{X},\mathcal{Y}]}\mathcal{Z}$.
 
-      **Next: "Three Connections on the Plane".** With tensoriality in hand, torsion and curvature can be computed from components alone. The next guided problem does it for the three plane connections $\nabla^{\mathrm{E}}$, $\nabla^{\mathrm{W}}$, $\nabla^{\kappa}$: one flat and torsion free, one flat with torsion, one curved.
+      **Next: "Three Connections on the Plane".** With tensoriality in hand, torsion and curvature can be computed from components alone. The next guided problem does it for three plane connections: $\nabla^{\mathrm{E}}$ (cartesian components differentiated), $\nabla^{\mathrm{W}}$ (unit radial and angular fields parallel), $\nabla^{\kappa}$ (cartesian coefficient $\Gamma^1_{22} = \kappa a$ only): one flat and torsion free, one flat with torsion, one curved.

@@ -2,6 +2,7 @@ id: ch04-tangent-space
 title: Curves and the Tangent Space
 kind: concept
 own: |
+  - **Setting:** $\mathcal{M}$ is a manifold, $C^\infty(\mathcal{M})$ its smooth scalar fields $f\colon\mathcal{M}\to\mathbb{R}$, $p\in\mathcal{M}$, $\gamma$ a smooth curve with $\gamma(\lambda_0)=p$; $\partial_if$ is the $i$-th partial derivative.
   - **Velocity without arrows:** for a smooth curve $\gamma$ through $p$ at $\lambda_0$,
     {{ $$v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0),$$ }}
     a linear map $C^\infty(\mathcal{M})\to\mathbb{R}$. It uses only curves and scalar fields, so it works on any manifold, with no surrounding space.

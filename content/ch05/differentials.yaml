@@ -454,16 +454,17 @@ cards:
     id: summary
     title: What you now own
     body: |
+      - **Setting:** $\mathsf{X}$ is a smooth covector field on a manifold $\mathcal{M}$, $f,g$ are smooth functions, and in a chart with coordinates $x^i$ the field has components $\mathtt{x}_i$ and $\partial x_j\lfloor\cdot\rceil$ is the derivative along the $j$-th coordinate direction.
       - **Exact:** $\mathsf{X} = df$ on all of $\mathcal{M}$. **Closed:** in a chart, for all $i, j$,
       $$\partial x_j\lfloor\mathtt{x}_i\rceil = \partial x_i\lfloor\mathtt{x}_j\rceil.$$
       Exact $\Rightarrow$ closed (mixed partials commute), and closedness does not depend on the chart.
       - **The obstruction from Leibniz:**
       $$g\,df = d(gf) - f\,dg.$$
-      - **Integral along a curve** and its key property:
+      - **Integral along a curve** $\gamma\colon[\lambda_a,\lambda_b]\to\mathcal{M}$ and its key property:
       $$\int_\gamma df = f(\gamma(\lambda_b)) - f(\gamma(\lambda_a)).$$
-      - **Poincaré lemma** on a ball centred at $0$: if $\mathsf{X}$ is closed, $f = F\circ\mathscr{X}$ with
+      - **Poincaré lemma** on a chart domain whose image is a ball centred at $0\in\mathbb{R}^d$: if $\mathsf{X}$ is closed, $f = F\circ\mathscr{X}$ with $\bar{\mathtt{x}}_i := \mathtt{x}_i\circ\mathscr{X}^{-1}$ (components as functions of the coordinates $\alpha\in\mathbb{R}^d$) and
       $$F(\alpha) = \int_0^1\bar{\mathtt{x}}_i(t\alpha)\,\alpha^i\,dt.$$
-      - **Examples:** $\mathsf{Z} = -b\,dx^1 + a\,dx^2$ is not closed; the angle field
+      - **Examples:** on the plane with coordinates $(a,b)$, $r=\sqrt{a^2+b^2}$ and polar angle $\theta$, $\mathsf{Z} = -b\,dx^1 + a\,dx^2$ is not closed; on the plane minus the origin, the angle field
       $$\mathsf{A} = -\frac{b}{r^2}dx^1 + \frac{a}{r^2}dx^2$$
       is closed, equals $d\theta$ off a cut, and has $\int\mathsf{A} = 2\pi$ around the origin: not exact.
 

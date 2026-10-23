@@ -3,18 +3,19 @@ title: Coupling to Matter
 kind: concept
 
 own: |
-  - **Energy-momentum tensor**: for a matter action $S_M = \int\sqrt{-\det g}\,\mathcal{L}_M\,d^4x$, $T$ is the response of $S_M$ to the metric,
+  - **Setting**: $g$ is the Lorentzian metric of the spacetime (inverse $(g^{-1})^{ab}$, $\nabla$ its Levi-Civita connection, $G_N$ Newton's constant), $\text{ᛉ}$ a symmetric $(0,2)$ tensor field with which we vary $g$ (compact support), $\Phi$ the matter fields and $\mathcal{L}_M$ the matter Lagrangian density; $G = \mathrm{Ric}-\tfrac12R\,g$ is the Einstein tensor, with $R$ the scalar curvature; a hat means all indices raised with $g^{-1}$.
+  - **Energy-momentum tensor**: for a matter action $S_M = \int\sqrt{-\det g}\,\mathcal{L}_M\,d^4x$, the symmetric tensor $T$ is the response of $S_M$ to the metric,
   {{ $$\delta S_M = -\tfrac12\int\sqrt{-\det g}\;\hat T^{ij}\,\text{ᛉ}_{ij}\,d^4x$$ }}
   where $\hat T^{ij}$ is $T_{ab}$ with both indices raised by $(g^{-1})^{ab}$, just as a current is the response of the action to the potential.
   - **No derivatives of $g$ in $\mathcal{L}_M$**: if $\delta\mathcal{L}_M = \Theta^{ij}\,\text{ᛉ}_{ij}$ ($\Theta$ symmetric), then
   {{ $$\hat T^{ij} = -2\,\Theta^{ij} - \mathcal{L}_M\,(g^{-1})^{ij}$$ }}
-  the second term coming from the volume density. A constant $\mathcal{L}_M = -\lambda$ gives $T_{ab} = \lambda g_{ab}$ ($p = -\rho$); a scalar field gives $T_{ab} = \partial_a\phi\,\partial_b\phi - g_{ab}\mathcal{L}_M$.
-  - **Electromagnetism**: with $F_{ab} = \partial_a\mathtt{a}_b - \partial_b\mathtt{a}_a$ and $\mathcal{L}_{\mathrm{EM}} = -\tfrac14 F_{ab}\hat F^{ab}$,
+  the second term coming from the volume density. A constant $\mathcal{L}_M = -\lambda$ ($\lambda\in\mathbb{R}$) gives $T_{ab} = \lambda g_{ab}$ (pressure $p$ equals minus energy density $\rho$: $p = -\rho$); a scalar field $\phi$ (a function on spacetime) gives $T_{ab} = \partial_a\phi\,\partial_b\phi - g_{ab}\mathcal{L}_M$.
+  - **Electromagnetism**: with $\mathtt{a}_b$ the components of the electromagnetic potential (a covector field), $F_{ab} = \partial_a\mathtt{a}_b - \partial_b\mathtt{a}_a$ and $\mathcal{L}_{\mathrm{EM}} = -\tfrac14 F_{ab}\hat F^{ab}$,
   {{ $$T_{mn} = -(g^{-1})^{bd}F_{mb}F_{nd} + \tfrac14\,g_{mn}F_{ab}\hat F^{ab}$$ }}
-  it has $T_{00} = \tfrac12(|\mathbf{e}|^2 + |\mathbf{b}|^2)\ge0$ and zero trace. Varying $\mathtt{a}$ gives Maxwell, $\nabla_a\hat F^{ab} = 0$; varying $g$ gives $G = 8\pi G_N T$ (Einstein–Maxwell).
+  it has energy density $T_{00} = \tfrac12(|\mathbf{e}|^2 + |\mathbf{b}|^2)\ge0$ ($\mathbf{e},\mathbf{b}$ the electric and magnetic fields in the chart) and zero trace. Varying $\mathtt{a}$ gives Maxwell, $\nabla_a\hat F^{ab} = 0$; varying $g$ gives $G = 8\pi G_N T$ (Einstein–Maxwell).
   - **Conservation**: the contracted Bianchi identity $\operatorname{div}G = 0$ forces
   {{ $$(g^{-1})^{kl}(\nabla_{\partial x_k}T)_{ln} = 0$$ }}
-  and the matter equations guarantee it, because $S_M$ does not depend on the chart: moving $g$ and $\Phi$ along a vector field $\xi$ changes nothing.
+  and the matter equations guarantee it, because $S_M$ does not depend on the chart: moving $g$ and $\Phi$ along any vector field $\xi$ (a flow of the manifold) changes nothing.
 
 cards:
   - type: text

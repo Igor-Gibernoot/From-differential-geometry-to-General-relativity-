@@ -411,16 +411,16 @@ cards:
     id: summary
     title: What you now own
     body: |
-      The traps, turned into rules:
+      The traps, turned into rules. Notation: $g$ is the Lorentzian metric of the spacetime, $\mathcal{X}$ a tangent vector, $\text{ᛏ}$ the time-orientation vector field, $\gamma$ a massive worldline with parameter $\lambda$ and velocity $v_\gamma$, $\eta := \mathrm{diag}(1,-1,-1,-1)$, $G_N$ Newton's constant, $\mathcal{L}_M$ the matter Lagrangian density.
 
-      - Signature $(+,-,-,-)$: positive $g(\mathcal{X},\mathcal{X})$ is timelike, zero lightlike, negative spacelike; $(X^0)^2 - (X^1)^2$ in 1+1. The light cone is a cone, not a subspace; $g$ does not know past from future, the time orientation $\text{ᛏ}$ does.
+      - Signature $(+,-,-,-)$: positive $g(\mathcal{X},\mathcal{X})$ is timelike, zero lightlike, negative spacelike; $g(\mathcal{X},\mathcal{X}) = (X^0)^2 - (X^1)^2$ in 1+1 ($X^0, X^1$ the components of $\mathcal{X}$; the upper index is a label). The light cone is a cone, not a subspace; $g$ does not know past from future, the time orientation $\text{ᛏ}$ does.
       - Proper time is the length of the path, not a coordinate:
       $$\tau = \int\sqrt{g(v_\gamma,v_\gamma)}\,d\lambda$$
-      It is independent of the parametrization, zero for light, and **maximal** for the straight worldline (moving clock $8 < 10$, twin $6 < 10$).
-      - Lorentz matrices obey $\Lambda^T\eta\Lambda = \eta$; $\det = \pm1$ is not enough; $\Lambda^0_0\geq1$ for orthochronous ones; $u = \Lambda^1_0/\Lambda^0_0$; speeds compose as $\tfrac{2u}{1+u^2}$, never above $1$. They relate frames at an event, not coordinates of a curved spacetime.
+      It is independent of the parametrization, zero for light, and **maximal** for the straight worldline (moving clock $8 < 10$, twin $6 < 10$: stay-at-home clock $10$ against a traveller who goes out and back).
+      - Lorentz matrices $\Lambda$ ($4\times4$ real, $\Lambda^b_a$ with row $b$, column $a$) obey $\Lambda^T\eta\Lambda = \eta$; $\det\Lambda = \pm1$ is not enough; $\Lambda^0_0\geq1$ for orthochronous ones; a boost has $u = \Lambda^1_0/\Lambda^0_0$; two equal speeds $u$ compose as $\tfrac{2u}{1+u^2}$, never above $1$ (units $c=1$). They relate frames at an event, not coordinates of a curved spacetime.
       - Einstein equations: the action needs $\sqrt{-\det g}$; $\delta\Gamma$ is a tensor; vacuum is $\mathrm{Ric} = 0$, not $\mathrm{Riem} = 0$. With $G_{ab} = 8\pi G_N T_{ab}$ and
       $$\mathrm{div}\,T = 0\ \text{(automatic)}$$
-      A constant $\mathcal{L}_M$ gives $p = -\rho$; $\rho = \tfrac12\dot\phi^2 + V$; $T_{00} = \tfrac12(|\mathbf{e}|^2 + |\mathbf{b}|^2) \geq 0$.
-      - Schwarzschild: $r$ is the area radius, radial lengths stretch by $1/\sqrt f$, static clocks run at $\sqrt f$ of the coordinate time, $f = 1 - c/r$ is forced by $\mathrm{Ric} = 0$, and the tides are traceless.
+      A constant $\mathcal{L}_M$ gives pressure $p = -\rho$ (energy density); for a scalar field $\phi$ with potential $V$, $\rho = \tfrac12\dot\phi^2 + V$; $T_{00} = \tfrac12(|\mathbf{e}|^2 + |\mathbf{b}|^2) \geq 0$ for the electromagnetic field ($\mathbf{e},\mathbf{b}$ electric and magnetic fields).
+      - Schwarzschild (metric with $f(r)$ in front of $dt^2$ and $-1/f$ in front of $dr^2$, plus $-r^2$ times the unit-sphere metric): $r$ is the area radius, radial lengths stretch by $1/\sqrt f$, static clocks run at $\sqrt f$ of the coordinate time, $f = 1 - c/r$ ($c$ a constant) is forced by $\mathrm{Ric} = 0$ (Ricci tensor), and the tides are traceless.
 
       **Next:** the content map of this level. You will rebuild the chain from the metric's signature through observers, the Lorentz group and the Einstein equations to the Schwarzschild solution, box by box, among decoys.

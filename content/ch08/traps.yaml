@@ -379,17 +379,18 @@ cards:
     id: summary
     title: What you now own
     body: |
-      The traps, turned into rules:
+      The traps, turned into rules. Throughout, $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow)$ is an oriented manifold of dimension $d$, $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ are charts with coordinates $\alpha$ and $\beta$, and $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ is the Jacobian $(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j := \partial\mathscr{X}^i/\partial\mathscr{Y}^j$ of the old coordinates by the new, with determinant $J := \det\text{ᛞ}_{\mathcal{U}\mathcal{V}}$.
 
       - Change of variables uses the Jacobian of the old coordinates by the new, in absolute value:
-      $$d^d\alpha = d^d\beta\;|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}|.$$
-      - A scalar density is a component, not a scalar field; it changes with the determinant, without absolute value:
+      $$d^d\alpha = d^d\beta\;|J|.$$
+      - A scalar density $\omega_\mathscr{X}$ (the number $\Omega(\partial x_1,\dots,\partial x_d)$ of a volume form $\Omega$ in a chart) is a component, not a scalar field; it changes with the determinant, without absolute value:
       $$\omega_\mathscr{Y} = J\,\omega_\mathscr{X}.$$
-      - A volume form is totally antisymmetric ($\Omega(v,v) = 0$) and nonzero everywhere; negative densities are fine. $\varepsilon$ is a symbol, not a tensor; $\Omega_{i\dots} = \varepsilon_{i\dots}\omega_\mathscr{X}$.
-      - A mirror chart flips the sign of every integral; it can orient a manifold, but never in the same atlas as the original. Jacobian determinants must be positive on every piece of every overlap.
-      - One-chart integrals need $\overline{\mathcal{D}}$ compact and inside the chart. Supports are closures. A partition of unity is smooth and sums to $1$ everywhere; the total does not depend on it.
-      - An integral needs orientation and a volume form, not a metric. With a metric,
+      - A volume form $\Omega$ is totally antisymmetric ($\Omega(v,v) = 0$) and nonzero everywhere; negative densities are fine. The Levi-Civita symbol $\varepsilon_{i_1\dots i_d}$ (totally antisymmetric, $\varepsilon_{1\dots d}=1$) is a symbol, not a tensor:
+      $$\Omega_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X}.$$
+      - A mirror chart (the chart composed with a reflection, $J<0$ against the original) flips the sign of every integral; it can orient a manifold, but never in the same atlas as the original. Jacobian determinants must be positive on every piece of every overlap.
+      - One-chart integrals need a region $\mathcal{D}\subseteq\mathcal{U}$ with $\overline{\mathcal{D}}$ (region plus boundary points) compact and inside $\mathcal{U}$. The support of $f$ is $\mathrm{supp}\,f := \overline{\{p\mid f(p)\neq0\}}$, a closure. A partition of unity $\{\text{ᚹ}_n\}$ is a family of smooth functions $\mathcal{M}\to[0,1]$, each supported in a chart domain, summing to $1$ everywhere; the total $\int_\mathcal{M}\Omega f=\sum_n\int\Omega\,\text{ᚹ}_nf$ does not depend on it.
+      - An integral needs orientation and a volume form, not a metric. With a metric $g$ (components $g_\mathscr{X}$),
       $$\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}$$
-      in charts of the oriented atlas only. Orthonormal gives $\omega^g = 1$, not conversely. In one dimension $\int\Omega^g$ is length, not shadow.
+      in charts of the oriented atlas only. Orthonormal basis gives $\omega^g = 1$, not conversely. In one dimension $\int\Omega^g$ is length, not shadow (the length of the projection onto an axis).
 
       **Next:** the content map of this level. You will rebuild the chain from the chart-dependent integral to volume forms, orientation, integration with partitions of unity and the metric volume form, box by box, among decoys.

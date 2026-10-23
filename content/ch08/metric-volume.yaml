@@ -6,18 +6,18 @@ own: |
   - **Setting**: an oriented metric manifold $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,g)$; in a chart $(\mathcal{U},\mathscr{X})\in\mathcal{A}^\uparrow$ the function $\det g_\mathscr{X} := \det((g_\mathscr{X})_{ij})$ on $\mathcal{U}$ (a function of the chart, not a scalar field).
   - **Determinant law**: with $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ the Jacobian $(\partial\mathscr{X}^i/\partial\mathscr{Y}^j)$, the congruence $\mathbf{G}_\mathscr{Y} = \mathbf{A}^{\mathsf{T}}\mathbf{G}_\mathscr{X}\mathbf{A}$ gives
   {{ $$\det g_\mathscr{Y} = (\det\text{ᛞ}_{\mathcal{U}\mathcal{V}})^2\det g_\mathscr{X}$$ }}
-  Polar chart of the Euclidean plane: $\det g_\mathscr{Y} = r^2$.
+  Euclidean plane, cartesian chart $\mathscr{X}$ ($g_\mathscr{X}=\mathrm{diag}(1,1)$) and polar chart $\mathscr{Y}$ ($g_\mathscr{Y}=\mathrm{diag}(1,r^2)$): $\det g_\mathscr{Y} = r^2$.
   - **Metric volume form** $\Omega^g$: in every chart of $\mathcal{A}^\uparrow$,
   {{ $$(\Omega^g_\mathscr{X})_{i_1\dots i_d} := \sqrt{|\det g_\mathscr{X}|}\;\varepsilon_{i_1\dots i_d}$$ }}
-  so its scalar density is $\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}$: $1$ in cartesian, $r$ in polar (it is $\Omega_{\mathrm{E}}$), $\sin\vartheta$ on the unit sphere.
+  so its scalar density is $\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|}$: $1$ in the cartesian chart of the plane, $r$ in the polar chart (it is the Euclidean area form $\Omega_{\mathrm{E}}$), and $\sin\vartheta$ on the unit sphere $\{a^2+b^2+c^2=1\}\subset\mathbb{R}^3$ with polar angle $\vartheta\in(0,\pi)$ and azimuth $\varphi\in(0,2\pi)$ (metric $\mathrm{diag}(1,\sin^2\vartheta)$).
   - **What the root measures** (Riemannian, $d = 2$): a coordinate square of side $\Delta$ at $p$ becomes, to first order, the parallelogram spanned by $\Delta\,\partial/\partial\alpha^1$, $\Delta\,\partial/\partial\alpha^2$, of area (Gram)
   $$\text{area}^2 = (g_{11}g_{22} - g_{12}^2)\Delta^4 = \det g\,\Delta^4,$$
   so true area$/\Delta^2\to\sqrt{\det g(p)}$. The side product $\sqrt{g_{11}g_{22}}$ is right only when $g_{12} = 0$.
   - **Why it glues**: $\sqrt{|\det g_\mathscr{Y}|} = |\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}|\sqrt{|\det g_\mathscr{X}|}$, and {{ $|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}| = \det\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ in an oriented atlas }}, which is the density law. Without the orientation the chartwise definitions differ by a sign (mirror chart).
-  - **Unit volume**: if the chart-induced basis at $p$ is orthonormal ($g_{ij}(p) = 0$ for $i\neq j$, $g_{ii}(p) = \pm1$), then {{ $\omega^g_\mathscr{X}(p) = 1$ }}, in any signature (Minkowski: $\sqrt{|\det\eta|} = 1$).
-  - **Integral of a function** $f$ with compact support, $\int_\mathcal{M}f := \int_\mathcal{M}\Omega^gf$, valid for any signature:
+  - **Unit volume**: if the chart-induced basis at $p$ is orthonormal ($g_{ij}(p) = 0$ for $i\neq j$, $g_{ii}(p) = \pm1$), then {{ $\omega^g_\mathscr{X}(p) = 1$ }}, in any signature (Minkowski metric $\eta=\mathrm{diag}(-1,1,\dots,1)$: $\sqrt{|\det\eta|} = 1$).
+  - **Integral of a function** $f$ with compact support, $\int_\mathcal{M}f := \int_\mathcal{M}\Omega^gf$, valid for any signature, for a partition of unity $\{\text{ᚹ}_n\}$ (smooth, values in $[0,1]$, sum $1$) with $\mathrm{supp}\,\text{ᚹ}_n\subseteq\mathcal{U}_n$, $(\mathcal{U}_n,\mathscr{X}_n)\in\mathcal{A}^\uparrow$:
   {{ $$\begin{aligned}\int_\mathcal{M}f =&\sum_n\int_{\mathscr{X}_n(\mathcal{U}_n)}d^d\alpha\\ &\cdot\sqrt{|\det g_{\mathscr{X}_n}|}\circ\mathscr{X}_n^{-1}\\ &\cdot(\text{ᚹ}_nf)\circ\mathscr{X}_n^{-1}\end{aligned}$$ }}
-  Unit sphere: area $\int\sin\vartheta\,d\vartheta\,d\varphi = 4\pi$.
+  Unit sphere: area $\int_0^{2\pi}\!\!\int_0^\pi\sin\vartheta\,d\vartheta\,d\varphi = 4\pi$.
 
 cards:
   - type: text

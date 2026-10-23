@@ -2,11 +2,12 @@ id: ch07-metric
 title: The Metric and the Musical Maps
 kind: concept
 own: |
-  - **Why**: a tangent space has no lengths, and "square root of the sum of squared components" only works in cartesian charts: at $(3,4)$ the polar components $(0,1)$ belong to an arrow of length $5$.
+  - **Setting**: $\mathcal{M}$ a manifold with a chart $(\mathcal{U},\mathscr{X})$; $\Gamma T\mathcal{M}$ and $\Gamma T^*\mathcal{M}$ are its smooth vector fields and covector fields; $\mathcal{X},\mathcal{Y}$ are vector fields with components $x^i,\tilde x^i$; $\mathsf{X},\mathsf{Y}$ are covector fields with components $\mathtt{x}_i,\mathtt{y}_i$; $\partial x_i$ is the $i$-th coordinate basis vector field; $\delta_{ij}$ is the identity matrix, and $\delta^k_i$ the same.
+  - **Why**: a tangent space has no lengths, and "square root of the sum of squared components" only works in cartesian charts: at the point with cartesian coordinates $(3,4)$ of the plane, where polar $r = 5$, the polar components $(0,1)$ belong to an arrow of length $5$.
   - **Metric** $g$: a $(0,2)$-tensor field that is symmetric, {{ $g(\mathcal{X},\mathcal{Y}) = g(\mathcal{Y},\mathcal{X})$ }}, and whose **musical map**
   {{ $$\flat(\mathcal{X})\lceil\mathcal{Y}\rfloor := g(\mathcal{X},\mathcal{Y})$$ }}
   is a bijection $\Gamma T\mathcal{M}\to\Gamma T^*\mathcal{M}$. Checked pointwise: non-degenerate, {{ $\det\big(g_{ij}(p)\big)\neq0$ }} at every $p$. Positivity is **not** required (Minkowski $\eta$ is a metric). Metric manifold $(\mathcal{M},\mathcal{O},\mathcal{A},g)$.
-  - **Components** {{ $g_{ij} := g(\partial x_i,\partial x_j)$ }}, symmetric, with $g(\mathcal{X},\mathcal{Y})|_\mathcal{U} = x^i\tilde x^jg_{ij}$; the Euclidean plane: $\delta_{ij}$ cartesian, $\mathrm{diag}(1,r^2)$ polar.
+  - **Components** {{ $g_{ij} := g(\partial x_i,\partial x_j)$ }}, symmetric, with $g(\mathcal{X},\mathcal{Y})|_\mathcal{U} = x^i\tilde x^jg_{ij}$; the Euclidean plane (dot product): $\delta_{ij}$ in cartesian coordinates, $\mathrm{diag}(1,r^2)$ in polar coordinates $(r,\theta)$.
   - **Lowering and raising**: {{ $\flat(\mathcal{X})_i = x^j\,g_{ji}$ }} and $\flat^{-1}(\mathsf{X})^i = \mathtt{x}_j\,(g^{-1})^{ji}$, with the inverse metric $g^{-1}(\mathsf{X},\mathsf{Y}) := \mathsf{Y}\lceil\flat^{-1}(\mathsf{X})\rfloor$, symmetric, whose matrix is the inverse matrix:
   {{ $$g_{ij}\,(g^{-1})^{jk} = \delta^k_i$$ }}
 

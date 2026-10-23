@@ -243,6 +243,8 @@ cards:
     id: wrap
     title: Problem solved
     body: |
+      For bases $\{\hat{x}_i\}$, $\{\hat{y}_i\}$ of $V$ with $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$, a covector $\mathsf{X}\in V^*$ has components $\mathtt{x}_i$, $\mathtt{y}_i$ in the dual bases, and a vector $\mathcal{X}\in V$ has components $x^i$, $y^i$:
+
       **(a)** Covector components transform covariantly, with the same matrix and index pattern as the basis vectors:
       $$\mathtt{y}_j = \sum_i (J^{-1})_j^i\,\mathtt{x}_i \quad\Longleftrightarrow\quad \mathtt{x}_j = \sum_i J^i_j\,\mathtt{y}_i .$$
       **(b)** As a consequence, the pairing does not depend on the basis:

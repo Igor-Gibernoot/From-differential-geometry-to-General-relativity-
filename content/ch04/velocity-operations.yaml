@@ -382,6 +382,7 @@ cards:
     id: wrap-up
     title: What you now own
     body: |
+      - **Setting:** $v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0)$ is the velocity of a smooth curve $\gamma$ through $p$ at $\lambda_0$ on a scalar field $f$; $(v\oplus_T w)(f) := v(f)+w(f)$ and $(\alpha\odot_T v)(f) := \alpha\,v(f)$.
       - **Closure under $\oplus_T$:** for curves with $\gamma_1(\lambda_1) = \gamma_2(\lambda_2) = p$ and any chart $\mathscr{X}$ around $p$, the curve with
       $$\begin{aligned}\mathscr{X}\circ\sigma(\lambda) = {}&\mathscr{X}\circ\gamma_1(\lambda_1 + \lambda)\\ &+ \mathscr{X}\circ\gamma_2(\lambda_2 + \lambda)\\ &- \mathscr{X}(p)\end{aligned}$$
       has velocity $v_{\gamma_1,p}\oplus_T v_{\gamma_2,p}$. Proof: chain rule forwards, add components, chain rule backwards.

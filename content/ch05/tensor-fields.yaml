@@ -2,13 +2,13 @@ id: ch05-tensor-fields
 title: Tensor Fields
 kind: concept
 own: |
-  - **$(r,s)$-tensor field**: {{ $C^\infty(\mathcal{M})$-multilinear map on $r$ covector fields and $s$ vector fields into $C^\infty(\mathcal{M})$ }}; the module $\Gamma T^{(r,s)}\mathcal{M}$. $(0,1)$ = covector fields, $(1,0)$ = vector fields.
-  - **Pointwise principle** (bump function): {{ $T(\dots)(p)$ depends only on the inputs' values at $p$ }}. $\mathbb{R}$-linear maps that differentiate, like $\mathcal{Z}\mapsto\partial x_1\lfloor z^1\rceil$, are not tensor fields.
-  - **Component functions** {{ $T^{i\dots}_{j\dots} := T(dx^i,\dots,\partial x_j,\dots)$ }}$\in C^\infty(\mathcal{U})$ and the expansion {{ $T|_\mathcal{U} = T^{i\dots}_{j\dots}\,\partial x_i\otimes\cdots\otimes dx^j\otimes\cdots$ }}.
+  - **$(r,s)$-tensor field**: {{ $C^\infty(\mathcal{M})$-multilinear map on $r$ covector fields and $s$ vector fields into $C^\infty(\mathcal{M})$ }}, on a smooth manifold $\mathcal{M}$; the module $\Gamma T^{(r,s)}\mathcal{M}$ of all of them. $(0,1)$ = covector fields, $(1,0)$ = vector fields.
+  - **Pointwise principle** (bump function): {{ $T(\dots)(p)$ depends only on the inputs' values at $p$ }}. $\mathbb{R}$-linear maps that differentiate, like $\mathcal{Z}\mapsto\partial x_1\lfloor z^1\rceil$ (derivative along the first chart direction of the first component $z^1$ of the field $\mathcal{Z}$), are not tensor fields.
+  - **Component functions** {{ $T^{i\dots}_{j\dots} := T(dx^i,\dots,\partial x_j,\dots)$ }}$\in C^\infty(\mathcal{U})$ on a chart domain $\mathcal{U}$ with coordinates $x^i$, basis fields $\partial x_i$ and cobasis fields $dx^i$, and the expansion {{ $T|_\mathcal{U} = T^{i\dots}_{j\dots}\,\partial x_i\otimes\cdots\otimes dx^j\otimes\cdots$ }}.
   - **Chart change**: {{ one Jacobian function per index }}, on $\mathcal{U}\cap\mathcal{V}$; for a $(1,1)$-field, at every $p$:
     {{ $$(T_\mathcal{V})^i_j = \sum_{k,l}\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^k}\,\frac{\partial\mathscr{X}^l}{\partial\mathscr{Y}^j}\,(T_\mathcal{U})^k_l .$$ }}
-    Egg carton: $T = df\otimes df$, $T_{ij} = \mathtt{X}_i\mathtt{X}_j$, $(T_\mathcal{V})_{22} = \pi^2$ at $(\pi,\pi/2)$.
-  - **Compact notation** with Einstein summation for fields; $x$ in five roles.
+    Here $\mathscr{X}$, $\mathscr{Y}$ are the charts on $\mathcal{U}$, $\mathcal{V}$ and $T_\mathcal{U}$, $T_\mathcal{V}$ the components in each. Example: on the surface $\mathcal{M}$ = graph of $\cos a\cos b+1$ with chart $\mathscr{X}(a,b,c)=(a,b)$ and polar chart $\mathscr{Y}=(r,\theta)$, $a=r\cos\theta$, $b=r\sin\theta$, take $f=\cos a\cos b+1$ and $T = df\otimes df$, so $T_{ij} = \mathtt{X}_i\mathtt{X}_j$ with $\mathtt{X}_i$ the components of $df$; at $(a,b)=(\pi,\pi/2)$ one gets $(T_\mathcal{V})_{22} = \pi^2$.
+  - **Compact notation** with Einstein summation (a repeated upper and lower index is summed) for fields, e.g. $T = T^i_j\,\partial x_i\otimes dx^j$; the letter $x$ plays five roles (coordinate function, coordinate value, component of a vector, a name in $\partial x_i$ and $dx^i$, and a point of $\mathbb{R}^d$), told apart by context.
 
 cards:
   - type: text

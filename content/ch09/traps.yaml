@@ -376,6 +376,8 @@ cards:
     body: |
       The traps, turned into rules:
 
+      Notation: $t$ is the absolute time on the manifold of events $\mathcal{M}$, $(dt)_p$ its differential at $p$, $\mathcal{X}_p\in T_p\mathcal{M}$ a tangent vector. In a stratified chart (coordinates $x^i$, $x^0=t$, $\alpha,\beta,\delta\in\{1,2,3\}$) the connection $\nabla$ has coefficients $\Gamma^i_{jk}$; $\tau$, $\lambda$ parametrize a worldline $\gamma$ of mass $m$ (coordinates $\gamma^\alpha$, dot $= d/d\lambda$), $\phi$ is the gravitational potential, $\partial_\alpha\phi := \partial\phi/\partial x^\alpha$, $\rho$ the mass density, $G_N$ Newton's constant, and $\mathrm{Riem}$, $\mathrm{Ric}$ the curvature and Ricci tensor of $\nabla$.
+
       - Absolute time never stands still, $(dt)_p\neq0$ at every event. Time content is the sign of $(dt)_p(\mathcal{X}_p)$, read from the $0$ component only in a stratified chart; velocities are always future directed, even at rest.
       - Stratified means $x^0 = t$ exactly; then $\Gamma^0_{ki} = 0$. Grids may move or curve; velocities pick up minus the grid velocity.
       - Newton II needs $\tau = c_1\lambda + c_2$, $c_1 > 0$.

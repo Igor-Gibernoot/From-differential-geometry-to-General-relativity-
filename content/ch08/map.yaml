@@ -370,7 +370,9 @@ edges:
 
 outroTitle: Chapter 8 in one picture
 outro: |
-  Read it top to bottom. Integrating a chart representative depends on the chart (the unit disc: $\pi$ or $2\pi$), because the **change of variables** brings
+  Read it top to bottom. Throughout, $\mathcal{M}$ is a manifold of dimension $d$ with an oriented atlas $\mathcal{A}^\uparrow$, $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ are charts with coordinates $\alpha$ and $\beta$, $\text{ᛞ}_{\mathcal{U}\mathcal{V}}$ is the Jacobian of the old coordinates by the new, $(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j := \partial\mathscr{X}^i/\partial\mathscr{Y}^j$, $f$ is a smooth function, $\mathcal{D}\subseteq\mathcal{U}$ an open region, and $g$ a metric with components $g_\mathscr{X}$.
+
+  Integrating a chart representative depends on the chart (the unit disc: $\pi$ in cartesian coordinates, $2\pi$ if you integrate $dr\,d\theta$ in polar ones), because the **change of variables** brings
   $$d^d\alpha = d^d\beta\,\big|\det\text{ᛞ}_{\mathcal{U}\mathcal{V}}\big|.$$
   A **volume form** $\Omega$, nowhere zero and totally antisymmetric, needs no metric; with the **Levi-Civita symbol** $\varepsilon$ its components are
   $$(\Omega_\mathscr{X})_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X},$$
@@ -378,10 +380,10 @@ outro: |
   $$\omega_\mathscr{Y} = \det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)\,\omega_\mathscr{X}.$$
   The two determinants cancel up to $|\det|/\det$, which an **oriented atlas** ($\det>0$ on every overlap) makes $+1$. Then the **integral in one chart**, over a region whose closure is compact and inside the chart,
   $$\int_\mathcal{D}\Omega f := \int_{\mathscr{X}(\mathcal{D})}d^d\alpha\,\omega_\mathscr{X}\,f$$
-  (both functions read through $\mathscr{X}^{-1}$), is the same in every chart of $\mathcal{A}^\uparrow$. A **partition of unity** cuts a function of compact **support** into one-chart pieces:
+  (both functions read through $\mathscr{X}^{-1}$), is the same in every chart of $\mathcal{A}^\uparrow$. A **partition of unity** $\{\text{ᚹ}_n\}$ (smooth functions $\mathcal{M}\to[0,1]$ summing to $1$, each supported in one chart domain $\mathcal{U}_n$ with chart $\mathscr{X}_n$) cuts a function of compact **support** (closure of where it is nonzero) into one-chart pieces:
   $$\int_\mathcal{M}\Omega f := \sum_n\int_{\mathcal{U}_n}\Omega\,\text{ᚹ}_n f,$$
   independent of the partition. A metric picks the **metric volume form**, since $\det g$ changes with $(\det)^2$:
   $$\omega^g_\mathscr{X} = \sqrt{|\det g_\mathscr{X}|},$$
-  which gives the circle $2\pi R$ and the unit sphere $4\pi$.
+  which gives the circle of radius $R$ its length $2\pi R$ and the unit sphere $\{(a,b,c)\in\mathbb{R}^3\mid a^2+b^2+c^2=1\}$ its area $4\pi$.
 
   **Next: the Level Challenge.** Harder problems that combine the whole map. Why must the closure of the region be compact and inside the chart: what exactly goes wrong, on the real line, when it is not?

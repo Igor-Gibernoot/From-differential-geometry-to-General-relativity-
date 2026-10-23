@@ -2,18 +2,21 @@ id: ch07-euler-lagrange
 title: Variations and the Euler-Lagrange Equations
 kind: concept
 own: |
+  - **Setting**: $(\mathcal{M},g)$ a metric manifold of dimension $d$ ($g$ its metric), $(\mathcal{U},\mathscr{X})$ a chart with $\mathscr{X}\colon\mathcal{U}\to\mathbb{R}^d$, $\gamma\colon[a,b]\to\mathcal{M}$ a smooth curve with velocity $v_\gamma$ and $\dot\gamma^i$ the components of $v_\gamma$. Its sign and speed are $\text{ᛇ}_\gamma := \mathrm{sgn}\,g(v_\gamma,v_\gamma)$ and $s_\gamma := \sqrt{\text{ᛇ}_\gamma\,g(v_\gamma,v_\gamma)}$, and its length is
+  {{ $$L_{[a,b]}[\gamma] := \int_a^b s_\gamma\,d\lambda$$ }}
+  Here $\partial_k$ is the derivative with respect to the $k$-th of the $2d$ slots of a function of $(\alpha;\beta)\in\mathbb{R}^d\times\mathbb{R}^d$, and $\mathcal{X}_p\in T_p\mathcal{M}$.
   - **Variation with fixed endpoints** of a smooth curve $\gamma$ with $\text{ᛇ}_\gamma\neq0$ on $[a,b]$ and $\gamma([a,b])\subseteq\mathcal{U}$, chart representative $\gamma_\mathcal{U} := \mathscr{X}\circ\gamma$: for a deformation parameter $\text{ᛊ}\in(-\text{ᛊ}_0,\text{ᛊ}_0)$ and a smooth shape $\text{ᛉ}\colon[a,b]\to\mathbb{R}^d$ with $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$,
   {{ $$\gamma_{\text{ᛊ}} := \mathscr{X}^{-1}\big(\gamma_\mathcal{U} + \text{ᛊ}\,\text{ᛉ}\big)$$ }}
   The chart representative is shifted linearly in $\text{ᛊ}$; the endpoints never move.
   - **Geodesic**: the length is stationary under every such variation,
   {{ $$\frac{d}{d\text{ᛊ}}L_{[a,b]}[\gamma_{\text{ᛊ}}]\Big|_{\text{ᛊ}=0} = 0\ \text{ for every }\text{ᛉ}$$ }}
   Stationary, not necessarily minimal (the inertial worldline in Minkowski is a maximum). The condition does not depend on the chart used to deform: the derivative only sees the first-order shape, which every chart translates into another chart's shape vanishing at the endpoints.
-  - **Lagrangian**: $\mathcal{L}(\mathcal{X}_p) := \sqrt{\text{ᛇ}_\gamma\,g_p(\mathcal{X}_p,\mathcal{X}_p)}$, a function on the tangent bundle (not a covector field); in the bundle chart $\xi_\mathscr{X}$, with $d$ position slots $\alpha$ and $d$ velocity slots $\beta$,
+  - **Lagrangian**: $\mathcal{L}(\mathcal{X}_p) := \sqrt{\text{ᛇ}_\gamma\,g_p(\mathcal{X}_p,\mathcal{X}_p)}$, a function on the tangent bundle (not a covector field); in the bundle chart $\xi_\mathscr{X}$ (it sends $\mathcal{X}_p$ to the pair of the position $\mathscr{X}(p)$ and the components of $\mathcal{X}_p$), with $d$ position slots $\alpha$ and $d$ velocity slots $\beta$,
   {{ $$\mathcal{L}_\mathscr{X}(\alpha;\beta) = \sqrt{\text{ᛇ}_\gamma\,g_{ij}\big(\mathscr{X}^{-1}(\alpha)\big)\,\beta^i\beta^j}$$ }}
   and $L_{[a,b]}[\gamma_{\text{ᛊ}}] = \int_a^b\mathcal{L}_\mathscr{X}(\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}\,;\,\dot\gamma_\mathcal{U}+\text{ᛊ}\,\text{ᛉ}')\,d\lambda$.
   - **Euler-Lagrange equations** (chain rule, integration by parts, boundary term killed by $\text{ᛉ}(a) = \text{ᛉ}(b) = 0$, then $\text{ᛉ}$ arbitrary): $\gamma$ is a geodesic if and only if, for $m = 1,\dots,d$,
   {{ $$\frac{d}{d\lambda}\big[\partial_{d+m}\mathcal{L}_\mathscr{X}\big] - \partial_m\mathcal{L}_\mathscr{X} = 0$$ }}
-  both partials evaluated at $(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})$. Cartesian Euclidean plane: $\frac{d}{d\lambda}(\dot\gamma^m/s_\gamma) = 0$, straight lines run at any speed. The proof works for any $C^2$ Lagrangian; the energy Lagrangian $\tfrac12\big((\beta^1)^2+(\beta^2)^2\big)$ gives $\ddot\gamma^m = 0$, straight lines at constant speed.
+  both partials evaluated at $(\gamma_\mathcal{U};\dot\gamma_\mathcal{U})$. Cartesian Euclidean plane ($g_{ij} = \delta_{ij}$): $\frac{d}{d\lambda}(\dot\gamma^m/s_\gamma) = 0$, straight lines run at any speed. The proof works for any $C^2$ Lagrangian; the energy Lagrangian $\tfrac12\big((\beta^1)^2+(\beta^2)^2\big)$ gives $\ddot\gamma^m = 0$, straight lines at constant speed.
 
 cards:
   - type: text

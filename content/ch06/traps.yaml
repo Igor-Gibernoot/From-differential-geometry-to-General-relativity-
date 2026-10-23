@@ -383,6 +383,8 @@ cards:
     id: summary
     title: What you now own
     body: |
+      Setting: $\nabla$ is a connection on a manifold, with coefficients $\Gamma^i_{jk}$ in a chart with coordinates $x^i$ and basis fields $\partial x_i$ (repeated indices are summed); $\mathcal{X},\mathcal{Y}$ are vector fields with components $x^i$, $\tilde x^i$, $\mathsf{X}$ a covector field with components $\mathtt{x}_k$, $f,g$ smooth functions, $\mathcal{X}\lfloor g\rceil$ the derivative of $g$ along $\mathcal{X}$; $\gamma$ is a curve with velocity $v_\gamma$, coordinates $\gamma^k(\lambda)$ and acceleration $a_\gamma := \nabla_{v_\gamma}v_\gamma$, $\text{ᚱ}$ a function of the parameter; $\mathtt{T}$ is the torsion and $\mathrm{Riem}$ the curvature of $\nabla$, $\Delta z^1$ the change of the first component of a vector transported once around a small counterclockwise loop in the $(x^1,x^2)$ plane (with components $z^1,z^2$).
+
       The traps, turned into rules:
 
       - $\Gamma$'s are not a tensor (zero in one chart, not in another), and the last lower index is the direction:

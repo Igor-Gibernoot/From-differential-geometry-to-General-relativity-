@@ -1067,24 +1067,28 @@ cards:
     id: wrap-up
     title: What you now own
     body: |
-      Five problems, one level. The formulas to keep:
+      Five problems, one level. The formulas to keep. Throughout, $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow)$ is an oriented manifold of dimension $d$, $(\mathcal{U},\mathscr{X})\in\mathcal{A}^\uparrow$ a chart with coordinates $\alpha$ and scalar density $\omega_\mathscr{X}$, $\mathcal{D}\subseteq\mathcal{U}$ an open region and $f$ a smooth function.
 
-      **1. Compact closure**: $\overline{\mathcal{D}}$ compact and inside $\mathcal{U}$ gives
+      **1. Compact closure**: if $\overline{\mathcal{D}}$ is compact and inside $\mathcal{U}$, then $\mathscr{X}(\overline{\mathcal{D}})\subseteq[-L,L]^d$ for some $L>0$, the integrand $(\omega_\mathscr{X}\circ\mathscr{X}^{-1})(f\circ\mathscr{X}^{-1})$ is bounded by some $C$ there, and
       $$\Big|\int_\mathcal{D}\Omega f\Big|\le C\,(2L)^d<\infty;$$
-      without it, $\int_0^1dp/p$ and the hyperbolic strip $0<w<1$ diverge.
+      without it, $\int_0^1dp/p$ (the density $1/p$ blowing up at the edge $p=0$ of the chart) and the strip $0<w<1$ (with $0<u<1$) of the hyperbolic half-plane $\{(u,w)\mid w>0\}$, metric $(du^2+dw^2)/w^2$, density $1/w^2$, diverge.
 
-      **2. Partition of unity**: from $g(t) = e^{-1/t}$, a smooth step $h$, and the staircase $\text{ᚹ}_n = H_n-H_{n+1}$; Hausdorff and second countability make one exist on every manifold.
+      **2. Partition of unity** $\{\text{ᚹ}_n\}$ on $\mathbb{R}$ subordinate to $\mathcal{U}_n := (n-1,n+1)$, $n\in\mathbb{Z}$: from $g(t) := e^{-1/t}$ for $t>0$ and $g(t):=0$ for $t\le0$, the smooth step
+      $$h(s) := \frac{g(\tfrac12+s)}{g(\tfrac12+s)+g(\tfrac12-s)},$$
+      (equal to $0$ for $s\le-\tfrac12$ and to $1$ for $s\ge\tfrac12$), the shifted steps $H_n(p) := h(2p-2n+1)$ and the staircase
+      $$\text{ᚹ}_n = H_n-H_{n+1};$$
+      Hausdorff and second countability make one exist on every manifold.
 
-      **3. A torus**: $\omega^g = \rho(R+\rho\cos\vartheta)$, area
+      **3. A torus** of radii $R>\rho>0$, chart $(\vartheta,\varphi)\in(0,2\pi)^2$ with $a = (R+\rho\cos\vartheta)\cos\varphi$, $b = (R+\rho\cos\vartheta)\sin\varphi$, $c = \rho\sin\vartheta$ and the metric induced from $\mathbb{R}^3$: $\omega^g = \rho(R+\rho\cos\vartheta)$, area
       $$4\pi^2R\rho.$$
-      **4. A causal diamond**: light-cone chart, $\det g = -\tfrac14$, $\omega^g = \tfrac12$, volume
+      **4. A causal diamond** between events $O=(0,0)$ and $Q=(\tau,0)$ of 1+1 Minkowski spacetime (metric $\eta=\mathrm{diag}(-1,1)$ in the coordinates $(t,a)$, $c=1$): in the light-cone chart $u := t-a$, $v := t+a$ one finds $\det g = -\tfrac14$, $\omega^g = \tfrac12$, and the volume is
       $$\tfrac12\tau^2,$$
       the same for every observer.
 
-      **5. Rescaling**: $\tilde g = e^{2\psi}g$ gives
+      **5. Rescaling**: for a smooth function $\psi$, the metric $\tilde g := e^{2\psi}g$ gives
       $$\Omega^{\tilde g} = e^{d\psi}\,\Omega^g;$$
-      the Möbius strip has no volume form, yet $\sqrt{|\det g|}$ with $|\det|$ still measures its area, $4\pi$.
+      the Möbius strip (the band $\mathbb{R}\times(-1,1)$ of points $(\theta,s)$ with $(\theta+2\pi,-s)\sim(\theta,s)$, metric $d\theta^2+ds^2$) has no volume form, yet $\sqrt{|\det g|}$ with $|\det|$ still measures its area, $4\pi$.
 
-      And the level in one formula, with charts $\mathscr{X}_n$ of $\mathcal{A}^\uparrow$:
+      And the level in one formula, for a function $f$ of compact support, a partition of unity $\{\text{ᚹ}_n\}$ with $\mathrm{supp}\,\text{ᚹ}_n\subseteq\mathcal{U}_n$, charts $\mathscr{X}_n$ of $\mathcal{A}^\uparrow$ on $\mathcal{U}_n$ and a metric $g$ with components $g_{\mathscr{X}_n}$:
       $$\begin{aligned}\int_\mathcal{M}f = \sum_n&\int d^d\alpha\,\sqrt{|\det g_{\mathscr{X}_n}|}\\ &\cdot\big((\text{ᚹ}_nf)\circ\mathscr{X}_n^{-1}\big).\end{aligned}$$
       **Next, Level 9: Newton–Cartan theory.** A falling apple and a falling feather (in vacuum) follow the same path, whatever their masses. No other force does that, except the pseudo-forces of accelerated frames, which come from the chart. What if gravity is one of them, written into the connection of a 4-dimensional spacetime with an **absolute time**? The first lesson builds that spacetime.

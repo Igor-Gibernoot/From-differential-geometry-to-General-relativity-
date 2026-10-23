@@ -393,10 +393,11 @@ cards:
     id: summary
     title: What you now own
     body: |
+      - **Setting:** $p$ is a point of a $d$-dimensional manifold, $\mathscr{X},\mathscr{Y}$ are charts around it, $\gamma$ a smooth curve through $p$ at $\lambda_0$, $f$ a smooth scalar field, $\delta^i_j$ is $1$ if $i=j$ and $0$ otherwise.
       - A **velocity** is the rate-of-change machine $f\mapsto(f\circ\gamma)'(\lambda_0)$: many curves share it, bending does not change it, running faster scales it.
-      - $\oplus_T$ is defined field by field; a chart is needed only to build a **curve** for the sum (adding points of a circle in the plane leaves the circle).
+      - $\oplus_T$ is defined field by field, $(v\oplus_T w)(f) := v(f)+w(f)$; a chart is needed only to build a **curve** for the sum (adding points of a circle in the plane leaves the circle).
       - $(\partial/\partial\mathscr{X}^i)_p$ depends on the **whole chart**; $(d\mathscr{X}^i)_p$ only on the function $\mathscr{X}^i$. Mixed pairings give Jacobian entries, $\delta$ only within one chart.
-      - Components and basis vectors change oppositely (meters to centimeters); the rune $\text{ᛞ}_{\mathcal{V}\mathcal{U}}$ has rows from $\mathscr{Y}$, columns from $\mathscr{X}$.
+      - Components and basis vectors change oppositely (meters to centimeters); the Jacobian rune $(\text{ᛞ}_{\mathcal{V}\mathcal{U}})^i_j := (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)_p$ has rows from $\mathscr{Y}$, columns from $\mathscr{X}$.
       - Strict Einstein summation: up-down pairs only, free indices matched, $\delta^i_i = d$.
       - A covector is not an arrow; $(df)_p$ is linear even when $f$ is not; components are numbers, basis elements are objects.
       - Tensors: type $(r, s)$ counts covector slots first, $d^{\,r+s}$ components, one Jacobian per index, $\otimes$ order matters, and zero in one chart means zero in all.

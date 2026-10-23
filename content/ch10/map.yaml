@@ -327,7 +327,7 @@ edges:
 
 outroTitle: Chapter 10 in one picture
 outro: |
-  Read it in two columns. **Spacetime** $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,\nabla^{\mathrm{LC}},g,\text{ᛏ})_4$ uses the metric to sort vectors into timelike, null and spacelike,
+  Read it in two columns. Throughout, $\mathcal{X}_p$ is a tangent vector at $p$, $\gamma$ a worldline with parameter $\lambda$ and velocity $v_\gamma$, $e_a$ an observer's frame, $\eta := \mathrm{diag}(1,-1,-1,-1)$, $R$ the scalar curvature, $\kappa = -1/(16\pi G_N)$, $G$ the Einstein tensor and $T$ the energy-momentum tensor. **Spacetime** $(\mathcal{M},\mathcal{O},\mathcal{A}^\uparrow,\nabla^{\mathrm{LC}},g,\text{ᛏ})_4$ uses the metric to sort vectors into timelike, null and spacelike,
   $$g_p(\mathcal{X}_p,\mathcal{X}_p)>0,\ =0,\ <0,$$
   and a timelike field $\text{ᛏ}$ picks the future half of every cone. **Massive worldlines** carry a clock that reads
   $$\tau=\int\sqrt{g(v_\gamma,v_\gamma)}\,d\lambda,$$
@@ -337,6 +337,6 @@ outro: |
   $$S_\mathcal{D}[g]=\kappa\int_\mathcal{D}\sqrt{-\det g}\;R\;d^4x.$$
   Matter enters through its **energy-momentum tensor**, the response to $g$, and the **Einstein equations**
   $$G_{ab}=8\pi G_N\,T_{ab}$$
-  follow; the Bianchi identity makes $\operatorname{div}T=0$ automatic. The vacuum solution around a mass is **Schwarzschild**, $f=1-r_S/r$, which is not flat: its **tides** stretch along $r$ and squeeze sideways, with zero trace.
+  follow; the Bianchi identity makes $\operatorname{div}T=0$ automatic. The vacuum solution around a mass is **Schwarzschild**, whose metric has $g_{tt}=f$, $g_{rr}=-1/f$ with $f(r)=1-r_S/r$ and $r_S=2G_NM$ ($M$ the mass, $r$ the area radius), which is not flat: its **tides** stretch along $r$ and squeeze sideways, with zero trace.
 
   **Next: the Level Challenge.** Harder problems that combine the whole map: clocks, frames, matter and the sphere, all in one place.

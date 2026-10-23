@@ -469,7 +469,7 @@ cards:
     id: summary
     title: What you now own
     body: |
-      The traps, turned into rules:
+      The traps, turned into rules. Setting: a metric $g$ with chart components $g_{ij}$ and inverse matrix $(g^{-1})^{jk}$; $\mathcal{X},\mathcal{Y}$ vectors with components $x^i,y^i$; $\flat(\mathcal{X})\lceil\mathcal{Y}\rfloor := g(\mathcal{X},\mathcal{Y})$; $\mathbf{G}_\mathscr{X}$, $\mathbf{G}_\mathscr{Y}$ the matrices of $g$ in two charts, related by the matrix $\mathbf{A}$ of the change of chart; $n_-$ the number of negative signs of the signature; $\gamma$ a curve with velocity $v$, speed $s$ and $\dot\gamma^k$ components; $\Gamma^k_{ij}$ Christoffel symbols of $g$; $\mathrm{Riem}$, $\mathrm{Ric}$, $R$ the curvatures of $\nabla^{\mathrm{LC}}$; $d$ the dimension.
 
       - Two upper indices never sum on their own; contract through $g$:
       $$g(\mathcal{X},\mathcal{Y}) = g_{ij}x^iy^j.$$
@@ -480,10 +480,10 @@ cards:
       $$\operatorname{sign}\det = (-1)^{n_-}.$$
       - Positive entries do not mean positive definite; a lightlike vector has $g(v,v) = 0$ and $v\neq0$.
       - Length ignores the parametrization, $\int g(v,v)$ does not; in Minkowski the inertial worldline has the **largest** proper time.
-      - Geodesics are stationary, not always shortest; a coordinate line is a geodesic only if it solves (G); (G) holds only at constant speed, the any-speed form is
+      - Geodesics are stationary, not always shortest; a coordinate line is a geodesic only if it solves the geodesic equation $\ddot\gamma^k + \Gamma^k_{ij}\dot\gamma^i\dot\gamma^j = 0$; that form holds only at constant speed, the any-speed form is
       $$\ddot\gamma^k + \Gamma^k_{ij}\dot\gamma^i\dot\gamma^j = \tfrac{\dot s}{s}\dot\gamma^k.$$
       - $\nabla^{\mathrm{LC}}$ needs both: torsion free and $\nabla g = 0$. Constant factors in $g$ leave $\Gamma$ unchanged and divide $R$.
       - $\Gamma\neq0$ is not curvature, $\Gamma(p) = 0$ is not flatness: decide with $\mathrm{Riem}$. $\mathrm{Ric} = 0$ forces flatness only in $d = 2, 3$.
-      - For $\mathrm{diag}(1,f^2)$: $R = -2f''/f$, $+2$ for the unit sphere, $-2$ for the hyperbolic plane, $2/a^2$ for radius $a$.
+      - For components $\mathrm{diag}(1,f(r)^2)$ in a chart $(r,\theta)$: $R = -2f''/f$, so $+2$ for the unit sphere ($f = \sin r$), $-2$ for the hyperbolic plane ($f = \sinh r$), $2/a^2$ for the sphere of radius $a$ ($f = a\sin(r/a)$).
 
       **Next:** the content map of this level. You will rebuild the chain from the metric and its signature to length, geodesics, the Levi-Civita connection and curvature, box by box, among decoys.

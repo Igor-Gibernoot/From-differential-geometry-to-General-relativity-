@@ -527,17 +527,17 @@ cards:
     body: |
       **The puzzle, resolved.** Meridians and the equator are geodesics; every other parallel bends toward its nearer pole, so a pilot flying due east off the equator is steering all the time.
 
-      - **Round metric**, chart $(\vartheta,\varphi)$ on $\vartheta\in(0,\pi)$, $\varphi\in(-\pi,\pi)$, from dot products in $\mathbb{R}^3$:
+      - **Round metric** on the unit sphere $S^2 := \{(x,y,z)\in\mathbb{R}^3\mid x^2+y^2+z^2=1\}$, from dot products in $\mathbb{R}^3$, in the chart $(\vartheta,\varphi)$ (polar angle and longitude) of the parametrization $(x,y,z) = (\sin\vartheta\cos\varphi,\sin\vartheta\sin\varphi,\cos\vartheta)$ with $\vartheta\in(0,\pi)$, $\varphi\in(-\pi,\pi)$:
       $$g_{ij} = \mathrm{diag}(1,\sin^2\vartheta)$$
-      the family $\mathrm{diag}(1,f^2)$ with $f = \sin\vartheta$.
+      the family $\mathrm{diag}(1,f^2)$ with $f(\vartheta) = \sin\vartheta$. Indices $1,2$ stand for $\vartheta,\varphi$; a dot is $d/d\lambda$ along a curve $\lambda\mapsto(\vartheta,\varphi)$.
       - **Christoffel symbols** (all others $0$):
       $$\begin{gathered}\Gamma^1_{22} = -\sin\vartheta\cos\vartheta\\ \Gamma^2_{12} = \Gamma^2_{21} = \cot\vartheta\end{gathered}$$
       - **Geodesic equation** (constant speed):
       $$\ddot\vartheta - \sin\vartheta\cos\vartheta\,\dot\varphi^2 = 0$$
       $$\ddot\varphi + 2\cot\vartheta\,\dot\vartheta\,\dot\varphi = 0$$
-      - **Meridians** pass (speed $1$); by rotations, all **great circles** are geodesics. The **parallel** $\vartheta_0$ leaves the residual $-\sin\vartheta_0\cos\vartheta_0$, zero only at the equator; bending it toward the pole shortens it ($\frac{dL}{d\text{ᛊ}} = \cos\vartheta_0\int\text{ᛉ}^1d\lambda$).
-      - **Curvature**: $\mathrm{Riem}^1_{212} = \sin^2\vartheta$, $\mathrm{Ric} = g$, and
-      $$R = 2,\quad\text{radius } a:\ R = \frac{2}{a^2}.$$
-      - **Holonomy**: around the triangle pole, equator, quarter of the equator, a vector turns by $90°$, the area $\pi/2$ of the triangle.
+      - **Meridians** pass (speed $1$); by rotations, all **great circles** are geodesics. The **parallel** $\vartheta_0$ leaves the residual $-\sin\vartheta_0\cos\vartheta_0$, zero only at the equator; bending it toward the pole shortens it: deforming $\vartheta = \vartheta_0$, $\varphi = \lambda$ ($\lambda\in[a,b]$) to $\vartheta = \vartheta_0 + \text{ᛊ}\,\text{ᛉ}^1(\lambda)$ with $\text{ᛉ}^1(a) = \text{ᛉ}^1(b) = 0$ gives $\frac{dL}{d\text{ᛊ}}\big|_0 = \cos\vartheta_0\int_a^b\text{ᛉ}^1d\lambda$.
+      - **Curvature** ($\mathrm{Riem}$, $\mathrm{Ric}$, $R$ those of the Levi-Civita connection of $g$, $R$ the Ricci scalar): $\mathrm{Riem}^1_{212} = \sin^2\vartheta$, $\mathrm{Ric} = g$, and
+      $$R = 2,\quad\text{sphere of radius } a:\ R = \frac{2}{a^2}.$$
+      - **Holonomy**: around the triangle made of the north pole, a meridian down to the equator, a quarter of the equator and a meridian back up, a parallel-transported vector turns by $90°$, the area $\pi/2$ of the triangle.
 
       **Next: "Metric Traps".** Fast questions on the level's tempting mistakes: straight in a chart versus geodesic, nonzero Christoffel symbols versus curvature, length versus energy, and which signature does what.

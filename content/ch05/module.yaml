@@ -2,11 +2,11 @@ id: ch05-module
 title: The $C^\infty(\mathcal{M})$-Module Structure
 kind: concept
 own: |
-  - The **ring** $(C^\infty(\mathcal{M}),\oplus_{C^\infty},\odot_{C^\infty})$: commutative and unitary, not a field; $f$ is invertible iff {{ it never vanishes }}; zero divisors such as $\psi(t)$, $\psi(-t)$.
-  - **Modules**: vector-space axioms with ring scalars. $(\Gamma T\mathcal{M},\oplus_\Gamma,\odot_\Gamma)$ and $(\Gamma T^*\mathcal{M},\oplus^*_\Gamma,\odot^*_\Gamma)$, with {{ $(f\,\mathcal{X})(p) = f(p)\,\mathcal{X}(p)$ }}: only values of $f$ enter.
-  - Over a ring, **independent does not imply spanning**: $t\,\partial x_1$ on $\mathbb{R}$; the egg-carton $\mathcal{X}$, $\mathcal{Y}$.
-  - A module basis is {{ a basis of $T_p\mathcal{M}$ at **every** point }}. **Frames** exist over chart domains ($\partial x_i$, dual $dx^i$) and sometimes beyond (polar frame off the origin).
-  - **Parallelizable** = {{ a global frame }}: $\mathbb{R}^2$, $S^1$, $T^2$; not $S^2$ (hairy ball).
+  - The **ring** $(C^\infty(\mathcal{M}),\oplus_{C^\infty},\odot_{C^\infty})$: commutative and unitary, not a field; $f$ is invertible iff {{ it never vanishes }}; zero divisors such as $\psi(t)$ and $\psi(-t)$ on $\mathbb{R}$, where $\psi(t) := e^{-1/t}$ for $t>0$ and $\psi(t):=0$ for $t\leq0$ (smooth, with $\psi(t)\,\psi(-t)=0$ at every $t$).
+  - **Modules**: vector-space axioms with ring scalars. $(\Gamma T\mathcal{M},\oplus_\Gamma,\odot_\Gamma)$ and $(\Gamma T^*\mathcal{M},\oplus^*_\Gamma,\odot^*_\Gamma)$, with {{ $(f\,\mathcal{X})(p) = f(p)\,\mathcal{X}(p)$ }} for $f\in C^\infty(\mathcal{M})$, $\mathcal{X}$ a vector field: only values of $f$ enter.
+  - Over a ring, **independent does not imply spanning**: the single field $t\,\partial x_1$ on $\mathbb{R}$ (coordinate $t=x^1$) is independent but does not span, since it vanishes at $t=0$; likewise on the surface $\mathcal{M}$ = graph of $\cos a\cos b+1$ with chart $(a,b,c)\mapsto(a,b)$, the fields $\mathcal{X}=\partial x_2$ and $\mathcal{Y}=-b\,\partial x_1+a\,\partial x_2$ are parallel on $b=0$.
+  - A module basis is {{ a basis of $T_p\mathcal{M}$ at **every** point }}. **Frames** exist over chart domains ($\partial x_i$, dual $dx^i$) and sometimes beyond (on the plane minus the origin, the polar frame $\partial r$, $\partial\theta$ with $r,\theta$ the polar coordinates).
+  - **Parallelizable** = {{ a global frame }}: $\mathbb{R}^2$, the circle $S^1 := \{(a,b)\in\mathbb{R}^2\mid a^2+b^2=1\}$, the torus $T^2 := S^1\times S^1$; not the sphere $S^2 := \{(a,b,c)\in\mathbb{R}^3\mid a^2+b^2+c^2=1\}$ (hairy ball theorem: every smooth field on $S^2$ vanishes somewhere).
 
 cards:
   - type: text

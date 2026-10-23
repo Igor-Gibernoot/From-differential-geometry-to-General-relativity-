@@ -5,10 +5,10 @@ own: |
   - **Time is geometry.** A clock moving at speed $v$ (as a fraction of the speed of light, $c = 1$) for a time $T$ of a clock at rest records the proper time
     {{ $$\tau = T\sqrt{1-v^2} ,$$ }}
     so the straight worldline between two meetings has the *longest* proper time.
-  - **Lengths and areas need a metric $g$.** A coordinate cell of side $\Delta$ has true area
+  - **Lengths and areas need a metric $g$** (a rule giving the length of each small arrow; in coordinates, a $2\times2$ table of numbers with determinant $\det g$). A coordinate cell of side $\Delta$ (a number) has true area
     {{ $$\sqrt{\det g}\,\Delta^2 ,$$ }}
-    not $\Delta^2$ (on a unit globe in latitude and longitude, $\sqrt{\det g} = \cos(\text{latitude})$).
-  - **Matter tells spacetime how to curve:**
+    not $\Delta^2$ (on a globe of radius 1 with latitude and longitude as coordinates, $\sqrt{\det g} = \cos(\text{latitude})$).
+  - **Matter tells spacetime how to curve.** Here $G_{ab}$ is the curvature table of spacetime, $T_{ab}$ the energy table of matter (indices $a,b$ label time and space directions, a label not a power), and $G_N$ Newton's constant:
     {{ $$G_{ab} = 8\pi G_N\,T_{ab} .$$ }}
     Curvature on the left, matter and energy on the right: a symmetric $4\times4$ table, so 10 component equations.
   - Newtonian gravity can also be geometric (gravity in the connection); what is new is a metric that mixes time with space and responds to matter.

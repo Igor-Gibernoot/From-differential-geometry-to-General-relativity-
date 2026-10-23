@@ -2,7 +2,8 @@ id: ch06-connections
 title: Connections and Affine Manifolds
 kind: concept
 own: |
-  - **Why**: "differentiate the components" depends on the chart, through the second derivatives {{ $\partial_i\partial_j(\text{ᛖ}_{\mathcal{U}\mathcal{V}})^k$ }} of the transition map; vectors at different points cannot be subtracted.
+  - **Why**: "differentiate the components" depends on the chart, through the second derivatives {{ $\partial_i\partial_j(\text{ᛖ}_{\mathcal{U}\mathcal{V}})^k$ }} of the transition map $\text{ᛖ}_{\mathcal{U}\mathcal{V}} := \mathscr{Y}\circ\mathscr{X}^{-1}$ between two charts $\mathscr{X}$, $\mathscr{Y}$ with domains $\mathcal{U}$, $\mathcal{V}$ ($\partial_i$ = partial derivative in the $i$-th slot); vectors at different points cannot be subtracted.
+  - **Notation**: $f,g$ are smooth functions, $\alpha\in\mathbb{R}$, $\mathcal{X},\mathcal{Y}$ vector fields, $\mathsf{X}$ a covector field, $T,T_1,T_2$ tensor fields of valence $(r,s)$; $\mathcal{X}\lfloor g\rceil$ is the vector field $\mathcal{X}$ acting on $g$ (the derivative of $g$ along $\mathcal{X}$), $\mathsf{X}\lceil\mathcal{Y}\rfloor$ the covector evaluated on the vector; $\Gamma T^{(r,s)}\mathcal{M}$ is the set of smooth $(r,s)$-tensor fields on the manifold $\mathcal{M}$.
   - **Connection** $\nabla\colon T_p\mathcal{M}\times\Gamma T^{(r,s)}\mathcal{M}\to T_p^{(r,s)}\mathcal{M}$, $(\mathcal{X}_p,T)\mapsto\nabla_{\mathcal{X}_p}T$, with the rules
   {{ $$\begin{gathered}\nabla_{\mathcal{X}_p}f = \mathcal{X}_p(f)\\ \nabla_{\mathcal{X}_p}(T_1+T_2) = \nabla_{\mathcal{X}_p}T_1 + \nabla_{\mathcal{X}_p}T_2\\ \nabla_{\alpha\mathcal{X}_p+\mathcal{Y}_p}T = \alpha\nabla_{\mathcal{X}_p}T + \nabla_{\mathcal{Y}_p}T\end{gathered}$$ }}
   plus the Leibniz rule, one term per ingredient,
@@ -12,7 +13,7 @@ own: |
   {{ $$\begin{gathered}\nabla_{f\mathcal{X}+\mathcal{Y}}T = f\nabla_\mathcal{X}T + \nabla_\mathcal{Y}T\\ \nabla_\mathcal{X}(g\mathcal{Y}) = \mathcal{X}\lfloor g\rceil\mathcal{Y} + g\nabla_\mathcal{X}\mathcal{Y}\end{gathered}$$ }}
   {{ $$\begin{aligned}&(\nabla_{\mathcal{X}_p}\mathsf{X})(\mathcal{Y}_p)\\ &= \mathcal{X}_p(\mathsf{X}\lceil\mathcal{Y}\rfloor) - \mathsf{X}_p(\nabla_{\mathcal{X}_p}\mathcal{Y})\end{aligned}$$ }}
   A tensor in the direction, not in the differentiated field; fixed on all tensor fields by its action on vector fields.
-  - **Affine manifold** $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla)$; the connection is a choice. On the plane: {{ $\nabla^{\mathrm{E}}_{\partial x_2}(-b\,\partial x_1 + a\,\partial x_2) = -\partial x_1$ }}, while $\nabla^{\mathrm{P}}$ (constant polar components) gives $0$.
+  - **Affine manifold** $(\mathcal{M},\mathcal{O},\mathcal{A},\nabla)$; the connection is a choice. On the plane (points $(a,b)$, cartesian basis fields $\partial x_1,\partial x_2$), with $\nabla^{\mathrm{E}}$ the connection that differentiates cartesian components: {{ $\nabla^{\mathrm{E}}_{\partial x_2}(-b\,\partial x_1 + a\,\partial x_2) = -\partial x_1$ }}, while $\nabla^{\mathrm{P}}$, which differentiates polar components (the field above is the polar basis field $\partial y_2$, with constant polar components $(0,1)$; $\mathscr{Y}=(r,\theta)$, $r=\sqrt{a^2+b^2}$, $\theta=\operatorname{atan2}(b,a)$), gives $0$.
 
 
 cards:

@@ -3,19 +3,22 @@ title: The Levi-Civita Connection
 kind: concept
 
 own: |
+  - **Setting**: $(\mathcal{M},g)$ a metric manifold with a chart, $g_{ij}$ the components of $g$, $(g^{-1})^{ij}$ the entries of the inverse matrix, $\partial_k$ the derivative along the $k$-th coordinate (summation over repeated indices), $\gamma$ a curve with velocity $v_\gamma$, $\dot\gamma^i$ its components, $\text{ᛇ}_\gamma := \mathrm{sgn}\,g(v_\gamma,v_\gamma)$ and $s_\gamma := \sqrt{\text{ᛇ}_\gamma\,g(v_\gamma,v_\gamma)}$. A connection $\nabla$ has coefficients $\Gamma^k_{ij}$; its **autoparallel equation** is
+  {{ $$\textbf{(A)}\quad\ddot\gamma^k + \Gamma^k_{ij}\dot\gamma^i\dot\gamma^j = 0$$ }}
+  and the **geodesic equation** (G) is the same equation with the Christoffel symbols of $g$ below as $\Gamma^k_{ij}$.
   - **Christoffel symbols** of a metric $g$ in a chart $(\mathcal{U},\mathscr{X})$, smooth functions on $\mathcal{U}$, symmetric in $i,j$, not tensor components:
   {{ $$\begin{aligned}(\Gamma^{\mathrm{LC}}_\mathscr{X})^k_{ji} := \tfrac12(g^{-1})^{km}\big(&\partial_i g_{mj} + \partial_j g_{mi}\\ &- \partial_m g_{ij}\big)\end{aligned}$$ }}
   The **Levi-Civita connection** $\nabla^{\mathrm{LC}}$ has these as its coefficients in every chart, so its autoparallel equation (A) is the geodesic equation (G), term by term.
   - **Metric compatible**: $\nabla_\mathcal{X}g = 0$ for every vector field $\mathcal{X}$; in a chart
   {{ $$(\nabla_{\partial x_k}g)_{ij} = \partial_k g_{ij} - \Gamma^m_{ik}\,g_{mj} - \Gamma^m_{jk}\,g_{im}$$ }}
-  must vanish. **Torsion free**: $\mathtt{T}^k_{ji} = \Gamma^k_{ij} - \Gamma^k_{ji} = 0$, symmetric coefficients. $\nabla^{\mathrm{LC}}$ has both: with the lowered $\Gamma_{mij}$, $\partial_k g_{ij} = \Gamma_{ijk} + \Gamma_{jik}$.
+  must vanish. **Torsion free**: $\mathtt{T}^k_{ji} = \Gamma^k_{ij} - \Gamma^k_{ji} = 0$, symmetric coefficients. $\nabla^{\mathrm{LC}}$ has both: with the lowered symbols $\Gamma_{mij} := g_{mn}\Gamma^n_{ij}$, $\partial_k g_{ij} = \Gamma_{ijk} + \Gamma_{jik}$.
   - **Levi-Civita theorem**: $\nabla^{\mathrm{LC}}$ is the only torsion-free, metric-compatible connection. Writing compatibility for the index orders $(k,i,j)$, $(i,j,k)$, $(j,k,i)$, adding the last two and subtracting the first, symmetry leaves
   {{ $$2\,g_{km}\Gamma^m_{ij} = \partial_i g_{jk} + \partial_j g_{ki} - \partial_k g_{ij}$$ }}
   and $\tfrac12(g^{-1})^{lk}$ solves for $\Gamma^l_{ij}$. Uniqueness also gives existence: on an overlap the two charts' connections agree, so the Christoffel symbols obey the transformation law automatically.
   - **Transport keeps the metric**: for fields $\mathcal{X}_\gamma,\mathcal{Y}_\gamma$ along $\gamma$,
   {{ $$\begin{aligned}&\tfrac{d}{d\lambda}g(\mathcal{X}_\gamma,\mathcal{Y}_\gamma)\\ &= g(\nabla_{v_\gamma}\mathcal{X}_\gamma,\mathcal{Y}_\gamma) + g(\mathcal{X}_\gamma,\nabla_{v_\gamma}\mathcal{Y}_\gamma)\end{aligned}$$ }}
   so parallel transport keeps lengths and angles, and along an autoparallelly transported curve $g(v_\gamma,v_\gamma)$, $\text{ᛇ}_\gamma$ and $s_\gamma$ are constant: these curves are the constant-speed geodesics, plus the **null geodesics** ($\text{ᛇ}_\gamma = 0$).
-  - **Not the same**: autoparallels depend on $\nabla$, geodesics only on $g$. $\nabla^{\mathrm{W}}$ is compatible but has torsion; $\nabla^{\mathrm{P}}$ is torsion free but not compatible; an antisymmetric addition keeps every autoparallel and adds torsion.
+  - **Not the same**: autoparallels depend on $\nabla$, geodesics only on $g$. on the Euclidean plane with polar chart $(r,\theta)$, $\nabla^{\mathrm{W}}$ (the unit radial and unit angular fields declared parallel) is compatible but has torsion, and $\nabla^{\mathrm{P}}$ (polar components constant, all $\Gamma^k_{ij} = 0$) is torsion free but not compatible; an antisymmetric addition keeps every autoparallel and adds torsion.
 
 cards:
   - type: text

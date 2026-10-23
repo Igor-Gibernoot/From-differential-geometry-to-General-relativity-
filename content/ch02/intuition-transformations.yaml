@@ -2,13 +2,13 @@ id: ch02-intuition-transformations
 title: "Intuition: Which Law Gets J, Which Gets J⁻¹?"
 kind: intuition
 own: |
-  - **One anchor**, the dictionary old in terms of new:
+  - **One anchor**, the dictionary old in terms of new, for two bases $\{\hat{x}_i\}$ (old) and $\{\hat{y}_i\}$ (new) of a vector space $V$, with $J$ the invertible matrix of numbers $J_i^j$:
     {{ $$\hat{x}_i = \sum_j J_i^j\,\hat{y}_j .$$ }}
     In $J_i^j$ the lower index is **old**, the upper index is **new**. In $(J^{-1})_k^m$ it is the other way round.
-  - **Lower-index objects follow the basis** (basis vectors, covector components):
+  - **Lower-index objects follow the basis** (basis vectors, and covector components $\mathtt{x}_k$ of a covector $\mathsf{X}$ in the dual basis):
     {{ $$\hat{y}_k = \sum_m (J^{-1})_k^m\,\hat{x}_m$$ }}
     {{ $$\mathtt{y}_k = \sum_m (J^{-1})_k^m\,\mathtt{x}_m$$ }}
-  - **Upper-index objects go against it** (vector components, dual basis):
+  - **Upper-index objects go against it** (components $x^i$ of a vector, and the dual basis $\hat{\mathfrak{x}}^i$, defined by $\hat{\mathfrak{x}}^i(\hat{x}_j)=\delta^i_j$):
     {{ $$y^j = \sum_i J_i^j\,x^i$$ }}
     {{ $$\hat{\mathfrak{y}}^j = \sum_i J_i^j\,\hat{\mathfrak{x}}^i$$ }}
   - **Two checks**: the scaling test ($J = 2$ is a basis that halves: components double, covector components halve), and the index balance (a repeated index sits once up and once down, free indices keep their height).

@@ -2,7 +2,9 @@ id: ch06-torsion-curvature
 title: Torsion and Curvature
 kind: concept
 own: |
-  **The hook, resolved.** Around a loop, $\nabla^{\mathrm{E}}$ and $\nabla^{\mathrm{W}}$ return every vector (both flat); $\nabla^{\kappa}$ does not (curved), and the mismatch is curvature times area. Torsion played no part.
+  **The hook, resolved.** On the plane (points $(a,b)$, cartesian chart with basis fields $\partial x_1,\partial x_2$, $r := \sqrt{a^2+b^2}$) take three connections: $\nabla^{\mathrm{E}}$, all cartesian coefficients $0$; $\nabla^{\mathrm{W}}$, on the plane minus the origin, for which the unit radial and angular fields $e_1 = (a,b)/r$, $e_2 = (-b,a)/r$ are parallel; $\nabla^{\kappa}$, with $\kappa>0$ a constant, whose only nonzero cartesian coefficient is $\Gamma^1_{22} = \kappa a$. Around a loop, $\nabla^{\mathrm{E}}$ and $\nabla^{\mathrm{W}}$ return every vector (both flat); $\nabla^{\kappa}$ does not (curved), and the mismatch is curvature times area. Torsion played no part.
+
+  Notation: $f$ is a smooth function, $\mathcal{X},\mathcal{Y},\mathcal{Z}$ are vector fields with components $x^k$, $\tilde x^k$ in a chart, $\mathsf{X}$ is a covector field, $\mathcal{X}\lfloor f\rceil$ is the derivative of $f$ along $\mathcal{X}$, $\mathsf{X}\lceil\mathcal{Y}\rfloor$ the covector evaluated on the vector, $\Gamma^i_{jk}$ the coefficients of $\nabla$ (last lower index = direction), implicit sums over repeated indices.
 
   - **Commutator** (a vector field: the second derivatives cancel):
   {{ $$[\mathcal{X},\mathcal{Y}]\lfloor f\rceil := \mathcal{X}\lfloor\mathcal{Y}\lfloor f\rceil\rceil - \mathcal{Y}\lfloor\mathcal{X}\lfloor f\rceil\rceil$$ }}
@@ -16,9 +18,9 @@ own: |
   {{ $$\begin{aligned}\mathrm{Riem}^i_{jkm} &= \partial x_k\lfloor\Gamma^i_{jm}\rceil - \partial x_m\lfloor\Gamma^i_{jk}\rceil\\ &\quad + \Gamma^i_{nk}\Gamma^n_{jm} - \Gamma^i_{nm}\Gamma^n_{jk}\end{aligned}$$ }}
   - **Ricci curvature**:
   {{ $$\mathrm{Ric}_{ab} = \mathrm{Riem}^m_{amb}$$ }}
-  - **Holonomy** (counterclockwise loop; exact for $\nabla^{\kappa}$, approximate for small loops in general):
+  - **Holonomy** (change $\Delta z^1$ of the first component of a vector with components $z^1,z^2$ transported once around a small counterclockwise loop in the $(x^1,x^2)$ plane; exact for $\nabla^{\kappa}$, approximate for small loops in general):
   $$\Delta z^1 = -\mathrm{Riem}^1_{212}\,z^2\times\text{area}$$
-  - **Examples**: $\nabla^{\mathrm{E}}$ neither; $\nabla^{\mathrm{W}}$ flat, $\mathtt{T}^1_{12} = -\tfrac b{r^2}$, $\mathtt{T}^2_{12} = \tfrac a{r^2}$; $\nabla^{\kappa}$ torsion free, $\mathrm{Riem}^1_{212} = \kappa$, $\mathrm{Ric} = \kappa\,dx^2\otimes dx^2$. Charts with all $\Gamma = 0$ exist locally iff $\mathtt{T} = 0$ and $\mathrm{Riem} = 0$.
+  - **Examples**: $\nabla^{\mathrm{E}}$ neither; $\nabla^{\mathrm{W}}$ flat, $\mathtt{T}^1_{12} = -\tfrac b{r^2}$, $\mathtt{T}^2_{12} = \tfrac a{r^2}$; $\nabla^{\kappa}$ torsion free, $\mathrm{Riem}^1_{212} = \kappa$, $\mathrm{Ric} = \kappa\,dx^2\otimes dx^2$ ($dx^2$ the covector field giving the second cartesian component). Charts with all $\Gamma = 0$ exist locally iff $\mathtt{T} = 0$ and $\mathrm{Riem} = 0$.
 
 
 cards:

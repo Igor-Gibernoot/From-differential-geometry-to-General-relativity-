@@ -273,6 +273,7 @@ cards:
     tag: Problem 1 · Straightest curves of ∇ᵂ
     title: What you now own
     body: |
+      - Setting: the plane (points $(a,b)$, polar chart $(r,\theta)$, $r = \sqrt{a^2+b^2}$, $\theta = \operatorname{atan2}(b,a)$) minus the origin; $e_1 = (a,b)/r$ and $e_2 = (-b,a)/r$ are the unit radial and angular fields; $\nabla^{\mathrm{W}}$ is the connection making $e_1,e_2$ parallel, $\nabla^{\mathrm{E}}$ the one differentiating cartesian components (polar coefficients $\Gamma^1_{22} = -r$, $\Gamma^2_{12} = \Gamma^2_{21} = \tfrac1r$); $\gamma(\lambda) = (r(\lambda),\theta(\lambda))$ is a curve with velocity $v_\gamma$, dots are $d/d\lambda$; $c_1,c_2,r_*$ are constants.
       - $\nabla^{\mathrm{W}}$ in polar: only $\Gamma^2_{21} = \tfrac1r$, so its straightest curves solve
       $$\ddot r = 0,$$
       $$\ddot\theta + \tfrac1r\,\dot r\dot\theta = 0.$$
@@ -424,7 +425,8 @@ cards:
     tag: Problem 2 · The fourth box
     title: What you now own
     body: |
-      - $\nabla^{\mathrm{F}}$: $\Gamma^1_{22} = \kappa\,a$, $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$, with
+      - Setting: the plane with points $(a,b)$, cartesian basis fields $\partial x_1,\partial x_2$, $\kappa$ a constant, $dx^2$ the covector field giving the second cartesian component; $\nabla^{\kappa}$ has the single cartesian coefficient $\Gamma^1_{22} = \kappa a$; $\mathtt{T}$ is torsion, $\mathrm{Riem}$ curvature, $\mathrm{Ric}_{ab} = \mathrm{Riem}^m_{amb}$.
+      - $\nabla^{\mathrm{F}}$: the connection with cartesian coefficients $\Gamma^1_{22} = \kappa\,a$, $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$ (all others $0$), with
       $$\mathtt{T}^1_{12} = -2,$$
       $$\mathrm{Riem}^1_{212} = \kappa + 1 = -\mathrm{Riem}^1_{221},$$
       $$\mathrm{Ric} = (\kappa+1)\,dx^2\otimes dx^2;$$
@@ -432,7 +434,7 @@ cards:
       - Straightest curves use only the symmetric part:
       $$\ddot\gamma^1 + \kappa\,\gamma^1(\dot\gamma^2)^2 = 0,\quad \ddot\gamma^2 = 0,$$
       the same as $\nabla^{\kappa}$.
-      - Transport sees the twist: along $(1,\lambda)$ from $z = (0,1)$,
+      - Transport sees the twist: along the line $\lambda\mapsto(1,\lambda)$ for $\nabla^{\mathrm{F}}$, from $z = (z^1,z^2) = (0,1)$,
       $$z^1 = \kappa\,(e^{-\lambda} - 1)$$
       instead of $-\kappa\lambda$.
       - Same straightest curves do not mean same torsion, nor same curvature.
@@ -579,7 +581,7 @@ cards:
     tag: Problem 3 · The sheared chart
     title: What you now own
     body: |
-      - Sheared chart $u = a$, $v = b - a^2$:
+      - Setting: the plane with points $(a,b)$, cartesian chart $\mathscr{X}$, $\nabla^{\mathrm{E}}$ the connection differentiating cartesian components. Sheared chart $\mathscr{Y} = (u,v)$ with $u = a$, $v = b - a^2$, basis fields $\partial y_1 = \partial/\partial u$, $\partial y_2 = \partial/\partial v$, $\partial x_i$ the cartesian ones:
       $$\partial y_1 = \partial x_1 + 2a\,\partial x_2,\quad \partial y_2 = \partial x_2;$$
       $\nabla^{\mathrm{E}}$ has the single coefficient
       $$\Gamma^2_{11} = \frac{\partial\mathscr{Y}^2}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial u^2} = 2.$$
@@ -766,6 +768,7 @@ cards:
     tag: Problem 4 · The difference is a tensor
     title: What you now own
     body: |
+      - Setting: on the plane (points $(a,b)$, $r = \sqrt{a^2+b^2}$, cartesian and polar charts), $\nabla^{\mathrm{E}}$ differentiates cartesian components and $\nabla^{\mathrm{W}}$ (plane minus the origin) makes the unit radial and angular fields parallel; $\mathcal{X},\mathcal{Y}$ are vector fields, $g$ a smooth function, $\Gamma^{\mathrm{E}\,i}_{jk}$, $\Gamma^{\mathrm{W}\,i}_{jk}$ their coefficients.
       - The difference of two connections,
       $$\mathcal{Q}(\mathcal{X},\mathcal{Y}) := \nabla^{\mathrm{W}}_\mathcal{X}\mathcal{Y} - \nabla^{\mathrm{E}}_\mathcal{X}\mathcal{Y},$$
       is a $(1,2)$-tensor field: the Leibniz terms cancel,
@@ -933,6 +936,7 @@ cards:
     tag: Problem 5 · Normal coordinates
     title: What you now own
     body: |
+      - Setting: $\nabla$ is a torsion-free connection and $p$ a point; $\bar x^i$ are the coordinates of any chart that vanish at $p$, $\Gamma^i_{(jk)}(p) := \tfrac12\big(\Gamma^i_{jk} + \Gamma^i_{kj}\big)(p)$ the symmetric part of the coefficients of $\nabla$ in that chart at $p$; $\nabla^{\kappa}$ is the connection on the plane (points $(a,b)$) with single cartesian coefficient $\Gamma^1_{22} = \kappa a$ ($\kappa$ a nonzero constant), and $p = (1,0)$.
       - Normal coordinates at $p$, with $\bar x^i$ vanishing at $p$:
       $$\mathscr{Y}^i = \bar x^i + \tfrac12\,\Gamma^i_{(jk)}(p)\,\bar x^j\bar x^k.$$
       - For $\nabla^{\kappa}$ at $p = (1,0)$:
@@ -950,19 +954,19 @@ cards:
     id: wrap-up
     title: What you now own
     body: |
-      Five problems, one level. The formulas to keep:
+      Five problems, one level. Setting: the plane has points $(a,b)$, $r = \sqrt{a^2+b^2}$, cartesian and polar charts; $\nabla^{\mathrm{E}}$ differentiates cartesian components (all cartesian $\Gamma = 0$); $\nabla^{\mathrm{W}}$ (plane minus the origin) makes the unit radial and angular fields parallel; $\nabla^{\kappa}$ has the single cartesian coefficient $\Gamma^1_{22} = \kappa a$ ($\kappa$ a constant); $\mathcal{X},\mathcal{Y}$ are vector fields, $g$ a smooth function, $\gamma$ a curve with dots $= d/d\lambda$, $\mathtt{T}$ torsion, $\mathrm{Riem}$ curvature. The formulas to keep:
 
       **1. Straightest curves of $\nabla^{\mathrm{W}}$** (polar):
       $$\ddot r = 0,$$
       $$\ddot\theta + \tfrac1r\,\dot r\,\dot\theta = 0,$$
       solved by rays, circles and logarithmic spirals
       $$r = r_*\,e^{(c_1/c_2)\theta}.$$
-      **2. The fourth box** $\nabla^{\mathrm{F}}$ ($\Gamma^1_{22} = \kappa a$, $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$):
+      **2. The fourth box** $\nabla^{\mathrm{F}}$ (cartesian coefficients $\Gamma^1_{22} = \kappa a$, $\Gamma^1_{12} = 1$, $\Gamma^1_{21} = -1$, others $0$):
       $$\mathtt{T}^1_{12} = -2,$$
       $$\mathrm{Riem}^1_{212} = \kappa + 1,$$
       same straightest curves as $\nabla^{\kappa}$, different transport.
 
-      **3. Sheared chart** $u = a$, $v = b - a^2$ for $\nabla^{\mathrm{E}}$:
+      **3. Sheared chart** $(u,v)$ with $u = a$, $v = b - a^2$, for $\nabla^{\mathrm{E}}$ (coefficients in that chart):
       $$\Gamma^2_{11} = 2,$$
       $$\ddot u = 0,\quad \ddot v + 2\,\dot u^2 = 0;$$
       a nonzero $\Gamma$ with $\mathtt{T} = 0$ and $\mathrm{Riem} = 0$.
@@ -971,7 +975,7 @@ cards:
       $$\mathcal{Q} := \nabla^{\mathrm{W}} - \nabla^{\mathrm{E}},$$
       $$\mathcal{Q}(\mathcal{X},g\mathcal{Y}) = g\,\mathcal{Q}(\mathcal{X},\mathcal{Y}),$$
       $$\mathtt{T}^{\mathrm{W}\,i}_{jk} = Q^i_{kj} - Q^i_{jk}.$$
-      **5. Normal coordinates** for $\nabla^{\kappa}$ at $(1,0)$:
+      **5. Normal coordinates** $(u,v)$ for $\nabla^{\kappa}$ at $p = (1,0)$ ($\Gamma_\mathscr{Y}$ = coefficients in the chart $\mathscr{Y} = (u,v)$):
       $$u = (a - 1) + \tfrac\kappa2\,b^2,\quad v = b,$$
       $$(\Gamma_\mathscr{Y})^i_{jk}(p) = 0,$$
       $$\mathrm{Riem}^1_{212} = \kappa.$$

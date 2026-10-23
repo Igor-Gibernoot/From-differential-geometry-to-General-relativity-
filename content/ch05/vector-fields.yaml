@@ -2,11 +2,14 @@ id: ch05-vector-fields
 title: Vector Fields and the Tangent Bundle
 kind: concept
 own: |
-  - The **tangent bundle** $T\mathcal{M} = \dot\bigcup_p T_p\mathcal{M}$, disjoint so that the projection $\pi(v_{\gamma,p}) = p$ is well defined; with the bundle charts {{ $\xi_{\mathscr{X}}(\mathcal{X}_p) = (\mathscr{X}(p)\,;\,x^i_p)$ }} it is a smooth manifold of dimension $2d$.
-  - A **smooth vector field** is a smooth section, $\mathcal{X}\colon\mathcal{M}\to T\mathcal{M}$ with {{ $\pi\circ\mathcal{X} = \mathrm{id}_\mathcal{M}$ }}; they form $\Gamma T\mathcal{M}$.
+  - Let $\mathcal{M}$ be a smooth manifold of dimension $d$, with charts $\mathscr{X}\colon\mathcal{U}\to\mathbb{R}^d$ and $\mathscr{Y}\colon\mathcal{V}\to\mathbb{R}^d$ (coordinates $x^i$, $y^i$). The **tangent bundle** $T\mathcal{M} = \dot\bigcup_p T_p\mathcal{M}$ (disjoint union of the tangent spaces), disjoint so that the projection $\pi(v_{\gamma,p}) = p$ is well defined; with the bundle charts {{ $\xi_{\mathscr{X}}(\mathcal{X}_p) = (\mathscr{X}(p)\,;\,x^i_p)$ }} ($x^i_p$ the components of $\mathcal{X}_p\in T_p\mathcal{M}$) it is a smooth manifold of dimension $2d$.
+  - A **smooth vector field** is a smooth section, $\mathcal{X}\colon\mathcal{M}\to T\mathcal{M}$ with {{ $\pi\circ\mathcal{X} = \mathrm{id}_\mathcal{M}$ }}; they form the set $\Gamma T\mathcal{M}$.
   - On a chart, $\mathcal{X}|_\mathcal{U} = x^i\,\partial x_i$ with **component functions** {{ $x^i = \mathcal{X}|_\mathcal{U}\lfloor\mathscr{X}^i\rceil$ }}; smooth means smooth components, and the law {{ $y^i = (\partial\mathscr{Y}^i/\partial\mathscr{X}^j)\,x^j$ }} with point-dependent Jacobian makes this chart independent.
-  - A field eats scalar fields: {{ $\mathcal{X}\lfloor f\rceil(p) = \mathcal{X}(p)(f) = x^i(p)\,\mathtt{x}^p_i$ }}, a new scalar field.
-  - Running example: $\mathcal{X}|_\mathcal{U} = \partial x_2$, the swirl $\mathcal{Y}$ with components $(-b,a)$ and $\mathcal{Y}|_\mathcal{V} = \partial y_2$, vanishing at the origin.
+  - A field eats scalar fields: {{ $\mathcal{X}\lfloor f\rceil(p) = \mathcal{X}(p)(f) = x^i(p)\,\mathtt{x}^p_i$ }} for a smooth function $f$, where $\mathtt{x}^p_i$ are the components of $(df)_p$; a new scalar field.
+  - Example: on the plane with cartesian chart $\mathscr{X}(a,b)=(a,b)$ and polar chart $\mathscr{Y}=(r,\theta)$ (defined off the half-line $b=0$, $a\leq0$), the **swirl** $\mathcal{Y}$ has components $(-b,a)$ in $\mathscr{X}$, i.e.
+    $$\mathcal{Y}|_\mathcal{U} = -b\,\partial x_1 + a\,\partial x_2,$$
+    $$\mathcal{Y}|_\mathcal{V} = \partial y_2 = \partial\theta,$$
+    and vanishes at the origin; a second field is $\mathcal{X}|_\mathcal{U} = \partial x_2$.
 
 cards:
   - type: text

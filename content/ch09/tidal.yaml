@@ -3,6 +3,7 @@ title: Tidal Acceleration
 kind: concept
 
 own: |
+  - **Setting and symbols**: $\phi$ is the gravitational potential, $\partial_\alpha\phi := \partial\phi/\partial x^\alpha$ in the sources chart (stratified, cartesian, non-rotating, at rest relative to the masses; coordinates $x^i$, $x^0=t$, $\alpha,\beta\in\{1,2,3\}$), $G_N$ Newton's constant, $\rho$ the mass density, $M$ a point mass at the origin. $\mathscr{Y}$ is a stratified chart with coordinates $y^i$ whose origin $b^\alpha(t)$ falls freely, $\eta^\beta$ the offset from that origin, and $(\Gamma_\mathscr{Y})^i_{jk}$ the coefficients of the connection $\nabla$ in it. $\gamma^\alpha_\mathcal{V}$ are the $\mathscr{Y}$-coordinates of a free particle (dot $= d/dt$), $\mathrm{Riem}$ is the curvature of $\nabla$, $\mathrm{Ric}_{00} := \sum_\alpha\mathrm{Riem}^\alpha_{0\alpha0}$, and $V(t)$ is the volume of a small ball of particles, $V_0$ its initial value.
   - **Gravity removed along one worldline**: a chart whose origin falls freely, $\ddot b^\alpha = -\partial_\alpha\phi(t,b(t))$, has at the point with offset $\eta$
   {{ $$(\Gamma_\mathscr{Y})^\alpha_{00} \approx \partial_\beta\partial_\alpha\phi(t,b)\,\eta^\beta$$ }}
   up to $\mathcal{O}(|\eta|^2)$: zero at the origin only. An observer falling there feels no gravity; uniform gravity is gone, non-uniform gravity is not.

@@ -222,14 +222,14 @@ cards:
     id: wrap
     title: Problem solved
     body: |
-      For $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$, the dual bases are related by the **same** $J$:
+      For two bases of $V$ with $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$ ($J$ invertible), and dual bases defined by $\hat{\mathfrak{x}}^i(\hat{x}_j)=\delta^i_j$ and $\hat{\mathfrak{y}}^i(\hat{y}_j)=\delta^i_j$, the dual bases are related by the **same** $J$:
       $$\hat{\mathfrak{x}}^i = \sum_{j} (J^{-1})_j^i\,\hat{\mathfrak{y}}^j \quad\Longleftrightarrow\quad \hat{\mathfrak{y}}^i = \sum_{j} J_j^i\,\hat{\mathfrak{x}}^j .$$
 
       | object | index | transforms |
       |---|---|---|
       | basis vectors $\hat{x}_i$ | down | covariant |
-      | covector components $\mathtt{x}_i$ | down | covariant |
-      | vector components $x^i$ | up | contravariant |
+      | covector components $\mathtt{x}_i = \mathsf{X}(\hat{x}_i)$ | down | covariant |
+      | vector components $x^i$ ($\mathcal{X}=\sum_i x^i\hat{x}_i$) | up | contravariant |
       | dual basis $\hat{\mathfrak{x}}^i$ | up | contravariant |
 
       **The method** (used twice): to find the components of a covector, evaluate it on basis vectors. You will use it again for tensors.

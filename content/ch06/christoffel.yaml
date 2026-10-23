@@ -2,6 +2,7 @@ id: ch06-christoffel
 title: Connection Coefficient Functions
 kind: concept
 own: |
+  - **Notation**: $\mathcal{M}$ is a $d$-dimensional manifold with a connection $\nabla$; $\mathscr{X} = (\mathscr{X}^1,\dots,\mathscr{X}^d)$ and $\mathscr{Y}$ are charts with basis fields $\partial x_i$, $\partial y_i$; $\mathcal{X},\mathcal{Y}$ are vector fields with components $x^i$, $\tilde x^i$ in $\mathscr{X}$, $\mathsf{X}$ is a covector field with components $\mathtt{x}_i$, and $\mathcal{X}\lfloor g\rceil$ is the derivative of the function $g$ along $\mathcal{X}$. Sums over repeated indices are written implicitly (Einstein convention).
   - **Coefficients** of $\nabla$ in a chart (last lower index = direction):
   {{ $$\nabla_{\partial x_k}\partial x_j = (\Gamma_\mathscr{X})^i_{jk}\,\partial x_i$$ }}
   $d^3$ smooth functions ($8$ on the plane, $64$ in spacetime), and any choice defines a connection on the chart domain.
@@ -11,7 +12,7 @@ own: |
   - **Transformation law** (not a tensor):
   {{ $$\begin{aligned}(\Gamma_\mathscr{Y})^i_{jk} &= \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}\\ &\quad + \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^l}\frac{\partial\mathscr{X}^s}{\partial\mathscr{Y}^j}\\ &\qquad\cdot\frac{\partial\mathscr{X}^m}{\partial\mathscr{Y}^k}\,(\Gamma_\mathscr{X})^l_{sm}\end{aligned}$$ }}
   Differences of connections and the antisymmetric part {{ $\Gamma^i_{jk} - \Gamma^i_{kj}$ }} are tensors; the symmetric part can be removed at one point.
-  - **The plane**: $\Gamma^{\mathrm{E}}_\mathscr{X} = 0$, while in polar coordinates
+  - **The plane** (points $(a,b)$; $\mathscr{X}(a,b) = (a,b)$ cartesian; $\mathscr{Y} = (r,\theta)$ polar, $r = \sqrt{a^2+b^2}$, $\theta = \operatorname{atan2}(b,a)$; $\nabla^{\mathrm{E}}$ differentiates cartesian components, $\nabla^{\mathrm{P}}$ polar ones): $\Gamma^{\mathrm{E}}_\mathscr{X} = 0$, while in polar coordinates
   {{ $$\begin{gathered}(\Gamma^{\mathrm{E}}_\mathscr{Y})^1_{22} = -r\\ (\Gamma^{\mathrm{E}}_\mathscr{Y})^2_{12} = (\Gamma^{\mathrm{E}}_\mathscr{Y})^2_{21} = \tfrac1r\end{gathered}$$ }}
   and $\nabla^{\mathrm{P}}$ is the reverse: $\Gamma^{\mathrm{P}}_\mathscr{Y} = 0$, $\Gamma^{\mathrm{P}}_\mathscr{X}\neq0$.
 

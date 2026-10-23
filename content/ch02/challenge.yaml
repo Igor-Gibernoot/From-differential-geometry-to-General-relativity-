@@ -668,7 +668,7 @@ cards:
     id: wrap
     title: What you now own
     body: |
-      You have run every tool of the level on one change of basis:
+      You have run every tool of the level on one change of basis of the plane $V=\mathbb{R}^2$, from the old basis $\{\hat{x}_i\}$ to the new one $\{\hat{y}_i\}$, with $\hat{x}_i = \sum_j J_i^j\,\hat{y}_j$ ($J$ an invertible matrix of numbers) and $T$ a tensor with components $T^i_j$ or $T_{ij}$ ($S$, $A$ its symmetric and antisymmetric parts), $W$ a second vector space, of dimensions $m=\dim V$ and $n=\dim W$ here:
 
       - **Old from new is $J$, new from old is $J^{-1}$.** Vector components and the dual basis go with $J$ (contravariant, upper index); basis vectors and covector components with $J^{-1}$ (covariant, lower index). Each dual covector depends on the whole basis.
       - **One factor per index.** A $(1,1)$-tensor gets $J$ and $J^{-1}$, so the identity keeps $\delta^i_j$ and the trace is invariant; a $(0,2)$-tensor gets two $J^{-1}$, so neither holds.

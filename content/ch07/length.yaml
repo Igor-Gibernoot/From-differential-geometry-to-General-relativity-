@@ -2,18 +2,19 @@ id: ch07-length
 title: Length and Geodesics
 kind: concept
 own: |
+  - **Setting**: $(\mathcal{M},g)$ a metric manifold with a chart, $g_{ij}$ the components of $g$, $\dot\gamma^i$ the chart components of the velocity $v_\gamma$. Examples: the Euclidean plane ($g_{ij} = \delta_{ij}$) and the Minkowski plane with coordinates $(t,x)$, $g_{ij} = \mathrm{diag}(-1,1)$, speeds as fractions of light speed.
   - **Sign and speed** of a $C^1$ curve $\gamma$ with velocity $v_\gamma$ on a metric manifold $(\mathcal{M},g)$: the sign rune $\text{ᛇ}_\gamma(\lambda) := \mathrm{sgn}\big(g(v_\gamma,v_\gamma)\big)\in\{-1,0,+1\}$ and
   {{ $$s_\gamma := \sqrt{\text{ᛇ}_\gamma\,g(v_\gamma,v_\gamma)}$$ }}
   in a chart $s_\gamma = \sqrt{\text{ᛇ}_\gamma\,g_{ij}\,\dot\gamma^i\dot\gamma^j}$. Riemannian: $\text{ᛇ}_\gamma = +1$ wherever $v_\gamma\neq0$. Indefinite: $\text{ᛇ}_\gamma = 0$ also on null velocities, and $s_\gamma$ is taken piecewise, on intervals where $\text{ᛇ}_\gamma$ is constant.
   - **Length** between parameter values $a<b$, a functional (it eats a whole curve):
   {{ $$L_{[a,b]}[\gamma] := \int_a^b s_\gamma(\lambda)\,d\lambda$$ }}
-  Circle of radius $5$ once round: $10\pi$, at any speed, in any chart. A light ray has length $0$. For a timelike worldline in Minkowski ($\text{ᛇ}_\gamma = -1$) it is the time the clock reads: at rest $1$ per unit of $t$, at speed $v$ only $\sqrt{1-v^2} = 1/\kappa$ (twin paradox: $8$ against $10$ at $v = \tfrac35$).
+  In the Euclidean plane, a circle of radius $5$ once round: $10\pi$, at any speed, in any chart. A light ray has length $0$. For a timelike worldline in Minkowski ($\text{ᛇ}_\gamma = -1$) it is the time the clock reads: at rest $1$ per unit of $t$, at speed $v$ only $\sqrt{1-v^2} = 1/\kappa$, with the Lorentz factor $\kappa := 1/\sqrt{1-v^2}$ (twin paradox: $8$ against $10$ at $v = \tfrac35$: a twin who goes out and back at that speed, $5$ units of $t$ each way, reads $8$ when the stay-at-home twin reads $10$).
   - **Reparametrization**: a diffeomorphism $\text{ᚱ}\colon\mathbb{R}\to\mathbb{R}$ ($\text{ᚱ}'\neq0$, so orientation preserving or reversing), $\delta := \gamma\circ\text{ᚱ}$. The speed is **not** invariant:
   {{ $$s_\delta(\mu) = |\text{ᚱ}'(\mu)|\,s_\gamma\big(\text{ᚱ}(\mu)\big)$$ }}
   but the factor $|\text{ᚱ}'|$ is exactly the one the substitution $\lambda = \text{ᚱ}(\mu)$ needs, so
   {{ $$L_{\text{ᚱ}^{-1}([a,b])}[\gamma\circ\text{ᚱ}] = L_{[a,b]}[\gamma]$$ }}
   The length belongs to the path traced (counted as often as it is traced, in either direction); $\int g(v_\gamma,v_\gamma)\,d\lambda$, without the root, does not.
-  - **Geodesics** (made precise next): curves whose length is **stationary** under small deformations with fixed endpoints; in Minkowski the inertial worldline has the **most** proper time, so "stationary", not "shortest".
+  - **Geodesics** (made precise next): curves whose length is **stationary** under small deformations with fixed endpoints; in Minkowski space the inertial worldline has the **most** proper time, so "stationary", not "shortest".
 
 cards:
   - type: text

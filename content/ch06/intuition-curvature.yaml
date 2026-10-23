@@ -2,6 +2,7 @@ id: ch06-intuition-curvature
 title: "Intuition: Slots of Torsion, Curvature and Ricci"
 kind: intuition
 own: |
+  - **Setting**: $\nabla$ is a connection with coefficients $\Gamma^i_{jk}$ in a chart with coordinates $x^i$ and basis fields $\partial x_i$ (last lower index = direction); repeated indices are summed; $\mathcal{X}\lfloor g\rceil$ is the derivative of a function $g$ along the vector field $\mathcal{X}$; $\mathscr{X}$, $\mathscr{Y}$ are two charts.
   - **Commutator** (components of $[\mathcal{X},\mathcal{Y}]$, with $x^i$ for $\mathcal{X}$ and $\tilde x^i$ for $\mathcal{Y}$): differentiate each field's components along the other,
     {{ $$[\mathcal{X},\mathcal{Y}]^i = \mathcal{X}\lfloor\tilde x^i\rceil - \mathcal{Y}\lfloor x^i\rceil$$ }}
   - **Torsion**, slots (output, direction of the first term, direction of the second), antisymmetric in the last two:
@@ -12,7 +13,7 @@ own: |
     {{ $$\mathrm{Riem}^i_{jkm} = -\mathrm{Riem}^i_{jmk}$$ }}
   - **Ricci**: contract the output with the **first** loop direction, the carried index and the second direction remain:
     {{ $$\mathrm{Ric}_{ab} = \mathrm{Riem}^m_{amb}$$ }}
-  - **Checks**: the slots balance (one Jacobian per index, so $\mathrm{Riem}^1_{212}$ scales by $2\cdot(\tfrac12)^3$ under $\mathscr{Y} = 2\mathscr{X}$); if all $\Gamma$ vanish in one chart, then $\mathtt{T}$, $\mathrm{Riem}$ and $\mathrm{Ric}$ vanish in every chart, but $\Gamma$ itself does not.
+  - **Checks**: the slots balance (one Jacobian per index, so $\mathrm{Riem}^1_{212}$ scales by $2\cdot(\tfrac12)^3$ under the chart change $\mathscr{Y}^i = 2\mathscr{X}^i$); if all $\Gamma$ vanish in one chart, then $\mathtt{T}$, $\mathrm{Riem}$ and $\mathrm{Ric}$ vanish in every chart, but $\Gamma$ itself does not.
 
 cards:
   - type: text

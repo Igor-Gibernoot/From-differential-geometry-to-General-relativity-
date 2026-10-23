@@ -594,14 +594,16 @@ cards:
     id: summary
     title: What you now own
     body: |
-      **The hook, resolved.** $\nabla^{\mathrm{E}}$: flat, torsion free. $\nabla^{\mathrm{W}}$: flat, with torsion. $\nabla^{\kappa}$: curved, torsion free. Adding a constant twist $\Gamma^1_{12} = -\Gamma^1_{21} = 1$ to $\nabla^{\kappa}$ fills the fourth box.
+      **Setting.** The plane has points $(a,b)$, $r := \sqrt{a^2+b^2}$, cartesian chart with basis fields $\partial x_1,\partial x_2$, polar chart $(r,\theta)$ with basis fields $\partial y_1,\partial y_2$. Three connections: $\nabla^{\mathrm{E}}$ has all cartesian coefficients $0$ (it differentiates cartesian components); $\nabla^{\mathrm{W}}$, on the plane minus the origin, makes the unit radial and angular fields $e_1 = (a,b)/r$, $e_2 = (-b,a)/r$ parallel; $\nabla^{\kappa}$, with $\kappa>0$ constant, has the single nonzero cartesian coefficient $\Gamma^1_{22} = \kappa a$. Here $\Gamma^i_{jk}$ are coefficients (last lower index = direction), $\mathtt{T}$ the torsion, $\mathrm{Riem}$ the curvature, $\mathcal{Z}$ a vector field, $\mathcal{X}\lfloor g\rceil$ the derivative of $g$ along $\mathcal{X}$.
+
+      **The hook, resolved.** $\nabla^{\mathrm{E}}$: flat, torsion free. $\nabla^{\mathrm{W}}$: flat, with torsion. $\nabla^{\kappa}$: curved, torsion free. Adding a constant twist $\Gamma^1_{12} = -\Gamma^1_{21} = 1$ (cartesian) to $\nabla^{\kappa}$ gives a connection (called $\nabla^{\mathrm{F}}$) that fills the fourth box.
 
       - **$\nabla^{\mathrm{E}}$**, polar coefficients (from $\nabla^{\mathrm{E}}$ differentiating cartesian components):
       $$\Gamma^1_{22} = -r,\quad \Gamma^2_{12} = \Gamma^2_{21} = \tfrac1r$$
       symmetric, so $\mathtt{T} = 0$; the curvature cancels term by term in pairs:
       $$\mathrm{Riem}^1_{212} = -1 + 1 = 0$$
       $$\mathrm{Riem}^2_{112} = -\tfrac1{r^2} + \tfrac1{r^2} = 0$$
-      - **$\nabla^{\mathrm{W}}$** ($\nabla^{\mathrm{W}}e_a = 0$, so $\nabla^{\mathrm{W}}_\mathcal{Z}(w^ae_a) = \mathcal{Z}\lfloor w^a\rceil e_a$); polar: only
+      - **$\nabla^{\mathrm{W}}$** ($\nabla^{\mathrm{W}}e_a = 0$, so for a field $w^ae_a$ with component functions $w^a$, $\nabla^{\mathrm{W}}_\mathcal{Z}(w^ae_a) = \mathcal{Z}\lfloor w^a\rceil e_a$); polar: only
       $$\Gamma^2_{21} = \tfrac1r;$$
       cartesian:
       $$\begin{gathered}\Gamma^2_{11} = \tfrac b{r^2},\quad \Gamma^2_{12} = -\tfrac a{r^2},\\ \Gamma^1_{21} = -\tfrac b{r^2},\quad \Gamma^1_{22} = \tfrac a{r^2}.\end{gathered}$$
@@ -612,11 +614,11 @@ cards:
       and $\mathrm{Riem} = 0$ (every term differentiates a parallel $e_a$).
       - **$\nabla^{\kappa}$**: $\Gamma^1_{22} = \kappa\,a$ only, so $\mathtt{T} = 0$, and
       $$\mathrm{Riem}^1_{212} = \kappa = -\mathrm{Riem}^1_{221},$$
-      all other components zero. Its straightest curves solve
+      all other components zero. Its straightest curves $\gamma = (\gamma^1,\gamma^2) = (a,b)$ solve
       $$\ddot\gamma^1 + \kappa\,\gamma^1(\dot\gamma^2)^2 = 0$$
       with $\ddot\gamma^2 = 0$: sinusoids
-      $$a = A\cos\big(\sqrt\kappa\,(b-b_0) + \psi\big).$$
-      Around a counterclockwise loop
+      $$a = A\cos\big(\sqrt\kappa\,(b-b_0) + \psi\big)$$
+      with constants $A,b_0,\psi$. Around a small counterclockwise loop, a transported vector with components $z^1,z^2$ changes by
       $$\Delta z^1 = -\mathrm{Riem}^1_{212}\,z^2\times\text{area}.$$
       - **The lessons:** nonzero $\Gamma$'s prove nothing; flat does not imply torsion free; torsion free does not imply flat; only the tensors $\mathtt{T}$ and $\mathrm{Riem}$ decide.
 

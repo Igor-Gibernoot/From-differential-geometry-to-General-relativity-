@@ -721,13 +721,19 @@ cards:
     id: wrap-up
     title: What you now own
     body: |
+      Setting: $\mathcal{M}$ is a manifold, $p\in\mathcal{M}$, $f$ and $g$ are smooth scalar fields, $v_{\gamma,p}(f) := (f\circ\gamma)'(\lambda_0)$ is the velocity of a curve $\gamma$ through $p$ at $\lambda_0$, and $(df)_p(v) := v(f)$. The running example is $\mathcal{M} = \mathbb{R}^2$ (points $q = (q_1,q_2)$), $p = (1,1)$, $f(q) := q_1^2 + q_2$, and $v$ the velocity with cartesian components $(1,2)$, so that $(df)_p(v) = 2v^1 + v^2 = 4$.
+
       Five problems, one level:
 
-      1. **Polar chart.** You computed a curved chart's basis $(\partial r)_p$, $(\partial\theta)_p$, the Jacobian and the components of $v$ and $(df)_p$ at $(1,1)$, and the pairing $4$ survived.
-      2. **Reparametrization.** $v_{\gamma\circ\text{ᚱ},p} = \text{ᚱ}'(\mu_0)\odot_T v_{\gamma,p}$, and the Leibniz rule $v(fg) = f(p)v(g) + g(p)v(f)$, which is why velocities kill constants.
-      3. **Circle.** Angle and stereographic charts rescale components in opposite ways; the pairing does not care.
-      4. **Trace.** Contracting an upper with a lower index is invariant; a same-height diagonal sum is not.
-      5. **A full tensor.** $v\otimes(df)_p$ in two charts, by the law and by feeding basis elements; its trace is $(df)_p(v)$.
+      1. **Polar chart.** With $\mathscr{P}^{-1}(r,\theta) := (r\cos\theta,\ r\sin\theta)$, you computed the basis $(\partial r)_p := (\partial/\partial\mathscr{P}^1)_p$, $(\partial\theta)_p := (\partial/\partial\mathscr{P}^2)_p$, the Jacobian and the components of $v$ and $(df)_p$ at $p = (1,1)$, and the pairing $4$ survived.
+      2. **Reparametrization.** For a smooth $\text{ᚱ}\colon\mathbb{R}\to\mathbb{R}$ with $\text{ᚱ}(\mu_0) = \lambda_0$:
+      $$v_{\gamma\circ\text{ᚱ},p} = \text{ᚱ}'(\mu_0)\odot_T v_{\gamma,p},$$
+      where $(\alpha\odot_T v)(f) := \alpha\,v(f)$. You also proved the Leibniz rule
+      $$v(fg) = f(p)\,v(g) + g(p)\,v(f),$$
+      which is why velocities kill constants.
+      3. **Circle.** On $S^1 := \{(q_1,q_2)\in\mathbb{R}^2 \mid q_1^2+q_2^2=1\}$, the angle chart $\theta$ (inverse $\theta^{-1}(t) := (\cos t,\sin t)$) and the stereographic chart $\sigma(q) := q_1/(1-q_2)$ rescale components in opposite ways; the pairing does not care.
+      4. **Trace.** For a $(1,1)$-tensor $T$ with components $(T_\mathcal{U})^i_j$ in a chart $\mathscr{X}$ on $\mathcal{U}$, the contraction $(T_\mathcal{U})^i_i$ is invariant; for a $(0,2)$-tensor $S$ the same-height sum $\sum_i(S_\mathcal{U})_{ii}$ is not.
+      5. **A full tensor.** With $\mathscr{X}(q) := (2q_1,-q_2)$ and $\mathscr{Y}(q) := (q_1, q_2e^{q_1})$, the tensor $T := v\otimes(df)_p$, defined by $T(\mathsf{X}_p,u) := \mathsf{X}_p(v)\,(df)_p(u)$, was computed in both charts, by the law and by feeding basis elements; its trace is $(df)_p(v) = 4$.
 
       The common thread: components belong to a chart, the objects $v$, $(df)_p$, $T$ do not, and every invariant number comes from an up-down pairing.
 

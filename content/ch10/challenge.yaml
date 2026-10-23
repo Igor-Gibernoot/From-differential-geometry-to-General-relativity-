@@ -819,22 +819,23 @@ cards:
     id: wrap-up
     title: What you now own
     body: |
-      Five problems, one level. The formulas to keep:
+      Five problems, one level. Notation: $g$ is the Lorentzian metric, $v_\gamma$ the velocity of a worldline $\gamma$ with parameter $\lambda$, $\eta := \mathrm{diag}(1,-1,-1,-1)$, $\Gamma$ the Christoffel symbols, $\mathrm{Riem}$, $\mathrm{Ric}$ the Riemann and Ricci tensors, $G = \mathrm{Ric}-\tfrac12R\,g$ the Einstein tensor, $T$ the energy-momentum tensor, $G_N$ Newton's constant, $f(r)$ the function in the Schwarzschild-type metric with $g_{tt}=f$, $g_{rr}=-1/f$, and $t$ the time coordinate. The formulas to keep:
 
       **1. Twins**: proper time is the length of the worldline,
       $$\tau = \int\sqrt{g(v,v)}\,d\lambda,$$
       and a bent worldline is shorter than a straight one; the frame change at a turnaround is a Lorentz matrix with $\Lambda^T\eta\Lambda = \eta$.
 
-      **2. Accelerated observers**: in the chart $g = \rho^2d\eta^2 - d\rho^2$,
+      **2. Accelerated observers**: in the chart with coordinates $(\eta,\rho)$ (a rapidity-like time and a distance, $\rho>0$) where $g = \rho^2d\eta^2 - d\rho^2$,
       $$\Gamma^\rho_{\eta\eta} = \rho,\quad \Gamma^\eta_{\eta\rho} = \frac1\rho,$$
       yet $\mathrm{Riem}=0$; rapidities add.
 
-      **3. Who gravitates**: for a fluid at rest,
+      **3. Who gravitates**: for a fluid at rest with energy density $\rho$ and pressure $p$,
       $$\mathrm{Ric}_{00} = 4\pi G_N(\rho+3p),$$
       so light attracts twice as hard as dust and vacuum energy repels.
 
       **4. Light**: the electromagnetic tensor is traceless, and for a plane wave
       $$T_{ab} = \rho\,k_ak_b,\quad k\ \text{null},$$
+      ($k$ a covector with $g^{-1}(k,k)=0$, $\rho$ the energy density)
       with conservation forcing its pattern to move at the speed of light.
 
       **5. Outside a star**: static clocks run at

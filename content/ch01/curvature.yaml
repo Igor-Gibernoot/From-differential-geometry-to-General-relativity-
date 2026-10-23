@@ -2,13 +2,13 @@ id: ch01-curvature
 title: Vectors, Derivatives and Curvature
 kind: concept
 own: |
-  - **Objects are not lists of numbers.** Doubling the basis halves a vector's components $x^i$ (the raised $i$ is a label, not a power):
+  - **Objects are not lists of numbers.** Take an arrow with components $x^i$ in a basis (a list of reference arrows; the raised $i$ is a label, not a power) and a gradient (a covector) with components $\mathtt{x}_i$. Doubling every basis arrow halves the arrow's components (new ones written $x'^i$):
     {{ $$x'^i = \tfrac12\,x^i ,$$ }}
-    but doubles the components $\mathtt{x}_i$ of a gradient (a covector):
+    but doubles the gradient's components (new ones $\mathtt{x}'_i$):
     {{ $$\mathtt{x}'_i = 2\,\mathtt{x}_i .$$ }}
   - **Tensor equations hold in every chart** once they hold in one.
   - **Differentiating vectors needs a connection**, since arrows at different points live in different tangent planes; differentiating components alone adds spurious basis terms.
-  - **Curvature is visible from inside.** On a sphere of radius $R$, a triangle of area $A$ has angle sum
+  - **Curvature is visible from inside.** On a sphere of radius $R$, a triangle of area $A$ (a number) made of three straight arcs has angle sum
     {{ $$\text{sum of angles} - \pi = \frac{A}{R^2} ,$$ }}
     and a carried arrow comes back turned by that excess.
 

@@ -5,15 +5,15 @@ kind: concept
 own: |
   - **The problem**: integrating chart representatives depends on the chart. Going from coordinates $\alpha$ of $\mathscr{X}$ to coordinates $\beta$ of $\mathscr{Y}$, the change of variables theorem gives
   {{ $$d^d\alpha = d^d\beta\,\big|\det(\text{ᛞ}_{\mathcal{U}\mathcal{V}})(\beta)\big|$$ }}
-  with $(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j = \partial\mathscr{X}^i/\partial\mathscr{Y}^j$. Unit disc: $\iint da\,db = \pi$, but $\iint dr\,d\theta = 2\pi$; polar Jacobian determinant $r$.
+  with $(\text{ᛞ}_{\mathcal{U}\mathcal{V}})^i_j = \partial\mathscr{X}^i/\partial\mathscr{Y}^j$. Unit disc $\{a^2+b^2<1\}$ with polar coordinates $a = r\cos\theta$, $b = r\sin\theta$: $\iint da\,db = \pi$, but $\iint dr\,d\theta = 2\pi$; the polar Jacobian determinant is $r$.
   - **Volume form** $\Omega$: a $(0,d)$-tensor field, nowhere zero ($\Omega_p\neq0$) and totally antisymmetric (exchanging two arguments flips the sign). Hence $\Omega(\mathcal{X},\mathcal{X},\dots) = 0$, and linearly dependent inputs give $0$.
   - **Levi-Civita symbol** $\varepsilon_{i_1\dots i_d} = \varepsilon^{i_1\dots i_d}$: $\varepsilon_{1\dots d} = 1$, totally antisymmetric, the same array in every chart (a symbol, not a tensor). Every totally antisymmetric array is $T_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}T_{1\dots d}$, and
   {{ $$\det(T^i_j) = \varepsilon_{i_1\dots i_d}T^{i_1}_1\cdots T^{i_d}_d$$ }}
-  - **Components**: with the **scalar density** $\omega_\mathscr{X} := \Omega(\partial x_1,\dots,\partial x_d)$, nonzero on $\mathcal{U}$,
+  - **Components**: in a chart $(\mathcal{U},\mathscr{X})$ with chart-induced basis $\partial x_1,\dots,\partial x_d$, the **scalar density** is $\omega_\mathscr{X} := \Omega(\partial x_1,\dots,\partial x_d)$, nonzero on $\mathcal{U}$,
   {{ $$(\Omega_\mathscr{X})_{i_1\dots i_d} = \varepsilon_{i_1\dots i_d}\,\omega_\mathscr{X}$$ }}
   and under a change of chart
   {{ $$\omega_\mathscr{Y} = \det\Big(\frac{\partial\mathscr{X}^i}{\partial\mathscr{Y}^j}\Big)\,\omega_\mathscr{X}$$ }}
-  so $\omega_\mathscr{X}$ is not a scalar field. Euclidean area form $\Omega_{\mathrm{E}} = dx^1\otimes dx^2 - dx^2\otimes dx^1$: $\omega_\mathscr{X} = 1$, $\omega_{\text{polar}} = r$.
+  so $\omega_\mathscr{X}$ is not a scalar field. Euclidean area form on the plane, $\Omega_{\mathrm{E}} = dx^1\otimes dx^2 - dx^2\otimes dx^1$ (cartesian coordinates $x^1,x^2$): $\omega_\mathscr{X} = 1$ in the cartesian chart, $\omega_{\text{polar}} = r$ in the polar chart.
   - **Oriented atlas**: charts covering $\mathcal{M}$ with, on every overlap,
   {{ $$\det\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^j}\Big) > 0$$ }}
   (symmetric: the two determinants multiply to $1$). **Orientable** = admits one. A volume form picks an orientation: the charts with $\omega_\mathscr{X} > 0$ form an oriented atlas.

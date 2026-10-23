@@ -567,6 +567,8 @@ cards:
     body: |
       **One point mass, the whole chain.** With $G_NM = 8$:
 
+      Notation: in the sources chart (stratified, cartesian, non-rotating, at rest relative to the mass; coordinates $x^i$, $x^0=t$, $\alpha,\beta\in\{1,2,3\}$), a point mass $M$ at the origin has potential $\phi$, $|x| := \sqrt{\sum_\beta(x^\beta)^2}$ and $r := |x|$. $G_N$ is Newton's constant, $\rho$ the mass density, $\Gamma^i_{jk}$ the coefficients of the connection, $\mathrm{Riem}$, $\mathrm{Ric}$ its curvature and Ricci tensor, $\delta_{\alpha\beta}$ the Kronecker delta, $\mathcal{U}$ the domain of the chart (spacetime minus the worldline of the mass), $r_0$ the orbit radius, $\omega$ the angular velocity, $x := r/(2r_0)$ in the fall formula, dots are $d/dt$.
+
       | | formula | value |
       |---|---|---|
       | $\phi$ | $-G_NM/\lvert x\rvert$ | |

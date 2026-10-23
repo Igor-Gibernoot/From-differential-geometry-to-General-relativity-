@@ -2,12 +2,13 @@ id: ch04-tensor-space
 title: Tensor Spaces at a Point
 kind: concept
 own: |
+  - **Setting:** $p$ is a point of a $d$-dimensional manifold $\mathcal{M}$; a chart $\mathscr{X}$ around $p$ gives the basis $(\partial x_i)_p := (\partial/\partial\mathscr{X}^i)_p$ of $T_p\mathcal{M}$ (velocities) and the dual basis $(dx^i)_p := (d\mathscr{X}^i)_p$ of $T_p^*\mathcal{M}$ (covectors); a second chart $\mathscr{Y}$ gives $(\partial y_i)_p$, $(dy^i)_p$; sums over repeated indices are implied.
   - The **$(r,s)$-tensor space** $T_p^{(r,s)}\mathcal{M}$: {{ multilinear maps with $r$ covector slots (first) and $s$ velocity slots }}. $(0,1)$: covectors; $(1,0)$: velocities; $(0,0)$: numbers; $(1,1)$: linear maps $T_p\mathcal{M}\to T_p\mathcal{M}$; $(0,2)$: bilinear forms, such as the metric (Level 7).
   - **Tensor products** of the chart bases, $(\partial x_{i_1})_p\otimes\cdots\otimes(dx^{j_s})_p$, form a basis; slot order matters; {{ $\dim T_p^{(r,s)}\mathcal{M} = d^{\,r+s}$ }}.
   - **Components** are values on basis elements, {{ $(T_\mathcal{U})^{i\dots}_{j\dots} = T((dx^i)_p,\dots,(\partial x_j)_p)$ }}, and $T = (T_\mathcal{U})^{i\dots}_{j\dots}(\partial x_i)_p\otimes\cdots\otimes(dx^j)_p$.
   - **Transformation law:** one Jacobian per index, $\partial\mathscr{Y}/\partial\mathscr{X}$ for upper (contravariant), {{ $\partial\mathscr{X}/\partial\mathscr{Y}$ }} for lower (covariant), derived by feeding or by re-expanding. For a $(1,1)$-tensor:
     {{ $$(T_\mathcal{V})^i_j = \sum_{k,l}\Big(\frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^k}\Big)_p\Big(\frac{\partial\mathscr{X}^l}{\partial\mathscr{Y}^j}\Big)_p (T_\mathcal{U})^k_l .$$ }}
-    Checked on $(df)_p\otimes(df)_p$: $(T_\mathcal{V})_{12} = 1/e$ both ways.
+    Checked on $T := (df)_p\otimes(df)_p$ in $\mathbb{R}^2$ with $f(q) := q_1^2+q_2$, $p := (1,1)$, $\mathscr{X}(q) := (2q_1,-q_2)$, $\mathscr{Y}(q) := (q_1,q_2e^{q_1})$: $(T_\mathcal{V})_{12} = 1/e$ both ways.
 
 cards:
   - type: text

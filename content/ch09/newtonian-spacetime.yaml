@@ -3,6 +3,7 @@ title: Absolute Time and Newtonian Spacetime
 kind: concept
 
 own: |
+  - **Setting and symbols**: $(\mathcal{M},\mathcal{O},\mathcal{A})$ is a 4-dimensional smooth manifold of events (topology $\mathcal{O}$, atlas $\mathcal{A}$ of charts $(\mathcal{U},\mathscr{X})$ with coordinates $x^i$), $C^\infty(\mathcal{M})$ its smooth scalar fields, $(dt)_p\in T^*_p\mathcal{M}$ the differential of $t$ at $p$, $\mathrm{preim}_t(\{\tau\}) := \{p\in\mathcal{M}\mid t(p)=\tau\}$, and $\nabla$ a torsion-free connection with coefficients $\Gamma^i_{jk}$.
   - **Absolute time** on a 4-dimensional smooth manifold $(\mathcal{M},\mathcal{O},\mathcal{A})$: a scalar field $t\in C^\infty(\mathcal{M})$ with {{ $(dt)_p\neq0$ for every $p\in\mathcal{M}$ }} ("time never stands still"). Counterexample: $t = \tau^2$, whose differential $2\tau\,d\tau$ vanishes on $\tau = 0$. Curved slices are allowed ($\tau + 0.3\sin a$).
   - **Absolute space** at time $\tau\in t(\mathcal{M})$, the events simultaneous at $\tau$:
   {{ $$\mathcal{S}_\tau := \mathrm{preim}_t(\{\tau\})$$ }}

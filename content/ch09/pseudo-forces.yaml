@@ -3,6 +3,7 @@ title: Inertial Charts and Pseudo-Forces
 kind: concept
 
 own: |
+  - **Setting and symbols**: $(\mathcal{U},\mathscr{X})$ and $(\mathcal{V},\mathscr{Y})$ are stratified charts (coordinates $x^i$, $y^i$, with $x^0=y^0=t$ the absolute time), $\Gamma_\mathscr{X}$, $\Gamma_\mathscr{Y}$ the coefficients of the connection $\nabla$ in them, $\alpha,\beta,\delta\in\{1,2,3\}$, and $\mathrm{Riem}$ the curvature of $\nabla$. $\gamma^\alpha$ are the coordinates in $\mathscr{Y}$ of a particle of mass $m$ under a force $f_\gamma$ (dot $= d/dt$). The rigid chart is $x^1=y^1\cos\theta-y^2\sin\theta+b^1$, $x^2=y^1\sin\theta+y^2\cos\theta+b^2$, $x^3=y^3+b^3$, with $\theta(t)$ the angle of its axes and $b^\alpha(t)$ the position of its origin, both in $\mathscr{X}$.
   - **Inertial chart**: a stratified chart $(\mathcal{U},\mathscr{X})$ with {{ $\Gamma_\mathscr{X} = 0$ }}. Without gravity, free particles of every velocity move straight in it ($\ddot\gamma^\alpha = 0$), which forces every coefficient to vanish; then $\mathrm{Riem} = 0$, a tensor statement valid in every chart.
   - **From an inertial chart** to any stratified chart $(\mathcal{V},\mathscr{Y})$ only the inhomogeneous term survives:
   {{ $$(\Gamma_\mathscr{Y})^i_{jk} = \frac{\partial\mathscr{Y}^i}{\partial\mathscr{X}^s}\frac{\partial^2\mathscr{X}^s}{\partial\mathscr{Y}^k\partial\mathscr{Y}^j}$$ }}

@@ -578,7 +578,8 @@ cards:
     id: summary
     title: Wrap-up
     body: |
-      **Checking Schwarzschild.** With $r_S = 2G_NM$, $f = 1 - r_S/r$:
+      **Checking Schwarzschild.** Chart coordinates $(t,r,\theta,\varphi)$, numbered $0,1,2,3$ (a raised index is a label). $G_N$ is Newton's constant, $M$ the mass, $\Gamma^k_{ij}$ the Christoffel symbols, $\mathrm{Ric}$ and $\mathrm{Riem}$ the Ricci and Riemann tensors, a prime is $d/dr$. With
+      $$r_S = 2G_NM,\qquad f(r) := 1 - \frac{r_S}{r}:$$
 
       - **Metric**: $g = \mathrm{diag}(f,-1/f,-r^2,-r^2\sin^2\theta)$, signature $(+,-,-,-)$ for $r>r_S$. Also $\det g = -r^4\sin^2\theta$, so $\sqrt{-\det g} = r^2\sin\theta$ does not involve $f$ and $\Gamma^m_{1m} = 2/r$.
       - **Connection**:

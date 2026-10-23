@@ -2,11 +2,11 @@ id: ch01-gravity
 title: Is Gravity a Force?
 kind: concept
 own: |
-  - **Gravity is not a force on free particles.** In a freely falling elevator a released ball has relative acceleration
+  - **Gravity is not a force on free particles.** In a freely falling elevator a released ball has acceleration $a_{\text{rel}}$ relative to the elevator
     {{ $$a_{\text{rel}} = 0 :$$ }}
     free particles follow the straightest paths of a curved spacetime.
   - **Free fall removes gravity at a point, not between points.** What survives is the {{ **tidal** }} effect: a falling ring of particles becomes an egg, because nearby free paths drift apart. That drift is **curvature**, and empty space can still be curved.
-  - **Coordinates are labels.** A chart can fail without any physics failing: longitude jumps by $180^\circ$ at the pole, and a black-hole formula
+  - **Coordinates are labels.** A chart can fail without any physics failing: longitude jumps by $180^\circ$ at the pole, and a black-hole formula, with $G_N$ Newton's constant, $M$ the hole's mass and $r$ the distance from its centre (units $c=1$),
     {{ $$\frac{1}{1 - 2G_NM/r}$$ }}
     blows up at the horizon, where a falling astronaut notices {{ nothing special }}.
   - Rotating labels invent forces (centrifugal, Coriolis), so "straight" must be defined without a chart.
