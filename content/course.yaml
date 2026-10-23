@@ -74,7 +74,7 @@ levels:
         title: "Guided Problem: Why the Change of Basis Is Invertible"
         kind: guided
         file: ch02/J-invertible.yaml
-        summary: The book uses $J^{-1}$ freely. Prove it exists, using nothing but the uniqueness of components in a basis.
+        summary: We use $J^{-1}$ freely. Prove it exists, using nothing but the uniqueness of components in a basis.
       - id: ch02-dual-basis-law
         title: "Guided Problem: The Dual Basis Uses the Same J"
         kind: guided
